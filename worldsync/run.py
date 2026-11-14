@@ -17,7 +17,7 @@ def main():
     parser.add_argument("--repo", type=Path, default=Path("external/ABot-World"))
     parser.add_argument("--experiment", type=Path, default=Path("experiments/pan_return.json"))
     parser.add_argument("--output", type=Path, default=Path("outputs/pan_return"))
-    parser.add_argument("--modes", nargs="+", choices=["stock", "window", "landmark"], default=["stock", "window", "landmark"])
+    parser.add_argument("--modes", nargs="+", choices=["stock", "window", "landmark"], default=["stock"])
     parser.add_argument("--seeds", nargs="+", type=int, default=[42])
     parser.add_argument("--height", type=int, default=704)
     parser.add_argument("--width", type=int, default=1280)
@@ -25,6 +25,12 @@ def main():
     parser.add_argument("--threshold", type=float, default=0.15)
     parser.add_argument("--max-blocks", type=int, help="smoke-test truncation; does not complete the return task")
     args = parser.parse_args()
+    if any(mode != "stock" for mode in args.modes):
+        from worldsync.reproduction import require_reproduced_baseline
+        try:
+            require_reproduced_baseline()
+        except RuntimeError as exc:
+            parser.error(str(exc))
     root = Path.cwd()
     repo, output = args.repo.resolve(), args.output.resolve()
     spec = json.loads(args.experiment.read_text())

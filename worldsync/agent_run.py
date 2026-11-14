@@ -18,7 +18,7 @@ def main():
     parser.add_argument("--data-root", type=Path, required=True)
     parser.add_argument("--task-id", required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--modes", nargs="+", choices=["stock", "window", "landmark"], default=["stock", "window", "landmark"])
+    parser.add_argument("--modes", nargs="+", choices=["stock", "window", "landmark"], default=["stock"])
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--provider", choices=["openai", "anthropic"], default="openai")
     parser.add_argument("--player-model", help="default: gpt-6.1-sol (OpenAI), claude-opus-5-5 (Anthropic)")
@@ -27,6 +27,12 @@ def main():
     parser.add_argument("--max-steps", type=int, default=40)
     parser.add_argument("--max-blocks", type=int, default=80, help="80 blocks is approximately 60 simulated seconds")
     args = parser.parse_args()
+    if any(mode != "stock" for mode in args.modes):
+        from worldsync.reproduction import require_reproduced_baseline
+        try:
+            require_reproduced_baseline()
+        except RuntimeError as exc:
+            parser.error(str(exc))
     if not 1 <= args.max_steps <= 40 or not 1 <= args.max_blocks <= 80:
         parser.error("max-steps must be 1..40 and max-blocks 1..80")
     repo, output = args.repo.resolve(), args.output.resolve()
