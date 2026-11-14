@@ -80,9 +80,21 @@ The durable workflow is `scripts/run_matrix_reproduction.py`, run with the Matri
 environment. It waits for the verified checkpoint inventory, checks a native
 57-frame smoke rollout, then runs the full stock suite. It stops on failure,
 preserves every attempt, and pushes a small credential-free progress summary
-after each case. `worldsync.matrix_suite --dry-run` validates all 171 inputs and
+after each case. The workflow scores each completed case with Claude Opus 5.5
+and the released rubric, explicitly as diagnostics. Missing generations or judge
+errors never become scores of 1 and never disappear from coverage. A diagnostic
+overall is withheld until all 171 cases are scored; aggregation then weights
+each of the four dimensions equally. Judge retries reuse successful generation.
+The paper-reproduction gate remains closed even if this diagnostic aggregate
+matches the published number.
+
+`worldsync.matrix_suite --dry-run` validates all 171 inputs and
 the evaluation queue without API calls. `--smoke` selects one case per dimension
 for integration checks; it never produces a benchmark overall score.
+
+See [live progress](matrix-progress.json). Detailed videos, action traces, raw
+judgments and error logs are retained under ignored
+`outputs/matrix-reproduction/`; API credentials never enter the progress summary.
 
 ## Scoring status
 

@@ -41,3 +41,36 @@ def test_suite_resumes_completed_cases_and_stops_without_dropping_failure(tmp_pa
     assert manifest["runs"][1]["status"] == "failed"
     assert manifest["completed_by_split"]["gc"] == 1
     assert manifest["completed_by_split"]["if"] == 1
+
+
+def test_judge_retry_reuses_successful_generation(tmp_path, monkeypatch):
+    cases = [{"split": "gc", "task_id": "GC007"}]
+    monkeypatch.setattr(matrix_suite, "inventory_cases", lambda root: cases.copy())
+    data = tmp_path / "data/gc"
+    data.mkdir(parents=True)
+    (data / "data.json").write_text(json.dumps([{"task_id": "GC007", "image_path": "gc/initial.jpg"}]))
+    output = tmp_path / "output"
+    monkeypatch.setattr("sys.argv", ["matrix_suite", "--output", str(output), "--data-root", str(data.parent), "--judge"])
+    calls = {"generation": 0, "judge": 0}
+    def execute(command, **kwargs):
+        directory = output / "gc-GC007-attempt1"
+        if "worldsync.matrix_baseline" in command:
+            calls["generation"] += 1
+            directory.mkdir()
+            (directory / "run.json").write_text(json.dumps({"status": "completed", "chunks": [{}]}))
+            return SimpleNamespace(returncode=0)
+        calls["judge"] += 1
+        if calls["judge"] == 1:
+            (directory / "judge.json").write_text(json.dumps({"reported_score": None}))
+            return SimpleNamespace(returncode=1)
+        (directory / "judge.json").write_text(json.dumps({"reported_score": 1, "gate": {"verdict": "fail"}}))
+        return SimpleNamespace(returncode=0)
+    monkeypatch.setattr(matrix_suite.subprocess, "run", execute)
+    with pytest.raises(SystemExit, match="Judge failed"):
+        matrix_suite.main()
+    matrix_suite.main()
+    assert calls == {"generation": 1, "judge": 2}
+    manifest = json.loads((output / "suite.json").read_text())
+    assert manifest["runs"][0]["diagnostic_score"] == 1
+    assert manifest["diagnostic_scores"]["diagnostic_overall"] is None
+    assert (output / "gc-GC007-attempt1/judge-prior-1.json").is_file()

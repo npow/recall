@@ -20,6 +20,8 @@ videos. Recovering exact generation/evaluation settings remains unresolved.
 The [stock Matrix adapter](reproduction/matrix-adapter.md) now preserves the
 upstream generator, verifies native control tensors, and provides a resumable
 171-case queue. Its reconstructed controller/settings remain explicitly labeled.
+The [live workflow status and coverage](reproduction/matrix-progress.json) are
+pushed as the stock suite advances. Missing cases prevent an overall score.
 No replacement controller or judge will be labeled as numerical
 reproduction. The earlier no-Gemini instruction remains in effect.
 

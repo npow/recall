@@ -58,7 +58,7 @@ def main():
     status("native_smoke_passed_starting_full_stock_suite")
     with (output / "suite.log").open("a") as log:
         result = subprocess.run([sys.executable, "-u", "-m", "worldsync.matrix_suite",
-            "--output", str(output / "suite"), "--publish-status"], cwd=ROOT,
+            "--output", str(output / "suite"), "--publish-status", "--judge"], cwd=ROOT,
             stdout=log, stderr=subprocess.STDOUT)
     if result.returncode:
         raise SystemExit(result.returncode)
