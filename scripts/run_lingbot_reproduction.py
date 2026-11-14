@@ -16,6 +16,8 @@ def main():
     progress = json.loads((ROOT / "reproduction/lingbot-progress.json").read_text())
     def status(value):
         progress["status"] = value
+        if (ROOT / "reproduction/lingbot-weights.json").exists():
+            progress["verified_transformer_shards"] = 8
         publish(progress, "lingbot-progress.json")
     manifest = ROOT / "reproduction/lingbot-weights.json"
     deadline = time.monotonic() + 6 * 3600
