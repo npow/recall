@@ -51,6 +51,24 @@ Sources: [paper, Appendix A](https://arxiv.org/html/2608.13552v2#A1),
   judgments or explicit resolution of that constraint. A Claude-calibrated study
   would be a different protocol and cannot unlock this milestone as-is.
 
+## Prepared assets
+
+[assets.json](assets.json) inventories all 171 cases and their input images at
+dataset revision `697e177194a1c4d8afe9068756fe743ac23ee1e8`.
+Every metadata file and image was verified against the immutable upstream Git
+blob hash or LFS SHA-256, and every image was checked for decoding errors.
+The inventory also records hashes and video metadata for three selected public
+demonstrations. None of these assets constitute a reproduced score.
+
+Rebuild the inventory without making generation or judge API calls:
+
+```bash
+.venv/bin/python scripts/prepare_reproduction.py --with-reference-videos
+```
+
+This downloads benchmark media into ignored `external/` directories. Omitting
+`--with-reference-videos` prepares only the complete benchmark inputs.
+
 ## Completion criteria
 
 1. Pin the dataset, unmodified generation source and exact paper checkpoint.

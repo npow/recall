@@ -14,9 +14,10 @@ PlayWorld protocol. SOTA references are **Genie 3: 2.12** and **LingBot-World2:
 Read [the reproduction protocol, audit and completion criteria](reproduction/README.md).
 [Machine-readable state](reproduction/state.json) records the closed gate.
 
-Current independent work is recovering exact generation/evaluation settings,
-validating the complete 171-case dataset, and inspecting published reference
-videos. No replacement controller or judge will be labeled as numerical
+All 171 benchmark inputs are downloaded and verified against the pinned source;
+the [asset inventory](reproduction/assets.json) also includes three public demo
+videos. Recovering exact generation/evaluation settings remains unresolved.
+No replacement controller or judge will be labeled as numerical
 reproduction. The earlier no-Gemini instruction remains in effect.
 
 The [historical implementation](docs/exploratory-setup.md) and
