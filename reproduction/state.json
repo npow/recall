@@ -1,12 +1,13 @@
 {
-  "phase": "reproduction",
-  "baseline_reproduced": false,
+  "phase": "baseline",
+  "baseline_verified": false,
   "baseline_report": null,
-  "protocol_id": "playworld-paper-lingbot-world2",
-  "first_generation_target": "LingBot-World2 published open-model SOTA",
+  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v1",
+  "first_generation_target": "LingBot-World2 14B causal-fast frozen local stock baseline",
   "published_reference_overall": 1.82,
   "published_reference_dimensions": {"gc": 2.04, "if": 2.13, "insight": 1.95, "outsight": 1.16},
   "sota_reference": {"model": "Genie 3", "overall": 2.12},
-  "policy": "No memory-policy experiments or hillclimbing until baseline reproduction is verified.",
+  "published_reference_scope": "Hosted LingBot service; local checkpoint and Claude judgments are not presumed to reproduce 1.82.",
+  "policy": "Verify the persistent adapter and measure complete scored local stock episodes before hillclimbing. Published-score agreement is not a prerequisite for the local baseline.",
   "gemini_calls_authorized": false
 }

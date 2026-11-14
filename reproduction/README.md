@@ -1,100 +1,63 @@
-# Reproduction before optimization
+# Local baseline before hillclimbing
 
-**Status: not reproduced. Hillclimbing is locked.**
+**Current target: LingBot-World2 14B causal-fast. Baseline not measured yet.**
 
-The ABot experiments in `results/2026-11-14-*` are exploratory engineering checks.
-They changed the model, controller, judge and budget, and provide no evidence of
-reproducing the published PlayWorld results. They are excluded from this milestone.
+The published **1.82** belongs to the hosted LingBot service. It is a reference,
+not an expected score for the public local checkpoint or our Claude evaluator.
+We will establish our own reproducible stock baseline before changing inference
+or memory. The [state file](state.json) records the closed gate; matching the
+hosted number is not required to verify the local baseline.
 
-The current generation target is **LingBot-World2**, the published open-model SOTA
-at 1.82. The closed reference is Genie 3 at 2.12. The earlier Matrix target (1.14)
-was cancelled at the user's instruction after its native smoke test succeeded.
+## 1. Freeze and measure the stock model
 
-## Frozen reference
+Pin checkpoint, source, input dataset, resolution, sampler, cache, anchors, seed,
+player, judge, scoring policy and action timing. Use the official unquantized 14B
+causal-fast release. Preserve videos, native controls, player decisions, actual
+call counts, terminations and errors for every case. Score all 171 cases and
+report coverage per dimension; missing generations or judge errors cannot
+silently become scores or disappear from the denominator.
 
-| Item | Published protocol / current evidence |
-| --- | --- |
-| Cases | 171: GC 48, IF 50, insight 30, out-of-sight 43 |
-| Player | Claude Haiku 4.5, not our GPT-6.1 controller |
-| Control | Human reference plan plus adaptive Keep/Stop/Extend/Correct/End decisions |
-| Budget | 40 interactions; reproduce the actual per-model action timing |
-| Judge | Gemini 3.1 Pro; Claude replacement is not numerical reproduction |
-| Sampling | Primary 10 FPS, 384×216 cells, 5×5; detail 0.5 FPS, 800×450, 2×2 |
-| Aggregation | Equal mean of the four dimension means, not one mean over all cases |
-| LingBot-World2 scores | GC 2.04, IF 2.13, insight 1.95, out-of-sight 1.16; overall 1.82 |
-| Weights and settings | Exact paper checkpoint revision, sampler/decoder/precision and adapter settings are not yet verified |
+Claude with the released PlayWorld rubric is the authorized local evaluator.
+Numerical comparisons with the published Gemini table remain qualified. No
+Gemini calls are made. See [setup and deviations](lingbot.md),
+[asset inventory](assets.json), and [live progress](lingbot-progress.json).
 
-Sources: [paper, Appendix A](https://arxiv.org/html/2608.13552v2#A1),
-[released code](https://github.com/hku-sail/PlayWorld),
-[dataset](https://huggingface.co/datasets/jocelynd/playworld-bench),
-[project examples](https://kxding.github.io/project/PlayWorld/).
+## 2. Verify the persistent control adapter
 
-## Audit findings to resolve
+Match native inputs and native generation before interpreting quality changes.
+Verify pose continuity, fixed movement and turn rates, and neutral camera inputs
+during WAIT. Check realized forward/backward motion, turns and revisits in the
+generated observations. Intended poses alone do not prove successful navigation.
+Separate integration errors, model control failures, identity/geometry failures,
+and evolution freezes or resets. Do not label every low score as forgetting.
 
-* The paper evaluates LingBot-World2 through its web interface. Local inference
-  uses the released 14B causal-fast checkpoint; exact equivalence to the hosted
-  benchmark variant and settings still requires verification. The public player
-  release has no LingBot-specific adapter. This difference must remain visible.
-* The earlier Matrix audit found a SANA adapter but no Matrix-specific adapter.
-  The authors' [local-adapter issue](https://github.com/hku-sail/PlayWorld/issues/3)
-  points to SANA as an example. Its model-specific action grouping is not evidence
-  of Matrix's original settings. We will not guess them and call that reproduction.
-* The paper describes weighted binary VQA answers mapped by `1 + 4R`. The released
-  scorer requests 1–5 category scores with additional policies. Establish which
-  scorer/data revision produced the reported table before using it as acceptance
-  evidence. Our previous Claude adapter must not silently stand in for that audit.
-* The paper and released README describe reference-plan handling differently.
-  Match the executed controller and prompts, not just the model name.
-* The public project has selected demonstration videos, including Genie GC004
-  and Matrix GC007/OE001. They are useful reference artifacts, not the complete
-  171-case rollout archive or original per-case judge cache. Scoring a few selected
-  demos does not reproduce the aggregate SOTA result.
-* Gemini use remains unauthorized under the user's earlier instruction. No Gemini
-  calls will be made. Exact score reproduction needs either the original saved
-  judgments or explicit resolution of that constraint. A Claude-calibrated study
-  would be a different protocol and cannot unlock this milestone as-is.
+Native/adapter pixel parity, source camera-tensor parity, and native VAE streaming
+parity are integration checks. They do not establish the hosted score. Complete
+scored episodes and realized trajectory evidence are also required.
 
-## Prepared assets
+## 3. Tune existing inference knobs
 
-The [stock Matrix adapter reconstruction](matrix-adapter.md) records recovered
-native timing, source and checkpoint history, exact control-tensor checks, runtime
-commands, and remaining deviations. It restores the missing model integration
-without modifying the generator or claiming that unknown settings are verified.
+Only after the local stock baseline and controls are verified, compare cache
+length, retained initial anchors, and player decision intervals. Select using
+complete scored development episodes; report player-call and inference costs.
+Evaluate the chosen settings on held-out episodes under the frozen evaluator.
+Keep the baseline results and all failed trials.
 
-[assets.json](assets.json) inventories all 171 cases and their input images at
-dataset revision `697e177194a1c4d8afe9068756fe743ac23ee1e8`.
-Every metadata file and image was verified against the immutable upstream Git
-blob hash or LFS SHA-256, and every image was checked for decoding errors.
-The inventory also records hashes and video metadata for three selected public
-demonstrations. None of these assets constitute a reproduced score.
+## 4. Retrieve history only for demonstrated forgetting
 
-Rebuild the inventory without making generation or judge API calls:
+If controls work and revisited regions lose identity or geometry, test historical
+view/feature retrieval within the v2 cache. The earlier training-free study used
+LingBot-World Fast, not this v2 checkpoint, so transfer is a hypothesis to test.
 
-```bash
-.venv/bin/python scripts/prepare_reproduction.py --with-reference-videos
-```
+## 5. Fine-tune only for a repeatable failure
 
-This downloads benchmark media into ignored `external/` directories. Omitting
-`--with-reference-videos` prepares only the complete benchmark inputs.
+If valid control still produces process freezes or resets, do not assume longer
+cache fixes it. Gather separate training examples and fine-tune an adapter only
+following diagnosis. Keep improvements that survive held-out, player-driven
+episodes. No training from scratch, image editing, reward-model work or RL is
+part of the current implementation plan.
 
-## Completion criteria
-
-1. Pin the dataset, unmodified generation source and exact paper checkpoint.
-2. Recover and freeze the LingBot controller, action mapping, budgets, preprocessing,
-   sampler, decoder and precision settings. Record any hardware substitutions.
-3. Verify scoring and aggregation against the exact released/paper version and
-   reference artifacts. Retain missing data as missing; do not silently exclude it.
-4. Generate the full unmodified baseline, preserving every case ID, action trace,
-   video, termination reason and failure. Report all four dimensions and coverage.
-5. Establish score agreement with the published reference and explain residual
-   variation. Fix numerical acceptance criteria before testing modifications.
-6. Save a verified reproduction report. Only then change `state.json` to the
-   hillclimbing phase and run one modification at a time under the frozen protocol.
-
-There is no verified report yet. The command-line experiment runners default to
-stock and reject non-stock modes while this gate is closed. Merely running a
-stock model, passing unit tests, downloading a video, or copying the published
-table does not satisfy reproduction.
-
-Historical setup and implementation details remain in
-[the exploratory documentation](../docs/exploratory-setup.md).
+The [paper/release audit](../docs/paper-protocol-audit.md),
+[Matrix integration](matrix-adapter.md), and [earlier ABot work](../docs/exploratory-setup.md)
+remain historical evidence. Neither the Matrix smoke nor the exploratory ABot
+scores count as the LingBot local baseline.

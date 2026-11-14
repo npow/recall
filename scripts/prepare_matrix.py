@@ -34,7 +34,14 @@ def valid(path, entry):
 def parallel_download(url, temporary, size, workers=24):
     """Bounded range downloads avoid serial CDN throttling; validate every range."""
     unit = 128 * 1024 * 1024
-    parts = [(start, min(start + unit, size) - 1) for start in range(0, size, unit)]
+    prefix = temporary.stat().st_size if temporary.exists() else 0
+    if prefix >= size:
+        prefix = 0
+    # A completed prefix can come from a previous serial or HF Xet transfer.
+    # Keep it in place and download only the suffix; global block alignment also
+    # preserves reusable range shards if assembly was interrupted previously.
+    parts = [(max(start, prefix), min(start + unit, size) - 1)
+             for start in range((prefix // unit) * unit, size, unit)]
 
     def fetch_part(bounds):
         start, end = bounds
@@ -69,7 +76,7 @@ def parallel_download(url, temporary, size, workers=24):
 
     with ThreadPoolExecutor(max_workers=workers) as pool:
         paths = list(pool.map(fetch_part, parts))
-    with temporary.open("wb") as output:
+    with temporary.open("ab" if prefix else "wb") as output:
         for part in paths:
             with part.open("rb") as source:
                 shutil.copyfileobj(source, output, length=8 * 1024 * 1024)

@@ -75,7 +75,9 @@ configuration.
 Moving cases allow 40 Haiku decisions with one native chunk per action. Stationary
 insight cases hold WAIT through 60 chunks (59.8125 seconds) without agent calls.
 All native controls and actual agent-call counts are recorded separately. These
-are fixed reconstruction choices. They do not unlock the published-protocol gate.
+are fixed reconstruction choices. Local baseline verification also requires
+complete scoring and realized-control review; agreement with the hosted 1.82 is
+not required.
 
 The suite runner is:
 
@@ -91,3 +93,8 @@ The durable workflow launches it only after native/adapter pixel parity passes.
 The Matrix workflow has been stopped. Its successful smoke produced 57 frames
 at 704×1280, with all weights and source pinned; it did not reproduce a published
 benchmark result. Existing Matrix code and failed/successful attempts are retained.
+
+The [predeclared episode split](episode-split.json) contains 126 development and
+45 held-out cases, with a 16-episode tuning cohort. Identical initial-image hashes
+are grouped; prior calibration cases remain in development. Benchmark assets are
+not permitted as fine-tuning training examples.

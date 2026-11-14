@@ -1,14 +1,15 @@
 # WorldSync
 
-**Current milestone: reproduce a published baseline. No hillclimbing yet.**
+**Current milestone: verify the persistent adapter and measure a local stock baseline.**
 
-We have not reproduced PlayWorld's published SOTA.
+We have not measured the complete LingBot local baseline yet.
 The previous ABot runs are exploratory and excluded from reproduction evidence.
 The experiment CLIs now default to stock and block modified memory policies until
 a verified reproduction report exists.
 
-The current target is **LingBot-World2: 1.82 overall**, the strongest open-model
-row in the published PlayWorld table. The closed reference is **Genie 3: 2.12**.
+The current model is **LingBot-World2 14B causal-fast**. Its hosted service scored
+**1.82** in the published PlayWorld table; that does not establish a score for
+the public local checkpoint. The closed reference is **Genie 3: 2.12**.
 We are using the official **14B causal-fast** release, without quantization or
 substitution of the smaller 1.3B model.
 
