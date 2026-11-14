@@ -31,7 +31,7 @@ def valid(path, entry):
     return digest(path, "sha1", git_blob=True) == entry["blobId"]
 
 
-def parallel_download(url, temporary, size):
+def parallel_download(url, temporary, size, workers=24):
     """Bounded range downloads avoid serial CDN throttling; validate every range."""
     unit = 128 * 1024 * 1024
     parts = [(start, min(start + unit, size) - 1) for start in range(0, size, unit)]
@@ -67,7 +67,7 @@ def parallel_download(url, temporary, size):
                     raise
                 time.sleep(attempt + 1)
 
-    with ThreadPoolExecutor(max_workers=24) as pool:
+    with ThreadPoolExecutor(max_workers=workers) as pool:
         paths = list(pool.map(fetch_part, parts))
     with temporary.open("wb") as output:
         for part in paths:
@@ -77,10 +77,13 @@ def parallel_download(url, temporary, size):
     return paths
 
 
-def fetch(entry, root, reuse_root, repo=REPO, revision=REVISION):
+def fetch(entry, root, reuse_root, repo=REPO, revision=REVISION, range_workers=24):
     name = entry["rfilename"]
     path = root / name
     path.parent.mkdir(parents=True, exist_ok=True)
+    completed_temporary = path.with_suffix(path.suffix + ".part")
+    if not path.exists() and valid(completed_temporary, entry):
+        completed_temporary.replace(path)
     if not valid(path, entry):
         reuse = reuse_root / name
         if valid(reuse, entry):
@@ -91,7 +94,7 @@ def fetch(entry, root, reuse_root, repo=REPO, revision=REVISION):
             temporary = path.with_suffix(path.suffix + ".part")
             url = f"https://huggingface.co/{repo}/resolve/{revision}/{quote(name, safe='/')}"
             if entry["size"] > 512 * 1024 * 1024:
-                parts = parallel_download(url, temporary, entry["size"])
+                parts = parallel_download(url, temporary, entry["size"], workers=range_workers)
                 if not valid(temporary, entry):
                     raise ValueError(f"checksum mismatch: {name}; remove range shards before retrying")
                 temporary.replace(path)

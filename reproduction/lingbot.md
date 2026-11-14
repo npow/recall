@@ -20,7 +20,8 @@ IF 2.13, insight 1.95, and out-of-sight 1.16. Hillclimbing remains locked.
 Prepare assets:
 
 ```bash
-.venv/bin/python scripts/prepare_lingbot.py
+HF_XET_HIGH_PERFORMANCE=1 .venv-lingbot/bin/python scripts/prepare_lingbot.py \
+  --workers 8 --range-workers 16
 ```
 
 The isolated Python 3.12 environment pins Transformers 4.51.3 and NumPy 1.26.4
@@ -33,6 +34,13 @@ The paper's LingBot-World2 row used its web interface. The released causal-fast
 model is our local starting point, and matching the hosted variant, controller,
 timing and evaluator remains part of reproduction. Claude diagnostic judgments
 will not be presented as the original Gemini judgments. No Gemini calls are made.
+
+The downloader uses eight concurrent file transfers. Fresh large shards use the
+native HF Xet client in high-performance mode with adaptive internal concurrency;
+existing HTTP range chunks resume with sixteen concurrent streams per file.
+Each complete file is checked against its immutable upstream checksum. An initial
+20-second observation measured 31 MB/s of incoming traffic on the active network
+interface; this is a point measurement, not a guaranteed sustained rate or ETA.
 
 The Matrix workflow has been stopped. Its successful smoke produced 57 frames
 at 704×1280, with all weights and source pinned; it did not reproduce a published
