@@ -1,37 +1,49 @@
 {
-  "model": "LingBot-World2",
-  "variant": "14B causal-fast, unquantized",
-  "status": "native_and_adapter_parity_passed_starting_full_suite",
-  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
-  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
-  "published_reference_overall": 1.82,
-  "baseline_reproduced": false,
+  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v1",
+  "max_chunks": 40,
+  "scope": "full 171-case generation reconstruction",
+  "published_score_reproduced": false,
   "hillclimbing_allowed": false,
-  "completed_cases": 0,
-  "total_cases": 171,
-  "download": {
-    "transport": "HF Xet high-performance with resumable HTTP range fallback",
-    "parallel_files": 8,
-    "http_range_workers_per_resumed_file": 16,
-    "observed_network_receive_MB_per_s": 31.0,
-    "measurement_window_seconds": 20,
-    "partial_data_preserved": true,
-    "latest_network_receive_MB_per_s": 33.84,
-    "latest_measurement_window_seconds": 10,
-    "latest_measurement_utc": "2026-11-14T22:47:09.005988+00:00"
+  "status": "prepared",
+  "completed_by_split": {
+    "gc": 0,
+    "if": 0,
+    "insight": 0,
+    "outsight": 0
   },
-  "verified_transformer_shards": 8,
-  "expected_transformer_shards": 8,
-  "native_smoke": {
-    "frames": 13,
-    "frame_shape": [
-      464,
-      832,
-      3
-    ],
-    "elapsed_s": 571.7942156490171,
-    "peak_allocated_bytes": 80013554688,
-    "video_sha256": "17457cd30e16505695d15650698b8b71bc2be103e7b42130ae7c313053167e27"
+  "runs": [],
+  "judge_protocol": "released-rubric-claude-opus-5-5",
+  "diagnostic_scores": {
+    "protocol": "Claude diagnostics; not published Gemini scores",
+    "coverage_complete": false,
+    "dimensions": {
+      "gc": {
+        "expected": 48,
+        "selected": 48,
+        "scored": 0,
+        "diagnostic_mean_of_available_cases": null
+      },
+      "if": {
+        "expected": 50,
+        "selected": 50,
+        "scored": 0,
+        "diagnostic_mean_of_available_cases": null
+      },
+      "insight": {
+        "expected": 30,
+        "selected": 30,
+        "scored": 0,
+        "diagnostic_mean_of_available_cases": null
+      },
+      "outsight": {
+        "expected": 43,
+        "selected": 43,
+        "scored": 0,
+        "diagnostic_mean_of_available_cases": null
+      }
+    },
+    "diagnostic_overall": null,
+    "published_score_reproduced": false
   },
-  "adapter_pixel_parity": true
+  "world_model": "LingBot-World2 14B causal-fast stock"
 }
