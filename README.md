@@ -17,6 +17,9 @@ Read [the reproduction protocol, audit and completion criteria](reproduction/REA
 All 171 benchmark inputs are downloaded and verified against the pinned source;
 the [asset inventory](reproduction/assets.json) also includes three public demo
 videos. Recovering exact generation/evaluation settings remains unresolved.
+The [stock Matrix adapter](reproduction/matrix-adapter.md) now preserves the
+upstream generator, verifies native control tensors, and provides a resumable
+171-case queue. Its reconstructed controller/settings remain explicitly labeled.
 No replacement controller or judge will be labeled as numerical
 reproduction. The earlier no-Gemini instruction remains in effect.
 

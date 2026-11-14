@@ -81,6 +81,8 @@ def main():
     parser.add_argument("--sampling-output-dir", type=Path)
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
+    if args.reference_image and not args.reference_image.is_file():
+        parser.error("reference image does not exist")
     repo = args.playworld.resolve()
     revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()
     if revision != REVISION:

@@ -19,6 +19,9 @@ numerical reproduction of the paper.
 * All nine headless control mappings were compared with the actual upstream
   `get_current_action()` function using simulated keyboard input. Tensor equality
   passed for both keyboard and mouse channels. Camera magnitude is 0.1.
+* The unmodified upstream Triton int8 kernel ran on Thor and matched its quantized
+  integer reference exactly in a small GPU check. This checks compatibility,
+  not full generation quality.
 * Native generation uses 57 frames initially, then 40 per chunk. The actual
   upstream export is 17 FPS. A 25-chunk rollout contains 1,017 frames, or 59.82 s.
 * The paper's player, `claude-haiku-4-5-20251001`, successfully returned a validated
@@ -73,6 +76,14 @@ within its 40-interaction budget; the paper's exact Matrix cap is unknown.
 calling an API. The full suite requires all 171 cases, with coverage reported per
 split. A smoke test or one adaptive trajectory cannot satisfy that requirement.
 
+The durable workflow is `scripts/run_matrix_reproduction.py`, run with the Matrix
+environment. It waits for the verified checkpoint inventory, checks a native
+57-frame smoke rollout, then runs the full stock suite. It stops on failure,
+preserves every attempt, and pushes a small credential-free progress summary
+after each case. `worldsync.matrix_suite --dry-run` validates all 171 inputs and
+the evaluation queue without API calls. `--smoke` selects one case per dimension
+for integration checks; it never produces a benchmark overall score.
+
 ## Scoring status
 
 The released scorer's third-person gate expects `third-person`, whereas the
@@ -80,6 +91,13 @@ dataset stores `third person`. The local Claude adapter now records and normaliz
 this metadata spelling. It also skips the trajectory gate for stationary insight
 cases, as required by the released dispatcher. Questions and scoring policies
 are otherwise preserved. Upstream's seven evaluator unit tests pass unchanged.
+
+Two published Matrix demos were processed successfully with Claude and the
+released rubric: [GC007](reference-checks/matrix-gc007.json) received a partial
+trajectory verdict and 2.2, and [insight OE001](reference-checks/matrix-oe001.json)
+received 1.0 with no trajectory gate. These are individual demo diagnostics,
+not a benchmark aggregate. They test execution only; no original per-case
+judgments are available to establish judge calibration.
 
 The binary paper formula and the released category scorer are distinct protocols;
 we have not recovered the original per-case judgments or a full rollout archive

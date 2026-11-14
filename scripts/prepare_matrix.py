@@ -67,7 +67,7 @@ def parallel_download(url, temporary, size):
                     raise
                 time.sleep(attempt + 1)
 
-    with ThreadPoolExecutor(max_workers=8) as pool:
+    with ThreadPoolExecutor(max_workers=24) as pool:
         paths = list(pool.map(fetch_part, parts))
     with temporary.open("wb") as output:
         for part in paths:
