@@ -159,7 +159,7 @@ def main():
             video = stream.decode(kwargs["x"][0])
             if not torch.isfinite(video).all():
                 raise ValueError("non-finite decoded observation")
-            pixels = ((video.permute(1, 2, 3, 0) + 1) * 127.5).clamp(0, 255).cpu().numpy().astype(np.uint8)
+            pixels = np.ascontiguousarray(((video.permute(1, 2, 3, 0) + 1) * 127.5).clamp(0, 255).cpu().numpy().astype(np.uint8))
             index = len(report["chunks"])
             movie = output / f"chunk-{index:03d}.mp4"
             imageio.mimwrite(movie, pixels, fps=16, codec="libx264", quality=8, macro_block_size=1)

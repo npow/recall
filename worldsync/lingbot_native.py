@@ -143,7 +143,7 @@ def main():
             shift=10, seed=42, offload_model=False)
         if not torch.isfinite(video).all():
             raise ValueError("native output contains non-finite pixels")
-        pixels = ((video.permute(1, 2, 3, 0).float() + 1) * 127.5).clamp(0, 255).cpu().numpy().astype(np.uint8)
+        pixels = np.ascontiguousarray(((video.permute(1, 2, 3, 0).float() + 1) * 127.5).clamp(0, 255).cpu().numpy().astype(np.uint8))
         if len(pixels) != args.frames:
             raise ValueError("native output is incomplete or invalid")
         movie = output / "rollout.mp4"
