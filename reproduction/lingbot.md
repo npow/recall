@@ -164,3 +164,16 @@ The [predeclared episode split](episode-split.json) contains 126 development and
 45 held-out cases, with a 16-episode tuning cohort. Identical initial-image hashes
 are grouped; prior calibration cases remain in development. Benchmark assets are
 not permitted as fine-tuning training examples.
+
+## Control diagnostics and gated inference knobs
+
+Every rollout now writes `camera_diagnostics` to `run.json` (path length, net and total
+turn degrees, distance from start, whether the start was revisited, and whether WAIT
+chunks moved the pose). Check these before attributing low scores to memory. One turn
+command is 60 degrees per chunk. The native helper normalises translation per call, so
+walking speed is constant by construction.
+
+`--local-attn-size` (stock 18), `--sink-size` (stock 6) and `--decision-interval`
+(stock 1; the action is held between player calls) exist on the rollout and suite CLIs.
+Non-stock values are refused until `state.json` has `phase: hillclimbing` with a
+reproduced baseline. The rolling window (local attention minus sink) must be a multiple of 4.

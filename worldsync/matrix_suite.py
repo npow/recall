@@ -30,7 +30,15 @@ def main():
     parser.add_argument("--publish-status", action="store_true")
     parser.add_argument("--judge", action="store_true", help="Claude diagnostics with released rubric; never official Gemini reproduction")
     parser.add_argument("--dry-run", action="store_true")
+    from worldsync import lingbot_tuning
+    lingbot_tuning.add_arguments(parser)
     args = parser.parse_args()
+    knobs = lingbot_tuning.resolve(args, parser)
+    if args.model != "lingbot" and not lingbot_tuning.is_stock(knobs):
+        parser.error("inference knobs apply to LingBot only")
+    knob_args = [] if lingbot_tuning.is_stock(knobs) else [
+        "--local-attn-size", str(knobs["local_attn_size"]), "--sink-size", str(knobs["sink_size"]),
+        "--decision-interval", str(knobs["decision_interval"])]
     if args.max_chunks is None:
         args.max_chunks = 40 if args.model == "lingbot" else 25
     if args.model == "lingbot":
@@ -56,12 +64,12 @@ def main():
     manifest_path = output / "suite.json"
     if manifest_path.exists():
         progress = json.loads(manifest_path.read_text())
-        if progress["protocol_id"] != protocol_id or progress["max_chunks"] != args.max_chunks or progress["selected_cases"] != cases or progress.get("judge_enabled", False) != args.judge:
+        if progress["protocol_id"] != protocol_id or progress["max_chunks"] != args.max_chunks or progress["selected_cases"] != cases or progress.get("judge_enabled", False) != args.judge or progress.get("rollout_args", []) != knob_args:
             parser.error("existing suite configuration differs; choose a new output directory")
     else:
         progress = {"protocol_id": protocol_id, "max_chunks": args.max_chunks,
             "selected_cases": cases, "runs": [], "scope": "four-case smoke" if args.smoke else "full 171-case generation reconstruction",
-            "judge_enabled": args.judge, "judge_protocol": "released-rubric-claude-opus-5-5" if args.judge else None,
+            "judge_enabled": args.judge, "rollout_args": knob_args, "judge_protocol": "released-rubric-claude-opus-5-5" if args.judge else None,
             "published_score_reproduced": False, "hillclimbing_allowed": False, "status": "prepared"}
 
     def save():
@@ -102,7 +110,7 @@ def main():
                 chunk_budget = 60 if args.model == "lingbot" and split == "insight" and args.max_chunks == 40 and not args.smoke else args.max_chunks
                 child = subprocess.run([sys.executable, "-u", "-m", generator_module,
                     "--data-root", str(args.data_root.resolve()), "--split", split, "--task-id", task_id,
-                    "--max-chunks", str(chunk_budget), "--output", str(directory)], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
+                    "--max-chunks", str(chunk_budget), "--output", str(directory), *knob_args], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
             result_path = directory / "run.json"
             result = json.loads(result_path.read_text()) if result_path.exists() else {}
             run.update(status="completed" if child.returncode == 0 and result.get("status") == "completed" else "failed",
