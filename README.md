@@ -67,8 +67,9 @@ Upstream's Apache-2.0 license and checkpoint notices remain in their download lo
 .venv/bin/python -m worldsync.score outputs/pan_return
 ```
 
-Default resolution is 352×640 for a manageable first experiment, below the release's
-720p reference setting. Add `--height 704 --width 1280` to test that setting. The
+Default resolution is the release's native **704×1280** setting. Reduced
+`--height 352 --width 640` is available only as an explicit development option;
+the initial pilot showed degraded control at that resolution. The
 pan trajectory uses equal left/right action durations; successful return is **not
 guaranteed**. Inspect the video before interpreting first/last frame similarity.
 The novelty threshold of 0.15 is an initial uncalibrated setting, not a published

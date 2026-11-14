@@ -11,7 +11,7 @@ from worldsync.memory import MemoryConfig, enable_memory
 
 
 class ABotSession:
-    def __init__(self, repo: Path, height=352, width=640):
+    def __init__(self, repo: Path, height=704, width=1280):
         if height % 32 or width % 32:
             raise ValueError("resolution must be divisible by 32")
         self.repo, self.height, self.width = repo.resolve(), height, width
