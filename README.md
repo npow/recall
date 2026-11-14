@@ -155,3 +155,5 @@ The adaptive GPT-6.1 player experiment addresses that diagnostic failure next.
 Local videos and full per-run measurements are under `outputs/pan_return/`.
 The [initial pilot report](results/2026-11-14-pilot/README.md) contains the measured
 results, Claude trajectory judgments and comparison images for collaborators.
+The [native-resolution comparison](results/2026-11-14-native/README.md) tracks the
+subsequent calibration and matched memory experiments.
