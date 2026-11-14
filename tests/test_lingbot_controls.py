@@ -23,3 +23,24 @@ def test_opencv_turns_and_translation_use_the_local_camera_axes():
     np.testing.assert_allclose(poses[-1, :3, :3].T @ poses[-1, :3, :3], np.eye(3), atol=1e-12)
     with pytest.raises(ValueError):
         camera.advance("SHELL")
+
+
+def test_pose_trace_distinguishes_backward_translation_turns_and_wait():
+    camera = CameraPlan()
+    camera.advance("WAIT")
+    camera.advance("W")
+    forward = camera.commanded_state()
+    assert forward["position_normalized_units"] == [0, 0, 4]
+    camera.advance("S")
+    assert camera.commanded_state()["heading_degrees"] == 0
+    np.testing.assert_allclose(camera.commanded_state()["position_normalized_units"], [0, 0, 0])
+    for _ in range(3):
+        camera.advance("RIGHT")
+    turned = camera.commanded_state()
+    assert turned["accumulated_yaw_degrees"] == pytest.approx(180)
+    assert abs(turned["heading_degrees"]) == pytest.approx(180)
+    camera.advance("WAIT")
+    held = camera.commanded_state()
+    assert held["position_normalized_units"] == turned["position_normalized_units"]
+    assert held["heading_degrees"] == turned["heading_degrees"]
+    assert held["world_time_seconds"] == turned["world_time_seconds"] + 1

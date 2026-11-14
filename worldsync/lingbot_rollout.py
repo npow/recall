@@ -12,7 +12,7 @@ from worldsync.credentials import load_local_credentials
 from worldsync.lingbot_controls import CameraPlan
 from worldsync.lingbot_native import ROOT, SOURCE_REVISION, WEIGHT_REVISION, runtime_pack, configure_backend
 
-PROTOCOL_ID = "lingbot-world2-stock-reconstructed-haiku-16fps-v1"
+PROTOCOL_ID = "lingbot-world2-stock-reconstructed-haiku-16fps-v2"
 
 
 class RolloutComplete(Exception):
@@ -56,6 +56,8 @@ def main():
         "actions": [], "chunks": [], "published_score_reproduced": False,
         "agent_interactions": 0,
         "adapter_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "controls_sha256": hashlib.sha256((Path(__file__).parent / "lingbot_controls.py").read_bytes()).hexdigest(),
+        "player_sha256": hashlib.sha256((Path(__file__).parent / "reference_player.py").read_bytes()).hexdigest(),
         "deviations": ["Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
             "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
             "Official 480p demo area and KV settings; single Thor GPU, BF16 and valid-length SDPA backend",
@@ -127,14 +129,18 @@ def main():
                 decision, metadata = {"operation": "KEEP", "action": args.fixed_actions[index], "reason": "fixed diagnostic"}, {}
             else:
                 decision, metadata = decide(client, task, initial, latest,
-                    [{key: action[key] for key in ("operation", "action", "reason")} for action in report["actions"]])
+                    [{key: action[key] for key in ("operation", "action", "reason")} for action in report["actions"]],
+                    commanded_state=camera.commanded_state())
                 report["agent_interactions"] += 1
-            report["actions"].append({**decision, **metadata, "elapsed_s": time.monotonic() - started})
+            report["actions"].append({**decision, **metadata, "pose_before": camera.commanded_state(),
+                                      "elapsed_s": time.monotonic() - started})
             save()
             if decision["operation"] == "END":
                 report["termination"] = "agent_end"
                 raise RolloutComplete
             poses = torch.from_numpy(camera.advance(decision["action"])).float()
+            report["actions"][-1]["pose_after"] = camera.commanded_state()
+            save()
             relative = compute_relative_poses(poses, framewise=True)[-4:].to(pipeline.device)
             condition = kwargs["dit_cond_dict"]["c2ws_plucker_emb"][0]
             height, width = condition.shape[-2] * 8, condition.shape[-1] * 8

@@ -4,6 +4,36 @@ The user switched the starting model to the strongest open row of the published
 PlayWorld table: **LingBot-World2, overall 1.82**. Dimension references are GC 2.04,
 IF 2.13, insight 1.95, and out-of-sight 1.16. Hillclimbing remains locked.
 
+The first GC007 calibration exposed a controller conflict: the written goal
+requires turning around, but its reference plan contains only W followed by S.
+The v1 player followed that plan without a turn. That episode is retained in
+`outputs/lingbot-reproduction/suite/gc-GC007-attempt1` and excluded from the
+frozen baseline. The original suite coordinator was stopped after launching
+that episode; its remaining cases were not launched.
+
+Protocol `lingbot-world2-stock-reconstructed-haiku-16fps-v2` makes the goal
+authoritative, explicitly distinguishes backward movement from yaw, and gives
+the player intended camera odometry. Every action records pose before/after;
+these are commands, not measurements of realized motion. Controller and control
+source hashes are recorded alongside the adapter hash. Sampler, checkpoint,
+cache settings, and camera mapping are unchanged. Native neutral pixel parity
+therefore remains applicable. Actual turns and revisits still require video
+review before interpreting poor scores as memory failures.
+
+Run a complete corrected-controller calibration episode and the local Claude
+rubric (the optional wait avoids overlapping GPU models):
+
+```bash
+.venv-lingbot/bin/python -u scripts/run_lingbot_control_pilot.py \
+  --wait-for-pid EXISTING_ROLLOUT_PID \
+  --output outputs/lingbot-reproduction/control-pilot-v2
+```
+
+This pilot does not launch tuning or silently add itself to the baseline.
+After reviewing controls, use a fresh suite directory for the frozen v2 pass;
+do not resume a v1 suite with v2 code. At the measured roughly 50 wall seconds
+per simulated second, full coverage on Thor takes substantial time.
+
 * Source: [Robbyant/lingbot-world-v2](https://github.com/Robbyant/lingbot-world-v2),
   revision `1895d300d8ac936401689b26389f51cbd36530eb`.
 * Weights: [official 14B causal-fast](https://huggingface.co/robbyant/lingbot-world-v2-14b-causal-fast),

@@ -12,23 +12,30 @@ ACTIONS = {"W", "S", "A", "D", "LEFT", "RIGHT", "UP", "DOWN", "WAIT"}
 OPERATIONS = {"KEEP", "STOP", "EXTEND", "CORRECT", "END"}
 
 
-def decide(client, task, initial, latest, history, maximum=40, model="claude-haiku-4-5-20251001"):
+def decide(client, task, initial, latest, history, maximum=40, model="claude-haiku-4-5-20251001", commanded_state=None):
     prompt = (
         "You are the Agent Player of an interactive world model. Pursue the goal using the human "
-        "reference action plan as guidance and adapt to actual visual progress. The images show "
+        "reference action plan as guidance and adapt to actual visual progress. The goal takes "
+        "priority over the reference plan: repair omitted or conflicting steps. The images show "
         "the initial world, then the latest generated observation. KEEP continues a reference "
         "action; STOP finishes the current action and selects the next appropriate action; "
         "EXTEND repeats an action when more progress is needed; CORRECT selects a corrective "
         "action; END terminates only when the goal is visually achieved. For all operations except "
         "END select exactly one action: W, S, A, D, LEFT, RIGHT, UP, DOWN, WAIT. W/S move "
-        "forward/backward; A/D move sideways; arrows turn the camera; WAIT lets time pass with "
+        "forward/backward without turning; A/D move sideways; arrows turn the camera; WAIT lets time pass with "
         "neutral controls. The first native chunk is 13 frames at 16 FPS; later chunks are "
         "16 frames (one second). Camera turns are commanded at 60 degrees per second. "
+        "Walking backward (S) does not turn around. A goal requiring turning around and walking "
+        "back requires an actual approximately 180-degree yaw, forward movement toward the "
+        "starting location, and another turn if the original facing direction is required. "
+        "Use intended odometry to track commands and avoid endless repeats, but verify realized "
+        "motion and completion visually; odometry alone cannot prove success. "
         "Scene identity drift is not evidence of returning to a location.\n"
         "Return JSON only: {\"operation\":\"KEEP|STOP|EXTEND|CORRECT|END\", "
         "\"action\":\"one action or null for END\", \"reason\":\"visual evidence\"}.\n"
         + json.dumps({"goal": task["prompt"], "reference_plan": task.get("action_sequence_steps") or task.get("action"),
-                      "executed_actions": history, "max_interactions": maximum}, ensure_ascii=False)
+                      "executed_actions": history, "intended_odometry": commanded_state,
+                      "max_interactions": maximum}, ensure_ascii=False)
     )
     content = [{"type": "text", "text": prompt}]
     for path in (initial, latest):
