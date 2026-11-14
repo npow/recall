@@ -106,21 +106,24 @@ the agent model, prompt and budgets stay fixed across compared methods. The
 with the actual requested and returned API model IDs. A smaller pilot budget is
 explicitly recorded if supplied on the command line.
 
-`scripts/playworld_score.py` uses the official scoring logic at pinned PlayWorld
-revision `eeaea12e050a90b815d11d030e943e7b3181da21`. It reads `GEMINI_API_KEY` from
-the environment or the ignored, permission-restricted `.env.local`. Install the
-`benchmark` extra and clone PlayWorld into `external/PlayWorld` at that revision.
-The transport explicitly uses `v1beta` and `gemini-3.1-pro-preview`, avoiding a
-preview-model routing error with current SDK defaults. Both are configurable.
-The supplied account currently reports zero Gemini 3.1 Pro generation quota;
-judge scoring requires that quota to be enabled. Model listing alone is not
-evidence that generation is available.
-For a video actually generated from the corresponding benchmark case:
+`scripts/playworld_score.py` now uses **Claude Opus 5.5** with PlayWorld's rubric
+prompts and dual-scale sampling from pinned revision
+`eeaea12e050a90b815d11d030e943e7b3181da21`. No Gemini API is used. It reads
+`ANTHROPIC_API_KEY` from the environment or the ignored, permission-restricted
+`.env.local`. The default `both` mode validates the trajectory before scoring;
+failed trajectories receive 1 and skip the extra rubric call. Actual judge model
+IDs, prompt hashes and token usage are saved. This is a provider adaptation, not
+the published Gemini evaluation protocol. For a video generated from its matching
+benchmark case:
 
 ```bash
 .venv/bin/python scripts/playworld_score.py --help
-# Use --dry-run first to inspect evidence preparation without an API call.
-# Supply --dataset, --task-id, --video, --reference-image and --output.
+.venv/bin/python scripts/playworld_score.py \
+  --dataset external/PlayWorld/example/GC/002.json --task-id GC004 \
+  --video outputs/adaptive-gpt6-pilot/seed-42/stock/GC004/rollout.mp4 \
+  --reference-image external/PlayWorld/example/GC/002.jpg \
+  --output outputs/adaptive-gpt6-pilot/stock-judge.json
+# Add --dry-run to inspect evidence preparation without an API call.
 ```
 
 The judge assesses outputs; a separate Agent Player chooses actions while the
