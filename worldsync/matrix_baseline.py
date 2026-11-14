@@ -122,6 +122,7 @@ def main():
         use_int8=True, verify_quant=False, vae_type="mg_lightvae", lightvae_pruning_rate=0.5,
         use_async_vae=False, compile_vae=False, fa_version="0")
     report = {"status": "prepared", "protocol_id": PROTOCOL_ID, "model": "Matrix-Game 3.0 stock",
+        "adapter_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "source_revision": revision, "task_id": args.task_id, "split": args.split, "seed": args.seed,
         "task": task, "initial_sha256": hashlib.sha256(initial.read_bytes()).hexdigest(),
         "fps": FPS, "native_args": vars(native_args), "sampling_steps": 3, "sample_shift": 5,
@@ -131,6 +132,7 @@ def main():
         "deviations": ["Matrix paper adapter unpublished: reconstructed reference-guided player prompt and stopping",
             "Paper checkpoint revision and decoder/precision flags not documented: use pinned release and demo int8/LightVAE settings",
             "Single Thor GPU, PyTorch 2.15 CUDA 13.2, SDPA instead of demo multi-GPU FlashAttention3",
+            "Runtime SDPA bridge fixes unused upstream fa_version=0 dispatcher and preserves key sequence lengths",
             "25-chunk cap chosen to approach 60 seconds; exact paper model-specific chunk budget unknown",
             "No Gemini judge calls; numerical agreement with published score remains unverified"]}
     report_path = output / "run.json"
@@ -154,6 +156,8 @@ def main():
     from PIL import Image
     sys.path.insert(0, str(source))
     from pipeline import inference_interactive_pipeline as upstream
+    from wan.modules import model as matrix_model
+    from worldsync.matrix_attention import sdpa_attention
     from wan.configs import WAN_CONFIGS
     from utils.misc import set_seed
     set_seed(args.seed)
@@ -203,8 +207,11 @@ def main():
             raise RolloutComplete
 
     previous_action, previous_video = upstream.get_current_action, upstream.process_video
+    previous_attention = matrix_model.flash_attention
     previous_cwd = Path.cwd()
     upstream.get_current_action, upstream.process_video = next_action, observe
+    matrix_model.flash_attention = sdpa_attention
+    report["attention_bridge_sha256"] = hashlib.sha256((Path(__file__).parent / "matrix_attention.py").read_bytes()).hexdigest()
     report["status"] = "running"
     report["environment"] = {"torch": torch.__version__, "cuda": torch.version.cuda,
         "gpu": torch.cuda.get_device_name(0)}
@@ -225,6 +232,7 @@ def main():
     finally:
         os.chdir(previous_cwd)
         upstream.get_current_action, upstream.process_video = previous_action, previous_video
+        matrix_model.flash_attention = previous_attention
         report["elapsed_s"] = time.monotonic() - started
         report["peak_allocated_bytes"] = torch.cuda.max_memory_allocated()
         save()

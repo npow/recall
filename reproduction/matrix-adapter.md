@@ -35,14 +35,30 @@ shift 5, seed 42, int8 quantization and original MG-LightVAE decoder. Hardware
 substitutions are single-GPU serial decoding and PyTorch SDPA on Thor. Compilation
 is disabled. These are fixed starting settings, not a parameter search.
 
-The adapter replaces only two I/O callbacks: console controls become validated
-agent controls, and the video callback captures generated pixels before the
-upstream key/mouse overlay. Latent generation, camera pose computation, memory
-retrieval, denoising and decoding are unchanged. END stops between complete
+Console controls become validated agent controls, and the video callback captures
+generated pixels before the upstream key/mouse overlay. The hardware bridge
+described below supplies the attention backend. Camera pose computation, memory
+retrieval, sampler and decoding remain unchanged. END stops between complete
 chunks. Every generated chunk, actual action, decision, request usage, failure and
 termination reason is recorded. API errors fail the run instead of silently
 falling back to another controller. Existing output directories cannot be
 overwritten.
+
+### Thor attention compatibility
+
+The first native smoke run reached the model but failed after 130.23 seconds:
+the model imports and calls `flash_attention()` directly even when
+`--fa_version 0` is selected. Its advertised SDPA dispatcher is unused. That
+dispatcher also ignores valid sequence lengths, so redirecting calls to it would
+change padded attention semantics.
+
+The local runtime bridge uses PyTorch SDPA with valid key/query lengths preserved.
+It rejects unsupported causal/local masks. CPU and CUDA tests compare it with the
+explicit attention formula, including different lengths and poisoned padding;
+changing padded values leaves valid output unchanged. This is a recorded
+hardware substitution, not proof of bitwise agreement with FlashAttention 3.
+The upstream checkout remains unmodified. Each run records the adapter and bridge
+source hashes, and the failed smoke is retained alongside subsequent attempts.
 
 The player sees the initial and latest frames, objective, verbatim reference
 action plan, and executed history. It does not receive judge questions. Its prompt
