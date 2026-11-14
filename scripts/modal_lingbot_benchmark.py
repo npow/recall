@@ -14,7 +14,7 @@ image = (
     .apt_install("git", "ffmpeg", "libgl1", "libglib2.0-0")
     .pip_install("torch==2.6.0", "torchvision==0.21.0",
                  index_url="https://download.pytorch.org/whl/cu124")
-    .pip_install("transformers==4.51.3", "tokenizers==0.21.4", "numpy==1.26.4",
+    .pip_install("transformers==4.51.3", "tokenizers==0.21.4", "numpy==1.26.4", "scipy==1.15.3",
                  "diffusers==0.37.0", "huggingface_hub==0.36.2", "hf_xet",
                  "accelerate", "safetensors", "Pillow", "einops", "easydict", "ftfy",
                  "sentencepiece", "tqdm", "imageio", "imageio-ffmpeg", "opencv-python-headless==4.11.0.86")
