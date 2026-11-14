@@ -5,7 +5,7 @@ pytest.importorskip("pydantic")
 from PIL import Image
 from pydantic import ValidationError
 
-from worldsync.player import Decision, KEY_MAP, OpenAIPlayer
+from worldsync.player import AnthropicPlayer, Decision, KEY_MAP, OpenAIPlayer
 
 
 def test_player_uses_observations_and_validated_actions(tmp_path):
@@ -31,3 +31,20 @@ def test_controller_rejects_unbounded_or_unknown_actions():
         Decision(action="SHELL", blocks=2, reason="invalid")
     with pytest.raises(ValidationError):
         Decision(action="WAIT", blocks=1000, reason="too long")
+
+
+def test_claude_uses_validated_outputs_without_forcing_thinking_off(tmp_path):
+    image = tmp_path / "view.png"
+    Image.new("RGB", (16, 16)).save(image)
+    captured = {}
+
+    def parse(**kwargs):
+        captured.update(kwargs)
+        return SimpleNamespace(parsed_output=Decision(action="WAIT", blocks=1, reason="observe"), id="test", model="claude-opus-5-5", usage=None)
+
+    client = SimpleNamespace(messages=SimpleNamespace(parse=parse))
+    decision, _ = AnthropicPlayer(client=client).decide(image, image, "Observe the scene", [], 40)
+    assert decision.action == "WAIT"
+    assert captured["thinking"] == {"type": "adaptive"}
+    assert captured["output_format"] is Decision
+    assert "tool_choice" not in captured

@@ -88,6 +88,7 @@ Haiku, so our controller is a protocol change that must be reported. Do not comp
 DINO cosine values against the published 1–5 PlayWorld table.
 
 ```bash
+.venv/bin/python scripts/setup.py --with-playworld
 .venv/bin/python -m worldsync.agent_run \
   --dataset external/PlayWorld/example/GC/002.json \
   --data-root external/PlayWorld/example --task-id GC004 \
@@ -105,10 +106,15 @@ the agent model, prompt and budgets stay fixed across compared methods. The
 with the actual requested and returned API model IDs. A smaller pilot budget is
 explicitly recorded if supplied on the command line.
 
-`scripts/playworld_score.py` delegates to the official judge at pinned PlayWorld
+`scripts/playworld_score.py` uses the official scoring logic at pinned PlayWorld
 revision `eeaea12e050a90b815d11d030e943e7b3181da21`. It reads `GEMINI_API_KEY` from
 the environment or the ignored, permission-restricted `.env.local`. Install the
 `benchmark` extra and clone PlayWorld into `external/PlayWorld` at that revision.
+The transport explicitly uses `v1beta` and `gemini-3.1-pro-preview`, avoiding a
+preview-model routing error with current SDK defaults. Both are configurable.
+The supplied account currently reports zero Gemini 3.1 Pro generation quota;
+judge scoring requires that quota to be enabled. Model listing alone is not
+evidence that generation is available.
 For a video actually generated from the corresponding benchmark case:
 
 ```bash

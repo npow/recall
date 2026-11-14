@@ -61,6 +61,7 @@ def main():
         torch.cuda.reset_peak_memory_stats()
         result = {"status": "running", "task_id": args.task_id, "mode": mode,
                   "seed": args.seed, "player_model": args.player_model, "player_provider": args.provider,
+                  "player_effort": "low" if args.provider == "openai" else "medium",
                   "objective": task["prompt"], "upstream_commit": commit,
                   "initial_image_sha256": hashlib.sha256(image.read_bytes()).hexdigest(),
                   "controller_protocol": "custom objective-driven controller; not the published Claude harness",
