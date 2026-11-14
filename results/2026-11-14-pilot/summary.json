@@ -1,0 +1,99 @@
+{
+  "status": "development pilot; no demonstrated improvement",
+  "world_model": "acvlab/ABot-World-0-5B-LF",
+  "checkpoint_revision": "d26a3003701e70d38cd17e2af2faf63bd4ff7632",
+  "resolution": [
+    352,
+    640
+  ],
+  "official_playworld_score": false,
+  "limitations": [
+    "One scene for open-loop diagnostics, three seeds",
+    "One PlayWorld example for adaptive control, one seed",
+    "Reduced resolution; native 720p calibration pending",
+    "Custom GPT-6.1 Sol controller, 12-decision/32-block pilot budget",
+    "Claude Opus 5.5 judge replaces the published Gemini judge"
+  ],
+  "open_loop": {
+    "stock": {
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "mean_dino_cosine": 0.37109047174453735,
+      "mean_steady_seconds_per_block": 1.3189667799717022,
+      "max_peak_allocated_bytes": 28412255744,
+      "trajectory_validity": "inspected seed-42 runs failed to return to the original view; other seeds not manually validated"
+    },
+    "window": {
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "mean_dino_cosine": 0.40920279423395794,
+      "mean_steady_seconds_per_block": 1.6325040526248307,
+      "max_peak_allocated_bytes": 29085914112,
+      "trajectory_validity": "inspected seed-42 runs failed to return to the original view; other seeds not manually validated"
+    },
+    "landmark": {
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "mean_dino_cosine": 0.3047528862953186,
+      "mean_steady_seconds_per_block": 1.6093477359093311,
+      "max_peak_allocated_bytes": 29086217216,
+      "trajectory_validity": "inspected seed-42 runs failed to return to the original view; other seeds not manually validated"
+    }
+  },
+  "adaptive": {
+    "stock": {
+      "task_id": "GC004",
+      "seed": 42,
+      "player_model_ids": [
+        "gpt-6.1-sol"
+      ],
+      "decisions": 7,
+      "generated_blocks": 20,
+      "agent_finished": true,
+      "completion_reason": "agent_finish",
+      "judge_model": "claude-opus-5-5",
+      "trajectory_verdict": "fail",
+      "effective_case_score": 1.0,
+      "video_sha256": "8fccd0ddba7a7f19ec26f13e543715858c3c46d1522b9145ce9e2ed7b0c9e0a1"
+    },
+    "window": {
+      "task_id": "GC004",
+      "seed": 42,
+      "player_model_ids": [
+        "gpt-6.1-sol"
+      ],
+      "decisions": 12,
+      "generated_blocks": 32,
+      "agent_finished": false,
+      "completion_reason": "budget_exhausted",
+      "judge_model": "claude-opus-5-5",
+      "trajectory_verdict": "fail",
+      "effective_case_score": 1.0,
+      "video_sha256": "23cd20a2f83cdef105b40119ac9628b4bab14cd0299ee50847fcc66b97c4dcff"
+    },
+    "landmark": {
+      "task_id": "GC004",
+      "seed": 42,
+      "player_model_ids": [
+        "gpt-6.1-sol"
+      ],
+      "decisions": 12,
+      "generated_blocks": 32,
+      "agent_finished": false,
+      "completion_reason": "budget_exhausted",
+      "judge_model": "claude-opus-5-5",
+      "trajectory_verdict": "fail",
+      "effective_case_score": 1.0,
+      "video_sha256": "67db890ea17b05fdce36c7b291d80bd0d7cf3ef4c943c4adab714c1434e85dd6"
+    }
+  }
+}

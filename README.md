@@ -152,3 +152,5 @@ seed-42 clips, none returned to the original view. This does **not** establish a
 memory improvement; the fixed action trajectory fails its intended purpose.
 The adaptive GPT-6.1 player experiment addresses that diagnostic failure next.
 Local videos and full per-run measurements are under `outputs/pan_return/`.
+The [initial pilot report](results/2026-11-14-pilot/README.md) contains the measured
+results, Claude trajectory judgments and comparison images for collaborators.
