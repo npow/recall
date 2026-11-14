@@ -6,10 +6,9 @@ The ABot experiments in `results/2026-11-14-*` are exploratory engineering check
 They changed the model, controller, judge and budget, and provide no evidence of
 reproducing the published PlayWorld results. They are excluded from this milestone.
 
-The first local generation target is the **published Matrix-Game 3.0 baseline**,
-not a newly defined ABot baseline. Matrix's reported overall score is 1.14; it is
-not the open-model SOTA. The published closed SOTA is Genie 3 at 2.12, and the best
-open-model row is LingBot-World2 at 1.82. Those references remain separate targets.
+The current generation target is **LingBot-World2**, the published open-model SOTA
+at 1.82. The closed reference is Genie 3 at 2.12. The earlier Matrix target (1.14)
+was cancelled at the user's instruction after its native smoke test succeeded.
 
 ## Frozen reference
 
@@ -22,7 +21,7 @@ open-model row is LingBot-World2 at 1.82. Those references remain separate targe
 | Judge | Gemini 3.1 Pro; Claude replacement is not numerical reproduction |
 | Sampling | Primary 10 FPS, 384×216 cells, 5×5; detail 0.5 FPS, 800×450, 2×2 |
 | Aggregation | Equal mean of the four dimension means, not one mean over all cases |
-| Matrix scores | GC 1.30, IF 1.25, insight 1.00, out-of-sight 1.00; overall 1.14 |
+| LingBot-World2 scores | GC 2.04, IF 2.13, insight 1.95, out-of-sight 1.16; overall 1.82 |
 | Weights and settings | Exact paper checkpoint revision, sampler/decoder/precision and adapter settings are not yet verified |
 
 Sources: [paper, Appendix A](https://arxiv.org/html/2608.13552v2#A1),
@@ -32,7 +31,11 @@ Sources: [paper, Appendix A](https://arxiv.org/html/2608.13552v2#A1),
 
 ## Audit findings to resolve
 
-* The pinned release includes a SANA adapter but no Matrix-Game-specific adapter.
+* The paper evaluates LingBot-World2 through its web interface. Local inference
+  uses the released 14B causal-fast checkpoint; exact equivalence to the hosted
+  benchmark variant and settings still requires verification. The public player
+  release has no LingBot-specific adapter. This difference must remain visible.
+* The earlier Matrix audit found a SANA adapter but no Matrix-specific adapter.
   The authors' [local-adapter issue](https://github.com/hku-sail/PlayWorld/issues/3)
   points to SANA as an example. Its model-specific action grouping is not evidence
   of Matrix's original settings. We will not guess them and call that reproduction.
@@ -77,7 +80,7 @@ This downloads benchmark media into ignored `external/` directories. Omitting
 ## Completion criteria
 
 1. Pin the dataset, unmodified generation source and exact paper checkpoint.
-2. Recover and freeze the Matrix controller, action mapping, budgets, preprocessing,
+2. Recover and freeze the LingBot controller, action mapping, budgets, preprocessing,
    sampler, decoder and precision settings. Record any hardware substitutions.
 3. Verify scoring and aggregation against the exact released/paper version and
    reference artifacts. Retain missing data as missing; do not silently exclude it.

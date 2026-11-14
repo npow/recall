@@ -77,7 +77,7 @@ def parallel_download(url, temporary, size):
     return paths
 
 
-def fetch(entry, root, reuse_root):
+def fetch(entry, root, reuse_root, repo=REPO, revision=REVISION):
     name = entry["rfilename"]
     path = root / name
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -89,7 +89,7 @@ def fetch(entry, root, reuse_root):
             print(f"Reused checksum-identical {name}", flush=True)
         else:
             temporary = path.with_suffix(path.suffix + ".part")
-            url = f"https://huggingface.co/{REPO}/resolve/{REVISION}/{quote(name, safe='/')}"
+            url = f"https://huggingface.co/{repo}/resolve/{revision}/{quote(name, safe='/')}"
             if entry["size"] > 512 * 1024 * 1024:
                 parts = parallel_download(url, temporary, entry["size"])
                 if not valid(temporary, entry):
