@@ -42,6 +42,52 @@ Each complete file is checked against its immutable upstream checksum. An initia
 20-second observation measured 31 MB/s of incoming traffic on the active network
 interface; this is a point measurement, not a guaranteed sustained rate or ETA.
 
+## Native generation and adapter checks
+
+The official root config and checkpoint index match the causal-fast model's
+1,421 tensor names with no missing or extra keys. The root config is exposed
+alongside the shards in a separate symlink-based runtime layout, allowing the
+official low-memory loader to cast float32 storage to native bfloat16 without
+duplicating the full checkpoint in anonymous host memory. Actual loading rejects
+any missing, extra or mismatched weights. A small loader fixture verifies exact
+BF16 casts; it is not used as a benchmark model.
+
+The native VAE was tested on CUDA: decoding eight latent frames at once versus
+two four-latent observation chunks produced identical 29-frame output (13 then
+16), with maximum error zero. See [the scoped parity report](lingbot-vae-verification.json).
+
+`scripts/run_lingbot_reproduction.py` waits for the verified full checkpoint,
+runs a neutral native 13-frame smoke test, then runs the callback adapter with
+the same image, seed, controls and horizon. The two raw pixel arrays must match
+exactly before the full suite starts. A failure stops the workflow and retains
+its artifacts; it does not trigger model/parameter search.
+
+The adaptive adapter supplies external camera inputs through root-model hooks
+and decodes observations after the native clean-cache pass. Native sampler,
+absolute temporal positions, causal KV updates, sink and rolling-window policy
+are unchanged. Camera mapping is explicitly reconstructed: WASD is local
+translation normalized by the native helper, arrow keys turn at 60 degrees/s,
+and WAIT preserves pose. The local release exposes camera poses, and its example
+pipeline leaves `wasd_action=None`; equivalence to the hosted character-control
+interface is unverified. This is part of the protocol gap, not a verified paper
+configuration.
+
+Moving cases allow 40 Haiku decisions with one native chunk per action. Stationary
+insight cases hold WAIT through 60 chunks (59.8125 seconds) without agent calls.
+All native controls and actual agent-call counts are recorded separately. These
+are fixed reconstruction choices. They do not unlock the published-protocol gate.
+
+The suite runner is:
+
+```bash
+.venv-lingbot/bin/python -m worldsync.evaluate --model lingbot --judge \
+  --output outputs/lingbot-reproduction/suite --publish-status
+```
+
+It grades with Claude and released PlayWorld rubrics as diagnostics, retains all
+case IDs and failures, and withholds an overall until all 171 cases are covered.
+The durable workflow launches it only after native/adapter pixel parity passes.
+
 The Matrix workflow has been stopped. Its successful smoke produced 57 frames
 at 704×1280, with all weights and source pinned; it did not reproduce a published
 benchmark result. Existing Matrix code and failed/successful attempts are retained.
