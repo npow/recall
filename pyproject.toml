@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "worldsync"
+version = "0.1.0"
+description = "Controlled experiments in persistent visual memory for ABot-World"
+requires-python = ">=3.12"
+dependencies = ["torch", "numpy", "Pillow", "omegaconf", "einops", "diffusers", "transformers", "accelerate", "safetensors", "ftfy", "sentencepiece", "tqdm", "imageio", "imageio-ffmpeg"]
+
+[project.optional-dependencies]
+test = ["pytest"]
+benchmark = ["google-genai>=1.0.0", "openai>=2.0", "anthropic>=0.70", "pydantic>=2.0"]
+
+[project.scripts]
+worldsync-run = "worldsync.run:main"
+
+[tool.setuptools.packages.find]
+include = ["worldsync*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

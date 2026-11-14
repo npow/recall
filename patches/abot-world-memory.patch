@@ -1,0 +1,27 @@
+diff --git a/wan/modules/causal_model.py b/wan/modules/causal_model.py
+index e1ebe9b..8a553aa 100644
+--- a/wan/modules/causal_model.py
++++ b/wan/modules/causal_model.py
+@@ -691,7 +691,7 @@ class CausalWanSelfAttention(nn.Module):
+                 cache_current_end = ref_token_len + current_start + video_token_len
+ 
+                 if self.use_relative_rope:
+-                    fast_rel = _REL_ROPE_CACHE_ENABLED and int(self.sink_size) == 0
++                    fast_rel = _REL_ROPE_CACHE_ENABLED and int(self.sink_size) == 0 and not hasattr(self, "_worldsync_config")
+                     if "k_raw" not in kv_cache or kv_cache["k_raw"].shape != kv_cache["k"].shape:
+                         kv_cache["k_raw"] = torch.empty_like(kv_cache["k"])
+                         if fast_rel:
+@@ -801,6 +801,13 @@ class CausalWanSelfAttention(nn.Module):
+                             video_value_parts.append(kv_cache["v"][:, recent_start:local_end_index])
+                         visible_video_raw = torch.cat(video_key_parts, dim=1) if video_key_parts else kv_cache["k_raw"][:, :0]
+                         visible_video_v = torch.cat(video_value_parts, dim=1) if video_value_parts else kv_cache["v"][:, :0]
++                        if hasattr(self, "_worldsync_config"):
++                            from worldsync.memory import memory_view
++                            visible_video_raw, visible_video_v = memory_view(
++                                self, kv_cache,
++                                k[:, query_ref_token_len:], v[:, query_ref_token_len:],
++                                current_start, frame_seqlen,
++                            )
+                         visible_video_frames = visible_video_raw.shape[1] // frame_seqlen if frame_seqlen > 0 else 0
+ 
+                         attn_k_parts = []
