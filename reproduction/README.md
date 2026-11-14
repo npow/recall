@@ -53,6 +53,11 @@ Sources: [paper, Appendix A](https://arxiv.org/html/2608.13552v2#A1),
 
 ## Prepared assets
 
+The [stock Matrix adapter reconstruction](matrix-adapter.md) records recovered
+native timing, source and checkpoint history, exact control-tensor checks, runtime
+commands, and remaining deviations. It restores the missing model integration
+without modifying the generator or claiming that unknown settings are verified.
+
 [assets.json](assets.json) inventories all 171 cases and their input images at
 dataset revision `697e177194a1c4d8afe9068756fe743ac23ee1e8`.
 Every metadata file and image was verified against the immutable upstream Git

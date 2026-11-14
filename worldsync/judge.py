@@ -60,6 +60,13 @@ def effective_score(gate, rubric):
     return float(value)
 
 
+def metric_task_record(task):
+    # The dataset uses spaces; the released gate dispatcher expects hyphens.
+    # Keep every original field/rubric otherwise intact and record this bridge.
+    return {**task, "task_id": task.get("source_task_id") or task["task_id"],
+            "perspective": str(task.get("perspective") or "").strip().lower().replace(" ", "-")}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--playworld", type=Path, default=Path("external/PlayWorld"))
@@ -81,19 +88,20 @@ def main():
     sys.path.insert(0, str(repo))
     from metrics.vqa.sampling import generate_dual_sampling, export_artifacts
     from metrics.vqa.rubric import build_scoring_context, build_scoring_prompt
-    from metrics.vqa.instruction_gate import build_gate_context, build_gate_prompt
+    from metrics.vqa.instruction_gate import build_gate_context, build_gate_prompt, gate_kind
     task = next((r for r in json.loads(args.dataset.read_text()) if r["task_id"] == args.task_id), None)
     if task is None:
         parser.error("task not found")
-    metric_task = {**task, "task_id": task.get("source_task_id") or task["task_id"]}
+    metric_task = metric_task_record(task)
     item = {"model": args.world_model, "task": metric_task["task_id"],
             "group": task.get("source_category") or task.get("category"),
-            "view": task.get("perspective"), "caption": task.get("image_caption"), "status": "generated"}
+            "view": metric_task.get("perspective"), "caption": task.get("image_caption"), "status": "generated"}
     result = {"task_id": args.task_id, "judge_provider": "anthropic", "judge_model": args.model,
               "playworld_revision": revision, "dry_run": args.dry_run, "mode": args.mode,
               "video_sha256": hashlib.sha256(args.video.read_bytes()).hexdigest(),
               "protocol_warning": "Claude judge and custom controller differ from the published PlayWorld protocol; do not compare directly with its leaderboard.",
               "gate": None, "rubric": None, "reported_score": None, "calls": []}
+    result["input_normalization"] = {"original_perspective": task.get("perspective"), "metric_perspective": metric_task["perspective"]}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="worldsync-judge-") as directory:
         artifacts = generate_dual_sampling(args.video, Path(directory))
@@ -105,6 +113,9 @@ def main():
             load_local_credentials()
             client = Anthropic(timeout=180, max_retries=2, default_headers={"Accept-Encoding": "identity"})
         for mode in (["gate", "score"] if args.mode == "both" else [args.mode]):
+            if mode == "gate" and gate_kind(metric_task) is None:
+                result["gate"] = {"verdict": "not_applicable", "instruction_following_score": None}
+                continue
             if mode == "score" and result["gate"] and result["gate"]["verdict"] == "fail":
                 result["rubric_skipped"] = "trajectory failed; effective score is 1"
                 break

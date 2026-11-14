@@ -1,0 +1,23 @@
+# The Thor host reuses its working torch 2.15.0+cu132. Upstream requests 2.10.0.
+# This is an explicit hardware substitution, not an exact upstream environment.
+transformers==4.57.3
+tokenizers==0.22.2
+huggingface_hub==0.36.2
+diffusers==0.37.0
+numpy==2.2.6
+safetensors==0.7.0
+easydict==1.14
+einops==0.8.2
+accelerate==1.15.0
+ftfy==6.3.1
+sentencepiece==0.2.3
+imageio==2.38.1
+opencv-python==4.10.0.84
+trimesh==5.2.1
+pandas==3.1.1
+scipy==1.18.1
+anthropic==2.8.0
+wcwidth==0.9.4
+requests==2.34.2
+# ABI-compatible CUDA wheel; torchvision is only imported for transforms.
+https://download-r2.pytorch.org/whl/nightly/cu132/torchvision-0.30.0.dev20261007%2Bcu132-cp312-cp312-manylinux_2_28_aarch64.whl
