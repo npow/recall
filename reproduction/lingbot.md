@@ -4,6 +4,22 @@ The user switched the starting model to the strongest open row of the published
 PlayWorld table: **LingBot-World2, overall 1.82**. Dimension references are GC 2.04,
 IF 2.13, insight 1.95, and out-of-sight 1.16. Hillclimbing remains locked.
 
+For a cloud hardware timing pilot, run:
+
+```bash
+modal run --profile nissan-pow --detach scripts/modal_lingbot_benchmark.py
+```
+
+This allocates one H200 for eight fixed-action chunks after a separate CPU job
+downloads and SHA256-verifies the pinned weights. It uses no player or judge
+API keys. Both weights and result videos persist in named Modal volumes.
+The GPU function has a 30-minute timeout and a one-container limit. Timing
+includes native cache growth, plus separately reported cold startup and chunk
+intervals. It is not a scored episode. The H200 image pins Torch 2.6.0/CUDA 12.4;
+the Thor runtime uses Torch 2.15.0/CUDA 13.2, so a hardware-only or exact pixel
+equivalence claim would be inappropriate. Measure cloud generation before
+choosing concurrency or updating the full baseline ETA.
+
 The first GC007 calibration exposed a controller conflict: the written goal
 requires turning around, but its reference plan contains only W followed by S.
 The v1 player followed that plan without a turn. That episode is retained in
