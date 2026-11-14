@@ -157,3 +157,7 @@ The [initial pilot report](results/2026-11-14-pilot/README.md) contains the meas
 results, Claude trajectory judgments and comparison images for collaborators.
 The [native-resolution comparison](results/2026-11-14-native/README.md) tracks the
 subsequent calibration and matched memory experiments.
+That completed one-case comparison scored stock **2.0**, window control **2.17**,
+and landmark **1.83**, all with only partial trajectory completion. The retention
+heuristic has not demonstrated a gain. These are Claude-judged case scores, not
+the published aggregate PlayWorld score.

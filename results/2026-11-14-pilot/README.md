@@ -36,8 +36,8 @@ also failed the required trajectory. The separate judge prevented false success.
 
 These are **one-case Claude-judged scores**, not the published aggregate PlayWorld
 score. The judge provider, custom controller, pilot budget and reduced resolution
-differ from the paper. Native 704×1280 stock calibration is running to check the
-resolution confound before attributing the control failure to the starting model.
+differ from the paper. The subsequent [native 704×1280 comparison](../2026-11-14-native/README.md)
+checks the resolution confound before attributing the control failure to the starting model.
 
 [Machine-readable measurements](summary.json) include model revisions and video
 hashes. Full judge results are stored alongside this report; their evidence fields
