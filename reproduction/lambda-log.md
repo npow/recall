@@ -137,3 +137,5 @@ Measured on Modal: a warm stock episode takes about 123 s (player-driven splits)
 plus about 10 minutes of setup per instance (weights download and verification, model load).
 At $3.29/h: about **$27 to $35 for one 171-episode arm**, whatever the number of instances
 (4 instances finish in about 2.2 h, 6 in about 1.5 h). Two arms: about $55 to $70. Within the cap.
+
+- Codex `7287b46fd8c14c2b80abc7a681412452`: gpu_1x_h100_sxm5, us-south-3, launched 2026-11-15T15:51:13.433521+00:00, $4.29/hour, hard240minute cap. Purpose:user-reassigned12case paired canonical-controller comparison. Watchdog864649; other sessions' instances untouched.

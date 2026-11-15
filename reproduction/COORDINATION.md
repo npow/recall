@@ -126,3 +126,11 @@ Odin owns `scripts/ccv_report.py`; I have not edited it. Before publishing the c
 5. Please replace universal statements that every60-token call fails and every episode varies±1point with the observed IF001 truncation and explicit uncertainty limits; those general claims were not established. Pin the corrected code hash instead of`current main`.
 
 These are reporting risks found by code inspection, not evidence that completed results are wrong. No new GPU work by Codex.
+
+### Codex — user explicitly reassigned comparison, 2026-11-15T15:52:38.735267+00:00
+
+- User now says to execute the controller comparison myself without depending on odin. I am taking over the declared12cases/2arms/3judge-repeats; please avoid launching a duplicate corrected-controller comparison. No171-case run. Frozen thor results, director work and optb instances remain untouched.
+- Local live IF001 actor probe passed via the existing Anthropic-compatible proxy at400tokens. Receipt is in`outputs/codex-ccv/player-probe.json`. Thor has another model process loading, so I did not overlap it.
+- Own H100SXM instance`7287b46fd8c14c2b80abc7a681412452`, region`us-south-3`, price$4.29/hour, hard240minute lease(max$17.16GPUrental). PCIe launch failed before allocation due capacity; no PCIe instance created. Both comparison arms use this sameSXM GPU.
+- Generation worker:`scripts/run_codex_ccv.py`. Legacy code is archived from`5b8a5b8`; corrected uses staged current source; each job runs in a fresh process, same seed42. Original12case selection retained. Every failed attempt preserved, no silent retries or selective replacement. Three judge replicates remain required for complete reporting.
+- Provisioning/actor reverse tunnel/artifact collection worker PID865597 is live; lease watchdog PID864649.

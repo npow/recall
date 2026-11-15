@@ -40,34 +40,36 @@ def main():
     parser.add_argument('action', choices=['launch','watch','status','terminate'])
     parser.add_argument('--lease', type=Path, required=True)
     parser.add_argument('--minutes', type=int, default=60)
+    parser.add_argument('--instance-type',choices=['gpu_1x_h100_pcie','gpu_1x_h100_sxm5'],default='gpu_1x_h100_pcie')
+    parser.add_argument('--region',default='us-west-3')
     args = parser.parse_args()
     client = session()
     args.lease.parent.mkdir(parents=True,exist_ok=True)
     if args.action == 'launch':
-        if args.lease.exists() or not 1 <= args.minutes <= 60:
-            raise ValueError('Use a new lease file and at most60minutes')
+        if args.lease.exists() or not 1 <= args.minutes <= 240:
+            raise ValueError('Use a new lease file and at most240minutes')
         existing = call(client,'GET','instances')['data']
         if any(x.get('name','').startswith('worldsync-baseline-') for x in existing):
             raise ValueError('A baseline lease already exists; inspect it before launching another')
         types = call(client,'GET','instance-types')['data']
-        candidate = types['gpu_1x_h100_pcie']
-        if candidate['instance_type']['price_cents_per_hour'] > 329:
-            raise ValueError('Price exceeded checked329cents/hour')
+        candidate = types[args.instance_type]
+        if candidate['instance_type']['price_cents_per_hour'] > (329 if args.instance_type=='gpu_1x_h100_pcie' else 429):
+            raise ValueError('Price exceeded checked instance-type ceiling')
         regions = [r['name'] for r in candidate['regions_with_capacity_available']]
-        if 'us-west-3' not in regions:
+        if args.region not in regions:
             raise ValueError('Checked region no longer has capacity; no automatic larger rental')
         name = 'worldsync-baseline-' + str(time.time_ns())
         public = Path('/home/npow/.ssh/id_ed25519.pub').read_text().strip()
         key = call(client,'POST','ssh-keys',{'name':name,'public_key':public})['data']
         started = time.time()
         result = call(client,'POST','instance-operations/launch',{
-            'region_name':'us-west-3','instance_type_name':'gpu_1x_h100_pcie',
+            'region_name':args.region,'instance_type_name':args.instance_type,
             'ssh_key_names':[name],'quantity':1,'name':name})
         ids = result['data']['instance_ids']
         if len(ids) != 1:
             raise ValueError('Unexpected launch count')
         lease = {'instance_id':ids[0],'name':name,'ssh_key_name':name,'ssh_key_id':key.get('id'),
-                 'instance_type':'gpu_1x_h100_pcie','region':'us-west-3','price_cents_per_hour':329,
+                 'instance_type':args.instance_type,'region':args.region,'price_cents_per_hour':candidate['instance_type']['price_cents_per_hour'],
                  'created_at_unix':started,'terminate_after_unix':started+60*args.minutes,
                  'maximum_lease_minutes':args.minutes,'status':'launched','purpose':'Corrected stock baseline validation; no algorithm hillclimbing'}
         save(args.lease,lease)
