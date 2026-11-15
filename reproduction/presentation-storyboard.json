@@ -1,0 +1,206 @@
+{
+  "output": "docs/demo/presentation.mp4",
+  "sources": {
+    "horizon_analysis": "/home/npow/code/iteratehack/.claude/worktrees/agent-afce29f0192e55298/reproduction/revisit-horizon/analysis.json",
+    "horizon_videos": "/home/npow/code/iteratehack/.claude/worktrees/agent-afce29f0192e55298/outputs/revisit-horizon",
+    "memv2_step1_videos": "/home/npow/code/iteratehack/.claude/worktrees/agent-a9e1baed8edee1ee7/outputs/memv2-step1",
+    "memv2_config": "/home/npow/code/iteratehack/.claude/worktrees/agent-a9e1baed8edee1ee7/reproduction/memory-v2-config.json",
+    "storage_table": "/home/npow/code/iteratehack/.claude/worktrees/agent-adcb4bba63383eeb6/reproduction/memory-storage-ablation/table.md",
+    "full_run": "reproduction/full-run/analysis.json",
+    "final_run": "reproduction/final-run/analysis.json"
+  },
+  "hero": {
+    "scene": "GC026",
+    "horizon": 12
+  },
+  "headline_horizon": 12,
+  "durations": {
+    "title": 5,
+    "problem": 9,
+    "benchmark": 11,
+    "failures": 16,
+    "insight": 8,
+    "system": 12,
+    "timeline": 11,
+    "hero": 11,
+    "chart": 7,
+    "ablation": 6,
+    "real": 4,
+    "limits": 11,
+    "process": 7,
+    "future": 7
+  },
+  "ablation_rows": [
+    [
+      "As released, no memory",
+      "",
+      0.352,
+      "stock"
+    ],
+    [
+      "Cache internal state (exact K/V)",
+      "1,235 MB / frame",
+      0.78,
+      "plain"
+    ],
+    [
+      "Same, 8-bit",
+      "627 MB",
+      0.818,
+      "plain"
+    ],
+    [
+      "Store the frame, recompute (ours)",
+      "6 MB",
+      0.765,
+      "ours"
+    ]
+  ],
+  "ablation_source": "storage fork final table (worktree agent-adcb4bba63383eeb6, reproduction/memory-storage-ablation.md and memory-storage-ablation/table.md), as corrected by the coordinator: only exact and fp8 hold on both scenes; recompute 0.765 from memv2_config primary_choice_evidence; 6 MB = clean_input_bytes / stored_latent_frames in memv2-step1/v2recompute-hold-GC007-seed42/run.json",
+  "loop": [
+    [
+      "Experiment",
+      "memory v1: 0.35 → 0.78 on a test path"
+    ],
+    [
+      "Audit",
+      "independent agents found 3 real bugs"
+    ],
+    [
+      "Diagnosis",
+      "only 12% of chunks are revisits"
+    ],
+    [
+      "Fix",
+      "memory v2: verified retrieval, 200× smaller"
+    ],
+    [
+      "Re-test",
+      "36 real tasks: −0.12 [−0.55, +0.28]; null, reported"
+    ]
+  ],
+  "text": {
+    "title": "WorldSync",
+    "subtitle": "Training-free episodic memory for an open world model",
+    "track": "Track 4 · World Models",
+    "base": "Base model: LingBot-World2 14B (open weights)",
+    "repo": "github.com/npow/worldsync"
+  },
+  "fixed_numbers": {
+    "published_lingbot": 1.82,
+    "published_genie3": 2.12,
+    "judge_sd": 0.36,
+    "judge_sd_source": "LEADERBOARD.md final-run section (mean within-video SD over three Gemini calls)",
+    "rolling_memory_seconds": 4.5,
+    "exact_mb_per_frame": 1235
+  },
+  "real_task": {
+    "label": "PlayWorld task GC045, agent-driven: move left 10 steps, then right 10 · memory v2",
+    "stock_video": "/home/npow/code/iteratehack/.claude/worktrees/agent-ad03b54239f02c9ae/outputs/final1/stock-gc-GC045-seed42/rollout.mp4",
+    "ours_video": "/home/npow/code/iteratehack/.claude/worktrees/agent-a9e1baed8edee1ee7/outputs/memv2-step2/memv2-gc-GC045-seed42/rollout.mp4",
+    "source": "/home/npow/code/iteratehack/.claude/worktrees/agent-a9e1baed8edee1ee7/reproduction/memory-v2-step2/per-case.csv (GC045: 2.4 vs 4.0, memory fired in 5 chunks)",
+    "score_text": "judge score (1–5): 2.4 as released, 4.0 with our memory",
+    "scope_text": "one selected task; across 36 such tasks there is no measurable gain"
+  },
+  "benchmark": {
+    "dimensions": [
+      [
+        "Geometry consistency",
+        48
+      ],
+      [
+        "Interaction fidelity",
+        50
+      ],
+      [
+        "In-sight evolution",
+        30
+      ],
+      [
+        "Out-of-sight evolution",
+        43
+      ]
+    ],
+    "published": [
+      [
+        "Genie 3",
+        2.12,
+        "closed"
+      ],
+      [
+        "LingBot-World2",
+        1.82,
+        "open weights"
+      ],
+      [
+        "Matrix-Game 3.0",
+        1.14,
+        "open weights"
+      ]
+    ],
+    "source": "PlayWorld data (external/PlayWorld/data/*/data.json task counts) and published leaderboard figures quoted in LEADERBOARD.md"
+  },
+  "failures": [
+    {
+      "dimension": "Geometry",
+      "task": "GC038",
+      "objective": "walk to the fireplace, walk back",
+      "failure": "The room is rebuilt: a different fireplace",
+      "video": "/home/npow/code/iteratehack/.claude/worktrees/agent-ad03b54239f02c9ae/outputs/final1/stock-gc-GC038-seed42/rollout.mp4"
+    },
+    {
+      "dimension": "Interaction",
+      "task": "IF013",
+      "objective": "row to the opposite shore",
+      "failure": "The boat never leaves the bank",
+      "video": "/home/npow/code/iteratehack/.claude/worktrees/agent-ad03b54239f02c9ae/outputs/final1/stock-if-IF013-seed42/rollout.mp4"
+    },
+    {
+      "dimension": "In-sight",
+      "task": "OE007",
+      "objective": "wait and observe",
+      "failure": "Wagons appear from nowhere",
+      "video": "/home/npow/code/iteratehack/.claude/worktrees/agent-ad03b54239f02c9ae/outputs/final1/stock-insight-OE007-seed42/rollout.mp4",
+      "step": 4
+    },
+    {
+      "dimension": "Out-of-sight",
+      "task": "OE036",
+      "objective": "tilt up 90°, then return",
+      "failure": "Man and dog replaced by someone else",
+      "video": "/home/npow/code/iteratehack/.claude/worktrees/agent-ad03b54239f02c9ae/outputs/final1/stock-outsight-OE036-seed42/rollout.mp4"
+    }
+  ],
+  "failures_source": "stock arm of the frozen final run (reproduction/final-run/per-episode.csv: all four scored 1.0 on all three judge calls); chosen by eye",
+  "memory_module": [
+    [
+      "1 · Archive",
+      "every latent frame (≈ 6 MB) + camera pose + DINO descriptor"
+    ],
+    [
+      "2 · Retrieve",
+      "pose-verified; fires only on a true return to a seen place"
+    ],
+    [
+      "3 · Recompute",
+      "one clean pass rebuilds the 40-layer K/V of 10 retrieved frames"
+    ],
+    [
+      "4 · Splice",
+      "attention window = sink 6 + retrieved 10 + recent 8"
+    ]
+  ],
+  "ablation_notes": [
+    "Did not hold on a second scene: layer subsets, pooling, low-rank, int8.",
+    "Test path GC007: turn away, hold, return. Recompute bar: one scene, one seed."
+  ],
+  "loss": {
+    "scene": "GC032",
+    "horizon": 12
+  },
+  "future": [
+    "A trained, compact memory layer",
+    "Retrieval by visible surfaces (VMem-style)",
+    "Long-horizon tasks, where memory matters"
+  ]
+}
