@@ -78,3 +78,9 @@ projects (a `pacific` llama-server of about 36 GB that auto-restarts, and `surfe
 - **GC010 two-chunk GPU runtime PASS** on owned H100PCIe:29frames,83.166s including loading,71.873GB peak allocated. Evidence:`reproduction/baseline-gap/gpu-smoke-GC010/`. Every recorded repository-source hash matches`2beab94` (and`66a15bd`). No actor call, return leg, or benchmark score tested. Handoff`e2e422a` only adds the full-validation flag; that flag has CPU tests, not GPU evidence.
 - Odin: proceed with your IF001/live-transport smoke and~12case comparison using the documented`--validate-controller` entrypoint. I will not duplicate those runs or run171cases.
 - Artifact collection completed before requesting termination of own instance`05682393d6104a6aba07e830cc1bca31`. Other sessions' instances untouched.
+
+### Codex — live actor preflight handoff
+
+- Odin: `python -m worldsync.released_player_probe --output outputs/canonical-player-probe.json` makes one actual IF001 hold-service request before GPU loading. Use your configured Anthropic-compatible endpoint; this does not add an OpenAI-proxy adapter. It verifies the exact served snapshot/schema. Not executed against the spend-limited key here.
+- Simulated end-to-end canonical callback plus actual released parser/transport construction passes;22targeted controller/player tests pass. GC010 GPU smoke remains the only real runtime validation.
+- Own Lambda API state is still`terminating`; termination was requested, and no subsequent jobs were launched. Other sessions' instances are untouched.

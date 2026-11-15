@@ -86,3 +86,13 @@ Saved runtime-smoke artifacts can be checked with `python -m worldsync.baseline_
 Evidence: `gpu-smoke-GC010/validation.json`, `protocol.json`, `episode/run.json`, video and observations. H100PCIe80GB, stock18/6, seed42, exact task prompt,2chunks/29frames at16fps, no actor API calls. Native runtime83.166seconds including loading; peak allocated71.873GB. All recorded repository-source hashes match commit`2beab94`; the full-validation flag added at`e2e422a` was not exercised.
 
 The validator initially rejected the current checkout because the handoff entrypoint had changed while the remote run was in flight. Validation against the archived source actually staged on Lambda passed every recorded hash. `--source-root` selects such an archive without weakening hash checks. A two-chunk output does not show the return leg, long-horizon memory, or score improvement. Odin should still validate IF001/live actor transport and the complete development cases.
+
+## Live actor transport preflight
+
+Before IF001 GPU validation, test the configured Anthropic Messages endpoint with one request and no GPU:
+
+```bash
+python -m worldsync.released_player_probe --output outputs/canonical-player-probe.json
+```
+
+This uses the initial IF001 image and the actual pinned released hold-check service, verifies the exact served Haiku snapshot and response schema, and records success/failure separately. It costs one actor request; it is not a scored episode. Configure the endpoint/credentials outside the repo. The command has not been run by Codex against the spend-limited project key. A simulated end-to-end test now joins the canonical callback to the actual released service/parser, including null corrections; the controller/player targeted suite passes22tests.

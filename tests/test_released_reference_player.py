@@ -95,6 +95,24 @@ def test_exact_released_payload_parser_and_sdk_transport(observation):
     assert meta["released_hold_decision"]["reason"] == "continue"
 
 
+def test_canonical_player_uses_released_hold_service_end_to_end(observation):
+    from worldsync.lingbot_released_baseline import BaselinePlayer, load_task
+    controller, client = ReleasedReferenceController(), FakeClient()
+    player = BaselinePlayer(controller)
+    data = load_task('if', 'IF001')
+    history = []
+    first, first_meta = player.decide(client, data, observation, observation, history)
+    history.append(first)
+    assert first_meta['bootstrap'] and not client.calls
+    second, meta = player.decide(client, data, observation, observation, history)
+    assert len(client.calls) == player.requests == meta['agent_interaction_increment'] == 1
+    assert meta['released_controller']['hy_action_parser_and_scheduler_used'] is False
+    assert meta['explicit_phase_index'] == 0 and meta['explicit_elapsed_ms'] == 0
+    assert meta['released_hold_decision']['adaptive_direction'] is None
+    assert meta['player_transport']['served_model'] == MODEL
+    assert len(meta['native_camera_steps']) == 4
+
+
 def test_phase_timing_arrows_no_api_tail_and_budget_end(observation):
     controller, client, history = ReleasedReferenceController(), FakeClient(), []
     data = task(action="right*1")
