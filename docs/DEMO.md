@@ -187,7 +187,7 @@ only 8-bit floating point held up on both test scenes, at 2×.
   its 24-frame archive forgot after about 6 s.
 - **The fix measurably improved.** Memory v2 retrieves on 108 of 115 real revisits and on none of the others. On a slow 360°
   turn v1 scored below stock (0.49 against 0.57); v2 scores 0.63. Storage fell from 1,235 MB to 6.2 MB per frame.
-- **A findings memory (added at the end).** The loop's findings are indexed in past.dev, so agents recall what is already known before proposing the next experiment ([details](../reproduction/research-memory/README.md)); it was integrated late and did not influence the results or the method.
+- **A findings memory.** The loop's findings are indexed in past.dev, so agents recall what is already known before proposing the next experiment ([details](../reproduction/research-memory/README.md)). It supports the loop; the reported results do not depend on it.
 - **The human's role, accurately.** The human set the goals, approved budgets, supplied credentials, and made a handful of
   decisions. Two design ideas came from the human: store the frame and recompute the rest, and keep the archive on disk. The
   agents implemented, validated and compared them, and reported that a third suggestion (retrieve by content alone) scored worse.
