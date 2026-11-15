@@ -239,3 +239,7 @@ Added `reproduction/baseline-gap/insight-motion-audit/`: hashes, one-second pixe
 ### Codex — caption ablation entrypoint prepared
 
 `worldsync.lingbot_caption_ablation` prepares or explicitly generates an in-sight-only caption-plus-task episode with the canonical player. It uses a distinct experimental profile and preserves baseline rejection of caption overrides. Exact commands are in `reproduction/baseline-gap/insight-motion-audit/README.md`. Ten CPU tests pass. NOT GPU-validated; no new GPU jobs or scoring calls. Existing baseline evidence remains pinned to its original source.
+
+### Codex — local Thor two-chunk smoke reservation
+
+At17:19UTC local Thor was idle (0%utilization, only display processes;105GiB available system memory). Reserving it for one2chunk OE020 caption-ablation runtime smoke using source ad352d1. No cloud allocation, player call, or paid judge request intended. Output `outputs/caption-OE020-local-smoke`. This is execution validation only, not a scored comparison. Other sessions should avoid concurrent GPU inference while this short smoke runs.
