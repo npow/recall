@@ -8,6 +8,7 @@ import argparse
 import hashlib
 import json
 import logging
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -52,9 +53,25 @@ def configure_backend(report, save):
     import wan.image2video as upstream
     from wan.modules import model_fast, model as base_model
     from worldsync.matrix_attention import sdpa_attention
-    model_fast.flash_attention = sdpa_attention
-    model_fast.attention = sdpa_attention
-    base_model.flash_attention = sdpa_attention
+    backend = os.environ.get("WORLDSYNC_LINGBOT_ATTENTION", "sdpa")
+    if backend == "sdpa":
+        attention = sdpa_attention
+    elif backend == "fa4":
+        from worldsync.lingbot_flash_attention import flash_attention, kernel
+        kernel()  # Fail before model loading if the opt-in dependency is unavailable.
+        attention = flash_attention
+    else:
+        raise ValueError(f"unsupported LingBot attention backend: {backend}")
+    report["attention_backend"] = backend
+    implementation = Path(__file__).with_name("lingbot_flash_attention.py" if backend == "fa4" else "matrix_attention.py")
+    report["attention_implementation_sha256"] = hashlib.sha256(implementation.read_bytes()).hexdigest()
+    if backend == "fa4":
+        report["deviations"] = [entry.replace("valid-length SDPA backend", "valid-length FlashAttention4 backend")
+                                for entry in report.get("deviations", [])]
+    save()
+    model_fast.flash_attention = attention
+    model_fast.attention = attention
+    base_model.flash_attention = attention
     def strict_load(cls, checkpoint_dir, subfolder, config, torch_dtype, extra=None):
         model, info = cls.from_pretrained(str(Path(checkpoint_dir) / subfolder),
             torch_dtype=torch_dtype, low_cpu_mem_usage=True, local_files_only=True,

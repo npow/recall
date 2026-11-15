@@ -14,10 +14,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 if modal.is_local():
     from scripts.modal_lingbot_benchmark import runtime_image
-    image = (runtime_image
+    fa4_runtime_image = (runtime_image
              .run_commands("python -m venv /opt/fa4",
                            "/opt/fa4/bin/python -m pip install torch==2.9.1 --index-url https://download.pytorch.org/whl/cu128",
-                           "/opt/fa4/bin/python -m pip install flash-attn-4==4.0.0b39 nvidia-cutlass-dsl==4.8.1 quack-kernels==0.6.5 apache-tvm-ffi==0.1.16 torch-c-dlpack-ext==0.1.5 numpy==1.26.4")
+                           "/opt/fa4/bin/python -m pip install flash-attn-4==4.0.0b39 nvidia-cutlass-dsl==4.8.1 quack-kernels==0.6.5 apache-tvm-ffi==0.1.16 torch-c-dlpack-ext==0.1.5 numpy==1.26.4"))
+    image = (fa4_runtime_image
              .add_local_file(ROOT / "worldsync/matrix_attention.py", "/work/matrix_attention.py")
              .add_local_file(ROOT / "scripts/lingbot_attention_kernel.py", "/work/attention_kernel.py"))
 else:
