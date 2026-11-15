@@ -35,7 +35,12 @@ def main():
     horizons = {int(k): v for k, v in summary["horizons"].items() if v["n"]}
     pairs = {(p["task"], p["horizon"]): p for p in summary["pairs_h12_h24"]}
     h12 = horizons[12]
-    pooled = summary["pooled_h12_h24_by_scene"]
+    pooled = summary["pooled_h6_h12_h24_by_scene"]
+    h6, h24 = horizons.get(6), horizons.get(24)
+    others = ""
+    if h6 and h24:
+        others = (f"; 6 s: {h6['stock'][0]:.2f} → {h6['memory'][0]:.2f} ({interval(h6['delta'])}); "
+                  f"24 s: {h24['stock'][0]:.2f} → {h24['memory'][0]:.2f} ({interval(h24['delta'])})")
     rows = []
     for horizon, row in sorted(horizons.items()):
         rows.append(f"| {horizon} s | {row['n']} | {row['stock'][0]:.2f} | {row['memory'][0]:.2f} | {interval(row['delta'])} | "
@@ -46,18 +51,22 @@ def main():
         data = json.loads(step2.read_text())
         everything, held = data["all"], data["held_out"]
         memv2_line = (f"**Memory v2 on PlayWorld's own revisit tasks** (pre-registered: the {everything['pairs']} geometry and out-of-sight "
-                      f"tasks whose path revisits a view, `docs/demo/sources/memory-v2-config.json`): no gain. Paired judged difference "
-                      f"{interval(everything['delta'])}, {everything['wins']}/{everything['ties']}/{everything['losses']} wins/ties/losses; "
-                      f"held-out {held['pairs']} tasks {interval(held['delta'])} (`docs/demo/sources/memory-v2-step2-per-case.csv`). "
-                      "One selected example from that set shows what it does when it fires:\n\n"
-                      "**GC045, \"move 10 steps left, then 10 steps right to return\": judged 2.4 → 4.0** (selected example; a development task). "
+                      f"tasks whose path revisits a view; three judge calls per video): not better than stock, and slightly worse. Paired judged "
+                      f"difference {interval(everything['delta'])}, {everything['wins']}/{everything['ties']}/{everything['losses']} wins/ties/losses; "
+                      f"held-out {held['pairs']} tasks {interval(held['delta'])}. Our judge-independent check, similarity of the return view to the "
+                      "start view, is flat (−0.02 [−0.08, +0.06]), and the player took different actions in the two arms on some tasks, so the "
+                      "judged loss cannot be pinned on the memory (`reproduction/memory-v2.md`, `reproduction/memory-v2-step2/per-case.csv`).\n\n"
+                      "**Selected example from that set: GC045, \"move 10 steps left, then 10 steps right to return\"** (a development task). "
                       "The player took the same 9 actions in both arms and the first 5 chunks are pixel-identical; memory fired once, at the turn-around. "
                       "On the way back, stock pushes a large red traffic light and a changed street sign into the frame; with memory v2 the "
-                      "Pleasure Pier arch stays framed as it was. [video](demo/playworld-GC045.mp4)\n\n"
+                      "Pleasure Pier arch stays framed as it was. The judge does not separate the two videos (three calls: 2.4, 3.8, 5.0 for stock; "
+                      "4.0, 5.0, 1.0 for memory v2), so this is a visible difference, not a scored one. [video](demo/playworld-GC045.mp4)\n\n"
                       "![GC045 freeze frame](demo/playworld-GC045-freeze.jpg)\n\n![GC045](demo/playworld-GC045.jpg)")
-        memv2_limit = (f"- **Memory v2 does not raise scores on PlayWorld's own revisit tasks**: {interval(everything['delta'])} over "
-                       f"{everything['pairs']} tasks. It usually fires on only 1 to 5 chunks per episode, often at or after the return itself, and "
-                       "single judge calls and different player endings swing individual tasks by several points.\n")
+        memv2_limit = (f"- **On PlayWorld's own revisit tasks memory v2 is not better than stock, and on three judge calls it is slightly worse**: "
+                       f"{interval(everything['delta'])} over {everything['pairs']} tasks ({interval(held['delta'])} on the {held['pairs']} held-out). "
+                       "It usually fires on only 1 to 5 chunks per episode, the return views are often the same pixels, and player endings differ between arms.\n"
+                       "- **The scripted single-scene numbers depend on hardware.** On GC007's turn-hold-return path stock scores 0.30 to 0.40 on cloud GPUs, "
+                       "but on a different GPU (a local Jetson Thor) stock itself returned (0.80, against 0.76 for memory v2). The 20-scene horizon benchmark is the evidence to rely on.\n")
     examples = ""
     for task, horizon in FEATURED:
         pair = pairs.get((task, horizon))
@@ -81,8 +90,8 @@ the model's internal state on demand, which takes **about 200× less memory** th
 
 | | Headline result | Status |
 |---|---|---|
-| 1 | **After 12 s looking away, on 20 unseen PlayWorld scenes: judged consistency {h12['stock'][0]:.2f} → {h12['memory'][0]:.2f}, paired {interval(h12['delta'])}, {h12['wins']} wins / {h12['ties']} ties / {h12['losses']} losses** | pre-registered{tag} |
-| 2 | **6.2 MB per remembered frame instead of 1,235 MB (about 200×) at about the same recall** (0.77 against 0.78; stock 0.35) | one scene, one seed |
+| 1 | **After 12 s looking away, on 20 unseen PlayWorld scenes: judged consistency {h12['stock'][0]:.2f} → {h12['memory'][0]:.2f}, paired {interval(h12['delta'])}, {h12['wins']} wins / {h12['ties']} ties / {h12['losses']} losses**{others} | pre-registered{tag} |
+| 2 | **6.2 MB per remembered frame instead of 1,235 MB (about 200×) at about the same recall** (0.77 against 0.78; stock 0.35) | one scene, one seed, one GPU type |
 | 3 | **Published baseline reproduced twice with the open checkpoint: 1.85 and 1.81 overall against the published 1.82** | all 171 PlayWorld tasks |
 | 4 | **Best subset of PlayWorld's own tasks: out-of-sight evolution with our text director, 1.32 → 1.53, a trend of +0.20 [−0.12, +0.58]** | post-hoc choice of subset and metric |
 
@@ -106,7 +115,9 @@ PlayWorld's released consistency rubric. These are PlayWorld scenes with our own
 |---:|---:|---:|---:|---|---|
 {chr(10).join(rows)}
 
-Pooled over the 12 s and 24 s absences, scenes as units: {interval(pooled['delta'])} (n = {pooled['n']}){tag}.
+Pooled over the 6 s, 12 s and 24 s absences, scenes as units: {interval(pooled['delta'])} (n = {pooled['n']}){tag}. The turn
+away and back adds about 6 s to each absence, so even the 0 s row is beyond the model's 4.5 s window. Source: `docs/demo/horizon-summary.json`
+({summary['episodes_scored']} of 160 episodes scored).
 
 ### Selected examples
 
@@ -120,7 +131,8 @@ To reuse an old frame, the model needs that frame's internal state at all 40 of 
 that state gets to 2× at best (8-bit floating point; nineteen formats tested, `reproduction/memory-storage-ablation.md`).
 Memory v2 keeps only the frame, 6.2 MB with its conditioning, and recomputes the state when the camera returns: 13.5 s of extra
 compute in a 14-chunk episode, GPU memory 72.4 GB against 68.8 GB for the stock model. The recall figures are from one scene
-and one seed on a scripted path.
+and one seed on a scripted path, on cloud H100s; on a different GPU the stock model itself returned on this path (0.80), so
+read them as "recompute matches stored state", not as the size of the memory effect.
 [Side-by-side video, GC007](demo/memv2-hold-GC007.mp4): stock ends at a storefront close-up; memory v2 ends on the facade and plaza seen at the start.
 
 ![memory v2 on GC007](demo/memv2-hold-GC007.jpg)
@@ -175,7 +187,7 @@ same flags at commit `edb2b83` on Lambda H100s; pixels differ between GPU models
 - **A clear question with a baseline first.** We reproduced the published LingBot-World2 score on all 171 PlayWorld tasks before
   claiming anything, twice, on different hardware: 1.85 and 1.81 against 1.82 (`reproduction/full-run/table.md`, `reproduction/final-run/table.md`).
 - **Frozen before generation.** Every comparison has a config committed before its first video: `reproduction/full-run-config.json`,
-  `reproduction/final-run-config.json`, `docs/demo/sources/revisit-horizon-config.json`, `docs/demo/sources/memory-v2-config.json`,
+  `reproduction/final-run-config.json`, `docs/demo/sources/revisit-horizon-config.json`, `reproduction/memory-v2-config.json`,
   and a success criterion written before any full score existed (`reproduction/pass-criterion.md`).
 - **Paired designs with intervals.** Same task, same seed, same GPU model for both arms; bootstrap 95% intervals over tasks;
   development scenes excluded from held-out results; wins, ties and losses reported next to every mean.
@@ -183,7 +195,7 @@ same flags at commit `edb2b83` on Lambda H100s; pixels differ between GPU models
   (`reproduction/memory-storage-ablation.md`): only exact storage and 8-bit floating point (2× smaller) keep the revisit on
   both scenes; layer subsets, pooling, token subsets, integer 8-bit and low-rank each fail on at least one scene. So compressing
   the cached state buys at most 2×, and the 200× comes from recomputing. Retrieval rules v1, v2 and content-only side by side
-  (`docs/demo/sources/memory-v2-step1-table.md`).
+  (`reproduction/memory-v2/step1/table.md`).
 - **Independent audits.** A five-lens audit of baseline fidelity with a skeptic per claim (`reproduction/baseline-fidelity-audit.md`),
   a code-and-trace audit of the memory (`reproduction/full-run-memory-audit.md`), and a judge-repeat study that measured the
   judge's own noise at 0.36 points per video (`reproduction/judge-repeat/README.md`).
@@ -209,10 +221,10 @@ How it differs from published work, as we read it (`reproduction/literature-revi
 | VMem | past views, indexed by 3D surfels | what is visible from the new camera | fine-tuned generator |
 | **ours (memory v2)** | **the frame only; state recomputed** | **pose, verified by content** | **none** |
 
-What the tests of memory v2 establish (`docs/demo/sources/memory-v2-step1-table.md`): it is pixel-identical to the stock model
+What the tests of memory v2 establish (`reproduction/memory-v2/step1/table.md`): it is pixel-identical to the stock model
 whenever it does not fire (v1 also retrieved on 338 of 726 chunks, 47%, where nothing was being revisited); recomputed state matches state
 stored on disk (0.77 against 0.82 on the hold path, 0.62 against 0.63 on the slow turn); it needs no archive of internal state;
-and it removes v1's harm on the slow 360° turn.
+and it removes v1's harm on the slow 360° turn. These are single-scene, single-seed checks on one GPU type.
 
 Storing the frame and recomputing the state is what gives the 200× saving; we did not find it in the papers we surveyed, and
 we have not searched exhaustively. We also tested 8-bit, low-rank, pooled and layer-subset versions of the stored state;
@@ -266,7 +278,7 @@ only 8-bit floating point held up on both test scenes, at 2×.
 
 1. **The problem.** Play the left half of the hero video. The model looks away for 12 seconds, turns back, and the room it left is gone. It only remembers about 4.5 seconds.
 2. **The fix.** Play the right half. We hand the model its own earlier frames of the place it is returning to. No training. The front door is back.
-3. **It holds on scenes we never tuned on.** Show Figure 1. On 20 unseen scenes the judged score goes from {h12['stock'][0]:.2f} to {h12['memory'][0]:.2f} after 12 seconds away, {h12['wins']} wins to {h12['losses']} losses.
+3. **It holds on scenes we never tuned on.** Show Figure 1. On 20 unseen scenes the judged score goes from {h12['stock'][0]:.2f} to {h12['memory'][0]:.2f} after 12 seconds away, {h12['wins']} wins to {h12['losses']} losses, and the memory line is above the stock line at every absence length.
 4. **It is cheap, and it improved itself.** Show Figures 2 and 3. Agents audited the first version, found why it failed on real tasks, and built one that keeps the frame, not the model's state: 6 MB instead of 1.2 GB.
 5. **Where we stand, honestly.** We reproduced the published baseline twice. On PlayWorld's own tasks we are level with it, not above, because those tasks rarely look away for long. Long absences are where memory pays.
 
@@ -280,7 +292,8 @@ Assets are built by `scripts/build_demo.py` and this page by `scripts/write_demo
                 "|---|---:|---:|---:|---:|---|---|"]
     for pair in summary["pairs_h12_h24"]:
         appendix.append(f"| {pair['task']} | {pair['horizon']} s | {pair['stock']:.2f} | {pair['memory']:.2f} | {pair['delta']:+.2f} | "
-                        f"{pair['stock_calls']} / {pair['memory_calls']} | {pair['dino_stock']:.2f} / {pair['dino_memory']:.2f} |")
+                        f"{pair['stock_calls']} / {pair['memory_calls']} | {pair['dino_stock'] if pair['dino_stock'] is None else round(pair['dino_stock'], 2)} / "
+                        f"{pair['dino_memory'] if pair['dino_memory'] is None else round(pair['dino_memory'], 2)} |")
     appendix += ["", "## Clips", ""]
     for (task, horizon), text in SEEN.items():
         pair = pairs.get((task, horizon))
@@ -291,7 +304,7 @@ Assets are built by `scripts/build_demo.py` and this page by `scripts/write_demo
                          f"![{task}]({name}.jpg)", ""]
     if (DEMO / "playworld-OE044.jpg").is_file():
         appendix += ["## A loss on a real PlayWorld task (memory v2, OE044)", "",
-                     "Judged 3.0 → 1.0. Stock ends with the plate and the person still at the counter; memory v2 ends on a sink view "
+                     "Judged 2.0 → 1.0 (three calls each). Stock ends with the plate and the person still at the counter; memory v2 ends on a sink view "
                      "without them. Memory fired on 9 of 13 chunks here. [video](playworld-OE044.mp4)", "", "![OE044](playworld-OE044.jpg)", ""]
     appendix += ["## Memory v2 on a slow 360° turn (GC007)", "",
                  "Both arms end on a similar plaza view, not the start view; the similarity scores are 0.57 (stock) and 0.62 (v2 recompute; 0.63 for v2 with the disk archive). "

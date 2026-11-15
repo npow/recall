@@ -49,11 +49,11 @@ def load_horizon(tree, calls=2):
                     gates.append((data.get("gate") or {}).get("verdict"))
                     cats.append((data.get("rubric") or {}).get("category_scores_1_to_5") or {})
         dino = judge / f"dino/{row['id']}.json"
-        if len(scores) < calls or not dino.is_file():
+        if len(scores) < calls:
             continue
         table[(row["task_id"], int(row["horizon_s"]), row["arm"])] = {
             "id": row["id"], "score": float(np.mean(scores)), "calls": scores, "gates": gates,
-            "video": str(video), "dino": json.loads(dino.read_text())["end_vs_frame12"],
+            "video": str(video), "dino": json.loads(dino.read_text())["end_vs_frame12"] if dino.is_file() else None,
             "objective": json.loads((judge / f"rep1/episodes/{row['id']}.json").read_text()).get("objective")}
     return table
 
@@ -70,9 +70,12 @@ def horizon_stats(table):
         delta = [m - s for m, s in zip(memory, stock)]
         report[horizon] = {"n": len(scenes), "scenes": scenes, "stock": bootstrap(stock), "memory": bootstrap(memory),
                            "delta": bootstrap(delta), "wins": sum(d > 1e-9 for d in delta), "losses": sum(d < -1e-9 for d in delta),
-                           "dino_stock": float(np.mean([table[(s, horizon, "stock")]["dino"] for s in scenes])),
-                           "dino_memory": float(np.mean([table[(s, horizon, "memory")]["dino"] for s in scenes])),
-                           "dino_delta": bootstrap([table[(s, horizon, "memory")]["dino"] - table[(s, horizon, "stock")]["dino"] for s in scenes])}
+                           }
+        both = [s for s in scenes if table[(s, horizon, "stock")]["dino"] is not None and table[(s, horizon, "memory")]["dino"] is not None]
+        report[horizon].update({"dino_n": len(both),
+                                "dino_stock": float(np.mean([table[(s, horizon, "stock")]["dino"] for s in both])),
+                                "dino_memory": float(np.mean([table[(s, horizon, "memory")]["dino"] for s in both])),
+                                "dino_delta": bootstrap([table[(s, horizon, "memory")]["dino"] - table[(s, horizon, "stock")]["dino"] for s in both])})
         report[horizon]["ties"] = len(scenes) - report[horizon]["wins"] - report[horizon]["losses"]
     return report
 
@@ -95,9 +98,9 @@ def figure_horizon(report, path, interim):
     for h in horizons:
         ax.annotate(f"n={report[h]['n']}", (h, 0.93), ha="center", fontsize=9, color="#555555")
     ax.set_xticks(horizons)
-    ax.set_xlabel("seconds the camera looks away before turning back", fontsize=12)
+    ax.set_xlabel("seconds waited while looking away (plus about 6 s of turning)", fontsize=12)
     ax.set_ylabel("judged consistency score (1–5)", fontsize=12)
-    ax.set_ylim(0.9, 3.4)
+    ax.set_ylim(0.9, 4.0)
     ax.grid(axis="y", color="#dddddd", linewidth=0.8)
     for side in ("top", "right"):
         ax.spines[side].set_visible(False)
@@ -138,7 +141,7 @@ def figure_footprint(path):
             ax.spines[side].set_visible(False)
         ax.tick_params(labelsize=9)
     fig.suptitle("Compressing the model's state saves 2×. Keeping the frame and recomputing saves about 200×.", fontsize=12, x=0.02, ha="left")
-    fig.text(0.01, 0.01, "One scene, one seed, scripted path, Lambda H100; DINO similarity of the final frame to the start view. Not a benchmark score.",
+    fig.text(0.01, 0.01, "One scene (GC007), one seed, scripted path, Lambda H100; similarity of the final frame to the start view. On another GPU the stock model itself returned (0.80).",
              fontsize=7.5, color="#555555")
     fig.tight_layout(rect=(0, 0.03, 1, 0.94))
     fig.savefig(path)
@@ -325,7 +328,7 @@ def task_clip(stock, ours, stem, task, objective, scores, labels, panel=640, fps
     """Side-by-side video of a real PlayWorld task with a title card and a start-vs-end freeze frame; also a strip."""
     left, right = read_frames(stock, panel), read_frames(ours, panel)
     count = min(len(left), len(right))
-    caption = f"PlayWorld task {task}  ·  judged {scores[0]:.1f} vs {scores[1]:.1f}"
+    caption = f"PlayWorld task {task}  ·  selected example"
     step = max(1.0, count / (14.0 * fps))
     indices = [int(i * step) for i in range(int(count / step))]
     body = [compose(left[i], right[i], panel, labels, caption + (f"  ·  {step:.1f}× speed" if step > 1.05 else ""), "") for i in indices]
@@ -350,7 +353,7 @@ def task_clip(stock, ours, stem, task, objective, scores, labels, panel=640, fps
         freeze = freeze[:height]
     write_video([card] * int(2.5 * fps) + body + [body[-1]] * int(0.8 * fps) + [freeze] * int(4 * fps), OUT / f"{stem}.mp4", fps, crf=25)
     Image.fromarray(freeze).save(OUT / f"{stem}-freeze.jpg", quality=90)
-    strip(stock, ours, OUT / f"{stem}.jpg", labels, f"{task}  ·  judged {scores[0]:.1f} vs {scores[1]:.1f}")
+    strip(stock, ours, OUT / f"{stem}.jpg", labels, f"PlayWorld task {task}")
 
 
 def memv2_cases(tree, cases):
@@ -376,7 +379,7 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     table = load_horizon(args.horizon_tree)
     report = horizon_stats(table)
-    figure_horizon(report, OUT / "fig1-horizon.png", args.interim)
+    figure_horizon(report, OUT / "fig1-horizon.png", bool(args.interim or len(table) < 160))
     figure_footprint(OUT / "fig2-footprint.png")
     figure_loop(OUT / "fig3-loop.png")
     pairs = []
@@ -391,21 +394,24 @@ def main():
             wins.append(pair)
             seen.add(pair["task"])
     losses = sorted([p for p in pairs if p["delta"] < 0], key=lambda p: (p["delta"], p["task"]))
-    summary = {"interim": args.interim, "horizons": {str(h): {k: v for k, v in r.items() if k != "scenes"} for h, r in report.items()},
+    summary = {"interim": bool(args.interim or len(table) < 160), "episodes_scored": len(table), "horizons": {str(h): {k: v for k, v in r.items() if k != "scenes"} for h, r in report.items()},
                "pairs_h12_h24": [{"task": p["task"], "horizon": p["horizon"], "stock": p["stock"]["score"], "memory": p["memory"]["score"],
                                   "delta": p["delta"], "stock_calls": p["stock"]["calls"], "memory_calls": p["memory"]["calls"],
                                   "dino_stock": p["stock"]["dino"], "dino_memory": p["memory"]["dino"]} for p in pairs],
                "rule": "largest paired judged difference (mean of 2 Gemini calls) at 12 s or 24 s away, one entry per scene; losses = most negative"}
     pooled = {}
-    for task in sorted({p["task"] for p in pairs}):
-        pooled[task] = float(np.mean([p["delta"] for p in pairs if p["task"] == task]))
-    summary["pooled_h12_h24_by_scene"] = {"n": len(pooled), "delta": bootstrap(list(pooled.values())) if pooled else None}
+    for task in sorted({key[0] for key in table}):
+        deltas = [table[(task, h, "memory")]["score"] - table[(task, h, "stock")]["score"] for h in (6, 12, 24)
+                  if (task, h, "memory") in table and (task, h, "stock") in table]
+        if deltas:
+            pooled[task] = float(np.mean(deltas))
+    summary["pooled_h6_h12_h24_by_scene"] = {"n": len(pooled), "delta": bootstrap(list(pooled.values())) if pooled else None}
     (OUT / "horizon-summary.json").write_text(json.dumps(summary, indent=1) + "\n")
     print(json.dumps(summary["horizons"], indent=1))
-    print("pooled", summary["pooled_h12_h24_by_scene"])
+    print("pooled", summary["pooled_h6_h12_h24_by_scene"], "episodes", len(table))
     for pair in pairs[:8] + losses[:3]:
         print(pair["task"], pair["horizon"], round(pair["stock"]["score"], 2), round(pair["memory"]["score"], 2), round(pair["delta"], 2),
-              pair["stock"]["calls"], pair["memory"]["calls"], round(pair["stock"]["dino"], 2), round(pair["memory"]["dino"], 2))
+              pair["stock"]["calls"], pair["memory"]["calls"], pair["stock"]["dino"], pair["memory"]["dino"])
     if args.memv2_cases:
         memv2_cases(args.memv2_tree, args.memv2_cases.split(","))
     if args.skip_media:
