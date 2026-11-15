@@ -1,0 +1,261 @@
+{
+  "rule": "Selection is by rule, not by eye: among HELD-OUT cases of the dimensions the director touches (IF, insight,\nout-of-sight), the 6 largest positive and the 3 largest negative paired differences in the primary score\n(single Gemini call, director minus stock), ties broken by task id, with at least one case per dimension where\nthat dimension has a difference of the required sign. Writes docs/gallery/*.jpg, *.mp4 and selection.json.\n",
+  "summary": {
+    "paired_scored": 123,
+    "held_out": 106,
+    "by_dimension": {
+      "if": {
+        "pairs": 45,
+        "wins": 18,
+        "ties": 15,
+        "losses": 12,
+        "mean_delta": 0.126,
+        "both_at_floor": 14
+      },
+      "insight": {
+        "pairs": 24,
+        "wins": 6,
+        "ties": 10,
+        "losses": 8,
+        "mean_delta": 0.042,
+        "both_at_floor": 10
+      },
+      "outsight": {
+        "pairs": 37,
+        "wins": 6,
+        "ties": 26,
+        "losses": 5,
+        "mean_delta": 0.079,
+        "both_at_floor": 24
+      }
+    }
+  },
+  "examples": [
+    {
+      "kind": "win",
+      "rank": 1,
+      "split": "outsight",
+      "task_id": "OE036",
+      "delta": 4.0,
+      "stock": {
+        "score": 1.0,
+        "gate": "pass"
+      },
+      "director": {
+        "score": 5.0,
+        "gate": "pass"
+      },
+      "objective": "Tilt the camera upward 90 degrees, then return to the starting view.",
+      "director_text": "The man in the white t-shirt walks steadily away down the asphalt road, his yellow Labrador Retriever trotting beside him on the long leash. Warm sunlight casts their shadows ahead of them. The dog occasionally sniffs the road surface while maintaining pace. The man's stride is measured and relaxed as they continue forward together along the empty road.",
+      "extra_calls": {
+        "stock": [],
+        "director": []
+      },
+      "strip": "outsight-OE036.jpg",
+      "video": {
+        "file": "outsight-OE036.mp4",
+        "speed": 1.0,
+        "bytes": 450667
+      }
+    },
+    {
+      "kind": "win",
+      "rank": 2,
+      "split": "insight",
+      "task_id": "OE073",
+      "delta": 3.8,
+      "stock": {
+        "score": 1.0,
+        "gate": "not_applicable"
+      },
+      "director": {
+        "score": 4.8,
+        "gate": "not_applicable"
+      },
+      "objective": "wait and observe",
+      "director_text": "The food vendor stands still at the serving station, holding the empty clear rectangular container and black spoon. The large round metal tray sits before them filled with the saucy chili-garlic mixture. Stacks of plastic containers and cups remain visible in the background. The vendor pauses, observing the scene as everything remains calm and quiet at the food stall.",
+      "extra_calls": {
+        "stock": [],
+        "director": []
+      },
+      "strip": "insight-OE073.jpg",
+      "video": {
+        "file": "insight-OE073.mp4",
+        "speed": 7.48,
+        "bytes": 950330
+      }
+    },
+    {
+      "kind": "win",
+      "rank": 3,
+      "split": "insight",
+      "task_id": "OE018",
+      "delta": 3.4,
+      "stock": {
+        "score": 1.0,
+        "gate": "not_applicable"
+      },
+      "director": {
+        "score": 4.4,
+        "gate": "not_applicable"
+      },
+      "objective": "wait and observe",
+      "director_text": "Hot water continues streaming from the kettle's spout into the glass teapot, the clear liquid splashing around the loose tea leaves at the bottom. The leaves tumble and swirl in the rising water, caught in the current. Steam rises from the teapot's opening as the water level climbs higher, the wooden cutting board and round wooden lid remaining still nearby.",
+      "extra_calls": {
+        "stock": [],
+        "director": []
+      },
+      "strip": "insight-OE018.jpg",
+      "video": {
+        "file": "insight-OE018.mp4",
+        "speed": 7.48,
+        "bytes": 469403
+      }
+    },
+    {
+      "kind": "win",
+      "rank": 4,
+      "split": "outsight",
+      "task_id": "OE030",
+      "delta": 3.25,
+      "stock": {
+        "score": 1.0,
+        "gate": "pass"
+      },
+      "director": {
+        "score": 4.25,
+        "gate": "pass"
+      },
+      "objective": "Pan the camera down to follow the silver SUV driving down the spiral parking garage ramp, then tilt back up to the original view",
+      "director_text": "The silver Suzuki Jimny SUV continues its smooth turn on the curved ramp, its front wheels angling further downward as it follows the spiral descent. The vehicle's compact frame hugs the concrete curve, moving steadily lower toward street level. Sunlight glints off its metallic surface as it descends deeper into the garage structure, the circular ventilation holes receding upward behind it.",
+      "extra_calls": {
+        "stock": [],
+        "director": []
+      },
+      "strip": "outsight-OE030.jpg",
+      "video": {
+        "file": "outsight-OE030.mp4",
+        "speed": 1.0,
+        "bytes": 886288
+      }
+    },
+    {
+      "kind": "win",
+      "rank": 5,
+      "split": "outsight",
+      "task_id": "OE029",
+      "delta": 3.17,
+      "stock": {
+        "score": 1.0,
+        "gate": "pass"
+      },
+      "director": {
+        "score": 4.17,
+        "gate": "pass"
+      },
+      "objective": "Turn the view 60 degrees to the right, walk forward a few steps, then hold the view still",
+      "director_text": "The black steam locomotive numbered 5917 continues its steady rightward movement along the track, white steam rolling upward from the tall smokestack. Light wisps of steam drift from beneath the wheels as the massive engine advances. Red trim catches the light along the engine's body. In the cab, crew members maintain their positions as the powerful locomotive maintains its forward momentum down the rails.",
+      "extra_calls": {
+        "stock": [
+          1.0
+        ],
+        "director": [
+          3.67
+        ]
+      },
+      "strip": "outsight-OE029.jpg"
+    },
+    {
+      "kind": "win",
+      "rank": 6,
+      "split": "if",
+      "task_id": "IF013",
+      "delta": 3.0,
+      "stock": {
+        "score": 1.0,
+        "gate": "fail"
+      },
+      "director": {
+        "score": 4.0,
+        "gate": "pass"
+      },
+      "objective": "The elderly man rows the boat across to the opposite shore of the river",
+      "director_text": "The elderly man grips the wooden oars and dips them into the cold water with a steady pull. His shoulders lean forward as the small boat glides away from the near shore, angling across toward the distant cabins. Ice floes drift slowly past on the right. His breath mists in the frigid air as he establishes a rhythmic rowing pace, the oar blades catching water with each measured stroke.",
+      "extra_calls": {
+        "stock": [],
+        "director": []
+      },
+      "strip": "if-IF013.jpg"
+    },
+    {
+      "kind": "loss",
+      "rank": 1,
+      "split": "outsight",
+      "task_id": "OE046",
+      "delta": -4.0,
+      "stock": {
+        "score": 5.0,
+        "gate": "pass"
+      },
+      "director": {
+        "score": 1.0,
+        "gate": "pass"
+      },
+      "objective": "Turn the camera left 90 degrees, then turn back to the original view.",
+      "director_text": "The black-framed conveyor belt rolls steadily, its silver rollers spinning in continuous motion. The yellow box with black stripe glides forward along the belt surface, traveling rightward across the warehouse floor. The mechanical system operates smoothly, advancing the cargo toward the right side of the frame.",
+      "extra_calls": {
+        "stock": [],
+        "director": []
+      },
+      "strip": "outsight-OE046.jpg"
+    },
+    {
+      "kind": "loss",
+      "rank": 2,
+      "split": "insight",
+      "task_id": "OE020",
+      "delta": -3.0,
+      "stock": {
+        "score": 5.0,
+        "gate": "not_applicable"
+      },
+      "director": {
+        "score": 2.0,
+        "gate": "not_applicable"
+      },
+      "objective": "wait and observe",
+      "director_text": "The ornate white building stands majestically at the street corner, its curved facade catching the bright sunlight. Several cyclists pedal smoothly past along the street, their bikes moving steadily through the vibrant urban scene. The light shifts gently across the building's intricate architectural details as the moment unfolds, while the everyday rhythm of city traffic continues naturally around the historic structure.",
+      "extra_calls": {
+        "stock": [],
+        "director": []
+      },
+      "strip": "insight-OE020.jpg"
+    },
+    {
+      "kind": "loss",
+      "rank": 3,
+      "split": "if",
+      "task_id": "IF019",
+      "delta": -2.67,
+      "stock": {
+        "score": 4.67,
+        "gate": "not_applicable"
+      },
+      "director": {
+        "score": 2.0,
+        "gate": "not_applicable"
+      },
+      "objective": "Rides the deer forward, then turns right toward the blue and white building.",
+      "director_text": "The mounted rider urges the deer forward across the bright plaza. The deer's legs move in steady rhythm, hooves tapping against pavement. Antlers sway gently in the foreground as the deer walks, pulling the rider and camera forward across the empty paved space. Sunlight glints off the plaza surface. The blue and white building remains visible on the right, growing gradually closer as forward motion continues.",
+      "extra_calls": {
+        "stock": [
+          4.0
+        ],
+        "director": [
+          1.8
+        ]
+      },
+      "strip": "if-IF019.jpg"
+    }
+  ]
+}
