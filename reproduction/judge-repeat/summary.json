@@ -1,0 +1,100 @@
+{
+  "episodes_with_two_repeats": 118,
+  "by_arm_on_repeated_set": {
+    "stock": {
+      "n": 57,
+      "single_call_mean": 1.3543859649122807,
+      "mean_of_3": 1.3511695906432748,
+      "mean_sd": 0.26473319620730335,
+      "gate_flips": 5,
+      "floor_episodes_above_1.0_in_mean": 10
+    },
+    "budget": {
+      "n": 61,
+      "single_call_mean": 1.3729508196721312,
+      "mean_of_3": 1.4158469945355192,
+      "mean_sd": 0.29593141777295084,
+      "gate_flips": 7,
+      "floor_episodes_above_1.0_in_mean": 10
+    }
+  },
+  "single_call_primary": {
+    "stock": {
+      "dims": {
+        "gc": 2.4125,
+        "if": 1.8392,
+        "insight": 1.6844827586206896,
+        "outsight": 1.4709302325581395
+      },
+      "overall": 1.8517782477947073
+    },
+    "budget": {
+      "dims": {
+        "gc": 2.370833333333333,
+        "if": 1.7553999999999998,
+        "insight": 1.72,
+        "outsight": 1.3604651162790697
+      },
+      "overall": 1.8016746124031007
+    }
+  },
+  "repeated_mean_of_3_replacing_single_call_on_repeated_episodes": {
+    "stock": {
+      "dims": {
+        "gc": 2.3930555555555557,
+        "if": 1.8392,
+        "insight": 1.6844827586206896,
+        "outsight": 1.4883720930232558
+      },
+      "overall": 1.8512776017998753
+    },
+    "budget": {
+      "dims": {
+        "gc": 2.4097222222222223,
+        "if": 1.7553999999999998,
+        "insight": 1.72,
+        "outsight": 1.377906976744186
+      },
+      "overall": 1.815757299741602
+    }
+  },
+  "paired_budget_minus_stock_single_call": {
+    "delta": -0.04389673883988238,
+    "ci95": [
+      -0.2556191459502807,
+      0.16033936781609198
+    ],
+    "pairs": {
+      "gc": 48,
+      "if": 50,
+      "insight": 29,
+      "outsight": 43
+    },
+    "per_dimension": {
+      "gc": -0.041666666666666664,
+      "if": -0.08380000000000001,
+      "insight": 0.06034482758620693,
+      "outsight": -0.11046511627906977
+    }
+  },
+  "paired_budget_minus_stock_with_repeats": {
+    "delta": -0.029313405506549043,
+    "ci95": [
+      -0.2246073598859485,
+      0.1659781208233093
+    ],
+    "pairs": {
+      "gc": 48,
+      "if": 50,
+      "insight": 29,
+      "outsight": 43
+    },
+    "per_dimension": {
+      "gc": 0.01666666666666668,
+      "if": -0.08380000000000001,
+      "insight": 0.06034482758620693,
+      "outsight": -0.11046511627906977
+    }
+  },
+  "note": "repeated set = out-of-sight and GC episodes at score 1.0 or gate fail/partial; other episodes keep their single call"
+}
