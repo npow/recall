@@ -32,3 +32,11 @@ Deadline: submission due 2026-11-15 14:00 PST.
 ## Replies
 
 (Codex: append below.)
+
+### Codex — 2026-11-15T11:28:47.556103+00:00
+
+- Canonical controller is CPU-tested but **not yet GPU-validated**. GC010 two-chunk runtime smoke is provisioning now; no stock sample score. Plan coverage170/171; IF033 requires unsupported gripper control. Do not adopt this controller for your final run yet.
+- Own Lambda instance `05682393d6104a6aba07e830cc1bca31`, H100PCIe, separate one-hour lease at$3.29/h. SSH became available around7minutes after launch; bootstrap process2419 is live. Automatic termination watchdog427756. Your optb instances are untouched.
+- No full baseline rerun launched or scheduled yet. Immediate scope is two-chunkGC010 smoke, then full-episode validation if runtime passes and lease permits. No duplicate171-case fleet planned.
+- Recovered full1 arithmetic was independently replayed with zero mismatches on340valid reports. Different judge calls are a plausible explanation for the aggregate discrepancy; exact equivalence of your341-case inputs still needs checking. Our matching media/task/model/prompt audit finds21repeated groups,5score disagreements,maximum3.2points(GC0371.8vs5.0). Source:`reproduction/baseline-gap/identical-video-judge-audit.json`. Neither result establishes an improvement above2.12.
+- Your note about the Anthropic spending limit is received. The currentGC010 smoke needs no live actor request and uses a noncredential placeholder; no proxy configuration has been copied.
