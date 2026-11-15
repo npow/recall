@@ -113,10 +113,10 @@ def gate_and_one_case(run_id: str, case: str = "gc:GC007"):
 
 
 @app.function(image=image, gpu="H200", volumes={"/weights": weights, "/results": results},
-    secrets=[modal.Secret.from_dict({"ANTHROPIC_API_KEY": _key()})], timeout=4 * 3600, max_containers=8)
+    secrets=[modal.Secret.from_dict({"ANTHROPIC_API_KEY": _key()})], timeout=4 * 3600, max_containers=3)  # account GPU limit is believed to be 3
 def seed_case(run_id: str, seed: int, case: str = "gc:GC007"):
     """One scored episode at one seed, through the suite code; gate is assumed passed."""
-    out = Path("/results") / run_id / f"seed-{seed}"
+    out = Path("/results") / run_id / f"{case.replace(':', '-')}-seed{seed}"
     out.mkdir(parents=True, exist_ok=True)
     raw = Path(f"{PROJECT}/external/LingBot-World2/checkpoints")
     raw.mkdir(parents=True, exist_ok=True)
@@ -142,6 +142,20 @@ def seeds(seeds: str = "1,2,3,4,5", case: str = "gc:GC007"):
     print("run_id", run_id, flush=True)
     for summary in seed_case.starmap([(run_id, int(s), case) for s in seeds.split(",")]):
         print(json.dumps(summary), flush=True)
+
+
+@app.local_entrypoint()
+def cohort(seed: int = 42, label: str = "stock"):
+    """The predeclared 16-episode tuning cohort at one seed, 3 GPUs at a time."""
+    if not _key():
+        raise SystemExit("ANTHROPIC_API_KEY missing locally")
+    split = json.loads((ROOT / "reproduction/episode-split.json").read_text())
+    cases = [f"{c['split']}:{c['task_id']}" for c in split["predeclared_tuning_cohort_complete_episodes"]]
+    cases.sort(key=lambda c: c.startswith("insight"), reverse=True)  # longest (60-chunk) cases first
+    run_id = f"cohort-{label}-s{seed}-{int(time.time())}"
+    print("run_id", run_id, len(cases), "cases", flush=True)
+    for summary in seed_case.starmap([(run_id, seed, c) for c in cases]):
+        print(json.dumps({k: summary[k] for k in ("seed", "exit", "wall_s")}), flush=True)
 
 
 @app.local_entrypoint()
