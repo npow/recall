@@ -2,7 +2,7 @@
 
 ## Current handoff status
 
-**GPU-validated: NO. No GPU-validated commit exists yet.** Controller handoff code is commit `e2e422a9c4a7246c9b4e054359fa10ffeecfeb2d`. CPU checks pass; Codex's already-running separate Lambda lease is executing only the two-chunk GC010 smoke. No full171-case run is planned by Codex. Claude on odin owns the subsequent approximately12-case controller comparison; Claude on thor owns the frozen full run, optb fleet and director experiment.
+**GPU runtime smoke validated: YES, GC010 two chunks only, at repository source commit `2beab94` (also identical for the recorded sources at `66a15bd`). Full episode, live actor requests, and benchmark scores: NOT validated.** Controller handoff code is commit `e2e422a9c4a7246c9b4e054359fa10ffeecfeb2d`. CPU checks pass; Codex completed the separate Lambda two-chunk GC010 smoke and requested termination of that instance. No full171-case run is planned by Codex. Claude on odin owns the subsequent approximately12-case controller comparison; Claude on thor owns the frozen full run, optb fleet and director experiment.
 
 Entrypoint: `worldsync.lingbot_released_baseline`. After installing dependencies and staging the pinned model/data, run from the repo root:
 
@@ -80,3 +80,9 @@ Saved runtime-smoke artifacts can be checked with `python -m worldsync.baseline_
 ## Saved identical-video judgments
 
 `scripts/audit_identical_judgments.py` groups saved reports by task, video SHA, requested model/provider and gate/scoring prompt hashes. In the recovered full1 reports,21groups repeat those identities;5receive different scores, with a maximum3.2-point spread (GC037:1.8versus5.0, both gates pass). Full evidence and report hashes are in `identical-video-judge-audit.json`. This is a post-hoc subset and cannot estimate whole-suite uncertainty. Historical reports omit some request and served-model details, so matching these fields does not prove byte-identical API requests. Existing scores are preserved. Candidate promotion needs repeat judging under a declared policy, without choosing favorable replicates; a single-call increase is insufficient evidence of a small memory effect.
+
+## GPU smoke result
+
+Evidence: `gpu-smoke-GC010/validation.json`, `protocol.json`, `episode/run.json`, video and observations. H100PCIe80GB, stock18/6, seed42, exact task prompt,2chunks/29frames at16fps, no actor API calls. Native runtime83.166seconds including loading; peak allocated71.873GB. All recorded repository-source hashes match commit`2beab94`; the full-validation flag added at`e2e422a` was not exercised.
+
+The validator initially rejected the current checkout because the handoff entrypoint had changed while the remote run was in flight. Validation against the archived source actually staged on Lambda passed every recorded hash. `--source-root` selects such an archive without weakening hash checks. A two-chunk output does not show the return leg, long-horizon memory, or score improvement. Odin should still validate IF001/live actor transport and the complete development cases.

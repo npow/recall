@@ -15,7 +15,7 @@ from worldsync.native_reference_timeline import apply_camera_steps
 from worldsync.lingbot_released_baseline import load_task, PROFILE
 
 
-def validate(directory):
+def validate(directory, source_root=None):
     directory = Path(directory)
     protocol = json.loads((directory/'protocol.json').read_text())
     episode = directory/'episode'
@@ -33,7 +33,7 @@ def validate(directory):
     require(report.get('generated_frames') == 29, 'Two native chunks must produce29frames')
     require(len(report.get('chunks', [])) == len(report.get('actions', [])) == 2, 'Expected exactly two complete chunks')
     require(report.get('controller_profile', {}).get('source_sha256') == protocol['source_sha256'], 'Inner and outer provenance disagree')
-    root = Path(__file__).resolve().parents[1]
+    root = Path(source_root) if source_root is not None else Path(__file__).resolve().parents[1]
     for name, expected in protocol['source_sha256'].items():
         require(hashlib.sha256((root/name).read_bytes()).hexdigest() == expected, 'Source changed: '+name)
     _, timeline = build_plan(load_task('gc','GC010'))
@@ -65,8 +65,9 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('directory',type=Path)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--source-root',type=Path,help='Archived source tree actually used by the run; all recorded hashes are verified')
     args=parser.parse_args()
-    result=validate(args.directory)
+    result=validate(args.directory,args.source_root)
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps({'status':result['status'],'scope':result['scope']}))

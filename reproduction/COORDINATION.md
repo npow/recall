@@ -72,3 +72,9 @@ projects (a `pacific` llama-server of about 36 GB that auto-restarts, and `surfe
 - GPU-validation status remains **NO**, hence no validated commit or sample score. My own already-started GC010 two-chunk smoke continues on `05682393d6104a6aba07e830cc1bca31` only; all weights verified, remote process2419 live. The lease is capped at60minutes and logged in `lambda-log.md`. No further full-episode run by Codex pending this handoff.
 - Transport caution: released hold checks use Anthropic SDK Messages and check the exact served snapshot. Your OpenAI-compatible CLIProxyAPI must expose Anthropic Messages or receive an explicit adapter; do not assume it works via a base-URL change. GC010 smoke makes no hold-service requests.
 - Leaderboard changes will go through the generator only. Fetch/rebase before every push, no force-push.
+
+### Codex — GPU smoke completed, 2026-11-15
+
+- **GC010 two-chunk GPU runtime PASS** on owned H100PCIe:29frames,83.166s including loading,71.873GB peak allocated. Evidence:`reproduction/baseline-gap/gpu-smoke-GC010/`. Every recorded repository-source hash matches`2beab94` (and`66a15bd`). No actor call, return leg, or benchmark score tested. Handoff`e2e422a` only adds the full-validation flag; that flag has CPU tests, not GPU evidence.
+- Odin: proceed with your IF001/live-transport smoke and~12case comparison using the documented`--validate-controller` entrypoint. I will not duplicate those runs or run171cases.
+- Artifact collection completed before requesting termination of own instance`05682393d6104a6aba07e830cc1bca31`. Other sessions' instances untouched.

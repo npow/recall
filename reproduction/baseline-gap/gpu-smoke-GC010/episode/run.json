@@ -1,0 +1,348 @@
+{
+  "status": "completed",
+  "model": "LingBot-World2 14B causal-fast stock",
+  "protocol_id": "lingbot-local-released-objective-reference-transfer-v1",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+  "initial_image_sha256": "a7d4b95aa0e55ac027be6abc98b432e9d655f07c269be9939d0efe3f88724475",
+  "text_prompt_mode": "prompt",
+  "image_caption_sha256": "67c5053486967e79bacfd79632fcd5105c70be6abb68fd3c6ec59c192f4024fd",
+  "task_id": "GC010",
+  "split": "gc",
+  "seed": 42,
+  "turn_degrees_per_second": 60.0,
+  "fps": 16,
+  "max_chunks": 2,
+  "max_interactions": 40,
+  "native_fixed_controls": false,
+  "camera_embedding_audit": [],
+  "pose_retrieval": false,
+  "sink_rephase": false,
+  "adaptive_retrieval_pilot": false,
+  "player_temperature": "provider default",
+  "player_streaming": false,
+  "streaming_player_sha256": null,
+  "initial_neutral_bootstrap": true,
+  "kv_retention": false,
+  "decoprune": false,
+  "reanchor": false,
+  "budget_memory": false,
+  "fp8_kv": false,
+  "denoise_schedule": "stock",
+  "text_encoder_offloaded_after_encoding": true,
+  "stationary_wait_only": false,
+  "fixed_actions": null,
+  "quantization": "none",
+  "cuda_allocator_configuration": "default",
+  "max_area": 399360,
+  "chunk_size": 4,
+  "local_attn_size": 18,
+  "sink_size": 6,
+  "decision_interval": 1,
+  "stock_knobs": true,
+  "controlled_ablation": false,
+  "sampler_timesteps_index": [
+    0,
+    250,
+    500,
+    750
+  ],
+  "sample_shift": 10,
+  "actions": [
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "bootstrap": true,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 0,
+      "plan_complete": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 0.0,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 68.50158181399999,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "RIGHT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "RIGHT",
+          "turn_degrees": 12.857142857142858,
+          "translation_scale": 1.0285714285714285
+        },
+        {
+          "action": "RIGHT",
+          "turn_degrees": 12.857142857142858,
+          "translation_scale": 1.0285714285714285
+        },
+        {
+          "action": "RIGHT",
+          "turn_degrees": 12.857142857142858,
+          "translation_scale": 1.0285714285714285
+        },
+        {
+          "action": "RIGHT",
+          "turn_degrees": 12.857142857142858,
+          "translation_scale": 1.0285714285714285
+        }
+      ],
+      "haiku_requests_total": 0,
+      "plan_complete": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 75.382880381,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 51.42857142857143,
+        "accumulated_yaw_degrees": 51.42857142857143,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    }
+  ],
+  "chunks": [
+    {
+      "index": 0,
+      "path": "chunk-000.mp4",
+      "frames": 13,
+      "pixel_sha256": "c3aaca558ec733ee5426566ed240b29170a115b40b58993e4f1e5384a24d0223",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.6715541309999935,
+        "mp4_encode": 0.7750862780000034
+      },
+      "elapsed_s": 75.379768874,
+      "sha256": "dc4912d8e0651a27629bf08124c497e7b8a1eccef33d2197ecc8f83d8a032ffe"
+    },
+    {
+      "index": 1,
+      "path": "chunk-001.mp4",
+      "frames": 16,
+      "pixel_sha256": "07a91d914d4b1278f92078989a647129d1a770d50d5b23185d88890dadceb315",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.8139818829999967,
+        "mp4_encode": 0.9152064049999922
+      },
+      "elapsed_s": 83.15914471599999,
+      "sha256": "f16a46bb1737458942f06370bfa3ca023aa24c2fdf39618600b3574e8f2ba6ad"
+    }
+  ],
+  "published_score_reproduced": false,
+  "agent_interactions": 0,
+  "simulation_chunk_budget_override": 2,
+  "adapter_sha256": "3f00b9d7b1c886a2b349c5db5f387f1bb1eed938def63712a5cb4c4700e7163e",
+  "controls_sha256": "ef2d9f0c0ba25440964f19c3047108469016a48bfb40c04cc3777a0ade8eba63",
+  "player_sha256": "1f5b59c6d9f872363136f327756632410304150b8b92b4b2b64a53722bf413ff",
+  "deviations": [
+    "Hosted service intentionally excluded.",
+    "Paper LingBot-specific controller/native keyboard timing is not released; HY reference behavior is transferred explicitly.",
+    "Native frame-time chunk quantization and paused API calls differ from browser wall-clock control.",
+    "40Haiku requests is an explicit local budget definition, not verified paper LingBot interaction counting.",
+    "Exact judge alias currently404 with configured released client; preview scores remain qualified."
+  ],
+  "controller_profile": {
+    "profile": "lingbot-local-released-objective-reference-transfer-v1",
+    "task_id": "GC010",
+    "split": "gc",
+    "seed": 42,
+    "world_text": "Turn right 90 degrees, then turn back left to the starting view",
+    "world_text_source": "task.prompt exactly; no static-caption substitution",
+    "simulation_chunks": 2,
+    "max_haiku_requests": 40,
+    "controller": {
+      "profile": "released-hy-hold-check-service-strict-v1",
+      "model": "claude-haiku-4-5-20251001",
+      "released_source_sha256": "d7a90541a19c27cf4c7ed298510fb1585974c85bdd90ea39547150093b287291",
+      "released_function_sha256": {
+        "extract_chat_text": "bbbd952ef1f7f29114ddba22852ec47b26d320e704f708a11624dbbd00a9d7d8",
+        "extract_json_object": "de8634b2568cd9af5c79675560b17bc9c217694438d4ac9c20142524ba485d9e",
+        "claude_viewer_screenshot": "7c888cfcbba52e18be17c4028c50452566e41d6aa2c875612d94364d75849726",
+        "request_claude_hold_decision": "63bdb91f6e06f7d147de553cb0c80e828d1572c1f643e33d7a9ccb33a6194e35",
+        "parse_actions": "d1b23517a023cd7aeec38e8a7b8c23a3afc99802b5d96797900b184ab19bf9c6"
+      },
+      "exact_paper_lingbot_controller": false,
+      "reference_guided": true,
+      "scheduler_policy": null,
+      "remaining_differences": [
+        "No public LingBot player exists; this transfers HY-specific reference-guided behavior, not verified paper LingBot behavior.",
+        "Native generation pauses during SDK calls; released browser controls remain held while the request runs.",
+        "Released prompt uses the latest screenshot only, not an initial/current image pair or arbitrary history.",
+        "Decoded native frames replace browser screenshots; the released JPEG65 then640x360/JPEG45 preprocessing is retained.",
+        "Anthropic SDK replaces the released OpenAI-compatible HTTP proxy; malformed/API failures abort instead of silently continuing.",
+        "Raw response schema and served snapshot are now checked before the permissive released parser; this is intentional fail-closed hardening.",
+        "Only native camera controls are supported; avatar interactions and simultaneous keys are rejected, not synthesized."
+      ],
+      "low_level_service_only": true,
+      "hy_action_parser_and_scheduler_used": false,
+      "shared_dsl_source_sha256": "906e1b993b4261cbb7d56013c4fd3f52676120cc234c5bce497016dd5a7ce6d0",
+      "caller_responsibilities": [
+        "Canonical phase parsing, clock and angle calibration",
+        "Check cadence, minimum hold/release, phase progression and rotation-release policy",
+        "Global interaction budget and extension/correction application"
+      ]
+    },
+    "stock_cache": {
+      "frames": 18,
+      "sink": 6
+    },
+    "backbone_modified": false,
+    "training": false,
+    "streamed_legacy_player": false,
+    "exact_published_baseline_reproduced": false,
+    "judge": {
+      "requested_model": "gemini-3.1-pro",
+      "transport": "released Gemini API client",
+      "silent_alias_fallback": false
+    },
+    "native_capability": "Camera rays only; no trained avatar-action channel is invented.",
+    "remaining_differences": [
+      "Hosted service intentionally excluded.",
+      "Paper LingBot-specific controller/native keyboard timing is not released; HY reference behavior is transferred explicitly.",
+      "Native frame-time chunk quantization and paused API calls differ from browser wall-clock control.",
+      "40Haiku requests is an explicit local budget definition, not verified paper LingBot interaction counting.",
+      "Exact judge alias currently404 with configured released client; preview scores remain qualified."
+    ],
+    "timeline": {
+      "interval_ms": 250,
+      "method": "Nearest cumulative boundary; explicit degree targets divided across their rounded phase steps",
+      "reference_total_ms": 3600,
+      "scheduled_total_ms": 3500,
+      "nominal_turn_rate_for_unspecified_angles": 50,
+      "explicit_angle_phases": 2,
+      "unresolved_angle_phases": 0,
+      "angle_binding": "Text-number heuristic; not validated semantic grounding",
+      "native_translation_normalization_validated": false
+    },
+    "status": "ready_for_generation_validation",
+    "reference_actions": [
+      {
+        "type": "hold",
+        "keys": [
+          "ArrowRight"
+        ],
+        "duration_ms": 1800,
+        "raw": "hold(Right,1800ms)",
+        "index": 0,
+        "rotation_extra_ms": 0,
+        "source": "released shared action DSL; no HY timing conversion",
+        "native_pitch_aliases": []
+      },
+      {
+        "type": "hold",
+        "keys": [
+          "ArrowLeft"
+        ],
+        "duration_ms": 1800,
+        "raw": "hold(Left,1800ms)",
+        "index": 1,
+        "rotation_extra_ms": 0,
+        "source": "released shared action DSL; no HY timing conversion",
+        "native_pitch_aliases": []
+      }
+    ],
+    "generation_blocker": "Canonical controller and fixed-scale conditioning are integrated; full rollout hook execution and output provenance still require runtime validation.",
+    "source_sha256": {
+      "worldsync/lingbot_released_baseline.py": "8ce45ccac4a4c37c615ec37979d3ccac405669c7ab7cfefc0d05024cfb78a9dd",
+      "worldsync/released_reference_player.py": "1f5b59c6d9f872363136f327756632410304150b8b92b4b2b64a53722bf413ff",
+      "worldsync/lingbot_rollout.py": "3f00b9d7b1c886a2b349c5db5f387f1bb1eed938def63712a5cb4c4700e7163e",
+      "worldsync/lingbot_controls.py": "ef2d9f0c0ba25440964f19c3047108469016a48bfb40c04cc3777a0ade8eba63",
+      "worldsync/native_reference_timeline.py": "7e7e8bbd2b62a2cd6ac2ac1cb433d8652ae65d63ad66855e1c055bc044d827c7",
+      "worldsync/camera_conditioning.py": "6c93722a16978998e7164161d5c71d52aed431962b3ea5bab42e8ef138f32fd6",
+      "worldsync/canonical_camera_plan.py": "c551c6681645e643d531fe34c1a4b3aadec948cde0d96646319e1c0a9be44210",
+      "reproduction/baseline-gap/explicit-angle-bindings.json": "852fb14ae3ce4394adb1b4e239656c572e001ded2d14ff20b22fb644f9fb0dc6",
+      "external/PlayWorld/Agent_player/hyworld2/player.py": "d7a90541a19c27cf4c7ed298510fb1585974c85bdd90ea39547150093b287291",
+      "external/PlayWorld/data/gc/data.json": "8ccc32df18bfb4e54a113a0b2793e418c98fb63cc8b2778f9ee4f9c1e37a3d64"
+    },
+    "scope": "runtime smoke only; not benchmark evidence"
+  },
+  "observation_encoding": "lossless PNG before released JPEG stages",
+  "hardware": {
+    "gpu": "NVIDIA H100 PCIe",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4"
+  },
+  "attention_backend": "sdpa",
+  "optional_torch_dlpack_addon_disabled": false,
+  "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+  "checkpoint_loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "turn_clamp": {
+    "mode": "off",
+    "yaw_limits_degrees": null
+  },
+  "generated_frames": 29,
+  "generated_seconds": 1.8125,
+  "termination": "chunk_budget_exhausted",
+  "elapsed_s": 83.165632816,
+  "camera_diagnostics": {
+    "position_normalized_units": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "heading_degrees": 51.42857142857143,
+    "accumulated_yaw_degrees": 51.42857142857143,
+    "yaw_limits_degrees": null,
+    "world_time_seconds": 1.75,
+    "scope": "Intended camera commands only; not measured visual motion or goal completion."
+  },
+  "peak_allocated_bytes": 71873184768
+}
