@@ -1,0 +1,49 @@
+{
+  "scope": "CPU-only isolated NanoKV adapter validation; no GPU or quality result",
+  "tests": {
+    "command": ".venv-lingbot/bin/python -m pytest -q tests/test_lingbot_nanokv.py tests/test_lingbot_commit_forcing.py",
+    "passed": 17,
+    "elapsed_s": 7.41,
+    "nanokv_tests": 8,
+    "existing_commit_forcing_tests": 9
+  },
+  "native_identity": {
+    "dtypes": [
+      "float32",
+      "bfloat16"
+    ],
+    "layers": 2,
+    "chunks_per_dtype": 9,
+    "forwards_per_chunk": 5,
+    "actual_native_layer_forwards_total": 180,
+    "all_outputs_exact": true,
+    "all_clean_reconstructed_kv_exact": true,
+    "cache_indices_exact_each_phase": true,
+    "rolling_capacity_frames": 18,
+    "sink_frames": 6,
+    "parameter_versions_unchanged": true,
+    "binding_hook_namespace_cleanup": true
+  },
+  "real_codec_cpu_checks": {
+    "published_sha256": "b014909923f657b8019203bd581da77e8c6e0880bf7aa80b3eadfbf6a433f458",
+    "weights_only": true,
+    "mmap": true,
+    "metadata_validated_entries": 80,
+    "layers": 40,
+    "rank": 640,
+    "sp_ranks": 1,
+    "joint_dim": 5120,
+    "synthetic_operator_official_int4_math": true,
+    "clean_only_commits_and_pruning": true
+  },
+  "not_validated": [
+    "GPU Triton kernels on current Torch2.6 runtime",
+    "full-model identity58 video parity",
+    "compressed58 quality or memory peak",
+    "PlayWorld scores"
+  ],
+  "files": {
+    "worldsync/lingbot_nanokv.py": "c784c6793153655349938a1c2334c5c40b769544888c780304a157e28d4a081d",
+    "tests/test_lingbot_nanokv.py": "b95ee5c6dc4cc096187d57d279ba0fedc0d5e9ce4700e45b90afe1d04add7351"
+  }
+}
