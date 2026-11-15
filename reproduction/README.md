@@ -1,10 +1,16 @@
 # Local baseline before hillclimbing
 
-**Latest:** [the corrected-native fixed-path comparison](roundtrip-v4/README.md)
-verified moving-camera input parity and rejected the first bounded retrieval
-variant. Both videos failed the realized return; translation/rotation isolation
-comes before further memory tuning. The v3 diagnostic below predates a camera
-ray precision correction and must not be reused as the v4 baseline.
+**Latest:** [the full-history cache pilot](context34-v1/README.md) improves
+returning landmark identity on the isolated native turn-and-return path.
+[Additional frozen comparisons](context-validation-plan.json) check another
+seed and two scenes. These fixed-path mechanism tests do not open adaptive
+benchmark tuning or establish a leaderboard score.
+
+The [corrected-native control tests](roundtrip-v4/README.md) verified camera
+input parity, rejected the first bounded retrieval variant, and isolated
+translation failures from a visibly realized pan/reversal. The latter permits
+testing history loss on actual returning views. The v3 diagnostic below
+predates a camera ray precision correction and is not the corrected baseline.
 
 **Current target: LingBot-World2 14B causal-fast. First complete episode scored;
 control validation remains incomplete.**

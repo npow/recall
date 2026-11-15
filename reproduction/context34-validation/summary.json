@@ -1,0 +1,55 @@
+{
+  "scope": "Predeclared small validation of fixed cache34; not PlayWorld or published-score reproduction",
+  "complete_pairs": 1,
+  "declared_pairs": 3,
+  "settings": {
+    "local_attn_size": 34,
+    "sink_size": 6,
+    "all_other_settings": "native stock"
+  },
+  "results": [
+    {
+      "task_id": "GC007",
+      "seed": 43,
+      "partition": "development",
+      "reason": "new seed on pilot scene",
+      "stock_dino": 0.6802299618721008,
+      "candidate_dino": 0.8136003017425537,
+      "stock_psnr_db": 9.506070272827147,
+      "candidate_psnr_db": 8.57596872877522,
+      "warmed_suffix_s": {
+        "stock": 37.434570166,
+        "context34": 40.969595459000004
+      },
+      "peak_allocated_bytes": {
+        "stock": 80201656320,
+        "context34": 99917301760
+      },
+      "visual_preference": "context34",
+      "visual_assessment": {
+        "A": {
+          "realized_round_trip": "no",
+          "starting_place_recovered": "no",
+          "discontinuity": "yes",
+          "visual_evidence": "Frames 0-9 are a static WAIT on the Primemall facade: triangular roofs, diamond-pattern orange cladding and the 'Primemall' sign left of center. During the RIGHT segment (~10-30), Primemall exits left and a glass building enters from the right. That building has an orange/red 'Wiemi'-like logo, a blue umbrella and a 'Ronguex' storefront banner. The pan across the glass facade (~30-48) is coherent. At ~49 there is an abrupt change: the orange logo is replaced by a white text sign ('Wietmc Tnemc'), and Primemall appears directly abutting the glass building. During the LEFT segment (~50-64), Primemall returns from the left, which is the correct side. However, a lamp post and conifer that were never in the opening view now sit in the foreground. Rotation then continues past Primemall to a new zigzag-roofed brick building with a blue 'Romal'-like sign (~63-78). The video ends on that building, not on the starting Primemall view.",
+          "failure_classification": "Combined camera-control and memory failure. The return yaw overshoots, or the camera drifts, past the start, ending on an unseen, invented building. A landmark is also forgotten or rewritten: the glass building's sign identity changes mid-sequence, and the foreground (tree, lamp post) around Primemall is altered on return."
+        },
+        "B": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "yes",
+          "discontinuity": "no",
+          "visual_evidence": "The first ~48 frames are essentially identical to A: a WAIT on Primemall, a RIGHT pan to the glass building with the orange logo, blue umbrella and 'Ronguex' banner. In B the glass building keeps its orange logo through the reversal (~45-55), and the yellow umbrellas and low orange-banded buildings in the plaza remain consistent. During LEFT (~55-64), Primemall re-enters from the left with the 'Primemall' sign, diamond cladding and twin triangular roofs intact, and the glass building recedes right. By ~65-78 Primemall is again the dominant centered subject with legible signage and the same roof geometry. Residual drift exists: the final view is closer and tilted more upward, the building sits slightly right of its original position, and large blue umbrellas and planters occupy the left foreground where the opening frame showed an open plaza. There are no hard cuts or sign swaps.",
+          "failure_classification": "Largely successful round trip with moderate pose drift: an apparent forward translation and upward tilt, plus some invented foreground. Landmark identity, sign text and main geometry persist, so there is no evidence of forgetting or reset."
+        },
+        "preference": "B",
+        "confidence": "high",
+        "reasoning": "Both videos execute the WAIT and RIGHT phases identically, so the outcome hinges on the reversal. In B the glass building keeps its logo and the camera rotates back to Primemall with consistent signage and geometry, reaching a recognizable near-start view without discontinuities. Its main flaw is viewpoint drift and some altered foreground. In A the glass building's sign abruptly changes at ~frame 49, new foreground objects appear around Primemall, and the camera keeps rotating past the start to end on an unseen 'Romal' building. That makes A a failed return (overshoot or drift) compounded by landmark inconsistency."
+      },
+      "label_mapping": {
+        "A": "stock",
+        "B": "context34"
+      }
+    }
+  ],
+  "caveat": "Fixed-path memory mechanism validation, not an adaptive PlayWorld score or a claim about minute-long worlds."
+}

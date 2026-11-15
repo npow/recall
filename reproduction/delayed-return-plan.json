@@ -1,0 +1,28 @@
+{
+  "scope": "Predeclared long-delay mechanism stress test; not adaptive PlayWorld",
+  "task_id": "GC007",
+  "seed": 42,
+  "path": "turn_wait_return",
+  "chunks": 16,
+  "simulated_seconds": 15.8125,
+  "delay_seconds_facing_away": 8,
+  "modes": [
+    "stock18",
+    "context34",
+    "sink_rephase18"
+  ],
+  "hypothesis": "Test whether the short-path cache benefit persists when the return exceeds both rolling windows; independently test native-budget sink rephasing.",
+  "cache_limit": "64 latent frames exceed both18 and34 cache capacities; neither candidate retains full history",
+  "expected_sink_intervention_chunks": [
+    14,
+    15
+  ],
+  "fixed_settings": "Same source, weights, sampler, initial image, seed and native camera tensors for all modes",
+  "evaluation": [
+    "Full-video continuity and realized reversal",
+    "Return identity with DINO endpoint and geometry/text evidence",
+    "Explicit reporting of failures; no success credit for frozen motion or resets",
+    "Native camera audit and exact raw-pixel prefix to intervention",
+    "Peak memory and warmed timing"
+  ]
+}

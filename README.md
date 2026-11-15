@@ -1,11 +1,20 @@
 # WorldSync
 
-**Current milestone: verify the persistent adapter and measure a local stock baseline.**
+**Current milestone: test whether retained history improves actual revisits.**
 
-We have not measured the complete LingBot local baseline yet.
-The previous ABot runs are exploratory and excluded from reproduction evidence.
-The experiment CLIs now default to stock and block modified memory policies until
-a verified reproduction report exists.
+Native moving-camera input parity is verified. Complete local stock episodes
+show substantial seed and player variance; see the [five-seed diagnostic](reproduction/GC007-v5-seeds.json).
+We have not reproduced the published overall score. Adaptive tuning remains
+gated; explicitly declared native fixed-path experiments run separately.
+
+The [full-history pilot](reproduction/context34-v1/README.md) retains 34 instead
+of 18 latent frames. On one turn-and-return scene it recovers the starting
+building better: endpoint DINO similarity rises from 0.579 to 0.848 and the
+blinded full-video review prefers it. It costs 25% more peak GPU memory and
+about 10% more warmed generation time in this pair. This is a short diagnostic,
+not a PlayWorld score. [Frozen additional seed/scene comparisons](reproduction/context-validation-plan.json)
+test whether it generalizes. The [earlier retrieval trial](reproduction/roundtrip-v4/README.md)
+failed and remains published.
 
 The current model is **LingBot-World2 14B causal-fast**. Its hosted service scored
 **1.82** in the published PlayWorld table; that does not establish a score for
@@ -31,7 +40,7 @@ No replacement controller or judge will be labeled as numerical
 reproduction. The earlier no-Gemini instruction remains in effect.
 
 The [historical implementation](docs/exploratory-setup.md) and
-[exploratory results](results/) are preserved for inspection. They cannot justify
-starting optimization. API credentials, weights and downloaded benchmark media
+[exploratory ABot results](results/) are preserved for inspection and excluded
+from LingBot reproduction evidence. API credentials, weights and downloaded benchmark media
 remain outside Git. Tested changes and audit results are pushed to this private
 repository as they are completed.

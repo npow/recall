@@ -1,0 +1,119 @@
+{
+  "comparison": "context",
+  "cache_frames": {
+    "stock": 18,
+    "candidate": 34
+  },
+  "scope": "single controlled development round trip; no PlayWorld score or SOTA claim",
+  "matched_settings": {
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v5",
+    "task_id": "GC007",
+    "split": "gc",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "seed": 43,
+    "fps": 16,
+    "max_chunks": 8,
+    "max_area": 399360,
+    "chunk_size": 4,
+    "sink_size": 6,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "fixed_actions": [
+      "WAIT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "LEFT",
+      "LEFT",
+      "LEFT",
+      "WAIT"
+    ]
+  },
+  "native_camera_inputs_verified": true,
+  "pre_intervention_pixel_identical_chunks": 4,
+  "modified_chunks": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "stock_wall_s": 137.573051672,
+  "candidate_wall_s": 133.414266011,
+  "stock_peak_allocated_bytes": 80201656320,
+  "candidate_peak_allocated_bytes": 99917301760,
+  "memory": null,
+  "caveat": "Commanded camera closure does not prove realized closure. Endpoint image similarity cannot establish world memory if the realized route fails.",
+  "stock": {
+    "endpoint_psnr_db": 9.506070272827147,
+    "video_sha256": "f1f97214db692ffe1cd5a080ffebea90ed32c21ad69c461b7635add6616f8c87",
+    "endpoint_dino_cosine": 0.6802299618721008
+  },
+  "context34": {
+    "endpoint_psnr_db": 8.57596872877522,
+    "video_sha256": "b33c94768784238f8b2f0aae040a3b2b8ebfbd0eeea7a2c4e795eebaadce021e",
+    "endpoint_dino_cosine": 0.8136003017425537
+  },
+  "candidate_label": "context34",
+  "warmed_suffix_s": {
+    "stock": 37.434570166,
+    "context34": 40.969595459000004
+  },
+  "feature_model": {
+    "name": "facebook/dinov2-small",
+    "revision": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+    "feature": "normalized CLS token"
+  },
+  "visual_judge": {
+    "model": "claude-opus-5-5",
+    "response_id": "msg_011Ch3siP8ZQuFcU6a3D2qpG",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 26419,
+      "output_tokens": 2270,
+      "output_tokens_details": {
+        "thinking_tokens": 1054
+      },
+      "server_tool_use": null,
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "label_mapping": {
+      "A": "stock",
+      "B": "context34"
+    },
+    "prompt": "Evaluate two anonymized world-model videos independently and then compare. Each was given the same image and fixed camera path. Commands by one-second chunk: ['WAIT', 'RIGHT', 'RIGHT', 'RIGHT', 'LEFT', 'LEFT', 'LEFT', 'WAIT']. RIGHT and LEFT yaw 60 degrees per second; W moves forward. Commands are NOT proof that motion happened. Inspect actual frames. Assess whether each video realizes a turnaround and return to the starting viewpoint; whether persistent landmark identity, any sign text, geometry and spatial layout match on return; and whether there are sudden jumps, frozen motion or implausible transitions. Distinguish camera-control failures from forgetting. Do not reward a similar final building if reaching it required a reset. Do not invent unseen geometry. Return English JSON with keys A and B (each with realized_round_trip: yes|no|uncertain, starting_place_recovered: yes|no|uncertain, discontinuity: yes|no|uncertain, visual_evidence, failure_classification), preference: A|B|tie|neither, confidence: low|medium|high, and reasoning. This is a diagnostic comparison, not a benchmark score.",
+    "prompt_sha256": "e1a922549def88b7dd266ebc3078977ba7d30afcfab87ca2cd6f81bdfebddc76",
+    "result": {
+      "A": {
+        "realized_round_trip": "no",
+        "starting_place_recovered": "no",
+        "discontinuity": "yes",
+        "visual_evidence": "Frames 0-9 are a static WAIT on the Primemall facade: triangular roofs, diamond-pattern orange cladding and the 'Primemall' sign left of center. During the RIGHT segment (~10-30), Primemall exits left and a glass building enters from the right. That building has an orange/red 'Wiemi'-like logo, a blue umbrella and a 'Ronguex' storefront banner. The pan across the glass facade (~30-48) is coherent. At ~49 there is an abrupt change: the orange logo is replaced by a white text sign ('Wietmc Tnemc'), and Primemall appears directly abutting the glass building. During the LEFT segment (~50-64), Primemall returns from the left, which is the correct side. However, a lamp post and conifer that were never in the opening view now sit in the foreground. Rotation then continues past Primemall to a new zigzag-roofed brick building with a blue 'Romal'-like sign (~63-78). The video ends on that building, not on the starting Primemall view.",
+        "failure_classification": "Combined camera-control and memory failure. The return yaw overshoots, or the camera drifts, past the start, ending on an unseen, invented building. A landmark is also forgotten or rewritten: the glass building's sign identity changes mid-sequence, and the foreground (tree, lamp post) around Primemall is altered on return."
+      },
+      "B": {
+        "realized_round_trip": "yes",
+        "starting_place_recovered": "yes",
+        "discontinuity": "no",
+        "visual_evidence": "The first ~48 frames are essentially identical to A: a WAIT on Primemall, a RIGHT pan to the glass building with the orange logo, blue umbrella and 'Ronguex' banner. In B the glass building keeps its orange logo through the reversal (~45-55), and the yellow umbrellas and low orange-banded buildings in the plaza remain consistent. During LEFT (~55-64), Primemall re-enters from the left with the 'Primemall' sign, diamond cladding and twin triangular roofs intact, and the glass building recedes right. By ~65-78 Primemall is again the dominant centered subject with legible signage and the same roof geometry. Residual drift exists: the final view is closer and tilted more upward, the building sits slightly right of its original position, and large blue umbrellas and planters occupy the left foreground where the opening frame showed an open plaza. There are no hard cuts or sign swaps.",
+        "failure_classification": "Largely successful round trip with moderate pose drift: an apparent forward translation and upward tilt, plus some invented foreground. Landmark identity, sign text and main geometry persist, so there is no evidence of forgetting or reset."
+      },
+      "preference": "B",
+      "confidence": "high",
+      "reasoning": "Both videos execute the WAIT and RIGHT phases identically, so the outcome hinges on the reversal. In B the glass building keeps its logo and the camera rotates back to Primemall with consistent signage and geometry, reaching a recognizable near-start view without discontinuities. Its main flaw is viewpoint drift and some altered foreground. In A the glass building's sign abruptly changes at ~frame 49, new foreground objects appear around Primemall, and the camera keeps rotating past the start to end on an unseen 'Romal' building. That makes A a failed return (overshoot or drift) compounded by landmark inconsistency."
+    }
+  }
+}
