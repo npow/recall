@@ -1,0 +1,114 @@
+{
+  "case": "GC007",
+  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v5",
+  "scope": "variance check on one case; Claude Opus judge, not Gemini; not a benchmark score",
+  "hardware": "Modal H200 per seed",
+  "modal_run": "seeds-1794706197",
+  "episodes": [
+    {
+      "seed": 1,
+      "visual_consistency_score": 4.0,
+      "trajectory_gate": "partial",
+      "revisit_observed": "no",
+      "chunks": 22,
+      "player_interactions": 23,
+      "termination": "agent_end",
+      "camera_diagnostics": {
+        "chunks": 22,
+        "path_length": 75.0,
+        "net_yaw_degrees": -179.99999999999997,
+        "total_turn_degrees": 179.99999999999997,
+        "max_distance_from_start": 35.0,
+        "final_distance_from_start": 5.0,
+        "revisited_start_at_chunk": 17,
+        "wait_chunks": 0,
+        "wait_pose_changes": 0
+      }
+    },
+    {
+      "seed": 2,
+      "visual_consistency_score": 1.8,
+      "trajectory_gate": "pass",
+      "revisit_observed": "yes",
+      "chunks": 25,
+      "player_interactions": 26,
+      "termination": "agent_end",
+      "camera_diagnostics": {
+        "chunks": 25,
+        "path_length": 91.0,
+        "net_yaw_degrees": 0.0,
+        "total_turn_degrees": 0.0,
+        "max_distance_from_start": 37.0,
+        "final_distance_from_start": 37.0,
+        "revisited_start_at_chunk": 11,
+        "wait_chunks": 2,
+        "wait_pose_changes": 0
+      }
+    },
+    {
+      "seed": 3,
+      "visual_consistency_score": 4.0,
+      "trajectory_gate": "partial",
+      "revisit_observed": "yes",
+      "chunks": 13,
+      "player_interactions": 14,
+      "termination": "agent_end",
+      "camera_diagnostics": {
+        "chunks": 13,
+        "path_length": 51.0,
+        "net_yaw_degrees": 0.0,
+        "total_turn_degrees": 0.0,
+        "max_distance_from_start": 23.0,
+        "final_distance_from_start": 5.0,
+        "revisited_start_at_chunk": 11,
+        "wait_chunks": 0,
+        "wait_pose_changes": 0
+      }
+    },
+    {
+      "seed": 4,
+      "visual_consistency_score": 2.1,
+      "trajectory_gate": "partial",
+      "revisit_observed": "no",
+      "chunks": 36,
+      "player_interactions": 37,
+      "termination": "agent_end",
+      "camera_diagnostics": {
+        "chunks": 36,
+        "path_length": 87.0,
+        "net_yaw_degrees": 0.0,
+        "total_turn_degrees": 720.0,
+        "max_distance_from_start": 41.0,
+        "final_distance_from_start": 41.0,
+        "revisited_start_at_chunk": 11,
+        "wait_chunks": 3,
+        "wait_pose_changes": 0
+      }
+    },
+    {
+      "seed": 5,
+      "visual_consistency_score": 1.0,
+      "trajectory_gate": "fail",
+      "revisit_observed": "no",
+      "chunks": 14,
+      "player_interactions": 15,
+      "termination": "agent_end",
+      "camera_diagnostics": {
+        "chunks": 14,
+        "path_length": 47.0,
+        "net_yaw_degrees": 0.0,
+        "total_turn_degrees": 0.0,
+        "max_distance_from_start": 19.0,
+        "final_distance_from_start": 9.0,
+        "revisited_start_at_chunk": 9,
+        "wait_chunks": 2,
+        "wait_pose_changes": 0
+      }
+    }
+  ],
+  "score_mean": 2.58,
+  "score_stdev": 1.36,
+  "score_min": 1.0,
+  "score_max": 4.0,
+  "note": "Seed 42 run (gate-1794705110, same protocol) scored 2.2 partial; the Haiku player is not seeded."
+}

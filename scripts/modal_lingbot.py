@@ -112,6 +112,38 @@ def gate_and_one_case(run_id: str, case: str = "gc:GC007"):
     return report
 
 
+@app.function(image=image, gpu="H200", volumes={"/weights": weights, "/results": results},
+    secrets=[modal.Secret.from_dict({"ANTHROPIC_API_KEY": _key()})], timeout=4 * 3600, max_containers=8)
+def seed_case(run_id: str, seed: int, case: str = "gc:GC007"):
+    """One scored episode at one seed, through the suite code; gate is assumed passed."""
+    out = Path("/results") / run_id / f"seed-{seed}"
+    out.mkdir(parents=True, exist_ok=True)
+    raw = Path(f"{PROJECT}/external/LingBot-World2/checkpoints")
+    raw.mkdir(parents=True, exist_ok=True)
+    link = raw / "lingbot-world-v2-14b-causal-fast"
+    if not link.exists():
+        link.symlink_to("/weights/14b-causal-fast")
+    start = time.monotonic()
+    code = sh([sys.executable, "-u", "-m", "worldsync.evaluate", "--model", "lingbot", "--only", case, "--judge",
+        "--seed", str(seed), "--output", str(out / "suite")], out / "suite.log")
+    suite = json.loads((out / "suite/suite.json").read_text()) if (out / "suite/suite.json").exists() else {}
+    summary = {"seed": seed, "exit": code, "wall_s": round(time.monotonic() - start, 1), "runs": suite.get("runs")}
+    (out / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+    results.commit()
+    return summary
+
+
+@app.local_entrypoint()
+def seeds(seeds: str = "1,2,3,4,5", case: str = "gc:GC007"):
+    """Fan out one episode per seed on separate GPUs. Never the full suite."""
+    if not _key():
+        raise SystemExit("ANTHROPIC_API_KEY missing locally")
+    run_id = f"seeds-{int(time.time())}"
+    print("run_id", run_id, flush=True)
+    for summary in seed_case.starmap([(run_id, int(s), case) for s in seeds.split(",")]):
+        print(json.dumps(summary), flush=True)
+
+
 @app.local_entrypoint()
 def main(case: str = "gc:GC007"):
     if not _key():

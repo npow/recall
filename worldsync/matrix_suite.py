@@ -29,6 +29,7 @@ def main():
     parser.add_argument("--smoke", action="store_true", help="Four explicit integration cases, one per split; no overall score")
     parser.add_argument("--only", nargs="+", metavar="SPLIT:TASK",
         help="Run only these cases (e.g. gc:GC007) to verify the pipeline; no overall score")
+    parser.add_argument("--seed", type=int, default=42, help="LingBot generation seed (default 42)")
     parser.add_argument("--publish-status", action="store_true")
     parser.add_argument("--judge", action="store_true", help="Claude diagnostics with released rubric; never official Gemini reproduction")
     parser.add_argument("--dry-run", action="store_true")
@@ -41,6 +42,10 @@ def main():
     knob_args = [] if lingbot_tuning.is_stock(knobs) else [
         "--local-attn-size", str(knobs["local_attn_size"]), "--sink-size", str(knobs["sink_size"]),
         "--decision-interval", str(knobs["decision_interval"])]
+    if args.seed != 42:
+        if args.model != "lingbot":
+            parser.error("--seed applies to LingBot only")
+        knob_args += ["--seed", str(args.seed)]
     if args.max_chunks is None:
         args.max_chunks = 40 if args.model == "lingbot" else 25
     if args.model == "lingbot":
