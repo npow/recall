@@ -34,6 +34,8 @@ def main():
     parser.add_argument("--native-fixed-controls", action="store_true", help="Use native precomputed poses and audit online camera embeddings")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--turn-degrees-per-second", type=float, default=60)
+    parser.add_argument("--adaptive-retrieval-pilot", action="store_true",
+                        help="Separate GC027 adaptive protocol:30deg/s, initial neutral chunk, optional frozen four-view memory")
     parser.add_argument("--pose-retrieval", action="store_true", help="Experimental bounded early-view retrieval on native fixed paths")
     parser.add_argument("--retrieved-frames", type=int, choices=(4, 8), default=4)
     parser.add_argument("--retrieval-selection", choices=("nearest", "diverse"), default="nearest")
@@ -61,9 +63,11 @@ def main():
     lingbot_tuning.add_arguments(parser)
     args = parser.parse_args()
     knobs = lingbot_tuning.resolve(args, parser)
+    from worldsync import lingbot_adaptive_pilot
+    lingbot_adaptive_pilot.validate(args, knobs, parser)
     if not 0 < args.turn_degrees_per_second <= 90:
         parser.error("turn rate must be in (0,90] degrees per second")
-    if args.turn_degrees_per_second != 60 and not args.native_fixed_controls:
+    if args.turn_degrees_per_second != 60 and not args.native_fixed_controls and not args.adaptive_retrieval_pilot:
         parser.error("non-stock turn rates are confined to declared native fixed-path tests")
     if not 1 <= args.max_chunks <= 60:
         parser.error("chunk budget must be in [1,60]")
@@ -80,7 +84,7 @@ def main():
     diagnostics = [args.pose_retrieval, args.rephase_sink, args.kv_retention, args.decoprune, args.reanchor, args.budget_memory]
     if sum(diagnostics) > 1:
         parser.error("memory ablations must be tested separately")
-    if (any(diagnostics) or args.denoise_schedule != "stock") and not args.native_fixed_controls:
+    if (any(diagnostics) or args.denoise_schedule != "stock") and not args.native_fixed_controls and not args.adaptive_retrieval_pilot:
         parser.error("retrieval calibration requires native fixed controls")
     if args.rephase_sink and not lingbot_tuning.is_stock(knobs):
         parser.error("sink rephasing requires the stock 18-frame/6-sink budget")
@@ -105,13 +109,16 @@ def main():
     stationary = args.split == "insight"
     maximum = min(args.max_chunks, 60 if stationary else 40)
     frames = maximum * 16 - 3
-    report = {"status": "prepared", "model": "LingBot-World2 14B causal-fast stock", "protocol_id": PROTOCOL_ID,
+    report = {"status": "prepared", "model": "LingBot-World2 14B causal-fast stock", "protocol_id": lingbot_adaptive_pilot.PROTOCOL if args.adaptive_retrieval_pilot else PROTOCOL_ID,
         "source_revision": revision, "checkpoint_revision": WEIGHT_REVISION,
         "initial_image_sha256": hashlib.sha256(initial.read_bytes()).hexdigest(),
         "image_caption_sha256": hashlib.sha256(task["image_caption"].encode()).hexdigest(), "task_id": args.task_id,
         "split": args.split, "seed": args.seed, "turn_degrees_per_second": args.turn_degrees_per_second, "fps": 16, "max_chunks": maximum, "max_interactions": 40,
         "native_fixed_controls": args.native_fixed_controls, "camera_embedding_audit": [],
         "pose_retrieval": args.pose_retrieval, "sink_rephase": args.rephase_sink,
+        "adaptive_retrieval_pilot": args.adaptive_retrieval_pilot,
+        "player_temperature": "provider default",
+        "initial_neutral_bootstrap": args.adaptive_retrieval_pilot,
         "kv_retention": args.kv_retention, "decoprune": args.decoprune, "reanchor": args.reanchor,
         "budget_memory": args.budget_memory, "denoise_schedule": args.denoise_schedule,
         "text_encoder_offloaded_after_encoding": args.offload_text_encoder,
@@ -233,7 +240,9 @@ def main():
             if index == 0 and args.offload_text_encoder:
                 pipeline.text_encoder.model.cpu()
                 torch.cuda.empty_cache()
-            if stationary:
+            if args.adaptive_retrieval_pilot and index == 0:
+                decision, metadata = {"operation": "KEEP", "action": "WAIT", "reason": "declared neutral bootstrap"}, {"bootstrap": True}
+            elif stationary:
                 decision, metadata = {"operation": "KEEP", "action": "WAIT", "reason": "stationary observation"}, {}
             elif args.fixed_actions:
                 if index >= len(args.fixed_actions):
@@ -245,7 +254,8 @@ def main():
             else:
                 decision, metadata = decide(client, task, initial, latest,
                     [{key: action[key] for key in ("operation", "action", "reason")} for action in report["actions"]],
-                    commanded_state=camera.commanded_state())
+                    commanded_state=(lingbot_adaptive_pilot.player_state(camera) if args.adaptive_retrieval_pilot
+                                     else camera.commanded_state()))
                 report["agent_interactions"] += 1
             report["actions"].append({**decision, **metadata, "pose_before": camera.commanded_state(),
                                       "elapsed_s": time.monotonic() - started})

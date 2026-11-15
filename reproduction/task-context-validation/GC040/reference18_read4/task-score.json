@@ -1,0 +1,492 @@
+{
+  "task_id": "GC040",
+  "judge_provider": "anthropic",
+  "judge_model": "claude-opus-5-5",
+  "playworld_revision": "eeaea12e050a90b815d11d030e943e7b3181da21",
+  "dry_run": false,
+  "mode": "both",
+  "video_sha256": "0f7627425caf7aecc53b652d1977f3b96309630134106cab9611eef1839fc26d",
+  "protocol_warning": "Claude judge and custom controller differ from the published PlayWorld protocol; do not compare directly with its leaderboard.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "GC040",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "\u955c\u5934\u5148\u5411\u53f3\u5e73\u79fb/\u8f6c\u5411\uff0c\u521d\u59cb\u7684\u767d\u7070\u53cc\u5e10\u7bf7\u5411\u753b\u9762\u5de6\u4fa7\u79fb\u51fa\uff0c\u53f3\u4fa7\u65b0\u7684\u5e10\u7bf7\u3001\u9ec4\u8272\u6876\u548c\u6811\u6797\u4f9d\u6b21\u8fdb\u5165\uff1b\u968f\u540e\u957f\u65f6\u95f4\u57fa\u672c\u9759\u6b62\uff1b\u6700\u540e\u955c\u5934\u5411\u5de6\u8f6c\u56de\uff0c\u53cc\u5e10\u7bf7\u4e0e\u6d77\u9762\u91cd\u65b0\u56de\u5230\u753b\u9762\u4e2d\u592e\u9644\u8fd1\uff0c\u63a5\u8fd1\u8d77\u59cb\u671d\u5411\u3002",
+    "trajectory_evidence_zh": "0.0-1.0\u79d2\uff1a\u8d77\u59cb\u89c6\u89d2\u4e3a\u6d77\u9762\u524d\u7684\u4e24\u9876\u5e10\u7bf7\uff0c\u753b\u9762\u57fa\u672c\u9759\u6b62\u30021.0-2.5\u79d2\uff1a\u573a\u666f\u6574\u4f53\u5411\u5de6\u79fb\u52a8\uff0c\u53f3\u4fa7\u5750\u4eba\u7684\u5e10\u7bf7\u3001\u84dd\u8272\u6905\u5b50\u548c\u9ec4\u8272\u6876\u4f9d\u6b21\u8fdb\u5165\uff0c\u8868\u660e\u955c\u5934\u5728\u53f3\u8f6c\u30022.5\u79d2\u5de6\u53f3\uff1a\u53f3\u8f6c\u7ed3\u675f\uff0c\u89c6\u89d2\u7a33\u5b9a\u5728\u5927\u5e10\u7bf7\u3001\u9ec4\u8272\u6876\u548c\u53f3\u4fa7\u6811\u6797\u4e00\u5e26\u30022.5-11.5\u79d2\uff1a\u89c6\u89d2\u57fa\u672c\u9759\u6b62\u3002\u7ea611.5-12.5\u79d2\uff1a\u573a\u666f\u5411\u53f3\u79fb\u52a8\uff0c\u9ec4\u8272\u6876\u4e0e\u53f3\u4fa7\u5e10\u7bf7\u79fb\u51fa\u753b\u9762\u53f3\u4fa7\uff0c\u53cc\u5e10\u7bf7\u4ece\u5de6\u4fa7\u56de\u5230\u753b\u9762\uff0c\u8868\u660e\u955c\u5934\u5728\u5de6\u8f6c\u300212.5-13.8\u79d2\uff1a\u6062\u590d\u4e3a\u4ee5\u53cc\u5e10\u7bf7\u548c\u6d77\u9762\u4e3a\u4e3b\u7684\u8d77\u59cb\u65b9\u5411\uff0c\u4ec5\u5b58\u5728\u8f7b\u5fae\u7684\u504f\u79fb\u548c\u4f4d\u7f6e\u5dee\u5f02\u3002",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 4
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 4.0,
+    "final_score_1_to_5": 3.75,
+    "category_scores_1_to_5": {
+      "identity_id": {
+        "score": 4,
+        "weight": 2.0,
+        "answer": "partial",
+        "evidence_zh": "In the initial region (frames 0-12), the two tents, the red-cap person on the left, the yellow pool noodle and the blue chair are present. After the left turn back (frames 120-138), the white/green tent and the grey/green tent reappear with the same structure. The red-cap person is still on the left side of the white tent, and the noodle and inflatables are on the sand. The blue chair is partly cropped by the right edge but is visible in frames 121-125. The red-cap person inside the new tent on the right belongs to a newly revealed region and is not counted as a duplicate. Mid-turn regions are new. The large tent and yellow boat in the left foreground at the end belong to the overshoot region left of the starting frame. No identity mutation of key objects was found."
+      },
+      "identity_texture": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "After the return, the white tent panels and seams, the grey tent's framed structure and the sand texture are broadly consistent with frames 0-5. The ocean waves are also continuous and stable. The new region on the right is noticeably more saturated with a smoother texture, but it is a different region. No persistent noise on the same surface was confirmed."
+      },
+      "color": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "The tents' lime green, white and grey, the red cap, the yellow noodle and the blue chair keep the same hues on return (frame 0 vs 125-138). The sky shifts from overcast to clear blue during the right turn (frames 15-24) and back to overcast on return. This is a change in the scene region and lighting, not a hue drift on a listed object, so it is noted only as possible."
+      },
+      "relative_position": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "After the return, the order is red-cap person / white tent / grey tent / blue chair, matching the start. The shoreline and horizon stay continuous. On the outbound turn, the new tent and yellow bucket enter from the right edge and leave the same way on return, with consistent ordering. After the right turn the ocean is still in front of the camera, which is somewhat implausible geometrically, so the score is not raised to the maximum."
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored",
+      "other_excluded_if_any": "none"
+    },
+    "static_tail_policy_applied": "After the right turn, the camera holds still for about 9 seconds (frames ~25-115), which counts as a pause after valid progress. It then pans back left. There is no full-video freeze.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 124,
+      "evidence_zh": "Frames 0-25 pan right into the new tent area. Frames 115-124 pan back left to the initial two-tent view. Frames 125-138 continue slightly further left, a small overshoot."
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "The horizon and sand-water boundary are continuous. The sky changes from overcast to clear during the right turn, and trees and dunes appear in the new region. Brightness is inconsistent across the scene, but there is no hard reset.",
+      "post_completion_phase_zh": "Frames 125-138 continue left, revealing a large tent, a blue chair and a yellow boat in the left foreground. This is a newly revealed region, and the initial tent area stays stable."
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "Initial white tent and grey tent vs. the two tents after the return",
+        "anchors": [
+          "shoreline/sand-water boundary",
+          "ocean horizon",
+          "red-cap person to the left of the tent",
+          "inflatables on the sand"
+        ],
+        "same_object_or_region": "yes"
+      },
+      {
+        "comparison": "Initial red-cap person vs. red-cap person inside the right-side new tent",
+        "anchors": [
+          "tent position",
+          "shoreline"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-25",
+        "25-115",
+        "115-125",
+        "125-138"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "ocean horizon",
+        "sand-water boundary",
+        "white tent",
+        "yellow bucket"
+      ],
+      "newly_revealed_regions_zh": "The tent with the masked red-cap person on the right, the yellow bucket, the large green tent and the trees are new regions. The large tent and yellow boat in the left foreground at the end are also new regions.",
+      "evidence_zh": "Objects move continuously into and out of the frame edges, consistent with a right pan followed by a left pan."
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "The transitions are continuous pans with no anchor contradictions."
+    },
+    "post_completion_adjustment": {
+      "value": -0.25,
+      "evidence_zh": "After the return, the camera keeps turning slightly left, moving the white tent to the center and revealing a new region on the left. This is a small overshoot."
+    },
+    "final_state_check": {
+      "window": "125-138",
+      "visible_key_objects": [
+        "white/green tent",
+        "grey/green tent (partly cropped)",
+        "red-cap person",
+        "yellow pool noodle"
+      ],
+      "reappearance_consistency_zh": "The tent structure, the person's position and the inflatables/noodle on the sand match the start. The blue chair is cropped by the right edge."
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 4,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [
+        "horizon",
+        "tents"
+      ],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "The camera turns right and then returns.",
+      "evidence_zh": "The camera rotation is clearly visible.",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "no",
+      "ink_change_type": "none",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "There is a clear right turn followed by a left turn back.",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "white tent",
+        "grey tent",
+        "red cap",
+        "yellow noodle",
+        "blue chair"
+      ],
+      "correspondence_anchors": [
+        "horizon",
+        "shoreline",
+        "tent positions"
+      ],
+      "visible_intervals": [
+        "0-12",
+        "118-138"
+      ],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "possible",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "lighting",
+      "evidence_zh": "Key object hues stay consistent on return. The sky and lighting change with the new region, which is not a same-surface drift."
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "yes",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "not_applicable",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "first-person",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "no",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "yes",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "the two initial tents and the red-cap person",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "colors",
+        "materials",
+        "surface_appearance"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "On return, the tents and the person match their initial appearance."
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 4,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": null,
+      "evidence_zh": "The camera action is effective, so identity can be weighted normally."
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 4,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "none",
+      "positive_evidence_zh": "The camera rotation is continuous.",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": 4
+    },
+    "summary_zh": "The camera turns right into a new tent area and then returns. The initial two tents, the red-cap person and the yellow noodle reappear consistently, but the sky and lighting change sharply across regions and the return slightly overshoots to the left."
+  },
+  "reported_score": 3.75,
+  "calls": [
+    {
+      "mode": "gate",
+      "model": "claude-opus-5-5",
+      "response_id": "msg_011Ch46zwNkR6Y4uCDqKWuHC",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 22502,
+        "output_tokens": 497,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      }
+    },
+    {
+      "mode": "score",
+      "model": "claude-opus-5-5",
+      "response_id": "msg_011Ch471yKMdoDBkkqVjREbL",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 44707,
+        "output_tokens": 5967,
+        "output_tokens_details": {
+          "thinking_tokens": 1633
+        },
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      }
+    }
+  ],
+  "input_normalization": {
+    "original_perspective": "first person",
+    "metric_perspective": "first-person"
+  },
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 139,
+      "sheets_count": 6,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 13.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 138,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 13.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 7,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 12.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 6,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 12.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "50dbb9278ced8de546dd0317c9622d28ed81c157af367e14deb89f87d96c26f7",
+  "score_prompt_sha256": "a5074925b11471089995d15e542e58b50fbdad27430d62e45fbcda1a2e27d01d"
+}

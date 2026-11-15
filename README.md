@@ -18,13 +18,23 @@ explicitly. This is a local subset result, not a published PlayWorld score.
 [Preserving recent context](reproduction/protected-recent-memory/summary.json)
 lets eight historical views run without the earlier resets on the development
 scene. Blinded comparisons weakly prefer this22-frame variant; fresh-image and
-new-seed validation is pending. The validated four-view method remains the default.
+new-seed checks also weakly prefer it, but task confirmation below does not. The validated four-view method remains the default.
 
 [Temporary-buffer release](reproduction/lingbot-read-cache-lifetime/README.md)
 reduces peak GPU allocation by1.59GB with all32chunks pixel-identical.
 [FlashAttention4 measurements](reproduction/lingbot-attention-optimization.md)
 show about1.9x faster attention and16% faster warm stock generation onH100.
-Cold startup still limits short-trial speed; pipeline-reuse checks are running.
+[Pipeline reuse](reproduction/lingbot-batch-validation/) preserves all42 raw chunk
+hashes across three moving-camera scenes and removes repeated model loading.
+
+[Task confirmation](reproduction/task-context-validation/summary.json) rejects
+promoting eight-view retrieval: fresh three-task means are3.95 for four views
+and3.63 for eight. Separately normalized attention gates also fail full-video
+review. The four-view method remains selected.
+
+[Judge repeatability](reproduction/judge-repeatability.json) is limited: the
+same beach video and identical prompts scored2.7 and3.75 in separate calls.
+Treat small differences as uncertain and inspect complete videos.
 
 [The four/eight-view ablation](reproduction/multiview-retrieval/README.md) finds
 that eight historical views degrade continuity when they displace recent

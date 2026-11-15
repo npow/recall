@@ -1,0 +1,139 @@
+{
+  "mode": "stock",
+  "seed": 42,
+  "workspace": "nissan-pow",
+  "result_directory": "adaptive-four-view-stock-GC027-seed42-1794719612100788055",
+  "returncode": 1,
+  "run": {
+    "status": "failed",
+    "model": "LingBot-World2 14B causal-fast stock",
+    "protocol_id": "lingbot-world2-adaptive-four-view-pilot-v1",
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "initial_image_sha256": "cfe324c6dacbb91123a74ad7d5c80f75fe4bd5e3cfd040af201e4ee0742cd33f",
+    "image_caption_sha256": "58e9282a2acfdc3b580ea4b33b69ea092305a35869f31226b2981a2e17cbcf65",
+    "task_id": "GC027",
+    "split": "gc",
+    "seed": 42,
+    "turn_degrees_per_second": 30.0,
+    "fps": 16,
+    "max_chunks": 40,
+    "max_interactions": 40,
+    "native_fixed_controls": false,
+    "camera_embedding_audit": [],
+    "pose_retrieval": false,
+    "sink_rephase": false,
+    "adaptive_retrieval_pilot": true,
+    "player_temperature": 0,
+    "initial_neutral_bootstrap": true,
+    "kv_retention": false,
+    "decoprune": false,
+    "reanchor": false,
+    "budget_memory": false,
+    "denoise_schedule": "stock",
+    "text_encoder_offloaded_after_encoding": true,
+    "stationary_wait_only": false,
+    "fixed_actions": null,
+    "quantization": "none",
+    "cuda_allocator_configuration": "expandable_segments:True",
+    "max_area": 399360,
+    "chunk_size": 4,
+    "local_attn_size": 18,
+    "sink_size": 6,
+    "decision_interval": 1,
+    "stock_knobs": true,
+    "controlled_ablation": false,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "actions": [
+      {
+        "operation": "KEEP",
+        "action": "WAIT",
+        "reason": "declared neutral bootstrap",
+        "bootstrap": true,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.0,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 130.036896598,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      }
+    ],
+    "chunks": [
+      {
+        "index": 0,
+        "path": "chunk-000.mp4",
+        "frames": 13,
+        "pixel_sha256": "805d2cf820bb2eeed49d3bfe922e750cafaca4b7301d6741ba877cef2a811e58",
+        "elapsed_s": 134.40657780700002,
+        "sha256": "5115b8a328ab14d6a39c346378833c72ff7b7b26b5c13bc0bc6525d14beb5f5b"
+      }
+    ],
+    "published_score_reproduced": false,
+    "agent_interactions": 0,
+    "adapter_sha256": "d698c2143316131aa48008da25a95b0938da8ccd1e5343869d24bb00eb50462f",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "player_sha256": "18ecd2ef485d076b9fc453e5423aa515d7129b193c00ce552aa96e3c82088ee5",
+    "deviations": [
+      "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+      "Reconstructed Haiku reference-guided prompt and camera mapping: 30 deg/s turns, unit-normalized translations",
+      "Official 480p demo area; single NVIDIA H200, BF16 and valid-length SDPA backend",
+      "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+      "Claude diagnostic scoring differs from published Gemini judgments"
+    ],
+    "hardware": {
+      "gpu": "NVIDIA H200",
+      "torch": "2.6.0+cu124",
+      "cuda": "12.4"
+    },
+    "attention_backend": "sdpa",
+    "optional_torch_dlpack_addon_disabled": false,
+    "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+    "checkpoint_loading": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "mismatched_keys": [],
+      "error_msgs": []
+    },
+    "generated_frames": 13,
+    "generated_seconds": 0.8125,
+    "error": "TypeError: Messages.create() got an unexpected keyword argument 'temperature'",
+    "elapsed_s": 134.566949583,
+    "camera_diagnostics": {
+      "chunks": 1,
+      "path_length": 0.0,
+      "net_yaw_degrees": 0.0,
+      "total_turn_degrees": 0.0,
+      "max_distance_from_start": 0.0,
+      "final_distance_from_start": 0.0,
+      "revisited_start_at_chunk": null,
+      "wait_chunks": 1,
+      "wait_pose_changes": 0
+    },
+    "peak_allocated_bytes": 72660566528
+  },
+  "scope": "Local adaptive pilot, not published AgentPlayer score reproduction",
+  "frozen_plan_sha256": "f0d83f43673f031720cc2493e2188ee864806cb6966afb6b486140f83bd8ecbb"
+}

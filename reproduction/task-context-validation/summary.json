@@ -1,0 +1,269 @@
+{
+  "scope": "Paired confirmation of frozen22/8 method against18/4 on previouslyaudited3-taskcohort; not untouched held-out selection",
+  "complete": true,
+  "declared_pairs": 3,
+  "results": [
+    {
+      "task_id": "GC010",
+      "seed": 42,
+      "path": "turn90_wait_return",
+      "partition": "development",
+      "task": "Turn right90 degrees then left back to the start",
+      "image_sha256": "a7d4b95aa0e55ac027be6abc98b432e9d655f07c269be9939d0efe3f88724475",
+      "caption_sha256": "67c5053486967e79bacfd79632fcd5105c70be6abb68fd3c6ec59c192f4024fd",
+      "reference": "reference18_read4",
+      "candidate": "candidate22_read8",
+      "status": "completed",
+      "reference_dino": 0.7634036540985107,
+      "candidate_dino": 0.7826879024505615,
+      "reference_peak_bytes": 72321217536,
+      "candidate_peak_bytes": 82586040832,
+      "warm_suffix_s": {
+        "reference18_read4": 90.064658847,
+        "candidate22_read8": 98.105568052
+      },
+      "pixel_identical_prefix_chunks": 4,
+      "preference": "candidate22_read8",
+      "assessment": {
+        "A": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "yes",
+          "discontinuity": "yes",
+          "visual_evidence": "Frames 0-9 show the opening view: the DRUGS / SHERIFF false-front stores, a central telephone pole (about x=228 of 384), a red brick annex, a wagon, pedestrians, snowy mountains, and a minimap HUD at bottom-left. From about frame 10 to 30 the view pans steadily right. The E.PRECES two-storey building enters from the right edge and moves to center, then a second dark two-storey building with an unreadable gable sign and a parked car comes into view. Around frames 25-30 the view tightens noticeably onto the E.PRECES / second-building pair, which reads more like a re-framing or zoom than pure yaw. Frames ~30-110 are an essentially static hold on that pair, which is consistent with the WAIT commands. From about frame 110 to 125 the view pans left. E.PRECES slides right, the brick annex and SHERIFF facade reappear on the left, then the DRUGS / SHERIFF row and the pole return to center. In the final frames (126-138) the same street layout is back: DRUGS and SHERIFF signage, brick annex, pole, wagon, mountains. The view sits slightly left of the start (pole at about x=260). A dark wooden building pops into the left edge between frames 125 and 126. The bottom-left minimap HUD has turned into a disc-like in-scene object.",
+          "failure_classification": "Mostly successful round trip with minor camera-control drift: a small leftward overshoot on return and a tightening of the view near the end of the right turn. There is one abrupt pop-in of a left foreground building at about frame 125\u2192126, and the minimap HUD is reinterpreted as a scene object. Landmark identity and spatial layout of the start view are preserved, so this is not forgetting."
+        },
+        "B": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "yes",
+          "discontinuity": "yes",
+          "visual_evidence": "Frames 0-~120 are visually the same as A: the same rightward pan to the E.PRECES / second-building pair, the same tightening around frames 25-30, the same long static hold, and the same leftward pan back past the brick annex and SHERIFF facade. In the final frames (125-138) the DRUGS / SHERIFF row, brick annex, pole, wagon and mountains are recognisably the start scene. The framing is offset further than in A: the pole sits at about x=290, versus about x=228 at the start. A large dark building with partly legible lettering and a hanging street lamp now fills roughly the left quarter of the frame. That building pops in abruptly between frames 125 and 126. The minimap again becomes a disc-like foreground object.",
+          "failure_classification": "Round trip realized and landmarks preserved, but with a larger camera-control overshoot or offset on return than A. There is an abrupt pop-in of a large left-side building with a lamp that is absent from the opening view. This is a camera-control and continuity issue rather than forgetting of the target landmarks."
+        },
+        "preference": "A",
+        "confidence": "low",
+        "reasoning": "Both videos share nearly identical content through the right turn, the static hold and most of the left turn. Each realizes a visible yaw out to the E.PRECES building and back to the DRUGS / SHERIFF street without a hard reset; the return is reached by continuous panning. Landmark identity and sign text (DRUGS, SHERIFF, E.PRECES) stay consistent in both. Both show the same flaws: a tightening of the view late in the right turn, a sudden left-edge building pop-in at about frame 125\u2192126, and the minimap HUD becoming a scene object. They differ only in the final framing. A ends closer to the original viewpoint (smaller pole offset, smaller intruding building), while B overshoots more and inserts a larger dark building with a hanging lamp that was never in the start view. A therefore recovers the start viewpoint slightly more faithfully. The difference is small, so confidence is low."
+      },
+      "label_mapping": {
+        "A": "candidate22_read8",
+        "B": "reference18_read4"
+      },
+      "task_scores": {
+        "reference18_read4": {
+          "score": 4.1,
+          "gate": {
+            "applicable": "yes",
+            "task_id": "GC010",
+            "perspective": "first-person",
+            "verdict": "pass",
+            "instruction_following_score": 1,
+            "meaningful_requested_trajectory_progress": "yes",
+            "revisit_required": "yes",
+            "revisit_observed": "yes",
+            "observed_action_zh": "\u7b2c\u4e00\u4eba\u79f0\u89c6\u89d2\u5148\u5411\u53f3\u8f6c\u52a8\uff0c\u4eceDRUGS/SHERIFF\u8857\u9053\u8f6c\u5230\u53f3\u4fa7\u7684E.PRECES\u5efa\u7b51\u4e00\u5e26\uff0c\u5e76\u5728\u8be5\u671d\u5411\u957f\u65f6\u95f4\u505c\u7559\uff1b\u968f\u540e\u5411\u5de6\u8f6c\u56de\uff0c\u6700\u7ec8\u56de\u5230\u4e0e\u8d77\u59cb\u76f8\u8fd1\u7684DRUGS/SHERIFF\u8857\u9053\u89c6\u89d2\u3002",
+            "trajectory_evidence_zh": "0-1.0\u79d2\uff1a\u8d77\u59cb\u89c6\u89d2\u671d\u5411DRUGS/SHERIFF\u8857\u9053\uff0c\u753b\u9762\u57fa\u672c\u9759\u6b62\u3002\u7ea61.0-2.5\u79d2\uff1a\u666f\u7269\u6301\u7eed\u5411\u5de6\u79fb\u51fa\u753b\u9762\uff0c\u53f3\u4fa7\u7684E.PRECES\u5efa\u7b51\u8fdb\u5165\u753b\u9762\u4e2d\u592e\uff0c\u8bf4\u660e\u955c\u5934\u5728\u5411\u53f3\u8f6c\uff0c\u5e45\u5ea6\u770b\u8d77\u6765\u8f83\u5927\uff0c\u63a5\u8fd190\u5ea6\u3002\u7ea62.5-10.9\u79d2\uff1a\u753b\u9762\u505c\u7559\u5728E.PRECES\u53ca\u5176\u53f3\u4fa7\u5efa\u7b51\u7684\u671d\u5411\uff0c\u6ca1\u6709\u660e\u663e\u8f6c\u52a8\u3002\u7ea611.0-12.5\u79d2\uff1a\u666f\u7269\u5411\u53f3\u79fb\u52a8\uff0cDRUGS/SHERIFF\u8857\u9053\u4ece\u5de6\u4fa7\u91cd\u65b0\u51fa\u73b0\uff0c\u8bf4\u660e\u955c\u5934\u5728\u5411\u5de6\u8f6c\u300212.5-13.8\u79d2\uff1a\u753b\u9762\u56de\u5230\u4ee5DRUGS/SHERIFF\u4e3a\u4e2d\u5fc3\u7684\u8857\u9053\u671d\u5411\uff0c\u4e0e\u8d77\u59cb\u89c6\u89d2\u57fa\u672c\u4e00\u81f4\u3002",
+            "failure_reason_zh": "",
+            "confidence_1_to_5": 4
+          },
+          "judge_model": "claude-opus-5-5",
+          "video_sha256": "f512efa4921e651d71a07d2f50c7d4d5b24aa4e02cccfaed86859c9829c7c405"
+        },
+        "candidate22_read8": {
+          "score": 4.0,
+          "gate": {
+            "applicable": "yes",
+            "task_id": "GC010",
+            "perspective": "first-person",
+            "verdict": "pass",
+            "instruction_following_score": 1,
+            "meaningful_requested_trajectory_progress": "yes",
+            "revisit_required": "yes",
+            "revisit_observed": "yes",
+            "observed_action_zh": "\u955c\u5934\u5148\u5411\u53f3\u5e73\u79fb\u8f6c\u5411\uff0c\u4ece\u836f\u5e97/\u8b66\u957f\u8857\u666f\u8f6c\u5230\u53f3\u4fa7\u7684\u4e24\u680b\u6728\u697c\uff0c\u7136\u540e\u957f\u65f6\u95f4\u4fdd\u6301\u9759\u6b62\uff0c\u968f\u540e\u5411\u5de6\u8f6c\u56de\uff0c\u6700\u7ec8\u56de\u5230\u521d\u59cb\u7684\u836f\u5e97\u8857\u666f\u89c6\u89d2\u3002",
+            "trajectory_evidence_zh": "0-1.0\u79d2\uff1a\u521d\u59cb\u89c6\u89d2\u4e3a\u836f\u5e97\u3001\u8b66\u957f\u529e\u516c\u5ba4\u548c\u7535\u7ebf\u6746\u7684\u8857\u666f\u3002\u7ea61.1-2.5\u79d2\uff1a\u753b\u9762\u5185\u5bb9\u6301\u7eed\u5411\u5de6\u79fb\u51fa\uff0c\u53f3\u4fa7\u6728\u697c\u9010\u6e10\u8fdb\u5165\uff0c\u8868\u660e\u955c\u5934\u5728\u5411\u53f3\u8f6c\u3002\u7ea62.5\u79d2\u540e\uff1a\u89c6\u89d2\u8f6c\u5230\u4e24\u680b\u6728\u697c\u6b63\u9762\uff0c\u8f6c\u52a8\u5e45\u5ea6\u770b\u8d77\u6765\u63a5\u8fd190\u5ea6\u3002\u7ea62.5-11\u79d2\uff1a\u89c6\u89d2\u57fa\u672c\u4fdd\u6301\u9759\u6b62\u3002\u7ea611-12.5\u79d2\uff1a\u753b\u9762\u5185\u5bb9\u5411\u53f3\u79fb\u52a8\uff0c\u5de6\u4fa7\u7684\u836f\u5e97\u548c\u7535\u7ebf\u6746\u91cd\u65b0\u8fdb\u5165\uff0c\u8868\u660e\u955c\u5934\u5728\u5411\u5de6\u56de\u8f6c\u300212.5-13.8\u79d2\uff1a\u56de\u5230\u4e0e\u8d77\u59cb\u76f8\u8fd1\u7684\u836f\u5e97\u8857\u666f\u89c6\u89d2\uff0c\u5de6\u4fa7\u6709\u5c11\u91cf\u5efa\u7b51\u8fb9\u7f18\u504f\u5dee\u3002",
+            "failure_reason_zh": "",
+            "confidence_1_to_5": 4
+          },
+          "judge_model": "claude-opus-5-5",
+          "video_sha256": "8c545d3116fa823eef3bbdf797df77647911bb28b1f5a9ca9a0624e6efb97616"
+        }
+      }
+    },
+    {
+      "task_id": "GC033",
+      "seed": 42,
+      "path": "turn90left_wait_return",
+      "partition": "held_out",
+      "task": "Turn left90 degrees then back to the display window",
+      "image_sha256": "5d57773cd6dbd2e73d3edadd91b026f333df95951b3fd31fe19865b58a72d3c3",
+      "caption_sha256": "28fd9133f29ac92089c5449871ed6fc9ea3f6d1443efd28b5adbc8589118b3db",
+      "reference": "reference18_read4",
+      "candidate": "candidate22_read8",
+      "status": "completed",
+      "reference_dino": 0.8079333305358887,
+      "candidate_dino": 0.7572606801986694,
+      "reference_peak_bytes": 72321217536,
+      "candidate_peak_bytes": 82586040832,
+      "warm_suffix_s": {
+        "reference18_read4": 89.79410901699998,
+        "candidate22_read8": 99.09348145400003
+      },
+      "pixel_identical_prefix_chunks": 4,
+      "preference": "reference18_read4",
+      "assessment": {
+        "A": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "yes",
+          "discontinuity": "no",
+          "visual_evidence": "Frames 0-10 show the wooden-framed crystal shop window. Visible are the hanging 'Gift Vouchers' card, three copper cage lamps, the amethyst geode, quartz points and orange figurines. From about frames 10-30 the view pans smoothly left. It passes the textured stone pillar and the large purple amethyst boulder, then reaches the white-framed shopfront with the hexagonal pendant lights. Beyond that are the street, a beige house and a silver car. That view holds steadily through about frame 111. The only motion during the hold is people moving inside the shop, which is plausible during WAIT. From about frames 111-125 the view pans smoothly right, retracing the same landmarks in reverse: pendant, stone pillar, display case, sign. The final frames (125-138) show the wooden window again with the same sign, lamps, geode, quartz points and figurines in the same arrangement. The end framing is shifted slightly left of the start: the stone pillar takes up noticeably more of the left edge and the sign sits further right. The sign text is blurry at the end but has the same shape and position. No pops, morphs or resets are visible.",
+          "failure_classification": "No memory failure. There is minor camera-control drift, with the return yaw slightly under-rotated or offset compared to the start. Note that the commanded path is a 90-degree yaw out and back, not a full 180-degree turnaround, and A realizes that path."
+        },
+        "B": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "yes",
+          "discontinuity": "no",
+          "visual_evidence": "B has nearly the same trajectory as A. It starts on the wooden-framed window with the 'Gift Vouchers' card, then pans smoothly left past the stone pillar and amethyst boulder to the white-framed shopfront with the hexagonal pendants and the street view. It holds there with only figures moving inside, which is plausible. It then pans smoothly right back across the pillar and display case to the wooden window. In the final frames (128-138) the sign, copper lamps, amethyst geode, quartz points, figurines and the right-hand window panes, including the top-right dark ornament, are all restored. The stone pillar margin on the left is somewhat narrower than in A's ending, so the framing is closer to the original start, though still slightly offset. Landmark identity and layout are consistent, and there are no jumps or resets.",
+          "failure_classification": "No memory failure. Minor residual yaw offset (camera control), smaller than A's."
+        },
+        "preference": "B",
+        "confidence": "low",
+        "reasoning": "Both videos actually move the camera left, hold, and return right with smooth transitions and no resets. On return, both preserve the shop window landmarks, the sign and the spatial layout, so neither shows forgetting. The commanded path is only a 90-degree out-and-back yaw, not a full turnaround, and both realize it. The difference is small: B's final framing matches the starting viewpoint a little more closely, with a narrower stone pillar margin and more of the original right-side panes visible. A ends slightly more offset. This is a camera-control precision difference, not a memory difference, so confidence is low."
+      },
+      "label_mapping": {
+        "A": "candidate22_read8",
+        "B": "reference18_read4"
+      },
+      "task_scores": {
+        "reference18_read4": {
+          "score": 4.0,
+          "gate": {
+            "applicable": "yes",
+            "task_id": "GC033",
+            "perspective": "first-person",
+            "verdict": "pass",
+            "instruction_following_score": 1,
+            "meaningful_requested_trajectory_progress": "yes",
+            "revisit_required": "yes",
+            "revisit_observed": "yes",
+            "observed_action_zh": "\u955c\u5934\u4ece\u6b63\u5bf9\u5c55\u793a\u6a71\u7a97\u5f00\u59cb\uff0c\u6301\u7eed\u5411\u5de6\u8f6c\uff0c\u4f7f\u753b\u9762\u4e2d\u7684\u5185\u5bb9\u5411\u53f3\u79fb\u52a8\uff0c\u6700\u7ec8\u8f6c\u5230\u6cbf\u5e97\u9762\u5916\u5899\u671b\u5411\u8857\u9053\u7684\u4fa7\u5411\u89c6\u89d2\uff0c\u7ea6\u8f6c\u4e86\u4e5d\u5341\u5ea6\u3002\u4fdd\u6301\u4e00\u6bb5\u65f6\u95f4\u540e\uff0c\u955c\u5934\u518d\u5411\u53f3\u8f6c\u56de\uff0c\u91cd\u65b0\u6b63\u5bf9\u5c55\u793a\u6a71\u7a97\u3002",
+            "trajectory_evidence_zh": "0-0.8\u79d2\uff1a\u753b\u9762\u6b63\u5bf9\u6728\u6846\u5c55\u793a\u6a71\u7a97\u3002\u7ea60.9-2.6\u79d2\uff1a\u77f3\u67f1\u3001\u7d2b\u6c34\u6676\u548c\u540a\u706f\u4f9d\u6b21\u4ece\u5de6\u4fa7\u8fdb\u5165\u5e76\u5411\u53f3\u79fb\u52a8\uff0c\u8bf4\u660e\u955c\u5934\u5728\u5411\u5de6\u8f6c\u3002\u7ea62.7\u79d2\uff1a\u8f6c\u5230\u6cbf\u5efa\u7b51\u5916\u5899\u671b\u5411\u8857\u9053\u548c\u623f\u5c4b\u7684\u4fa7\u5411\u89c6\u89d2\u3002\u7ea62.7-11\u79d2\uff1a\u57fa\u672c\u4fdd\u6301\u8fd9\u4e00\u5de6\u8f6c\u540e\u7684\u671d\u5411\u3002\u7ea611.0-12.5\u79d2\uff1a\u753b\u9762\u5185\u5bb9\u5411\u5de6\u79fb\u52a8\uff0c\u77f3\u67f1\u548c\u5c55\u793a\u67dc\u91cd\u65b0\u56de\u5230\u753b\u9762\u4e2d\uff0c\u8bf4\u660e\u955c\u5934\u5728\u5411\u53f3\u8f6c\u56de\u300212.5-13.8\u79d2\uff1a\u753b\u9762\u518d\u6b21\u6b63\u5bf9\u6728\u6846\u5c55\u793a\u6a71\u7a97\uff0c\u4e0e\u8d77\u59cb\u671d\u5411\u4e00\u81f4\u3002",
+            "failure_reason_zh": "",
+            "confidence_1_to_5": 4
+          },
+          "judge_model": "claude-opus-5-5",
+          "video_sha256": "ea95a1c1c151eafbeecff2415eb163f5c316d449b3ff56be55422b24d1f3a1e2"
+        },
+        "candidate22_read8": {
+          "score": 4.0,
+          "gate": {
+            "applicable": "yes",
+            "task_id": "GC033",
+            "perspective": "first-person",
+            "verdict": "pass",
+            "instruction_following_score": 1,
+            "meaningful_requested_trajectory_progress": "yes",
+            "revisit_required": "yes",
+            "revisit_observed": "yes",
+            "observed_action_zh": "\u955c\u5934\u4ece\u6b63\u5bf9\u6a71\u7a97\u5f00\u59cb\u5411\u5de6\u5e73\u79fb\u8f6c\u52a8\uff0c\u770b\u5230\u77f3\u67f1\u3001\u5de6\u4fa7\u7a97\u6237\u548c\u6cbf\u8857\u89c6\u89d2\uff08\u7ea690\u5ea6\u5de6\u8f6c\uff09\uff0c\u505c\u7559\u8f83\u957f\u65f6\u95f4\u540e\u5411\u53f3\u8f6c\u56de\uff0c\u6700\u7ec8\u518d\u6b21\u6b63\u5bf9\u539f\u6a71\u7a97\u3002",
+            "trajectory_evidence_zh": "0-0.9\u79d2\uff1a\u6b63\u5bf9\u6728\u6846\u6a71\u7a97\u30021.0-2.4\u79d2\uff1a\u753b\u9762\u5185\u5bb9\u5411\u53f3\u79fb\uff0c\u5de6\u4fa7\u77f3\u67f1\u3001\u7d2b\u6c34\u6676\u548c\u5de6\u8fb9\u7684\u767d\u6846\u7a97\u6237\u4f9d\u6b21\u8fdb\u5165\u753b\u9762\uff0c\u8868\u660e\u955c\u5934\u5728\u5411\u5de6\u8f6c\u30022.5-3.0\u79d2\u5de6\u53f3\uff1a\u8f6c\u5230\u6cbf\u5efa\u7b51\u7acb\u9762\u770b\u5411\u8857\u9053\u7684\u89c6\u89d2\uff0c\u5de6\u8f6c\u660e\u663e\u63a5\u8fd190\u5ea6\u30023.0-11.0\u79d2\uff1a\u57fa\u672c\u4fdd\u6301\u8be5\u89c6\u89d2\u300211.2-12.4\u79d2\uff1a\u753b\u9762\u5185\u5bb9\u5411\u5de6\u79fb\uff0c\u77f3\u67f1\u3001\u6a71\u7a97\u6728\u6846\u4f9d\u6b21\u91cd\u65b0\u51fa\u73b0\uff0c\u8868\u660e\u955c\u5934\u5728\u5411\u53f3\u8f6c\u56de\u300212.5-13.8\u79d2\uff1a\u6062\u590d\u6b63\u5bf9\u539f\u6a71\u7a97\u7684\u89c6\u89d2\uff0c\u6728\u6846\u3001\u6807\u7b7e\u548c\u6c34\u6676\u7684\u4f4d\u7f6e\u4e0e\u8d77\u59cb\u5e27\u63a5\u8fd1\u3002",
+            "failure_reason_zh": "",
+            "confidence_1_to_5": 4
+          },
+          "judge_model": "claude-opus-5-5",
+          "video_sha256": "d25eebb01659214b476c70e7aee11bb9810a74240eb2e3b8d3d45ada7710de14"
+        }
+      }
+    },
+    {
+      "task_id": "GC040",
+      "seed": 42,
+      "path": "turn90_wait_return",
+      "partition": "development_replacement",
+      "task": "Turn right90 degrees then return to the starting view",
+      "replacement_for": "GC013",
+      "image_sha256": "78fc9d7154806042255323039205840e02e2b670cf2e93434c079a8445fec2be",
+      "caption_sha256": "844603e32d7a25bc6cf08a1b5d674ec382bb0b4d64e4db38635fc94c19842d97",
+      "reference": "reference18_read4",
+      "candidate": "candidate22_read8",
+      "status": "completed",
+      "reference_dino": 0.7832623720169067,
+      "candidate_dino": 0.8204421997070312,
+      "reference_peak_bytes": 72423404544,
+      "candidate_peak_bytes": 82688227840,
+      "warm_suffix_s": {
+        "reference18_read4": 89.65007480899999,
+        "candidate22_read8": 98.33028811999998
+      },
+      "pixel_identical_prefix_chunks": 4,
+      "preference": "reference18_read4",
+      "assessment": {
+        "A": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "uncertain",
+          "discontinuity": "no",
+          "visual_evidence": "Frames 0-9 show the start view under an overcast sky: a white-faced tent left of center, a grey-and-lime tent to its right, a person in a red cap at the left edge, and floats on the sand. From about frame 10 to 30 the camera pans right smoothly. The two tents leave on the left, and a small tent with a seated masked man, a blue chair, a yellow cylinder and a large open tent come in. The sky gradually turns blue and trees appear. Frames about 30-110 hold steady on this view; only the seated person moves slightly. From about frame 110 to 124 the camera pans back left through the same objects in reverse order. Around frames 120-124 the start composition reappears with the same white tent, grey tent, red-cap person behind them and overcast sky. The pan then keeps going left through frames 125-129. A large lime tent comes into the left foreground, along with a yellow inflatable and a blue chair. The white tent ends near the center-right and the grey tent is cut off at the right edge. Frames 130-138 hold this view. The landmarks keep their identity and relative order. There is no sign text. The final framing is offset to the left of frame 0 and is not the original composition.",
+          "failure_classification": "Camera-control error: the return yaw overshoots, or the rotation is asymmetric, and the camera settles left of the start heading. This is not forgetting. The revisited tents, person and items stay consistent, and the newly revealed left-side tent is plausible unseen content rather than a contradiction. The transitions are smooth, with no reset."
+        },
+        "B": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "uncertain",
+          "discontinuity": "no",
+          "visual_evidence": "Frames 0-about 120 are nearly identical to A. The start view, the smooth right pan to the seated-man tent, yellow cylinder and large open tent, the long hold, and the smooth left pan all match. Around frames 120-123 the start-like layout with the white tent and grey tent returns. At frame 124 a person in a red shirt at a blue chair or table enters from the left edge. Frames 125-138 settle on a view offset to the left. A large lime tent sits at left, with a yellow inflatable ring and the red-shirt person working at a blue table in the foreground. The red-cap person stands behind, the white tent is center-right and the grey tent is partly cut off at the right. Identity and order of the revisited landmarks are preserved and there is no sign text. Like A, the final framing does not match frame 0. B also adds a new prominent foreground person who was never seen at the start, in a region outside the original field of view.",
+          "failure_classification": "Camera-control error, the same leftward overshoot as A. It is not forgetting of the revisited landmarks. B additionally hallucinates more new content in the unseen region: a foreground person with a table. This is not strictly contradictory, but it moves the end state further from the start. No reset or abrupt cut is evident; the new person enters through the pan."
+        },
+        "preference": "A",
+        "confidence": "low",
+        "reasoning": "Both videos follow essentially the same trajectory. They realize a visible right turn, a hold and a left return, and they reproduce the start layout briefly around frames 120-124 with consistent landmark identity. Both then over-rotate left and settle on a view offset from frame 0, so neither cleanly recovers the starting viewpoint. This is a camera-control or yaw-magnitude issue, not memory loss. A is marginally preferred because its overshoot region adds less invented content. B introduces a prominent new red-shirted person and table in the foreground, which moves its final frame further from the original scene. The difference is small, so confidence is low."
+      },
+      "label_mapping": {
+        "A": "reference18_read4",
+        "B": "candidate22_read8"
+      },
+      "task_scores": {
+        "reference18_read4": {
+          "score": 3.75,
+          "gate": {
+            "applicable": "yes",
+            "task_id": "GC040",
+            "perspective": "first-person",
+            "verdict": "pass",
+            "instruction_following_score": 1,
+            "meaningful_requested_trajectory_progress": "yes",
+            "revisit_required": "yes",
+            "revisit_observed": "yes",
+            "observed_action_zh": "\u955c\u5934\u5148\u5411\u53f3\u5e73\u79fb/\u8f6c\u5411\uff0c\u521d\u59cb\u7684\u767d\u7070\u53cc\u5e10\u7bf7\u5411\u753b\u9762\u5de6\u4fa7\u79fb\u51fa\uff0c\u53f3\u4fa7\u65b0\u7684\u5e10\u7bf7\u3001\u9ec4\u8272\u6876\u548c\u6811\u6797\u4f9d\u6b21\u8fdb\u5165\uff1b\u968f\u540e\u957f\u65f6\u95f4\u57fa\u672c\u9759\u6b62\uff1b\u6700\u540e\u955c\u5934\u5411\u5de6\u8f6c\u56de\uff0c\u53cc\u5e10\u7bf7\u4e0e\u6d77\u9762\u91cd\u65b0\u56de\u5230\u753b\u9762\u4e2d\u592e\u9644\u8fd1\uff0c\u63a5\u8fd1\u8d77\u59cb\u671d\u5411\u3002",
+            "trajectory_evidence_zh": "0.0-1.0\u79d2\uff1a\u8d77\u59cb\u89c6\u89d2\u4e3a\u6d77\u9762\u524d\u7684\u4e24\u9876\u5e10\u7bf7\uff0c\u753b\u9762\u57fa\u672c\u9759\u6b62\u30021.0-2.5\u79d2\uff1a\u573a\u666f\u6574\u4f53\u5411\u5de6\u79fb\u52a8\uff0c\u53f3\u4fa7\u5750\u4eba\u7684\u5e10\u7bf7\u3001\u84dd\u8272\u6905\u5b50\u548c\u9ec4\u8272\u6876\u4f9d\u6b21\u8fdb\u5165\uff0c\u8868\u660e\u955c\u5934\u5728\u53f3\u8f6c\u30022.5\u79d2\u5de6\u53f3\uff1a\u53f3\u8f6c\u7ed3\u675f\uff0c\u89c6\u89d2\u7a33\u5b9a\u5728\u5927\u5e10\u7bf7\u3001\u9ec4\u8272\u6876\u548c\u53f3\u4fa7\u6811\u6797\u4e00\u5e26\u30022.5-11.5\u79d2\uff1a\u89c6\u89d2\u57fa\u672c\u9759\u6b62\u3002\u7ea611.5-12.5\u79d2\uff1a\u573a\u666f\u5411\u53f3\u79fb\u52a8\uff0c\u9ec4\u8272\u6876\u4e0e\u53f3\u4fa7\u5e10\u7bf7\u79fb\u51fa\u753b\u9762\u53f3\u4fa7\uff0c\u53cc\u5e10\u7bf7\u4ece\u5de6\u4fa7\u56de\u5230\u753b\u9762\uff0c\u8868\u660e\u955c\u5934\u5728\u5de6\u8f6c\u300212.5-13.8\u79d2\uff1a\u6062\u590d\u4e3a\u4ee5\u53cc\u5e10\u7bf7\u548c\u6d77\u9762\u4e3a\u4e3b\u7684\u8d77\u59cb\u65b9\u5411\uff0c\u4ec5\u5b58\u5728\u8f7b\u5fae\u7684\u504f\u79fb\u548c\u4f4d\u7f6e\u5dee\u5f02\u3002",
+            "failure_reason_zh": "",
+            "confidence_1_to_5": 4
+          },
+          "judge_model": "claude-opus-5-5",
+          "video_sha256": "0f7627425caf7aecc53b652d1977f3b96309630134106cab9611eef1839fc26d"
+        },
+        "candidate22_read8": {
+          "score": 2.9,
+          "gate": {
+            "applicable": "yes",
+            "task_id": "GC040",
+            "perspective": "first-person",
+            "verdict": "pass",
+            "instruction_following_score": 1,
+            "meaningful_requested_trajectory_progress": "yes",
+            "revisit_required": "yes",
+            "revisit_observed": "yes",
+            "observed_action_zh": "\u955c\u5934\u5148\u5411\u53f3\u8f6c\uff0c\u8d77\u59cb\u7684\u4e24\u9876\u5e10\u7bf7\u4ece\u753b\u9762\u5de6\u4fa7\u79fb\u51fa\uff0c\u53f3\u4fa7\u7684\u5e10\u7bf7\u3001\u9ec4\u8272\u6876\u7b49\u65b0\u5185\u5bb9\u8fdb\u5165\u753b\u9762\u3002\u968f\u540e\u955c\u5934\u957f\u65f6\u95f4\u505c\u7559\u5728\u53f3\u4fa7\u89c6\u89d2\u3002\u4e4b\u540e\u955c\u5934\u5411\u5de6\u8f6c\u56de\uff0c\u8d77\u59cb\u7684\u767d\u7070\u5e10\u7bf7\u4e0e\u6d77\u9762\u89c6\u89d2\u91cd\u65b0\u51fa\u73b0\u5728\u753b\u9762\u4e2d\u3002",
+            "trajectory_evidence_zh": "0-1.0\u79d2\uff1a\u89c6\u89d2\u57fa\u672c\u9759\u6b62\uff0c\u6b63\u5bf9\u4e24\u9876\u5e10\u7bf7\u548c\u6d77\u9762\u3002\u7ea61.0-3.0\u79d2\uff1a\u753b\u9762\u5185\u5bb9\u6301\u7eed\u5411\u5de6\u5e73\u79fb\uff0c\u53f3\u4fa7\u4f9d\u6b21\u51fa\u73b0\u5e26\u4eba\u7684\u5e10\u7bf7\u3001\u84dd\u6905\u3001\u9ec4\u6876\u548c\u5927\u5e10\u7bf7\uff0c\u7b26\u5408\u53f3\u8f6c\u3002\u7ea63-11\u79d2\uff1a\u505c\u7559\u5728\u53f3\u4fa7\u89c6\u89d2\uff0c\u57fa\u672c\u65e0\u8f6c\u52a8\u3002\u7ea611.0-12.4\u79d2\uff1a\u753b\u9762\u5185\u5bb9\u5411\u53f3\u5e73\u79fb\uff0c\u5927\u5e10\u7bf7\u79fb\u51fa\u3001\u6d77\u9762\u91cd\u73b0\uff0c\u8d77\u59cb\u7684\u4e24\u9876\u5e10\u7bf7\u4ece\u5de6\u4fa7\u56de\u5230\u753b\u9762\uff0c\u7b26\u5408\u5de6\u8f6c\u56de\u5230\u8d77\u59cb\u671d\u5411\u300212.5\u79d2\u540e\uff1a\u8d77\u59cb\u5e10\u7bf7\u4f4d\u4e8e\u753b\u9762\u4e2d\u53f3\u90e8\uff0c\u5927\u81f4\u56de\u5230\u8d77\u59cb\u65b9\u5411\uff0c\u4f46\u7565\u6709\u504f\u79fb\u3002",
+            "failure_reason_zh": "",
+            "confidence_1_to_5": 4
+          },
+          "judge_model": "claude-opus-5-5",
+          "video_sha256": "d62fc8ab77479c5901201693a70994aea631cf29b69525a9ab082be73d002b54"
+        }
+      }
+    }
+  ],
+  "means": {
+    "reference18_read4": 3.9499999999999997,
+    "candidate22_read8": 3.6333333333333333
+  },
+  "quarantined_task_not_counted": "GC013",
+  "caveat": "Native fixed task-matched paths, not adaptiveAgentPlayer; no publicleaderboardscore claim."
+}

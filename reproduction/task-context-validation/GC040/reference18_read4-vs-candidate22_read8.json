@@ -1,0 +1,852 @@
+{
+  "comparison": "memory-context",
+  "cache_frames": {
+    "stock": 18,
+    "candidate": 22
+  },
+  "scope": "single controlled fixed path; no PlayWorld score or SOTA claim",
+  "matched_settings": {
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+    "task_id": "GC040",
+    "split": "gc",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "seed": 42,
+    "fps": 16,
+    "max_chunks": 14,
+    "max_area": 399360,
+    "chunk_size": 4,
+    "sink_size": 6,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "fixed_actions": [
+      "WAIT",
+      "RIGHT",
+      "RIGHT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "LEFT",
+      "LEFT",
+      "WAIT"
+    ]
+  },
+  "native_camera_inputs_verified": true,
+  "pre_intervention_pixel_identical_chunks": 4,
+  "modified_chunks": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "candidate_wall_s": 204.021989026,
+  "candidate_peak_allocated_bytes": 82688227840,
+  "memory": {
+    "method": "bounded early-view pose KV retrieval; diagnostic, not paper reproduction",
+    "archive_limit_latent_frames": 16,
+    "retrieved_latent_frames": 8,
+    "retrieved_frame_count_is_limit": true,
+    "selection": "nearest",
+    "attention_composition": "joint softmax",
+    "history_output_weight": null,
+    "attention_branches_per_retrieval": 1,
+    "attended_latent_frames": 22,
+    "sink_latent_frames": 6,
+    "tail_latent_frames": 8,
+    "excluded_recent_archive_frames": 8,
+    "tail_frame_count_is_minimum": true,
+    "temporary_gpu_read_lifetime": "denoising and clean pass only; released before VAE decode",
+    "pose_source": "commanded poses, not reconstructed realized poses",
+    "key_positions": "virtual",
+    "key_storage": "canonical pre-RoPE BF16 keys; reapply spatial and virtual temporal RoPE on read",
+    "archive_bytes": 19765657600,
+    "retrieval_attention_calls": 1400,
+    "trace": [
+      {
+        "chunk": 0,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 1,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 2,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [
+          6,
+          7
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 3,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 4,
+        "retrieved_frame_ids": [
+          7,
+          6
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 5,
+        "retrieved_frame_ids": [
+          11,
+          10,
+          9,
+          8,
+          7,
+          6
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 10,
+        "temporary_read_bytes_released_before_decode": 7412121600
+      },
+      {
+        "chunk": 6,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          10,
+          9,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 9882828800
+      },
+      {
+        "chunk": 7,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 9882828800
+      },
+      {
+        "chunk": 8,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 9882828800
+      },
+      {
+        "chunk": 9,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 9882828800
+      },
+      {
+        "chunk": 10,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 9882828800
+      },
+      {
+        "chunk": 11,
+        "retrieved_frame_ids": [
+          7,
+          6,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 9882828800
+      },
+      {
+        "chunk": 12,
+        "retrieved_frame_ids": [
+          6,
+          7,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 13,
+        "retrieved_frame_ids": [
+          6,
+          7,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      }
+    ]
+  },
+  "caveat": "Commanded camera closure does not prove realized closure. Endpoint image similarity cannot establish world memory if the realized route fails.",
+  "reference18_read4": {
+    "endpoint_psnr_db": 12.712609729671003,
+    "video_sha256": "0f7627425caf7aecc53b652d1977f3b96309630134106cab9611eef1839fc26d",
+    "endpoint_dino_cosine": 0.7832623720169067
+  },
+  "candidate22_read8": {
+    "endpoint_psnr_db": 12.185991383544382,
+    "video_sha256": "d62fc8ab77479c5901201693a70994aea631cf29b69525a9ab082be73d002b54",
+    "endpoint_dino_cosine": 0.8204421997070312
+  },
+  "reference_label": "reference18_read4",
+  "reference_memory": {
+    "method": "bounded early-view pose KV retrieval; diagnostic, not paper reproduction",
+    "archive_limit_latent_frames": 16,
+    "retrieved_latent_frames": 4,
+    "retrieved_frame_count_is_limit": true,
+    "selection": "nearest",
+    "attention_composition": "joint softmax",
+    "history_output_weight": null,
+    "attention_branches_per_retrieval": 1,
+    "attended_latent_frames": 18,
+    "sink_latent_frames": 6,
+    "tail_latent_frames": 8,
+    "excluded_recent_archive_frames": 4,
+    "tail_frame_count_is_minimum": true,
+    "temporary_gpu_read_lifetime": "denoising and clean pass only; released before VAE decode",
+    "pose_source": "commanded poses, not reconstructed realized poses",
+    "key_positions": "virtual",
+    "key_storage": "canonical pre-RoPE BF16 keys; reapply spatial and virtual temporal RoPE on read",
+    "archive_bytes": 19765657600,
+    "retrieval_attention_calls": 1600,
+    "trace": [
+      {
+        "chunk": 0,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 1,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 2,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [
+          6,
+          7
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 3,
+        "retrieved_frame_ids": [
+          7,
+          6
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 4,
+        "retrieved_frame_ids": [
+          11,
+          10,
+          9,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 4941414400
+      },
+      {
+        "chunk": 5,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 4941414400
+      },
+      {
+        "chunk": 6,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 4941414400
+      },
+      {
+        "chunk": 7,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 4941414400
+      },
+      {
+        "chunk": 8,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 4941414400
+      },
+      {
+        "chunk": 9,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 4941414400
+      },
+      {
+        "chunk": 10,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 4941414400
+      },
+      {
+        "chunk": 11,
+        "retrieved_frame_ids": [
+          7,
+          6,
+          8,
+          9
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 4941414400
+      },
+      {
+        "chunk": 12,
+        "retrieved_frame_ids": [
+          6,
+          7,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 13,
+        "retrieved_frame_ids": [
+          6,
+          7,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      }
+    ]
+  },
+  "reference_wall_s": 186.561592683,
+  "reference_peak_allocated_bytes": 72423404544,
+  "candidate_label": "candidate22_read8",
+  "warmed_suffix_s": {
+    "reference18_read4": 89.65007480899999,
+    "candidate22_read8": 98.33028811999998
+  },
+  "feature_model": {
+    "name": "facebook/dinov2-small",
+    "revision": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+    "feature": "normalized CLS token"
+  },
+  "visual_judge": {
+    "model": "claude-opus-5-5",
+    "response_id": "msg_011Ch46x6ZobnPTaZ1i4UZ8a",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 41262,
+      "output_tokens": 2741,
+      "output_tokens_details": {
+        "thinking_tokens": 1445
+      },
+      "server_tool_use": null,
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "label_mapping": {
+      "A": "reference18_read4",
+      "B": "candidate22_read8"
+    },
+    "prompt": "Evaluate two anonymized world-model videos independently and then compare. Each was given the same image and fixed camera path. Commands by one-second chunk: ['WAIT', 'RIGHT', 'RIGHT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'LEFT', 'LEFT', 'WAIT']. RIGHT and LEFT yaw 45.0 degrees per second; W moves forward. Commands are NOT proof that motion happened. Inspect actual frames. Assess whether each video realizes a turnaround and return to the starting viewpoint; whether persistent landmark identity, any sign text, geometry and spatial layout match on return; and whether there are sudden jumps, frozen motion or implausible transitions. Distinguish camera-control failures from forgetting. Do not reward a similar final building if reaching it required a reset. Do not invent unseen geometry. Return English JSON with keys A and B (each with realized_round_trip: yes|no|uncertain, starting_place_recovered: yes|no|uncertain, discontinuity: yes|no|uncertain, visual_evidence, failure_classification), preference: A|B|tie|neither, confidence: low|medium|high, and reasoning. This is a diagnostic comparison, not a benchmark score.",
+    "prompt_sha256": "e5bc952e033e53155aa248eb338cd9c72bd48ef0c364e90104c08b5509b81536",
+    "result": {
+      "A": {
+        "realized_round_trip": "yes",
+        "starting_place_recovered": "uncertain",
+        "discontinuity": "no",
+        "visual_evidence": "Frames 0-9 show the start view under an overcast sky: a white-faced tent left of center, a grey-and-lime tent to its right, a person in a red cap at the left edge, and floats on the sand. From about frame 10 to 30 the camera pans right smoothly. The two tents leave on the left, and a small tent with a seated masked man, a blue chair, a yellow cylinder and a large open tent come in. The sky gradually turns blue and trees appear. Frames about 30-110 hold steady on this view; only the seated person moves slightly. From about frame 110 to 124 the camera pans back left through the same objects in reverse order. Around frames 120-124 the start composition reappears with the same white tent, grey tent, red-cap person behind them and overcast sky. The pan then keeps going left through frames 125-129. A large lime tent comes into the left foreground, along with a yellow inflatable and a blue chair. The white tent ends near the center-right and the grey tent is cut off at the right edge. Frames 130-138 hold this view. The landmarks keep their identity and relative order. There is no sign text. The final framing is offset to the left of frame 0 and is not the original composition.",
+        "failure_classification": "Camera-control error: the return yaw overshoots, or the rotation is asymmetric, and the camera settles left of the start heading. This is not forgetting. The revisited tents, person and items stay consistent, and the newly revealed left-side tent is plausible unseen content rather than a contradiction. The transitions are smooth, with no reset."
+      },
+      "B": {
+        "realized_round_trip": "yes",
+        "starting_place_recovered": "uncertain",
+        "discontinuity": "no",
+        "visual_evidence": "Frames 0-about 120 are nearly identical to A. The start view, the smooth right pan to the seated-man tent, yellow cylinder and large open tent, the long hold, and the smooth left pan all match. Around frames 120-123 the start-like layout with the white tent and grey tent returns. At frame 124 a person in a red shirt at a blue chair or table enters from the left edge. Frames 125-138 settle on a view offset to the left. A large lime tent sits at left, with a yellow inflatable ring and the red-shirt person working at a blue table in the foreground. The red-cap person stands behind, the white tent is center-right and the grey tent is partly cut off at the right. Identity and order of the revisited landmarks are preserved and there is no sign text. Like A, the final framing does not match frame 0. B also adds a new prominent foreground person who was never seen at the start, in a region outside the original field of view.",
+        "failure_classification": "Camera-control error, the same leftward overshoot as A. It is not forgetting of the revisited landmarks. B additionally hallucinates more new content in the unseen region: a foreground person with a table. This is not strictly contradictory, but it moves the end state further from the start. No reset or abrupt cut is evident; the new person enters through the pan."
+      },
+      "preference": "A",
+      "confidence": "low",
+      "reasoning": "Both videos follow essentially the same trajectory. They realize a visible right turn, a hold and a left return, and they reproduce the start layout briefly around frames 120-124 with consistent landmark identity. Both then over-rotate left and settle on a view offset from frame 0, so neither cleanly recovers the starting viewpoint. This is a camera-control or yaw-magnitude issue, not memory loss. A is marginally preferred because its overshoot region adds less invented content. B introduces a prominent new red-shirted person and table in the foreground, which moves its final frame further from the original scene. The difference is small, so confidence is low."
+    }
+  }
+}

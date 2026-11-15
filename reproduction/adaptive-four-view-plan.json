@@ -1,0 +1,48 @@
+{
+  "protocol_id": "lingbot-world2-adaptive-four-view-pilot-v1",
+  "scope": "First explicit adaptive-player comparison of frozen four-view memory versus local stock; not published leaderboard reproduction",
+  "case": {
+    "split": "gc",
+    "task_id": "GC027",
+    "image_sha256": "cfe324c6dacbb91123a74ad7d5c80f75fe4bd5e3cfd040af201e4ee0742cd33f",
+    "caption_sha256": "58e9282a2acfdc3b580ea4b33b69ea092305a35869f31226b2981a2e17cbcf65",
+    "semantic_audit": "Image visually inspected: playground, yellow sports-center sign, leafless trees and pink building match released caption.",
+    "goal": "Rotate the camera 360 degrees in place, then return to the original angle facing the original view."
+  },
+  "seeds": [
+    42,
+    43
+  ],
+  "phase_order": "Generate and score BOTH stock baselines first; only then launch frozen-memory candidates. No baseline-based case selection or method tuning.",
+  "baseline": "Original pinned14B checkpoint, native18/6 cache and4step sampler, no archival retrieval.",
+  "candidate": "Identical pretrained weights/control/player, optional frozen4-nearest early-view KV retrieval; archive16latentframes6..21, stock18-frame attention budget.",
+  "controller": {
+    "model": "claude-haiku-4-5-20251001",
+    "temperature": "provider default; anthropic2.8.0 does not expose temperature",
+    "turn_degrees_per_second": 30,
+    "first_chunk": "Automatic neutral WAIT bootstrap; no player call.",
+    "decision_interval_chunks": 1,
+    "max_chunks": 40,
+    "notes": "Botharmsuse30deg/s so a360degree turn spans~12simseconds and previously seen views can leave the rolling context. Bootstrapkeepsinitialcamera atzero beforefull-durationturnsteps. Tellplayeractualrate;webreferenceplantimingmaydiffer. Goalremains360degree in-place return. This is an explicit controller deviation, not stock published timing."
+  },
+  "runtime": {
+    "profile": "nissan-pow",
+    "gpu": "H200",
+    "torch": "2.6.0+cu124",
+    "attention": "SDPA",
+    "text_encoder_offload": true,
+    "allocator": "expandable_segments:True"
+  },
+  "primary_evaluation": "Complete-video released task gate/rubric with ClaudeOpus5.5 and anonymized model label; retain failure, budget exhaustion, actualactiontrace and whethermemoryeveractivated. No change credited if retrievalneverfires.",
+  "secondary": "On paired disagreement, replay recorded actions to separate policy decisions from generator memory. Judge scores are stochastic; identical beach video previously ranged2.7to3.75.",
+  "acceptance": "Do not promote from one seed or an episode without realized complete turn/revisit. Report both seeds, raw scores, uncertainty and remaining failures.",
+  "no_gemini": true,
+  "training": false,
+  "failed_attempts": {
+    "reason": "Both initial stock attempts failed before first player decision: SDK rejected temperature keyword. No scored episode or candidate produced. Retry both arms with provider defaults.",
+    "manifests": [
+      "reproduction/adaptive-four-view/failed-initial/stock-seed42.json",
+      "reproduction/adaptive-four-view/failed-initial/stock-seed43.json"
+    ]
+  }
+}

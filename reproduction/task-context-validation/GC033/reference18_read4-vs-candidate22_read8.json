@@ -1,0 +1,852 @@
+{
+  "comparison": "memory-context",
+  "cache_frames": {
+    "stock": 18,
+    "candidate": 22
+  },
+  "scope": "single controlled fixed path; no PlayWorld score or SOTA claim",
+  "matched_settings": {
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+    "task_id": "GC033",
+    "split": "gc",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "seed": 42,
+    "fps": 16,
+    "max_chunks": 14,
+    "max_area": 399360,
+    "chunk_size": 4,
+    "sink_size": 6,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "fixed_actions": [
+      "WAIT",
+      "LEFT",
+      "LEFT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "RIGHT",
+      "RIGHT",
+      "WAIT"
+    ]
+  },
+  "native_camera_inputs_verified": true,
+  "pre_intervention_pixel_identical_chunks": 4,
+  "modified_chunks": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "candidate_wall_s": 199.232611789,
+  "candidate_peak_allocated_bytes": 82586040832,
+  "memory": {
+    "method": "bounded early-view pose KV retrieval; diagnostic, not paper reproduction",
+    "archive_limit_latent_frames": 16,
+    "retrieved_latent_frames": 8,
+    "retrieved_frame_count_is_limit": true,
+    "selection": "nearest",
+    "attention_composition": "joint softmax",
+    "history_output_weight": null,
+    "attention_branches_per_retrieval": 1,
+    "attended_latent_frames": 22,
+    "sink_latent_frames": 6,
+    "tail_latent_frames": 8,
+    "excluded_recent_archive_frames": 8,
+    "tail_frame_count_is_minimum": true,
+    "temporary_gpu_read_lifetime": "denoising and clean pass only; released before VAE decode",
+    "pose_source": "commanded poses, not reconstructed realized poses",
+    "key_positions": "virtual",
+    "key_storage": "canonical pre-RoPE BF16 keys; reapply spatial and virtual temporal RoPE on read",
+    "archive_bytes": 19765657600,
+    "retrieval_attention_calls": 1400,
+    "trace": [
+      {
+        "chunk": 0,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 1,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 2,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [
+          6,
+          7
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 3,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 4,
+        "retrieved_frame_ids": [
+          7,
+          6
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 5,
+        "retrieved_frame_ids": [
+          11,
+          10,
+          9,
+          8,
+          7,
+          6
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 10,
+        "temporary_read_bytes_released_before_decode": 7412121600
+      },
+      {
+        "chunk": 6,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          10,
+          9,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 9882828800
+      },
+      {
+        "chunk": 7,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 9882828800
+      },
+      {
+        "chunk": 8,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 9882828800
+      },
+      {
+        "chunk": 9,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 9882828800
+      },
+      {
+        "chunk": 10,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 9882828800
+      },
+      {
+        "chunk": 11,
+        "retrieved_frame_ids": [
+          7,
+          6,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 9882828800
+      },
+      {
+        "chunk": 12,
+        "retrieved_frame_ids": [
+          6,
+          7,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 13,
+        "retrieved_frame_ids": [
+          6,
+          7,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      }
+    ]
+  },
+  "caveat": "Commanded camera closure does not prove realized closure. Endpoint image similarity cannot establish world memory if the realized route fails.",
+  "reference18_read4": {
+    "endpoint_psnr_db": 10.300267859844631,
+    "video_sha256": "ea95a1c1c151eafbeecff2415eb163f5c316d449b3ff56be55422b24d1f3a1e2",
+    "endpoint_dino_cosine": 0.8079333305358887
+  },
+  "candidate22_read8": {
+    "endpoint_psnr_db": 9.479497134660617,
+    "video_sha256": "d25eebb01659214b476c70e7aee11bb9810a74240eb2e3b8d3d45ada7710de14",
+    "endpoint_dino_cosine": 0.7572606801986694
+  },
+  "reference_label": "reference18_read4",
+  "reference_memory": {
+    "method": "bounded early-view pose KV retrieval; diagnostic, not paper reproduction",
+    "archive_limit_latent_frames": 16,
+    "retrieved_latent_frames": 4,
+    "retrieved_frame_count_is_limit": true,
+    "selection": "nearest",
+    "attention_composition": "joint softmax",
+    "history_output_weight": null,
+    "attention_branches_per_retrieval": 1,
+    "attended_latent_frames": 18,
+    "sink_latent_frames": 6,
+    "tail_latent_frames": 8,
+    "excluded_recent_archive_frames": 4,
+    "tail_frame_count_is_minimum": true,
+    "temporary_gpu_read_lifetime": "denoising and clean pass only; released before VAE decode",
+    "pose_source": "commanded poses, not reconstructed realized poses",
+    "key_positions": "virtual",
+    "key_storage": "canonical pre-RoPE BF16 keys; reapply spatial and virtual temporal RoPE on read",
+    "archive_bytes": 19765657600,
+    "retrieval_attention_calls": 1600,
+    "trace": [
+      {
+        "chunk": 0,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 1,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 2,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [
+          6,
+          7
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 3,
+        "retrieved_frame_ids": [
+          7,
+          6
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 4,
+        "retrieved_frame_ids": [
+          11,
+          10,
+          9,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 4941414400
+      },
+      {
+        "chunk": 5,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 4941414400
+      },
+      {
+        "chunk": 6,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 4941414400
+      },
+      {
+        "chunk": 7,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 4941414400
+      },
+      {
+        "chunk": 8,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 4941414400
+      },
+      {
+        "chunk": 9,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 4941414400
+      },
+      {
+        "chunk": 10,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 4941414400
+      },
+      {
+        "chunk": 11,
+        "retrieved_frame_ids": [
+          7,
+          6,
+          8,
+          9
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8,
+        "temporary_read_bytes_released_before_decode": 4941414400
+      },
+      {
+        "chunk": 12,
+        "retrieved_frame_ids": [
+          6,
+          7,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 13,
+        "retrieved_frame_ids": [
+          6,
+          7,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false,
+        "temporary_read_bytes_released_before_decode": 0
+      }
+    ]
+  },
+  "reference_wall_s": 193.328380581,
+  "reference_peak_allocated_bytes": 72321217536,
+  "candidate_label": "candidate22_read8",
+  "warmed_suffix_s": {
+    "reference18_read4": 89.79410901699998,
+    "candidate22_read8": 99.09348145400003
+  },
+  "feature_model": {
+    "name": "facebook/dinov2-small",
+    "revision": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+    "feature": "normalized CLS token"
+  },
+  "visual_judge": {
+    "model": "claude-opus-5-5",
+    "response_id": "msg_011Ch46kKaKHxQWQPhcA8KfQ",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 41262,
+      "output_tokens": 1597,
+      "output_tokens_details": {
+        "thinking_tokens": 469
+      },
+      "server_tool_use": null,
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "label_mapping": {
+      "A": "candidate22_read8",
+      "B": "reference18_read4"
+    },
+    "prompt": "Evaluate two anonymized world-model videos independently and then compare. Each was given the same image and fixed camera path. Commands by one-second chunk: ['WAIT', 'LEFT', 'LEFT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'RIGHT', 'RIGHT', 'WAIT']. RIGHT and LEFT yaw 45.0 degrees per second; W moves forward. Commands are NOT proof that motion happened. Inspect actual frames. Assess whether each video realizes a turnaround and return to the starting viewpoint; whether persistent landmark identity, any sign text, geometry and spatial layout match on return; and whether there are sudden jumps, frozen motion or implausible transitions. Distinguish camera-control failures from forgetting. Do not reward a similar final building if reaching it required a reset. Do not invent unseen geometry. Return English JSON with keys A and B (each with realized_round_trip: yes|no|uncertain, starting_place_recovered: yes|no|uncertain, discontinuity: yes|no|uncertain, visual_evidence, failure_classification), preference: A|B|tie|neither, confidence: low|medium|high, and reasoning. This is a diagnostic comparison, not a benchmark score.",
+    "prompt_sha256": "bd09e3d9a420f4f3dc55bb62872fe773185e987cdac22dbcafb10538b0b121bf",
+    "result": {
+      "A": {
+        "realized_round_trip": "yes",
+        "starting_place_recovered": "yes",
+        "discontinuity": "no",
+        "visual_evidence": "Frames 0-10 show the wooden-framed crystal shop window. Visible are the hanging 'Gift Vouchers' card, three copper cage lamps, the amethyst geode, quartz points and orange figurines. From about frames 10-30 the view pans smoothly left. It passes the textured stone pillar and the large purple amethyst boulder, then reaches the white-framed shopfront with the hexagonal pendant lights. Beyond that are the street, a beige house and a silver car. That view holds steadily through about frame 111. The only motion during the hold is people moving inside the shop, which is plausible during WAIT. From about frames 111-125 the view pans smoothly right, retracing the same landmarks in reverse: pendant, stone pillar, display case, sign. The final frames (125-138) show the wooden window again with the same sign, lamps, geode, quartz points and figurines in the same arrangement. The end framing is shifted slightly left of the start: the stone pillar takes up noticeably more of the left edge and the sign sits further right. The sign text is blurry at the end but has the same shape and position. No pops, morphs or resets are visible.",
+        "failure_classification": "No memory failure. There is minor camera-control drift, with the return yaw slightly under-rotated or offset compared to the start. Note that the commanded path is a 90-degree yaw out and back, not a full 180-degree turnaround, and A realizes that path."
+      },
+      "B": {
+        "realized_round_trip": "yes",
+        "starting_place_recovered": "yes",
+        "discontinuity": "no",
+        "visual_evidence": "B has nearly the same trajectory as A. It starts on the wooden-framed window with the 'Gift Vouchers' card, then pans smoothly left past the stone pillar and amethyst boulder to the white-framed shopfront with the hexagonal pendants and the street view. It holds there with only figures moving inside, which is plausible. It then pans smoothly right back across the pillar and display case to the wooden window. In the final frames (128-138) the sign, copper lamps, amethyst geode, quartz points, figurines and the right-hand window panes, including the top-right dark ornament, are all restored. The stone pillar margin on the left is somewhat narrower than in A's ending, so the framing is closer to the original start, though still slightly offset. Landmark identity and layout are consistent, and there are no jumps or resets.",
+        "failure_classification": "No memory failure. Minor residual yaw offset (camera control), smaller than A's."
+      },
+      "preference": "B",
+      "confidence": "low",
+      "reasoning": "Both videos actually move the camera left, hold, and return right with smooth transitions and no resets. On return, both preserve the shop window landmarks, the sign and the spatial layout, so neither shows forgetting. The commanded path is only a 90-degree out-and-back yaw, not a full turnaround, and both realize it. The difference is small: B's final framing matches the starting viewpoint a little more closely, with a narrower stone pillar margin and more of the original right-side panes visible. A ends slightly more offset. This is a camera-control precision difference, not a memory difference, so confidence is low."
+    }
+  }
+}
