@@ -1,0 +1,80 @@
+{
+  "scope": "Frozen confirmation of caption+objective text after four-case IF development. No training. Not a full benchmark score.",
+  "arms": [
+    "caption",
+    "both"
+  ],
+  "cases": [
+    {
+      "partition": "new-seed",
+      "task_id": "IF001",
+      "seed": 43,
+      "image_sha256": "4fc64ac38864e2f072f407090c283d65ca60efcc1e130ee5754748564e2dc634",
+      "task_sha256": "5c783276e9a2246a26bf4c418c122c0a8f367c3d802a2a963ed1213d81ce44fa"
+    },
+    {
+      "partition": "new-seed",
+      "task_id": "IF021",
+      "seed": 43,
+      "image_sha256": "8494b2f9033b43ed5e8fcf526e5f8698e72e0a04fab2c94a693dd58aa72ebe4d",
+      "task_sha256": "27309d89fef69d4471d120c661188c41d66213ba86e9d5f2ed515ce7f9721a0b"
+    },
+    {
+      "partition": "new-seed",
+      "task_id": "IF025",
+      "seed": 43,
+      "image_sha256": "bd6476bb88042e62003f93c5a081c6cf3e1730f4f4bea0be7a0352340fbc98cf",
+      "task_sha256": "71d01aa3674afaccb375fd1ccc4aa2e5fdef2c639f09b892ced6f8082540caed"
+    },
+    {
+      "partition": "new-seed",
+      "task_id": "IF042",
+      "seed": 43,
+      "image_sha256": "ca8a0e1af093be6868ab7e64d21ac583e627ff84c0f2f8ba7fc1d3256662e053",
+      "task_sha256": "841c4aa89ab5ff091b1bde6dd989df5f41515514c7fcafd51ee046f7319c2351"
+    },
+    {
+      "partition": "new-cases",
+      "task_id": "IF011",
+      "seed": 42,
+      "image_sha256": "2e0fc7cb03e02e95f3236fcea8792e2011fbafc19d589c584bb7239e82463fa2",
+      "task_sha256": "17a3b51b70abc7c9ba9f1244043e1597a0bfc8d4a3bd895916c9494c6f3874dc"
+    },
+    {
+      "partition": "new-cases",
+      "task_id": "IF035",
+      "seed": 42,
+      "image_sha256": "dca7fcb7fd2901390cbad4befcc0fe23785d85b74eb7a5127bf3a13ccef6b2e4",
+      "task_sha256": "e9392eedb772fab30e5db3a83036de7b9b73527b11f11d702a0bccd3f6f04703"
+    },
+    {
+      "partition": "new-cases",
+      "task_id": "IF051",
+      "seed": 42,
+      "image_sha256": "59cb95380967f748936b191be21383fc7b29ae25d99a7f7d2c669a88a9030cd7",
+      "task_sha256": "f0ab4ba5ef4373680f7cb245d806e729f5a0b829564b72c2e784d347fe924dae"
+    },
+    {
+      "partition": "new-cases",
+      "task_id": "IF024",
+      "seed": 42,
+      "image_sha256": "9b9e5b18f431a96fd6c9eec60f5cbe987305b8a92b890e242d099d1da7ae9e73",
+      "task_sha256": "cab3849ceb911a119a80fd7a3c61586bac0f2b8dc9da0a9f6f8d18ae73c634f6"
+    }
+  ],
+  "selection": {
+    "development_ids": [
+      "IF001",
+      "IF021",
+      "IF025",
+      "IF042"
+    ],
+    "new_case_method": "first4ascendingSHA256(salt:task_id), excludingdevelopment",
+    "salt": "worldsync-task-text-confirmation-2026-11-15",
+    "selection_before_judging": true
+  },
+  "runtime": "Same H200/Torch2.6/SDPA, stock18/6 cache, streamed unchangedHaikuplayer,40chunk budget, no fixed actions.",
+  "primary": "Released Gemini Vertex3.1Pro-preview official gate/aggregation, all16declaredepisodes. Keep model failures, retry only scorer transport failures.",
+  "promotion_rule": "Candidate only: require positive held-out-case mean delta, nonnegative new-seed delta, improvements on at least two distinct cases and no clear video-quality regression. Report case uncertainty; this small cohort cannot establish beating2.12.",
+  "phase_order": "Frozenbotharmchosenfromdevelopmentbeforeanyconfirmationoutcome; no case replacement after generation."
+}

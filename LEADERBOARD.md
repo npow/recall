@@ -72,10 +72,22 @@ The adaptive four-view pilot changed 3.60→3.90, but neither seed visibly retur
 ## Other measured results
 
 - [Turn check](reproduction/turn-check-baseline-v6.json): judge-independent yaw-from-frames check; stock passed 6/6 turn tasks, v6 4/6. Gemini failed OE057 three times for both arms although the video turned as instructed.
-- [Protocol finding](reproduction/text-prompt-finding.md): the released PlayWorld harness submits `task.prompt` as the world-model text, while our adapter sent the static image caption. `--text-prompt prompt` exists; its test is incomplete (GPU shared, one case out-of-memory), so no score is claimed.
+- [Protocol finding](reproduction/text-prompt-finding.md): the released PlayWorld harness submits `task.prompt` as the world-model text, while our adapter sent the static image caption. `--text-prompt prompt` exists; the completed four-case development comparison and its limitations are reported above; held-out confirmation is pending.
 - [Long-return memory](reproduction/memory-validation/README.md): a 31.8-second episode with 24 seconds away retained the landmark; residual framing/text drift remains. Not a benchmark score.
 - [Local submaps](reproduction/spatial-local-submaps/summary.json): better mall localization, bridge and drifted-stock failures; not generator conditioning.
 - [Persistent runner](reproduction/modal-runner.md): 3.6x steady short-job throughput in the reported seven-job trial, exact outputs on the same GPU model. [Mixed-scene batch](reproduction/lingbot-batch-validation/) preserves all 42 chunk hashes.
+
+## Gemini — IF text-conditioning development pilot
+
+Four predeclared IF cases, seed 42; 12 completed adaptive episodes. Same H200, native 18/6 cache and player. These are development results, not an overall score.
+
+| Text conditioning | Mean |
+|---|---:|
+| caption |1.00|
+| prompt |1.25|
+| both |1.71|
+
+Caption plus objective is awaiting separate case/seed confirmation. Physical failures remain: walking through glass and disappearing carried objects. [Protocol, videos and per-case scores](reproduction/task-text-pilot/README.md).
 
 
 ## Gemini — paired GC/OE development cohort (seeds 42 and 43)

@@ -1,0 +1,484 @@
+{
+  "scope": "Development-only task-conditioning comparison; not a held-out overall or new world-model training result",
+  "complete": true,
+  "declared_episodes": 12,
+  "results": [
+    {
+      "id": "text-if-IF001-caption-seed42",
+      "task_id": "IF001",
+      "mode": "caption",
+      "seed": 42,
+      "partition": "development",
+      "status": "scored",
+      "score": 1.0,
+      "gate": {
+        "applicable": "yes",
+        "task_id": "IF001",
+        "perspective": "third-person",
+        "verdict": "fail",
+        "instruction_following_score": 0,
+        "meaningful_requested_trajectory_progress": "no",
+        "revisit_required": "no",
+        "revisit_observed": "not_applicable",
+        "observed_action_zh": "\u89c6\u9891\u4e2d\u5973\u5b50\u4e00\u76f4\u7ad9\u5728\u516c\u4ea4\u8f66\u7ad9\u524d\uff0c\u6ca1\u6709\u4efb\u4f55\u5411\u524d\u884c\u8d70\u7684\u52a8\u4f5c\u3002",
+        "trajectory_evidence_zh": "\u5728\u6240\u6709\u4e3b\u8bc1\u636e\u5e27\uff080-48\u5e27\uff09\u4e2d\uff0c\u5973\u5b50\u76f8\u5bf9\u4e8e\u80cc\u666f\uff08\u516c\u4ea4\u8f66\u7ad9\uff09\u7684\u4f4d\u7f6e\u548c\u5927\u5c0f\u5747\u672a\u53d1\u751f\u53d8\u5316\uff0c\u8868\u660e\u5979\u5b8c\u5168\u9759\u6b62\uff0c\u6ca1\u6709\u5411\u524d\u79fb\u52a8\u3002",
+        "failure_reason_zh": "\u5973\u5b50\u6ca1\u6709\u6309\u7167\u6307\u4ee4\u5411\u524d\u884c\u8d70\uff0c\u800c\u662f\u5168\u7a0b\u4fdd\u6301\u9759\u6b62\u3002",
+        "confidence_1_to_5": 5
+      },
+      "generated_seconds": 4.8125,
+      "agent_interactions": 6,
+      "termination": "agent_end",
+      "video_sha256": "f79673b1953f79e3135bb5e3565365da1ba9af3247705305940ac67b0513c492",
+      "judge_model": "gemini-3.1-pro-preview",
+      "hardware": {
+        "gpu": "NVIDIA H200",
+        "torch": "2.6.0+cu124",
+        "cuda": "12.4"
+      },
+      "interaction_quality": null
+    },
+    {
+      "id": "text-if-IF001-prompt-seed42",
+      "task_id": "IF001",
+      "mode": "prompt",
+      "seed": 42,
+      "partition": "development",
+      "status": "scored",
+      "score": 1.0,
+      "gate": {
+        "applicable": "yes",
+        "task_id": "IF001",
+        "perspective": "third-person",
+        "verdict": "pass",
+        "instruction_following_score": 1,
+        "meaningful_requested_trajectory_progress": "yes",
+        "revisit_required": "no",
+        "revisit_observed": "not_applicable",
+        "observed_action_zh": "\u89c6\u9891\u4e2d\uff0c\u5973\u5b50\u4e00\u76f4\u5411\u524d\u8d70\uff0c\u8d70\u5411\u5e76\u7a7f\u8fc7\u4e86\u516c\u4ea4\u7ad9\u53f0\u7684\u73bb\u7483\uff08\u969c\u788d\u7269\uff09\u3002",
+        "trajectory_evidence_zh": "\u4ece\u7b2c\u4e00\u5f20\u56fe\u5f00\u59cb\uff0c\u5973\u5b50\u80cc\u5bf9\u955c\u5934\u7ad9\u7acb\u3002\u968f\u540e\u5979\u5f00\u59cb\u5411\u524d\u8fc8\u6b65\uff0c\u5f84\u76f4\u8d70\u5411\u516c\u4ea4\u7ad9\u53f0\uff0c\u5e76\u5728\u540e\u7eed\u5e27\u4e2d\u76f4\u63a5\u7a7f\u8fc7\u4e86\u5e26\u6709\u6d82\u9e26\u7684\u73bb\u7483\u677f\uff0c\u4e00\u76f4\u4fdd\u6301\u5411\u524d\u884c\u8d70\u7684\u8f68\u8ff9\u3002",
+        "failure_reason_zh": "",
+        "confidence_1_to_5": 5
+      },
+      "generated_seconds": 3.8125,
+      "agent_interactions": 5,
+      "termination": "agent_end",
+      "video_sha256": "932ba74e7abb29b0d7f7fe46978da861bbbb3cd1ddf1ccf106b8077e4960f3e2",
+      "judge_model": "gemini-3.1-pro-preview",
+      "hardware": {
+        "gpu": "NVIDIA H200",
+        "torch": "2.6.0+cu124",
+        "cuda": "12.4"
+      },
+      "interaction_quality": {
+        "interaction_quality_level_1_to_5": 1,
+        "interaction_opportunity_reached": "yes",
+        "physical_response_observed": "no",
+        "core_failure_zh": "\u5973\u5b50\u76f4\u63a5\u7a7f\u8fc7\u4e86\u56fa\u4f53\u7684\u516c\u4ea4\u7ad9\u73bb\u7483\u9762\u677f\u3001\u5ea7\u6905\u548c\u7eff\u7bf1\uff0c\u53d1\u751f\u4e86\u707e\u96be\u6027\u7684\u7269\u7406\u7a7f\u6a21\u3002",
+        "positive_evidence_zh": "\u5973\u5b50\u8868\u73b0\u51fa\u4e86\u6301\u7eed\u7684\u5411\u524d\u884c\u8d70\u52a8\u4f5c\u3002",
+        "evidence_zh": "\u5c3d\u7ba1\u5973\u5b50\u6267\u884c\u4e86\u5411\u524d\u884c\u8d70\u7684\u6307\u4ee4\uff0c\u4f46\u5979\u5b8c\u5168\u65e0\u89c6\u4e86\u524d\u65b9\u7684\u7269\u7406\u969c\u788d\uff0c\u76f4\u63a5\u7a7f\u8fc7\u4e86\u516c\u4ea4\u7ad9\u7684\u56fa\u4f53\u7ed3\u6784\uff0c\u5c5e\u4e8e\u707e\u96be\u6027\u7684\u4ea4\u4e92\u5931\u8d25\u3002",
+        "final_score_cap_applied": 1
+      }
+    },
+    {
+      "id": "text-if-IF001-both-seed42",
+      "task_id": "IF001",
+      "mode": "both",
+      "seed": 42,
+      "partition": "development",
+      "status": "scored",
+      "score": 1.0,
+      "gate": {
+        "applicable": "yes",
+        "task_id": "IF001",
+        "perspective": "third-person",
+        "verdict": "fail",
+        "instruction_following_score": 0,
+        "meaningful_requested_trajectory_progress": "no",
+        "revisit_required": "no",
+        "revisit_observed": "not_applicable",
+        "observed_action_zh": "\u89c6\u9891\u4e2d\u7684\u5973\u5b50\u4e00\u76f4\u7ad9\u5728\u516c\u4ea4\u8f66\u7ad9\u524d\uff0c\u6ca1\u6709\u4efb\u4f55\u79fb\u52a8\u3002",
+        "trajectory_evidence_zh": "\u4ece\u7b2c\u4e00\u5e27\u5230\u6700\u540e\u4e00\u5e27\uff0c\u5973\u5b50\u59cb\u7ec8\u4fdd\u6301\u9759\u6b62\u7ad9\u7acb\u7684\u59ff\u52bf\uff0c\u6ca1\u6709\u5411\u524d\u884c\u8d70\u7684\u52a8\u4f5c\u3002",
+        "failure_reason_zh": "\u5973\u5b50\u5b8c\u5168\u6ca1\u6709\u5411\u524d\u884c\u8d70\uff0c\u672a\u80fd\u6267\u884c\u6307\u4ee4\u4e2d\u8981\u6c42\u7684\u52a8\u4f5c\u3002",
+        "confidence_1_to_5": 5
+      },
+      "generated_seconds": 3.8125,
+      "agent_interactions": 5,
+      "termination": "agent_end",
+      "video_sha256": "0f00291202a1163bbbddfbb1cc15bbe35984f431ff3c9a8c4066e8ba8063ce71",
+      "judge_model": "gemini-3.1-pro-preview",
+      "hardware": {
+        "gpu": "NVIDIA H200",
+        "torch": "2.6.0+cu124",
+        "cuda": "12.4"
+      },
+      "interaction_quality": null
+    },
+    {
+      "id": "text-if-IF025-caption-seed42",
+      "task_id": "IF025",
+      "mode": "caption",
+      "seed": 42,
+      "partition": "development",
+      "status": "scored",
+      "score": 1.0,
+      "gate": {
+        "applicable": "yes",
+        "task_id": "IF025",
+        "perspective": "third-person",
+        "verdict": "fail",
+        "instruction_following_score": 0,
+        "meaningful_requested_trajectory_progress": "no",
+        "revisit_required": "no",
+        "revisit_observed": "not_applicable",
+        "observed_action_zh": "\u89c6\u9891\u4e2d\u5973\u5b50\u5411\u524d\u8d70\uff0c\u7136\u540e\u5411\u5de6\u4fa7\u79fb\u52a8\uff0c\u8fdb\u5165\u4e86\u5de6\u4fa7\u7684\u7389\u7c73\u5730\u4e2d\u3002",
+        "trajectory_evidence_zh": "\u5728\u7b2c0-4\u5e27\u4e2d\uff0c\u5973\u5b50\u5728\u5c0f\u8def\u4e0a\u5411\u524d\u8d70\u3002\u5728\u7b2c5-9\u5e27\u4e2d\uff0c\u5979\u5411\u753b\u9762\u7684\u5de6\u4fa7\u79fb\u52a8\uff0c\u5e76\u6d88\u5931\u5728\u5de6\u4fa7\u7684\u7389\u7c73\u5730\u91cc\u3002\u968f\u540e\u7684\u5e27\u4e2d\u53ea\u663e\u793a\u4e86\u7389\u7c73\u5730\u3002",
+        "failure_reason_zh": "\u6307\u4ee4\u8981\u6c42\u5973\u5b50\u5411\u53f3\u524d\u65b9\u659c\u5411\u884c\u8d70\u5e76\u8fdb\u5165\u7389\u7c73\u5730\uff0c\u4f46\u89c6\u9891\u4e2d\u5973\u5b50\u5b9e\u9645\u5411\u5de6\u4fa7\u884c\u8d70\u5e76\u8fdb\u5165\u4e86\u5de6\u4fa7\u7684\u7389\u7c73\u5730\uff0c\u65b9\u5411\u4e0e\u6307\u4ee4\u76f8\u53cd\u3002",
+        "confidence_1_to_5": 5
+      },
+      "generated_seconds": 3.8125,
+      "agent_interactions": 5,
+      "termination": "agent_end",
+      "video_sha256": "8fa7e43041477bb156c55de7bb73af3953fff33a6c3ae8c741a22f5abb65b00e",
+      "judge_model": "gemini-3.1-pro-preview",
+      "hardware": {
+        "gpu": "NVIDIA H200",
+        "torch": "2.6.0+cu124",
+        "cuda": "12.4"
+      },
+      "interaction_quality": null
+    },
+    {
+      "id": "text-if-IF025-prompt-seed42",
+      "task_id": "IF025",
+      "mode": "prompt",
+      "seed": 42,
+      "partition": "development",
+      "status": "scored",
+      "score": 2.0,
+      "gate": {
+        "applicable": "yes",
+        "task_id": "IF025",
+        "perspective": "third-person",
+        "verdict": "pass",
+        "instruction_following_score": 1,
+        "meaningful_requested_trajectory_progress": "yes",
+        "revisit_required": "no",
+        "revisit_observed": "not_applicable",
+        "observed_action_zh": "\u5973\u5b50\u5411\u524d\u8d70\uff0c\u7136\u540e\u5411\u53f3\u504f\u8f6c\uff0c\u8fdb\u5165\u9ad8\u5927\u7684\u7389\u7c73\u5730\u4e2d\u5e76\u7ee7\u7eed\u5728\u5176\u4e2d\u884c\u8d70\u3002",
+        "trajectory_evidence_zh": "\u89c6\u9891\u5f00\u59cb\u65f6\u5973\u5b50\u5728\u5c0f\u8def\u4e0a\u884c\u8d70\uff0c\u968f\u540e\u5411\u53f3\u79fb\u52a8\u8fdb\u5165\u7389\u7c73\u5730\uff0c\u5728\u89c6\u9891\u7684\u540e\u534a\u90e8\u5206\uff0c\u5979\u4e00\u76f4\u8d70\u5728\u9ad8\u5927\u7684\u7389\u7c73\u690d\u682a\u4e4b\u95f4\u3002",
+        "failure_reason_zh": "",
+        "confidence_1_to_5": 5
+      },
+      "generated_seconds": 3.8125,
+      "agent_interactions": 5,
+      "termination": "agent_end",
+      "video_sha256": "e99a3a70ced1fb91ca38fadd85dc95db1b67c12ebfb80d985c1909037f01bb2a",
+      "judge_model": "gemini-3.1-pro-preview",
+      "hardware": {
+        "gpu": "NVIDIA H200",
+        "torch": "2.6.0+cu124",
+        "cuda": "12.4"
+      },
+      "interaction_quality": {
+        "interaction_quality_level_1_to_5": 2,
+        "interaction_opportunity_reached": "yes",
+        "physical_response_observed": "no",
+        "core_failure_zh": "\u4eba\u7269\u7a7f\u8fc7\u7389\u7c73\u690d\u682a\u65f6\uff0c\u690d\u7269\u6ca1\u6709\u4efb\u4f55\u7269\u7406\u53cd\u5e94\uff0c\u4e14\u53d1\u751f\u4e25\u91cd\u7684\u7a7f\u6a21\u73b0\u8c61\u3002",
+        "positive_evidence_zh": "\u4eba\u7269\u6210\u529f\u5411\u53f3\u524d\u65b9\u884c\u8d70\u5e76\u8fdb\u5165\u4e86\u7389\u7c73\u5730\u3002",
+        "evidence_zh": "\u4eba\u7269\u6309\u63d0\u793a\u8fdb\u5165\u4e86\u7389\u7c73\u5730\uff0c\u4f46\u4e0e\u7389\u7c73\u690d\u682a\u7684\u7269\u7406\u4ea4\u4e92\u4e25\u91cd\u8fdd\u80cc\u5e38\u7406\uff0c\u8eab\u4f53\u76f4\u63a5\u7a7f\u8fc7\u53f6\u7247\u548c\u830e\u79c6\uff0c\u690d\u7269\u6ca1\u6709\u4efb\u4f55\u5f2f\u66f2\u6216\u907f\u8ba9\u7684\u56e0\u679c\u53cd\u5e94\u3002",
+        "final_score_cap_applied": 2
+      }
+    },
+    {
+      "id": "text-if-IF025-both-seed42",
+      "task_id": "IF025",
+      "mode": "both",
+      "seed": 42,
+      "partition": "development",
+      "status": "scored",
+      "score": 2.86,
+      "gate": {
+        "applicable": "yes",
+        "task_id": "IF025",
+        "perspective": "third-person",
+        "verdict": "pass",
+        "instruction_following_score": 1,
+        "meaningful_requested_trajectory_progress": "yes",
+        "revisit_required": "no",
+        "revisit_observed": "not_applicable",
+        "observed_action_zh": "\u5973\u5b50\u5148\u5728\u5c0f\u8def\u4e0a\u5411\u524d\u8d70\uff0c\u968f\u540e\u5411\u53f3\u8f6c\uff0c\u8d70\u8fdb\u4e86\u53f3\u4fa7\u9ad8\u5927\u7684\u7389\u7c73\u5730\u4e2d\u3002",
+        "trajectory_evidence_zh": "\u5728\u7b2c1\u5f20\u63a5\u89e6\u8868\u4e2d\uff0c\u5973\u5b50\u6700\u521d\u5728\u8def\u4e0a\u884c\u8d70\uff0c\u5927\u7ea6\u5728\u7b2c5\u5e27\u5f00\u59cb\u5411\u53f3\u8f6c\uff0c\u968f\u540e\u8fdb\u5165\u4e86\u53f3\u4fa7\u7684\u7389\u7c73\u5730\u3002\u5728\u5269\u4f59\u7684\u5e27\u548c\u7b2c2\u5f20\u63a5\u89e6\u8868\u4e2d\uff0c\u5979\u7ee7\u7eed\u5728\u7389\u7c73\u5730\u4e2d\u5411\u524d\u884c\u8d70\u3002",
+        "failure_reason_zh": "",
+        "confidence_1_to_5": 5
+      },
+      "generated_seconds": 3.8125,
+      "agent_interactions": 5,
+      "termination": "agent_end",
+      "video_sha256": "690879882b997d28de88ce2ccd823afa82c68c32e3e46556e7d022cc45927915",
+      "judge_model": "gemini-3.1-pro-preview",
+      "hardware": {
+        "gpu": "NVIDIA H200",
+        "torch": "2.6.0+cu124",
+        "cuda": "12.4"
+      },
+      "interaction_quality": {
+        "interaction_quality_level_1_to_5": 3,
+        "interaction_opportunity_reached": "yes",
+        "physical_response_observed": "no",
+        "core_failure_zh": "\u5973\u5b50\u7a7f\u8fc7\u7389\u7c73\u5730\u65f6\u53d1\u751f\u4e86\u4e25\u91cd\u7684\u7a7f\u6a21\uff0c\u690d\u7269\u6ca1\u6709\u4efb\u4f55\u7269\u7406\u5f62\u53d8\u54cd\u5e94\u3002",
+        "positive_evidence_zh": "\u5973\u5b50\u6210\u529f\u5b8c\u6210\u4e86\u5411\u53f3\u884c\u8d70\u5e76\u8fdb\u5165\u7389\u7c73\u5730\u7684\u8f68\u8ff9\uff0c\u4e14\u5728\u7389\u7c73\u5730\u5185\u90e8\u4fdd\u6301\u4e86\u5408\u7406\u7684\u884c\u8d70\u6b65\u6001\u548c\u76f8\u673a\u8ddf\u968f\u3002",
+        "evidence_zh": "\u5973\u5b50\u6210\u529f\u8fdb\u5165\u4e86\u76ee\u6807\u533a\u57df\uff08\u7389\u7c73\u5730\uff09\u5e76\u7ee7\u7eed\u884c\u8d70\uff0c\u6784\u6210\u4e86\u660e\u786e\u7684\u90e8\u5206\u4ea4\u4e92\uff1b\u4f46\u7531\u4e8e\u5b8c\u5168\u7f3a\u4e4f\u690d\u7269\u7684\u7269\u7406\u54cd\u5e94\u548c\u4e25\u91cd\u7684\u7a7f\u6a21\u73b0\u8c61\uff0c\u5b58\u5728\u91cd\u5927\u7f3a\u9677\uff0c\u8bc4\u4e3a3\u7ea7\u3002",
+        "final_score_cap_applied": 3
+      }
+    },
+    {
+      "id": "text-if-IF021-caption-seed42",
+      "task_id": "IF021",
+      "mode": "caption",
+      "seed": 42,
+      "partition": "development",
+      "status": "scored",
+      "score": 1.0,
+      "gate": {
+        "applicable": "yes",
+        "task_id": "IF021",
+        "perspective": "third-person",
+        "verdict": "pass",
+        "instruction_following_score": 1,
+        "meaningful_requested_trajectory_progress": "yes",
+        "revisit_required": "no",
+        "revisit_observed": "not_applicable",
+        "observed_action_zh": "\u670d\u52a1\u5458\u4e00\u76f4\u80cc\u5bf9\u955c\u5934\u5411\u524d\u8d70\u3002",
+        "trajectory_evidence_zh": "\u5728\u6574\u4e2a\u89c6\u9891\u5e8f\u5217\u4e2d\uff0c\u670d\u52a1\u5458\u7684\u80cc\u5f71\u9010\u6e10\u53d8\u5c0f\uff0c\u8868\u660e\u4ed6\u6b63\u5728\u6301\u7eed\u5411\u573a\u666f\u6df1\u5904\uff08\u6b63\u524d\u65b9\uff09\u884c\u8d70\u3002",
+        "failure_reason_zh": "",
+        "confidence_1_to_5": 5
+      },
+      "generated_seconds": 2.8125,
+      "agent_interactions": 4,
+      "termination": "agent_end",
+      "video_sha256": "a57c966accbfdb6727525018a47ae6c5346921256ce840fa622b093157b07bed",
+      "judge_model": "gemini-3.1-pro-preview",
+      "hardware": {
+        "gpu": "NVIDIA H200",
+        "torch": "2.6.0+cu124",
+        "cuda": "12.4"
+      },
+      "interaction_quality": {
+        "interaction_quality_level_1_to_5": 1,
+        "interaction_opportunity_reached": "no",
+        "physical_response_observed": "no",
+        "core_failure_zh": "\u4e3b\u4f53\u5b8c\u5168\u9759\u6b62\uff0c\u672a\u8fdb\u884c\u4efb\u4f55\u7269\u7406\u4ea4\u4e92\u6216\u79fb\u52a8\u3002",
+        "positive_evidence_zh": "",
+        "evidence_zh": "\u670d\u52a1\u5458\u5728\u6574\u4e2a\u89c6\u9891\u4e2d\u50cf\u96d5\u50cf\u4e00\u6837\u51bb\u7ed3\uff0c\u6ca1\u6709\u884c\u8d70\u3001\u6ca1\u6709\u91cd\u91cf\u8f6c\u79fb\uff0c\u4e5f\u6ca1\u6709\u4e0e\u73af\u5883\u53d1\u751f\u4efb\u4f55\u4ea4\u4e92\u3002",
+        "final_score_cap_applied": 1
+      }
+    },
+    {
+      "id": "text-if-IF021-prompt-seed42",
+      "task_id": "IF021",
+      "mode": "prompt",
+      "seed": 42,
+      "partition": "development",
+      "status": "scored",
+      "score": 1.0,
+      "gate": {
+        "applicable": "yes",
+        "task_id": "IF021",
+        "perspective": "third-person",
+        "verdict": "pass",
+        "instruction_following_score": 1,
+        "meaningful_requested_trajectory_progress": "yes",
+        "revisit_required": "no",
+        "revisit_observed": "not_applicable",
+        "observed_action_zh": "\u670d\u52a1\u5458\u80cc\u5bf9\u955c\u5934\uff0c\u4e00\u76f4\u5411\u524d\u8d70\u3002",
+        "trajectory_evidence_zh": "\u4ece\u7b2c0\u5e27\u5230\u7b2c28\u5e27\uff0c\u670d\u52a1\u5458\u7684\u80cc\u5f71\u5728\u753b\u9762\u4e2d\u9010\u6e10\u53d8\u5c0f\uff0c\u80cc\u666f\u76f8\u5bf9\u653e\u5927\uff0c\u8868\u660e\u4ed6\u6b63\u5728\u6301\u7eed\u5411\u524d\u76f4\u7ebf\u884c\u8d70\u3002",
+        "failure_reason_zh": "",
+        "confidence_1_to_5": 5
+      },
+      "generated_seconds": 2.8125,
+      "agent_interactions": 4,
+      "termination": "agent_end",
+      "video_sha256": "424859fdb3d070396ab8ea89f60f242154991a3bcadf154ee0065e5f1927627f",
+      "judge_model": "gemini-3.1-pro-preview",
+      "hardware": {
+        "gpu": "NVIDIA H200",
+        "torch": "2.6.0+cu124",
+        "cuda": "12.4"
+      },
+      "interaction_quality": {
+        "interaction_quality_level_1_to_5": 1,
+        "interaction_opportunity_reached": "no",
+        "physical_response_observed": "no",
+        "core_failure_zh": "\u4e3b\u4f53\u5b8c\u5168\u9759\u6b62\uff0c\u672a\u6267\u884c\u4efb\u4f55\u52a8\u4f5c\uff0c\u4e14\u53d1\u751f\u786c\u91cd\u7f6e\u3002",
+        "positive_evidence_zh": "\u65e0\u3002",
+        "evidence_zh": "\u670d\u52a1\u5458\u5728\u6574\u4e2a\u89c6\u9891\u4e2d\u4fdd\u6301\u5b8c\u5168\u9759\u6b62\uff0c\u6ca1\u6709\u8fdb\u884c\u4efb\u4f55\u6709\u610f\u4e49\u7684\u79fb\u52a8\uff0c\u4e14\u5728\u7b2c20\u5e27\u53d1\u751f\u4e86\u573a\u666f\u548c\u4e3b\u4f53\u7684\u786c\u91cd\u7f6e\u3002",
+        "final_score_cap_applied": 1
+      }
+    },
+    {
+      "id": "text-if-IF021-both-seed42",
+      "task_id": "IF021",
+      "mode": "both",
+      "seed": 42,
+      "partition": "development",
+      "status": "scored",
+      "score": 2.0,
+      "gate": {
+        "applicable": "yes",
+        "task_id": "IF021",
+        "perspective": "third-person",
+        "verdict": "pass",
+        "instruction_following_score": 1,
+        "meaningful_requested_trajectory_progress": "yes",
+        "revisit_required": "no",
+        "revisit_observed": "not_applicable",
+        "observed_action_zh": "\u670d\u52a1\u5458\u4e00\u76f4\u5f84\u76f4\u5411\u524d\u8d70\uff0c\u80cc\u5bf9\u955c\u5934\u5411\u573a\u666f\u6df1\u5904\u79fb\u52a8\u3002",
+        "trajectory_evidence_zh": "\u4ece\u4e3b\u8bc1\u636e\u5e27\u53ef\u4ee5\u770b\u51fa\uff0c\u670d\u52a1\u5458\u5728\u753b\u9762\u4e2d\u7684\u6bd4\u4f8b\u9010\u6e10\u53d8\u5c0f\uff0c\u4e14\u76f8\u5bf9\u4e8e\u80cc\u666f\u4e2d\u7684\u906e\u9633\u4f1e\u548c\u62f1\u95e8\u7b49\u53c2\u7167\u7269\uff0c\u4ed6\u6b63\u5728\u5411\u573a\u666f\u6df1\u5904\u79fb\u52a8\uff0c\u8868\u73b0\u51fa\u6301\u7eed\u5411\u524d\u884c\u8d70\u7684\u8f68\u8ff9\u3002",
+        "failure_reason_zh": "",
+        "confidence_1_to_5": 5
+      },
+      "generated_seconds": 2.8125,
+      "agent_interactions": 4,
+      "termination": "agent_end",
+      "video_sha256": "55dd89c6138b686a598a16be9daf1b82d7435f8bf2a59c003b62821f893c6e7f",
+      "judge_model": "gemini-3.1-pro-preview",
+      "hardware": {
+        "gpu": "NVIDIA H200",
+        "torch": "2.6.0+cu124",
+        "cuda": "12.4"
+      },
+      "interaction_quality": {
+        "interaction_quality_level_1_to_5": 2,
+        "interaction_opportunity_reached": "yes",
+        "physical_response_observed": "no",
+        "core_failure_zh": "\u670d\u52a1\u5458\u624b\u4e2d\u7684\u6258\u76d8\u548c\u996e\u6599\u5728\u884c\u8d70\u8fc7\u7a0b\u4e2d\u5b8c\u5168\u6d88\u5931\uff0c\u672a\u80fd\u4fdd\u6301\u63a5\u89e6\u548c\u652f\u6491\u3002",
+        "positive_evidence_zh": "\u670d\u52a1\u5458\u786e\u5b9e\u6309\u7167\u6307\u4ee4\u5411\u524d\u8d70\u52a8\uff0c\u6b65\u6001\u57fa\u672c\u81ea\u7136\u3002",
+        "evidence_zh": "\u670d\u52a1\u5458\u867d\u7136\u5411\u524d\u884c\u8d70\uff0c\u4f46\u5176\u6838\u5fc3\u4efb\u52a1\uff08\u7aef\u7740\u6258\u76d8\uff09\u5728\u89c6\u9891\u521d\u671f\u5c31\u906d\u9047\u4e86\u707e\u96be\u6027\u5931\u8d25\uff0c\u6258\u76d8\u51ed\u7a7a\u6d88\u5931\u3002",
+        "final_score_cap_applied": 2
+      }
+    },
+    {
+      "id": "text-if-IF042-caption-seed42",
+      "task_id": "IF042",
+      "mode": "caption",
+      "seed": 42,
+      "partition": "development",
+      "status": "scored",
+      "score": 1.0,
+      "gate": {
+        "applicable": "yes",
+        "task_id": "IF042",
+        "perspective": "third-person",
+        "verdict": "fail",
+        "instruction_following_score": 0,
+        "meaningful_requested_trajectory_progress": "no",
+        "revisit_required": "no",
+        "revisit_observed": "not_applicable",
+        "observed_action_zh": "\u7537\u5b50\u5728\u5411\u524d\u8fde\u7eed\u8df3\u8dc3\uff0c\u800c\u4e0d\u662f\u884c\u8d70\u3002",
+        "trajectory_evidence_zh": "\u89c6\u9891\u4e2d\u7537\u5b50\u6ca1\u6709\u5728\u5730\u9762\u4e0a\u884c\u8d70\uff0c\u800c\u662f\u53cd\u590d\u8df3\u8d77\u5e76\u5728\u7a7a\u4e2d\u5411\u524d\u79fb\u52a8\u3002",
+        "failure_reason_zh": "\u6307\u4ee4\u8981\u6c42\u7537\u5b50\u5411\u524d\u8d70\uff08walks forward\uff09\uff0c\u4f46\u89c6\u9891\u4e2d\u7537\u5b50\u662f\u5728\u5411\u524d\u8fde\u7eed\u8df3\u8dc3\uff08jumps forward\uff09\uff0c\u52a8\u4f5c\u7c7b\u578b\u5b8c\u5168\u4e0d\u7b26\u3002",
+        "confidence_1_to_5": 5
+      },
+      "generated_seconds": 2.8125,
+      "agent_interactions": 4,
+      "termination": "agent_end",
+      "video_sha256": "d83f56aeafec2c97a71c3de2b8ce59c015faa804915cc5639c79dba2444e6d3a",
+      "judge_model": "gemini-3.1-pro-preview",
+      "hardware": {
+        "gpu": "NVIDIA H200",
+        "torch": "2.6.0+cu124",
+        "cuda": "12.4"
+      },
+      "interaction_quality": null
+    },
+    {
+      "id": "text-if-IF042-prompt-seed42",
+      "task_id": "IF042",
+      "mode": "prompt",
+      "seed": 42,
+      "partition": "development",
+      "status": "scored",
+      "score": 1.0,
+      "gate": {
+        "applicable": "yes",
+        "task_id": "IF042",
+        "perspective": "third-person",
+        "verdict": "fail",
+        "instruction_following_score": 0,
+        "meaningful_requested_trajectory_progress": "no",
+        "revisit_required": "no",
+        "revisit_observed": "not_applicable",
+        "observed_action_zh": "\u7537\u5b50\u4fdd\u6301\u9759\u6b62\uff0c\u6444\u50cf\u673a\u5411\u524d\u79fb\u52a8\u5e76\u62c9\u8fd1\u5230\u7537\u5b50\u7684\u80cc\u90e8\u3002",
+        "trajectory_evidence_zh": "\u5728\u6574\u4e2a\u89c6\u9891\u4e2d\uff0c\u7537\u5b50\u7684\u59ff\u52bf\u4fdd\u6301\u4e0d\u53d8\uff0c\u6ca1\u6709\u8fc8\u6b65\u6216\u884c\u8d70\u7684\u52a8\u4f5c\u3002\u6444\u50cf\u673a\u4e0d\u65ad\u5411\u524d\u63a8\u8fdb\uff0c\u6700\u7ec8\u753b\u9762\u5b8c\u5168\u88ab\u7537\u5b50\u7684\u80cc\u90e8\u5360\u636e\u3002",
+        "failure_reason_zh": "\u7537\u5b50\u6ca1\u6709\u5411\u524d\u884c\u8d70\uff0c\u53ea\u6709\u6444\u50cf\u673a\u5728\u5411\u524d\u79fb\u52a8\uff0c\u672a\u5b8c\u6210\u8981\u6c42\u7684\u52a8\u4f5c\u3002",
+        "confidence_1_to_5": 5
+      },
+      "generated_seconds": 2.8125,
+      "agent_interactions": 4,
+      "termination": "agent_end",
+      "video_sha256": "b5ca31487aa7cec3b87917accee47c8de7b80fa4316354b7978e20ac2cac9b4f",
+      "judge_model": "gemini-3.1-pro-preview",
+      "hardware": {
+        "gpu": "NVIDIA H200",
+        "torch": "2.6.0+cu124",
+        "cuda": "12.4"
+      },
+      "interaction_quality": null
+    },
+    {
+      "id": "text-if-IF042-both-seed42",
+      "task_id": "IF042",
+      "mode": "both",
+      "seed": 42,
+      "partition": "development",
+      "status": "scored",
+      "score": 1.0,
+      "gate": {
+        "applicable": "yes",
+        "task_id": "IF042",
+        "perspective": "third-person",
+        "verdict": "partial",
+        "instruction_following_score": 1,
+        "meaningful_requested_trajectory_progress": "yes",
+        "revisit_required": "no",
+        "revisit_observed": "not_applicable",
+        "observed_action_zh": "\u7537\u5b50\u5411\u524d\u8df3\u8dc3\uff0c\u843d\u5730\u540e\u5411\u524d\u8dd1\u52a8\uff0c\u968f\u540e\u518d\u6b21\u8df3\u8dc3\u3002",
+        "trajectory_evidence_zh": "\u4ece\u7b2c1\u5e27\u5f00\u59cb\uff0c\u89d2\u8272\u8d77\u8df3\u5e76\u5411\u524d\u79fb\u52a8\uff1b\u7b2c10\u5e27\u843d\u5730\u540e\u7ee7\u7eed\u5411\u524d\u8dd1\u52a8\uff1b\u7b2c25\u5e27\u518d\u6b21\u8d77\u8df3\u5411\u524d\u3002\u6574\u4f53\u8f68\u8ff9\u662f\u5411\u524d\u7684\uff0c\u4f46\u52a8\u4f5c\u662f\u8df3\u8dc3\u548c\u8dd1\u52a8\u800c\u975e\u5355\u7eaf\u7684\u884c\u8d70\u3002",
+        "failure_reason_zh": "\u89d2\u8272\u5b9e\u73b0\u4e86\u5411\u524d\u7684\u8f68\u8ff9\uff0c\u4f46\u6267\u884c\u7684\u52a8\u4f5c\u662f\u8df3\u8dc3\u548c\u8dd1\u52a8\uff0c\u800c\u4e0d\u662f\u6307\u4ee4\u8981\u6c42\u7684\u2018\u884c\u8d70\u2019\uff08walk\uff09\u3002",
+        "confidence_1_to_5": 4
+      },
+      "generated_seconds": 2.8125,
+      "agent_interactions": 4,
+      "termination": "agent_end",
+      "video_sha256": "5c1e12fee1b73d189e747f6ddd1f99f249b36ea674dd5cce0b1696e635739ca6",
+      "judge_model": "gemini-3.1-pro-preview",
+      "hardware": {
+        "gpu": "NVIDIA H200",
+        "torch": "2.6.0+cu124",
+        "cuda": "12.4"
+      },
+      "interaction_quality": {
+        "interaction_quality_level_1_to_5": 1,
+        "interaction_opportunity_reached": "no",
+        "physical_response_observed": "no",
+        "core_failure_zh": "\u7537\u5b50\u5b8c\u5168\u60ac\u6d6e\u5728\u534a\u7a7a\u4e2d\u884c\u8d70\uff0c\u672a\u80fd\u4e0e\u5b9e\u9645\u5730\u9762\u63a5\u89e6\u3002",
+        "positive_evidence_zh": "\u7537\u5b50\u6709\u5411\u524d\u79fb\u52a8\u7684\u52a8\u4f5c\u3002",
+        "evidence_zh": "\u7537\u5b50\u5728\u534a\u7a7a\u4e2d\u964d\u843d\u5728\u4e00\u4e2a\u4e0d\u53ef\u89c1\u7684\u5e73\u9762\u4e0a\u5e76\u7ee7\u7eed\u884c\u8d70\uff0c\u8fd9\u5c5e\u4e8e\u707e\u96be\u6027\u7684\u7269\u7406\u4ea4\u4e92\u5931\u8d25\u3002",
+        "final_score_cap_applied": 1
+      }
+    }
+  ],
+  "means": {
+    "caption": 1.0,
+    "prompt": 1.25,
+    "both": 1.7149999999999999
+  },
+  "caveat": "Small declared IF cohort with Gemini preview alias; not a four-dimension overall. Development and confirmation partitions remain separate.",
+  "means_by_partition": {
+    "development": {
+      "caption": 1.0,
+      "prompt": 1.25,
+      "both": 1.7149999999999999
+    }
+  }
+}

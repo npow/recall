@@ -1,0 +1,475 @@
+{
+  "id": "text-if-IF001-both-seed42",
+  "result_directory": "text-if-IF001-both-seed42-1794725332985762501",
+  "argv": [
+    "--split",
+    "if",
+    "--task-id",
+    "IF001",
+    "--seed",
+    "42",
+    "--max-chunks",
+    "40",
+    "--offload-text-encoder",
+    "--stream-player-actions",
+    "--text-prompt",
+    "both",
+    "--output",
+    "/work/outputs/text-if-IF001-both-seed42-1794725332985762501"
+  ],
+  "error": null,
+  "status": "completed",
+  "chunk_pixel_sha256": [
+    "4962daa38969f31af51d5e257cfea80cc1237028e12a7638b51f306cc5c938e7",
+    "126320a0f84859cb9878379e1165222bb635a1593e7b69d34b1893a3bc7a2234",
+    "e2140edc34a1ba3903126a33726a3c666f4c08e76918980a2031f3d4fa762f18",
+    "38cf2474058eba957605f844a9d184b487e9580a0a383dca769a70efc102a500"
+  ],
+  "job_seconds": 49.17518160000003,
+  "weights_unchanged": true,
+  "warm_runtime": {
+    "loaded_this_job": false,
+    "load_seconds": 0.0,
+    "job_index": 3
+  },
+  "peak_allocated_bytes": 72579169792,
+  "run": {
+    "status": "completed",
+    "model": "LingBot-World2 14B causal-fast stock",
+    "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "initial_image_sha256": "4fc64ac38864e2f072f407090c283d65ca60efcc1e130ee5754748564e2dc634",
+    "text_prompt_mode": "both",
+    "image_caption_sha256": "af0fe9029d96de981e3f7984045bd5baeea979b810ea99c22d0fe92694eccce6",
+    "task_id": "IF001",
+    "split": "if",
+    "seed": 42,
+    "turn_degrees_per_second": 60,
+    "fps": 16,
+    "max_chunks": 40,
+    "max_interactions": 40,
+    "native_fixed_controls": false,
+    "camera_embedding_audit": [],
+    "pose_retrieval": false,
+    "sink_rephase": false,
+    "adaptive_retrieval_pilot": false,
+    "player_temperature": "provider default",
+    "player_streaming": true,
+    "streaming_player_sha256": "3bc14684cc4ee859728fabab319b47dd3d810465f32495a090ea7475d19454a8",
+    "initial_neutral_bootstrap": false,
+    "kv_retention": false,
+    "decoprune": false,
+    "reanchor": false,
+    "budget_memory": false,
+    "denoise_schedule": "stock",
+    "text_encoder_offloaded_after_encoding": true,
+    "stationary_wait_only": false,
+    "fixed_actions": null,
+    "quantization": "none",
+    "cuda_allocator_configuration": "expandable_segments:True",
+    "max_area": 399360,
+    "chunk_size": 4,
+    "local_attn_size": 18,
+    "sink_size": 6,
+    "decision_interval": 1,
+    "stock_knobs": true,
+    "controlled_ablation": false,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "actions": [
+      {
+        "operation": "KEEP",
+        "action": "W",
+        "reason": "The goal is for the woman to walk straight forward toward the bus stop shelter. The reference plan calls for holding W (forward movement) for 4.5 seconds. The initial and current images show the woman standing at the bus shelter facing forward. I need to begin the forward walking motion as specified in the plan. No motion has been executed yet (elapsed_commanded_seconds: 0.0), so I'm starting the first action from the reference plan.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.0,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 19.819312112000006,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            3.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4GVBKiUoCF9AHpid43y",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2916,
+          "output_tokens": 152,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"The goal is for the woman to walk straight forward toward the bus stop shelter. The reference plan calls for holding W (forward movement) for 4.5 seconds. The initial and current images show the woman standing at the bus shelter facing forward. I need to begin the forward walking motion as specified in the plan. No motion has been executed yet (elapsed_commanded_seconds: 0.0), so I'm starting the first action from the reference plan.\"}]",
+        "prompt_sha256": "a60593c015ce5ad2547f9027afcbe0e126d66f98729fa100ea5f29c712a7c27e",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.9211482709999927,
+          "full_response_s": 2.3982500790000074,
+          "wait_for_completion_s": 0.00011336699998309996,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "W",
+        "reason": "The goal is for the woman to walk straight forward toward the bus stop shelter. The reference plan specifies holding W (forward movement) for 4.5 seconds total. Currently, 0.8125 seconds have elapsed out of the 4.5 second requirement. Comparing the initial and current images: the woman's position relative to the shelter and surroundings shows minimal visual change - she remains at approximately the same location within the bus shelter. The camera view is nearly identical between the two images, suggesting the forward walking motion has just begun or the agent is moving very slowly. I will continue holding W to maintain forward walking motion as planned, with 3.6875 seconds remaining to fulfill the reference plan.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            3.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 25.008091936,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            7.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4GVZP1uiZNRchniTL1W",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2765,
+          "output_tokens": 207,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"The goal is for the woman to walk straight forward toward the bus stop shelter. The reference plan specifies holding W (forward movement) for 4.5 seconds total. Currently, 0.8125 seconds have elapsed out of the 4.5 second requirement. Comparing the initial and current images: the woman's position relative to the shelter and surroundings shows minimal visual change - she remains at approximately the same location within the bus shelter. The camera view is nearly identical between the two images, suggesting the forward walking motion has just begun or the agent is moving very slowly. I will continue holding W to maintain forward walking motion as planned, with 3.6875 seconds remaining to fulfill the reference plan.\"}]",
+        "prompt_sha256": "69f89801913ad8db1f73d8000598364d2728742e43fbaf6821815ac8b57267e1",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.8975689000000102,
+          "full_response_s": 3.1288043440000024,
+          "wait_for_completion_s": 0.00015024399999674642,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "W",
+        "reason": "The goal requires the woman to walk straight forward toward the bus stop shelter. The reference plan specifies holding W for 4.5 seconds total. Currently, 1.8125 seconds have elapsed out of 4.5 seconds needed. Comparing the two images: the camera position has moved forward slightly - the shelter roof frame is now closer/higher in the view, and the woman's position relative to the shelter structure has shifted forward. The blue seats and woman are now more prominently positioned in the frame, indicating forward motion is occurring. I will continue holding W to maintain forward walking motion as planned, with approximately 2.7 seconds remaining to complete the 4.5-second walking sequence.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            7.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 30.510250783999993,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            11.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4GVxofqxEsfHfbwkNFQ",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2933,
+          "output_tokens": 205,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"The goal requires the woman to walk straight forward toward the bus stop shelter. The reference plan specifies holding W for 4.5 seconds total. Currently, 1.8125 seconds have elapsed out of 4.5 seconds needed. Comparing the two images: the camera position has moved forward slightly - the shelter roof frame is now closer/higher in the view, and the woman's position relative to the shelter structure has shifted forward. The blue seats and woman are now more prominently positioned in the frame, indicating forward motion is occurring. I will continue holding W to maintain forward walking motion as planned, with approximately 2.7 seconds remaining to complete the 4.5-second walking sequence.\"}]",
+        "prompt_sha256": "be8389a09f31f2ebd6f6736053bdb1e49ad2cc14c29a0a614a6a57af6067a88d",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.9066453949999982,
+          "full_response_s": 3.2705479380000213,
+          "wait_for_completion_s": 0.0001231210000014471,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "W",
+        "reason": "The goal requires the woman to walk straight forward toward the bus stop shelter. The reference plan specifies holding W for 4.5 seconds total. Currently, 2.8125 seconds have elapsed out of 4.5 seconds needed, leaving approximately 1.7 seconds remaining. \n\nComparing the initial and current images: Clear forward motion is evident. The camera has moved inside the shelter - the shelter's interior roof beam is now prominently visible at the top of the frame, positioned lower/closer than before. The woman's position relative to the shelter has advanced noticeably forward. The blue seats are now positioned lower and more centered in the frame compared to the initial image where they were more to the right and lower. The hedge background has shifted upward in the frame, consistent with forward camera motion. \n\nThe woman continues walking forward as required by the goal. I will continue holding W to complete the remaining 1.7 seconds of the planned 4.5-second forward walking sequence.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            11.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 37.09050343199999,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            15.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 3.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4GWQBepYwkfBfPp1ioW",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3099,
+          "output_tokens": 269,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"W\", \"reason\": \"The goal requires the woman to walk straight forward toward the bus stop shelter. The reference plan specifies holding W for 4.5 seconds total. Currently, 2.8125 seconds have elapsed out of 4.5 seconds needed, leaving approximately 1.7 seconds remaining. \\n\\nComparing the initial and current images: Clear forward motion is evident. The camera has moved inside the shelter - the shelter's interior roof beam is now prominently visible at the top of the frame, positioned lower/closer than before. The woman's position relative to the shelter has advanced noticeably forward. The blue seats are now positioned lower and more centered in the frame compared to the initial image where they were more to the right and lower. The hedge background has shifted upward in the frame, consistent with forward camera motion. \\n\\nThe woman continues walking forward as required by the goal. I will continue holding W to complete the remaining 1.7 seconds of the planned 4.5-second forward walking sequence.\"}]",
+        "prompt_sha256": "f995d129a71531c6d33dc45b634cda929a740aae9716cade659f036784847b60",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 1.5427042680000227,
+          "full_response_s": 4.498864753000021,
+          "wait_for_completion_s": 0.0001045170000111284,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "END",
+        "action": null,
+        "reason": "The goal is for the woman to walk straight forward toward the bus stop shelter. Comparing the initial image with the current image, clear and significant forward motion has been achieved:\n\n1. **Initial position**: Woman was standing outside the shelter, back to camera, facing the shelter entrance. The blue seats were visible, and the shelter's transparent panel was centered.\n\n2. **Current position**: Woman has walked forward into the shelter interior. She is now positioned well inside the shelter, closer to the back wall with graffiti markings. The blue seats are now directly below her, positioned lower and more centered in the frame.\n\n3. **Environmental shifts**: The hedge background has moved upward in the frame, the shelter's structural elements (beams/frame) are now more prominent and closer, and the overall perspective indicates substantial forward progression through the shelter.\n\n4. **Time elapsed**: The elapsed_commanded_seconds shows 3.812 seconds out of the planned 4.5 seconds. The current_action_held_seconds is 3.8125 seconds, which is within the chunk duration and represents nearly complete execution of the reference plan.\n\n5. **Goal completion**: The woman is actively walking forward through the bus shelter as required by the goal. Even though the full 4.5 seconds hasn't been perfectly reached, the visual evidence clearly demonstrates that the woman has walked forward significantly into the shelter environment, fulfilling the goal's requirement.\n\nThe visual progression confirms the woman has successfully walked straight forward toward and into the bus stop shelter as specified in the goal.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4GWvNbs3zcyifBdwea2",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3333,
+          "output_tokens": 385,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"The goal is for the woman to walk straight forward toward the bus stop shelter. Comparing the initial image with the current image, clear and significant forward motion has been achieved:\\n\\n1. **Initial position**: Woman was standing outside the shelter, back to camera, facing the shelter entrance. The blue seats were visible, and the shelter's transparent panel was centered.\\n\\n2. **Current position**: Woman has walked forward into the shelter interior. She is now positioned well inside the shelter, closer to the back wall with graffiti markings. The blue seats are now directly below her, positioned lower and more centered in the frame.\\n\\n3. **Environmental shifts**: The hedge background has moved upward in the frame, the shelter's structural elements (beams/frame) are now more prominent and closer, and the overall perspective indicates substantial forward progression through the shelter.\\n\\n4. **Time elapsed**: The elapsed_commanded_seconds shows 3.812 seconds out of the planned 4.5 seconds. The current_action_held_seconds is 3.8125 seconds, which is within the chunk duration and represents nearly complete execution of the reference plan.\\n\\n5. **Goal completion**: The woman is actively walking forward through the bus shelter as required by the goal. Even though the full 4.5 seconds hasn't been perfectly reached, the visual evidence clearly demonstrates that the woman has walked forward significantly into the shelter environment, fulfilling the goal's requirement.\\n\\nThe visual progression confirms the woman has successfully walked straight forward toward and into the bus stop shelter as specified in the goal.\"}]",
+        "prompt_sha256": "d9603706149acc85c1db6eaf2a9e2a8b05d6b9bb93a31d215b3a7d1ce283570a",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 5.980962119000026,
+          "full_response_s": 5.980962119000026,
+          "wait_for_completion_s": 3.0530000003636815e-06,
+          "generation_started_before_response_completed": false
+        },
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            15.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 3.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 48.571992679000005
+      }
+    ],
+    "chunks": [
+      {
+        "index": 0,
+        "path": "chunk-000.mp4",
+        "frames": 13,
+        "pixel_sha256": "4962daa38969f31af51d5e257cfea80cc1237028e12a7638b51f306cc5c938e7",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5800389489999986,
+          "mp4_encode": 0.28951005199999713
+        },
+        "elapsed_s": 24.105036514000005,
+        "sha256": "f7e1e234475bb0ad7768a3962f828cbead5e5021f64777845351c1120dde2ebb"
+      },
+      {
+        "index": 1,
+        "path": "chunk-001.mp4",
+        "frames": 16,
+        "pixel_sha256": "126320a0f84859cb9878379e1165222bb635a1593e7b69d34b1893a3bc7a2234",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5319497859999842,
+          "mp4_encode": 0.2970706170000028
+        },
+        "elapsed_s": 29.59657826899999,
+        "sha256": "c7270af06e0fa478d785ba337263ba7fceabc06553c11db277be38333e6b0459"
+      },
+      {
+        "index": 2,
+        "path": "chunk-002.mp4",
+        "frames": 16,
+        "pixel_sha256": "e2140edc34a1ba3903126a33726a3c666f4c08e76918980a2031f3d4fa762f18",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5252663630000143,
+          "mp4_encode": 0.2888938959999905
+        },
+        "elapsed_s": 35.540613482000026,
+        "sha256": "9279b71109bd868da52e5339b2a3097c314e5f4d68e11c95076ed5f184e93886"
+      },
+      {
+        "index": 3,
+        "path": "chunk-003.mp4",
+        "frames": 16,
+        "pixel_sha256": "38cf2474058eba957605f844a9d184b487e9580a0a383dca769a70efc102a500",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5267313870000407,
+          "mp4_encode": 0.2872373159999597
+        },
+        "elapsed_s": 42.58529750600002,
+        "sha256": "171ff786aa4d9b17aa675c5c3adeb5559a6dde169c598a4e7f6f534d12dbc883"
+      }
+    ],
+    "published_score_reproduced": false,
+    "agent_interactions": 5,
+    "adapter_sha256": "eb12f1128d9e9525ed7f5b856b5b45b59723d768741f87cff6a28b765ce638a6",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+    "deviations": [
+      "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+      "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+      "Official 480p demo area; single NVIDIA H200, BF16 and valid-length SDPA backend",
+      "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+      "Claude diagnostic scoring differs from published Gemini judgments"
+    ],
+    "hardware": {
+      "gpu": "NVIDIA H200",
+      "torch": "2.6.0+cu124",
+      "cuda": "12.4"
+    },
+    "attention_backend": "sdpa",
+    "optional_torch_dlpack_addon_disabled": false,
+    "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+    "checkpoint_loading": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "mismatched_keys": [],
+      "error_msgs": []
+    },
+    "warm_runtime": {
+      "loaded_this_job": false,
+      "load_seconds": 0.0,
+      "job_index": 3
+    },
+    "generated_frames": 61,
+    "generated_seconds": 3.8125,
+    "termination": "agent_end",
+    "elapsed_s": 48.57515849399999,
+    "camera_diagnostics": {
+      "chunks": 4,
+      "path_length": 15.0,
+      "net_yaw_degrees": 0.0,
+      "total_turn_degrees": 0.0,
+      "max_distance_from_start": 15.0,
+      "final_distance_from_start": 15.0,
+      "revisited_start_at_chunk": null,
+      "wait_chunks": 0,
+      "wait_pose_changes": 0
+    },
+    "peak_allocated_bytes": 72579169792
+  },
+  "client_wall_s": 106.2241249710205
+}

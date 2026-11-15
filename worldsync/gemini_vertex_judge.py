@@ -213,6 +213,8 @@ def judge_episode(client, playworld, dataset_task, video, reference_image=None, 
                 parsed = unwrap_json_object(released_score.json_from_response(response.text))
                 usage = getattr(response, "usage_metadata", None)
                 result["calls"].append({"mode": step, "cached": False,
+                                        "served_model_version": getattr(response, "model_version", None),
+                                        "response_id": getattr(response, "response_id", None),
                                         "prompt_tokens": getattr(usage, "prompt_token_count", None),
                                         "output_tokens": getattr(usage, "candidates_token_count", None)})
                 if cached:

@@ -1,0 +1,122 @@
+{
+  "task_id": "IF001",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "0f00291202a1163bbbddfbb1cc15bbe35984f431ff3c9a8c4066e8ba8063ce71",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF001",
+    "perspective": "third-person",
+    "verdict": "fail",
+    "instruction_following_score": 0,
+    "meaningful_requested_trajectory_progress": "no",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "视频中的女子一直站在公交车站前，没有任何移动。",
+    "trajectory_evidence_zh": "从第一帧到最后一帧，女子始终保持静止站立的姿势，没有向前行走的动作。",
+    "failure_reason_zh": "女子完全没有向前行走，未能执行指令中要求的动作。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": null,
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "Slf5aqaOCseD9LsP7Mul8AQ",
+      "prompt_tokens": 4697,
+      "output_tokens": 192
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "e0895fd5b662166db2512ed20ec6f79b9bf348d3990b405ee72b63e327e78471",
+  "rubric_skipped": "trajectory failed; aggregate score is 1",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  }
+}

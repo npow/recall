@@ -1,0 +1,366 @@
+{
+  "status": "completed",
+  "model": "LingBot-World2 14B causal-fast stock",
+  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+  "initial_image_sha256": "8494b2f9033b43ed5e8fcf526e5f8698e72e0a04fab2c94a693dd58aa72ebe4d",
+  "text_prompt_mode": "caption",
+  "image_caption_sha256": "9c9767e7ca43d376b14ed6dceca5104a81d782b4f03bf3ee30a8a3856f9399b8",
+  "task_id": "IF021",
+  "split": "if",
+  "seed": 42,
+  "turn_degrees_per_second": 60,
+  "fps": 16,
+  "max_chunks": 40,
+  "max_interactions": 40,
+  "native_fixed_controls": false,
+  "camera_embedding_audit": [],
+  "pose_retrieval": false,
+  "sink_rephase": false,
+  "adaptive_retrieval_pilot": false,
+  "player_temperature": "provider default",
+  "player_streaming": true,
+  "streaming_player_sha256": "3bc14684cc4ee859728fabab319b47dd3d810465f32495a090ea7475d19454a8",
+  "initial_neutral_bootstrap": false,
+  "kv_retention": false,
+  "decoprune": false,
+  "reanchor": false,
+  "budget_memory": false,
+  "denoise_schedule": "stock",
+  "text_encoder_offloaded_after_encoding": true,
+  "stationary_wait_only": false,
+  "fixed_actions": null,
+  "quantization": "none",
+  "cuda_allocator_configuration": "expandable_segments:True",
+  "max_area": 399360,
+  "chunk_size": 4,
+  "local_attn_size": 18,
+  "sink_size": 6,
+  "decision_interval": 1,
+  "stock_knobs": true,
+  "controlled_ablation": false,
+  "sampler_timesteps_index": [
+    0,
+    250,
+    500,
+    750
+  ],
+  "sample_shift": 10,
+  "actions": [
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Starting reference plan: hold(W, 2250ms) to make the waiter keep walking straight forward. Initial observation shows the waiter facing away, holding a tray with drinks, in a patio/courtyard setting. The latest image appears nearly identical to the initial image, confirming no motion has occurred yet. Beginning the forward walk command (W) to accomplish the goal of the waiter walking straight forward. This is the first action of the plan, which requires approximately 2.25 seconds of continuous forward movement. Current elapsed time: 0.0s. Plan total: 2.25s.",
+      "player_transport": "stream",
+      "player_response_pending": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.0,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 19.40357763100002,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4GgA38krYhZnsUNChGm",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2898,
+        "output_tokens": 186,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Starting reference plan: hold(W, 2250ms) to make the waiter keep walking straight forward. Initial observation shows the waiter facing away, holding a tray with drinks, in a patio/courtyard setting. The latest image appears nearly identical to the initial image, confirming no motion has occurred yet. Beginning the forward walk command (W) to accomplish the goal of the waiter walking straight forward. This is the first action of the plan, which requires approximately 2.25 seconds of continuous forward movement. Current elapsed time: 0.0s. Plan total: 2.25s.\"}]",
+      "prompt_sha256": "46d06e6f88588f4bd4d9769e840c93d304d3d47462a6374219b4ee4623bba445",
+      "player_rate_limits": {
+        "anthropic-ratelimit-requests-limit": "10000",
+        "anthropic-ratelimit-input-tokens-limit": "10000000",
+        "anthropic-ratelimit-output-tokens-limit": "2000000"
+      },
+      "player_stream_timing": {
+        "action_ready_s": 1.8866931389999877,
+        "full_response_s": 3.8523054769999874,
+        "wait_for_completion_s": 0.0001490739999780999,
+        "generation_started_before_response_completed": true
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Continuing forward walk. The latest image shows the waiter has moved forward compared to the initial image - the scene has shifted, with the left side vegetation now more prominent and the right stone wall positioned differently. The waiter remains in view facing away, holding the tray of drinks. Current elapsed time: 0.812s out of required 2.25s. The waiter is successfully walking straight forward. Continuing W command to complete the remaining ~1.44 seconds of the planned forward motion.",
+      "player_transport": "stream",
+      "player_response_pending": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 24.489341803000002,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          7.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4GgbLtMM1CL1PKx9MDE",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2781,
+        "output_tokens": 162,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Continuing forward walk. The latest image shows the waiter has moved forward compared to the initial image - the scene has shifted, with the left side vegetation now more prominent and the right stone wall positioned differently. The waiter remains in view facing away, holding the tray of drinks. Current elapsed time: 0.812s out of required 2.25s. The waiter is successfully walking straight forward. Continuing W command to complete the remaining ~1.44 seconds of the planned forward motion.\"}]",
+      "prompt_sha256": "b01e5ff22c5a6187d6314f51c3c0032cd74457f58d21ecf82d5c3d43fc8ab36d",
+      "player_rate_limits": {
+        "anthropic-ratelimit-requests-limit": "10000",
+        "anthropic-ratelimit-input-tokens-limit": "10000000",
+        "anthropic-ratelimit-output-tokens-limit": "2000000"
+      },
+      "player_stream_timing": {
+        "action_ready_s": 0.9139148280000029,
+        "full_response_s": 2.5164191970000047,
+        "wait_for_completion_s": 0.00012042599999517734,
+        "generation_started_before_response_completed": true
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Continuing forward walk toward goal completion. The latest image shows the waiter has advanced further from the initial position - the scene background shows different positioning of umbrellas, vegetation, and the back wall. The waiter remains facing away with the tray of drinks, clearly walking straight forward as required by the goal. Current elapsed time: 1.8125s out of required 2.25s. Approximately 0.44 seconds remain in the planned action. The waiter's continuous forward motion is visually confirmed by the shifting background perspective. Continuing W command to complete the remaining motion.",
+      "player_transport": "stream",
+      "player_response_pending": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          7.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 30.15892263400002,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          11.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4Gh1c9VNeViqW5kk2eJ",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2904,
+        "output_tokens": 181,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Continuing forward walk toward goal completion. The latest image shows the waiter has advanced further from the initial position - the scene background shows different positioning of umbrellas, vegetation, and the back wall. The waiter remains facing away with the tray of drinks, clearly walking straight forward as required by the goal. Current elapsed time: 1.8125s out of required 2.25s. Approximately 0.44 seconds remain in the planned action. The waiter's continuous forward motion is visually confirmed by the shifting background perspective. Continuing W command to complete the remaining motion.\"}]",
+      "prompt_sha256": "23881ebc474cfab21e80013116914bee8c15aeb71d5ceb8bb66ba351f34f79d2",
+      "player_rate_limits": {
+        "anthropic-ratelimit-requests-limit": "10000",
+        "anthropic-ratelimit-input-tokens-limit": "10000000",
+        "anthropic-ratelimit-output-tokens-limit": "2000000"
+      },
+      "player_stream_timing": {
+        "action_ready_s": 1.0602261810000186,
+        "full_response_s": 3.0858261150000033,
+        "wait_for_completion_s": 0.00015365300001235482,
+        "generation_started_before_response_completed": true
+      }
+    },
+    {
+      "operation": "END",
+      "action": null,
+      "reason": "Goal achieved. The waiter is visually confirmed to be walking straight forward. Comparing the initial image (top) with the latest image (bottom):\n\nInitial state: Waiter in white shirt holding a tray with drinks, positioned closer to camera, with vegetation and umbrellas visible around the patio.\n\nLatest state: Waiter in the same white shirt, same posture facing away, but positioned further forward in the frame - the background has shifted substantially backward, confirming forward motion. The umbrellas, vegetation, and stone architecture visible in both images show clear perspective changes consistent with continuous forward movement through the courtyard.\n\nThe current_action_held_seconds (2.8125s) exceeds the plan_total_seconds (2.25s), meaning the planned duration has been completed and surpassed. The waiter's steady forward motion with the tray of drinks is unambiguously confirmed through the parallax shift of background elements. The goal \"The waiter keeps walking straight forward\" is visually and temporally achieved.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4GhTLD37yLx67pos69j",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3046,
+        "output_tokens": 278,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"Goal achieved. The waiter is visually confirmed to be walking straight forward. Comparing the initial image (top) with the latest image (bottom):\\n\\nInitial state: Waiter in white shirt holding a tray with drinks, positioned closer to camera, with vegetation and umbrellas visible around the patio.\\n\\nLatest state: Waiter in the same white shirt, same posture facing away, but positioned further forward in the frame - the background has shifted substantially backward, confirming forward motion. The umbrellas, vegetation, and stone architecture visible in both images show clear perspective changes consistent with continuous forward movement through the courtyard.\\n\\nThe current_action_held_seconds (2.8125s) exceeds the plan_total_seconds (2.25s), meaning the planned duration has been completed and surpassed. The waiter's steady forward motion with the tray of drinks is unambiguously confirmed through the parallax shift of background elements. The goal \\\"The waiter keeps walking straight forward\\\" is visually and temporally achieved.\"}]",
+      "prompt_sha256": "2364a2914168be3f269293014ff5b22256ceec901471172583f19611e34843cb",
+      "player_transport": "stream",
+      "player_response_pending": false,
+      "player_rate_limits": {
+        "anthropic-ratelimit-requests-limit": "10000",
+        "anthropic-ratelimit-input-tokens-limit": "10000000",
+        "anthropic-ratelimit-output-tokens-limit": "2000000"
+      },
+      "player_stream_timing": {
+        "action_ready_s": 4.745931421000023,
+        "full_response_s": 4.745931421000023,
+        "wait_for_completion_s": 8.03599999699145e-06,
+        "generation_started_before_response_completed": false
+      },
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          11.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 39.96190209400001
+    }
+  ],
+  "chunks": [
+    {
+      "index": 0,
+      "path": "chunk-000.mp4",
+      "frames": 13,
+      "pixel_sha256": "4ddef2af6e88da40a8e76e2390fa072a8ac716a40fc5c9c104a37e57866d6fe3",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.4280467799999883,
+        "mp4_encode": 0.32219018899999696
+      },
+      "elapsed_s": 23.569711188000014,
+      "sha256": "6ad12eb07bf1b26fdcb7e047be71ee8c4e95f99929de5cb740fd80bb6e067d3f"
+    },
+    {
+      "index": 1,
+      "path": "chunk-001.mp4",
+      "frames": 16,
+      "pixel_sha256": "311a194ad004c1851d0d08ffe98e8d8388bebef99f3ab35fd5da2bc5cf2ff5e5",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5251835549999839,
+        "mp4_encode": 0.3035772050000105
+      },
+      "elapsed_s": 29.091718842999995,
+      "sha256": "ed98bdd941643054031d400b837363aa4f5725104d6fd235e09c71a8618d7b69"
+    },
+    {
+      "index": 2,
+      "path": "chunk-002.mp4",
+      "frames": 16,
+      "pixel_sha256": "d06b3e285d4a1a0f57d1c3f484f91cfbb69021279463f0dbc313d40f135057c9",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5223150829999952,
+        "mp4_encode": 0.29714600399998403
+      },
+      "elapsed_s": 35.20886808700001,
+      "sha256": "50cd615347278bb4fbbdef9ba7ac2b14a49fe93d52232e9763f21bf478de8075"
+    }
+  ],
+  "published_score_reproduced": false,
+  "agent_interactions": 4,
+  "adapter_sha256": "eb12f1128d9e9525ed7f5b856b5b45b59723d768741f87cff6a28b765ce638a6",
+  "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+  "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+  "deviations": [
+    "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+    "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+    "Official 480p demo area; single NVIDIA H200, BF16 and valid-length SDPA backend",
+    "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+    "Claude diagnostic scoring differs from published Gemini judgments"
+  ],
+  "hardware": {
+    "gpu": "NVIDIA H200",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4"
+  },
+  "attention_backend": "sdpa",
+  "optional_torch_dlpack_addon_disabled": false,
+  "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+  "checkpoint_loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "warm_runtime": {
+    "loaded_this_job": false,
+    "load_seconds": 0.0,
+    "job_index": 2
+  },
+  "generated_frames": 45,
+  "generated_seconds": 2.8125,
+  "termination": "agent_end",
+  "elapsed_s": 39.96569583500002,
+  "camera_diagnostics": {
+    "chunks": 3,
+    "path_length": 11.0,
+    "net_yaw_degrees": 0.0,
+    "total_turn_degrees": 0.0,
+    "max_distance_from_start": 11.0,
+    "final_distance_from_start": 11.0,
+    "revisited_start_at_chunk": null,
+    "wait_chunks": 0,
+    "wait_pose_changes": 0
+  },
+  "peak_allocated_bytes": 72670003712
+}
