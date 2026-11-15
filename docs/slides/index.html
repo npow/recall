@@ -440,6 +440,7 @@ svg text{font-family:inherit}
         <li><b>Moving objects.</b> Invalidate archived views when their world state changes.</li>
         <li><b>Compact shared storage.</b> Store frames and recompute peer KV, using the earlier memory result.</li>
         <li><b>Longer paths.</b> Extend beyond common-origin rotations to translation and simultaneous agents.</li>
+        <li><b>Share KV caches by heading.</b> Agents looking the same way could reuse each other's cached views, with moving objects masked out. This has not worked yet; more capable models may make the approach work.</li>
       </ul></div>
       <div class="col" style="flex:.8"><div class="card">
         <p style="font-weight:700;margin-bottom:14px">Take-aways</p>
@@ -455,6 +456,17 @@ svg text{font-family:inherit}
 
 
   <!-- A1 -->
+  <section class="slide" data-sec="Appendix" id="shared-context-text">
+    <h2>Earlier prototype: shared plan + weights, separate visual KV</h2>
+    <div style="position:relative;width:1728px;height:740px">
+      <!-- each agent's own generated view (frame at 4.0 s of multi-agent-pov.mp4), faded behind its column of the diagram -->
+      <div class="ctx-bg" style="left:10px;background-image:linear-gradient(rgba(11,14,19,.1),rgba(11,14,19,.5)),url(media/ctx-agent-a.jpg)"></div>
+      <div class="ctx-bg" style="left:918px;background-image:linear-gradient(rgba(11,14,19,.1),rgba(11,14,19,.5)),url(media/ctx-agent-b.jpg)"></div>
+      <img class="media" style="position:relative;width:1728px;height:740px;background:transparent" src="media/multi-agent-architecture-shared-text.svg" alt="Shared event plan and frozen DiT weights; per-agent text conditioning and private visual KV caches">
+    </div>
+    <p class="tiny foot">Shared-text prototype · no visual KV exchanged between agents · behind each column, that agent's own generated view.</p>
+    <aside class="notes">Green is shared event information. The scene description and scripted timeline specify when the basket changes holder. Orange and Purple receive viewpoint-specific descriptions through the text encoder. Those form separate cross-attention keys and values. Blue is the causal video DiT used throughout this project. Each rollout keeps its own self-attention cache: the first six latent frames and most recent twelve. The dashed blue arrows mean that both rollouts reuse the same frozen forty-layer checkpoint, loaded once and served serially. They do not mean shared activations or exchanged visual KV. No RECALL retrieval splice is enabled across agents in these demonstration clips. The cross-agent RECALL slides earlier in the deck add that shared visual retrieval.</aside>
+  </section>
     <section class="slide" data-sec="Appendix" id="multi-agent-demo">
 <h2>Earlier prototype: shared text only</h2>
 <div class="vwrap" style="margin-top:30px"><video muted loop playsinline preload="auto" poster="media/multi-agent-pov.jpg" src="media/multi-agent-pov-2x.mp4"></video></div>
