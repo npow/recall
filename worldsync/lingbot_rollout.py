@@ -15,7 +15,7 @@ from worldsync import lingbot_tuning
 from worldsync.lingbot_diagnostics import summarize
 from worldsync.lingbot_native import ROOT, SOURCE_REVISION, WEIGHT_REVISION, runtime_pack, configure_backend
 
-PROTOCOL_ID = "lingbot-world2-stock-reconstructed-haiku-16fps-v5"
+PROTOCOL_ID = "lingbot-world2-stock-reconstructed-haiku-16fps-v6"
 
 
 class RolloutComplete(Exception):

@@ -1,0 +1,59 @@
+{
+  "purpose": "Quick subset for hillclimbing: moving cases from the declared tuning cohort (about 3-5 min each). Insight cases are excluded here because they are WAIT-only (no player) and take about 9 min each; they stay in the 16-case cohort for confirmation.",
+  "cases": [
+    {
+      "split": "gc",
+      "task_id": "GC024",
+      "baseline_stock_v5_s42": 3.0
+    },
+    {
+      "split": "gc",
+      "task_id": "GC017",
+      "baseline_stock_v5_s42": 3.8
+    },
+    {
+      "split": "gc",
+      "task_id": "GC007",
+      "baseline_stock_v5_s42": 2.2
+    },
+    {
+      "split": "gc",
+      "task_id": "GC027",
+      "baseline_stock_v5_s42": 2.7
+    },
+    {
+      "split": "if",
+      "task_id": "IF025",
+      "baseline_stock_v5_s42": 2.0
+    },
+    {
+      "split": "if",
+      "task_id": "IF001",
+      "baseline_stock_v5_s42": 1.0
+    },
+    {
+      "split": "if",
+      "task_id": "IF042",
+      "baseline_stock_v5_s42": 2.0
+    },
+    {
+      "split": "outsight",
+      "task_id": "OE026",
+      "baseline_stock_v5_s42": 1.75
+    },
+    {
+      "split": "outsight",
+      "task_id": "OE057",
+      "baseline_stock_v5_s42": 1.75
+    },
+    {
+      "split": "outsight",
+      "task_id": "OE069",
+      "baseline_stock_v5_s42": 2.0
+    }
+  ],
+  "baseline_mean": 2.22,
+  "baseline_source": "reproduction/cohort-stock-v5-s42.json",
+  "seed": 42,
+  "noise_note": "Player is unseeded; one episode sd about 1.4. Treat differences under about 0.5 on this 10-case mean as noise and confirm any win on a repeat pass and on the full 16."
+}
