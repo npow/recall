@@ -15,6 +15,11 @@ improves the same Claude rubric from **2.47 to 3.57** across three valid
 scripted tasks. One released image/caption mismatch is quarantined and retained
 explicitly. This is a local subset result, not a published PlayWorld score.
 
+[The first adaptive four-view pilot](reproduction/adaptive-four-view/README.md)
+remains unsuccessful: local rubric means3.6→3.9, but neither seed visually
+returns to the initial view. All first12 chunks match stock exactly; retrieval
+activates only on the final return chunk. The small score gain is inconclusive.
+
 [Preserving recent context](reproduction/protected-recent-memory/summary.json)
 lets eight historical views run without the earlier resets on the development
 scene. Blinded comparisons weakly prefer this22-frame variant; fresh-image and

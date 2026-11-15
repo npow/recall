@@ -1,0 +1,140 @@
+{
+  "metric": "PlayWorld instruction-following trajectory gate",
+  "gate_kind": "gc",
+  "task_id": "GC027",
+  "model": "LingBot-World2 adaptive local trial",
+  "perspective": "first-person",
+  "objective": "Rotate the camera 360 degrees in place, then return to the original angle facing the original view.",
+  "base_action_sequence": "hold(Right,9450ms)",
+  "base_action_steps": [
+    "hold(Right,9450ms)"
+  ],
+  "revisit_required": true,
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 129,
+      "sheets_count": 6,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 12.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 128,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 12.8,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 7,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 12.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 6,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 12.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "score_policy": {
+    "pass": 1,
+    "partial": 1,
+    "fail": 0
+  }
+}

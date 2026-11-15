@@ -1,0 +1,1113 @@
+{
+  "mode": "memory",
+  "seed": 43,
+  "workspace": "nissan-pow",
+  "result_directory": "adaptive-four-view-memory-GC027-seed43-1794721238006996292",
+  "returncode": 0,
+  "run": {
+    "status": "completed",
+    "model": "LingBot-World2 14B causal-fast stock",
+    "protocol_id": "lingbot-world2-adaptive-four-view-pilot-v1",
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "initial_image_sha256": "cfe324c6dacbb91123a74ad7d5c80f75fe4bd5e3cfd040af201e4ee0742cd33f",
+    "image_caption_sha256": "58e9282a2acfdc3b580ea4b33b69ea092305a35869f31226b2981a2e17cbcf65",
+    "task_id": "GC027",
+    "split": "gc",
+    "seed": 43,
+    "turn_degrees_per_second": 30.0,
+    "fps": 16,
+    "max_chunks": 40,
+    "max_interactions": 40,
+    "native_fixed_controls": false,
+    "camera_embedding_audit": [],
+    "pose_retrieval": true,
+    "sink_rephase": false,
+    "adaptive_retrieval_pilot": true,
+    "player_temperature": "provider default",
+    "initial_neutral_bootstrap": true,
+    "kv_retention": false,
+    "decoprune": false,
+    "reanchor": false,
+    "budget_memory": false,
+    "denoise_schedule": "stock",
+    "text_encoder_offloaded_after_encoding": true,
+    "stationary_wait_only": false,
+    "fixed_actions": null,
+    "quantization": "none",
+    "cuda_allocator_configuration": "expandable_segments:True",
+    "max_area": 399360,
+    "chunk_size": 4,
+    "local_attn_size": 18,
+    "sink_size": 6,
+    "decision_interval": 1,
+    "stock_knobs": true,
+    "controlled_ablation": false,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "actions": [
+      {
+        "operation": "KEEP",
+        "action": "WAIT",
+        "reason": "declared neutral bootstrap",
+        "bootstrap": true,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.0,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 128.746729137,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "Initial WAIT completed at 0.81s. Now executing the reference plan: turning RIGHT to rotate the camera 360 degrees. The plan specifies 9450ms (9.45s) of RIGHT action. At 30\u00b0/s, this should achieve approximately 283.5\u00b0 of rotation. The current view shows the Shilhai Street Sports Center from the initial angle. No visible rotation has occurred yet in the latest observation, confirming we are still at or very near the starting angle. Continuing with RIGHT to begin the 360\u00b0 rotation as planned.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4BSfbtvsrPiybk3KUwp",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2753,
+          "output_tokens": 177,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Initial WAIT completed at 0.81s. Now executing the reference plan: turning RIGHT to rotate the camera 360 degrees. The plan specifies 9450ms (9.45s) of RIGHT action. At 30\\u00b0/s, this should achieve approximately 283.5\\u00b0 of rotation. The current view shows the Shilhai Street Sports Center from the initial angle. No visible rotation has occurred yet in the latest observation, confirming we are still at or very near the starting angle. Continuing with RIGHT to begin the 360\\u00b0 rotation as planned.\"}]",
+        "prompt_sha256": "5c450a61b58c3f38ca1c559e619a4a4be3debbb4bf1a1cd9f32733ad388a9451",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 136.138253467,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 30.000000000000004,
+          "accumulated_yaw_degrees": 29.999999999999996,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "Comparing the initial and current images, the scene has visibly rotated. The Shilhai Street Sports Center sign, which was centered in the initial image, is now visible on the left side of the frame. The playground equipment (yellow and red structures) has shifted position, and the viewing angle has clearly changed\u2014approximately 60-90\u00b0 of rotation achieved so far. At 30\u00b0/s, the plan's 9.45s should achieve ~283.5\u00b0, but to complete a full 360\u00b0 and return to the original angle, I need to continue turning right. The current_action_held_seconds is 1s, and I have significant time remaining in the reference plan. Continuing RIGHT to accumulate more rotation toward 360\u00b0.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4BTLZT79TPiyy3z7m2W",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2896,
+          "output_tokens": 217,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Comparing the initial and current images, the scene has visibly rotated. The Shilhai Street Sports Center sign, which was centered in the initial image, is now visible on the left side of the frame. The playground equipment (yellow and red structures) has shifted position, and the viewing angle has clearly changed\\u2014approximately 60-90\\u00b0 of rotation achieved so far. At 30\\u00b0/s, the plan's 9.45s should achieve ~283.5\\u00b0, but to complete a full 360\\u00b0 and return to the original angle, I need to continue turning right. The current_action_held_seconds is 1s, and I have significant time remaining in the reference plan. Continuing RIGHT to accumulate more rotation toward 360\\u00b0.\"}]",
+        "prompt_sha256": "a919965fc7cea19a047cb640cf0985c61107caeb7a3470ac910697a1ce2a4109",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 30.000000000000004,
+          "accumulated_yaw_degrees": 29.999999999999996,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 147.411162139,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 59.999999999999986,
+          "accumulated_yaw_degrees": 59.99999999999999,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "Comparing the initial image with the current observation: The initial view shows the Shilhai Street Sports Center sign centered in the frame with the pink building and yellow/red playground structures in the foreground. The current image shows the playground equipment (yellow and red structures with slides and canopies) as the primary focus, indicating the camera has rotated substantially\u2014approximately 90-120\u00b0 of rightward rotation has been achieved. The sign that was centered is now off-frame to the left. At 30\u00b0/s rotation rate, the plan calls for 9.45s (283.5\u00b0 total), but a full 360\u00b0 return requires approximately 12 seconds of continuous turning. Current elapsed commanded is 2.812s with current_action_held_seconds at 2s on the RIGHT action. I need to continue turning RIGHT to accumulate the remaining ~240\u00b0 needed to complete the 360\u00b0 rotation and return to the original facing angle. Proceeding with KEEP RIGHT.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4BUL9BaieT2yc33reSJ",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3074,
+          "output_tokens": 265,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Comparing the initial image with the current observation: The initial view shows the Shilhai Street Sports Center sign centered in the frame with the pink building and yellow/red playground structures in the foreground. The current image shows the playground equipment (yellow and red structures with slides and canopies) as the primary focus, indicating the camera has rotated substantially\\u2014approximately 90-120\\u00b0 of rightward rotation has been achieved. The sign that was centered is now off-frame to the left. At 30\\u00b0/s rotation rate, the plan calls for 9.45s (283.5\\u00b0 total), but a full 360\\u00b0 return requires approximately 12 seconds of continuous turning. Current elapsed commanded is 2.812s with current_action_held_seconds at 2s on the RIGHT action. I need to continue turning RIGHT to accumulate the remaining ~240\\u00b0 needed to complete the 360\\u00b0 rotation and return to the original facing angle. Proceeding with KEEP RIGHT.\"}]",
+        "prompt_sha256": "1e4c940e16056be59a0c03cb07b0b0352ce48ae0fe834a03ee7bf35e2feab7f9",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 59.999999999999986,
+          "accumulated_yaw_degrees": 59.99999999999999,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 160.237266008,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 89.99999999999997,
+          "accumulated_yaw_degrees": 90.0,
+          "world_time_seconds": 3.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "Comparing initial and current images: The initial view centered on the Shilhai Street Sports Center sign with the pink building and playground in foreground. The current image shows the playground structure (yellow posts, red/pink slides, white railings) as primary focus, indicating approximately 120-150\u00b0 of rightward rotation achieved. The sign is now off-frame. At 30\u00b0/s, elapsed commanded time is 3.812s (~114\u00b0 accumulated yaw). To complete a full 360\u00b0 rotation and return to original angle requires ~12 seconds total (360\u00b0\u00f730\u00b0/s). Current action has been held for 3 seconds. With 5.45s remaining in the reference plan and needing ~8-9s more to achieve the full 360\u00b0 return, I will continue RIGHT. The camera rotation must proceed to reach the remaining ~210-240\u00b0 needed to complete the 360\u00b0 loop and face the original angle again.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4BVHaQz3n3pNhB1LJWp",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3296,
+          "output_tokens": 259,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Comparing initial and current images: The initial view centered on the Shilhai Street Sports Center sign with the pink building and playground in foreground. The current image shows the playground structure (yellow posts, red/pink slides, white railings) as primary focus, indicating approximately 120-150\\u00b0 of rightward rotation achieved. The sign is now off-frame. At 30\\u00b0/s, elapsed commanded time is 3.812s (~114\\u00b0 accumulated yaw). To complete a full 360\\u00b0 rotation and return to original angle requires ~12 seconds total (360\\u00b0\\u00f730\\u00b0/s). Current action has been held for 3 seconds. With 5.45s remaining in the reference plan and needing ~8-9s more to achieve the full 360\\u00b0 return, I will continue RIGHT. The camera rotation must proceed to reach the remaining ~210-240\\u00b0 needed to complete the 360\\u00b0 loop and face the original angle again.\"}]",
+        "prompt_sha256": "e3fdf0162ea80fd0441f999841a54cfcd6d523cf7794edd5001d2372eadb4c33",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 89.99999999999997,
+          "accumulated_yaw_degrees": 90.0,
+          "world_time_seconds": 3.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 174.123617379,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 119.99999999999999,
+          "accumulated_yaw_degrees": 119.99999999999999,
+          "world_time_seconds": 4.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "Comparing initial image with current observation: The initial view centered on the Shilhai Street Sports Center sign with the pink building and playground structures symmetrically framed. The current image shows a much closer, detailed view of the yellow playground equipment (multi-level structure with canopies, slides, railings) from an angle that has rotated approximately 150-180\u00b0 from the original facing. The sign is completely off-frame, and the viewing perspective has shifted to show the playground from a different side. Intended odometry shows accumulated 120\u00b0 yaw, but visual analysis suggests approximately 150-180\u00b0 of actual rotation has occurred. To complete a full 360\u00b0 rotation and return to the original angle facing the sign, I need to continue turning RIGHT. The reference plan allocates 9.45s total, but achieving a true 360\u00b0 return requires approximately 12 seconds of continuous turning at 30\u00b0/s. Current elapsed commanded time is 4.812s with current action held for 4 seconds. I need to continue RIGHT to accumulate the remaining ~180-210\u00b0 of rotation necessary to complete the 360\u00b0 loop and face the original direction again.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4BWKjgJwioiezHdaQAM",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3520,
+          "output_tokens": 304,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"Comparing initial image with current observation: The initial view centered on the Shilhai Street Sports Center sign with the pink building and playground structures symmetrically framed. The current image shows a much closer, detailed view of the yellow playground equipment (multi-level structure with canopies, slides, railings) from an angle that has rotated approximately 150-180\\u00b0 from the original facing. The sign is completely off-frame, and the viewing perspective has shifted to show the playground from a different side. Intended odometry shows accumulated 120\\u00b0 yaw, but visual analysis suggests approximately 150-180\\u00b0 of actual rotation has occurred. To complete a full 360\\u00b0 rotation and return to the original angle facing the sign, I need to continue turning RIGHT. The reference plan allocates 9.45s total, but achieving a true 360\\u00b0 return requires approximately 12 seconds of continuous turning at 30\\u00b0/s. Current elapsed commanded time is 4.812s with current action held for 4 seconds. I need to continue RIGHT to accumulate the remaining ~180-210\\u00b0 of rotation necessary to complete the 360\\u00b0 loop and face the original direction again.\"}]",
+        "prompt_sha256": "08274ec6b8f6857043ae685cba837fdd7399b41f1b9e5714403dc4b7dab31681",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 119.99999999999999,
+          "accumulated_yaw_degrees": 119.99999999999999,
+          "world_time_seconds": 4.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 187.785407838,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 150.0,
+          "accumulated_yaw_degrees": 149.99999999999997,
+          "world_time_seconds": 5.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "Comparing the initial image with the current observation: The initial view shows the Shilhai Street Sports Center sign centered in the frame with the pink building and playground structures symmetrically positioned. The current image shows a close-up perspective of the yellow playground equipment (slides, canopies, railings, climbing structures) from an angle rotated approximately 180\u00b0 from the original facing. The sign is completely out of frame, and the viewing angle has shifted to show the opposite side of the playground structure. Intended odometry indicates ~150\u00b0 accumulated yaw, but visual analysis confirms approximately 180\u00b0 of rotation has been achieved. To complete a full 360\u00b0 rotation and return to the original angle facing the sign, I need to continue turning RIGHT for the remaining ~180\u00b0 of rotation. Current elapsed commanded time is 5.812s with current action held for 5 seconds. The reference plan allocates 9.45s total, but completing the full 360\u00b0 return requires approximately 12 seconds of continuous turning at 30\u00b0/s. I will continue RIGHT to accumulate the remaining ~180\u00b0 of rotation necessary to complete the 360\u00b0 loop and face the original direction again.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4BXD6bXhhWaYBjn3Ak7",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3781,
+          "output_tokens": 305,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"Comparing the initial image with the current observation: The initial view shows the Shilhai Street Sports Center sign centered in the frame with the pink building and playground structures symmetrically positioned. The current image shows a close-up perspective of the yellow playground equipment (slides, canopies, railings, climbing structures) from an angle rotated approximately 180\\u00b0 from the original facing. The sign is completely out of frame, and the viewing angle has shifted to show the opposite side of the playground structure. Intended odometry indicates ~150\\u00b0 accumulated yaw, but visual analysis confirms approximately 180\\u00b0 of rotation has been achieved. To complete a full 360\\u00b0 rotation and return to the original angle facing the sign, I need to continue turning RIGHT for the remaining ~180\\u00b0 of rotation. Current elapsed commanded time is 5.812s with current action held for 5 seconds. The reference plan allocates 9.45s total, but completing the full 360\\u00b0 return requires approximately 12 seconds of continuous turning at 30\\u00b0/s. I will continue RIGHT to accumulate the remaining ~180\\u00b0 of rotation necessary to complete the 360\\u00b0 loop and face the original direction again.\"}]",
+        "prompt_sha256": "6dc5c8de145be07d47251a856e4041260e23dd9def847f4973a456437df149f1",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 150.0,
+          "accumulated_yaw_degrees": 149.99999999999997,
+          "world_time_seconds": 5.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 199.763616735,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 180.0,
+          "accumulated_yaw_degrees": 179.99999999999997,
+          "world_time_seconds": 6.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "Comparing the initial image with the current observation: The initial view shows the Shilhai Street Sports Center sign centered with the pink building and playground structures symmetrically positioned. The current image shows the playground from an angle where the yellow slides and equipment are in the foreground with the building visible in the background-left area, indicating approximately 200-210\u00b0 of rightward rotation has been achieved. The sign is now visible again on the left side of the frame (beginning to come back into view), which is consistent with having rotated past 180\u00b0 and approaching 270\u00b0. Intended odometry shows ~180\u00b0 accumulated yaw, but visual evidence (the sign reappearing on the left) suggests ~200-210\u00b0 of actual rotation. To complete the full 360\u00b0 rotation and return to the original angle facing the sign centered in frame, I need to continue RIGHT for the remaining ~150\u00b0 of rotation. Current elapsed commanded time is 6.812s with current action held for 6 seconds. The reference plan allocated 9.45s total (which would give only ~283.5\u00b0 at 30\u00b0/s), but a true 360\u00b0 return requires approximately 12 seconds of continuous turning. I will continue RIGHT to accumulate the remaining ~150\u00b0 of rotation necessary to complete the 360\u00b0 loop and return to face the original direction with the sign centered again.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4BY1W7PQF3UJbRVpuNN",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 4047,
+          "output_tokens": 346,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"Comparing the initial image with the current observation: The initial view shows the Shilhai Street Sports Center sign centered with the pink building and playground structures symmetrically positioned. The current image shows the playground from an angle where the yellow slides and equipment are in the foreground with the building visible in the background-left area, indicating approximately 200-210\\u00b0 of rightward rotation has been achieved. The sign is now visible again on the left side of the frame (beginning to come back into view), which is consistent with having rotated past 180\\u00b0 and approaching 270\\u00b0. Intended odometry shows ~180\\u00b0 accumulated yaw, but visual evidence (the sign reappearing on the left) suggests ~200-210\\u00b0 of actual rotation. To complete the full 360\\u00b0 rotation and return to the original angle facing the sign centered in frame, I need to continue RIGHT for the remaining ~150\\u00b0 of rotation. Current elapsed commanded time is 6.812s with current action held for 6 seconds. The reference plan allocated 9.45s total (which would give only ~283.5\\u00b0 at 30\\u00b0/s), but a true 360\\u00b0 return requires approximately 12 seconds of continuous turning. I will continue RIGHT to accumulate the remaining ~150\\u00b0 of rotation necessary to complete the 360\\u00b0 loop and return to face the original direction with the sign centered again.\"}]",
+        "prompt_sha256": "de9e4cfede0c15dbc5bf8819a5e50443311438984360d975953afe3f933aa62e",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 180.0,
+          "accumulated_yaw_degrees": 179.99999999999997,
+          "world_time_seconds": 6.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 211.933126969,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -150.00000000000003,
+          "accumulated_yaw_degrees": 209.99999999999997,
+          "world_time_seconds": 7.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "Comparing the initial image with the current observation: The initial view shows the Shilhai Street Sports Center sign centered and prominently displayed with the pink building and yellow playground structures symmetrically framed. The current image shows the playground equipment from a close-up perspective with multiple slides, canopies (red/purple and yellow), yellow railings, and white protective barriers\u2014viewed from approximately 210-220\u00b0 of rightward rotation from the original facing. The pink building is visible in the background-left area, and the sign is no longer centered or prominently visible in the foreground. \n\nIntended odometry shows ~210\u00b0 accumulated yaw with elapsed commanded time of 7.812s. At 30\u00b0/s rotation rate, achieving a full 360\u00b0 rotation and returning to the original angle requires approximately 12 seconds of continuous turning. Current action has been held for 7 seconds, and I have approximately 1.638s remaining in the reference plan's 9.45s window. However, to complete the full 360\u00b0 loop and return to face the original angle with the sign centered again in the frame, I need to continue turning RIGHT for the remaining ~140-150\u00b0 of rotation.\n\nSince the visual evidence confirms substantial rotation has occurred (playground now viewed from a different angle with pink building and sign repositioned) and the goal explicitly requires returning to the original angle facing the original view, I must continue RIGHT to complete the rotation cycle. The reference plan's 9.45s is insufficient for a true 360\u00b0 return, but I will proceed with continuous RIGHT action to accumulate the remaining rotation needed to achieve the goal's requirement of 360\u00b0 rotation and return to original facing angle.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4BYuXj5GA4aJzq2SBLo",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 4358,
+          "output_tokens": 415,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"Comparing the initial image with the current observation: The initial view shows the Shilhai Street Sports Center sign centered and prominently displayed with the pink building and yellow playground structures symmetrically framed. The current image shows the playground equipment from a close-up perspective with multiple slides, canopies (red/purple and yellow), yellow railings, and white protective barriers\\u2014viewed from approximately 210-220\\u00b0 of rightward rotation from the original facing. The pink building is visible in the background-left area, and the sign is no longer centered or prominently visible in the foreground. \\n\\nIntended odometry shows ~210\\u00b0 accumulated yaw with elapsed commanded time of 7.812s. At 30\\u00b0/s rotation rate, achieving a full 360\\u00b0 rotation and returning to the original angle requires approximately 12 seconds of continuous turning. Current action has been held for 7 seconds, and I have approximately 1.638s remaining in the reference plan's 9.45s window. However, to complete the full 360\\u00b0 loop and return to face the original angle with the sign centered again in the frame, I need to continue turning RIGHT for the remaining ~140-150\\u00b0 of rotation.\\n\\nSince the visual evidence confirms substantial rotation has occurred (playground now viewed from a different angle with pink building and sign repositioned) and the goal explicitly requires returning to the original angle facing the original view, I must continue RIGHT to complete the rotation cycle. The reference plan's 9.45s is insufficient for a true 360\\u00b0 return, but I will proceed with continuous RIGHT action to accumulate the remaining rotation needed to achieve the goal's requirement of 360\\u00b0 rotation and return to original facing angle.\"}]",
+        "prompt_sha256": "b437b782f563b36f6798f9c0944c140fa694ec21ad7a3bb7032df9e05eb43d29",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -150.00000000000003,
+          "accumulated_yaw_degrees": 209.99999999999997,
+          "world_time_seconds": 7.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 224.035098903,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -120.00000000000007,
+          "accumulated_yaw_degrees": 239.99999999999997,
+          "world_time_seconds": 8.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "Comparing the initial image with the current observation: The initial view clearly shows the Shilhai Street Sports Center sign centered and prominently displayed with the pink building, yellow railings, and playground structures symmetrically framed. The current image shows the playground from approximately 240-260\u00b0 of rightward rotation\u2014the equipment is now viewed from a near-opposite angle with purple/maroon canopies and slides visible from their opposite side, yellow railings visible on the right side of frame, and the overall scene rotated substantially past 180\u00b0. The sign is no longer visible in the current frame, and the buildings in the background appear from a different angle.\n\nIntended odometry shows ~240\u00b0 accumulated yaw with elapsed commanded time of 8.812s. At 30\u00b0/s rotation rate, a full 360\u00b0 rotation requires approximately 12 seconds total. Current action has been held for 8 seconds, with approximately 0.638s remaining in the reference plan's 9.45s allocation. However, to achieve the goal's explicit requirement of rotating 360\u00b0 and returning to the original angle facing the original view with the sign centered again, I need to continue RIGHT for the remaining ~100-120\u00b0 of rotation.\n\nThe visual evidence confirms the camera has rotated substantially (playground now viewed from opposite angle with different canopy orientations), and I am close to completing the full rotation cycle. I must continue RIGHT to accumulate the remaining rotation needed to complete the 360\u00b0 loop and return to face the original direction with the sign centered again in the frame.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4BZo92EBs9mEeeLtvA5",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 4739,
+          "output_tokens": 388,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"Comparing the initial image with the current observation: The initial view clearly shows the Shilhai Street Sports Center sign centered and prominently displayed with the pink building, yellow railings, and playground structures symmetrically framed. The current image shows the playground from approximately 240-260\\u00b0 of rightward rotation\\u2014the equipment is now viewed from a near-opposite angle with purple/maroon canopies and slides visible from their opposite side, yellow railings visible on the right side of frame, and the overall scene rotated substantially past 180\\u00b0. The sign is no longer visible in the current frame, and the buildings in the background appear from a different angle.\\n\\nIntended odometry shows ~240\\u00b0 accumulated yaw with elapsed commanded time of 8.812s. At 30\\u00b0/s rotation rate, a full 360\\u00b0 rotation requires approximately 12 seconds total. Current action has been held for 8 seconds, with approximately 0.638s remaining in the reference plan's 9.45s allocation. However, to achieve the goal's explicit requirement of rotating 360\\u00b0 and returning to the original angle facing the original view with the sign centered again, I need to continue RIGHT for the remaining ~100-120\\u00b0 of rotation.\\n\\nThe visual evidence confirms the camera has rotated substantially (playground now viewed from opposite angle with different canopy orientations), and I am close to completing the full rotation cycle. I must continue RIGHT to accumulate the remaining rotation needed to complete the 360\\u00b0 loop and return to face the original direction with the sign centered again in the frame.\"}]",
+        "prompt_sha256": "a1f90f6d09bfd6d963ff68f76867e0fd6ecd618bd0771514e9e1b5af894392e2",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -120.00000000000007,
+          "accumulated_yaw_degrees": 239.99999999999997,
+          "world_time_seconds": 8.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 235.977639753,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -90.00000000000006,
+          "accumulated_yaw_degrees": 270.0,
+          "world_time_seconds": 9.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "Comparing the initial image with the current observation: The initial view shows the Shilhai Street Sports Center sign centered and prominently displayed with the pink building, yellow framing, and playground structures symmetrically positioned. The current image shows playground equipment (two canopied structures with yellow columns and purple/maroon slides) with white railings and a different viewing angle, indicating approximately 270-280\u00b0 of rightward rotation has been achieved. The sign and the pink building entrance are no longer visible in the current frame, confirming substantial rotation has occurred\u2014the camera has rotated nearly 3/4 of the way around.\n\nIntended odometry shows ~270\u00b0 accumulated yaw with elapsed commanded time of 9.812s. At 30\u00b0/s rotation rate, a full 360\u00b0 rotation requires approximately 12 seconds total. Current action has been held for 9 seconds, with approximately 3.188s remaining until 12 seconds total. However, the reference plan allocates only 9.45s (which is why the elapsed_commanded_seconds shows 9.812s\u2014we have already exceeded the plan's nominal duration). \n\nTo achieve the goal's explicit requirement of rotating 360\u00b0 and returning to the original angle facing the original view with the sign centered again, I need to continue RIGHT for the remaining ~80-90\u00b0 of rotation. The visual evidence confirms we are close to completing the full rotation cycle. I must continue RIGHT to accumulate the remaining ~80-90\u00b0 of rotation needed to complete the 360\u00b0 loop and return to face the original direction with the sign centered again in the frame.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4BagJoGygYK3yWkaJD1",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 5088,
+          "output_tokens": 400,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"Comparing the initial image with the current observation: The initial view shows the Shilhai Street Sports Center sign centered and prominently displayed with the pink building, yellow framing, and playground structures symmetrically positioned. The current image shows playground equipment (two canopied structures with yellow columns and purple/maroon slides) with white railings and a different viewing angle, indicating approximately 270-280\\u00b0 of rightward rotation has been achieved. The sign and the pink building entrance are no longer visible in the current frame, confirming substantial rotation has occurred\\u2014the camera has rotated nearly 3/4 of the way around.\\n\\nIntended odometry shows ~270\\u00b0 accumulated yaw with elapsed commanded time of 9.812s. At 30\\u00b0/s rotation rate, a full 360\\u00b0 rotation requires approximately 12 seconds total. Current action has been held for 9 seconds, with approximately 3.188s remaining until 12 seconds total. However, the reference plan allocates only 9.45s (which is why the elapsed_commanded_seconds shows 9.812s\\u2014we have already exceeded the plan's nominal duration). \\n\\nTo achieve the goal's explicit requirement of rotating 360\\u00b0 and returning to the original angle facing the original view with the sign centered again, I need to continue RIGHT for the remaining ~80-90\\u00b0 of rotation. The visual evidence confirms we are close to completing the full rotation cycle. I must continue RIGHT to accumulate the remaining ~80-90\\u00b0 of rotation needed to complete the 360\\u00b0 loop and return to face the original direction with the sign centered again in the frame.\"}]",
+        "prompt_sha256": "cbd01c398d50e658fd32565d836c4044f393cb38c47e5b9a859bc5fa6aba263b",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -90.00000000000006,
+          "accumulated_yaw_degrees": 270.0,
+          "world_time_seconds": 9.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 248.098757299,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -60.000000000000036,
+          "accumulated_yaw_degrees": 300.0,
+          "world_time_seconds": 10.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "Comparing the initial image with the current observation: The initial view shows the Shilhai Street Sports Center sign centered and prominently displayed with the pink building, yellow frame, and playground structures symmetrically positioned. The current image shows playground equipment from approximately 300-310\u00b0 of rightward rotation\u2014the equipment is now viewed from near the original viewing angle, with yellow columns and blue canopies visible, white railings, and playground structures approaching the original view but not yet fully returned. The sign is still out of frame, confirming we have rotated approximately 300\u00b0 but have not yet completed the full 360\u00b0 rotation to return to the original centered view with the sign prominently displayed in the frame.\n\nIntended odometry shows accumulated yaw of 300\u00b0 with elapsed commanded time of 10.812s. At 30\u00b0/s rotation rate, a full 360\u00b0 rotation requires approximately 12 seconds total. Current action has been held for 10 seconds. I need to continue RIGHT for the remaining ~50-60\u00b0 of rotation to complete the 360\u00b0 loop and return to face the original direction with the sign centered again in the frame. This final push will bring the camera back to the starting orientation where the sign is prominently centered.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4BbaAyo4go91vLn47Vx",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 5453,
+          "output_tokens": 320,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"Comparing the initial image with the current observation: The initial view shows the Shilhai Street Sports Center sign centered and prominently displayed with the pink building, yellow frame, and playground structures symmetrically positioned. The current image shows playground equipment from approximately 300-310\\u00b0 of rightward rotation\\u2014the equipment is now viewed from near the original viewing angle, with yellow columns and blue canopies visible, white railings, and playground structures approaching the original view but not yet fully returned. The sign is still out of frame, confirming we have rotated approximately 300\\u00b0 but have not yet completed the full 360\\u00b0 rotation to return to the original centered view with the sign prominently displayed in the frame.\\n\\nIntended odometry shows accumulated yaw of 300\\u00b0 with elapsed commanded time of 10.812s. At 30\\u00b0/s rotation rate, a full 360\\u00b0 rotation requires approximately 12 seconds total. Current action has been held for 10 seconds. I need to continue RIGHT for the remaining ~50-60\\u00b0 of rotation to complete the 360\\u00b0 loop and return to face the original direction with the sign centered again in the frame. This final push will bring the camera back to the starting orientation where the sign is prominently centered.\"}]",
+        "prompt_sha256": "134aa719452f16b8c06a494b911f11e3195fdf841fc080535fd13b50304e3e8f",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -60.000000000000036,
+          "accumulated_yaw_degrees": 300.0,
+          "world_time_seconds": 10.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 259.063433929,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -30.00000000000003,
+          "accumulated_yaw_degrees": 330.00000000000006,
+          "world_time_seconds": 11.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "Comparing the initial image with the current observation: The initial view shows the Shilhai Street Sports Center sign centered and prominently displayed with the pink building, yellow frame, and playground structures symmetrically positioned. The current image shows playground equipment from approximately 330\u00b0 of rightward rotation\u2014the equipment is now viewed from near the original viewing angle with yellow railings and structures in the foreground similar to the initial view, but the sign is not yet fully centered and visible as it was initially. The pink building is visible in the background-right area, confirming we are very close to completing the full 360\u00b0 rotation.\n\nIntended odometry shows accumulated yaw of 330\u00b0 with elapsed commanded time of 11.812s. At 30\u00b0/s rotation rate, a full 360\u00b0 rotation requires approximately 12 seconds total. Current action has been held for 11 seconds. I need to continue RIGHT for just the remaining ~30\u00b0 of rotation to complete the 360\u00b0 loop and return to face the original direction with the sign centered again in the frame. This final push of approximately 1 second more will bring the camera back to the exact starting orientation.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4BcP4GJMZhNemRMkL4M",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 5740,
+          "output_tokens": 302,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"Comparing the initial image with the current observation: The initial view shows the Shilhai Street Sports Center sign centered and prominently displayed with the pink building, yellow frame, and playground structures symmetrically positioned. The current image shows playground equipment from approximately 330\\u00b0 of rightward rotation\\u2014the equipment is now viewed from near the original viewing angle with yellow railings and structures in the foreground similar to the initial view, but the sign is not yet fully centered and visible as it was initially. The pink building is visible in the background-right area, confirming we are very close to completing the full 360\\u00b0 rotation.\\n\\nIntended odometry shows accumulated yaw of 330\\u00b0 with elapsed commanded time of 11.812s. At 30\\u00b0/s rotation rate, a full 360\\u00b0 rotation requires approximately 12 seconds total. Current action has been held for 11 seconds. I need to continue RIGHT for just the remaining ~30\\u00b0 of rotation to complete the 360\\u00b0 loop and return to face the original direction with the sign centered again in the frame. This final push of approximately 1 second more will bring the camera back to the exact starting orientation.\"}]",
+        "prompt_sha256": "b5bcd72b9cece099c2856bb367778c14053a389c512e9667edcf1b0ae43a9993",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -30.00000000000003,
+          "accumulated_yaw_degrees": 330.00000000000006,
+          "world_time_seconds": 11.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 269.774461149,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -4.05506770679017e-14,
+          "accumulated_yaw_degrees": 360.00000000000006,
+          "world_time_seconds": 12.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "END",
+        "action": null,
+        "reason": "Comparing the initial image with the current observation: The initial view clearly shows the Shilhai Street Sports Center sign centered and prominently displayed at eye level, with the pink building behind it, yellow frame structures on both sides, and playground equipment in the foreground symmetrically positioned. The current image shows the same Shilhai Street Sports Center sign centered and prominently displayed at eye level, with the pink building behind it, yellow frame structures visible, and the playground equipment (yellow circular tunnel structure, white railings, dark poles) in the foreground. The viewing angle, the position and prominence of the sign, the arrangement of the playground structures, and the overall scene composition match the initial image virtually identically. The camera has completed a full 360-degree rotation and has returned to the original angle facing the original view. The intended odometry shows 360 degrees of accumulated yaw, and the visual evidence confirms the sign is centered again in the frame exactly as it appeared initially. The goal has been visually achieved: the camera has rotated 360 degrees in place and returned to the original angle facing the original view.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4BdHUwKpvjwnhZAmXyV",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 6008,
+          "output_tokens": 291,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"Comparing the initial image with the current observation: The initial view clearly shows the Shilhai Street Sports Center sign centered and prominently displayed at eye level, with the pink building behind it, yellow frame structures on both sides, and playground equipment in the foreground symmetrically positioned. The current image shows the same Shilhai Street Sports Center sign centered and prominently displayed at eye level, with the pink building behind it, yellow frame structures visible, and the playground equipment (yellow circular tunnel structure, white railings, dark poles) in the foreground. The viewing angle, the position and prominence of the sign, the arrangement of the playground structures, and the overall scene composition match the initial image virtually identically. The camera has completed a full 360-degree rotation and has returned to the original angle facing the original view. The intended odometry shows 360 degrees of accumulated yaw, and the visual evidence confirms the sign is centered again in the frame exactly as it appeared initially. The goal has been visually achieved: the camera has rotated 360 degrees in place and returned to the original angle facing the original view.\"}]",
+        "prompt_sha256": "5a55f02c90a4effee31dda9874642749696810f56fce815f81bd327866f93e80",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -4.05506770679017e-14,
+          "accumulated_yaw_degrees": 360.00000000000006,
+          "world_time_seconds": 12.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 282.484025602
+      }
+    ],
+    "chunks": [
+      {
+        "index": 0,
+        "path": "chunk-000.mp4",
+        "frames": 13,
+        "pixel_sha256": "8629502edd277cf185987349031b6998e5f9c612046fef0adf2a973ba27a8d9a",
+        "elapsed_s": 133.18492343,
+        "sha256": "b060f8e75ac2a116d125f4cc6ce311b2b5d3abea5aa27c9c2a72142a658f3266"
+      },
+      {
+        "index": 1,
+        "path": "chunk-001.mp4",
+        "frames": 16,
+        "pixel_sha256": "bceba81063a6fbb4915591e28c205987a1775826b44b6cb495c5e36c2e76a730",
+        "elapsed_s": 142.34440255799998,
+        "sha256": "09987b2075476b7bb39cf52712b3a2536c075a13523f763f3113a9a833068533"
+      },
+      {
+        "index": 2,
+        "path": "chunk-002.mp4",
+        "frames": 16,
+        "pixel_sha256": "265c3de5dd139699935bd8aac0e34edcfd43a772848c9c54cc85f6b1f8fa4e7a",
+        "elapsed_s": 155.792478457,
+        "sha256": "ba82ec45c3570d2169b5ae9308f667fe74bb192b06066e4bd0069e04986979d9"
+      },
+      {
+        "index": 3,
+        "path": "chunk-003.mp4",
+        "frames": 16,
+        "pixel_sha256": "ff24d04337111660fb86b0fe78166b54c5247df32c0ad8f9cf07b75f2e811d5d",
+        "elapsed_s": 168.745572393,
+        "sha256": "e2d0f8f5c0c7b8f757924509506767f129fb6349434d81938c3be463f1c7be3c"
+      },
+      {
+        "index": 4,
+        "path": "chunk-004.mp4",
+        "frames": 16,
+        "pixel_sha256": "0283ff59375d2a95fdab0e8a71a7e5e4ee597d7fba598a7145cd6a1baacbb8ff",
+        "elapsed_s": 182.814412872,
+        "sha256": "4abb2b2f56ab99c10f995fe35ee6ee1f2307fb788fd039d9c2c60bdc3ae083ce"
+      },
+      {
+        "index": 5,
+        "path": "chunk-005.mp4",
+        "frames": 16,
+        "pixel_sha256": "810feb2295bd237fbb8150325389c0af08a88bbd89a3f546046c5a1841b0dc28",
+        "elapsed_s": 194.839822271,
+        "sha256": "77a7a7856834a01f6e772acab74cf456e02835ea06848ef7374b5f64d805433a"
+      },
+      {
+        "index": 6,
+        "path": "chunk-006.mp4",
+        "frames": 16,
+        "pixel_sha256": "155b0b0b664f03eac49d4ae89abd05c26d3b2eb976a8e0ab6db8a16d233a8bca",
+        "elapsed_s": 205.676643474,
+        "sha256": "a8c7bbd46a0bec74bbcbc6e997e1fbc483c37c7dad7341b10a87dee27e4fca46"
+      },
+      {
+        "index": 7,
+        "path": "chunk-007.mp4",
+        "frames": 16,
+        "pixel_sha256": "7149c391c725b3754811030632c099bf62f23fd92f9add77fd9ea55a942a3b26",
+        "elapsed_s": 217.84001418699998,
+        "sha256": "9be349cdd100e222e8a52cdca3ce6d80cb639b69c98bdfbeeb4735186858d989"
+      },
+      {
+        "index": 8,
+        "path": "chunk-008.mp4",
+        "frames": 16,
+        "pixel_sha256": "b440734be16ef52d5373be9f988f3fcb9432fb56b263d3c34aa5a8abd88153e6",
+        "elapsed_s": 229.929676696,
+        "sha256": "1db7646fcf803b7547c618ad5427892761669e52bd001aee3404908665ee5fa3"
+      },
+      {
+        "index": 9,
+        "path": "chunk-009.mp4",
+        "frames": 16,
+        "pixel_sha256": "524d59a0edccc6248fc6b2598b15612c490a32580f30483755f80e32a9cdf849",
+        "elapsed_s": 241.870544128,
+        "sha256": "8b71ce25cd465206f19ff12d87fe87471c38831a49bed65945055a2f0fe07982"
+      },
+      {
+        "index": 10,
+        "path": "chunk-010.mp4",
+        "frames": 16,
+        "pixel_sha256": "ba84a9cd02776f4711f636e94ac282703c6b8392c2ff9d0afc3bb45179f5f4f7",
+        "elapsed_s": 254.01123219199997,
+        "sha256": "904e0a03cb3d5900f93dbe008f7dd7dc7c1219a073caf47bfc548caea9ca4734"
+      },
+      {
+        "index": 11,
+        "path": "chunk-011.mp4",
+        "frames": 16,
+        "pixel_sha256": "fb77a27fb1cfa24672be3070e4deb5516b22659a173e9a037f5c173f958aff2b",
+        "elapsed_s": 264.985334125,
+        "sha256": "2c06d67cd437b704522c7d565fa709bcca0955bf6376abf1b40552c302db60e3"
+      },
+      {
+        "index": 12,
+        "path": "chunk-012.mp4",
+        "frames": 16,
+        "pixel_sha256": "f7abc9b0ad543d8fb0e11558ba5444b60c00b9d33aee9e1aa425a81f38afbc79",
+        "elapsed_s": 277.21345225,
+        "sha256": "e86858b140ffc144d65d7740f24cb07308eb8936e8cf356d6622ce47e2ca290e"
+      }
+    ],
+    "published_score_reproduced": false,
+    "agent_interactions": 13,
+    "adapter_sha256": "35c49341324e32df21f428b7413921183eb429a88376f67317c1897e20aa591a",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+    "deviations": [
+      "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+      "Reconstructed Haiku reference-guided prompt and camera mapping: 30 deg/s turns, unit-normalized translations",
+      "Official 480p demo area; single NVIDIA H200, BF16 and valid-length SDPA backend",
+      "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+      "Claude diagnostic scoring differs from published Gemini judgments"
+    ],
+    "hardware": {
+      "gpu": "NVIDIA H200",
+      "torch": "2.6.0+cu124",
+      "cuda": "12.4"
+    },
+    "attention_backend": "sdpa",
+    "optional_torch_dlpack_addon_disabled": false,
+    "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+    "checkpoint_loading": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "mismatched_keys": [],
+      "error_msgs": []
+    },
+    "generated_frames": 205,
+    "generated_seconds": 12.8125,
+    "memory": {
+      "method": "bounded early-view pose KV retrieval; diagnostic, not paper reproduction",
+      "archive_limit_latent_frames": 16,
+      "retrieved_latent_frames": 4,
+      "retrieved_frame_count_is_limit": true,
+      "selection": "nearest",
+      "attention_composition": "joint softmax",
+      "history_output_weight": null,
+      "attention_branches_per_retrieval": 1,
+      "attended_latent_frames": 18,
+      "sink_latent_frames": 6,
+      "tail_latent_frames": 8,
+      "excluded_recent_archive_frames": 4,
+      "tail_frame_count_is_minimum": true,
+      "temporary_gpu_read_lifetime": "denoising and clean pass only; released before VAE decode",
+      "pose_source": "commanded poses, not reconstructed realized poses",
+      "key_positions": "virtual",
+      "key_storage": "canonical pre-RoPE BF16 keys; reapply spatial and virtual temporal RoPE on read",
+      "archive_bytes": 19765657600,
+      "retrieval_attention_calls": 200,
+      "trace": [
+        {
+          "chunk": 0,
+          "retrieved_frame_ids": [],
+          "archive_frame_ids": [],
+          "attention_replaced": false,
+          "temporary_read_bytes_released_before_decode": 0
+        },
+        {
+          "chunk": 1,
+          "retrieved_frame_ids": [],
+          "archive_frame_ids": [],
+          "attention_replaced": false,
+          "temporary_read_bytes_released_before_decode": 0
+        },
+        {
+          "chunk": 2,
+          "retrieved_frame_ids": [],
+          "archive_frame_ids": [
+            6,
+            7
+          ],
+          "attention_replaced": false,
+          "temporary_read_bytes_released_before_decode": 0
+        },
+        {
+          "chunk": 3,
+          "retrieved_frame_ids": [],
+          "archive_frame_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "attention_replaced": false,
+          "temporary_read_bytes_released_before_decode": 0
+        },
+        {
+          "chunk": 4,
+          "retrieved_frame_ids": [],
+          "archive_frame_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "attention_replaced": false,
+          "temporary_read_bytes_released_before_decode": 0
+        },
+        {
+          "chunk": 5,
+          "retrieved_frame_ids": [],
+          "archive_frame_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "attention_replaced": false,
+          "temporary_read_bytes_released_before_decode": 0
+        },
+        {
+          "chunk": 6,
+          "retrieved_frame_ids": [],
+          "archive_frame_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          "attention_replaced": false,
+          "temporary_read_bytes_released_before_decode": 0
+        },
+        {
+          "chunk": 7,
+          "retrieved_frame_ids": [],
+          "archive_frame_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          "attention_replaced": false,
+          "temporary_read_bytes_released_before_decode": 0
+        },
+        {
+          "chunk": 8,
+          "retrieved_frame_ids": [],
+          "archive_frame_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          "attention_replaced": false,
+          "temporary_read_bytes_released_before_decode": 0
+        },
+        {
+          "chunk": 9,
+          "retrieved_frame_ids": [],
+          "archive_frame_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          "attention_replaced": false,
+          "temporary_read_bytes_released_before_decode": 0
+        },
+        {
+          "chunk": 10,
+          "retrieved_frame_ids": [],
+          "archive_frame_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          "attention_replaced": false,
+          "temporary_read_bytes_released_before_decode": 0
+        },
+        {
+          "chunk": 11,
+          "retrieved_frame_ids": [
+            6
+          ],
+          "archive_frame_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          "attention_replaced": false,
+          "temporary_read_bytes_released_before_decode": 0
+        },
+        {
+          "chunk": 12,
+          "retrieved_frame_ids": [
+            6,
+            7,
+            8,
+            9
+          ],
+          "archive_frame_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          "attention_replaced": true,
+          "retained_tail_latent_frames": 8,
+          "temporary_read_bytes_released_before_decode": 4941414400
+        }
+      ]
+    },
+    "termination": "agent_end",
+    "elapsed_s": 282.48937987799997,
+    "camera_diagnostics": {
+      "chunks": 13,
+      "path_length": 0.0,
+      "net_yaw_degrees": 359.99999999999994,
+      "total_turn_degrees": 359.99999999999994,
+      "max_distance_from_start": 0.0,
+      "final_distance_from_start": 0.0,
+      "revisited_start_at_chunk": null,
+      "wait_chunks": 1,
+      "wait_pose_changes": 0
+    },
+    "peak_allocated_bytes": 73025647616
+  },
+  "scope": "Local adaptive pilot, not published AgentPlayer score reproduction",
+  "frozen_plan_sha256": "aec651782d515e623b492b6a5fbe31e1c060937e2dea022a81bb1d9492eb39c5",
+  "source_revision": "660fa4e93e0b70f4a2df6b7488785d11634ff17e"
+}
