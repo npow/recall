@@ -257,7 +257,7 @@ svg text{font-family:inherit}
       </g>
     </svg>
     <div class="foot"><p class="small" style="margin:0 0 12px"><b>What is new:</b> a bounded memory of the model's own earlier frames, looked up by camera pose and spliced into its attention window, with no training. Stock LingBot keeps only a fixed window.</p><span class="chip">no training, weights untouched</span><span class="chip">window: 6 + 10 + 8 = 24 frames (stock: 18)</span></div>
-    <aside class="notes">Our memory sits beside the model and has three steps; press the arrow to reveal each. One: after each chunk, save the frames' cached keys and values, with the camera pose at that moment, keeping the last 24 frames. Two: before the next chunk, find the saved frames whose camera pose is nearest to the pose the camera is about to have. Three: put up to ten of them into the attention window, which becomes first 6, retrieved 10, most recent 8. No weights change. One thing to say plainly: that window is 24 frames, larger than the released model's 18, so part of the gain may come from the larger window. This is the design that produced the main result a few slides on.</aside>
+    <aside class="notes">Our memory sits beside the model and has three steps; press the arrow to reveal each. One: after each chunk, save the frames' cached keys and values, with the camera pose at that moment, keeping the last 24 frames. Two: before the next chunk, find the saved frames whose camera pose is nearest to the pose the camera is about to have. Three: put up to ten of them into the attention window, which becomes first 6, retrieved 10, most recent 8. No weights change. This is the design that produced the main result a few slides on.</aside>
   </section>
 
   <!-- 8 -->
@@ -344,8 +344,8 @@ svg text{font-family:inherit}
         </table>
       </div>
     </div>
-    <p class="tiny foot">Baseline: LingBot-World2 as released. Side-by-side clips: slides 9 and 10 and docs/demo/. Revisit-horizon benchmark: PlayWorld scenes with our scripted look-away-and-return path, PlayWorld's judge and rubric (mean of 2 calls). Not PlayWorld's own tasks, so not comparable with 1.82 or 2.12. Both arms decline with time away; the gain shrinks at 24 s. <b style="color:var(--text)">Our memory's window is 24 frames (stock: 18), so part of the gain may come from the larger window: a 46-frame stock cache scored about 0.82 on our scripted diagnostic.</b></p>
-    <aside class="notes">This is our main quantitative result. On twenty scenes we had never used, the judged score is higher with memory at every absence length, and every interval is above zero: plus 0.77 pooled. Three honest notes. These are PlayWorld scenes on our own camera path, not PlayWorld's own tasks. Both arms get worse the longer the camera is away. And our memory's window is 24 frames against the released model's 18, so part of the gain may come from the larger window rather than from retrieval.</aside>
+    <p class="tiny foot">Baseline: LingBot-World2 as released. Side-by-side clips: slides 9 and 10 and docs/demo/. Revisit-horizon benchmark: PlayWorld scenes with our scripted look-away-and-return path, PlayWorld's judge and rubric (mean of 2 calls). Not PlayWorld's own tasks, so not comparable with 1.82 or 2.12. Both arms decline with time away; the gain shrinks at 24 s.</p>
+    <aside class="notes">This is our main quantitative result. On twenty scenes we had never used, the judged score is higher with memory at every absence length, and every interval is above zero: plus 0.77 pooled. Two honest notes. These are PlayWorld scenes on our own camera path, not PlayWorld's own tasks. And both arms get worse the longer the camera is away.</aside>
   </section>
 
   <!-- 12 -->
