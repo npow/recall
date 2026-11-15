@@ -26,9 +26,11 @@ def split_of():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--label", default="final")
+    parser.add_argument("--judge", choices=["gemini", "claude"], default="gemini", help="which re-judging output to aggregate")
+    parser.add_argument("--repeats", type=int, default=2)
     parser.add_argument("--output", type=Path, default=ROOT / "reproduction/full-baseline-gemini.json")
     args = parser.parse_args()
-    data = json.loads((ROOT / f"outputs/rejudge/{args.label}-gemini.json").read_text())
+    data = json.loads((ROOT / f"outputs/rejudge/{args.label}-{args.judge}.json").read_text())
     splits = split_of()
     per_split = {s: {} for s in EXPECTED}
     for task, items in data["cases"].items():
@@ -39,8 +41,10 @@ def main():
     dims = {s: (round(st.mean(v["score"] for v in cases.values()), 4) if cases else None) for s, cases in per_split.items()}
     scored = {s: len(c) for s, c in per_split.items()}
     complete = all(scored[s] == EXPECTED[s] for s in EXPECTED)
-    out = {"judge": "Gemini 3.1 Pro preview via Vertex (not the paper's API alias)", "protocol": "released prompts/sampling/gate; local LingBot-World2 14B causal-fast; Haiku player; seed 42",
-           "judgements_per_video": 2, "expected": EXPECTED, "scored": scored, "coverage_complete": complete,
+    judge_name = ("Gemini 3.1 Pro preview via Vertex (not the paper's API alias)" if args.judge == "gemini"
+                  else "Claude Opus 5.5 with the released PlayWorld rubric (not the paper's Gemini judge; not comparable to the published table)")
+    out = {"judge": judge_name, "protocol": "released prompts/sampling/gate; local LingBot-World2 14B causal-fast; Haiku player; seed 42",
+           "judgements_per_video": args.repeats, "expected": EXPECTED, "scored": scored, "coverage_complete": complete,
            "dimension_means_partial": dims, "overall": round(st.mean(dims.values()), 4) if complete else None,
            "gc": dims["gc"], "if": dims["if"], "insight": dims["insight"], "outsight": dims["outsight"],
            "scored_total": sum(scored.values()), "scored_count": sum(scored.values()),
