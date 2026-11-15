@@ -6,7 +6,7 @@ import subprocess
 
 import pytest
 
-from worldsync import shared_world as sw
+from worldsync import shared_frames as sw
 from tests.test_research_memory import client
 
 

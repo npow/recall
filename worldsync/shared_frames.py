@@ -15,11 +15,11 @@ differing chunk.
 
 CLI::
 
-    python -m worldsync.shared_world ingest-run reproduction/full-history-GC010 --agent agent-a --dry-run
-    python -m worldsync.shared_world ingest-run <run-dir> --agent agent-a --confirm-send
-    python -m worldsync.shared_world compare <run-dir-a> <run-dir-b> --agents agent-a agent-b [--confirm-send]
-    python -m worldsync.shared_world recall <world-id> --heading 90 --identity agent-b [--at 12.75]
-    python -m worldsync.shared_world nearby <world-id> --heading 90 [--exclude agent-b]
+    python -m worldsync.shared_frames ingest-run reproduction/full-history-GC010 --agent agent-a --dry-run
+    python -m worldsync.shared_frames ingest-run <run-dir> --agent agent-a --confirm-send
+    python -m worldsync.shared_frames compare <run-dir-a> <run-dir-b> --agents agent-a agent-b [--confirm-send]
+    python -m worldsync.shared_frames recall <world-id> --heading 90 --identity agent-b [--at 12.75]
+    python -m worldsync.shared_frames nearby <world-id> --heading 90 [--exclude agent-b]
 """
 from __future__ import annotations
 

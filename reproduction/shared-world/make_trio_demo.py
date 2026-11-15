@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from worldsync import shared_world as sw
+from worldsync import shared_frames as sw
 from worldsync.duel_demo import compose
 
 T = Path(sys.argv[1] if len(sys.argv) > 1 else "outputs/shared-world/trio").resolve()

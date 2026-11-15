@@ -3,7 +3,7 @@
 Goal: two agents inhabit the same generated world and share what they have seen.
 
 - **Same world.** A world id hashes the source and checkpoint revisions, initial image, caption, seed, frame rate
-  and chunk size (`worldsync/shared_world.py`, `world_id`). The memory method is not part of it, so stock and
+  and chunk size (`worldsync/shared_frames.py`, `world_id`). The memory method is not part of it, so stock and
   retrieval rollouts from the same start share a world until their pixels differ.
 - **Frames.** Each chunk's last generated frame is stored as a JPEG blob in a local SQLite database
   (`outputs/shared-world/world.db`, ignored by git), addressed by sha256. Frames are decoded from the video into
@@ -16,11 +16,11 @@ Goal: two agents inhabit the same generated world and share what they have seen.
   references against the local database.
 
 ```
-python -m worldsync.shared_world ingest-run reproduction/full-history-GC010 --agent agent-a --dry-run
-python -m worldsync.shared_world ingest-run reproduction/commit-forcing/GC010-seed42-h200/stock --agent agent-b --dry-run
-python -m worldsync.shared_world compare reproduction/full-history-GC010 reproduction/commit-forcing/GC010-seed42-h200/stock --agents agent-a agent-b --dry-run
-python -m worldsync.shared_world nearby w-8a495fb5ac51a5b8 --heading 90 --exclude agent-b
-python -m worldsync.shared_world recall w-8a495fb5ac51a5b8 --heading 90 --identity agent-b --at 12.75   # needs PAST_API_KEY
+python -m worldsync.shared_frames ingest-run reproduction/full-history-GC010 --agent agent-a --dry-run
+python -m worldsync.shared_frames ingest-run reproduction/commit-forcing/GC010-seed42-h200/stock --agent agent-b --dry-run
+python -m worldsync.shared_frames compare reproduction/full-history-GC010 reproduction/commit-forcing/GC010-seed42-h200/stock --agents agent-a agent-b --dry-run
+python -m worldsync.shared_frames nearby w-8a495fb5ac51a5b8 --heading 90 --exclude agent-b
+python -m worldsync.shared_frames recall w-8a495fb5ac51a5b8 --heading 90 --identity agent-b --at 12.75   # needs PAST_API_KEY
 ```
 
 ## Dry run on two existing GC010 rollouts
@@ -55,9 +55,9 @@ RECALL pose retrieval; the viewer exports its K/V archive (`--archive-export`) a
 
 ```
 for a in viewer duel-a duel-b; do
-  python -m worldsync.shared_world --db outputs/shared-world/trio.db ingest-run outputs/shared-world/trio/$a --agent $a \
+  python -m worldsync.shared_frames --db outputs/shared-world/trio.db ingest-run outputs/shared-world/trio/$a --agent $a \
       --captions outputs/shared-world/trio/$a/captions.json --dry-run; done
-python -m worldsync.shared_world --db outputs/shared-world/trio.db compare outputs/shared-world/trio/viewer outputs/shared-world/trio/duel-b --agents viewer duel-b --confirm-send
+python -m worldsync.shared_frames --db outputs/shared-world/trio.db compare outputs/shared-world/trio/viewer outputs/shared-world/trio/duel-b --agents viewer duel-b --confirm-send
 python reproduction/shared-world/make_trio_demo.py outputs/shared-world/trio   # side-by-side mp4 with memory captions
 ```
 
@@ -83,7 +83,7 @@ not return to the original DRUGS street. past.dev recall as agent-b at heading 2
 the identical pose first; 22 data points, 34 credits.
 
 ```
-python -m worldsync.shared_world --db outputs/shared-world/orbit.db ingest-run outputs/shared-world/orbit/agent-a --agent agent-a --captions ... --dry-run
+python -m worldsync.shared_frames --db outputs/shared-world/orbit.db ingest-run outputs/shared-world/orbit/agent-a --agent agent-a --captions ... --dry-run
 python reproduction/shared-world/make_trio_demo.py outputs/shared-world/orbit agent-a agent-b
 ```
 
