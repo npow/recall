@@ -40,6 +40,9 @@ def main(argv=None, runtime=None):
     parser.add_argument("--fixed-actions", nargs="+", help="Transport/parity diagnostic; not adaptive benchmark evidence")
     parser.add_argument("--native-fixed-controls", action="store_true", help="Use native precomputed poses and audit online camera embeddings")
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--text-prompt", choices=["caption", "prompt", "both"], default="caption",
+        help="World-model text: caption = static image description (current baseline), prompt = task objective "
+             "(what the released PlayWorld harness submits), both = caption then objective")
     parser.add_argument("--turn-degrees-per-second", type=float, default=60)
     parser.add_argument("--adaptive-retrieval-pilot", action="store_true",
                         help="Separate GC027 adaptive protocol:30deg/s, initial neutral chunk, optional frozen four-view memory")
@@ -77,6 +80,8 @@ def main(argv=None, runtime=None):
     knobs = lingbot_tuning.resolve(args, parser)
     from worldsync import lingbot_adaptive_pilot
     lingbot_adaptive_pilot.validate(args, knobs, parser)
+    if args.text_prompt != "caption" and not lingbot_tuning.hillclimb_unlocked():
+        parser.error("non-default world-model text is locked until hillclimbing is unlocked")
     if not 0 < args.turn_degrees_per_second <= 90:
         parser.error("turn rate must be in (0,90] degrees per second")
     if (args.turn_degrees_per_second != 60 and not args.native_fixed_controls
@@ -127,7 +132,7 @@ def main(argv=None, runtime=None):
     report = {"status": "prepared", "model": "LingBot-World2 14B causal-fast stock", "protocol_id": lingbot_adaptive_pilot.PROTOCOL if args.adaptive_retrieval_pilot else PROTOCOL_ID,
         "source_revision": revision, "checkpoint_revision": WEIGHT_REVISION,
         "initial_image_sha256": hashlib.sha256(initial.read_bytes()).hexdigest(),
-        "image_caption_sha256": hashlib.sha256(task["image_caption"].encode()).hexdigest(), "task_id": args.task_id,
+        "text_prompt_mode": args.text_prompt, "image_caption_sha256": hashlib.sha256(task["image_caption"].encode()).hexdigest(), "task_id": args.task_id,
         "split": args.split, "seed": args.seed, "turn_degrees_per_second": args.turn_degrees_per_second, "fps": 16, "max_chunks": maximum, "max_interactions": 40,
         "native_fixed_controls": args.native_fixed_controls, "camera_embedding_audit": [],
         "pose_retrieval": args.pose_retrieval, "sink_rephase": args.rephase_sink,
@@ -357,7 +362,9 @@ def main(argv=None, runtime=None):
                 raise RolloutComplete
         handles = [pipeline.model.register_forward_pre_hook(before, with_kwargs=True),
                    pipeline.model.register_forward_hook(after, with_kwargs=True)]
-        pipeline.generate(task["image_caption"], Image.open(initial).convert("RGB"),
+        world_text = {"caption": task["image_caption"], "prompt": task["prompt"],
+                      "both": f"{task['image_caption']} {task['prompt']}"}[args.text_prompt]
+        pipeline.generate(world_text, Image.open(initial).convert("RGB"),
             action_path=str(controls), chunk_size=4, max_area=480 * 832, frame_num=frames,
             shift=schedule["shift"], timesteps_index=schedule["timesteps_index"], seed=args.seed, offload_model=False)
     except RolloutComplete:
