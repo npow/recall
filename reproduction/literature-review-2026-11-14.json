@@ -1,0 +1,299 @@
+{
+  "cutoff": "2026-11-14",
+  "scope": "Targeted review of major interactive video world memory, control, geometry and evaluation papers; not a claim of exhaustive bibliometric coverage. Abstracts and selected methods/results/limitations were checked; not every paper read line by line.",
+  "paper_count": 34,
+  "ranking_caveat": "Different datasets, controllers, camera trajectories, resolutions, speeds and evaluation definitions prevent a universal model ranking. Paper-reported numbers are not reproduced by us.",
+  "recommended_order": [
+    "Verify control on fixed round trips with realized camera motion.",
+    "Compare stock cache, budget-feasible retained history, and relevant retrieval at matched settings.",
+    "Prioritize DeCoPrune as a direct v2-compatible research reference; do not inherit its changed denoising schedule silently.",
+    "Test WorldKV-style native KV retrieval and correct temporal RoPE handling as separate ablations.",
+    "If retrieval cannot preserve geometry, use visibility-aware local geometric memory and train a conditioning adapter.",
+    "Use exposure-bias fine-tuning for recurring drift; separately model dynamic event state."
+  ],
+  "papers": [
+    {
+      "name": "GEN3C",
+      "arxiv_id": "2503.03751",
+      "paper_url": "https://arxiv.org/abs/2503.03751",
+      "family": "explicit_3d",
+      "mechanism": "Render a persistent depth-derived point cache into requested camera views.",
+      "applicability": "Requires a generator trained for geometric conditioning; foundational reference."
+    },
+    {
+      "name": "WorldMem",
+      "arxiv_id": "2504.12369",
+      "paper_url": "https://arxiv.org/abs/2504.12369",
+      "family": "historical_retrieval",
+      "mechanism": "Store frames with poses and timestamps and use state-aware memory attention.",
+      "applicability": "Useful retrieval and dynamic-time design; not a tested plug-in for our v2 checkpoint."
+    },
+    {
+      "name": "Context as Memory",
+      "arxiv_id": "2506.03141",
+      "paper_url": "https://arxiv.org/abs/2506.03141",
+      "family": "historical_retrieval",
+      "mechanism": "Retrieve raw history by camera field-of-view overlap.",
+      "applicability": "Useful retrieval baseline; its trained conditioning path must not be assumed present in LingBot."
+    },
+    {
+      "name": "VMem",
+      "arxiv_id": "2506.18903",
+      "paper_url": "https://arxiv.org/abs/2506.18903",
+      "family": "geometry_retrieval",
+      "mechanism": "Index past views by the surfels they observed.",
+      "applicability": "Useful visibility-aware retrieval rather than simply nearest pose."
+    },
+    {
+      "name": "Self Forcing",
+      "arxiv_id": "2506.08009",
+      "paper_url": "https://arxiv.org/abs/2506.08009",
+      "family": "exposure_bias",
+      "mechanism": "Train autoregressive generation on its own outputs.",
+      "applicability": "Training strategy; not an inference flag or proof of persistent geometry."
+    },
+    {
+      "name": "History-Guided Video Diffusion",
+      "arxiv_id": "2502.06764",
+      "paper_url": "https://arxiv.org/abs/2502.06764",
+      "family": "history_guidance",
+      "mechanism": "Guide diffusion with variable and differently noised history.",
+      "applicability": "Requires a compatible trained diffusion-forcing backbone."
+    },
+    {
+      "name": "Stable Video Infinity",
+      "arxiv_id": "2510.09212",
+      "paper_url": "https://arxiv.org/abs/2510.09212",
+      "family": "exposure_bias",
+      "mechanism": "Recycle generated errors into fine-tuning histories.",
+      "applicability": "Relevant adapter-training inspiration; long videos alone do not prove revisits."
+    },
+    {
+      "name": "WorldPack: Dynamic Frame Compression for Long-context Video World Modeling",
+      "arxiv_id": "2512.02473",
+      "paper_url": "https://arxiv.org/abs/2512.02473",
+      "family": "compressed_memory",
+      "mechanism": "Compress trajectory history and retrieve relevant memory.",
+      "applicability": "Context efficiency research; domain and checkpoint transfer need evaluation."
+    },
+    {
+      "name": "Infinite-World",
+      "arxiv_id": "2602.02393",
+      "paper_url": "https://arxiv.org/abs/2602.02393",
+      "family": "learned_memory",
+      "mechanism": "Hierarchical pose-free compression, uncertainty-aware action labels, revisit-dense fine-tuning.",
+      "applicability": "Relevant when camera estimates are noisy; the paper reports a compact 30-minute revisit training set."
+    },
+    {
+      "name": "AnchorWeave",
+      "arxiv_id": "2602.14941",
+      "paper_url": "https://arxiv.org/abs/2602.14941",
+      "family": "geometry_retrieval",
+      "mechanism": "Retrieve clean local geometric memories and reconcile multiple anchors.",
+      "applicability": "Avoid fusing noisy generated geometry into a single supposedly authoritative map."
+    },
+    {
+      "name": "PERSIST: Beyond Pixel Histories",
+      "arxiv_id": "2603.03482",
+      "paper_url": "https://arxiv.org/abs/2603.03482",
+      "family": "persistent_state",
+      "mechanism": "Maintain and evolve a persistent latent 3D world representation.",
+      "applicability": "Strong architectural direction; evaluation is in Luanti voxel worlds, not a direct LingBot patch."
+    },
+    {
+      "name": "Lyra 2.0",
+      "arxiv_id": "2604.13036",
+      "paper_url": "https://arxiv.org/abs/2604.13036",
+      "family": "geometry_and_exposure_bias",
+      "mechanism": "Use geometry to route historical views and train on self-augmented degraded histories.",
+      "applicability": "Code, checkpoints and training recipe checked in nv-tlabs/lyra; useful geometry reference baseline."
+    },
+    {
+      "name": "WorldKV",
+      "arxiv_id": "2605.22718",
+      "paper_url": "https://arxiv.org/abs/2605.22718",
+      "family": "training_free_kv",
+      "mechanism": "Archive evicted native KV, retrieve relevant chunks and compress redundant tokens.",
+      "applicability": "Published main backbones are LingBot-World-Fast v1 and Matrix-Game 2.0; v2 transfer remains an experiment."
+    },
+    {
+      "name": "GIM-World: Geometry-Aware Implicit Memory",
+      "arxiv_id": "2606.02436",
+      "paper_url": "https://arxiv.org/abs/2606.02436",
+      "family": "learned_memory",
+      "mechanism": "Compress history into fixed memory tokens with a geometry teacher during training.",
+      "applicability": "Lightweight memory-module direction; requires learned integration."
+    },
+    {
+      "name": "Mirage: Latent Spatial Memory",
+      "arxiv_id": "2606.09828",
+      "paper_url": "https://arxiv.org/abs/2606.09828",
+      "family": "latent_3d",
+      "mechanism": "Lift VAE features into a persistent 3D cache and query through latent warping.",
+      "applicability": "Avoid repeated RGB rendering and VAE encoding; requires suitable conditioning."
+    },
+    {
+      "name": "Mem-World",
+      "arxiv_id": "2606.18960",
+      "paper_url": "https://arxiv.org/abs/2606.18960",
+      "family": "dynamic_geometry_memory",
+      "mechanism": "Use time-indexed 4D wrist-view surfels to retrieve history for future actions.",
+      "applicability": "Robot manipulation evidence; not proof of arbitrary open-world performance."
+    },
+    {
+      "name": "WorldDirector",
+      "arxiv_id": "2607.02517",
+      "paper_url": "https://arxiv.org/abs/2607.02517",
+      "family": "dynamic_state",
+      "mechanism": "Separate semantic motion planning and 3D entity trajectories from visual generation.",
+      "applicability": "Relevant to off-screen evolution; an object-state store must actually condition generation."
+    },
+    {
+      "name": "LingBot-World2: Infinite Worlds with Versatile Interactions",
+      "arxiv_id": "2607.07534",
+      "paper_url": "https://arxiv.org/abs/2607.07534",
+      "family": "base_model",
+      "mechanism": "Existing open action-conditioned world model used by this project.",
+      "applicability": "Public local causal-fast checkpoint is distinct from the hosted PlayWorld service."
+    },
+    {
+      "name": "AlayaWorld full technical report",
+      "arxiv_id": "2607.18367",
+      "paper_url": "https://arxiv.org/abs/2607.18367",
+      "family": "hybrid_memory",
+      "mechanism": "Combine sink, compressed history, geometry memory and recent context with corrupted-history training.",
+      "applicability": "Open system reference; its paper benchmark and released variant must be identified precisely."
+    },
+    {
+      "name": "Wonder",
+      "arxiv_id": "2607.26037",
+      "paper_url": "https://arxiv.org/abs/2607.26037",
+      "family": "control_and_sparse_memory",
+      "mechanism": "Use dense coordinate-field camera conditioning, sparse retrieval and corrected distillation.",
+      "applicability": "Control fidelity and memory must be evaluated together."
+    },
+    {
+      "name": "WorldTrace: Addressable Memory for Video World Models",
+      "arxiv_id": "2608.07408",
+      "paper_url": "https://arxiv.org/abs/2608.07408",
+      "family": "training_free_kv",
+      "mechanism": "Assign distinct in-range virtual positions and merge keys in canonical coordinates.",
+      "applicability": "Read v2 revised 11 Nov 2026; main Matrix-Game-2 evaluation plus earlier LingBot appendix, not demonstrated v2 transfer."
+    },
+    {
+      "name": "Matrix-Game 3.5",
+      "arxiv_id": "2608.29910",
+      "paper_url": "https://arxiv.org/abs/2608.29910",
+      "family": "static_dynamic_memory",
+      "mechanism": "Use patch memory, projective camera conditioning and separate static/dynamic representation.",
+      "applicability": "Newer than the Matrix-Game 3.0 row on PlayWorld; not evidence of a newer PlayWorld score."
+    },
+    {
+      "name": "DeCoPrune",
+      "arxiv_id": "2609.39096",
+      "paper_url": "https://arxiv.org/abs/2609.39096",
+      "family": "training_free_kv",
+      "mechanism": "Keep historical KV tokens with large intermediate-to-final denoising discrepancies.",
+      "applicability": "Direct LingBot World v2 evidence; released config names 14B causal-fast. Schedule differs from our stock settings."
+    },
+    {
+      "name": "Learning to Retrieve",
+      "arxiv_id": "2610.11444",
+      "paper_url": "https://arxiv.org/abs/2610.11444",
+      "family": "learned_memory",
+      "mechanism": "Learn pose-conditioned internal recurrent retrieval with revisibility supervision.",
+      "applicability": "Trains memory layers; evaluated Wan and SANA variants, not a zero-shot LingBot modification."
+    },
+    {
+      "name": "World-T3",
+      "arxiv_id": "2610.17434",
+      "paper_url": "https://arxiv.org/abs/2610.17434",
+      "family": "fast_weight_memory",
+      "mechanism": "Update a pose-keyed parametric memory with recursive least squares and distill a few-step generator.",
+      "applicability": "Strong memory/speed result on its own revisit protocol; requires trained memory and distillation, not a drop-in knob."
+    },
+    {
+      "name": "Mallea",
+      "arxiv_id": "2610.21283",
+      "paper_url": "https://arxiv.org/abs/2610.21283",
+      "family": "executable_state",
+      "mechanism": "Let executable object rules advance state and let a generative renderer use persistent appearance.",
+      "applicability": "Alternative hybrid simulator formulation; distinguish it from extending a frozen video model."
+    },
+    {
+      "name": "WorldPager",
+      "arxiv_id": "2610.35529",
+      "paper_url": "https://arxiv.org/abs/2610.35529",
+      "family": "memory_systems",
+      "mechanism": "Tier archived KV across GPU, DRAM and NVMe with pose-driven prefetch and position handling.",
+      "applicability": "A memory-capacity result; long runtime is not proof of perfect world coherence. Matrix-Game-2 system."
+    },
+    {
+      "name": "Hy-Nomas",
+      "arxiv_id": "2610.36729",
+      "paper_url": "https://arxiv.org/abs/2610.36729",
+      "family": "control_and_exposure_bias",
+      "mechanism": "Use structured persistent descriptions, temporally local actions and training on generated histories.",
+      "applicability": "Official code, weights and LoRA workflow available; author human comparisons are not PlayWorld rankings."
+    },
+    {
+      "name": "L3G-World",
+      "arxiv_id": "2610.40614",
+      "paper_url": "https://arxiv.org/abs/2610.40614",
+      "family": "latent_3d",
+      "mechanism": "Update latent 3D Gaussians and render directly into diffusion latent space.",
+      "applicability": "Static scene focus. Official repository release checklist remains pending for inference code and checkpoints at review time."
+    },
+    {
+      "name": "AgiWorld",
+      "arxiv_id": "2611.02341",
+      "paper_url": "https://arxiv.org/abs/2611.02341",
+      "family": "agent_and_geometry",
+      "mechanism": "Share spatial memory between a world-building agent and the generator; retrieve visible surfaces and prefer reliable earlier geometry.",
+      "applicability": "Submitted 2 Nov 2026; official project says Code soon. Reported benchmark advantage is not a PlayWorld score."
+    },
+    {
+      "name": "PlayWorld",
+      "arxiv_id": "2608.13552",
+      "paper_url": "https://arxiv.org/abs/2608.13552",
+      "family": "benchmark",
+      "mechanism": "Evaluate player-driven geometry, interaction and visible/hidden evolution.",
+      "applicability": "Published table: Genie 3 2.12, LingBot-World2 1.82, Matrix-Game-3.0 1.14. Our Claude score is not directly comparable."
+    },
+    {
+      "name": "MemoBench",
+      "arxiv_id": "2606.27537",
+      "paper_url": "https://arxiv.org/abs/2606.27537",
+      "family": "benchmark",
+      "mechanism": "Test processes that continue while their target leaves view.",
+      "applicability": "Separate successful camera departure/return from semantic dynamic memory."
+    },
+    {
+      "name": "WorldMemBench",
+      "arxiv_id": "2610.19063",
+      "paper_url": "https://arxiv.org/abs/2610.19063",
+      "family": "benchmark",
+      "mechanism": "Test static and dynamic memory across repeated camera departures and returns.",
+      "applicability": "Table 2: HY-WorldPlay leads static metrics; LingBot-World v1 leads dynamic memory. Different capabilities have different leaders."
+    },
+    {
+      "name": "WorldProbe",
+      "arxiv_id": "2610.39721",
+      "paper_url": "https://arxiv.org/abs/2610.39721",
+      "family": "benchmark",
+      "mechanism": "Use closed-loop agent exploration and realized reconstructed poses over long rollouts.",
+      "applicability": "Useful diagnostics up to 180 seconds; local visual stability does not establish long-range memory."
+    }
+  ],
+  "checked_release_sources": {
+    "DeCoPrune": "https://github.com/DeCoPrune/CMBench",
+    "DeCoPrune_checkpoint_config": "https://raw.githubusercontent.com/DeCoPrune/CMBench/main/configs/decoprune.json",
+    "WorldKV": "https://github.com/cvlab-kaist/WorldKV",
+    "Lyra-2": "https://github.com/nv-tlabs/lyra/blob/main/Lyra-2/README.md",
+    "L3G-World": "https://github.com/cvlab-kaist/L3G-World",
+    "AgiWorld": "https://bshfang.github.io/agiworld/",
+    "World-T3": "https://adreamwu.github.io/World-T3/",
+    "Hy-Nomas": "https://github.com/tencent-hunyuan/hy-nomas",
+    "WorldTrace": "https://research.nvidia.com/labs/sil/projects/WorldTrace/"
+  }
+}
