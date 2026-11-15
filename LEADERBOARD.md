@@ -121,10 +121,12 @@ The60-update real-data fit passed frozen-base and checkpoint-reload checks, but 
 
 All342 generation records are verified complete. Judging resumes from preserved video-hash-verified reports after the original scorer lost credentials. Overall scores remain pending until all171 cases in each arm are scored.
 
-| Arm | Generated | Judged | Overall |
-|---|---:|---:|---:|
-| stock |171/171|164/171|pending|
-| budget |171/171|170/171|pending|
+| Arm | Generated | Judged | Overall | Possible overall range |
+|---|---:|---:|---:|---:|
+| stock |171/171|170/171|pending|1.7649–1.7982|
+| budget |171/171|170/171|pending|1.7133–1.7467|
+
+Neither arm can exceed the numerical2.12 target even if every pending judgment is5. Bounds allow each ungraded case any score1–5; they are not official means or confidence intervals.
 
 [Generation plan, completion records and judgments](reproduction/full1-recovered-judging/README.md). Uses the integrated checkpoint, streamed Haiku player and Gemini preview alias; hosted-service equivalence is not established. The released rubric admits partial returns, so an overall score alone does not prove revisit memory.
 

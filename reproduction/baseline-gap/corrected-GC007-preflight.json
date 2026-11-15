@@ -1,0 +1,109 @@
+{
+  "profile": "lingbot-local-released-objective-reference-transfer-v1",
+  "task_id": "GC007",
+  "split": "gc",
+  "seed": 42,
+  "world_text": "Walk forward to the Primemall entrance, then turn around and walk back to the starting point, and turn to look in the original direction.",
+  "world_text_source": "task.prompt exactly; no static-caption substitution",
+  "simulation_chunks": 60,
+  "max_haiku_requests": 40,
+  "controller": {
+    "profile": "released-hy-reference-guided-transfer-v2",
+    "model": "claude-haiku-4-5-20251001",
+    "released_source_sha256": "d7a90541a19c27cf4c7ed298510fb1585974c85bdd90ea39547150093b287291",
+    "released_function_sha256": {
+      "extract_chat_text": "bbbd952ef1f7f29114ddba22852ec47b26d320e704f708a11624dbbd00a9d7d8",
+      "extract_json_object": "de8634b2568cd9af5c79675560b17bc9c217694438d4ac9c20142524ba485d9e",
+      "claude_viewer_screenshot": "7c888cfcbba52e18be17c4028c50452566e41d6aa2c875612d94364d75849726",
+      "request_claude_hold_decision": "63bdb91f6e06f7d147de553cb0c80e828d1572c1f643e33d7a9ccb33a6194e35",
+      "parse_actions": "d1b23517a023cd7aeec38e8a7b8c23a3afc99802b5d96797900b184ab19bf9c6"
+    },
+    "exact_paper_lingbot_controller": false,
+    "reference_guided": true,
+    "scheduler_policy": {
+      "reference_priority": "released parse_actions: action field before action_sequence_steps",
+      "action_unit_seconds": 1.5,
+      "arrow_padding_ms": 1500,
+      "minimum_hold_ms": 1000,
+      "minimum_release_ms": 1000,
+      "maximum_checks_per_hold": 3,
+      "minimum_check_spacing_ms": 1500,
+      "maximum_extension_per_check_ms": 5000,
+      "maximum_total_extension_ms": 10000,
+      "maximum_unique_post_hold_arrow_corrections": 2,
+      "correction_hold_ms": 1000,
+      "live_checks_on_rotation_holds": false
+    },
+    "remaining_differences": [
+      "No public LingBot player exists; this transfers HY-specific reference-guided behavior, not verified paper LingBot behavior.",
+      "Native generation pauses during SDK calls; released browser controls remain held while the request runs.",
+      "Durations use generated time (first chunk812.5ms, later1000ms), rounded at chunk boundaries instead of browser wall time.",
+      "First live check observes the first generated chunk instead of starting immediately after browser keydown.",
+      "Released HY action-field priority,1.5s action units and1.5s arrow padding differ from derived action_sequence_steps and cannot be assumed to match hosted LingBot timing.",
+      "Released prompt uses the latest screenshot only, not an initial/current image pair or arbitrary history.",
+      "Decoded native frames replace browser screenshots; the released JPEG65 then640x360/JPEG45 preprocessing is retained.",
+      "Anthropic SDK replaces the released OpenAI-compatible HTTP proxy; malformed/API failures abort instead of silently continuing.",
+      "Raw response schema and served snapshot are now checked before the permissive released parser; this is intentional fail-closed hardening.",
+      "Neutral observation tail ends at the native chunk budget, not HY's natural60s world endpoint; END does not assert visual success.",
+      "A40interaction paper limit is not verified equivalent to40one-second native chunks; some released HY reference plans exceed this chunk budget.",
+      "Only native camera controls are supported; avatar interactions and simultaneous keys are rejected, not synthesized."
+    ]
+  },
+  "stock_cache": {
+    "frames": 18,
+    "sink": 6
+  },
+  "backbone_modified": false,
+  "training": false,
+  "streamed_legacy_player": false,
+  "exact_published_baseline_reproduced": false,
+  "judge": {
+    "requested_model": "gemini-3.1-pro",
+    "transport": "released Gemini API client",
+    "silent_alias_fallback": false
+  },
+  "native_capability": "Camera rays only; no trained avatar-action channel is invented.",
+  "remaining_differences": [
+    "Hosted service intentionally excluded.",
+    "Paper LingBot-specific controller/native keyboard timing is not released; HY reference behavior is transferred explicitly.",
+    "Native frame-time chunk quantization and paused API calls differ from browser wall-clock control.",
+    "40Haiku requests is an explicit local budget definition, not verified paper LingBot interaction counting.",
+    "Exact judge alias currently404 with configured released client; preview scores remain qualified."
+  ],
+  "status": "blocked_controller_integration",
+  "reference_actions": [
+    {
+      "type": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "duration_ms": 24000,
+      "base_duration_ms": 24000,
+      "rotation_extra_ms": 0,
+      "raw": "w*16",
+      "index": 0,
+      "source": "action_field_1_5s_unit_with_fixed_rotation_extra"
+    },
+    {
+      "type": "hold",
+      "keys": [
+        "KeyS"
+      ],
+      "duration_ms": 24000,
+      "base_duration_ms": 24000,
+      "rotation_extra_ms": 0,
+      "raw": "s*16",
+      "index": 1,
+      "source": "action_field_1_5s_unit_with_fixed_rotation_extra"
+    }
+  ],
+  "generation_blocker": "Controller timing audit failed: legacy HY scheduling is still wired into this profile. Canonical native timeline, observation encoding, and raw-report provenance require integration tests.",
+  "source_sha256": {
+    "worldsync/lingbot_released_baseline.py": "ec83f2916fee15b6190007924f4e2e998886aa3097348a245332179231d193ee",
+    "worldsync/released_reference_player.py": "1f5b59c6d9f872363136f327756632410304150b8b92b4b2b64a53722bf413ff",
+    "worldsync/lingbot_rollout.py": "10c9d34354950789e4072a9db2fee12c1176eb6843639cff50119240ed0c1c61",
+    "worldsync/lingbot_controls.py": "ef2d9f0c0ba25440964f19c3047108469016a48bfb40c04cc3777a0ade8eba63",
+    "external/PlayWorld/Agent_player/hyworld2/player.py": "d7a90541a19c27cf4c7ed298510fb1585974c85bdd90ea39547150093b287291",
+    "external/PlayWorld/data/gc/data.json": "8ccc32df18bfb4e54a113a0b2793e418c98fb63cc8b2778f9ee4f9c1e37a3d64"
+  }
+}

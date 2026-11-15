@@ -1,0 +1,404 @@
+{
+  "task_id": "OE069",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "judge_project": "servo-tpu-20260901",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "cfb91e9e1812bf3ccbded38fe7dfa86a1aa82e7f75ae4611a234032a1e7bc5c9",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE069",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头向左平移约180度，直到看向自动扶梯上方，随后向右平移，最终回到最初向下看自动扶梯的视角。",
+    "trajectory_evidence_zh": "第0-25帧显示镜头向左平移，直到视线转到相反方向（看向扶梯上方）；第26-68帧显示镜头向右平移，并最终回到了初始的向前（向下）的视角。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 4.25,
+    "final_score_1_to_5": 4,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "当镜头向后看时（如第18帧和第45帧），画面中出现了一对与主角高度相似的母女（背红书包的女士和戴红帽子的女孩）的复制伪影。不过当镜头转回前方时，原主角的身份和外观保持一致。"
+      },
+      "hidden_state_progression": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "在镜头移开期间，自动扶梯继续向下运行，当镜头转回时，母女两人已经随着扶梯向下移动了很长一段距离，体现了隐藏状态的合理推进。"
+      },
+      "revealed_state_difference": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "镜头转回后，母女两人明显处于扶梯更下方的位置，距离初始位置更远。"
+      },
+      "process_accumulation": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "母女两人的位置下降是由扶梯连续向下的运动产生的，她们稳稳地站在移动的台阶上，没有出现漂浮或瞬间移动的情况。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "无静止尾段，视频结束时扶梯仍在运行。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 63,
+      "evidence_zh": "镜头在第63帧左右成功转回了初始的向下扶梯视角。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头旋转期间，扶梯两侧的墙壁、海报和天花板灯带结构保持连贯。",
+      "post_completion_phase_zh": "镜头转回后，通道的背景结构与初始状态一致。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "初始视角的母女与镜头转回后的母女",
+        "anchors": [
+          "自动扶梯的台阶",
+          "两侧墙壁的结构"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-35",
+        "36-68"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "扶梯两侧的墙壁",
+        "天花板的灯带"
+      ],
+      "newly_revealed_regions_zh": "镜头向左旋转时展示了左侧墙壁、后方向上运行的扶梯视角以及右侧墙壁。",
+      "evidence_zh": "画面变化完全由镜头的水平旋转引起，空间结构保持连贯。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频通过连续的镜头旋转过渡，没有发生硬切或场景重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作完成后无多余的错误或违规行为。"
+    },
+    "final_state_check": {
+      "window": "60-68",
+      "visible_key_objects": [
+        "mother in a dark coat with an orange backpack",
+        "young girl in a brown coat and red knit hat",
+        "escalator steps and handrails",
+        "orange-and-black wall posters"
+      ],
+      "reappearance_consistency_zh": "镜头转回后，原主角（背橙色书包的母亲和戴红帽子的女孩）一致地重新出现，且位置合理下降。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 5,
+      "named_process": "母女两人乘坐自动扶梯向下移动的过程",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "第0-5帧，母女两人在镜头前方不远处的扶梯上向下移动。",
+      "hidden_interval_zh": "第10-55帧，镜头转向两侧和后方，扶梯在视野外继续运行。",
+      "reappeared_state_zh": "第60-68帧，镜头转回前方，母女两人已经移动到扶梯更下方的位置。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "视频结束时扶梯仍在运行，母女两人继续向下移动，没有出现不合理的静止。",
+      "terminal_state_reasoning_zh": "过程在视频结束时仍在自然进行，无冻结现象。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无静止尾段。",
+      "camera_independent_subject_motion": "yes",
+      "stable_world_anchors_compared": [
+        "自动扶梯的台阶",
+        "两侧墙壁上的海报"
+      ],
+      "articulation_or_local_state_change_zh": "母女两人相对于扶梯两侧海报和整体通道的位置发生了显著变化。",
+      "uniquely_matched_anchor_relative_change_zh": "镜头转回后，母女两人距离初始位置的台阶和两侧特定的海报更远，接近扶梯底部。",
+      "two_independent_motion_evidence_requirements_met": "yes",
+      "expected_world_motion_direction_zh": "沿着自动扶梯向下移动。",
+      "returned_motion_direction_consistent": "yes",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "no",
+      "subject_relative_change_zh": "母女两人在扶梯上的绝对位置下降，周围的参照物（海报、台阶）也随之改变。",
+      "unchanged_coupled_details_zh": "无复制粘贴的冻结迹象。",
+      "accumulated_change_zh": "在镜头移开期间，母女两人随着扶梯向下移动了显著的距离。",
+      "evidence_zh": "视频完整展示了镜头旋转以及扶梯持续向下运行带来的位置变化，演变过程自然且符合物理规律。",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向左旋转了约270度，随后向右旋转回到了初始的向前视角。",
+      "trajectory_evidence_zh": "第0-35帧镜头持续向左旋转，经过左侧墙壁、后方和右侧墙壁；第36-68帧镜头向右旋转，原路返回至初始的向下扶梯视角。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "镜头完成了大幅度的旋转并返回，扶梯也在持续运行。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "母女两人",
+      "same_entity_throughout": "partial",
+      "stable_identity_attributes": [
+        "clothing",
+        "colors"
+      ],
+      "identity_failure": "duplication",
+      "evidence_zh": "镜头向后看时生成了一对高度相似的复制人物，但镜头转回前方时原主角的身份保持一致。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 5,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": null,
+      "evidence_zh": "演变过程质量高，身份一致性正常计入评分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 5,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 5
+    },
+    "summary_zh": "视频成功展示了镜头旋转及扶梯持续向下的演变过程，但在镜头向后看时出现了主角的复制伪影，导致身份一致性得分降低。",
+    "task_id": "OE069"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "QIb5arTBJbSr4_UP6bz2-Ac",
+      "prompt_tokens": 5918,
+      "output_tokens": 223
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "YYb5ao69CpmX4_UPz8Lc-Q4",
+      "prompt_tokens": 31651,
+      "output_tokens": 3514
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 69,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 68,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 6.8,
+          "filled_cells": 19
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 4,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "7ab403056df88331f7bcb928cbd2f50fd72c858ddae2cddd0b8fc30d65cb0c37",
+  "score_prompt_sha256": "2f52269d5a3fcb02110a853b5232129f03eb9f34de9c3c21c61b357e4b7ff770",
+  "scores": {
+    "official": 4.0,
+    "final_score": 4.0
+  },
+  "episode_id": "stock-outsight-OE069-seed42"
+}

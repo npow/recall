@@ -1,0 +1,403 @@
+{
+  "task_id": "OE058",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "judge_project": "servo-tpu-20260901",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "8ad08d96e804eeb215f40946dc9f00f19b09e6788361d70986dfd52950415fd8",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE058",
+    "perspective": "first-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "partial",
+    "revisit_required": "yes",
+    "revisit_observed": "no",
+    "observed_action_zh": "镜头在整个视频中持续向右旋转（平移），没有执行向左转回的动作。",
+    "trajectory_evidence_zh": "从第0帧到第68帧，画面中的物体（如案板、圣诞树、碗、手、水龙头等）持续向左移动，表明镜头一直在向右旋转。在视频的后半段（约第36帧之后），镜头并没有按照指令向左转回，而是继续向右旋转，不断展现右侧的新场景。",
+    "failure_reason_zh": "镜头只执行了向右旋转的动作，完全没有执行向左转回原视角的动作，轨迹未完成。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1.0,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "视频未能保持任何主体的一致性。在镜头移动过程中，场景发生了严重的变形和硬重置，原本的装饰者双手和裱花袋消失，背景变成了完全不同的厨房，桌面上凭空出现了金属压粉器。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "由于场景发生了硬重置，原本的饼干和装饰过程完全丢失，没有任何合理的隐藏状态进展。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头从未真正返回到原始视角，而是幻觉出了一个全新的厨房场景，因此无法展示任何合理的返回状态差异。"
+      },
+      "process_accumulation": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "糖霜装饰过程被场景的硬重置完全打断，未能展示任何连贯的积累过程。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "The video is not static, but it fails due to severe hallucinations and hard resets. No static tail penalty is needed as the base scores are already 1.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "镜头向右平移后，未能连贯地返回原始视角，而是发生了场景重置。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景在帧51到53之间发生了硬重置，从纯白墙壁突变为带有水槽和瓷砖的厨房背景。",
+      "post_completion_phase_zh": "不适用，动作未完成。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial decorating scene vs final kitchen scene",
+        "anchors": [
+          "wooden board",
+          "table surface"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-35",
+        "36-51",
+        "51-53",
+        "53-68"
+      ],
+      "continuous_camera_motion": "no",
+      "tracked_structural_anchors": [
+        "wooden board",
+        "table edge"
+      ],
+      "newly_revealed_regions_zh": "帧53之后出现的带有水槽和瓷砖的厨房背景以及金属压粉器是全新幻觉出的区域，取代了原本的场景。",
+      "evidence_zh": "镜头的移动伴随着严重的场景变形和硬重置，无法用连续的摄像机运动来解释。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "51-53",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "wooden board",
+        "background wall"
+      ],
+      "evidence_zh": "在帧51中，背景是纯白墙壁，双手正在装饰饼干；到帧53时，双手消失，背景突变为带有水槽和瓷砖的厨房，桌面上凭空出现了一个金属压粉器，这完全违背了物理空间逻辑。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作未完成，基础分数已为最低。"
+    },
+    "final_state_check": {
+      "window": "64-68",
+      "visible_key_objects": [
+        "wooden board"
+      ],
+      "reappearance_consistency_zh": "原始视角从未恢复。最终场景是一个幻觉出的厨房，包含一个金属压粉器，原本的装饰者双手、裱花袋和目标饼干均已消失。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "decorating Christmas tree-shaped cookies with white icing",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "一个人在木板上用白色裱花袋装饰圣诞树形状的饼干。",
+      "hidden_interval_zh": "镜头向右平移，展示桌子上的其他物品。",
+      "reappeared_state_zh": "场景发生硬重置，变成了一个带有水槽的厨房，桌面上出现了一个金属压粉器，原始视角未恢复。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "不适用。",
+      "terminal_state_reasoning_zh": "不适用。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "不适用。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "wooden board",
+        "table surface"
+      ],
+      "articulation_or_local_state_change_zh": "无，主体在场景重置中消失。",
+      "uniquely_matched_anchor_relative_change_zh": "无。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "不适用。",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "不适用。",
+      "vehicle_front_rear_identification_zh": "不适用。",
+      "vehicle_world_displacement_vs_heading_zh": "不适用。",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "无。",
+      "unchanged_coupled_details_zh": "无。",
+      "accumulated_change_zh": "无，装饰过程被场景的硬重置完全破坏。",
+      "evidence_zh": "视频未能保持空间和物体的一致性。场景发生了严重的硬重置，幻觉出了完全不同的厨房环境和物体，导致没有任何连贯的演变。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "fail",
+      "instruction_following_score": 0,
+      "meaningful_requested_trajectory_progress": "no",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "no",
+      "observed_action_zh": "镜头向右平移，随后场景发生变形和重置，镜头向左平移进入一个全新幻觉出的环境中。",
+      "trajectory_evidence_zh": "镜头虽然有左右平移的动作，但伴随着严重的场景重置，未能连贯地执行180度旋转并返回原始视角的指令。",
+      "failure_reason_zh": "镜头运动伴随严重的场景变形和硬重置，未能返回原始视角。"
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "yes",
+      "action_type": "drawing",
+      "tool_and_target": "white piping bag and Christmas tree-shaped cookie",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "outcome",
+      "result_matches_named_requirement": "no",
+      "result_later_disappears_or_resets": "yes",
+      "visible_reversal_explanation": "none",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "装饰过程被场景的硬重置完全打断，原本的饼干和裱花袋消失，未能产生任何持久的、连贯的装饰结果。"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "decorator's hands and piping bag",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [],
+      "identity_failure": "replacement",
+      "evidence_zh": "在场景重置后，原本的双手和裱花袋完全消失，被替换为一只去抓取金属压粉器的手。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于缺乏有意义的演变且发生了严重的硬重置，主体一致性得分被限制在最低水平。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频完全未能保持空间和物体的一致性，在镜头移动过程中发生了严重的场景变形和硬重置，将原本的装饰场景替换为了幻觉出的厨房环境，导致没有任何连贯的演变或返回原始视角。",
+    "task_id": "OE058"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "6oX5asezIOOb4_UP_InpMQ",
+      "prompt_tokens": 5918,
+      "output_tokens": 260
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "CIb5asO-I8eM998Pqta98AM",
+      "prompt_tokens": 31626,
+      "output_tokens": 3468
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 69,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 68,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 6.8,
+          "filled_cells": 19
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 4,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "6309c8ea93f221f4197fd71046099e0ddf9412e5338bccce8ec289472fed18f5",
+  "score_prompt_sha256": "237cab9854777d51e66971c26fcb29b89e2637cf6b96d1bb780933cf2dc35440",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "stock-outsight-OE058-seed42"
+}

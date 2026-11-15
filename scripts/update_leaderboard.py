@@ -52,12 +52,16 @@ def extra_sections():
     if recovered:
         lines.extend(["", "## Full171 stock versus budget run", "",
             "All342 generation records are verified complete. Judging resumes from preserved video-hash-verified reports after the original scorer lost credentials. Overall scores remain pending until all171 cases in each arm are scored.", "",
-            "| Arm | Generated | Judged | Overall |", "|---|---:|---:|---:|"])
+            "| Arm | Generated | Judged | Overall | Possible overall range |", "|---|---:|---:|---:|---:|"])
         for arm, result in recovered["arms"].items():
             count = sum(d["scored"] for d in result["dimensions"].values())
             overall = result["overall_equal_dimension_mean"]
             value = f"{overall:.4f}" if overall is not None else "pending"
-            lines.append(f"| {arm} |171/171|{count}/171|{value}|")
+            bounds = result.get("possible_overall_range")
+            interval = f"{bounds[0]:.4f}–{bounds[1]:.4f}" if bounds else "pending"
+            lines.append(f"| {arm} |171/171|{count}/171|{value}|{interval}|")
+        if recovered.get("any_arm_could_exceed_target_with_pending_scores") is False:
+            lines.extend(["", "Neither arm can exceed the numerical2.12 target even if every pending judgment is5. Bounds allow each ungraded case any score1–5; they are not official means or confidence intervals."])
         lines.extend(["", "[Generation plan, completion records and judgments](reproduction/full1-recovered-judging/README.md). Uses the integrated checkpoint, streamed Haiku player and Gemini preview alias; hosted-service equivalence is not established. The released rubric admits partial returns, so an overall score alone does not prove revisit memory."])
     full_history = read("reproduction/full-history-GC010/gemini-summary.json")
     if full_history:

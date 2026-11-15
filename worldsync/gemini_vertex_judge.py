@@ -21,6 +21,7 @@ import concurrent.futures
 import datetime
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import subprocess
@@ -155,8 +156,11 @@ def metric_task_record(task):
             "perspective": str(task.get("perspective") or "").strip().lower().replace(" ", "-")}
 
 
-def cache_path(cache_dir, video_sha, task_id, mode, model, prompt_sha):
-    key = hashlib.sha256(f"{video_sha}|{task_id}|{mode}|{model}|{prompt_sha}".encode()).hexdigest()[:24]
+def cache_path(cache_dir, video_sha, task_id, mode, model, prompt_sha, request_fingerprint=None):
+    identity = f"{video_sha}|{task_id}|{mode}|{model}|{prompt_sha}"
+    if request_fingerprint is not None:
+        identity += "|v2|" + request_fingerprint
+    key = hashlib.sha256(identity.encode()).hexdigest()[:24]
     return Path(cache_dir) / f"{task_id}-{mode}-{key}.json"
 
 
@@ -170,7 +174,14 @@ def sha256_file(path):
 
 def effective_scores(gate, rubric):
     """Released aggregation for one episode: Fail = 1, GC uses the weighted categories."""
-    if gate is not None and gate.get("verdict") == "fail":
+    if gate is not None and gate.get("verdict") != "not_applicable" and "instruction_following_score" in gate:
+        try:
+            passed = float(gate["instruction_following_score"]) == 1
+        except (TypeError, ValueError):
+            passed = False
+        if not passed:
+            return {"official": 1.0, "final_score": 1.0}
+    elif gate is not None and gate.get("verdict") == "fail":
         return {"official": 1.0, "final_score": 1.0}
     if rubric is None:
         return {"official": None, "final_score": None}
@@ -181,8 +192,25 @@ def effective_scores(gate, rubric):
     return {"official": official, "final_score": float(final) if isinstance(final, (int, float)) else None}
 
 
+def validate_rubric(parsed, task_id):
+    if parsed.get("task_id") not in {None, task_id}:
+        raise ValueError("Rubric returned a different task ID")
+    parsed.setdefault("task_id", task_id)
+    values = [parsed[key] for key in ["score", "final_score_1_to_5"] if key in parsed]
+    categories = parsed.get("categories") or parsed.get("category_scores_1_to_5") or {}
+    if isinstance(categories, dict):
+        values.extend(category["score"] for category in categories.values()
+                      if isinstance(category, dict) and "score" in category)
+    for value in values:
+        if isinstance(value, bool) or not isinstance(value, (int,float)) or not math.isfinite(value) or not 1 <= value <= 5:
+            raise ValueError("Rubric contains a score outside numeric1to5")
+    official = effective_scores(None, parsed)["official"]
+    if official is None or not math.isfinite(official) or not 1 <= official <= 5:
+        raise ValueError("Rubric has no valid released aggregate score")
+
+
 def judge_episode(client, playworld, dataset_task, video, reference_image=None, world_model="LingBot-World-Infinity",
-                  model=DEFAULT_MODEL, cache_dir=None, dry_run=False, mode="both", retries=5):
+                  model=DEFAULT_MODEL, cache_dir=None, dry_run=False, mode="both", retries=5, transport="vertex"):
     released_score, rubric_module, gate_module, sampling = load_playworld(playworld)
     from google.genai import types
 
@@ -192,10 +220,14 @@ def judge_episode(client, playworld, dataset_task, video, reference_image=None, 
             "view": metric_task.get("perspective"), "caption": dataset_task.get("image_caption"), "status": "generated"}
     video = Path(video)
     video_sha = sha256_file(video)
-    result = {"task_id": dataset_task["task_id"], "judge_provider": "google-vertex", "judge_model": model,
+    from worldsync.judge_integrity import request_identity, validate_gate
+    identity = request_identity(playworld, dataset_task, video, reference_image, world_model, model, transport)
+    result = {"task_id": dataset_task["task_id"], "request_identity": identity,
+              "request_fingerprint": identity["fingerprint"],
+              "world_model": world_model, "judge_provider": "google-vertex" if transport == "vertex" else "google-api", "judge_model": model,
               "judge_project": getattr(getattr(client, "_api_client", None), "project", None),
-              "endpoint": "vertex-ai-global", "video_sha256": video_sha, "dry_run": dry_run,
-              "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+              "endpoint": "vertex-ai-global" if transport == "vertex" else "released-gemini-api", "video_sha256": video_sha, "dry_run": dry_run,
+              "protocol_warning": ("Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; " if transport == "vertex" else "Released API transport requested; availability and served model must be checked. ") + "Controller, adapter and checkpoint also differ.",
               "gate": None, "rubric": None, "calls": []}
     with tempfile.TemporaryDirectory(prefix="worldsync-gemini-") as directory:
         artifacts = sampling.generate_dual_sampling(video, Path(directory))
@@ -216,10 +248,13 @@ def judge_episode(client, playworld, dataset_task, video, reference_image=None, 
                 reference = Path(reference_image) if reference_image else None
             prompt_sha = hashlib.sha256(prompt.encode()).hexdigest()
             result[f"{step}_prompt_sha256"] = prompt_sha
-            cached = cache_path(cache_dir, video_sha, dataset_task["task_id"], step, model, prompt_sha) if cache_dir else None
+            cached = cache_path(cache_dir, video_sha, dataset_task["task_id"], step, model, prompt_sha, identity["fingerprint"]) if cache_dir else None
             if cached and cached.is_file():
-                parsed = unwrap_json_object(json.loads(cached.read_text()))
-                result["calls"].append({"mode": step, "cached": True})
+                envelope = json.loads(cached.read_text())
+                if envelope.get("request_fingerprint") != identity["fingerprint"]:
+                    raise ValueError("Judge cache belongs to different inputs")
+                parsed = unwrap_json_object(envelope["response"])
+                result["calls"].append({**envelope.get("provenance", {}), "mode": step, "cached": True})
             elif dry_run:
                 continue
             else:
@@ -228,6 +263,10 @@ def judge_episode(client, playworld, dataset_task, video, reference_image=None, 
                     client, model, types.Content(role="user", parts=parts),
                     types.GenerateContentConfig(response_mime_type="application/json", temperature=0.1), retries=retries)
                 parsed = unwrap_json_object(released_score.json_from_response(response_text(response)))
+                if step == "gate":
+                    validate_gate(parsed, metric_task["task_id"])
+                else:
+                    validate_rubric(parsed, metric_task["task_id"])
                 usage = getattr(response, "usage_metadata", None)
                 result["calls"].append({"mode": step, "cached": False,
                                         "served_model_version": getattr(response, "model_version", None),
@@ -236,13 +275,13 @@ def judge_episode(client, playworld, dataset_task, video, reference_image=None, 
                                         "output_tokens": getattr(usage, "candidates_token_count", None)})
                 if cached:
                     cached.parent.mkdir(parents=True, exist_ok=True)
-                    cached.write_text(json.dumps(parsed, ensure_ascii=False, indent=2))
+                    from worldsync.judge_integrity import atomic_json
+                    atomic_json(cached, {"request_fingerprint": identity["fingerprint"], "response": parsed, "provenance": result["calls"][-1]})
             if step == "gate":
-                if parsed.get("verdict") not in {"pass", "partial", "fail", "not_applicable"}:
-                    raise ValueError("judge returned an invalid trajectory verdict")
+                validate_gate(parsed, metric_task["task_id"])
                 result["gate"] = parsed
             else:
-                parsed.setdefault("task_id", dataset_task["task_id"])
+                validate_rubric(parsed, metric_task["task_id"])
                 result["rubric"] = parsed
     if not dry_run:
         result["scores"] = effective_scores(result["gate"], result["rubric"])
@@ -258,33 +297,63 @@ def load_dataset_task(playworld, split, task_id):
 
 
 def run_manifest(manifest, output_dir, playworld=DEFAULT_PLAYWORLD, model=DEFAULT_MODEL, workers=3, dry_run=False,
-                 project=None, location=DEFAULT_LOCATION, prefer="gcloud", limit=None):
+                 project=None, location=DEFAULT_LOCATION, prefer="gcloud", limit=None, transport="vertex"):
     """Manifest: jsonl of {episode_id, split, task_id, video, reference_image?, world_model?}."""
     rows = [json.loads(line) for line in Path(manifest).read_text().splitlines() if line.strip()]
     rows = rows[:limit] if limit else rows
+    identifiers = [row["episode_id"] for row in rows]
+    if len(identifiers) != len(set(identifiers)):
+        raise ValueError("Judge manifest contains duplicate episode IDs")
     output_dir = Path(output_dir)
     (output_dir / "episodes").mkdir(parents=True, exist_ok=True)
-    client = None if dry_run else create_vertex_client(project, location, prefer=prefer)
+    if transport not in {"vertex", "released"}:
+        raise ValueError("Unknown judge transport")
+    if dry_run:
+        client = None
+    elif transport == "released":
+        load_playworld(playworld)
+        from metrics.gemini_client import create_gemini_client
+        client = create_gemini_client()
+    else:
+        client = create_vertex_client(project, location, prefer=prefer)
     lock = threading.Lock()
     summary = []
 
     def work(row):
         target = output_dir / "episodes" / f"{row['episode_id']}.json"
-        if target.is_file() and not dry_run:
-            previous = json.loads(target.read_text())
-            if not previous.get("error"):  # errored episodes are retried; completed calls stay cached
-                return previous
-        task = load_dataset_task(playworld, row["split"], row["task_id"])
+        from worldsync.judge_integrity import atomic_json
+        previous = None
         try:
+            # Preserve the prior evidence even if the new input file is missing.
+            if target.is_file() and not dry_run:
+                raw = target.read_bytes()
+                archive = output_dir / "previous-reports" / row["episode_id"] / (hashlib.sha256(raw).hexdigest() + ".json")
+                if not archive.exists():
+                    archive.parent.mkdir(parents=True, exist_ok=True)
+                    archive.write_bytes(raw)
+                previous = json.loads(raw)
+            task = load_dataset_task(playworld, row["split"], row["task_id"])
+            from worldsync.judge_integrity import request_identity
+            identity = request_identity(playworld, task, row["video"], row.get("reference_image"),
+                                        row.get("world_model", "LingBot-World-Infinity"), model, transport)
+            if previous is not None:
+                score = (previous.get("scores") or {}).get("official")
+                if (not previous.get("error") and previous.get("request_fingerprint") == identity["fingerprint"]
+                        and previous.get("episode_id") == row["episode_id"]
+                        and previous.get("task_id") == row["task_id"]
+                        and isinstance(score, (int,float)) and not isinstance(score,bool)
+                        and math.isfinite(score) and 1 <= score <= 5):
+                    return previous
             result = judge_episode(client, playworld, task, row["video"], row.get("reference_image"),
                                    row.get("world_model", "LingBot-World-Infinity"), model,
-                                   cache_dir=output_dir / "cache", dry_run=dry_run)
-        except Exception as error:  # record and continue; the batch is resumable
+                                   cache_dir=output_dir / "cache", dry_run=dry_run, transport=transport)
+        except Exception as error:  # Input and judge failures both remain in the declared matrix.
             result = {"task_id": row["task_id"], "error": f"{type(error).__name__}: {str(error)[:300]}"}
         result["episode_id"] = row["episode_id"]
         if not dry_run:
+            from worldsync.judge_integrity import atomic_json
             with lock:
-                target.write_text(json.dumps(result, ensure_ascii=False, indent=2))
+                atomic_json(target, result)
         return result
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=max(1, workers)) as pool:
@@ -303,6 +372,7 @@ def main():
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--playworld", type=Path, default=DEFAULT_PLAYWORLD)
     parser.add_argument("--model", default=os.environ.get("GEMINI_MODEL", DEFAULT_MODEL))
+    parser.add_argument("--transport", choices=["vertex","released"], default="vertex")
     parser.add_argument("--project")
     parser.add_argument("--location", default=DEFAULT_LOCATION)
     parser.add_argument("--credentials", choices=["gcloud", "adc"], default="gcloud")
@@ -311,7 +381,7 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="Sample video and build prompts; no API call")
     args = parser.parse_args()
     run_manifest(args.manifest, args.output_dir, args.playworld, args.model, args.workers, args.dry_run,
-                 args.project, args.location, args.credentials, args.limit)
+                 args.project, args.location, args.credentials, args.limit, args.transport)
 
 
 if __name__ == "__main__":

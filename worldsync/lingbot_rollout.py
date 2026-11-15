@@ -30,7 +30,7 @@ def build_pipeline(upstream, configs, pack, knobs):
         local_attn_size=knobs["local_attn_size"], sink_size=knobs["sink_size"], infer_mode="causal_fast", convert_model_dtype=True)
 
 
-def main(argv=None, runtime=None):
+def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=None):
     """Run one rollout. `runtime` (worldsync/lingbot_runtime.py) may supply a warm pipeline; returns the report."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-root", type=Path, default=ROOT / "external/PlayWorld/data")
@@ -79,6 +79,10 @@ def main(argv=None, runtime=None):
     parser.add_argument("--dry-run", action="store_true")
     lingbot_tuning.add_arguments(parser)
     args = parser.parse_args(argv)
+    if simulation_chunk_budget is not None and (player_decide is None or type(simulation_chunk_budget) is not int or not 1 <= simulation_chunk_budget <= 60):
+        parser.error("An explicit simulation budget requires a supplied player and1..60chunks")
+    if player_decide is not None and args.stream_player_actions:
+        parser.error("A supplied player callback cannot use the legacy streamed controller")
     if args.lora and not (args.controlled_ablation and args.native_fixed_controls and args.fixed_actions):
         parser.error("--lora changes the model; allowed only on fixed native-camera diagnostics with --controlled-ablation")
     if args.lora and not args.lora.is_file():
@@ -142,7 +146,7 @@ def main(argv=None, runtime=None):
         parser.error("task not found")
     initial = (args.data_root / task["image_path"]).resolve()
     stationary = args.split == "insight"
-    maximum = min(args.max_chunks, 60 if stationary else 40)
+    maximum = min(args.max_chunks, simulation_chunk_budget if simulation_chunk_budget is not None else (60 if stationary else 40))
     frames = maximum * 16 - 3
     report = {"status": "prepared", "model": "LingBot-World2 14B causal-fast stock", "protocol_id": lingbot_adaptive_pilot.PROTOCOL if args.adaptive_retrieval_pilot else PROTOCOL_ID,
         "source_revision": revision, "checkpoint_revision": WEIGHT_REVISION,
@@ -166,7 +170,7 @@ def main(argv=None, runtime=None):
         "controlled_ablation": args.controlled_ablation,
         "sampler_timesteps_index": schedule["timesteps_index"], "sample_shift": schedule["shift"],
         "actions": [], "chunks": [], "published_score_reproduced": False,
-        "agent_interactions": 0,
+        "agent_interactions": 0, "simulation_chunk_budget_override": simulation_chunk_budget,
         "adapter_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "controls_sha256": hashlib.sha256((Path(__file__).parent / "lingbot_controls.py").read_bytes()).hexdigest(),
         "player_sha256": hashlib.sha256((Path(__file__).parent / "reference_player.py").read_bytes()).hexdigest(),
@@ -201,6 +205,8 @@ def main(argv=None, runtime=None):
     from einops import rearrange
     from worldsync.lingbot_vae import NativeVaeStream
     from worldsync.reference_player import decide
+    if player_decide is not None:
+        decide = player_decide
     if str(source) not in sys.path:
         sys.path.insert(0, str(source))
     from wan.configs import WAN_CONFIGS
@@ -290,7 +296,7 @@ def main(argv=None, runtime=None):
             index = int(kwargs["current_start"]) // (4 * int(kwargs["frame_seqlen"]))
             if index == current_chunk:
                 return
-            if index >= maximum or (not stationary and index >= 40):
+            if index >= maximum or (simulation_chunk_budget is None and not stationary and index >= 40):
                 report["termination"] = "budget_exhausted"
                 raise RolloutComplete
             if index == 0 and args.offload_text_encoder:
@@ -317,7 +323,10 @@ def main(argv=None, runtime=None):
                     decision, metadata = pending_player.action()
                 else:
                     decision, metadata = decide(client, task, initial, latest, history, commanded_state=commanded)
-                report["agent_interactions"] += 1
+                increment = metadata.get("agent_interaction_increment", 1)
+                if type(increment) is not int or not 0 <= increment <= 1:
+                    raise ValueError("Player must report zero or one interaction per callback")
+                report["agent_interactions"] += increment
             report["actions"].append({**decision, **metadata, "pose_before": camera.commanded_state(),
                                       "elapsed_s": time.monotonic() - started})
             save()
