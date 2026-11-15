@@ -120,7 +120,9 @@ def drain_loop(next_job, run_job, is_done, record, max_attempts=3, max_episodes=
             run = result.get("run") or {}
             record("progress", job, {"status": "completed", "seconds": seconds, "attempts": attempts,
                                       "result_directory": result.get("result_directory"), "finished_at": now(),
-                                      "generated_seconds": run.get("generated_seconds"), "termination": run.get("termination"),
+                                      "generated_seconds": result.get("generated_seconds", run.get("generated_seconds")),
+                                      "termination": result.get("termination", run.get("termination")),
+                                      "chunks": result.get("chunks"),
                                       "peak_allocated_bytes": result.get("peak_allocated_bytes"),
                                       "weights_unchanged": result.get("weights_unchanged")})
         else:

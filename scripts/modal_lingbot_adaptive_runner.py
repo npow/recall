@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 APP_NAME = "worldsync-lingbot-adaptive-runner"
 MAX_CONTAINERS = int(os.environ.get("ADAPTIVE_MAX_CONTAINERS", "5"))
-SCALEDOWN = int(os.environ.get("ADAPTIVE_SCALEDOWN", "300"))
+SCALEDOWN = int(os.environ.get("ADAPTIVE_SCALEDOWN", "45"))
 if modal.is_local():
     from scripts.modal_lingbot_benchmark import runtime_image, weights, results
     from worldsync.credentials import load_local_credentials
@@ -92,7 +92,9 @@ def _drain(core, queue_name, label, max_episodes, max_attempts, canary):
         name = q.attempt_name(job, attempt)
         outcome = core.run({**job, "result_name": name})
         shutil.rmtree(Path("/work/outputs") / name, ignore_errors=True)  # keep the container disk small
-        outcome.pop("run", None)
+        run = outcome.pop("run", None) or {}
+        outcome.update(generated_seconds=run.get("generated_seconds"), termination=run.get("termination"),
+                       chunks=len(run.get("chunks", [])))
         return outcome
 
     def record(kind, job, payload):
