@@ -71,6 +71,7 @@ The adaptive four-view pilot changed 3.60→3.90, but neither seed visibly retur
 
 ## Other measured results
 
+- [Corrected-controller comparison](reproduction/baseline-gap/ccv-snapshot/report.md): planned 12-case paired validation, three Gemini judgments per video. The report shows completed pairs and missing results; overall is withheld until complete. This compares full configurations with different text and duration policies, not an isolated controller change or a full benchmark score.
 - [Rotation and yaw-clamp test](reproduction/rotation-clamp-test.json): 4 GC 360-degree rotation cases scored 2.22 at 60 deg/s, 2.19 at 50 deg/s and 1.97 with the plan clamp; 3 OE turn-and-return cases rose 1.19 to 1.83 with the clamp. One run per case, inside noise; the trajectory gate already passed at 60 deg/s, so turn overshoot is not the limiting factor. The bounded pose-memory arm on the same cases also showed no gain (2.60 vs 2.44 on 3 GC cases). No claimed improvement.
 - [Turn check](reproduction/turn-check-baseline-v6.json): judge-independent yaw-from-frames check; stock passed 6/6 turn tasks, v6 4/6. Gemini failed OE057 three times for both arms although the video turned as instructed.
 - [Protocol finding](reproduction/text-prompt-finding.md): the released PlayWorld harness submits `task.prompt` as the world-model text, while our adapter sent the static image caption. `--text-prompt prompt` exists; the completed four-case development comparison and its limitations are reported above; held-out confirmation is pending.
