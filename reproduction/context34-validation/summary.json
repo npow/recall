@@ -1,6 +1,6 @@
 {
   "scope": "Predeclared small validation of fixed cache34; not PlayWorld or published-score reproduction",
-  "complete_pairs": 2,
+  "complete_pairs": 3,
   "declared_pairs": 3,
   "settings": {
     "local_attn_size": 34,
@@ -86,6 +86,48 @@
         "preference": "B",
         "confidence": "low",
         "reasoning": "Both videos share an identical, plausible outbound right turn and both reverse direction on LEFT. Both briefly pass a view resembling the starting mill partway through the LEFT phase, then continue panning. Both end on a different mill: A's has a brick-arched brown door, B's a green door with sheds. Neither recovers the starting viewpoint or the wind-rose landmark at the end, so neither earns credit for the final frame. B is marginally better as a diagnostic: it re-presents the dark post mill on the return path, while A replaces it with unrelated sails. B's transitions are also somewhat smoother than A's morphing and scale jump around frames 64-65. The core failure, an end-state hallucination after overshooting, is shared, so the preference is weak."
+      },
+      "label_mapping": {
+        "A": "stock",
+        "B": "context34"
+      }
+    },
+    {
+      "task_id": "GC002",
+      "seed": 42,
+      "partition": "held_out",
+      "reason": "unseen indoor scene from frozen image split",
+      "stock_dino": 0.6653569936752319,
+      "candidate_dino": 0.8612631559371948,
+      "stock_psnr_db": 12.540395372798049,
+      "candidate_psnr_db": 13.26007161806806,
+      "warmed_suffix_s": {
+        "stock": 37.58535696199999,
+        "context34": 40.98145927899998
+      },
+      "peak_allocated_bytes": {
+        "stock": 80271342592,
+        "context34": 99980581888
+      },
+      "visual_preference": "context34",
+      "visual_assessment": {
+        "A": {
+          "realized_round_trip": "no",
+          "starting_place_recovered": "no",
+          "discontinuity": "no",
+          "visual_evidence": "Frames 0-~10 hold the start view: a long skylit gallery, a bronze head on a tall pillar at center, rows of busts on both sides, a statue on the left wall and the raised-arm statue pair on the right. During the RIGHT chunks (~10-40) the camera pans smoothly right along the red wall of white and black statues, then into an end room with a lunette window and a gilded torso before a doorway. This is a plausible ~180\u00b0 turn. During the LEFT chunks (~40-69) it pans back past the same red-wall statues (~50-56). Then, where the start gallery should reappear (~57-69), it instead shows a different room: a white fragmentary statue on a dark plinth at center, a skylight vault, a white standing statue on the right, and a tall draped statue on the left. The bronze head on its pillar, the raised-arm pair and the long rows of busts never return. The WAIT frames (70-78) hold this new view stably.",
+          "failure_classification": "Forgetting / scene drift. Camera control appears to work: yaw motion is visible and continuous in both directions, and the return leg retraces the red-wall statues. However, the scene regenerated on the final part of the return. The original gallery layout and landmark identity are lost through gradual hallucination, not a hard cut."
+        },
+        "B": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "yes",
+          "discontinuity": "no",
+          "visual_evidence": "Frames 0-49 match A: the same start gallery, the rightward pan along the red-wall statues, and the window/gilded-torso end room. On the LEFT return (~50-69) the camera smoothly retraces the red-wall statues. It then brings back the raised-arm statue pair with its red shadow (~55-62) and the bronze head on its pillar with the long gallery behind (~60-64). Around ~65 the view closely matches frame 0: left-wall statue, centered pillar head, the central white statue group at the far end, the skylight vault and the raised-arm pair at right. The camera then drifts somewhat further left into the WAIT segment (70-78), so the final frame is rotated left of the start. It still shows the same gallery with the pillar head, the far-end statue group, the bust rows and the left-wall statue, plus extra draped statues at the left edge. The landmarks keep a consistent identity and layout. No sign text is legible in either video.",
+          "failure_classification": "Minor camera-control imprecision: a slight leftward overshoot and a final heading offset during the WAIT segment. No forgetting is evident, since the landmarks and spatial layout persist on return and there is no reset or hard cut."
+        },
+        "preference": "B",
+        "confidence": "high",
+        "reasoning": "The two videos are effectively identical through the outbound turn, so the difference lies in the return leg. B recovers the original gallery through continuous motion, with persistent landmarks: the pillar-mounted bronze head, the raised-arm statue pair, the bust rows and the skylight. Its only flaw is a modest overshoot in heading. A also moves continuously and retraces the intermediate statues, but at the point where the start view should reappear it substitutes a different room with a centered white torso. The starting landmarks never return. This is a memory/consistency failure rather than a camera-control failure, so B is clearly preferable."
       },
       "label_mapping": {
         "A": "stock",
