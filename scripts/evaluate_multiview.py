@@ -16,7 +16,7 @@ def label(variant):
 
 
 def manifest_path(case, variant):
-    mode = "retrieval" if variant == {"retrieved_frames": 4, "selection": "nearest"} else f"retrieval-{variant['retrieved_frames']}-{variant['selection']}"
+    mode = "retrieval" if variant["retrieved_frames"] == 4 and variant["selection"] == "nearest" else f"retrieval-{variant['retrieved_frames']}-{variant['selection']}"
     return ROOT / "outputs/lingbot-reproduction" / f"multiview-{case['task_id']}-{mode}-{case['path']}-seed{case['seed']}.json"
 
 
@@ -43,6 +43,14 @@ def fetch(case, variant, output):
 def compare(case, variant, output, judge):
     reference = output / "nearest4"
     directory, manifest = fetch(case, variant, output)
+    verified_prefix = 0
+    if variant["retrieved_frames"] == 8 and variant["selection"] == "diverse":
+        failed_path = output / "failed-eight-diverse-run.json"
+        if failed_path.exists():
+            failed = json.loads(failed_path.read_text())
+            verified_prefix = len(failed["chunks"])
+            if any(a["pixel_sha256"] != b["pixel_sha256"] for a, b in zip(failed["chunks"], manifest["run"]["chunks"][:verified_prefix])):
+                raise ValueError("Allocator retry changed the completed raw-pixel prefix")
     comparison = directory / "comparison.json"
     previous = json.loads(comparison.read_text()) if comparison.exists() else {}
     if not previous.get("feature_model") or (judge and not previous.get("visual_judge")):
@@ -59,7 +67,7 @@ def compare(case, variant, output, judge):
     report = json.loads(comparison.read_text())
     memory = manifest["run"]["memory"]
     changed = [row for row in memory["trace"] if row["attention_replaced"]]
-    result = {**variant, "status": "completed", "endpoint_dino": report[label(variant)]["endpoint_dino_cosine"],
+    result = {**variant, "status": "completed", "retry_identical_prefix_chunks": verified_prefix, "endpoint_dino": report[label(variant)]["endpoint_dino_cosine"],
               "reference_endpoint_dino": report["nearest4"]["endpoint_dino_cosine"],
               "actual_read_counts": sorted({len(row["retrieved_frame_ids"]) for row in changed}),
               "actual_recent_tail_counts": sorted({row["retained_tail_latent_frames"] for row in changed}),

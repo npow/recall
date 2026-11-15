@@ -1,0 +1,1952 @@
+{
+  "comparison": "retrieval",
+  "cache_frames": {
+    "stock": 18,
+    "candidate": 18
+  },
+  "scope": "single controlled fixed path; no PlayWorld score or SOTA claim",
+  "matched_settings": {
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v5",
+    "task_id": "GC007",
+    "split": "gc",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "seed": 42,
+    "fps": 16,
+    "max_chunks": 32,
+    "max_area": 399360,
+    "chunk_size": 4,
+    "local_attn_size": 18,
+    "sink_size": 6,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "fixed_actions": [
+      "WAIT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "LEFT",
+      "LEFT",
+      "LEFT",
+      "WAIT"
+    ]
+  },
+  "native_camera_inputs_verified": true,
+  "pre_intervention_pixel_identical_chunks": 5,
+  "modified_chunks": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+  ],
+  "candidate_wall_s": 360.817464242,
+  "candidate_peak_allocated_bytes": 79259309568,
+  "memory": {
+    "method": "bounded early-view pose KV retrieval; diagnostic, not paper reproduction",
+    "archive_limit_latent_frames": 16,
+    "retrieved_latent_frames": 8,
+    "retrieved_frame_count_is_limit": true,
+    "selection": "nearest",
+    "attended_latent_frames": 18,
+    "sink_latent_frames": 6,
+    "tail_latent_frames": 4,
+    "tail_frame_count_is_minimum": true,
+    "pose_source": "commanded poses, not reconstructed realized poses",
+    "key_positions": "virtual",
+    "key_storage": "canonical pre-RoPE BF16 keys; reapply spatial and virtual temporal RoPE on read",
+    "archive_bytes": 19765657600,
+    "retrieval_attention_calls": 5000,
+    "trace": [
+      {
+        "chunk": 0,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 1,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 2,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [
+          6,
+          7
+        ],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 3,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 4,
+        "retrieved_frame_ids": [
+          11
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 5,
+        "retrieved_frame_ids": [
+          15,
+          14,
+          13,
+          12,
+          11
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 7
+      },
+      {
+        "chunk": 6,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          14,
+          13,
+          12
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 7,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 8,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 9,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 10,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 11,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 12,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 13,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 14,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 15,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 16,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 17,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 18,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 19,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 20,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 21,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 22,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 23,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 24,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 25,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 26,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 27,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 28,
+        "retrieved_frame_ids": [
+          11,
+          10,
+          12,
+          9,
+          13,
+          8,
+          14,
+          7
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 4
+      },
+      {
+        "chunk": 29,
+        "retrieved_frame_ids": [
+          7,
+          6,
+          8,
+          9,
+          10,
+          11
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 6
+      },
+      {
+        "chunk": 30,
+        "retrieved_frame_ids": [
+          6,
+          7
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 31,
+        "retrieved_frame_ids": [
+          6,
+          7
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false
+      }
+    ]
+  },
+  "caveat": "Commanded camera closure does not prove realized closure. Endpoint image similarity cannot establish world memory if the realized route fails.",
+  "nearest4": {
+    "endpoint_psnr_db": 8.343989093446407,
+    "video_sha256": "ce278f0f360c9f8b391bf9cba4a2fbce958359eee6088e8f78af554c385b1db4",
+    "endpoint_dino_cosine": 0.7450172305107117
+  },
+  "nearest8": {
+    "endpoint_psnr_db": 8.321036804724555,
+    "video_sha256": "aeaa19dd717daa8015f2f61485628fb958c95a8bbd7263fccdbcc0d2a3300e9b",
+    "endpoint_dino_cosine": 0.7721953392028809
+  },
+  "reference_label": "nearest4",
+  "reference_memory": {
+    "method": "bounded early-view pose KV retrieval; diagnostic, not paper reproduction",
+    "archive_limit_latent_frames": 16,
+    "retrieved_latent_frames": 4,
+    "retrieved_frame_count_is_limit": true,
+    "selection": "nearest",
+    "attended_latent_frames": 18,
+    "sink_latent_frames": 6,
+    "tail_latent_frames": 8,
+    "tail_frame_count_is_minimum": true,
+    "pose_source": "commanded poses, not reconstructed realized poses",
+    "key_positions": "virtual",
+    "key_storage": "canonical pre-RoPE BF16 keys; reapply spatial and virtual temporal RoPE on read",
+    "archive_bytes": 19765657600,
+    "retrieval_attention_calls": 5000,
+    "trace": [
+      {
+        "chunk": 0,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 1,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 2,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [
+          6,
+          7
+        ],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 3,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 4,
+        "retrieved_frame_ids": [
+          11
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 5,
+        "retrieved_frame_ids": [
+          15,
+          14,
+          13,
+          12
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 6,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 7,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 8,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 9,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 10,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 11,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 12,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 13,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 14,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 15,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 16,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 17,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 18,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 19,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 20,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 21,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 22,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 23,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 24,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 25,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 26,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 27,
+        "retrieved_frame_ids": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 28,
+        "retrieved_frame_ids": [
+          11,
+          10,
+          12,
+          9
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 29,
+        "retrieved_frame_ids": [
+          7,
+          6,
+          8,
+          9
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 30,
+        "retrieved_frame_ids": [
+          6,
+          7
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 31,
+        "retrieved_frame_ids": [
+          6,
+          7
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false
+      }
+    ]
+  },
+  "reference_wall_s": 329.992958211,
+  "reference_peak_allocated_bytes": 74346575360,
+  "candidate_label": "nearest8",
+  "warmed_suffix_s": {
+    "nearest4": 218.592408722,
+    "nearest8": 245.01866521400004
+  },
+  "feature_model": {
+    "name": "facebook/dinov2-small",
+    "revision": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+    "feature": "normalized CLS token"
+  },
+  "visual_judge": {
+    "model": "claude-opus-5-5",
+    "response_id": "msg_011Ch3zrLjDxfH7yD25RLL3K",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 87345,
+      "output_tokens": 2018,
+      "output_tokens_details": {
+        "thinking_tokens": 814
+      },
+      "server_tool_use": null,
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "label_mapping": {
+      "A": "nearest4",
+      "B": "nearest8"
+    },
+    "prompt": "Evaluate two anonymized world-model videos independently and then compare. Each was given the same image and fixed camera path. Commands by one-second chunk: ['WAIT', 'RIGHT', 'RIGHT', 'RIGHT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'LEFT', 'LEFT', 'LEFT', 'WAIT']. RIGHT and LEFT yaw 60.0 degrees per second; W moves forward. Commands are NOT proof that motion happened. Inspect actual frames. Assess whether each video realizes a turnaround and return to the starting viewpoint; whether persistent landmark identity, any sign text, geometry and spatial layout match on return; and whether there are sudden jumps, frozen motion or implausible transitions. Distinguish camera-control failures from forgetting. Do not reward a similar final building if reaching it required a reset. Do not invent unseen geometry. Return English JSON with keys A and B (each with realized_round_trip: yes|no|uncertain, starting_place_recovered: yes|no|uncertain, discontinuity: yes|no|uncertain, visual_evidence, failure_classification), preference: A|B|tie|neither, confidence: low|medium|high, and reasoning. This is a diagnostic comparison, not a benchmark score.",
+    "prompt_sha256": "177cd801eab758dcf6aba8bb3eba562f1a86cb7a54a907bfbca64fef3e2dddc4",
+    "result": {
+      "A": {
+        "realized_round_trip": "yes",
+        "starting_place_recovered": "yes",
+        "discontinuity": "no",
+        "visual_evidence": "Frames 0-9 show the 'Primemall' facade with its pitched black roof. The right yaw (about frames 10-35) pans smoothly past the pink pyramid 'Dhrmall' building and the glass/orange building, then settles on the blue umbrella over a planter with round tables. The long WAIT section holds that view steadily, with only minor drift: storefront sign text mutates, and pedestrians and cars appear. The left yaw (about frames 279-305) retraces the outbound path in mirrored order: glass building, then Dhrmall pyramid entering from the left, then the Primemall facade and sign returning. The final frames (about 305-318) show Primemall with the same roof geometry and legible sign. The framing is shifted, with the building right of center, and a dark blue building, lamp post, and white car appear on the left that were not in the opening frame. This suggests slight yaw overshoot rather than a reset.",
+        "failure_classification": "Minor camera-control imprecision (final yaw offset or overshoot, which newly reveals left-side content). There is mild texture and sign drift during the hold. No forgetting of the landmark and no reset."
+      },
+      "B": {
+        "realized_round_trip": "yes",
+        "starting_place_recovered": "uncertain",
+        "discontinuity": "yes",
+        "visual_evidence": "Frames 0-59 match A: Primemall, a smooth right pan past Dhrmall and the glass building, then the umbrella planter. During WAIT (about frame 59) there is an abrupt hazy cut to a different view: a glass building bearing a new 'Ptramall/Pitanmall' sign, a pinkish sky, and a terrace. This holds until about frame 68, then jumps back to an umbrella view with a different perspective (planter shifted right, darker and more saturated tones, cloudier sky). Spurious facade text ('AWW...') appears mid-hold. On the return (about frames 279-281) another ghosted, smeared transition shows Dhrmall before the glass building. The glass building now has a brick lower facade merged into it, and Dhrmall then re-enters from the left, which is an inconsistent ordering. The final Primemall view (about 305-318) is centered and similar to the start, but a large dark-blue umbrella now dominates the left foreground, absent from the opening frame.",
+        "failure_classification": "Scene discontinuities and partial resets during the static WAIT, which is a world-consistency failure rather than camera control. Spatial layout confusion and hallucinated signage appear on the return. The final landmark matches roughly but with altered foreground content, after implausible transitions."
+      },
+      "preference": "A",
+      "confidence": "high",
+      "reasoning": "Both videos physically execute the right turn, the hold, and the left return to the Primemall facade. A does so continuously: the return path mirrors the outbound sequence, and the landmark identity, sign text, and roof geometry are preserved, with only a small framing offset and minor drift during the hold. B has hard, hazy cuts during a WAIT period where nothing should change. It jumps to an invented 'Ptramall' glass view and returns to a re-rendered umbrella scene. Its return contains a ghosted transition with out-of-order landmarks and a merged glass/brick facade, and it ends with a new foreground umbrella. B's similar final building should not be rewarded given these discontinuities, so A is clearly preferred."
+    }
+  }
+}

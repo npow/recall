@@ -1,0 +1,466 @@
+{
+  "comparison": "retrieval",
+  "cache_frames": {
+    "stock": 18,
+    "candidate": 18
+  },
+  "scope": "single controlled fixed path; no PlayWorld score or SOTA claim",
+  "matched_settings": {
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v5",
+    "task_id": "GC040",
+    "split": "gc",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "seed": 42,
+    "fps": 16,
+    "max_chunks": 14,
+    "max_area": 399360,
+    "chunk_size": 4,
+    "local_attn_size": 18,
+    "sink_size": 6,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "fixed_actions": [
+      "WAIT",
+      "RIGHT",
+      "RIGHT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "LEFT",
+      "LEFT",
+      "WAIT"
+    ]
+  },
+  "native_camera_inputs_verified": true,
+  "pre_intervention_pixel_identical_chunks": 4,
+  "modified_chunks": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "stock_wall_s": 186.852139656,
+  "candidate_wall_s": 180.67045271,
+  "stock_peak_allocated_bytes": 72241958912,
+  "candidate_peak_allocated_bytes": 74019773440,
+  "memory": {
+    "method": "bounded early-view pose KV retrieval; diagnostic, not paper reproduction",
+    "archive_limit_latent_frames": 16,
+    "retrieved_latent_frames": 4,
+    "retrieved_frame_count_is_limit": true,
+    "selection": "nearest",
+    "attended_latent_frames": 18,
+    "sink_latent_frames": 6,
+    "tail_latent_frames": 8,
+    "tail_frame_count_is_minimum": true,
+    "pose_source": "commanded poses, not reconstructed realized poses",
+    "key_positions": "virtual",
+    "key_storage": "canonical pre-RoPE BF16 keys; reapply spatial and virtual temporal RoPE on read",
+    "archive_bytes": 19765657600,
+    "retrieval_attention_calls": 1600,
+    "trace": [
+      {
+        "chunk": 0,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 1,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 2,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [
+          6,
+          7
+        ],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 3,
+        "retrieved_frame_ids": [
+          7,
+          6
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 4,
+        "retrieved_frame_ids": [
+          11,
+          10,
+          9,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 5,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 6,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 7,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 8,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 9,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 10,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 11,
+        "retrieved_frame_ids": [
+          7,
+          6,
+          8,
+          9
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true,
+        "retained_tail_latent_frames": 8
+      },
+      {
+        "chunk": 12,
+        "retrieved_frame_ids": [
+          6,
+          7,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 13,
+        "retrieved_frame_ids": [
+          6,
+          7,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false
+      }
+    ]
+  },
+  "caveat": "Commanded camera closure does not prove realized closure. Endpoint image similarity cannot establish world memory if the realized route fails.",
+  "stock": {
+    "endpoint_psnr_db": 11.747183085030915,
+    "video_sha256": "1ef6614b60d4636a2aad0513c26e94e0dc9ce4a74d484a3fd392f75a738f9157",
+    "endpoint_dino_cosine": 0.7291253805160522
+  },
+  "retrieval": {
+    "endpoint_psnr_db": 12.712609729671003,
+    "video_sha256": "0f7627425caf7aecc53b652d1977f3b96309630134106cab9611eef1839fc26d",
+    "endpoint_dino_cosine": 0.7832623720169067
+  },
+  "reference_label": "stock",
+  "reference_memory": null,
+  "reference_wall_s": 186.852139656,
+  "reference_peak_allocated_bytes": 72241958912,
+  "candidate_label": "retrieval",
+  "warmed_suffix_s": {
+    "stock": 74.63260182200001,
+    "retrieval": 89.461165817
+  },
+  "feature_model": {
+    "name": "facebook/dinov2-small",
+    "revision": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+    "feature": "normalized CLS token"
+  },
+  "visual_judge": {
+    "model": "claude-opus-5-5",
+    "response_id": "msg_011Ch3zxB11av4entDhFKZ95",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 41262,
+      "output_tokens": 2972,
+      "output_tokens_details": {
+        "thinking_tokens": 1777
+      },
+      "server_tool_use": null,
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "label_mapping": {
+      "A": "stock",
+      "B": "retrieval"
+    },
+    "prompt": "Evaluate two anonymized world-model videos independently and then compare. Each was given the same image and fixed camera path. Commands by one-second chunk: ['WAIT', 'RIGHT', 'RIGHT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'LEFT', 'LEFT', 'WAIT']. RIGHT and LEFT yaw 45.0 degrees per second; W moves forward. Commands are NOT proof that motion happened. Inspect actual frames. Assess whether each video realizes a turnaround and return to the starting viewpoint; whether persistent landmark identity, any sign text, geometry and spatial layout match on return; and whether there are sudden jumps, frozen motion or implausible transitions. Distinguish camera-control failures from forgetting. Do not reward a similar final building if reaching it required a reset. Do not invent unseen geometry. Return English JSON with keys A and B (each with realized_round_trip: yes|no|uncertain, starting_place_recovered: yes|no|uncertain, discontinuity: yes|no|uncertain, visual_evidence, failure_classification), preference: A|B|tie|neither, confidence: low|medium|high, and reasoning. This is a diagnostic comparison, not a benchmark score.",
+    "prompt_sha256": "e5bc952e033e53155aa248eb338cd9c72bd48ef0c364e90104c08b5509b81536",
+    "result": {
+      "A": {
+        "realized_round_trip": "uncertain",
+        "starting_place_recovered": "no",
+        "discontinuity": "yes",
+        "visual_evidence": "Frames 0-~110 appear essentially identical to B. The start view shows a white/lime dome with a red-capped person at its left and a gray/lime tent with a hanging dark backpack, under an overcast sky. During RIGHT (~10-30) the view pans to the chair tent with a masked man, a blue lounger, a yellow container and a large open tent. The sky becomes bright blue with trees, and the view then holds steadily through the WAIT block. During LEFT (~110-130) a leftward pan does occur, but the layout on return is wrong. At ~115-119 the white/lime tent appears directly beside the chair tent, and the gray tent with the backpack, which should sit between them, is missing. From ~120-125 a new large lime tent slides into the left foreground with a red-shirted person in a blue chair, and the white tent recedes to the right background. Frames 125-138 hold a close foreground shot of this new person and tent, with only part of a white/lime tent at the right edge. The original two-tent side-by-side composition never reappears.",
+        "failure_classification": "Forgetting/hallucination on the return path. Yaw motion was attempted, but the start-view landmarks were not preserved: the gray tent and backpack were lost and a new foreground tent and person were invented. The final view looks more like a different camera position than the original viewpoint. The overcast-to-blue sky shift during the outbound turn is a lighting inconsistency shared with B."
+      },
+      "B": {
+        "realized_round_trip": "yes",
+        "starting_place_recovered": "yes",
+        "discontinuity": "no",
+        "visual_evidence": "The outbound turn and WAIT segment match A, including the same overcast-to-blue sky shift. During LEFT (~110-124) the pan passes back smoothly: the blue lounger, the chair tent with the masked man, then the gray/lime tent with the dark backpack, then the white/lime tent. At ~120-124 the start composition is recovered with the correct ordering and identity: the white dome on the left with the red-capped person and float toys at its left, the gray tent on the right with the backpack, red items on the sand, and swimmers in the water. The sky returns to overcast. The camera then continues slightly further left through ~129, and the final frames (130-138) hold an overshot view. The same white tent, red-capped person and gray tent edge remain, plus newly revealed area to the left of the start: a lime tent in the left foreground, a blue chair and a yellow float. This newly revealed area is plausible, not a contradiction. Motion is continuous with no cuts.",
+        "failure_classification": "Minor camera-control error: timing and overshoot. The start view is reached a little early and the rotation overshoots left, so the resting viewpoint is offset from the start. Landmark memory and layout are preserved, so this is not forgetting."
+      },
+      "preference": "B",
+      "confidence": "high",
+      "reasoning": "Both videos share an identical outbound turn and hold. They diverge on the return. B pans back continuously and re-presents the original white-tent/gray-tent pair with consistent identity and arrangement, then overshoots somewhat to the left, which is a camera-control issue. A's return loses the gray tent and backpack and introduces a new foreground tent and person, ending in a different scene. That is a memory/consistency failure rather than control drift. B is therefore clearly better at recovering the starting place."
+    }
+  }
+}

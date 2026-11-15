@@ -1,11 +1,20 @@
-# Local task-matched memory pilot
+# Audited local task-matched memory pilot
 
-The four-view memory method improves the two currently valid completed tasks: GC010 2.6→4.0 and held-out GC033 2.4→4.0 under the same local Claude PlayWorld rubric. Memory passes the released instruction gate on both; stock is partial. These are complete scripted 90-degree turn-and-return episodes, including an eight-second away-view hold, on identical H100 hardware and settings.
+Four-view historical memory improves all three valid tasks under the same local Claude PlayWorld rubric. These are complete scripted 90-degree turn-and-return episodes, including an eight-second away-view hold, on identical H100 hardware and settings.
 
-GC013 is quarantined because the released image is a coast while the caption/rubric describe a living room. Its raw2.4→3.2 scores and videos remain visible but are invalid as benchmark evidence. See ../input-audit-gc013.md and ../task-input-audit.json. The original unreviewed cohort summary is labeled original-unaudited-summary.json. The active cohort mean is null until replacement GC040 is generated and scored; missing or invalid cases do not silently disappear.
+| Case | Split | Stock | Memory | Instruction gate, stock → memory |
+|---|---|---:|---:|---|
+| GC010, western street | Development | 2.6 | 4.0 | partial → pass |
+| GC033, display window | Held out | 2.4 | 4.0 | partial → pass |
+| GC040, beach tents | Audited replacement development case | 2.4 | 2.7 | partial → pass |
+| GC013 | Quarantined invalid source pairing | raw 2.4 | raw 3.2 | Excluded explicitly from valid-input means |
 
-GC040 is declared before generation in the amended ../task-memory-benchmark-plan.json using a deterministic compatible-task rule. Its source image, and the sources for GC010/GC033, have been visually checked against their captions. No candidate selection uses its outputs.
+The amended valid-input cohort mean is **2.47 stock versus 3.57 memory** (+1.10 on the local five-point rubric). No uncertainty estimate is available from this small cohort. The generator keeps the same 18-frame attention budget, official checkpoint, sampler and poses within each pair. Complete native-camera audits and exact pre-intervention raw-pixel prefixes pass. No training, image editing or output-frame pasting is used.
 
-The remaining limitations matter: sign lettering can blur, object counts can be uncertain and camera heading can drift. These three-task local scores use a scripted policy and Claude rather than the published adaptive Agent Player/Gemini setup. They are not comparable to the Genie 3 leaderboard score or a full 171-case overall. No training or image/output editing is used.
+GC013 is invalid because the released image is a coast while its caption/rubric describe a living room. The image matches the official pinned bytes. Its raw videos, scores and original unaudited summary remain visible, but do not establish benchmark quality. See ../input-audit-gc013.md and ../task-input-audit.json. GC040 was declared before generation using the lowest remaining compatible development task ID, and visually audited against its source caption. The amended cohort has four attempted case IDs, including the quarantined case; invalid and missing cases do not disappear silently.
 
-Complete videos, contacts, native manifests, comparison metrics, released gate/rubric contexts, judge responses and usage are retained per case. Hardware and encoder-offload settings are recorded. Both policies keep the same 18-frame attention budget; memory adds a bounded CPU key/value archive. Reproduce with `modal run --profile nissan-pow scripts/modal_lingbot_roundtrip.py --task-benchmark`, then `.venv-lingbot/bin/python scripts/evaluate_task_memory.py`.
+Failures remain. Western-street lettering blurs and a porch-person count is uncertain. The display-window paper text loses legibility. On the beach, the sky/sea change from overcast to clear, an extra tent and a large yellow object appear, and the final layout is imperfect; its 2.7 score is only moderate. Exact heading and dynamic-process consistency are not solved.
+
+The policy is scripted, and Claude replaces the published adaptive Agent Player/Gemini setup. These local subset scores are not comparable to Genie 3's leaderboard result or a full 171-case overall. Both methods use the same generic judge label to avoid exposing the memory treatment.
+
+Videos, contact sheets, endpoint images, native manifests, comparison metrics, released gate/rubric contexts, full judge responses and usage are retained per case. Hardware and text-encoder offload settings are recorded. Memory adds a bounded 19.765 GB CPU archive. Reproduce with `modal run --profile nissan-pow scripts/modal_lingbot_roundtrip.py --task-benchmark`, then `.venv-lingbot/bin/python scripts/evaluate_task_memory.py`.

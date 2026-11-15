@@ -2,11 +2,11 @@
   "scope": "Three complete task-matched native-control PlayWorld GC trials; local Claude evaluator, not published-score reproduction",
   "declared_pairs_including_quarantine": 4,
   "valid_declared_pairs": 3,
-  "completed_pairs": 2,
+  "completed_pairs": 3,
   "quarantined_case_ids": [
     "GC013"
   ],
-  "complete": false,
+  "complete": true,
   "results": [
     {
       "task_id": "GC010",
@@ -197,9 +197,97 @@
         }
       },
       "status": "completed"
+    },
+    {
+      "task_id": "GC040",
+      "seed": 42,
+      "path": "turn90_wait_return",
+      "partition": "development_replacement",
+      "task": "Turn right90 degrees then return to the starting view",
+      "replacement_for": "GC013",
+      "stock_dino": 0.7291253805160522,
+      "candidate_dino": 0.7832623720169067,
+      "stock_psnr_db": 11.747183085030915,
+      "candidate_psnr_db": 12.712609729671003,
+      "warmed_suffix_s": {
+        "stock": 74.63260182200001,
+        "retrieval": 89.461165817
+      },
+      "peak_allocated_bytes": {
+        "stock": 72241958912,
+        "retrieval": 74019773440
+      },
+      "visual_preference": "retrieval",
+      "visual_assessment": {
+        "A": {
+          "realized_round_trip": "uncertain",
+          "starting_place_recovered": "no",
+          "discontinuity": "yes",
+          "visual_evidence": "Frames 0-~110 appear essentially identical to B. The start view shows a white/lime dome with a red-capped person at its left and a gray/lime tent with a hanging dark backpack, under an overcast sky. During RIGHT (~10-30) the view pans to the chair tent with a masked man, a blue lounger, a yellow container and a large open tent. The sky becomes bright blue with trees, and the view then holds steadily through the WAIT block. During LEFT (~110-130) a leftward pan does occur, but the layout on return is wrong. At ~115-119 the white/lime tent appears directly beside the chair tent, and the gray tent with the backpack, which should sit between them, is missing. From ~120-125 a new large lime tent slides into the left foreground with a red-shirted person in a blue chair, and the white tent recedes to the right background. Frames 125-138 hold a close foreground shot of this new person and tent, with only part of a white/lime tent at the right edge. The original two-tent side-by-side composition never reappears.",
+          "failure_classification": "Forgetting/hallucination on the return path. Yaw motion was attempted, but the start-view landmarks were not preserved: the gray tent and backpack were lost and a new foreground tent and person were invented. The final view looks more like a different camera position than the original viewpoint. The overcast-to-blue sky shift during the outbound turn is a lighting inconsistency shared with B."
+        },
+        "B": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "yes",
+          "discontinuity": "no",
+          "visual_evidence": "The outbound turn and WAIT segment match A, including the same overcast-to-blue sky shift. During LEFT (~110-124) the pan passes back smoothly: the blue lounger, the chair tent with the masked man, then the gray/lime tent with the dark backpack, then the white/lime tent. At ~120-124 the start composition is recovered with the correct ordering and identity: the white dome on the left with the red-capped person and float toys at its left, the gray tent on the right with the backpack, red items on the sand, and swimmers in the water. The sky returns to overcast. The camera then continues slightly further left through ~129, and the final frames (130-138) hold an overshot view. The same white tent, red-capped person and gray tent edge remain, plus newly revealed area to the left of the start: a lime tent in the left foreground, a blue chair and a yellow float. This newly revealed area is plausible, not a contradiction. Motion is continuous with no cuts.",
+          "failure_classification": "Minor camera-control error: timing and overshoot. The start view is reached a little early and the rotation overshoots left, so the resting viewpoint is offset from the start. Landmark memory and layout are preserved, so this is not forgetting."
+        },
+        "preference": "B",
+        "confidence": "high",
+        "reasoning": "Both videos share an identical outbound turn and hold. They diverge on the return. B pans back continuously and re-presents the original white-tent/gray-tent pair with consistent identity and arrangement, then overshoots somewhat to the left, which is a camera-control issue. A's return loses the gray tent and backpack and introduces a new foreground tent and person, ending in a different scene. That is a memory/consistency failure rather than control drift. B is therefore clearly better at recovering the starting place."
+      },
+      "label_mapping": {
+        "A": "stock",
+        "B": "retrieval"
+      },
+      "local_task_scores": {
+        "stock": {
+          "score": 2.4,
+          "trajectory_gate": {
+            "applicable": "yes",
+            "task_id": "GC040",
+            "perspective": "first-person",
+            "verdict": "partial",
+            "instruction_following_score": 1,
+            "meaningful_requested_trajectory_progress": "partial",
+            "revisit_required": "yes",
+            "revisit_observed": "yes",
+            "observed_action_zh": "\u955c\u5934\u5148\u9759\u6b62\u7ea61\u79d2\uff0c\u7136\u540e\u660e\u663e\u5411\u53f3\u8f6c\uff0c\u5230\u8fbe\u65b0\u7684\u671d\u5411\u5e76\u957f\u65f6\u95f4\u505c\u7559\uff1b\u4e4b\u540e\u5411\u5de6\u8f6c\u56de\uff0c\u7ecf\u8fc7\u8d77\u59cb\u671d\u5411\uff0c\u4f46\u7ee7\u7eed\u5411\u5de6\u8f6c\u8fc7\u5934\uff0c\u7ed3\u675f\u65f6\u504f\u79bb\u8d77\u59cb\u671d\u5411\u3002",
+            "trajectory_evidence_zh": "0\u20131.0\u79d2\u753b\u9762\u57fa\u672c\u9759\u6b62\uff0c\u671d\u5411\u521d\u59cb\u7684\u4e24\u9876\u5e10\u7bf7\u548c\u6d77\u9762\u3002\u7ea61.1\u20132.5\u79d2\uff0c\u753b\u9762\u5185\u5bb9\u6301\u7eed\u5411\u5de6\u79fb\u52a8\uff0c\u53f3\u4fa7\u4e0d\u65ad\u51fa\u73b0\u65b0\u7684\u5e10\u7bf7\u548c\u9ec4\u8272\u7269\u4f53\uff0c\u8bf4\u660e\u955c\u5934\u5728\u5411\u53f3\u8f6c\uff1b\u8f6c\u52a8\u5e45\u5ea6\u8f83\u5927\uff0c\u53ef\u80fd\u63a5\u8fd190\u5ea6\u3002\u7ea62.5\u201310.9\u79d2\uff0c\u955c\u5934\u505c\u5728\u53f3\u8f6c\u540e\u7684\u671d\u5411\uff0c\u57fa\u672c\u4fdd\u6301\u9759\u6b62\u3002\u7ea611.0\u201312.0\u79d2\uff0c\u753b\u9762\u5185\u5bb9\u5411\u53f3\u79fb\u52a8\uff0c\u5de6\u4fa7\u91cd\u65b0\u51fa\u73b0\u767d\u7070\u8272\u5e10\u7bf7\u548c\u6d77\u9762\uff0c\u8bf4\u660e\u955c\u5934\u5728\u5411\u5de6\u56de\u8f6c\uff0c\u5e76\u7ecf\u8fc7\u63a5\u8fd1\u8d77\u59cb\u671d\u5411\u7684\u4f4d\u7f6e\u3002\u7ea612.0\u201313.8\u79d2\uff0c\u955c\u5934\u7ee7\u7eed\u5411\u5de6\u8f6c\uff0c\u5de6\u4fa7\u51fa\u73b0\u5927\u5e10\u7bf7\uff0c\u539f\u5148\u7684\u5e10\u7bf7\u88ab\u63a8\u5230\u753b\u9762\u53f3\u4fa7\uff0c\u6700\u7ec8\u671d\u5411\u8d8a\u8fc7\u4e86\u8d77\u59cb\u65b9\u5411\u3002",
+            "failure_reason_zh": "\u53f3\u8f6c\u548c\u56de\u8f6c\u7684\u65b9\u5411\u90fd\u6b63\u786e\uff0c\u56de\u8f6c\u65f6\u4e5f\u7ecf\u8fc7\u4e86\u8d77\u59cb\u671d\u5411\uff1b\u4f46\u6700\u540e\u660e\u663e\u5411\u5de6\u8f6c\u8fc7\u5934\uff0c\u7ed3\u675f\u65f6\u6ca1\u6709\u7a33\u5b9a\u9762\u5411\u8d77\u59cb\u65b9\u5411\uff0c\u56e0\u6b64\u8f68\u8ff9\u53ea\u80fd\u7b97\u90e8\u5206\u5b8c\u6210\u3002",
+            "confidence_1_to_5": 3
+          },
+          "judge_model": "claude-opus-5-5",
+          "video_sha256": "1ef6614b60d4636a2aad0513c26e94e0dc9ce4a74d484a3fd392f75a738f9157"
+        },
+        "retrieval": {
+          "score": 2.7,
+          "trajectory_gate": {
+            "applicable": "yes",
+            "task_id": "GC040",
+            "perspective": "first-person",
+            "verdict": "pass",
+            "instruction_following_score": 1,
+            "meaningful_requested_trajectory_progress": "yes",
+            "revisit_required": "yes",
+            "revisit_observed": "yes",
+            "observed_action_zh": "\u955c\u5934\u5148\u5411\u53f3\u5e73\u79fb\u8f6c\u52a8\uff0c\u8d77\u59cb\u7684\u4e24\u9876\u5e10\u7bf7\u4ece\u753b\u9762\u5de6\u4fa7\u79fb\u51fa\uff0c\u65b0\u7684\u5e10\u7bf7\u3001\u9ec4\u8272\u6876\u548c\u53f3\u4fa7\u6811\u6797\u4f9d\u6b21\u8fdb\u5165\u753b\u9762\uff1b\u5728\u65b0\u671d\u5411\u4fdd\u6301\u8f83\u957f\u65f6\u95f4\u540e\uff0c\u955c\u5934\u5411\u5de6\u8f6c\u56de\uff0c\u8d77\u59cb\u7684\u4e24\u9876\u5e10\u7bf7\u548c\u6d77\u9762\u91cd\u65b0\u51fa\u73b0\uff0c\u7ed3\u5c3e\u5927\u81f4\u56de\u5230\u521d\u59cb\u671d\u5411\u3002",
+            "trajectory_evidence_zh": "0-1.0\u79d2\uff1a\u753b\u9762\u9759\u6b62\uff0c\u6b63\u5bf9\u4e24\u9876\u5e10\u7bf7\u548c\u6d77\u9762\u3002\u7ea61.0-2.6\u79d2\uff1a\u573a\u666f\u5185\u5bb9\u6301\u7eed\u5411\u5de6\u79fb\u52a8\uff0c\u53f3\u4fa7\u4f9d\u6b21\u51fa\u73b0\u5e26\u4eba\u7684\u5e10\u7bf7\u3001\u84dd\u8272\u6905\u5b50\u3001\u9ec4\u8272\u6876\u548c\u5927\u5e10\u7bf7\uff0c\u7b26\u5408\u5411\u53f3\u8f6c\u3002\u7ea62.6-11.4\u79d2\uff1a\u89c6\u89d2\u57fa\u672c\u505c\u5728\u65b0\u65b9\u5411\uff0c\u770b\u5230\u4e24\u9876\u5e10\u7bf7\u548c\u53f3\u4fa7\u6811\u6797\u3002\u7ea611.5-12.5\u79d2\uff1a\u573a\u666f\u5185\u5bb9\u5411\u53f3\u79fb\u52a8\uff0c\u5e26\u4eba\u7684\u5e10\u7bf7\u5411\u53f3\u9000\u51fa\uff0c\u8d77\u59cb\u7684\u4e24\u9876\u5e10\u7bf7\u4ece\u5de6\u4fa7\u56de\u5230\u753b\u9762\uff0c\u7b26\u5408\u5411\u5de6\u8f6c\u56de\u300212.5-13.8\u79d2\uff1a\u4e24\u9876\u5e10\u7bf7\u548c\u6d77\u9762\u56de\u5230\u753b\u9762\u4e2d\u592e\u9644\u8fd1\uff0c\u89d2\u5ea6\u7565\u6709\u504f\u5dee\uff0c\u5de6\u4fa7\u591a\u51fa\u4e00\u9876\u5e10\u7bf7\u3002",
+            "failure_reason_zh": "",
+            "confidence_1_to_5": 4
+          },
+          "judge_model": "claude-opus-5-5",
+          "video_sha256": "0f7627425caf7aecc53b652d1977f3b96309630134106cab9611eef1839fc26d"
+        }
+      },
+      "status": "completed"
     }
   ],
-  "local_cohort_means": null,
+  "local_cohort_means": {
+    "stock": 2.466666666666667,
+    "retrieval": 3.5666666666666664
+  },
   "cohort_definition": "Amended pilot after a verified source input mismatch; quarantined raw results remain visible and are not valid quality scores.",
   "caveat": "Scripted task-matched actions and Claude evaluation differ from the published Agent Player/Gemini protocol. This is not a leaderboard score."
 }

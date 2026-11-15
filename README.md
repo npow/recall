@@ -10,8 +10,14 @@ archive and about 6% higher GPU peak allocation. Exact heading recovery and
 some texture/sign drift remain unresolved; endpoint similarity can decline
 when the camera overshoots. No training was used for these tests.
 
-[Task-matched released-rubric comparisons](reproduction/task-memory-benchmark-plan.json)
-are in progress. These results do not yet establish a PlayWorld score gain.
+[The audited local task pilot](reproduction/task-memory-benchmark/README.md)
+improves the same Claude rubric from **2.47 to 3.57** across three valid
+scripted tasks. One released image/caption mismatch is quarantined and retained
+explicitly. This is a local subset result, not a published PlayWorld score.
+
+[The four/eight-view ablation](reproduction/multiview-retrieval/README.md) finds
+that eight historical views degrade continuity when they displace recent
+context. Four diverse views tie the four-nearest reference.
 
 Native moving-camera input parity is verified. Complete local stock episodes
 show substantial seed and player variance; see the [five-seed diagnostic](reproduction/GC007-v5-seeds.json).
