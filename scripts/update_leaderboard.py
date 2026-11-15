@@ -46,8 +46,50 @@ def rescore_rows():
     return rows or None
 
 
+def official_full_run_section():
+    """Official frozen full-run table (stock vs budget memory, all four dimensions, single-call Gemini)."""
+    data = read("reproduction/full-run/analysis.json")
+    if not data:
+        return []
+    names = {"stock": "stock 18/6", "budget": "budget memory (K10 native)"}
+    def row(label, block, arm, total=171):
+        stats = block["arms"][arm]
+        dims, low, high = stats["dimension_means"], *stats["overall_ci95"]
+        return (f"| {label} |{sum(stats['cases_scored'].values())}/{total}|{stats['overall']:.2f} [{low:.2f}, {high:.2f}]"
+                f"|{dims['gc']:.2f}|{dims['if']:.2f}|{dims['insight']:.2f}|{dims['outsight']:.2f}|")
+    everything, no013 = data["all"], data["without_gc013"]
+    paired = everything["paired"]
+    scored = sum(sum(everything["arms"][arm]["cases_scored"].values()) for arm in names)
+    lines = ["", "## Official full 171-case run: stock versus budget memory (Gemini, all four dimensions)", "",
+        "Frozen configuration, one seed, one Gemini call per video (released prompts, rubric, gate and aggregation; Vertex "
+        "`gemini-3.1-pro-preview`). Overall is the equal mean of the four dimension means; intervals are 95% bootstrap over cases. "
+        f"Coverage {scored}/342 scored episodes (one stock insight judgment failed).", "",
+        "| Arm | Scored | Overall [95% CI] | GC | IF | In-sight | Out-of-sight |", "|---|---:|---|---:|---:|---:|---:|",
+        *[row(label, everything, arm) for arm, label in names.items()],
+        *[row(f"{label}, without GC013", no013, arm, 170) for arm, label in names.items()], "",
+        f"Paired budget minus stock: **{paired['delta']:+.2f} [{paired['ci95'][0]:+.2f}, {paired['ci95'][1]:+.2f}]** "
+        f"(GC {paired['per_dimension']['gc']:+.2f}, IF {paired['per_dimension']['if']:+.2f}, "
+        f"in-sight {paired['per_dimension']['insight']:+.2f}, out-of-sight {paired['per_dimension']['outsight']:+.2f}). "
+        "**Budget memory gives no gain, and the pass criterion for beating 2.12 is NOT met** (the lower bound must exceed 2.12).", "",
+        "Notes: in-sight episodes use caption-only world-model text, a pre-declared amendment (the released-style prompt scored about "
+        "1.2 on 6 development cases). GC013 is shown with and without because its released image contradicts its caption and rubric. "
+        "The hosted-service equivalence of our local checkpoint is not established."]
+    recovered = read("reproduction/full1-recovered-judging/summary.json")
+    if recovered:
+        ranges = {arm: result.get("possible_overall_range") for arm, result in recovered["arms"].items()}
+        if all(ranges.get(arm) for arm in names):
+            lines.append("An independent re-judging of the same videos by another session bounds stock at "
+                f"{ranges['stock'][0]:.2f}-{ranges['stock'][1]:.2f} and budget {ranges['budget'][0]:.2f}-{ranges['budget'][1]:.2f} "
+                "(possible ranges, its in-sight judging incomplete; [summary](reproduction/full1-recovered-judging/summary.json)), so single-call judge noise is about 0.05 to 0.1 on the overall.")
+    lines.extend(["", "Evidence: [table](reproduction/full-run/table.md), [analysis](reproduction/full-run/analysis.json), "
+        "[per-episode scores](reproduction/full-run/per-episode.csv), [frozen config](reproduction/full-run-config.json), "
+        "[run log](reproduction/full-run-log.md), [judge-repeat study](reproduction/judge-repeat/README.md), "
+        "[memory audit](reproduction/full-run-memory-audit.md)."])
+    return lines
+
+
 def extra_sections():
-    lines = []
+    lines = official_full_run_section()
     recovered = read("reproduction/full1-recovered-judging/summary.json")
     if recovered:
         lines.extend(["", "## Full171 stock versus budget run", "",
@@ -102,7 +144,7 @@ def extra_sections():
         "The pass criterion for beating 2.12 was fixed in advance in "
         "[pass-criterion.md](reproduction/pass-criterion.md): equal mean of four dimension means, released Gemini scorer, "
         "identical-harness stock baseline, full 171 cases, lower CI bound above 2.12.", "",
-        "A full 171-case run is complete; preliminary tally stock about 1.84, budget memory about 1.80 (no gain); official table pending. "
+        "The official full 171-case run is complete: stock 1.85 [1.67, 2.04], budget memory 1.80 [1.63, 1.98], paired -0.04 [-0.26, +0.16] (table above). "
         "**The pass criterion is not met.** An exploratory check finds memory did fire in 136 of 171 budget episodes, the earlier +0.32 does not "
         "replicate on its own 14 cases inside the full run (+0.04), and the judge scored 5 of 28 identical-pixel video pairs differently "
         "(by up to 4.0 points), so single-call differences under about 0.3 are noise: "

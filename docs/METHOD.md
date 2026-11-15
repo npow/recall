@@ -56,7 +56,14 @@ stock 1.81, budget memory 2.13 (+0.32, 95% CI -0.08 to +0.75), 46/6 cache 2.26 (
 **No arm is established better than stock overall**; budget memory is positive in both seeds and halves instruction-gate failures (3 vs 7 of 28).
 These cover two of the four dimensions and are not comparable with Genie 3's 2.12.
 
-**Full benchmark.** A full 171-case run is complete; preliminary tally stock about 1.84, budget memory about 1.80 (no gain); official table pending.
+**Full benchmark (official).** All 171 cases, both arms, one seed, released Gemini scorer, 341 of 342 episodes scored
+([table](../reproduction/full-run/table.md)): stock **1.85** [1.67, 2.04], budget memory **1.80** [1.63, 1.98];
+paired budget minus stock **-0.04** [-0.26, +0.16]. Per dimension (stock / budget): GC 2.41 / 2.37, IF 1.84 / 1.76,
+in-sight 1.68 / 1.72, out-of-sight 1.47 / 1.36. In-sight uses caption-only text (pre-declared amendment). An independent re-judging
+of the same videos gave stock 1.76-1.80 and budget 1.71-1.75, so single-call judge noise is of that size.
+**Why memory gave no gain** ([memory audit](../reproduction/full-run-memory-audit.md)): the mechanism ran as coded and its fixed-path gain
+reproduces, but only about 12% of GC and out-of-sight chunks are real revisits, returns made by translation are not undone by it,
+and the 24-frame archive behaves like a roughly 6-second first-in-first-out buffer on distinct poses.
 The pre-registered pass criterion for beating 2.12 is **not met**. Memory did fire in 136 of 171 budget episodes, the +0.32 above does not
 replicate on its own 14 cases inside the full run (+0.04), and the judge scored 5 of 28 identical-pixel video pairs differently (by up to 4.0 points),
 so single-call differences under about 0.3 are noise ([exploratory analysis](../reproduction/full-run-memory-fired.md)).

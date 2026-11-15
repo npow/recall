@@ -85,6 +85,8 @@ def main():
     parser.add_argument("--interval", type=int, default=60)
     parser.add_argument("--summarize", action="store_true", help="print the table and exit")
     parser.add_argument("--dry-run", action="store_true", help="download and build prompts; no Gemini calls")
+    parser.add_argument("--no-refresh", action="store_true",
+                        help="read the last saved status.json instead of asking the (possibly stopped) runner app")
     args = parser.parse_args()
     base = ROOT / "outputs/adaptive" / args.label
     if args.summarize:
@@ -94,7 +96,7 @@ def main():
     plan = json.loads((base / "plan.json").read_text())
     expected = len(plan["arms"]) * len(plan["seeds"]) * len(plan["cases"])
     while True:
-        status = refresh_status(args.label)
+        status = (json.loads((base / "status.json").read_text()) if args.no_refresh else refresh_status(args.label))
         scored = {p.stem for p in (base / "gemini/episodes").glob("*.json")
                   if not json.loads(p.read_text()).get("error")} if (base / "gemini/episodes").is_dir() else set()
         todo = pending_rows(status, scored)
