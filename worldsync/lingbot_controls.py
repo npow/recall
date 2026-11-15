@@ -3,6 +3,13 @@ import math
 import numpy as np
 
 
+def fp32_camera_rays(builder, poses, intrinsics, height, width):
+    """Match native ray computation even when called inside denoiser autocast."""
+    import torch
+    with torch.amp.autocast("cuda", enabled=False):
+        return builder(poses, intrinsics, height, width)
+
+
 class CameraPlan:
     def __init__(self, turn_degrees_per_second=60):
         self.poses = []

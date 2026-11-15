@@ -9,10 +9,10 @@ import sys
 import time
 
 from worldsync.credentials import load_local_credentials
-from worldsync.lingbot_controls import CameraPlan
+from worldsync.lingbot_controls import CameraPlan, fp32_camera_rays
 from worldsync.lingbot_native import ROOT, SOURCE_REVISION, WEIGHT_REVISION, runtime_pack, configure_backend
 
-PROTOCOL_ID = "lingbot-world2-stock-reconstructed-haiku-16fps-v3"
+PROTOCOL_ID = "lingbot-world2-stock-reconstructed-haiku-16fps-v4"
 
 
 class RolloutComplete(Exception):
@@ -157,7 +157,9 @@ def main():
             ks = get_Ks_transformed(torch.from_numpy(intrinsics[None]).float(),
                 height_org=480, width_org=832, height_resize=height, width_resize=width,
                 height_final=height, width_final=width)[0].repeat(4, 1).to(pipeline.device)
-            embedding = get_plucker_embeddings(relative, ks, height, width)
+            # Native camera rays are built before the denoiser's BF16 autocast
+            # scope. Hooks run inside it; preserve native FP32 ray arithmetic.
+            embedding = fp32_camera_rays(get_plucker_embeddings, relative, ks, height, width)
             # Match native rearrangement and channel strides as well as values.
             embedding = rearrange(embedding, "f (h a) (w b) c -> (f h w) (c a b)", a=8, b=8)[None]
             embedding = rearrange(embedding, "b (f h w) c -> b c f h w", f=4,

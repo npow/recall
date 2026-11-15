@@ -1,5 +1,11 @@
 # First complete stock episode
 
+**Integration limitation found afterward:** the moving-camera audit detected
+that v3 computed camera rays under the denoiser's BF16 autocast, whereas native
+LingBot computes them in FP32. Neutral inputs did not expose this difference.
+Protocol v4 corrects the precision scope. This v3 episode remains an archived
+diagnostic and must not be reused as the corrected-native baseline.
+
 GC007, LingBot-World2 14B causal-fast, seed 42, Haiku 4.5 player,
 Claude Opus 5.5 judge with the pinned released PlayWorld rubric.
 
