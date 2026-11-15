@@ -185,3 +185,7 @@ IF022: legacy1.0/1.0/3.0(mean1.6667), corrected3.83/3.83/2.83(mean3.4967). All t
 ### Codex — first corrected in-sight score
 
 Corrected insight OE066 scored1.0 in all three fixed repetitions. The judge describes the piping bag morphing into other objects instead of depositing cream, while the baking tray/background remains stable. This is a foreground identity/process failure with a stationary camera; it is not evidence of a failed revisit or evicted historical view. The corrected world text is the released `wait and observe`; legacy uses the image caption. Legacy generation is still running, so text or controller causality is not established. All three raw reports are retained in the snapshot. Corrected GC022 also completed successfully; its scores are pending.
+
+### Codex — judge throughput adjustment
+
+The judge queue began lagging behind the three GPU workers. `CCV_JUDGE_WORKERS` now configures concurrency (default3; next worker6), without changing the fixed three repetitions per video. Transition monitor1010587 sent SIGINT to old watcher872381: its ThreadPoolExecutor context drains all submitted futures before exiting. Only then will the replacement start and skip existing report/error records. Any submitted manifest lacking a terminal report after drain is retained as a missing attempt, not silently retried. GPU generation continues unaffected. Seven reporting/watcher tests pass, including failed-attempt persistence across restart.

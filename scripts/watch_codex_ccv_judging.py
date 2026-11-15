@@ -1,6 +1,7 @@
 """Judge completed paired episodes with exactly three declared independent repeats."""
 import concurrent.futures
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -57,7 +58,8 @@ def generation_accounted_for(scheduled):
                 except (OSError,ValueError):return False
                 if status['returncode']!=0:continue
                 if not all((identifier,rep) in scheduled or
-                           (RUN/'judge'/rep/'episodes'/f'{identifier}.json').exists() for rep in REPEATS):
+                           (RUN/'judge'/rep/'episodes'/f'{identifier}.json').exists() or
+                           (BASE/'judge-errors'/f'{identifier}-{rep}.json').exists() for rep in REPEATS):
                     return False
     return True
 
@@ -67,13 +69,15 @@ def main():
     lease=json.loads((ROOT/'outputs/lambda/codex-ccv-lease.json').read_text())
     deadline=lease['terminate_after_unix']+3600
     scheduled=set();pending={}
-    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
+    workers=int(os.environ.get('CCV_JUDGE_WORKERS','3'))
+    if not 1 <= workers <= 12:raise ValueError('Judge concurrency must be between1and12')
+    with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
         while time.time()<deadline:
             for split,tasks in CASES.items():
                 for task in tasks:
                     for arm in ['L','C']:
                         identifier=f'{arm}-{split}-{task}'
-                        outstanding=[r for r in REPEATS if (identifier,r) not in scheduled and not (RUN/'judge'/r/'episodes'/f'{identifier}.json').exists()]
+                        outstanding=[r for r in REPEATS if (identifier,r) not in scheduled and not (RUN/'judge'/r/'episodes'/f'{identifier}.json').exists() and not (BASE/'judge-errors'/f'{identifier}-{r}.json').exists()]
                         if not outstanding:continue
                         video=ready(arm,split,task)
                         if video is None:continue
