@@ -19,6 +19,9 @@ from worldsync import fourdim  # noqa: E402
 ARMS = ("stock", "budget")
 EXPECTED = {"gc": 48, "if": 50, "insight": 30, "outsight": 43}
 EXCLUDED_SENSITIVITY = {("gc", "GC013")}
+# Insight development cases used for the pre-declared text-prompt amendment (reproduction/full-run-config.json):
+# the held-out insight set is the other 24 of 30.
+INSIGHT_DEV = {("insight", task) for task in ("OE008", "OE022", "OE035", "OE040", "OE063", "OE074")}
 
 
 def load(label):
@@ -73,20 +76,23 @@ def interval(ci):
     return "n/a" if not ci else f"[{ci[0]:.2f}, {ci[1]:.2f}]"
 
 
-def render(full, without, table, status, rows):
+def render(full, without, table, status, rows, held_out=None, sensitivity=()):
     paper = fourdim.PAPER
     head = "| | " + " | ".join(fourdim.DIMENSION_NAMES[s] for s in fourdim.SPLITS) + " | overall (equal mean of four) |"
     lines = [head, "|---|" + "---:|" * 5,
              "| paper, LingBot-World2 (hosted) | " + " | ".join(fmt(paper[s]) for s in fourdim.SPLITS) + f" | {fmt(paper['overall'])} |",
              f"| paper, Genie 3 (closed) | | | | | {fmt(paper['genie3_overall'])} |"]
-    for label, data in (("all 171 cases", full), ("without GC013", without)):
+    variants = [("all 171 cases", full), ("without GC013", without)]
+    if held_out is not None:
+        variants.append(("insight = 24 held-out cases (6 dev cases dropped)", held_out))
+    for label, data in variants:
         for arm in ARMS:
             d = data["arms"][arm]
             n = "/".join(str(d["cases_scored"][s]) for s in fourdim.SPLITS)
             lines.append(f"| ours {arm}, {label} (scored {n}) | " + " | ".join(fmt(d["dimension_means"][s]) for s in fourdim.SPLITS)
                          + f" | {fmt(d['overall'])} {interval(d['overall_ci95'])} |")
     lines += ["", "Paired budget - stock (cases scored in both arms; overall = equal mean of the four dimension deltas):", ""]
-    for label, data in (("all 171", full), ("without GC013", without)):
+    for label, data in [("all 171", full), ("without GC013", without)] + ([("insight 24 held-out", held_out)] if held_out else []):
         p = data["paired"]
         if not p:
             lines.append(f"* {label}: not available (a dimension has no paired cases)")
@@ -101,6 +107,8 @@ def render(full, without, table, status, rows):
                      f"{g['revisit_required']} | {g['revisit_observed']} |")
     failures = {arm: len(status["arms"].get(arm, {}).get("failed", [])) for arm in ARMS}
     unscored = {arm: sum(1 for r in rows if r["arm"] == arm and (r["score"] is None or r["error"])) for arm in ARMS}
+    if sensitivity:
+        lines += ["", "Kept separately as a 'both'-prompt sensitivity datum (not in any table above): " + ", ".join(sensitivity)]
     lines += ["", f"Generation failures after retries: {failures}. Episodes generated but not scored (judge errors): {unscored}.",
               "Expected episodes per arm and dimension: " + json.dumps(EXPECTED) + ".",
               "", "A claim of beating 2.12 requires the lower CI bound of the overall above 2.12 (reproduction/pass-criterion.md)."]
@@ -115,14 +123,18 @@ def main():
     rows, status = load(args.label)
     full = summarize(rows)
     without = summarize(rows, EXCLUDED_SENSITIVITY)
+    held_out = summarize(rows, INSIGHT_DEV)  # insight on the 24 held-out cases (dev cases dropped)
+    sens_dir = ROOT / "outputs/adaptive" / args.label / "sensitivity_both/gemini/episodes"
+    sensitivity = sorted(p.stem for p in sens_dir.glob("*.json")) if sens_dir.is_dir() else []
     table = gates(rows)
     args.out.mkdir(parents=True, exist_ok=True)
-    (args.out / "analysis.json").write_text(json.dumps({"all": full, "without_gc013": without, "gates": table,
+    (args.out / "analysis.json").write_text(json.dumps({"all": full, "without_gc013": without, "insight_24_held_out": held_out,
+                                                       "both_prompt_sensitivity_episodes": sensitivity, "gates": table,
                                                        "paper": fourdim.PAPER}, indent=2) + "\n")
     (args.out / "per-episode.csv").write_text("arm,split,task,gate,score,revisit_required,revisit_observed,error\n" + "\n".join(
         f"{r['arm']},{r['split']},{r['task']},{r['gate']},{r['score']},{r['revisit_required']},{r['revisit_observed']},{bool(r['error'])}"
         for r in sorted(rows, key=lambda r: (r['arm'], r['split'], r['task']))) + "\n")
-    text = render(full, without, table, status, rows)
+    text = render(full, without, table, status, rows, held_out, sensitivity)
     (args.out / "table.md").write_text(text + "\n")
     print(text)
 

@@ -17,6 +17,17 @@
   "player": "claude-haiku-4-5-20251001 via worldsync/reference_player.decide (main's player; reference plan guided; no end-guard, no measured-motion feedback)",
   "player_retries_in_rollout": 2,
   "queue_attempt_cap": 3,
+  "amendments": [
+    {
+      "id": "insight-text-prompt",
+      "declared_by": "coordinator, 2026-11-14 about 23:25 PST, before any insight episode of this run existed (one budget insight job, OE025, had already been taken under 'both' before the queue reorder; it is kept separately as a sensitivity datum)",
+      "change": "insight_text_prompt: caption (the stock default) instead of 'both', for BOTH arms; gc/if/outsight flags unchanged",
+      "evidence": "diagnosis on 6 development cases (OE008, OE022, OE035, OE040, OE063, OE074, seed 42): 'both' appends the literal objective 'wait and observe', a stasis cue; caption 2.60 vs both 1.60, paired +1.0, 4 wins / 1 tie / 1 loss",
+      "insight_chunks": "60 for now; a caption-only 60-chunk confirmation run on the 6 development cases is in flight and may change the length (to be recorded here)",
+      "reporting": "insight overall reported with all 30 cases and with the 24 held-out cases (the 6 development cases excluded), separately",
+      "script": "scripts/rebuild_insight_tail.py"
+    }
+  ],
   "judge": {
     "primary": "released PlayWorld VQA rubric, gate and aggregation via worldsync/gemini_vertex_judge.py",
     "model": "gemini-3.1-pro-preview on Vertex AI (global), gcloud login; the paper's name gemini-3.1-pro is not available to this account",
