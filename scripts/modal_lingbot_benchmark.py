@@ -89,7 +89,7 @@ def benchmark():
     intervals = [b["elapsed_s"] - a["elapsed_s"] for a, b in zip(chunks, chunks[1:])]
     summary = {"scope": "fixed-action hardware timing; no baseline score or adaptive player",
         "status": report.get("status", "failed"), "returncode": outcome.returncode,
-        "gpu": torch.cuda.get_device_name(), "torch": torch.__version__, "cuda": torch.version.cuda,
+        "gpu": torch.cuda.get_device_name(), "torch": str(torch.__version__), "cuda": torch.version.cuda,
         "wall_s": time.monotonic() - started, "generated_seconds": report.get("generated_seconds"),
         "chunk_intervals_s": intervals, "peak_allocated_bytes": report.get("peak_allocated_bytes"),
         "source_revision": SOURCE_REVISION, "checkpoint_revision": WEIGHT_REVISION,
