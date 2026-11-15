@@ -104,7 +104,7 @@ def preflight(split, task_id, *, seed=42, chunks=60):
     return result
 
 
-def run(split,task_id,output,*,seed=42,chunks=60,validate_runtime=False,validate_controller=False):
+def run(split,task_id,output,*,seed=42,chunks=60,validate_runtime=False,validate_controller=False,runtime=None):
     from worldsync import lingbot_rollout
     from worldsync.released_reference_player import ReleasedReferenceController
     output=Path(output);output.mkdir(parents=True,exist_ok=False)
@@ -126,7 +126,7 @@ def run(split,task_id,output,*,seed=42,chunks=60,validate_runtime=False,validate
     controller=ReleasedReferenceController();player=BaselinePlayer(controller,chunks)
     try:
         report=lingbot_rollout.main(generation_argv(split,task_id,output/'episode',seed=seed,chunks=chunks),
-            player_decide=player.decide,simulation_chunk_budget=chunks, controller_profile=audit)
+            runtime=runtime,player_decide=player.decide,simulation_chunk_budget=chunks, controller_profile=audit)
         if report['text_prompt_mode']!='prompt' or report['local_attn_size']!=18 or report['sink_size']!=6:
             raise ValueError('Corrected baseline settings changed')
         audit.update(generation_status=report['status'],haiku_requests=player.requests,
