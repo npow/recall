@@ -1,0 +1,107 @@
+{
+  "protocol": "lingbot-commit-forcing-gc010-paired-v1",
+  "benchmark_eligible": false,
+  "arms": [
+    "stock",
+    "commit_forcing"
+  ],
+  "reference_manifest": "reproduction/task-memory-benchmark/GC010-seed42-turn90_wait_return/stock-run.json",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+  "task_id": "GC010",
+  "split": "gc",
+  "seed": 42,
+  "max_chunks": 14,
+  "fixed_actions": [
+    "WAIT",
+    "RIGHT",
+    "RIGHT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "LEFT",
+    "LEFT",
+    "WAIT"
+  ],
+  "turn_degrees_per_second": 45.0,
+  "local_attn_size": 18,
+  "sink_size": 6,
+  "sampler_timesteps_index": [
+    0,
+    250,
+    500,
+    750
+  ],
+  "sample_shift": 10,
+  "text_prompt_mode": "caption",
+  "attention_backend": "sdpa",
+  "gpu": "H200",
+  "torch": "2.6.0+cu124",
+  "cuda": "12.4",
+  "pipeline_constructor_calls_required": 1,
+  "offload_text_encoder": true,
+  "cuda_allocator_configuration": "expandable_segments:True",
+  "initial_image_sha256": "a7d4b95aa0e55ac027be6abc98b432e9d655f07c269be9939d0efe3f88724475",
+  "image_caption_sha256": "67c5053486967e79bacfd79632fcd5105c70be6abb68fd3c6ec59c192f4024fd",
+  "input_files": {
+    "worldsync/lingbot_commit_pair.py": "2df268ea1fb22af5373ecb66794095cd59402ccdb646210d51031b29658e3295",
+    "worldsync/lingbot_commit_forcing.py": "1da706f4696faaf3f0053c8316404757233c0f96f200cb9b8317bece491dba48",
+    "worldsync/lingbot_rollout.py": "d629d0082a1ed2c4c3b60af3f93214ad9d1dc8708252ebe8991c237570d85fff",
+    "worldsync/lingbot_tuning.py": "b7b725e50ec4aa17e1e932cf9d9f913b49625de25549bfd30f78b8507e781454",
+    "worldsync/lingbot_native.py": "b432904ca7766c6324c5b08adea2e07be03029b1645be234daccd8e9f7ffa31e",
+    "worldsync/lingbot_controls.py": "ef2d9f0c0ba25440964f19c3047108469016a48bfb40c04cc3777a0ade8eba63",
+    "worldsync/lingbot_paths.py": "3d982adb31bfc61d06b89fee7c2206cc5ef8a618380d01d0a06f3c3e6892a606",
+    "worldsync/lingbot_vae.py": "b56ff7b8c751931fc9652c991bbeeefcafeee1185123628cbc195a2a8ac2d3e6",
+    "worldsync/matrix_attention.py": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+    "worldsync/lingbot_pipeline_reuse.py": "8b01c0b585bb47e4792ba158e55a8e3fb4599d71e8c21a660253d786531dbefc",
+    "reproduction/task-memory-benchmark/GC010-seed42-turn90_wait_return/stock-run.json": "b4c4f2fe227f23e226e4f2dff8b5d2a62d6251709c6a21dab4b3a998bcf0a695",
+    "reproduction/lingbot-weights.json": "5d1bd27cdbe49c8ad79fd1ad9669c8e46ee29cece2f8fb3353274271beed1a84",
+    "external/PlayWorld/data/gc/data.json": "8ccc32df18bfb4e54a113a0b2793e418c98fb63cc8b2778f9ee4f9c1e37a3d64",
+    "external/PlayWorld/data/gc/images/GC010.jpg": "a7d4b95aa0e55ac027be6abc98b432e9d655f07c269be9939d0efe3f88724475"
+  },
+  "old_stock_hardware": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4"
+  },
+  "old_stock_pixel_hashes": [
+    "25f0ae5aa846d23d9b2d762de09ed68d03e0b35533e897ae6dd3c7295879b188",
+    "b44e19302b8d0390eaf33de4911f68abf6549764fbc15b65a6b3f0ae56581959",
+    "69a95b5cab96306fbd9a35dbe2c53acf0f7b728b6c4edfc170923ef589afdb82",
+    "548207bf43e1721023a9147e72b9eaedf268a0eca5eaf4c53a7e924c0a81ae19",
+    "b5aa07bb2f2b46c517a1979c23195c04a7ef0d5989eb8eb0ecb26551ca35435e",
+    "a77bdc01aafa907b8dd9c02fb6bf1ae1cdcf062321149b6f177f2cef35d9171d",
+    "ce0529e1d0aa4f3228c2ab0b5a196c9f833f42f77a8f4869d0f763552cef306a",
+    "900de697531956e0c7886982ff9ca2feb4b026ca76f60749ef7b4d8316890b4f",
+    "b76bf4e95f1bdb142c53f35b5face26bd4d58e61f585e3e3b454185e3b67ca88",
+    "928dae1c1b291ffceb7b6c733fc701832ed487743ab6ef5e91eb7a66bf4ed2b3",
+    "d4290514b2d40de89016741dc3457d214774b4f2c22ba96565215da7ce003cec",
+    "b941fff941b3af2e5673eb7404522e97f7c66852d52fe9f19851c5e279b7337b",
+    "c5c93a96660330879112b37d8a1836f787b23dbdc96f922d7b1af3ec713933e1",
+    "ede3ce143e3b2908e5aa70f06b6cb14d10e659e1f9145076fd3f899e8a02d45e"
+  ],
+  "old_reference_comparison": "diagnostic only: old H100/code, incomplete hash provenance",
+  "validation_gpu_snapshots": {
+    "clean_chunks": [
+      0,
+      1,
+      2
+    ],
+    "all_native_layers": true,
+    "description": "Exact current K/V byte comparisons; snapshot memory included in reported peaks"
+  },
+  "gates": [
+    "first three rendered raw hashes exact",
+    "first clean cache difference on chunk2",
+    "all initial noise blocks and scheduler re-noise draws exact",
+    "all native camera audits pass",
+    "per-phase key lengths correct",
+    "one constructor and complete cleanup between arms"
+  ],
+  "plan_sha256": "218a64362aa7f2928d2a7ae439edf2417f8fb9abb749ccf74af9c76d601d22b6"
+}
