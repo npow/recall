@@ -12,8 +12,11 @@ def read(name):
 
 def powered_rows():
     """Seed-42 paired Gemini comparison on 14 GC/OE development cases (stock vs budget memory vs 46/6)."""
-    data = read("reproduction/powered-comparison/seed42/powered-analysis.json")
-    if not data or data.get("judge_errors") or data["episodes_scored"] != 42:
+    data = read("reproduction/powered-comparison/pooled/powered-analysis.json")
+    expected = 84
+    if not data:
+        data, expected = read("reproduction/powered-comparison/seed42/powered-analysis.json"), 42
+    if not data or data.get("judge_errors") or data["episodes_scored"] != expected:
         return None
     names = {"stock": "stock 18/6", "budget": "budget memory (K10 native)", "cache46": "46/6 cache"}
     rows = []
@@ -47,17 +50,16 @@ def extra_sections():
     lines = []
     powered = powered_rows()
     if powered:
-        lines.extend(["", "## Gemini — paired GC/OE development cohort (seed 42)", "",
-            "14 hash-selected GC and out-of-sight cases, three arms, same cases and seed, `--end-guard` and player retries on every arm. "
+        lines.extend(["", "## Gemini — paired GC/OE development cohort (seeds 42 and 43)", "",
+            "14 hash-selected GC and out-of-sight cases (7 GC, 7 out-of-sight), three arms, two seeds, same cases, `--end-guard` and player retries on every arm. "
             "Scores are the Gemini mean over GC and out-of-sight episodes only, **not** the four-dimension overall, "
             "so they are **not comparable with 2.12 or 1.82**. Paired delta is against stock over (case, seed) pairs; "
-            "wins/ties/losses in brackets. Every interval includes zero: no arm is established better than stock. "
-            "Opus scores the same episodes without seeing the budget-memory effect (+0.02), so judge-specific noise is not ruled out.", "",
+            "wins/ties/losses in brackets (28 pairs). No arm is established better than stock overall. The one interval that clears zero, 46/6 on out-of-sight (+0.84 [+0.20, +1.62]), is one of eight uncorrected contrasts, comes mostly from seed 43, and Opus sees nothing (+0.05), so it is a lead, not a result.", "",
             "| Arm | n | Gemini mean [95% CI] | GC | Out-of-sight | Gate non-fail | Paired Δ vs stock [95% CI] (W/T/L) |",
             "|---|---:|---|---:|---:|---:|---|", *powered, "",
-            "Evidence: [analysis](reproduction/powered-comparison/seed42/powered-analysis.json), "
-            "[table](reproduction/powered-comparison/seed42/powered-table.md), [protocol](reproduction/powered-comparison.md). "
-            "A second seed was generated and is being scored; it is added here only when complete."])
+            "Evidence: [analysis](reproduction/powered-comparison/pooled/powered-analysis.json), "
+            "[case-clustered CIs](reproduction/powered-comparison/pooled/case-cluster-ci.json), "
+            "[full tables and limits](reproduction/powered-comparison/pooled/README.md), [protocol](reproduction/powered-comparison.md)."])
     rescore = rescore_rows()
     if rescore:
         lines.extend(["", "## Gemini — earlier rescoring of the first cohorts", "",
