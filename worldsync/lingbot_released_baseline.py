@@ -29,8 +29,8 @@ class BaselinePlayer:
         from worldsync.native_reference_timeline import NativeReferenceTimeline
         from worldsync.camera_conditioning import plan_translation_scale
         if self.timeline is None:
-            self.actions = canonical_actions(task)
-            self.timeline = NativeReferenceTimeline(self.actions, task['prompt'])
+            from worldsync.canonical_camera_plan import build_plan
+            self.actions, self.timeline = build_plan(task)
             self.scale = plan_translation_scale(self.timeline)
         metadata = {'agent_interaction_increment': 0, 'translation_scale': self.scale}
         if not history:
@@ -86,8 +86,8 @@ def preflight(split, task_id, *, seed=42, chunks=60):
     try:
         from worldsync.released_reference_player import canonical_actions
         from worldsync.native_reference_timeline import NativeReferenceTimeline
-        actions=canonical_actions(task)
-        timeline=NativeReferenceTimeline(actions, task['prompt'])
+        from worldsync.canonical_camera_plan import build_plan
+        actions, timeline=build_plan(task)
         result['timeline']=timeline.quantization
         result.update(status='blocked_controller_integration',reference_actions=actions,
                       generation_blocker=GENERATION_BLOCKER)
@@ -96,6 +96,7 @@ def preflight(split, task_id, *, seed=42, chunks=60):
     paths=['worldsync/lingbot_released_baseline.py','worldsync/released_reference_player.py',
            'worldsync/lingbot_rollout.py','worldsync/lingbot_controls.py',
            'worldsync/native_reference_timeline.py','worldsync/camera_conditioning.py',
+           'worldsync/canonical_camera_plan.py','reproduction/baseline-gap/explicit-angle-bindings.json',
            'external/PlayWorld/Agent_player/hyworld2/player.py',
            f'external/PlayWorld/data/{split}/data.json']
     result['source_sha256']={p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in paths}

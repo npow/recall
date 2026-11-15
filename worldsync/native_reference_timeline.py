@@ -8,7 +8,7 @@ TURN={'LEFT','RIGHT','UP','DOWN'}
 
 
 class NativeReferenceTimeline:
-    def __init__(self, actions, objective, nominal_turn_rate=50):
+    def __init__(self, actions, objective, nominal_turn_rate=50, phase_angles=None):
         if not isinstance(actions, list) or not actions:
             raise ValueError('A nonempty canonical action plan is required')
         if isinstance(nominal_turn_rate, bool) or not math.isfinite(nominal_turn_rate) or nominal_turn_rate <= 0:
@@ -34,12 +34,22 @@ class NativeReferenceTimeline:
         elif (len(angles)==1 and len(turns)==2 and {p['action'] for p in turns} in [{'LEFT','RIGHT'},{'UP','DOWN'}]
               and any(word in objective.lower() for word in ['back','starting','original','return'])):
             for p in turns:p['angle']=angles[0]
+        if phase_angles is not None:
+            expected={i for i,p in enumerate(self.phases) if p['action'] in TURN}
+            if set(phase_angles) != expected:
+                raise ValueError('Explicit bindings must cover exactly the turn phases')
+            for index, angle in phase_angles.items():
+                if isinstance(angle,bool) or not isinstance(angle,(int,float)) or not math.isfinite(angle) or angle <= 0:
+                    raise ValueError('Invalid explicit turn angle')
+                self.phases[index]['angle']=angle
         self.quantization={'interval_ms':250,'method':'Nearest cumulative boundary; explicit degree targets divided across their rounded phase steps',
                            'reference_total_ms':elapsed,'scheduled_total_ms':previous*250,
                            'nominal_turn_rate_for_unspecified_angles':nominal_turn_rate,
                            'explicit_angle_phases':sum(p['angle'] is not None for p in turns),
                            'unresolved_angle_phases':sum(p['angle'] is None for p in turns)}
         self.quantization['angle_binding']='Text-number heuristic; not validated semantic grounding'
+        if phase_angles is not None:
+            self.quantization['angle_binding']='Explicit task-fingerprinted phase bindings from released objective'
         self.quantization['native_translation_normalization_validated']=False
         if angles and any(p['angle'] is None for p in turns):
             raise ValueError('Explicit angle targets cannot be unambiguously bound to reference turns')
