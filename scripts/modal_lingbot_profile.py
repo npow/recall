@@ -6,7 +6,12 @@ import modal
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from scripts.modal_lingbot_benchmark import image, weights, results
+if modal.is_local():
+    from scripts.modal_lingbot_benchmark import image, weights, results
+else:
+    image = None
+    weights = modal.Volume.from_name("worldsync-lingbot-weights")
+    results = modal.Volume.from_name("worldsync-lingbot-results")
 
 app = modal.App("worldsync-lingbot-profile")
 

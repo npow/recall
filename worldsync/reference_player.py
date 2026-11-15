@@ -6,10 +6,19 @@ import json
 
 from PIL import Image
 
-from worldsync.judge import parse_json
-
 ACTIONS = {"W", "S", "A", "D", "LEFT", "RIGHT", "UP", "DOWN", "WAIT"}
 OPERATIONS = {"KEEP", "STOP", "EXTEND", "CORRECT", "END"}
+CONTROL_TOOL = {"name": "choose_action", "description": "Select one camera action toward the goal.",
+    "strict": True, "input_schema": {"type": "object", "additionalProperties": False,
+        "properties": {"operation": {"type": "string", "enum": sorted(OPERATIONS)},
+                       "action": {"type": "string", "enum": sorted(ACTIONS) + ["NONE"]},
+                       "reason": {"type": "string"}}, "required": ["operation", "action", "reason"]}}
+
+
+class PlayerResponseError(ValueError):
+    def __init__(self, message, metadata):
+        super().__init__(message)
+        self.metadata = metadata
 
 
 def decide(client, task, initial, latest, history, maximum=40, model="claude-haiku-4-5-20251001", commanded_state=None):
@@ -31,8 +40,8 @@ def decide(client, task, initial, latest, history, maximum=40, model="claude-hai
         "Use intended odometry to track commands and avoid endless repeats, but verify realized "
         "motion and completion visually; odometry alone cannot prove success. "
         "Scene identity drift is not evidence of returning to a location.\n"
-        "Return JSON only: {\"operation\":\"KEEP|STOP|EXTEND|CORRECT|END\", "
-        "\"action\":\"one action or null for END\", \"reason\":\"visual evidence\"}.\n"
+        "Call choose_action exactly once. Use action=NONE only for END; otherwise choose "
+        "one permitted action and give visual evidence in reason.\n"
         + json.dumps({"goal": task["prompt"], "reference_plan": task.get("action_sequence_steps") or task.get("action"),
                       "executed_actions": history, "intended_odometry": commanded_state,
                       "max_interactions": maximum}, ensure_ascii=False)
@@ -45,12 +54,20 @@ def decide(client, task, initial, latest, history, maximum=40, model="claude-hai
         image.save(buffer, format="JPEG", quality=85)
         content.append({"type": "image", "source": {"type": "base64", "media_type": "image/jpeg",
             "data": base64.b64encode(buffer.getvalue()).decode()}})
-    response = client.messages.create(model=model, max_tokens=1500, messages=[{"role": "user", "content": content}])
-    raw = "\n".join(block.text for block in response.content if block.type == "text")
-    decision = parse_json(raw)
+    response = client.messages.create(model=model, max_tokens=1500,
+        tools=[CONTROL_TOOL], tool_choice={"type": "tool", "name": "choose_action", "disable_parallel_tool_use": True},
+        messages=[{"role": "user", "content": content}])
+    calls = [block.input for block in response.content if block.type == "tool_use" and block.name == "choose_action"]
+    metadata = {"model": response.model, "response_id": response.id, "usage": response.usage.model_dump(),
+        "raw_response": json.dumps(calls), "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest()}
+    if len(calls) != 1:
+        metadata["raw_response"] = str(response.content)
+        raise PlayerResponseError("expected exactly one player control call", metadata)
+    decision = calls[0]
+    if decision.get("operation") == "END":
+        decision = {**decision, "action": None}
     if decision.get("operation") not in OPERATIONS or not isinstance(decision.get("reason"), str):
-        raise ValueError("invalid player response")
+        raise PlayerResponseError("invalid player response", metadata)
     if decision["operation"] != "END" and decision.get("action") not in ACTIONS:
-        raise ValueError("invalid player action")
-    return decision, {"model": response.model, "response_id": response.id, "usage": response.usage.model_dump(),
-        "raw_response": raw, "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest()}
+        raise PlayerResponseError("invalid player action", metadata)
+    return decision, metadata

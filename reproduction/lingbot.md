@@ -1,5 +1,25 @@
 # LingBot-World2 reproduction target
 
+The current development scope is one complete scored GC007 episode, followed
+by a small declared cohort for paired baseline/method comparisons. The user
+explicitly removed the requirement to run all 171 cases before demonstrating
+an improvement. Full coverage remains necessary only for a full benchmark
+overall claim. Initial experiments must retain complete episodes, fixed tasks
+and seeds, failure cases, and separate development/held-out examples.
+
+Protocol v3 uses a strict `choose_action` tool schema to prevent malformed
+action strings. A live Haiku API control test passed. The failed v2 calibration
+is preserved and excluded. Run the single episode with:
+
+```bash
+modal run --profile nissan-pow --detach scripts/modal_lingbot_episode.py
+```
+
+The H200 generates the complete adaptive episode; a separate CPU function
+runs the existing Claude gate and rubric afterward. Only the Anthropic key is
+injected as a Modal Secret. No credential file is uploaded. Generation and
+judge artifacts persist in `worldsync-lingbot-results`, including on failures.
+
 The user switched the starting model to the strongest open row of the published
 PlayWorld table: **LingBot-World2, overall 1.82**. Dimension references are GC 2.04,
 IF 2.13, insight 1.95, and out-of-sight 1.16. Hillclimbing remains locked.

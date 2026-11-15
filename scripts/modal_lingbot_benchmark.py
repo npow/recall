@@ -9,7 +9,7 @@ WEIGHT_REVISION = "5c33dd40b213598c418fd25bff30fdbd23fd38a7"
 app = modal.App("worldsync-lingbot-timing")
 weights = modal.Volume.from_name("worldsync-lingbot-weights", create_if_missing=True)
 results = modal.Volume.from_name("worldsync-lingbot-results", create_if_missing=True)
-image = (
+runtime_image = (
     modal.Image.debian_slim(python_version="3.12")
     .apt_install("git", "ffmpeg", "libgl1", "libglib2.0-0")
     .pip_install("torch==2.6.0", "torchvision==0.21.0",
@@ -24,6 +24,9 @@ image = (
                   f"git -C /work/external/LingBot-World2 fetch --depth 1 origin {SOURCE_REVISION}",
                   "git -C /work/external/LingBot-World2 checkout FETCH_HEAD")
     .env({"PYTHONPATH": "/work", "HF_XET_HIGH_PERFORMANCE": "1", "HF_HUB_DOWNLOAD_TIMEOUT": "180"})
+)
+image = (
+    runtime_image
     .add_local_dir(ROOT / "worldsync", "/work/worldsync", ignore=["__pycache__"])
     .add_local_file(ROOT / "reproduction/lingbot-weights.json", "/work/reproduction/lingbot-weights.json")
     .add_local_file(ROOT / "external/PlayWorld/data/gc/data.json", "/work/external/PlayWorld/data/gc/data.json")

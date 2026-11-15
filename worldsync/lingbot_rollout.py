@@ -12,7 +12,7 @@ from worldsync.credentials import load_local_credentials
 from worldsync.lingbot_controls import CameraPlan
 from worldsync.lingbot_native import ROOT, SOURCE_REVISION, WEIGHT_REVISION, runtime_pack, configure_backend
 
-PROTOCOL_ID = "lingbot-world2-stock-reconstructed-haiku-16fps-v2"
+PROTOCOL_ID = "lingbot-world2-stock-reconstructed-haiku-16fps-v3"
 
 
 class RolloutComplete(Exception):
@@ -193,6 +193,8 @@ def main():
     except BaseException as error:
         report["status"] = "failed"
         report["error"] = f"{type(error).__name__}: {error}"
+        if hasattr(error, "metadata"):
+            report["player_failure"] = error.metadata
         raise
     finally:
         for handle in handles:
