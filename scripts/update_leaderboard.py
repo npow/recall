@@ -203,10 +203,10 @@ def generate():
     if small_context and small_context.get("complete"):
         lines.extend(["## Gemini — small-model scripted context diagnostic", "",
             "Official small checkpoint, GC027, seed42, thirteen native fixed-camera chunks. One judge draw per video; no adaptive player. This does not establish a benchmark improvement.", "",
-            "| Cache | Diagnostic score | Revisit observed |", "|---|---:|---|"])
+            "| Cache | Released GC rubric (partial admitted) | Revisit observed |", "|---|---:|---|"])
         for arm, row in small_context["results"].items():
             lines.append(f"| {arm} |{row['score']:.2f}|{row['gate']['revisit_observed']}|")
-        lines.extend(["", "Both videos fail the requested return. [Videos, frame comparison and caveats](reproduction/lingbot-small/README.md).", ""])
+        lines.extend(["", "Both videos fail the requested return. [Scoring audit](reproduction/lingbot-small/scoring-audit.md): partial trajectories pass the released gate, so visual rubric scores can remain high without a revisit. [Videos, frame comparison and caveats](reproduction/lingbot-small/README.md).", ""])
     lines.extend(extra_sections())
     lines.extend(["", "Regenerate: `.venv-lingbot/bin/python scripts/update_leaderboard.py`. Machine-readable snapshot: [leaderboard.json](leaderboard.json).", ""])
     (ROOT / "LEADERBOARD.md").write_text("\n".join(lines))

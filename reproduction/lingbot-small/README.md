@@ -21,3 +21,5 @@ The frozen two-video comparison scored **1.2 for18/6 versus3.8 for70/6** using t
 The [first/middle/final-frame comparison](context-contact.jpg) shows the floor expanding and changing perspective; the initial pink building is absent at the end in both arms. The larger cache preserves a more legible court in this sample, but the requested360-degree return still fails. Review both complete videos and [raw judgments](gemini-summary.json); camera travel and dynamic state need independent confirmation.
 
 Rejudge with `.venv-lingbot/bin/python scripts/evaluate_lingbot_small_context.py`. The task, native fixed controls, seed, frame count, cache sizes and video hashes are validated before judging. These results stay separate from adaptive PlayWorld scores and from the14B experiments.
+
+[Scoring audit](scoring-audit.md): the released gate admits partial trajectories. The3.8 is visual rubric credit on an incomplete journey, not demonstrated memory.

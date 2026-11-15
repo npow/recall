@@ -93,12 +93,12 @@ Caption plus objective is awaiting separate case/seed confirmation. Physical fai
 
 Official small checkpoint, GC027, seed42, thirteen native fixed-camera chunks. One judge draw per video; no adaptive player. This does not establish a benchmark improvement.
 
-| Cache | Diagnostic score | Revisit observed |
+| Cache | Released GC rubric (partial admitted) | Revisit observed |
 |---|---:|---|
 | cache18 |1.20|no|
 | cache70 |3.80|no|
 
-Both videos fail the requested return. [Videos, frame comparison and caveats](reproduction/lingbot-small/README.md).
+Both videos fail the requested return. [Scoring audit](reproduction/lingbot-small/scoring-audit.md): partial trajectories pass the released gate, so visual rubric scores can remain high without a revisit. [Videos, frame comparison and caveats](reproduction/lingbot-small/README.md).
 
 
 ## Gemini — paired GC/OE development cohort (seeds 42 and 43)
