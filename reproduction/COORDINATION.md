@@ -247,3 +247,7 @@ At17:19UTC local Thor was idle (0%utilization, only display processes;105GiB ava
 ### Codex — requested academic presentation completed
 
 User explicitly requested a standard research presentation and chose silent video for live presenting. New `docs/demo/worldsync-academic-2min.mp4` is exactly120s/3600frames/720p30fps, with problem, benchmark, four simultaneous dimension failure videos, control/memory architecture, exploratory IF scores, boardwalk and memory comparisons, limitations/future work. Timed speaker notes, static PDF backup, architecture PNG and source/duration/hash receipt included. Original demo cut retained. Quantitative claims and separate-experiment caveats preserved. Local two-chunk caption smoke remains independent of this presentation.
+
+### Codex — local Thor smoke completed; GPU released
+
+Two-chunk OE020 caption ablation at ad352d1 passed actual inference:29frames/1.8125s, zero player calls, identity WAIT command poses, all source and chunk hashes verified. Receipt/video at `reproduction/baseline-gap/caption-runtime-smoke/`. Total load+generation about421s; no quality score or full-episode validation. Process1121962 exited successfully; local GPU reservation released.

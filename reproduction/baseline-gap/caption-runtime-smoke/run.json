@@ -1,0 +1,349 @@
+{
+  "status": "completed",
+  "model": "LingBot-World2 14B causal-fast stock",
+  "protocol_id": "lingbot-insight-caption-ablation-v1",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+  "initial_image_sha256": "71ba3ccdd46679d545d276071e0564c9ce512621a3961f4d3660ec43f975e710",
+  "text_prompt_mode": "both",
+  "director_mode": "off",
+  "image_caption_sha256": "2f09588af23e008782bf9327d144986be5b0dc9159e28f53619fc624846a215a",
+  "task_id": "OE020",
+  "split": "insight",
+  "seed": 42,
+  "turn_degrees_per_second": 60.0,
+  "fps": 16,
+  "max_chunks": 2,
+  "max_interactions": 40,
+  "native_fixed_controls": false,
+  "camera_embedding_audit": [],
+  "pose_retrieval": false,
+  "sink_rephase": false,
+  "adaptive_retrieval_pilot": false,
+  "player_temperature": "provider default",
+  "player_streaming": false,
+  "streaming_player_sha256": null,
+  "initial_neutral_bootstrap": true,
+  "kv_retention": false,
+  "decoprune": false,
+  "reanchor": false,
+  "budget_memory": false,
+  "fp8_kv": false,
+  "denoise_schedule": "stock",
+  "text_encoder_offloaded_after_encoding": true,
+  "stationary_wait_only": true,
+  "fixed_actions": null,
+  "quantization": "none",
+  "cuda_allocator_configuration": "default",
+  "max_area": 399360,
+  "chunk_size": 4,
+  "local_attn_size": 18,
+  "sink_size": 6,
+  "decision_interval": 1,
+  "stock_knobs": true,
+  "controlled_ablation": true,
+  "sampler_timesteps_index": [
+    0,
+    250,
+    500,
+    750
+  ],
+  "sample_shift": 10,
+  "actions": [
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "bootstrap": true,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 0,
+      "plan_complete": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 0.0,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 351.5845971299568,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0,
+          "translation_scale": 0.9
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0,
+          "translation_scale": 0.9
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 0,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 385.2436432209797,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    }
+  ],
+  "chunks": [
+    {
+      "index": 0,
+      "path": "chunk-000.mp4",
+      "frames": 13,
+      "pixel_sha256": "03ff6325d29173fc397a8b2599f0c6bceebc39da52b62bb03543b4e857221a31",
+      "phase_seconds": {
+        "vae_decode_and_download": 3.681661256006919,
+        "mp4_encode": 0.6442817709757946
+      },
+      "elapsed_s": 385.237951632007,
+      "sha256": "fdd0462034a9dc135e95ed99446e9f2371fd6f8c01c544df65e91585d0c46d9d"
+    },
+    {
+      "index": 1,
+      "path": "chunk-001.mp4",
+      "frames": 16,
+      "pixel_sha256": "0052381404c8476b9d1c4bf91590699026f07697ca3ea77160a45546140ba2cf",
+      "phase_seconds": {
+        "vae_decode_and_download": 4.626591496984474,
+        "mp4_encode": 0.6127343979896978
+      },
+      "elapsed_s": 421.25691447401186,
+      "sha256": "74f78dc1619ad35e704092725c1d971fc47634ceb9e78b474682e836712de99c"
+    }
+  ],
+  "published_score_reproduced": false,
+  "agent_interactions": 0,
+  "simulation_chunk_budget_override": 2,
+  "adapter_sha256": "efdcb02d7e0ac77ad9773c721d3112d033190c1e4898b567a8d76eb96aced79b",
+  "controls_sha256": "ef2d9f0c0ba25440964f19c3047108469016a48bfb40c04cc3777a0ade8eba63",
+  "player_sha256": "53cc8a1de1861c0095a7f27e883e3a23750a71d3ef20ecfa4af5a985c3b77933",
+  "deviations": [
+    "Hosted service intentionally excluded.",
+    "Paper LingBot-specific controller/native keyboard timing is not released; HY reference behavior is transferred explicitly.",
+    "Native frame-time chunk quantization and paused API calls differ from browser wall-clock control.",
+    "40Haiku requests is an explicit local budget definition, not verified paper LingBot interaction counting.",
+    "Exact judge alias currently404 with configured released client; preview scores remain qualified.",
+    "Experimental caption-plus-task text differs from the released objective-only controller profile."
+  ],
+  "controller_profile": {
+    "profile": "lingbot-insight-caption-ablation-v1",
+    "task_id": "OE020",
+    "split": "insight",
+    "seed": 42,
+    "world_text": "A wide-angle, sunlit view of a massive, ornate, curved white historical building at a street corner in a vibrant city, with cyclists riding by. wait and observe",
+    "world_text_source": "image_caption + space + task.prompt",
+    "simulation_chunks": 2,
+    "max_haiku_requests": 40,
+    "controller": {
+      "profile": "released-hy-hold-check-service-strict-v1",
+      "model": "claude-haiku-4-5-20251001",
+      "released_source_sha256": "d7a90541a19c27cf4c7ed298510fb1585974c85bdd90ea39547150093b287291",
+      "released_function_sha256": {
+        "extract_chat_text": "bbbd952ef1f7f29114ddba22852ec47b26d320e704f708a11624dbbd00a9d7d8",
+        "extract_json_object": "de8634b2568cd9af5c79675560b17bc9c217694438d4ac9c20142524ba485d9e",
+        "claude_viewer_screenshot": "7c888cfcbba52e18be17c4028c50452566e41d6aa2c875612d94364d75849726",
+        "request_claude_hold_decision": "63bdb91f6e06f7d147de553cb0c80e828d1572c1f643e33d7a9ccb33a6194e35",
+        "parse_actions": "d1b23517a023cd7aeec38e8a7b8c23a3afc99802b5d96797900b184ab19bf9c6"
+      },
+      "exact_paper_lingbot_controller": false,
+      "reference_guided": true,
+      "output_token_policy": {
+        "released_max_tokens": 60,
+        "override": 0,
+        "effective_max_tokens": 60,
+        "deviation_from_released_cap": false
+      },
+      "scheduler_policy": null,
+      "remaining_differences": [
+        "No public LingBot player exists; this transfers HY-specific reference-guided behavior, not verified paper LingBot behavior.",
+        "Native generation pauses during SDK calls; released browser controls remain held while the request runs.",
+        "Released prompt uses the latest screenshot only, not an initial/current image pair or arbitrary history.",
+        "Decoded native frames replace browser screenshots; the released JPEG65 then640x360/JPEG45 preprocessing is retained.",
+        "Anthropic SDK replaces the released OpenAI-compatible HTTP proxy; malformed/API failures abort instead of silently continuing.",
+        "Raw response schema and served snapshot are now checked before the permissive released parser; this is intentional fail-closed hardening.",
+        "Only native camera controls are supported; avatar interactions and simultaneous keys are rejected, not synthesized."
+      ],
+      "low_level_service_only": true,
+      "hy_action_parser_and_scheduler_used": false,
+      "shared_dsl_source_sha256": "906e1b993b4261cbb7d56013c4fd3f52676120cc234c5bce497016dd5a7ce6d0",
+      "caller_responsibilities": [
+        "Canonical phase parsing, clock and angle calibration",
+        "Check cadence, minimum hold/release, phase progression and rotation-release policy",
+        "Global interaction budget and extension/correction application"
+      ]
+    },
+    "stock_cache": {
+      "frames": 18,
+      "sink": 6
+    },
+    "backbone_modified": false,
+    "training": false,
+    "streamed_legacy_player": false,
+    "exact_published_baseline_reproduced": false,
+    "judge": {
+      "requested_model": "gemini-3.1-pro",
+      "transport": "released Gemini API client",
+      "silent_alias_fallback": false
+    },
+    "native_capability": "Camera rays only; no trained avatar-action channel is invented.",
+    "remaining_differences": [
+      "Hosted service intentionally excluded.",
+      "Paper LingBot-specific controller/native keyboard timing is not released; HY reference behavior is transferred explicitly.",
+      "Native frame-time chunk quantization and paused API calls differ from browser wall-clock control.",
+      "40Haiku requests is an explicit local budget definition, not verified paper LingBot interaction counting.",
+      "Exact judge alias currently404 with configured released client; preview scores remain qualified.",
+      "Experimental caption-plus-task text differs from the released objective-only controller profile."
+    ],
+    "timeline": {
+      "interval_ms": 250,
+      "method": "Nearest cumulative boundary; explicit degree targets divided across their rounded phase steps",
+      "reference_total_ms": 450,
+      "scheduled_total_ms": 500,
+      "nominal_turn_rate_for_unspecified_angles": 50,
+      "explicit_angle_phases": 0,
+      "unresolved_angle_phases": 0,
+      "angle_binding": "Text-number heuristic; not validated semantic grounding",
+      "native_translation_normalization_validated": false
+    },
+    "status": "ready_for_experimental_generation",
+    "reference_actions": [
+      {
+        "type": "wait",
+        "keys": [],
+        "duration_ms": 450,
+        "raw": "wait(450ms)",
+        "index": 0,
+        "rotation_extra_ms": 0,
+        "source": "released shared action DSL; no HY timing conversion",
+        "native_pitch_aliases": []
+      }
+    ],
+    "generation_blocker": "Canonical controller and fixed-scale conditioning are integrated; full rollout hook execution and output provenance still require runtime validation.",
+    "source_sha256": {
+      "worldsync/lingbot_released_baseline.py": "d1017044e5230b2b64cbbe9673bee7d94016d0075a4fb6a599f5c7877cb9c082",
+      "worldsync/released_reference_player.py": "53cc8a1de1861c0095a7f27e883e3a23750a71d3ef20ecfa4af5a985c3b77933",
+      "worldsync/lingbot_rollout.py": "efdcb02d7e0ac77ad9773c721d3112d033190c1e4898b567a8d76eb96aced79b",
+      "worldsync/lingbot_controls.py": "ef2d9f0c0ba25440964f19c3047108469016a48bfb40c04cc3777a0ade8eba63",
+      "worldsync/native_reference_timeline.py": "7e7e8bbd2b62a2cd6ac2ac1cb433d8652ae65d63ad66855e1c055bc044d827c7",
+      "worldsync/camera_conditioning.py": "6c93722a16978998e7164161d5c71d52aed431962b3ea5bab42e8ef138f32fd6",
+      "worldsync/canonical_camera_plan.py": "c551c6681645e643d531fe34c1a4b3aadec948cde0d96646319e1c0a9be44210",
+      "reproduction/baseline-gap/explicit-angle-bindings.json": "852fb14ae3ce4394adb1b4e239656c572e001ded2d14ff20b22fb644f9fb0dc6",
+      "external/PlayWorld/Agent_player/hyworld2/player.py": "d7a90541a19c27cf4c7ed298510fb1585974c85bdd90ea39547150093b287291",
+      "external/PlayWorld/data/insight/data.json": "ffa3cf23b86ab56cd5bea21ae5f12af77d3b5185bff8937d8eacb200dbd46145",
+      "worldsync/lingbot_caption_ablation.py": "4a368e4285ceed59da11f9f333db2077e984b2376742f3f740bf1963646fdb64"
+    },
+    "experimental_text_mode": "both",
+    "scope": "experimental prompt ablation; not baseline reproduction"
+  },
+  "observation_encoding": "lossless PNG before released JPEG stages",
+  "hardware": {
+    "gpu": "NVIDIA Thor",
+    "torch": "2.15.0+cu132",
+    "cuda": "13.2"
+  },
+  "attention_backend": "sdpa",
+  "optional_torch_dlpack_addon_disabled": false,
+  "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+  "checkpoint_loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "turn_clamp": {
+    "mode": "off",
+    "yaw_limits_degrees": null
+  },
+  "camera_trajectory_artifacts": {
+    "initialization_only": "controls/poses.npy",
+    "online_latent_poses": "controls/online_latent_poses.npy",
+    "online_pose_samples": 8,
+    "scope": "Commanded latent-step camera-to-world poses before relative conditioning; not measured visual motion or decoded-frame poses"
+  },
+  "generated_frames": 29,
+  "generated_seconds": 1.8125,
+  "termination": "chunk_budget_exhausted",
+  "elapsed_s": 421.26931192399934,
+  "camera_diagnostics": {
+    "position_normalized_units": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "heading_degrees": 0.0,
+    "accumulated_yaw_degrees": 0.0,
+    "yaw_limits_degrees": null,
+    "world_time_seconds": 1.75,
+    "scope": "Intended camera commands only; not measured visual motion or goal completion."
+  },
+  "peak_allocated_bytes": 71845357568
+}
