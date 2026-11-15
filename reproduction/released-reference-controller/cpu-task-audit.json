@@ -1,0 +1,181 @@
+{
+  "profile": "released-hy-reference-guided-transfer-v1",
+  "scope": "CPU-only released HY parser/control transfer audit; no API/GPU calls",
+  "controller": {
+    "profile": "released-hy-reference-guided-transfer-v1",
+    "model": "claude-haiku-4-5-20251001",
+    "released_source_sha256": "d7a90541a19c27cf4c7ed298510fb1585974c85bdd90ea39547150093b287291",
+    "released_function_sha256": {
+      "extract_chat_text": "bbbd952ef1f7f29114ddba22852ec47b26d320e704f708a11624dbbd00a9d7d8",
+      "extract_json_object": "de8634b2568cd9af5c79675560b17bc9c217694438d4ac9c20142524ba485d9e",
+      "claude_viewer_screenshot": "7c888cfcbba52e18be17c4028c50452566e41d6aa2c875612d94364d75849726",
+      "request_claude_hold_decision": "63bdb91f6e06f7d147de553cb0c80e828d1572c1f643e33d7a9ccb33a6194e35",
+      "parse_actions": "d1b23517a023cd7aeec38e8a7b8c23a3afc99802b5d96797900b184ab19bf9c6"
+    },
+    "exact_paper_lingbot_controller": false,
+    "reference_guided": true,
+    "scheduler_policy": {
+      "reference_priority": "released parse_actions: action field before action_sequence_steps",
+      "action_unit_seconds": 1.5,
+      "arrow_padding_ms": 1500,
+      "minimum_hold_ms": 1000,
+      "minimum_release_ms": 1000,
+      "maximum_checks_per_hold": 3,
+      "minimum_check_spacing_ms": 1500,
+      "maximum_extension_per_check_ms": 5000,
+      "maximum_total_extension_ms": 10000,
+      "maximum_unique_post_hold_arrow_corrections": 2,
+      "correction_hold_ms": 1000,
+      "live_checks_on_rotation_holds": false
+    },
+    "remaining_differences": [
+      "No public LingBot player exists; this transfers HY-specific reference-guided behavior, not verified paper LingBot behavior.",
+      "Native generation pauses during SDK calls; released browser controls remain held while the request runs.",
+      "Durations use generated time (first chunk812.5ms, later1000ms), rounded at chunk boundaries instead of browser wall time.",
+      "First live check observes the first generated chunk instead of starting immediately after browser keydown.",
+      "Released HY action-field priority,1.5s action units and1.5s arrow padding differ from derived action_sequence_steps and cannot be assumed to match hosted LingBot timing.",
+      "Released prompt uses the latest screenshot only, not an initial/current image pair or arbitrary history.",
+      "Decoded native frames replace browser screenshots; the released JPEG65 then640x360/JPEG45 preprocessing is retained.",
+      "Anthropic SDK replaces the released OpenAI-compatible HTTP proxy; malformed/API failures abort instead of silently continuing.",
+      "Neutral observation tail ends at the native chunk budget, not HY's natural60s world endpoint; END does not assert visual success.",
+      "A40interaction paper limit is not verified equivalent to40one-second native chunks; some released HY reference plans exceed this chunk budget.",
+      "Only native camera controls are supported; avatar interactions and simultaneous keys are rejected, not synthesized."
+    ]
+  },
+  "splits": {
+    "gc": {
+      "tasks": 48,
+      "supported": 48,
+      "unsupported": 0,
+      "plans_exceeding_native_budget": 9
+    },
+    "if": {
+      "tasks": 50,
+      "supported": 42,
+      "unsupported": 8,
+      "plans_exceeding_native_budget": 1
+    },
+    "insight": {
+      "tasks": 30,
+      "supported": 30,
+      "unsupported": 0,
+      "plans_exceeding_native_budget": 0
+    },
+    "outsight": {
+      "tasks": 43,
+      "supported": 43,
+      "unsupported": 0,
+      "plans_exceeding_native_budget": 1
+    }
+  },
+  "unsupported": [
+    {
+      "split": "if",
+      "task_id": "IF016",
+      "error": "Released reference plan requires unsupported native controls"
+    },
+    {
+      "split": "if",
+      "task_id": "IF027",
+      "error": "Released reference plan requires unsupported native controls"
+    },
+    {
+      "split": "if",
+      "task_id": "IF030",
+      "error": "Released reference plan requires unsupported native controls"
+    },
+    {
+      "split": "if",
+      "task_id": "IF033",
+      "error": "Released reference plan requires unsupported native controls"
+    },
+    {
+      "split": "if",
+      "task_id": "IF034",
+      "error": "Released reference plan requires unsupported native controls"
+    },
+    {
+      "split": "if",
+      "task_id": "IF037",
+      "error": "Released reference plan requires unsupported native controls"
+    },
+    {
+      "split": "if",
+      "task_id": "IF038",
+      "error": "Released reference plan requires unsupported native controls"
+    },
+    {
+      "split": "if",
+      "task_id": "IF041",
+      "error": "Released reference plan requires unsupported native controls"
+    }
+  ],
+  "plans_exceeding_native_budget": [
+    {
+      "split": "gc",
+      "task_id": "GC002",
+      "released_hy_plan_ms": 54000,
+      "native_chunk_budget_ms": 39812.5
+    },
+    {
+      "split": "gc",
+      "task_id": "GC005",
+      "released_hy_plan_ms": 60000,
+      "native_chunk_budget_ms": 39812.5
+    },
+    {
+      "split": "gc",
+      "task_id": "GC006",
+      "released_hy_plan_ms": 42000,
+      "native_chunk_budget_ms": 39812.5
+    },
+    {
+      "split": "gc",
+      "task_id": "GC007",
+      "released_hy_plan_ms": 48000,
+      "native_chunk_budget_ms": 39812.5
+    },
+    {
+      "split": "gc",
+      "task_id": "GC009",
+      "released_hy_plan_ms": 58500,
+      "native_chunk_budget_ms": 39812.5
+    },
+    {
+      "split": "gc",
+      "task_id": "GC015",
+      "released_hy_plan_ms": 42000,
+      "native_chunk_budget_ms": 39812.5
+    },
+    {
+      "split": "gc",
+      "task_id": "GC021",
+      "released_hy_plan_ms": 45000,
+      "native_chunk_budget_ms": 39812.5
+    },
+    {
+      "split": "gc",
+      "task_id": "GC023",
+      "released_hy_plan_ms": 54000,
+      "native_chunk_budget_ms": 39812.5
+    },
+    {
+      "split": "gc",
+      "task_id": "GC038",
+      "released_hy_plan_ms": 43500,
+      "native_chunk_budget_ms": 39812.5
+    },
+    {
+      "split": "if",
+      "task_id": "IF028",
+      "released_hy_plan_ms": 42000,
+      "native_chunk_budget_ms": 39812.5
+    },
+    {
+      "split": "outsight",
+      "task_id": "OE044",
+      "released_hy_plan_ms": 44000,
+      "native_chunk_budget_ms": 39812.5
+    }
+  ]
+}

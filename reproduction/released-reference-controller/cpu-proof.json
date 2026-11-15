@@ -1,0 +1,28 @@
+{
+  "scope": "CPU-only released HY reference-guided controller transfer, not verified paper LingBot behavior",
+  "command": ".venv-lingbot/bin/python -m pytest -q tests/test_released_reference_player.py tests/test_reference_player.py",
+  "passed": 13,
+  "elapsed_s": 0.43,
+  "new_tests": 9,
+  "existing_legacy_tests": 4,
+  "api_calls": 0,
+  "gpu_calls": 0,
+  "sdk_responses_mocked": true,
+  "checks": [
+    "SHA-pinned original prompt/schema/parser/action parsing and image preprocessing AST",
+    "exact Haiku4.5 SDK model/max60tokens/no custom tool",
+    "released action-field priority and timing",
+    "arrow holds without live checks",
+    "minrelease and post-hold corrections",
+    "three checks/five-second extension/ten-second total limits",
+    "unsupported avatar and simultaneous controls rejected",
+    "failed response retains transactional state",
+    "history integrity and per-episode reset",
+    "source drift rejected"
+  ],
+  "remaining_differences_recorded": true,
+  "files": {
+    "worldsync/released_reference_player.py": "a17a12f27398744a33c4011df9229053bf10e216477993f2088e084317078cfb",
+    "tests/test_released_reference_player.py": "6923f1bb675fe9624bed8b5d8c6bf625ade66b9c8c802501afa410d1f5b6447e"
+  }
+}
