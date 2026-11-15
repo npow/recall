@@ -27,6 +27,8 @@ def main():
     parser.add_argument("--output", type=Path)
     parser.add_argument("--max-chunks", type=int)
     parser.add_argument("--smoke", action="store_true", help="Four explicit integration cases, one per split; no overall score")
+    parser.add_argument("--only", nargs="+", metavar="SPLIT:TASK",
+        help="Run only these cases (e.g. gc:GC007) to verify the pipeline; no overall score")
     parser.add_argument("--publish-status", action="store_true")
     parser.add_argument("--judge", action="store_true", help="Claude diagnostics with released rubric; never official Gemini reproduction")
     parser.add_argument("--dry-run", action="store_true")
@@ -53,7 +55,12 @@ def main():
     if not 1 <= args.max_chunks <= 40:
         parser.error("max chunks must be in [1,40]")
     cases = inventory_cases(args.data_root.resolve())
-    if args.smoke:
+    if args.only:
+        wanted = {tuple(item.split(":", 1)) for item in args.only}
+        cases = [case for case in cases if (case["split"], case["task_id"]) in wanted]
+        if len(cases) != len(wanted):
+            parser.error("unknown case in --only")
+    elif args.smoke:
         selected = {("gc", "GC007"), ("if", "IF001"), ("insight", "OE001"), ("outsight", "OE014")}
         cases = [case for case in cases if (case["split"], case["task_id"]) in selected]
     else:
@@ -68,7 +75,7 @@ def main():
             parser.error("existing suite configuration differs; choose a new output directory")
     else:
         progress = {"protocol_id": protocol_id, "max_chunks": args.max_chunks,
-            "selected_cases": cases, "runs": [], "scope": "four-case smoke" if args.smoke else "full 171-case generation reconstruction",
+            "selected_cases": cases, "runs": [], "scope": "selected cases only" if args.only else "four-case smoke" if args.smoke else "full 171-case generation reconstruction",
             "judge_enabled": args.judge, "rollout_args": knob_args, "judge_protocol": "released-rubric-claude-opus-5-5" if args.judge else None,
             "published_score_reproduced": False, "hillclimbing_allowed": False, "status": "prepared"}
 
