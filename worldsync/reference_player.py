@@ -21,6 +21,21 @@ class PlayerResponseError(ValueError):
         self.metadata = metadata
 
 
+def held_seconds(history):
+    """Seconds the most recent action has been continuously commanded.
+
+    The first native chunk is 13 frames (0.8125 s); later chunks are 1 s.
+    """
+    if not history or not history[-1].get("action"):
+        return 0.0
+    count = 0
+    for item in reversed(history):
+        if item.get("action") != history[-1]["action"]:
+            break
+        count += 1
+    return count - (0.1875 if count == len(history) else 0)
+
+
 def decide(client, task, initial, latest, history, maximum=40, model="claude-haiku-4-5-20251001", commanded_state=None):
     prompt = (
         "You are the Agent Player of an interactive world model. Pursue the goal using the human "
@@ -37,6 +52,7 @@ def decide(client, task, initial, latest, history, maximum=40, model="claude-hai
         "Walking backward (S) does not turn around. A goal requiring turning around and walking "
         "back requires an actual approximately 180-degree yaw, forward movement toward the "
         "starting location, and another turn if the original facing direction is required. "
+        "Compare current_action_held_seconds with the reference plan's hold durations to avoid overshooting a step. "
         "Use intended odometry to track commands and avoid endless repeats, but verify realized "
         "motion and completion visually; odometry alone cannot prove success. "
         "Scene identity drift is not evidence of returning to a location.\n"
@@ -44,6 +60,8 @@ def decide(client, task, initial, latest, history, maximum=40, model="claude-hai
         "one permitted action and give visual evidence in reason.\n"
         + json.dumps({"goal": task["prompt"], "reference_plan": task.get("action_sequence_steps") or task.get("action"),
                       "executed_actions": history, "intended_odometry": commanded_state,
+                      "current_action": history[-1].get("action") if history else None,
+                      "current_action_held_seconds": held_seconds(history),
                       "max_interactions": maximum}, ensure_ascii=False)
     )
     content = [{"type": "text", "text": prompt}]

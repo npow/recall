@@ -28,3 +28,12 @@ def test_reference_controller_uses_native_timing_and_excludes_judge_questions(tm
     assert captured["model"] == "claude-haiku-4-5-20251001"
     assert captured["tools"][0]["strict"] is True
     assert captured["tools"][0]["input_schema"]["properties"]["action"]["enum"] == ["A", "D", "DOWN", "LEFT", "RIGHT", "S", "UP", "W", "WAIT", "NONE"]
+
+
+def test_held_seconds_counts_consecutive_chunks_with_short_first_chunk():
+    from worldsync.reference_player import held_seconds
+    assert held_seconds([]) == 0.0
+    w = {"action": "W"}
+    assert held_seconds([w] * 3) == pytest.approx(2.8125)
+    assert held_seconds([w, {"action": "S"}, {"action": "S"}]) == 2.0
+    assert held_seconds([w, {"action": None}]) == 0.0
