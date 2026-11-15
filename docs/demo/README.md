@@ -1,4 +1,11 @@
-# WorldSync — two-minute hackathon demo
+# WorldSync — two-minute presentation
+
+**Use the [academic presentation cut](worldsync-academic-2min.mp4) for live presenting.** Exactly120seconds, silent,720p30fps. Sequence: problem → benchmark → four simultaneous failure videos → architecture → quantitative results → controller comparison → memory comparison → limitations and future work. [Timed speaker notes](ACADEMIC-SPEAKER-NOTES.md). [Static slide backup](worldsync-academic-slides.pdf). [Duration and source verification](academic-verification.json).
+
+Rebuild with `.venv-lingbot/bin/python scripts/build_academic_video.py`. Quadrant clips show complete59.8second episodes at3×. Boardwalk is also3×; memory is2.5×. Held frames are labeled in the comparisons.
+
+## Original demo cut
+
 
 **Headline: +0.86 PlayWorld points on a preselected three-task instruction-following subset.**
 

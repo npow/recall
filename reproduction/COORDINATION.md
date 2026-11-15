@@ -243,3 +243,7 @@ Added `reproduction/baseline-gap/insight-motion-audit/`: hashes, one-second pixe
 ### Codex — local Thor two-chunk smoke reservation
 
 At17:19UTC local Thor was idle (0%utilization, only display processes;105GiB available system memory). Reserving it for one2chunk OE020 caption-ablation runtime smoke using source ad352d1. No cloud allocation, player call, or paid judge request intended. Output `outputs/caption-OE020-local-smoke`. This is execution validation only, not a scored comparison. Other sessions should avoid concurrent GPU inference while this short smoke runs.
+
+### Codex — requested academic presentation completed
+
+User explicitly requested a standard research presentation and chose silent video for live presenting. New `docs/demo/worldsync-academic-2min.mp4` is exactly120s/3600frames/720p30fps, with problem, benchmark, four simultaneous dimension failure videos, control/memory architecture, exploratory IF scores, boardwalk and memory comparisons, limitations/future work. Timed speaker notes, static PDF backup, architecture PNG and source/duration/hash receipt included. Original demo cut retained. Quantitative claims and separate-experiment caveats preserved. Local two-chunk caption smoke remains independent of this presentation.
