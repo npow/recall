@@ -139,3 +139,5 @@ At $3.29/h: about **$27 to $35 for one 171-episode arm**, whatever the number of
 (4 instances finish in about 2.2 h, 6 in about 1.5 h). Two arms: about $55 to $70. Within the cap.
 
 - Codex `7287b46fd8c14c2b80abc7a681412452`: gpu_1x_h100_sxm5, us-south-3, launched 2026-11-15T15:51:13.433521+00:00, $4.29/hour, hard240minute cap. Purpose:user-reassigned12case paired canonical-controller comparison. Watchdog864649; other sessions' instances untouched.
+
+- Codex `daa2be26cc0c4638ac2c9ec881b45160`: gpu_1x_h100_sxm5, us-southeast-1, launched2026-11-15T16:07:53.918165+00:00, $4.29/hour, hard90minute cap(max$6.435). Purpose:parallelize four complete controller-comparison pairs. Watchdog912389. Provisioning; no generation yet.

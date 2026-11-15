@@ -107,7 +107,7 @@ def main():
 
     fmt = lambda v: "—" if v is None else f"{v:.2f}"
     lines = ["# Corrected-controller validation: canonical controller vs legacy player (12 cases)", "",
-        "**Scope: validation on a 12-case sample, not a benchmark score.** One seed (42), one GPU, three Gemini calls per video.", "",
+        "**Scope: validation on a 12-case sample, not a benchmark score.** One seed (42), each pair on the same GPU, three Gemini calls per video.", "",
         "## Setup", "",
         f"- **Cases:** {selection['rule']}: " + ", ".join(f"{NAMES[s]} {' '.join(selection['picked'][s])}" for s in SPLITS) + ".",
         "- **Legacy arm:** frozen full-run config at `5b8a5b8` (`reproduction/full-run-config.json`): `--player-retries 2 "
@@ -115,7 +115,7 @@ def main():
         f"- **Corrected arm:** Codex's canonical controller at `{selection.get('corrected_source_commit', 'unrecorded: inspect source provenance')}` via `--validate-controller` (task objective as text, "
         "canonical timeline, released hold service, 60-chunk budget). Hold-service token cap raised from the released 60 to 400 "
         "(`WORLDSYNC_HOLD_MAX_TOKENS`) because a live IF001 response truncated at60tokens.",
-        "- **Hardware:** both arms must use the same GPU; Codex takeover uses oneH100SXM. Inspect run.json hardware fields. Not bit-comparable to the Modal frozen run.",
+        f"- **Hardware:** {selection.get('gpu_policy', 'Both arms must use the same GPU; inspect run metadata')}. Inspect run.json hardware fields. Not bit-comparable to the Modal frozen run.",
         "- **Player transport:** Haiku 4.5 (`claude-haiku-4-5-20251001`) through the local CLIProxyAPI; the project API key is spend-capped.",
         "- **Judge:** `worldsync/gemini_vertex_judge.py` (released rubric, gate and aggregation), `gemini-3.1-pro-preview` on Vertex, "
         "three independent calls per video (separate caches).", "",

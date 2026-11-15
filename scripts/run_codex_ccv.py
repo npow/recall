@@ -23,6 +23,12 @@ def main():
     shard=int(os.environ.get('CCV_SHARD','0'));shards=int(os.environ.get('CCV_SHARDS','1'))
     if not 0 <= shard < shards:raise ValueError('Invalid paired shard')
     jobs=[job for index,job in enumerate(jobs) if (index//2)%shards==shard]
+    case_ids=os.environ.get('CCV_CASE_IDS')
+    if case_ids:
+        requested=set(case_ids.split(','))
+        known={f'{split}-{task}' for split,task,_ in jobs}
+        if not requested <= known:raise ValueError('Unknown case assignment')
+        jobs=[job for job in jobs if f'{job[0]}-{job[1]}' in requested]
     for split,task,arm in jobs:
         episode=output/arm/f'{split}-{task}'
         status=output/f'{arm}-{split}-{task}-status.json'
