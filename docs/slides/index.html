@@ -67,6 +67,9 @@ td:not(:first-child),th:not(:first-child){white-space:nowrap}
 table.compact td,table.compact th{font-size:27px;padding:10px 12px}
 th{color:var(--dim);font-weight:600;font-size:28px}
 td:first-child,th:first-child{text-align:left}
+table.base td:last-child,table.base th:last-child{background:rgba(61,220,151,.10);color:var(--ours);font-weight:800}
+table.base td:last-child b{font-size:38px}
+table.base td:last-child .small{color:var(--dim);font-weight:500}
 tr.hl td{color:var(--ours);font-weight:700}
 video,img.media{display:block;width:100%;height:auto;border-radius:10px;background:#000}
 .tag{position:absolute;left:14px;bottom:14px;background:rgba(0,0,0,.78);padding:8px 16px;font-size:26px;font-weight:700;border-radius:6px;border-left:6px solid var(--rel)}
@@ -188,7 +191,7 @@ svg text{font-family:inherit}
   <!-- 4 -->
   <section class="slide" data-sec="Benchmark">
     <h2>First: reproduce the baseline, on all 171 tasks, twice</h2>
-    <table style="margin-bottom:26px">
+    <table class="base" style="margin-bottom:26px">
       <tr><th>LingBot-World2, as released</th><th>Geometry</th><th>Interaction</th><th>In-sight</th><th>Out-of-sight</th><th>Overall</th></tr>
       <tr><td>Published (hosted service)</td><td>2.04</td><td>2.13</td><td>1.95</td><td>1.16</td><td><b>1.82</b></td></tr>
       <tr><td class="rel">Our run 1 (H200 GPUs)</td><td>2.41</td><td>1.84</td><td>1.68</td><td>1.47</td><td><b>1.85</b> <span class="small">[1.67, 2.04]</span></td></tr>
