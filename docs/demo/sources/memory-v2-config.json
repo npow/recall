@@ -1,0 +1,238 @@
+{
+ "label": "memv2-step2",
+ "written_before_any_v2_adaptive_episode": true,
+ "purpose": "Does memory v2 (unlimited exact-KV archive on disk, content-verified retrieval) improve adaptive episodes that actually contain revisits beyond the stock window? Exploratory follow-up to the full-run null.",
+ "code_commit_validated_on_fixed_paths": "e658ee4",
+ "case_rule": "GC and out-of-sight cases whose full1 budget-memory episode had >= 1 revisit chunk in reproduction/full-run-memory-audit/revisits.json (cost threshold 0.5); fixed before generation",
+ "cases": [
+  {
+   "split": "gc",
+   "task_id": "GC004",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC006",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC008",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC011",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC022",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC024",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC027",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC032",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC036",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC044",
+   "development": false
+  },
+  {
+   "split": "outsight",
+   "task_id": "OE019",
+   "development": false
+  },
+  {
+   "split": "outsight",
+   "task_id": "OE042",
+   "development": false
+  },
+  {
+   "split": "outsight",
+   "task_id": "OE052",
+   "development": false
+  },
+  {
+   "split": "outsight",
+   "task_id": "OE055",
+   "development": false
+  },
+  {
+   "split": "outsight",
+   "task_id": "OE058",
+   "development": false
+  },
+  {
+   "split": "outsight",
+   "task_id": "OE069",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC005",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC009",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC021",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC023",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC025",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC031",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC035",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC039",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC048",
+   "development": false
+  },
+  {
+   "split": "outsight",
+   "task_id": "OE024",
+   "development": false
+  },
+  {
+   "split": "outsight",
+   "task_id": "OE044",
+   "development": false
+  },
+  {
+   "split": "outsight",
+   "task_id": "OE053",
+   "development": false
+  },
+  {
+   "split": "outsight",
+   "task_id": "OE056",
+   "development": false
+  },
+  {
+   "split": "outsight",
+   "task_id": "OE060",
+   "development": false
+  },
+  {
+   "split": "outsight",
+   "task_id": "OE070",
+   "development": false
+  },
+  {
+   "split": "gc",
+   "task_id": "GC046",
+   "development": true
+  },
+  {
+   "split": "outsight",
+   "task_id": "OE062",
+   "development": true
+  },
+  {
+   "split": "gc",
+   "task_id": "GC007",
+   "development": true
+  },
+  {
+   "split": "gc",
+   "task_id": "GC045",
+   "development": true
+  },
+  {
+   "split": "outsight",
+   "task_id": "OE067",
+   "development": true
+  }
+ ],
+ "counts": {
+  "gc": 22,
+  "outsight": 14,
+  "development": 5
+ },
+ "frozen_at": "2026-11-15 08:35 PST",
+ "step1_status_at_freeze": {
+  "note": "step 1 was only partly complete when this file was frozen",
+  "jobs_complete": [
+   "oldpose-hold-GC007-seed42",
+   "oldpose-slow360-GC007-seed42",
+   "oldpose-translate-GC001-seed42",
+   "stock-hold-GC007-seed42",
+   "stock-slow360-GC007-seed42",
+   "stock-translate-GC001-seed42",
+   "v2-hold-GC007-seed42",
+   "v2-slow360-GC007-seed42",
+   "v2-translate-GC001-seed42",
+   "v2content-hold-GC007-seed42",
+   "v2content-translate-GC001-seed42",
+   "v2recompute-hold-GC001-seed42",
+   "v2recompute-hold-GC007-seed42",
+   "v2recompute-slow360-GC007-seed42"
+  ],
+  "jobs_total": 27
+ },
+ "primary_kv_source": "recompute",
+ "primary_choice_evidence": "Lambda H100, GC007, DINO final frame vs frame 12, one seed: turn-hold-return stock 0.352, old rule 0.780, v2 disk 0.816, v2 recompute 0.765; slow 360 stock 0.568, old rule 0.486, v2 disk 0.630, v2 recompute 0.615; GC001 translate-return stock 0.916, old rule 0.849, v2 disk 0.909. Recompute is within 0.05 of disk and far above stock on the hold, so it is the primary arm (no disk archive needed). Caveat recorded before freezing: on different hardware (local Thor) the STOCK model itself returns on the same hold path (0.798 vs v2 recompute 0.761), so the fixed-path gain is hardware/sample dependent.",
+ "reference_arm": "disk K/V on the first 8 held-out cases (sanity only: player trajectories differ between runs, so recompute-vs-disk parity is measured on the fixed paths of step 1, not here)",
+ "arm": {
+  "flags": "final1 stock flags for the case + --memory-v2 recompute --memv2-select verified --memv2-retrieved 10 --memv2-rope native",
+  "seed": 42,
+  "hardware": "Lambda gpu_1x_h100_pcie",
+  "player": "claude-haiku-4-5-20251001 via the local proxy tunnel"
+ },
+ "comparison_arm": "final1 stock episode of the same case (same seed, flags, hardware, code lineage abfa73a)",
+ "development_data": "the fixed paths of step 1 (GC007, GC001), the 20 final1 development cases, and the full1 stock videos used for the offline replay; thresholds (60 deg / 2 units pose match, DINO 0.75 place verification, 0.80 direct match) were chosen on those and are frozen here",
+ "metrics": {
+  "judge_independent": "DINO(start frame, frame at each commanded return to the start pose), paired by case with the stock episode where both arms contain a return; mean and bootstrap 95% CI",
+  "judge": "released PlayWorld rubric/gate/aggregation, gemini-3.1-pro-preview on Vertex, 3 independent calls per video for BOTH arms; paired mean-of-3 difference with bootstrap 95% CI over cases; all cases and held-out (non-development) cases reported separately; per dimension (GC, out-of-sight)",
+  "mechanism": "chunks where retrieval replaced attention, frames retrieved, disk bytes, read seconds, added seconds per chunk"
+ },
+ "known_limits": [
+  "one seed",
+  "player trajectories differ between arms, so pairs compare episodes, not identical paths",
+  "the case rule was derived from the budget arm's trajectories on Modal",
+  "v2 cannot make the model undo translation; it only stops injecting mismatched views",
+  "a positive result would be exploratory: it is not the pre-registered final1 comparison"
+ ]
+}
