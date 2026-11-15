@@ -207,15 +207,15 @@ svg text{font-family:inherit}
   <!-- 6 -->
   <section class="slide" data-sec="Method">
     <h2>Key insight: the model only remembers about 4.5 seconds</h2>
-    <svg viewBox="-6 0 1736 330" width="1728" height="328" style="margin:6px 0 20px">
+    <svg viewBox="-6 0 1736 350" width="1728" height="348" style="margin:6px 0 20px">
       <g id="tl"></g>
       <text x="0" y="40" font-size="28" fill="#9aa4b2">generated latent frames, oldest to newest →</text>
       <rect x="-4" y="62" width="196" height="126" rx="12" fill="none" stroke="#7aa2f7" stroke-width="4"/>
       <rect id="tlwin" x="1338" y="62" width="388" height="126" rx="12" fill="none" stroke="#7aa2f7" stroke-width="4" style="transition:x .1s linear,width .1s linear"/>
       <text x="0" y="232" font-size="30" fill="#7aa2f7" font-weight="700">first 6: kept forever</text>
       <text x="765" y="232" font-size="30" fill="#ff8a65" font-weight="700" text-anchor="middle">evicted: the model can no longer see these</text>
-      <text id="tlwinlab" x="1530" y="232" font-size="30" fill="#7aa2f7" text-anchor="middle" font-weight="700">most recent 12: sliding window</text>
-      <text x="0" y="300" font-size="28" fill="#9aa4b2">The cache holds 18 latent frames ≈ 4.5 s. For each one it keeps the keys and values attention reads, at all 40 layers.</text>
+      <text id="tlwinlab" x="1530" y="270" font-size="30" fill="#7aa2f7" text-anchor="middle" font-weight="700">most recent 12: sliding window</text>
+      <text x="0" y="334" font-size="28" fill="#9aa4b2">The cache holds 18 latent frames ≈ 4.5 s. For each one it keeps the keys and values attention reads, at all 40 layers.</text>
     </svg>
     <ul>
       <li>LingBot-World2 generates video a chunk at a time and looks back only at this cache.</li>
@@ -548,7 +548,7 @@ svg text{font-family:inherit}
       var start=Math.max(6,head-11), cnt=head-start+1;
       win.setAttribute('opacity',1); lab.setAttribute('opacity',1);
       win.setAttribute('x',start*w-6); win.setAttribute('width',cnt*w+0);
-      var cx=Math.min(1560,Math.max(1010,(start*w-6)+(cnt*w)/2));
+      var cx=Math.min(1480,Math.max(380,(start*w-6)+(cnt*w)/2));
       lab.setAttribute('x',cx);
     }
     var _paint=paint; paint=function(){ _paint(); moveWin(); };
