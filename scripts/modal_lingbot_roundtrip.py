@@ -18,7 +18,7 @@ app = modal.App("worldsync-lingbot-roundtrip")
 
 @app.function(image=image, gpu="H200", cpu=8, memory=131072, timeout=1800, max_containers=1,
               volumes={"/cache": weights, "/results": results})
-def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False):
+def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18):
     import shutil
     import subprocess
     import time
@@ -29,7 +29,7 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
     target.parent.mkdir(exist_ok=True)
     if not target.exists():
         target.symlink_to("/cache/14b-causal-fast")
-    mode = "retrieval" if retrieval else "stock"
+    mode = "retrieval" if retrieval else ("stock" if cache_frames == 18 else f"context{cache_frames}")
     identifier = f"{mode}-{path_name}-seed{seed}-{time.time_ns()}"
     output = Path("/work/outputs") / identifier
     try:
@@ -38,6 +38,8 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
             "--native-fixed-controls", "--fixed-actions", *actions, "--output", str(output)]
         if retrieval:
             command.append("--pose-retrieval")
+        if cache_frames != 18:
+            command.extend(["--controlled-ablation", "--local-attn-size", str(cache_frames)])
         outcome = subprocess.run(command, cwd="/work")
     finally:
         if output.exists():
@@ -46,14 +48,16 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
     if outcome.returncode:
         raise RuntimeError(f"Calibration failed; artifacts preserved: {identifier}")
     report = json.loads((output / "run.json").read_text())
-    return {"scope": "fixed-path native stock calibration; not PlayWorld task score",
+    return {"scope": "fixed-path native-camera controlled experiment; not PlayWorld task score", "mode": mode,
             "path": path_name, "result_directory": identifier, "run": report}
 
 
 @app.local_entrypoint()
-def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False):
-    result = generate.remote(path_name, seed, retrieval)
-    mode = "retrieval" if retrieval else "stock"
+def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18):
+    if cache_frames not in {18, 34} or (retrieval and cache_frames != 18):
+        raise ValueError("This declared pilot supports stock18, context34, or stock-budget retrieval")
+    result = generate.remote(path_name, seed, retrieval, cache_frames)
+    mode = "retrieval" if retrieval else ("stock" if cache_frames == 18 else f"context{cache_frames}")
     output = ROOT / "outputs/lingbot-reproduction" / f"native-{mode}-{path_name}-seed{seed}.json"
     output.write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({k: v for k, v in result.items() if k != "run"}, indent=2))

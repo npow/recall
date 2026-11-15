@@ -1,0 +1,16 @@
+{
+  "scope": "Controlled development experiment; not an adaptive benchmark baseline",
+  "declared_before_candidate_generation": true,
+  "task_id": "GC007",
+  "split": "gc",
+  "path": "turn_return",
+  "seed": 42,
+  "stock_report": "reproduction/roundtrip-v4/turn-run.json",
+  "baseline_cache_frames": 18,
+  "candidate_cache_frames": 34,
+  "sink_frames_both": 6,
+  "latent_frames_in_complete_path": 32,
+  "hypothesis": "Keeping the complete observed yaw history may preserve returning geometry better than the native sliding window.",
+  "evaluation": ["Native camera input parity", "Unchanged raw pixels until context eviction differs", "Realized pan and reversal", "Returning facade/roof/sign/layout", "Endpoint DINO/PSNR with control-fidelity qualification", "GPU memory and latency"],
+  "failure_policy": "No improvement claim for frozen videos, mismatched routes, abrupt resets, or endpoint similarity alone. Validate any promising result on additional scenes and seeds."
+}

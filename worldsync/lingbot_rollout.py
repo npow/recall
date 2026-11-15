@@ -42,6 +42,8 @@ def main():
         parser.error("native fixed controls require exactly max-chunks fixed actions")
     if args.pose_retrieval and not args.native_fixed_controls:
         parser.error("retrieval calibration requires native fixed controls")
+    if args.pose_retrieval and not lingbot_tuning.is_stock(knobs):
+        parser.error("bounded retrieval currently requires the stock 18-frame/6-sink budget")
     output = args.output.resolve()
     if output.exists() and any(output.iterdir()):
         parser.error("output directory must be empty")
@@ -66,6 +68,7 @@ def main():
         "stationary_wait_only": stationary, "fixed_actions": args.fixed_actions, "quantization": "none",
         "max_area": 480 * 832, "chunk_size": 4, "local_attn_size": knobs["local_attn_size"], "sink_size": knobs["sink_size"],
         "decision_interval": knobs["decision_interval"], "stock_knobs": lingbot_tuning.is_stock(knobs),
+        "controlled_ablation": args.controlled_ablation,
         "sampler_timesteps_index": [0, 250, 500, 750], "sample_shift": 10,
         "actions": [], "chunks": [], "published_score_reproduced": False,
         "agent_interactions": 0,

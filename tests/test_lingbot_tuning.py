@@ -26,6 +26,17 @@ def test_non_stock_knobs_locked_until_gate_opens(tmp_path):
     assert knobs["sink_size"] == 2 and knobs["decision_interval"] == 2
 
 
+def test_controlled_ablation_requires_native_fixed_path():
+    parser = argparse.ArgumentParser()
+    tuning.add_arguments(parser)
+    args = parser.parse_args(["--controlled-ablation", "--local-attn-size", "34"])
+    with pytest.raises(SystemExit):
+        tuning.resolve(args, parser)
+    args.native_fixed_controls = True
+    args.fixed_actions = ["WAIT", "RIGHT", "LEFT", "WAIT"]
+    assert tuning.resolve(args, parser)["local_attn_size"] == 34
+
+
 def test_invalid_cache_rejected(tmp_path):
     with pytest.raises(SystemExit):
         parse(["--local-attn-size", "6"], tmp_path, "hillclimbing", True)
