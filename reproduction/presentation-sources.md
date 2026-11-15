@@ -23,6 +23,8 @@ The storyboard points at videos and result files in other branches' worktrees by
 | Limitations | Memory 1.80 vs stock 1.85 (full run); director 1.82 vs 1.81 (final run); judge SD 0.36; loss clip GC032 at 12 s (2.5 vs 1.0) | the two `analysis.json` files; `LEADERBOARD.md`; horizon `analysis.json` |
 | Process | 3 audited defects; 12% of chunks are revisits; v2 about 200x smaller; 36 real revisit tasks, memory v2 final with three judge calls per video: -0.35 [-0.71, -0.01], 9 wins / 12 ties / 15 losses (also in Limitations and under the GC045 example) | `reproduction/INTEGRATION.md`, `reproduction/full-run-memory-audit.md`, `reproduction/full-run/analysis.json`; the -0.35 figure is the memory-v2 fork's final report relayed by the coordinator, not re-derived here (the single-call per-case CSV I read gives -0.12) |
 
+The Process scene and the autoresearch slide also mention past.dev as the loop's findings memory (100 findings indexed, integrated at the end; see `reproduction/research-memory/README.md`). It is not claimed to have influenced any result or the method.
+
 Not verified: that the phase labels ("looking away", "camera turns back") match every frame (they are derived
 from the scripted action list: 13 frames for the first chunk, 16 for each later one); the "K = 10 retrieved
 frames" figure (taken from the coordinator's description).

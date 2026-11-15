@@ -391,7 +391,7 @@ def scene_system(data, seconds):
             draw.rounded_rectangle((cx, 880, cx + width, 944), 32, outline=mix(BG, OURS, d), width=3)
             draw.text((cx + width / 2, 912), chip, font=font(30), fill=mix(BG, FG, d), anchor="mm")
             cx += width + 20
-        caption(draw, "Archive every frame; on a true return, recompute and splice.", 1.0)
+        caption(draw, "New: pose-verified retrieval, and K/V rebuilt from the stored frame.", 1.0)
         yield np.asarray(image)
 
 
@@ -564,8 +564,9 @@ def scene_chart(data, seconds):
         head = "pooled over 6, 12 and 24 s away" if pooled else f"after {headline['seconds']} s away: {headline['stock']['mean']:.2f} → {headline['memory']['mean']:.2f}"
         draw.text((rx, 462), head, font=font(42), fill=mix(BG, FG, a), anchor="lm")
         draw.text((rx, 524), f"95% CI {big['ci95'][0]:+.2f} to {big['ci95'][1]:+.2f}", font=font(40, False), fill=mix(BG, FG, a), anchor="lm")
-        draw.text((rx, 584), f"{headline['n']} unseen scenes · paired, same seed", font=font(34, False), fill=mix(BG, MUTED, a), anchor="lm")
-        draw.text((rx, 630), "config frozen before generation", font=font(34, False), fill=mix(BG, MUTED, a), anchor="lm")
+        draw.text((rx, 570), f"{headline['n']} unseen scenes · paired, same seed", font=font(34, False), fill=mix(BG, MUTED, a), anchor="lm")
+        draw.text((rx, 606), "config frozen before generation", font=font(34, False), fill=mix(BG, MUTED, a), anchor="lm")
+        draw.text((rx, 646), "baseline: released model · clips in docs/demo/", font=font(26, False), fill=mix(BG, MUTED, a), anchor="lm")
         for k, r in enumerate(rows):
             d = r["paired"]
             draw.text((rx, 692 + k * 40), f"{r['seconds']:>2} s:  {d['mean']:+.2f}  [{d['ci95'][0]:+.2f}, {d['ci95'][1]:+.2f}]   {d['wins']}W / {d['ties']}T / {d['losses']}L",
@@ -669,7 +670,7 @@ def scene_process(data, seconds):
     loop = data.board["loop"]
     box_w, gap = 272, 36
     x_start = (W - len(loop) * box_w - (len(loop) - 1) * gap) // 2
-    chips = ["pre-registered configs", "every run logged in the repo"]
+    chips = data.board.get("chips", ["pre-registered configs", "every run logged in the repo"])
     for index in range(int(seconds * FPS)):
         t = index / FPS
         image, draw = canvas("Process", "An autoresearch loop", "AUTONOMY", 58)
@@ -687,16 +688,20 @@ def scene_process(data, seconds):
         draw.line((x_start + (len(loop) - 1) * (box_w + gap) + box_w / 2, 600, x_start + (len(loop) - 1) * (box_w + gap) + box_w / 2, 640,
                    x_start + box_w / 2, 640, x_start + box_w / 2, 600), fill=mix(BG, MUTED, back), width=4)
         draw.text((W / 2, 676), "repeat", font=font(32, False), fill=mix(BG, MUTED, back), anchor="mm")
-        cx = 80
-        total = sum(draw.textlength(c, font=font(32)) + 48 for c in chips) + 24 * (len(chips) - 1)
-        cx = (W - total) / 2
-        for n, chip in enumerate(chips):
-            d = ease((t - 4.3 - 0.3 * n) / 0.6)
-            width = draw.textlength(chip, font=font(32)) + 48
-            draw.rounded_rectangle((cx, 780, cx + width, 848), 34, outline=mix(BG, ACCENT, d), width=3)
-            draw.text((cx + width / 2, 814), chip, font=font(32), fill=mix(BG, FG, d), anchor="mm")
-            cx += width + 24
-        draw.text((W / 2, 900), "AI agents ran the loop; a human set the goals and budget and made key calls.",
+        rows = [chips[:2], chips[2:]]
+        for r, row in enumerate(rows):
+            if not row:
+                continue
+            total = sum(draw.textlength(c, font=font(32)) + 48 for c in row) + 24 * (len(row) - 1)
+            cx = (W - total) / 2
+            for n, chip in enumerate(row):
+                d = ease((t - 4.3 - 0.3 * (n + 2 * r)) / 0.6)
+                width = draw.textlength(chip, font=font(32)) + 48
+                y = 750 + 80 * r
+                draw.rounded_rectangle((cx, y, cx + width, y + 62), 31, outline=mix(BG, ACCENT, d), width=3)
+                draw.text((cx + width / 2, y + 31), chip, font=font(32), fill=mix(BG, FG, d), anchor="mm")
+                cx += width + 24
+        draw.text((W / 2, 940), "The loop found its own bugs and rebuilt memory v2; a human set goals and budget.",
                   font=font(30, False), fill=mix(BG, MUTED, ease((t - 4.6) / 0.6)), anchor="mm")
         caption(draw, "Agents ran, audited and fixed their own experiments.", 1.0)
         yield np.asarray(image)
