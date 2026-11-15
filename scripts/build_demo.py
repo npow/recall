@@ -116,9 +116,9 @@ def figure_footprint(path):
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     rows = [("exact internal state\n(what we started with)", 1235, 0.780), ("8-bit internal state", 627, 0.818),
-            ("our memory v2:\nkeep the frame, recompute", 6.2, 0.765)]
+            ("low-rank internal state\n(rank 64, one run)", 68, 0.821), ("our memory v2:\nkeep the frame, recompute", 6.2, 0.765)]
     fig, axes = plt.subplots(1, 2, figsize=(9, 4.2), dpi=160)
-    colours = ["#999999", "#999999", "#3c96e8"]
+    colours = ["#999999", "#999999", "#bbbbbb", "#3c96e8"]
     names = [r[0] for r in rows]
     axes[0].barh(names, [r[1] for r in rows], color=colours)
     axes[0].set_xscale("log")
@@ -128,7 +128,7 @@ def figure_footprint(path):
     axes[0].set_xlim(1, 12000)
     axes[0].invert_yaxis()
     axes[1].barh(["stock\n(no memory)"] + names, [0.352] + [r[2] for r in rows], color=["#e8783c"] + colours)
-    axes[1].set_xlabel("similarity of the return view to the start (0–1)", fontsize=10)
+    axes[1].set_xlabel("similarity to the start view (0–1)", fontsize=10)
     for index, value in enumerate([0.352] + [r[2] for r in rows]):
         axes[1].text(value + 0.015, index, f"{value:.2f}", va="center", fontsize=10)
     axes[1].set_xlim(0, 1)
@@ -141,6 +141,37 @@ def figure_footprint(path):
     fig.text(0.01, 0.01, "One scene, one seed, scripted path, Lambda H100; DINO similarity of the final frame to the start view. Not a benchmark score.",
              fontsize=7.5, color="#555555")
     fig.tight_layout(rect=(0, 0.03, 1, 0.94))
+    fig.savefig(path)
+    plt.close(fig)
+
+
+def figure_loop(path):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import FancyBboxPatch
+    steps = [("1  Experiment", "Memory v1 on all 171\nPlayWorld tasks\n1.80 vs stock 1.85:\nno gain", "#e8783c"),
+             ("2  Audit", "Agents re-read the code\nand traces: no bug, but v1\nalso retrieves on 338 chunks\nwhere nothing is revisited", "#888888"),
+             ("3  Diagnosis", "Wrong frames after\nforward-and-back moves;\n24-frame archive forgets\nafter about 6 s", "#888888"),
+             ("4  Fix: memory v2", "Keep every frame, verify\nthe place before retrieving,\nrecompute state on demand\n(6 MB, not 1,235 MB)", "#3c96e8"),
+             ("5  Re-test", "Slow 360° turn:\nv1 0.49 < stock 0.57\nv2 0.63\nIdentical to stock\nwhen it does not fire", "#2e9e5b")]
+    fig, ax = plt.subplots(figsize=(11, 3.3), dpi=160)
+    ax.set_xlim(0, 11)
+    ax.set_ylim(0, 3.3)
+    ax.axis("off")
+    for index, (title, body, colour) in enumerate(steps):
+        x = 0.15 + index * 2.17
+        ax.add_patch(FancyBboxPatch((x, 0.55), 1.95, 2.2, boxstyle="round,pad=0.03,rounding_size=0.08", linewidth=2,
+                                    edgecolor=colour, facecolor="white"))
+        ax.text(x + 0.975, 2.5, title, ha="center", va="center", fontsize=10.5, fontweight="bold", color=colour)
+        ax.text(x + 0.975, 1.5, body, ha="center", va="center", fontsize=8.6, color="#222222", linespacing=1.35)
+        if index < len(steps) - 1:
+            ax.annotate("", xy=(x + 2.17, 1.65), xytext=(x + 1.98, 1.65), arrowprops=dict(arrowstyle="-|>", color="#555555", lw=1.8))
+    ax.annotate("", xy=(1.1, 0.5), xytext=(9.9, 0.5), arrowprops=dict(arrowstyle="-|>", color="#555555", lw=1.4,
+                                                                       connectionstyle="arc3,rad=-0.12"))
+    ax.text(5.5, 0.12, "results feed the next experiment", ha="center", fontsize=9, color="#555555")
+    ax.set_title("The loop ran on its own results: experiment → audit → diagnosis → fix → re-test", fontsize=12, loc="left")
+    fig.tight_layout()
     fig.savefig(path)
     plt.close(fig)
 
@@ -304,6 +335,7 @@ def main():
     report = horizon_stats(table)
     figure_horizon(report, OUT / "fig1-horizon.png", args.interim)
     figure_footprint(OUT / "fig2-footprint.png")
+    figure_loop(OUT / "fig3-loop.png")
     pairs = []
     for (task, horizon, arm), row in table.items():
         if arm == "memory" and horizon in (12, 24) and (task, horizon, "stock") in table:
