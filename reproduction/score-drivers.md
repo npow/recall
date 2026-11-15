@@ -78,3 +78,13 @@ Caveats: 54 scored episodes, one judge, two seeds with up to about 2 points of s
 (GC015, GC005), a judge that gates strictly (`partial` vs `pass` is a judgment call), and no check that
 more Extend steps raise translation approach beyond the measured x1.04. The "closed loop will fix it" step
 is a hypothesis to test, not a result.
+
+## Correction (near-field retest, `reproduction/near-field-motion.md`)
+
+The "commanded trajectory not realized" cause above, and the recommendation that rested on it, over-read one scene. The earlier
+"translation barely realized" hypothesis was a **distant-scene artefact** (GC007, a far facade). A 56-job stock sweep on 13
+scenes found camera control realized: forward expands every scene (median 1.78x, range 1.07 to 4.79), backward contracts
+every scene (median 0.49x), and turning realizes a mean 176.6 degrees of 180 commanded. GC007 is the only gate-failure scene
+where translation is weak. For GC017, GC015 and GC027 the commanded motion happens, so control realization does not explain
+their gate failures; the real causes (player behaviour, judge strictness, the task objective itself) remain **untested**.
+Treat the ranked table and the "fix control realization first" recommendation as superseded for those cases.
