@@ -1,0 +1,447 @@
+{
+  "task_id": "IF022",
+  "request_identity": {
+    "version": 3,
+    "video_sha256": "2164ea8335cf62d6f55ada2ef634d2fda9de9d26654dd5f87ba491fbc5534bda",
+    "reference_sha256": "497aad90414daff0803af95963bd40329d7e20694b7b4a1a7e63138c695fb958",
+    "task_sha256": "6a4ebd1903788f49383e797191a7b2a16e7c9fced7a52ff2c7b7b7e025dbbb22",
+    "world_model": "LingBot-World2 14B causal-fast",
+    "judge_model": "gemini-3.1-pro-preview",
+    "transport": "vertex",
+    "generation_config": {
+      "response_mime_type": "application/json",
+      "temperature": 0.1
+    },
+    "released_source_sha256": {
+      "metrics/vqa/rubric.py": "717337bf48986afd3bd239e838a30d2bc75788b5a3f1c76c3ceeb67f5997c945",
+      "metrics/vqa/instruction_gate.py": "216f4abc854bbc020819a55679b873cf5472bb2d72661659ed8674cca673df5f",
+      "metrics/vqa/sampling.py": "573be715981b64ac664be85f40337e8fce9002839698673de37300845eb6e0ca",
+      "metrics/vqa/score.py": "9e7656ea7aacde92b5c52ba4b401628ac5589c227935a18a0ab95b44870038a7",
+      "metrics/aggregate.py": "a11aa8c5da9a437d00e0b2205f5e72a48f953a68d63b6b3d804567008fe7adfd"
+    },
+    "adapter_source_sha256": {
+      "judge_integrity.py": "b4d5f5b249b1c4316a1a5c712cc37d2f60a381cd0f892f1611aa936494a22497",
+      "gemini_vertex_judge.py": "e0c3211328e2ea64695c7ad016b8aa20ef2ba493916a2b518b0e555118eb3e3e"
+    },
+    "fingerprint": "e92f7765e3041d72ce42dfa167b5ccb8bc0aaa722bb2fa05a08c3e08dec5db33"
+  },
+  "request_fingerprint": "e92f7765e3041d72ce42dfa167b5ccb8bc0aaa722bb2fa05a08c3e08dec5db33",
+  "world_model": "LingBot-World2 14B causal-fast",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "judge_project": "seismic-fx-507702-v1",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "2164ea8335cf62d6f55ada2ef634d2fda9de9d26654dd5f87ba491fbc5534bda",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; Controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF022",
+    "perspective": "third-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "女子沿着木制栈道一直向前走，朝着前方的亭子移动，但在视频结束时并未到达亭子。",
+    "trajectory_evidence_zh": "在所有帧中，女子始终背对镜头，沿着木制栈道保持向前行走，与前方亭子的距离逐渐缩短，但未走过亭子。",
+    "failure_reason_zh": "女子一直在向前走，但由于视频时间限制，未能到达前方的结构（亭子），因此“到达后继续向前走”的部分未能完全展现，属于部分完成。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "女子的衣着（灰色毛衣、棕色裤子）和体型在整个视频中保持稳定一致。"
+      },
+      "contact_support": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "女子在原地踏步，脚部在木板上持续滑动，没有产生真实的支撑和位移。"
+      },
+      "causal_response": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "由于主体完全没有产生空间位移，未能与环境产生任何有意义的因果交互。"
+      },
+      "motion_kinematics": {
+        "score": 1,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "女子仅在原地播放行走动画，没有任何向前的世界坐标位移，属于严重的运动学失败。"
+      },
+      "collision_boundary": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "主体没有产生位移，未能到达或测试任何边界，无碰撞交互。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored",
+      "subject_identity": "excluded from mean because interaction_quality_level_1_to_5 is 1"
+    },
+    "static_tail_policy_applied": "No static tail penalty applied; the entire video shows treadmilling inactivity.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "女子一直在原地踏步，未能完成向前行走的动作。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景中的凉亭、桥梁和芦苇荡在整个视频中保持完全静止和一致。",
+      "post_completion_phase_zh": "无"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "gazebo and boardwalk",
+        "anchors": [
+          "gazebo roof",
+          "boardwalk posts"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-78"
+      ],
+      "continuous_camera_motion": "no",
+      "tracked_structural_anchors": [
+        "gazebo posts",
+        "boardwalk railings"
+      ],
+      "newly_revealed_regions_zh": "无",
+      "evidence_zh": "视频中相机完全静止，栈道栏杆和前方凉亭在画面中的位置没有任何变化。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频连续，没有发生硬重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作未完成，无额外扣分。"
+    },
+    "final_state_check": {
+      "window": "75-78",
+      "visible_key_objects": [
+        "woman",
+        "boardwalk",
+        "gazebo"
+      ],
+      "reappearance_consistency_zh": "主体和环境在视频结尾保持一致。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "yes",
+      "ineffective_repetition": "yes",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "none",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "yes",
+      "ineffective_repetition": "yes",
+      "evidence_zh": "not_applicable",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "yes",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "视频中女子在原地踏步，没有任何世界坐标下的位移，环境和相机完全静止。",
+      "final_score_gate_applied": 1
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "fail",
+      "instruction_following_score": 0,
+      "prompt_directed_forward_progress": "no",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "女子在木栈道上原地做行走动画，没有向前移动。",
+      "trajectory_evidence_zh": "从视频开始到结束，女子相对于栈道两侧的木柱和前方的凉亭没有任何距离上的缩短，完全没有位移。",
+      "failure_reason_zh": "主体在原地踏步，没有产生任何向前的空间位移。"
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "no_motion",
+      "solid_interpenetration": "no",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "由于主体在原地踏步，没有产生位移，未能到达或测试任何碰撞边界。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "gazebo and railings",
+      "target_type": "solid_boundary",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "yes",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "yes",
+      "evidence_zh": "前方的凉亭和栈道栏杆在整个视频中保持稳定，但主体未能靠近它们。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "yes",
+      "proxy_evidence_observed": [
+        "torso_or_head_bob",
+        "joint_motion"
+      ],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "虽然能看到腿部动作和身体起伏，但脚部在木板上完全滑动，没有产生真实的支撑和位移。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "woman",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "clothing",
+        "body_proportions",
+        "face_or_hair",
+        "colors",
+        "materials"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "女子的衣着（灰色毛衣、棕色裤子）和体型在整个视频中保持一致。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "no",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于主体完全没有产生有意义的空间位移（交互质量为1），外观一致性不计入最终得分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "主体在原地踏步，没有任何世界坐标下的位移。",
+      "positive_evidence_zh": "无",
+      "evidence_zh": "视频中女子仅在原地播放行走动画，相对于环境没有任何前进，属于严重的运动学失败，未能产生任何有意义的物理交互。",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频中女子在木栈道上完全原地踏步，没有任何向前的空间位移，属于严重的运动学失败。",
+    "task_id": "IF022"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "Fd_5asqEJ8eM998Pqta98AM",
+      "prompt_tokens": 7090,
+      "output_tokens": 236
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "MN_5aqWGJrSr4_UP6bz2-Ac",
+      "prompt_tokens": 38528,
+      "output_tokens": 3385
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 79,
+      "sheets_count": 4,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 7.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 78,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 7.8,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 4,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "e0430733fa89732768f14eba07c3e6462f33763c189090726ac2510052a0a019",
+  "score_prompt_sha256": "52a287b4379465c37033ce4444b0a5c167bf2352749688cf94aa02cdad0e2234",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "L-if-IF022"
+}

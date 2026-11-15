@@ -177,3 +177,7 @@ IF012 completed: legacy1.0/1.0/1.0(mean1.00), corrected1.0/1.0/1.6(mean1.20). Bo
 ### Codex — three-worker runtime active
 
 Third worker2364 passed its actual IF001 player probe and started GC022. All82staged worldsync Python modules, including the unused extra probe, hash-match across all three workers; source-equivalence receipt added to `reproduction/baseline-gap/ccv-source-provenance.json`. Corrected IF022 also completed60chunks on worker2. No new aggregate or promotion claim; judging continues.
+
+### Codex — fourth paired score
+
+IF022: legacy1.0/1.0/3.0(mean1.6667), corrected3.83/3.83/2.83(mean3.4967). All three corrected gates are partial: the woman walks along the boardwalk, then stops at the platform instead of continuing. This is a released-score gain on one case, not full instruction success or a memory/revisit result. Four paired cases now complete: two GC declines and two IF gains. No in-sight/out-of-sight pair is complete yet, so no overall estimate or promotion. Snapshot includes all available fixed repetitions and terminal generation evidence.

@@ -1,0 +1,660 @@
+{
+  "task_id": "IF022",
+  "request_identity": {
+    "version": 3,
+    "video_sha256": "0ab9852c3ca12e0dab413e56d85d5efe65f3f345cc5176e4fd44d46317fcb4fc",
+    "reference_sha256": "497aad90414daff0803af95963bd40329d7e20694b7b4a1a7e63138c695fb958",
+    "task_sha256": "6a4ebd1903788f49383e797191a7b2a16e7c9fced7a52ff2c7b7b7e025dbbb22",
+    "world_model": "LingBot-World2 14B causal-fast",
+    "judge_model": "gemini-3.1-pro-preview",
+    "transport": "vertex",
+    "generation_config": {
+      "response_mime_type": "application/json",
+      "temperature": 0.1
+    },
+    "released_source_sha256": {
+      "metrics/vqa/rubric.py": "717337bf48986afd3bd239e838a30d2bc75788b5a3f1c76c3ceeb67f5997c945",
+      "metrics/vqa/instruction_gate.py": "216f4abc854bbc020819a55679b873cf5472bb2d72661659ed8674cca673df5f",
+      "metrics/vqa/sampling.py": "573be715981b64ac664be85f40337e8fce9002839698673de37300845eb6e0ca",
+      "metrics/vqa/score.py": "9e7656ea7aacde92b5c52ba4b401628ac5589c227935a18a0ab95b44870038a7",
+      "metrics/aggregate.py": "a11aa8c5da9a437d00e0b2205f5e72a48f953a68d63b6b3d804567008fe7adfd"
+    },
+    "adapter_source_sha256": {
+      "judge_integrity.py": "b4d5f5b249b1c4316a1a5c712cc37d2f60a381cd0f892f1611aa936494a22497",
+      "gemini_vertex_judge.py": "e0c3211328e2ea64695c7ad016b8aa20ef2ba493916a2b518b0e555118eb3e3e"
+    },
+    "fingerprint": "634e2d6777165ba849cfa982bf336eea141b306cd51237f5859cec224ec23bb6"
+  },
+  "request_fingerprint": "634e2d6777165ba849cfa982bf336eea141b306cd51237f5859cec224ec23bb6",
+  "world_model": "LingBot-World2 14B causal-fast",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "judge_project": "seismic-fx-507702-v1",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "0ab9852c3ca12e0dab413e56d85d5efe65f3f345cc5176e4fd44d46317fcb4fc",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; Controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF022",
+    "perspective": "third-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "partial",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "女子沿着木栈道向前走，到达尽头的平台后停止了走动，转身并站在栏杆旁。",
+    "trajectory_evidence_zh": "在第1到第4张主接触图中（0.0秒至9.9秒），女子沿着木栈道向前走。在第5张接触图（10.0秒）左右到达平台后，她停止了前进，随后转身并一直站在栏杆旁直到视频结束，没有继续向前走。",
+    "failure_reason_zh": "女子在到达木栈道尽头后停止了走动，没有按照指令要求继续向前走，轨迹未完全完成。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 2.83,
+    "final_score_1_to_5": 2.83,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "女子的服装在视频中发生了两次严重的无端突变：最初穿着灰色毛衣和棕色裤子，在第160帧左右转身后变成了条纹衬衫配黑色束腰，在第370帧左右再次转身后又变成了灰色衬衫配黑色裤子和棕色腰带。"
+      },
+      "contact_support": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "女子的双脚在可见时与木栈道保持了合理的接触，没有出现明显的悬空、穿模或严重的滑动现象。"
+      },
+      "causal_response": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "环境保持稳定，木栈道和两侧的栏杆没有发生无故的变形或消失，女子走动时衣服有自然的摆动反馈。"
+      },
+      "motion_kinematics": {
+        "score": 2,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "女子最初向前行走，但随后停下、转身并向摄像机方向（向后）走回，这与控制指令hold(W)要求的持续向前运动严重矛盾。"
+      },
+      "collision_boundary": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "女子在木栈道内活动，没有穿透两侧的木栏杆，边界限制得到了合理的维持。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "女子在视频后半段转身后基本保持静止，但由于动作已经发生过实质性进展，动作后的静止尾部不作为扣分项。",
+    "action_inconsistency_penalties": [
+      "motion_kinematics因女子转身向后走违背hold(W)指令而扣分"
+    ],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "女子最初向前走，但中途停下并转身往回走，未能完成持续向前走的指令。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景中的凉亭、远处的桥梁和芦苇荡在女子向前走时保持稳定。",
+      "post_completion_phase_zh": "女子转身及后续过程中，背景结构依然保持相对稳定，没有发生重置或扭曲。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "woman's clothing before and after turning",
+        "anchors": [
+          "wooden boardwalk",
+          "side railings"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-598"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "wooden boardwalk",
+        "gazebo ahead"
+      ],
+      "newly_revealed_regions_zh": "无明显新区域，摄像机主要跟随女子在栈道上移动。",
+      "evidence_zh": "摄像机视角变化连贯，背景元素的透视变化符合摄像机的跟随运动。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频中没有出现背景或空间结构的硬重置，场景保持连贯。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作未完全完成，不适用完成后的额外扣分。"
+    },
+    "final_state_check": {
+      "window": "575-598",
+      "visible_key_objects": [
+        "woman",
+        "wooden boardwalk",
+        "railings"
+      ],
+      "reappearance_consistency_zh": "女子在视频末尾的服装与初始状态完全不一致，发生了严重的突变。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "not_applicable",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "女子在视频中有明显的走动和转身动作。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "yes",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "yes",
+      "static_tail_first_frame": 400,
+      "static_tail_fraction_of_video": 0.33,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "女子在视频前三分之二有明显的走动和转身动作，最后三分之一基本保持静止。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "partial",
+      "instruction_following_score": 1,
+      "prompt_directed_forward_progress": "partial",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "女子最初沿着木栈道向前走，但随后停下、转身并向摄像机方向走回。",
+      "trajectory_evidence_zh": "前15秒女子有明显的向前位移，但之后轨迹反转，未能持续向前。",
+      "failure_reason_zh": "女子未能持续向前走，中途转身并往回走。"
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "partial",
+      "observed_outcome": "avoided",
+      "solid_interpenetration": "no",
+      "support_after_contact": "plausible",
+      "boundary_response_plausible": "yes",
+      "evidence_zh": "女子在木栈道内行走，没有穿透两侧的栏杆，边界限制得到了合理的维持。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "wooden boardwalk railings",
+      "target_type": "solid_boundary",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "yes",
+      "observed_trigger": "none",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "yes",
+      "evidence_zh": "木栈道和栏杆在整个视频中保持稳定，没有发生无故的消失或变形。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "partial",
+      "proxy_evidence_observed": [
+        "torso_or_head_bob",
+        "weight_transfer"
+      ],
+      "proxy_supports_expected_locomotion": "yes",
+      "evidence_zh": "虽然女子的脚部经常被遮挡，但身体的起伏和重心转移表明其行走动作是合理的。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "woman",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "face_or_hair"
+      ],
+      "identity_failure": "morphing",
+      "evidence_zh": "女子的服装发生了两次严重突变：最初穿着灰色毛衣和棕色裤子，转身后变成条纹衬衫配黑色束腰，再次转身后又变成灰色衬衫配黑色裤子和棕色腰带。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 3,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": 3,
+      "evidence_zh": "由于交互质量达到3级（有明显的部分交互），主体身份的一致性被正常计入评分权重。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 3,
+      "interaction_opportunity_reached": "partial",
+      "physical_response_observed": "yes",
+      "core_failure_zh": "严重的服装突变和与指令矛盾的后退动作。",
+      "positive_evidence_zh": "女子最初在木栈道上进行了连贯的向前行走，与地面接触合理。",
+      "evidence_zh": "女子进行了部分符合指令的向前行走，但随后出现了严重的服装突变和与指令矛盾的后退动作，整体交互质量为部分成功但有重大缺陷。",
+      "final_score_cap_applied": 3
+    },
+    "summary_zh": "视频中女子最初在木栈道上向前走，但随后出现了严重的服装突变并转身往回走，违背了持续向前的指令。",
+    "task_id": "IF022"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "gt75aoqDGoGX9LsPsIOMuAU",
+      "prompt_tokens": 39670,
+      "output_tokens": 258
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "td75arKIDOz1tALHxLm4DQ",
+      "prompt_tokens": 71108,
+      "output_tokens": 3598
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 599,
+      "sheets_count": 24,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 59.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 149,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 14.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 7,
+          "first_sample_index": 150,
+          "last_sample_index": 174,
+          "first_time_seconds": 15.0,
+          "last_time_seconds": 17.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 8,
+          "first_sample_index": 175,
+          "last_sample_index": 199,
+          "first_time_seconds": 17.5,
+          "last_time_seconds": 19.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 9,
+          "first_sample_index": 200,
+          "last_sample_index": 224,
+          "first_time_seconds": 20.0,
+          "last_time_seconds": 22.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 10,
+          "first_sample_index": 225,
+          "last_sample_index": 249,
+          "first_time_seconds": 22.5,
+          "last_time_seconds": 24.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 11,
+          "first_sample_index": 250,
+          "last_sample_index": 274,
+          "first_time_seconds": 25.0,
+          "last_time_seconds": 27.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 12,
+          "first_sample_index": 275,
+          "last_sample_index": 299,
+          "first_time_seconds": 27.5,
+          "last_time_seconds": 29.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 13,
+          "first_sample_index": 300,
+          "last_sample_index": 324,
+          "first_time_seconds": 30.0,
+          "last_time_seconds": 32.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 14,
+          "first_sample_index": 325,
+          "last_sample_index": 349,
+          "first_time_seconds": 32.5,
+          "last_time_seconds": 34.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 15,
+          "first_sample_index": 350,
+          "last_sample_index": 374,
+          "first_time_seconds": 35.0,
+          "last_time_seconds": 37.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 16,
+          "first_sample_index": 375,
+          "last_sample_index": 399,
+          "first_time_seconds": 37.5,
+          "last_time_seconds": 39.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 17,
+          "first_sample_index": 400,
+          "last_sample_index": 424,
+          "first_time_seconds": 40.0,
+          "last_time_seconds": 42.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 18,
+          "first_sample_index": 425,
+          "last_sample_index": 449,
+          "first_time_seconds": 42.5,
+          "last_time_seconds": 44.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 19,
+          "first_sample_index": 450,
+          "last_sample_index": 474,
+          "first_time_seconds": 45.0,
+          "last_time_seconds": 47.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 20,
+          "first_sample_index": 475,
+          "last_sample_index": 499,
+          "first_time_seconds": 47.5,
+          "last_time_seconds": 49.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 21,
+          "first_sample_index": 500,
+          "last_sample_index": 524,
+          "first_time_seconds": 50.0,
+          "last_time_seconds": 52.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 22,
+          "first_sample_index": 525,
+          "last_sample_index": 549,
+          "first_time_seconds": 52.5,
+          "last_time_seconds": 54.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 23,
+          "first_sample_index": 550,
+          "last_sample_index": 574,
+          "first_time_seconds": 55.0,
+          "last_time_seconds": 57.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 24,
+          "first_sample_index": 575,
+          "last_sample_index": 598,
+          "first_time_seconds": 57.5,
+          "last_time_seconds": 59.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 30,
+      "sheets_count": 8,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 58.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 7,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 14.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 8,
+          "last_sample_index": 11,
+          "first_time_seconds": 16.0,
+          "last_time_seconds": 22.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 12,
+          "last_sample_index": 15,
+          "first_time_seconds": 24.0,
+          "last_time_seconds": 30.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 16,
+          "last_sample_index": 19,
+          "first_time_seconds": 32.0,
+          "last_time_seconds": 38.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 20,
+          "last_sample_index": 23,
+          "first_time_seconds": 40.0,
+          "last_time_seconds": 46.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 7,
+          "first_sample_index": 24,
+          "last_sample_index": 27,
+          "first_time_seconds": 48.0,
+          "last_time_seconds": 54.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 8,
+          "first_sample_index": 28,
+          "last_sample_index": 29,
+          "first_time_seconds": 56.0,
+          "last_time_seconds": 58.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "f49b6f7b9cb1466b27bea0403ae0f4485e1070fe76b4d03abf74b91e48b52d6e",
+  "score_prompt_sha256": "6558767445048f4147ea48e1ff6befcd340ef172358830af1024e70566b514b0",
+  "scores": {
+    "official": 2.83,
+    "final_score": 2.83
+  },
+  "episode_id": "C-if-IF022"
+}
