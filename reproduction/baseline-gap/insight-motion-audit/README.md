@@ -26,7 +26,7 @@ Run OE020 and OE066 with the frozen corrected controller, same seed42, same chec
 
 This would require2new episodes if matching controls are possible,4otherwise. It has not been launched. It is a development ablation, not evidence of a full-benchmark gain. The hackathon IF demonstration remains unchanged.
 
-## Experimental entrypoint (CPU-tested, not GPU-validated)
+## Experimental entrypoint (CPU-tested; two-chunk GPU smoke passed)
 
 The stock baseline still rejects a caption override. A separate experimental profile permits only in-sight caption-plus-task text with the same stock cache and canonical controller. To write a CPU preflight manifest without loading a GPU:
 
@@ -40,4 +40,4 @@ One experimental episode, when compute is available:
 .venv-lingbot/bin/python -m worldsync.lingbot_caption_ablation --task-id OE020 --seed 42 --chunks 60 --generate --output outputs/caption-OE020-seed42
 ```
 
-Use OE066 for the second case. Output directories must be new. For a newly matched task-only control, use `worldsync.lingbot_released_baseline --split insight --task-id OE020 --seed 42 --chunks 60 --generate --validate-controller --output outputs/task-only-OE020-seed42`. Freeze this source and use the same runtime/GPU for both arms; record source hashes, hardware and complete outputs. The runner changes only text and the explicit experimental label relative to the canonical argument vector. Ten CPU preflight/controller tests pass; this does not validate model execution or improvement.
+Use OE066 for the second case. Output directories must be new. For a newly matched task-only control, use `worldsync.lingbot_released_baseline --split insight --task-id OE020 --seed 42 --chunks 60 --generate --validate-controller --output outputs/task-only-OE020-seed42`. Freeze this source and use the same runtime/GPU for both arms; record source hashes, hardware and complete outputs. The runner changes only text and the explicit experimental label relative to the canonical argument vector. Ten CPU preflight/controller tests pass. A [two-chunk Thor runtime smoke](../caption-runtime-smoke/README.md) at `ad352d1` now verifies actual model execution. Full-length execution and quality improvement remain unvalidated.
