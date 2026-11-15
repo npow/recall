@@ -680,19 +680,19 @@ LAPS = [("Reproduce the open baseline", "1.81\u20131.85 vs 1.82", "kept"), ("Pos
 def scene_process(data, seconds):
     colour_of = {"kept": OURS, "partial": ACCENT, "dropped": MUTED}
     counts = {k: sum(1 for _, _, o in LAPS if o == k) for k in colour_of}
-    step, y0, spine = 37, 352, W // 2
+    step, y0, spine = 41, 270, W // 2
     for index in range(int(seconds * FPS)):
         t = index / FPS
         image, draw = canvas("Autoresearch", "An autoresearch loop", "AUTONOMY", 58)
         h = ease(t / 0.5)
-        draw.text((90, 232), f"{len(LAPS)} ideas tried in two days", font=font(56), fill=mix(BG, FG, h), anchor="lm")
-        x = 90 + draw.textlength(f"{len(LAPS)} ideas tried in two days", font=font(56)) + 50
-        for k in ("kept", "partial", "dropped"):
-            draw.ellipse((x, 222, x + 20, 242), fill=mix(BG, colour_of[k], h))
-            label = f"{counts[k]} {k}"
-            draw.text((x + 30, 232), label, font=font(32, False), fill=mix(BG, MUTED, h), anchor="lm")
-            x += 30 + draw.textlength(label, font=font(32, False)) + 40
-        draw.text((90, 290), "Findings memory: past.dev", font=font(28, False), fill=mix(BG, MUTED, h), anchor="lm")
+        items = [(k, f"{counts[k]} {k}") for k in ("kept", "partial", "dropped")]
+        total = sum(34 + draw.textlength(label, font=font(36, False)) for _, label in items) + 50 * (len(items) - 1)
+        x = W - 80 - total
+        for k, label in items:
+            draw.ellipse((x, 111, x + 22, 133), fill=mix(BG, colour_of[k], h))
+            draw.text((x + 34, 122), label, font=font(36, False), fill=mix(BG, FG, h), anchor="lm")
+            x += 34 + draw.textlength(label, font=font(36, False)) + 50
+        draw.text((90, 200), "Findings memory: past.dev", font=font(28, False), fill=mix(BG, MUTED, h), anchor="lm")
         last = y0 + (len(LAPS) - 1) * step
         draw.line((spine, y0 - 14, spine, last + 14), fill=mix(BG, LINE, ease((t - 0.2) / 0.6)), width=3)
         for n, (title, outcome, kind) in enumerate(LAPS):
@@ -714,7 +714,7 @@ def scene_process(data, seconds):
         for n, label in ((0, "Nov 14"), (8, "Nov 15")):
             a = ease((t - 0.6 - 0.2 * n) / 0.35)
             draw.text((spine + 34, y0 + n * step), label, font=font(26), fill=mix(BG, MUTED, a), anchor="lm")
-        caption(draw, "AI agents ran the loop; a human set goals and budget.", 1.0)
+        draw.text((W / 2, 1020), "AI agents wrote the code, ran the experiments and audited the results; a human set goals and budget.", font=font(26, False), fill=mix(BG, MUTED, h), anchor="mm")
         yield np.asarray(image)
 
 
