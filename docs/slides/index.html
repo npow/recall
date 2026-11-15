@@ -525,15 +525,30 @@ svg text{font-family:inherit}
     if(n>=1&&n<=slides.length&&n-1!==cur){ go(n-1,false); }
   });
 
-  // timeline on slide 6
+  // timeline on slide 6: animated. Frames stream in; the cache keeps the first 6 and the latest 12; the rest turn orange (evicted).
   (function(){
-    var g=document.getElementById('tl'), NS='http://www.w3.org/2000/svg', n=54, w=32;
+    var g=document.getElementById('tl'), NS='http://www.w3.org/2000/svg', n=54, w=32, rects=[], head=-1, hold=0, sl=g.closest('.slide');
     for(var i=0;i<n;i++){
-      var r=document.createElementNS(NS,'rect'); var inWin=(i>=n-12)||(i<6);
+      var r=document.createElementNS(NS,'rect');
       r.setAttribute('x',i*w); r.setAttribute('y',74); r.setAttribute('width',w-6); r.setAttribute('height',102); r.setAttribute('rx',5);
-      r.setAttribute('fill',inWin?'#2b4a86':'#232a35'); r.setAttribute('opacity',inWin?1:0.55+0.0*i);
-      g.appendChild(r);
+      r.style.transition='fill .25s, opacity .25s';
+      g.appendChild(r); rects.push(r);
     }
+    function paint(){
+      for(var i=0;i<n;i++){
+        var r=rects[i];
+        if(i>head){ r.setAttribute('fill','#161b23'); r.setAttribute('opacity',0.5); }
+        else if(i<6 || i>head-12){ r.setAttribute('fill', i===head?'#7aa2f7':'#2b4a86'); r.setAttribute('opacity',1); }
+        else { r.setAttribute('fill','#a14a2c'); r.setAttribute('opacity',0.75); }
+      }
+    }
+    paint();
+    setInterval(function(){
+      if(!sl.classList.contains('active')){ head=-1; hold=0; paint(); return; }
+      if(head<n-1){ head++; }
+      else { hold++; if(hold>18){ head=-1; hold=0; } }
+      paint();
+    },110);
   })();
 
   // chart on slide 11
