@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1728 740" role="img" aria-labelledby="title desc">
+  <title id="title">Shared event conditioning and weights, private visual KV caches</title>
+  <desc id="desc">A shared scene and event plan produces separate viewpoint prompts and text conditioning for two causal video DiT histories. Each history has private cross-attention KV and a private self-attention KV window of first six and most recent twelve frames. Both histories reuse the same frozen forty-layer model weights. No visual KV cache is exchanged between agents.</desc>
+  <style>text{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"DejaVu Sans",sans-serif}</style>
+  <defs>
+    <marker id="green" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 z" fill="#3ddc97"/></marker>
+    <marker id="blue" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 z" fill="#7aa2f7"/></marker>
+    <marker id="gray" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 z" fill="#9aa4b2"/></marker>
+  </defs>
+  <rect x="314" y="8" width="1100" height="104" rx="14" fill="#12382a" stroke="#3ddc97" stroke-width="3"/>
+  <text x="864" y="52" text-anchor="middle" font-size="34" font-weight="700" fill="#3ddc97">SHARED · scene + scripted event plan</text>
+  <text x="864" y="91" text-anchor="middle" font-size="27" fill="#e8ecf2">event time · phase · object holder</text>
+  <g fill="none" stroke="#3ddc97" stroke-width="4" marker-end="url(#green)">
+    <path d="M864,114 V145 H410 V174"/>
+    <path d="M864,145 H1318 V174"/>
+  </g>
+  <rect x="10" y="180" width="800" height="94" rx="12" fill="#151a22" stroke="#ffca65" stroke-width="2"/>
+  <text x="410" y="218" text-anchor="middle" font-size="30" font-weight="700" fill="#ffca65">Orange’s prompt → text encoder</text>
+  <text x="410" y="254" text-anchor="middle" font-size="26" fill="#e8ecf2">“Purple holds the basket.”</text>
+  <rect x="918" y="180" width="800" height="94" rx="12" fill="#151a22" stroke="#c5a3ff" stroke-width="2"/>
+  <text x="1318" y="218" text-anchor="middle" font-size="30" font-weight="700" fill="#c5a3ff">Purple’s prompt → text encoder</text>
+  <text x="1318" y="254" text-anchor="middle" font-size="26" fill="#e8ecf2">“I hold the basket.”</text>
+  <g fill="none" stroke="#9aa4b2" stroke-width="3" marker-end="url(#gray)"><path d="M410,277 V335"/><path d="M1318,277 V335"/></g>
+  <text x="436" y="314" font-size="23" fill="#9aa4b2">cross-attention KV A</text>
+  <text x="1344" y="314" font-size="23" fill="#9aa4b2">cross-attention KV B</text>
+  <g>
+    <rect x="10" y="342" width="800" height="250" rx="14" fill="#151a22" stroke="#7aa2f7" stroke-width="3"/>
+    <text x="35" y="387" font-size="32" font-weight="700" fill="#7aa2f7">Agent A · causal video DiT</text>
+    <text x="35" y="430" font-size="29" fill="#e8ecf2">private self-attention KV A:</text>
+    <rect x="35" y="452" width="220" height="58" rx="8" fill="#232b38"/><text x="145" y="491" font-size="28" fill="#e8ecf2" text-anchor="middle">first 6</text>
+    <rect x="275" y="452" width="510" height="58" rx="8" fill="#232b38"/><text x="530" y="491" font-size="28" fill="#e8ecf2" text-anchor="middle">most recent 12</text>
+    <text x="410" y="560" text-anchor="middle" font-size="26" fill="#ffca65">own camera + reference → POV A</text>
+    <rect x="918" y="342" width="800" height="250" rx="14" fill="#151a22" stroke="#7aa2f7" stroke-width="3"/>
+    <text x="943" y="387" font-size="32" font-weight="700" fill="#7aa2f7">Agent B · causal video DiT</text>
+    <text x="943" y="430" font-size="29" fill="#e8ecf2">private self-attention KV B:</text>
+    <rect x="943" y="452" width="220" height="58" rx="8" fill="#232b38"/><text x="1053" y="491" font-size="28" fill="#e8ecf2" text-anchor="middle">first 6</text>
+    <rect x="1183" y="452" width="510" height="58" rx="8" fill="#232b38"/><text x="1438" y="491" font-size="28" fill="#e8ecf2" text-anchor="middle">most recent 12</text>
+    <text x="1318" y="560" text-anchor="middle" font-size="26" fill="#c5a3ff">own camera + reference → POV B</text>
+  </g>
+  <g fill="none" stroke="#7aa2f7" stroke-width="3" stroke-dasharray="10 8" marker-end="url(#blue)">
+    <path d="M700,656 V626 H410 V596"/>
+    <path d="M1028,656 V626 H1318 V596"/>
+  </g>
+  <rect x="314" y="661" width="1100" height="70" rx="12" fill="#151a22" stroke="#7aa2f7" stroke-width="3"/>
+  <text x="864" y="707" text-anchor="middle" font-size="31" font-weight="700" fill="#7aa2f7">SHARED · frozen DiT weights · 40 layers · one warm model</text>
+</svg>
