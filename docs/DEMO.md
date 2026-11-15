@@ -13,7 +13,7 @@ the model's internal state on demand, which takes **about 200× less memory** th
 
 | | Headline result | Status |
 |---|---|---|
-| 1 | **After 12 s looking away, on 20 unseen PlayWorld scenes: judged consistency 1.86 → 2.52, paired +0.66 [+0.19, +1.12], 14 wins / 2 ties / 4 losses**; 6 s: 1.76 → 3.07 (+1.31 [+0.74, +1.89]); 24 s: 1.45 → 1.78 (+0.34 [+0.05, +0.64]); pooled +0.77 [+0.51, +1.03] | pre-registered |
+| 1 | **After 12 s looking away, on 20 unseen PlayWorld scenes: judged consistency 1.86 → 2.52, paired +0.66 [+0.19, +1.12], 14 wins / 2 ties / 4 losses**; 6 s: 1.76 → 3.07 (+1.31 [+0.74, +1.89]); 24 s: 1.45 → 1.78 (+0.34 [+0.05, +0.64]); pooled +0.77 [+0.51, +1.04] | pre-registered |
 | 2 | **6.2 MB per remembered frame instead of 1,235 MB (about 200×) at about the same recall** (0.77 against 0.78; stock 0.35) | one scene, one seed, one GPU type |
 | 3 | **Published baseline reproduced twice with the open checkpoint: 1.85 and 1.81 overall against the published 1.82** | all 171 PlayWorld tasks |
 | 4 | **Best subset of PlayWorld's own tasks: out-of-sight evolution with our text director, 1.32 → 1.53, a trend of +0.20 [−0.12, +0.58]** | post-hoc choice of subset and metric |
@@ -41,7 +41,7 @@ PlayWorld's released consistency rubric. These are PlayWorld scenes with our own
 | 12 s | 20 | 1.86 | 2.52 | +0.66 [+0.19, +1.12] | 14/2/4 |
 | 24 s | 20 | 1.45 | 1.78 | +0.34 [+0.05, +0.64] | 12/3/5 |
 
-Pooled over the 6 s, 12 s and 24 s absences, scenes as units: +0.77 [+0.51, +1.03] (n = 20). The turn
+Pooled over the 6 s, 12 s and 24 s absences, scenes as units: +0.77 [+0.51, +1.04] (n = 20). The turn
 away and back adds about 6 s to each absence, so even the 0 s row is beyond the model's 4.5 s window. Source: `docs/demo/horizon-summary.json`
 (160 of 160 episodes scored).
 

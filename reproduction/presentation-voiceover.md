@@ -28,7 +28,7 @@ Old frames leave the cache as the camera turns away. On the way back the nearest
 Same scene, same camera path, same time away. As released, the returning view is a different place. With our memory, the storefront it started from is back.
 
 ## chart
-Consistency improves at every length: plus zero point seven seven, interval zero point five one to one point zero three.
+Consistency improves at every length: plus zero point seven seven, interval zero point five one to one point zero four.
 
 ## ablation
 Store the frame and recompute: two hundred times smaller, similar recall on one scripted path.
