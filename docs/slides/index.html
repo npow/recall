@@ -41,6 +41,17 @@ li{margin:0 0 20px}
 .ar .at{font-weight:650}
 .ar .ao{color:#9aa4b2;font-size:26px;flex:1 1 100%;padding-left:30px;margin-top:-2px}
 .dot{display:inline-block;width:16px;height:16px;border-radius:50%;flex:none;margin-right:2px}
+.tl{display:grid;grid-template-columns:1fr 44px 1fr;grid-auto-rows:41px;margin-top:6px}
+.tn{display:flex;align-items:center;font-size:27px;line-height:1.1;white-space:nowrap;gap:12px}
+.tn.l{justify-content:flex-end;padding-right:10px;text-align:right}.tn.r{padding-left:10px}
+.tn b{font-weight:650}.tn span{color:#9aa4b2;font-size:26px}
+.tn.dropped b{color:#aab2bf;font-weight:550}
+.tn.kp b{font-size:32px;color:#3ddc97}.tn.kp span{font-size:27px}
+.tn.day{color:#6b7482;font-size:26px;font-weight:600;padding-left:26px}
+.sd{position:relative;display:flex;align-items:center;justify-content:center}
+.sd::before{content:"";position:absolute;left:21px;width:2px;top:0;bottom:0;background:#2a3240}
+.sd i{position:relative;width:16px;height:16px;border-radius:50%;background:#6b7482}
+.sd i.kept{background:#3ddc97;width:26px;height:26px}.sd i.partial{background:#7aa2f7}
 .tiny{font-size:22px;color:var(--faint);line-height:1.35}
 .rel{color:var(--rel)} .ours{color:var(--ours)} .warn{color:var(--warn)} .dim{color:var(--dim)}
 b{font-weight:750}
@@ -407,37 +418,13 @@ svg text{font-family:inherit}
   <!-- 15 -->
   <section class="slide" data-sec="Autoresearch">
     <h2>An autoresearch loop</h2>
-    <div class="row" style="gap:40px;align-items:flex-start">
-      <div style="flex:none;width:640px;margin-top:8px">
-      <svg id="loop" viewBox="0 0 1000 520" width="640" height="333">
-      <defs><marker id="al" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 z" fill="#7aa2f7"/></marker><marker id="ag2" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 z" fill="#3ddc97"/></marker></defs>
-      <line x1="450" y1="89" x2="550" y2="89" stroke="#7aa2f7" stroke-width="4" marker-end="url(#al)"/>
-      <line x1="741" y1="140" x2="817" y2="211" stroke="#7aa2f7" stroke-width="4" marker-end="url(#al)"/>
-      <line x1="817" y1="313" x2="741" y2="384" stroke="#7aa2f7" stroke-width="4" marker-end="url(#al)"/>
-      <line x1="550" y1="435" x2="450" y2="435" stroke="#7aa2f7" stroke-width="4" marker-end="url(#al)"/>
-      <line x1="259" y1="384" x2="183" y2="313" stroke="#7aa2f7" stroke-width="4" marker-end="url(#al)"/>
-      <line x1="183" y1="211" x2="259" y2="140" stroke="#7aa2f7" stroke-width="4" marker-end="url(#al)"/>
-      <g class="rn" id="rn0"><rect x="186" y="46" width="256" height="86" rx="14" fill="#151a22" stroke="#2a3240" stroke-width="3"/><text x="314" y="83" font-size="27" font-weight="700" fill="#e8ecf2" text-anchor="middle">Propose</text><text x="314" y="115" font-size="22" fill="#9aa4b2" text-anchor="middle">a method</text></g>
-      <g class="rn" id="rn1"><rect x="558" y="46" width="256" height="86" rx="14" fill="#151a22" stroke="#2a3240" stroke-width="3"/><text x="686" y="83" font-size="27" font-weight="700" fill="#e8ecf2" text-anchor="middle">Run experiments</text><text x="686" y="115" font-size="22" fill="#9aa4b2" text-anchor="middle">on cloud GPUs</text></g>
-      <g class="rn" id="rn2"><rect x="744" y="219" width="256" height="86" rx="14" fill="#151a22" stroke="#2a3240" stroke-width="3"/><text x="872" y="256" font-size="27" font-weight="700" fill="#e8ecf2" text-anchor="middle">Audit</text><text x="872" y="288" font-size="22" fill="#9aa4b2" text-anchor="middle">a separate AI agent</text></g>
-      <g class="rn" id="rn3"><rect x="558" y="392" width="256" height="86" rx="14" fill="#151a22" stroke="#2a3240" stroke-width="3"/><text x="686" y="429" font-size="27" font-weight="700" fill="#e8ecf2" text-anchor="middle">Diagnose</text><text x="686" y="461" font-size="22" fill="#9aa4b2" text-anchor="middle">what went wrong</text></g>
-      <g class="rn" id="rn4"><rect x="186" y="392" width="256" height="86" rx="14" fill="#151a22" stroke="#2a3240" stroke-width="3"/><text x="314" y="429" font-size="27" font-weight="700" fill="#e8ecf2" text-anchor="middle">Fix</text><text x="314" y="461" font-size="22" fill="#9aa4b2" text-anchor="middle">rebuild the method</text></g>
-      <g class="rn" id="rn5"><rect x="0" y="219" width="256" height="86" rx="14" fill="#151a22" stroke="#2a3240" stroke-width="3"/><text x="128" y="256" font-size="27" font-weight="700" fill="#e8ecf2" text-anchor="middle">Re-test</text><text x="128" y="288" font-size="22" fill="#9aa4b2" text-anchor="middle">on real tasks</text></g>
-      <g id="rc"><rect x="375" y="207" width="250" height="110" rx="14" fill="#151a22" stroke="#2a3240" stroke-width="2"/><text x="500" y="250" font-size="26" font-weight="600" fill="#e8ecf2" text-anchor="middle">findings memory</text><text x="500" y="284" font-size="20" fill="#9aa4b2" text-anchor="middle">stored in past.dev</text></g>
-      <line x1="420" y1="207" x2="374" y2="138" stroke="#5b6573" stroke-width="3" marker-end="url(#ag2)"/>
-      <text x="470" y="175" font-size="20" fill="#9aa4b2">recall past findings</text>
-      <line x1="264" y1="262" x2="369" y2="262" stroke="#5b6573" stroke-width="3" marker-end="url(#ag2)"/>
-      <text x="306" y="232" font-size="18" fill="#9aa4b2" text-anchor="middle">store the</text><text x="306" y="253" font-size="18" fill="#9aa4b2" text-anchor="middle">result</text>
-      </svg>
-      <p class="small" style="margin:18px 0 0">AI agents wrote the code, ran the experiments and audited the results; a human set goals and budget.</p>
-      </div>
-      <div style="flex:1">
-        <p style="font-size:40px;font-weight:700;margin:0 0 6px">17 ideas tried in two days</p>
-        <p style="font-size:30px;margin:0 0 18px;color:var(--dim)"><span class="dot" style="background:#3ddc97"></span>4 kept &nbsp; <span class="dot" style="background:#7aa2f7"></span>5 partial &nbsp; <span class="dot" style="background:#6b7482"></span>8 dropped</p>
-        <div class="arg"><div><div class="ar"><span class="dot" style="background:#3ddc97"></span><span class="at">Reproduce the open baseline</span><span class="ao">1.81–1.85 vs 1.82</span></div><div class="ar"><span class="dot" style="background:#3ddc97"></span><span class="at">Pose memory on scripted paths</span><span class="ao">similarity 0.30 → 0.78</span></div><div class="ar"><span class="dot" style="background:#7aa2f7"></span><span class="at">Four vs eight retrieved views</span><span class="ao">four kept</span></div><div class="ar"><span class="dot" style="background:#6b7482"></span><span class="at">Re-anchor on the start image</span><span class="ao">no gain</span></div><div class="ar"><span class="dot" style="background:#6b7482"></span><span class="at">WorldKV-style retention</span><span class="ao">no gain</span></div><div class="ar"><span class="dot" style="background:#6b7482"></span><span class="at">DeCoPrune port</span><span class="ao">no gain</span></div><div class="ar"><span class="dot" style="background:#6b7482"></span><span class="at">Commit Forcing transfer</span><span class="ao">no revisit gain shown</span></div><div class="ar"><span class="dot" style="background:#6b7482"></span><span class="at">Keyframe restart</span><span class="ao">hard cuts</span></div><div class="ar"><span class="dot" style="background:#7aa2f7"></span><span class="at">Bigger and fp8 caches</span><span class="ao">diagnostic only</span></div></div><div><div class="ar"><span class="dot" style="background:#6b7482"></span><span class="at">Memory LoRA</span><span class="ao">lower quality</span></div><div class="ar"><span class="dot" style="background:#6b7482"></span><span class="at">Prompt and motion tricks</span><span class="ao">no gain</span></div><div class="ar"><span class="dot" style="background:#7aa2f7"></span><span class="at">Full 171-task run</span><span class="ao">no gain; audit finds bugs</span></div><div class="ar"><span class="dot" style="background:#7aa2f7"></span><span class="at">Text director</span><span class="ao">+0.02, not established</span></div><div class="ar"><span class="dot" style="background:#3ddc97"></span><span class="at">Store the frame, rebuild values</span><span class="ao">200× smaller</span></div><div class="ar"><span class="dot" style="background:#7aa2f7"></span><span class="at">Storage ablations</span><span class="ao">fp8 holds</span></div><div class="ar"><span class="dot" style="background:#6b7482"></span><span class="at">Verified retrieval</span><span class="ao">−0.35 on 36 real tasks</span></div><div class="ar"><span class="dot" style="background:#3ddc97"></span><span class="at">Revisit-horizon test</span><span class="ao">+0.77, pre-registered</span></div></div></div>
-      </div>
+    <div style="display:flex;align-items:baseline;gap:34px;margin-top:-4px">
+      <span style="font-size:44px;font-weight:700">17 ideas tried in two days</span>
+      <span style="font-size:30px;color:var(--dim)"><span class="dot" style="background:#3ddc97"></span>4 kept &nbsp; <span class="dot" style="background:#7aa2f7"></span>5 partial &nbsp; <span class="dot" style="background:#6b7482"></span>8 dropped</span>
     </div>
-    <aside class="notes">The research ran as an autoresearch loop: AI agents proposed a method, ran experiments on cloud GPUs, a separate AI agent audited the code and the results, then diagnosed, fixed and re-tested, and the findings were stored in a research memory in past.dev. Over two days the loop tried seventeen ideas. Four were kept: the reproduced baseline, the pose-indexed memory, the store-the-frame idea that is two hundred times smaller, and the pre-registered revisit test with its plus 0.77. Five were partial, and eight were dropped, each with its result recorded in the repo. A human set the goals and the budget and made a few key calls.</aside>
+    <p class="small" style="margin:8px 0 6px">AI agents wrote the code, ran the experiments and audited the results; a human set goals and budget. Findings memory: past.dev.</p>
+    <div class="tl"><div class="tn l kept kp" style="grid-row:1;grid-column:1"><b>Reproduce the open baseline</b> <span>1.81–1.85 vs 1.82</span></div><div class="sd" style="grid-row:1;grid-column:2"><i class="kept kp"></i></div><div class="tn r kept kp" style="grid-row:2;grid-column:3"><b>Pose memory on scripted paths</b> <span>similarity 0.30 → 0.78</span></div><div class="sd" style="grid-row:2;grid-column:2"><i class="kept kp"></i></div><div class="tn l partial " style="grid-row:3;grid-column:1"><b>Four vs eight retrieved views</b> <span>four kept</span></div><div class="sd" style="grid-row:3;grid-column:2"><i class="partial "></i></div><div class="tn r dropped " style="grid-row:4;grid-column:3"><b>WorldKV-style retention</b> <span>no gain</span></div><div class="sd" style="grid-row:4;grid-column:2"><i class="dropped "></i></div><div class="tn l dropped " style="grid-row:5;grid-column:1"><b>DeCoPrune port</b> <span>no gain</span></div><div class="sd" style="grid-row:5;grid-column:2"><i class="dropped "></i></div><div class="tn r dropped " style="grid-row:6;grid-column:3"><b>Memory LoRA</b> <span>lower quality</span></div><div class="sd" style="grid-row:6;grid-column:2"><i class="dropped "></i></div><div class="tn l dropped " style="grid-row:7;grid-column:1"><b>Prompt and motion tricks</b> <span>no gain</span></div><div class="sd" style="grid-row:7;grid-column:2"><i class="dropped "></i></div><div class="tn r dropped " style="grid-row:8;grid-column:3"><b>Re-anchor on the start image</b> <span>no gain</span></div><div class="sd" style="grid-row:8;grid-column:2"><i class="dropped "></i></div><div class="tn l dropped " style="grid-row:9;grid-column:1"><b>Commit Forcing transfer</b> <span>no revisit gain shown</span></div><div class="sd" style="grid-row:9;grid-column:2"><i class="dropped "></i></div><div class="tn r dropped " style="grid-row:10;grid-column:3"><b>Keyframe restart</b> <span>hard cuts</span></div><div class="sd" style="grid-row:10;grid-column:2"><i class="dropped "></i></div><div class="tn l partial " style="grid-row:11;grid-column:1"><b>Bigger and fp8 caches</b> <span>diagnostic only</span></div><div class="sd" style="grid-row:11;grid-column:2"><i class="partial "></i></div><div class="tn r partial " style="grid-row:12;grid-column:3"><b>Full 171-task run</b> <span>no gain; audit finds bugs</span></div><div class="sd" style="grid-row:12;grid-column:2"><i class="partial "></i></div><div class="tn l partial " style="grid-row:13;grid-column:1"><b>Text director</b> <span>+0.02, not established</span></div><div class="sd" style="grid-row:13;grid-column:2"><i class="partial "></i></div><div class="tn r partial " style="grid-row:14;grid-column:3"><b>Storage ablations</b> <span>fp8 holds</span></div><div class="sd" style="grid-row:14;grid-column:2"><i class="partial "></i></div><div class="tn l kept kp" style="grid-row:15;grid-column:1"><b>Store the frame, rebuild values</b> <span>200× smaller</span></div><div class="sd" style="grid-row:15;grid-column:2"><i class="kept kp"></i></div><div class="tn r dropped " style="grid-row:16;grid-column:3"><b>Verified retrieval</b> <span>−0.35 on 36 real tasks</span></div><div class="sd" style="grid-row:16;grid-column:2"><i class="dropped "></i></div><div class="tn l kept kp" style="grid-row:17;grid-column:1"><b>Revisit-horizon test</b> <span>+0.77, pre-registered</span></div><div class="sd" style="grid-row:17;grid-column:2"><i class="kept kp"></i></div><div class="tn r day" style="grid-row:1;grid-column:3">Nov 14</div><div class="tn l day" style="grid-row:9;grid-column:3;justify-content:flex-start">Nov 15</div></div>
+    <aside class="notes">The research ran as an autoresearch loop: AI agents proposed a method, ran experiments on cloud GPUs, a separate AI agent audited the code and the results, then diagnosed, fixed and re-tested, and the findings were stored in a research memory in past.dev. Over two days the loop tried seventeen ideas, shown here in the order their results landed in the repo. Four were kept: the reproduced baseline, the pose-indexed memory, the store-the-frame idea that is two hundred times smaller, and the pre-registered revisit test with its plus 0.77. Five were partial, and eight were dropped, each with its result recorded in the repo. A human set the goals and the budget and made a few key calls.</aside>
   </section>
 
   <!-- 16 -->
@@ -634,24 +621,6 @@ svg text{font-family:inherit}
     },110);
   })();
 
-
-  // autoresearch ring: a highlight steps around the six nodes; lap 1 then lap 2, repeating
-  (function(){
-    var sl=document.getElementById('loop').closest('.slide'), step=-1, nodes=[], i;
-    for(i=0;i<6;i++) nodes.push(document.getElementById('rn'+i).querySelector('rect'));
-    var l1=document.getElementById('lap1'), l2=document.getElementById('lap2'), rc=document.getElementById('rc').querySelector('rect');
-    function paint(){
-      var k=step%6, lap=Math.floor(step/6)%2;
-      nodes.forEach(function(r,j){ var on=(step>=0&&j===k); r.setAttribute('stroke',on?'#7aa2f7':'#2a3240'); r.setAttribute('fill',on?'#1d2a46':'#151a22'); });
-      rc.setAttribute('stroke-width',(step>=0&&(k===0||k===5))?7:3);
-      if(l1){ l1.style.opacity=(step<0||lap===0)?1:.35; } if(l2){ l2.style.opacity=(step<0||lap===1)?1:.35; }
-    }
-    paint();
-    setInterval(function(){
-      if(!sl.classList.contains('active')){ step=-1; paint(); return; }
-      step=(step+1)%12; paint();
-    },1100);
-  })();
 
   // chart on slide 11
   (function(){
