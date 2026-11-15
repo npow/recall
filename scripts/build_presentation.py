@@ -21,7 +21,7 @@ BG, PANEL, LINE = (13, 17, 23), (24, 30, 40), (48, 58, 74)
 FG, MUTED = (236, 239, 244), (150, 160, 176)
 ACCENT, OURS, WARN = (110, 168, 255), (64, 220, 160), (255, 130, 92)
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans%s.ttf"
-SECTIONS = ["Problem", "Benchmark", "Baseline failures", "Method", "Results", "Limitations", "Process", "Future work"]
+SECTIONS = ["Problem", "Benchmark", "Baseline failures", "Method", "Results", "Limitations", "Autoresearch", "Future work"]
 _fonts = {}
 
 
@@ -224,7 +224,7 @@ def scene_problem(data, seconds):
     start, end = cv2.resize(clip[0], small), cv2.resize(clip[-1], small)
     for index in range(int(seconds * FPS)):
         t = index / FPS
-        image, draw = canvas("Problem", "Generated worlds drift and forget")
+        image, draw = canvas("Problem", "Generated worlds forget what they leave behind")
         text, alpha = pick(captions, t)
         caption(draw, text, alpha)
         if t < play:
@@ -335,7 +335,7 @@ def scene_insight(data, seconds):
     window = 4
     for index in range(int(seconds * FPS)):
         t = index / FPS
-        image, draw = canvas("Method", "Key insight: the model remembers about 4.5 seconds", "NOVELTY", 56)
+        image, draw = canvas("Method", "Key insight: the model only remembers about 4.5 seconds", "NOVELTY", 56)
         head = window - 1 + ease(t / (seconds - 2.0)) * (count - window)
         last = int(round(head))
         first = last - window + 1
@@ -364,7 +364,7 @@ def scene_system(data, seconds):
     chips = ["training-free", "weights untouched", "window 6 + 10 + 8 = 24 frames (stock: 18)"]
     for index in range(int(seconds * FPS)):
         t = index / FPS
-        image, draw = canvas("Method", "Training-free episodic memory", "NOVELTY", 60)
+        image, draw = canvas("Method", "Our method: a training-free episodic memory", "NOVELTY", 54)
         a = ease(t / 0.7)
         draw.rounded_rectangle((80, 200, 640, 850), 18, fill=PANEL, outline=mix(BG, ACCENT, a), width=4)
         draw.text((110, 250), "World model", font=font(44), fill=mix(PANEL, ACCENT, a), anchor="lm")
@@ -489,7 +489,7 @@ def scene_hero(data, seconds):
     sub = f"PlayWorld scene {spec['scene']} · same seed, same camera path · selected example"
     for index in range(int(seconds * FPS)):
         t = index / FPS
-        image, draw = canvas("Results", "Side by side: look away, come back", "RESULTS", 60)
+        image, draw = canvas("Results", "Look away, then turn back", "RESULTS", 60)
         draw.text((80, 182), sub, font=font(28, False), fill=MUTED, anchor="lm")
         text, alpha = pick(captions, t)
         caption(draw, text, alpha)
@@ -606,7 +606,7 @@ def scene_ablation(data, seconds):
         draw.text((x_label, base + 40), "Store the frame and recompute: about 200× smaller", font=font(42), fill=mix(BG, OURS, a), anchor="lm")
         for k, note in enumerate(data.board["ablation_notes"]):
             draw.text((x_label, base + 104 + k * 44), note, font=font(28, False), fill=mix(BG, MUTED, a), anchor="lm")
-        caption(draw, "Compressing the cache fails beyond 2×; recomputing works.", 1.0)
+        caption(draw, "Compressing the cache fails beyond 2×; recomputing holds on a scripted path.", 1.0)
         yield np.asarray(image)
 
 
@@ -617,9 +617,9 @@ def scene_real(data, seconds):
     panels = [s[0], s[-1], v[-1]]
     xs, top = [45, 665, 1285], 300
     for index in range(int(seconds * FPS)):
-        image, draw = canvas("Results", "On a real PlayWorld task", "RESULTS · selected", 60)
+        image, draw = canvas("Results", "On one of PlayWorld's own tasks", "RESULTS · selected", 60)
         draw.text((80, 182), real["label"], font=font(28, False), fill=MUTED, anchor="lm")
-        for px, (name, colour) in zip(xs, [("Start view", FG), ("End: as released", WARN), ("End: with our memory", OURS)]):
+        for px, (name, colour) in zip(xs, [("Start view", FG), ("End: as released", WARN), ("End: with our improved memory", OURS)]):
             draw.text((px, top - 34), name, font=font(40), fill=colour, anchor="lm")
         draw.text((W / 2, top + small[1] + 70), real["score_text"], font=font(40, False), fill=FG, anchor="mm")
         draw.text((W / 2, top + small[1] + 130), real["scope_text"], font=font(34, False), fill=MUTED, anchor="mm")
@@ -641,15 +641,15 @@ def scene_limits(data, seconds):
     pair = data.pair(loss)
     small = (500, 288)
     a_clip, b_clip = load_clip(pair["stock"]["video"], small), load_clip(pair["memory"]["video"], small)
-    bullets = [("On PlayWorld's own tasks our memory does not help.",
-                "Improved design (verified retrieval), " + data.board["real_null"] + f" Full benchmark: memory {stats['a_memory']:.2f} vs {stats['a_stock']:.2f}, director {stats['b_director']:.2f} vs {stats['b_stock']:.2f}."),
+    bullets = [("Record not beaten: 1.80\u20131.86 against Genie 3's 2.12.",
+                f"Level with the published 1.82 (memory {stats['a_memory']:.2f} vs {stats['a_stock']:.2f}). Only 12% of chunks are real revisits."),
+               ("Verified retrieval was not better on 36 real tasks.", data.board["real_null"].replace("36 revisit tasks: ", "") + " It removed unneeded swaps (338 to 0)."),
                ("The model does not undo forward motion.", "A return by walking back often never happens."),
-               ("Frozen scenes and unattempted actions", "are not memory problems."),
-               (f"The judge is noisy: SD {numbers['judge_sd']:.2f}.", "Same video, three scores.")]
+               ("Frozen scenes and unattempted actions", f"are not memory problems. The judge is noisy: SD {numbers['judge_sd']:.2f}.")]
     px = 1340
     for index in range(int(seconds * FPS)):
         t = index / FPS
-        image, draw = canvas("Limitations", "Where our method does not help", "INTERPRETABILITY", 60)
+        image, draw = canvas("Limitations", "Where it still breaks", "INTERPRETABILITY", 60)
         for n, (head, sub) in enumerate(bullets):
             a = ease((t - 0.4 - 1.3 * n) / 0.7)
             y = 230 + n * 170
@@ -690,7 +690,7 @@ def scene_process(data, seconds):
 
     for index in range(int(seconds * FPS)):
         t = index / FPS
-        image, draw = canvas("Process", "An autoresearch loop", "AUTONOMY", 58)
+        image, draw = canvas("Autoresearch", "An autoresearch loop", "AUTONOMY", 58)
         for n in range(6):
             a = ease((t - 0.4 - 0.5 * n) / 0.5)
             c, nxt = pts[n], pts[(n + 1) % 6]
