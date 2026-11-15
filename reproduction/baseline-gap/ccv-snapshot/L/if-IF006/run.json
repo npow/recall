@@ -1,0 +1,427 @@
+{
+  "status": "completed",
+  "model": "LingBot-World2 14B causal-fast stock",
+  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+  "initial_image_sha256": "dfba878193655911d6e3e03164fb5138ed14d1e54e172efb0351324661051ef0",
+  "text_prompt_mode": "both",
+  "image_caption_sha256": "73cc51688101085c4750fd9216e821f838dae8b3c36bd2ab886741dafdc4076c",
+  "task_id": "IF006",
+  "split": "if",
+  "seed": 42,
+  "turn_degrees_per_second": 60,
+  "fps": 16,
+  "max_chunks": 40,
+  "max_interactions": 40,
+  "native_fixed_controls": false,
+  "camera_embedding_audit": [],
+  "pose_retrieval": false,
+  "sink_rephase": false,
+  "adaptive_retrieval_pilot": false,
+  "player_temperature": "provider default",
+  "player_streaming": false,
+  "streaming_player_sha256": null,
+  "initial_neutral_bootstrap": false,
+  "kv_retention": false,
+  "decoprune": false,
+  "reanchor": false,
+  "budget_memory": false,
+  "denoise_schedule": "stock",
+  "text_encoder_offloaded_after_encoding": true,
+  "stationary_wait_only": false,
+  "fixed_actions": null,
+  "quantization": "none",
+  "cuda_allocator_configuration": "expandable_segments:True",
+  "max_area": 399360,
+  "chunk_size": 4,
+  "local_attn_size": 18,
+  "sink_size": 6,
+  "decision_interval": 1,
+  "stock_knobs": true,
+  "controlled_ablation": false,
+  "sampler_timesteps_index": [
+    0,
+    250,
+    500,
+    750
+  ],
+  "sample_shift": 10,
+  "actions": [
+    {
+      "operation": "KEEP",
+      "action": "A",
+      "reason": "Starting the reference plan to walk the character left (A action) into the pond. The pond is visible on the left side of the screen. The character needs to move left to reach it. This is the first action of the 4.5-second plan to hold A continuously.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54M7BopDqovX8RN2Bpf",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3009,
+        "output_tokens": 115,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"A\", \"reason\": \"Starting the reference plan to walk the character left (A action) into the pond. The pond is visible on the left side of the screen. The character needs to move left to reach it. This is the first action of the 4.5-second plan to hold A continuously.\"}]",
+      "prompt_sha256": "bef515849c0b9894e2cf4e43b1ee674303b76f89e323b45489b7c9af748886bd",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.0,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 92.03187488100002,
+      "pose_after": {
+        "position_normalized_units": [
+          -3.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "A",
+      "reason": "Continuing the A action to move the character left toward the pond. The character has moved slightly left in the current frame compared to the initial image. The pond is clearly visible on the left side of the screen. The plan requires holding A for 4.5 seconds total; only 0.812 seconds have elapsed so far. The character is still in the central area and needs to continue moving left to reach and enter the pond.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54MfsKqGZ5ZdCbpGfWN",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2821,
+        "output_tokens": 147,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"A\", \"reason\": \"Continuing the A action to move the character left toward the pond. The character has moved slightly left in the current frame compared to the initial image. The pond is clearly visible on the left side of the screen. The plan requires holding A for 4.5 seconds total; only 0.812 seconds have elapsed so far. The character is still in the central area and needs to continue moving left to reach and enter the pond.\"}]",
+      "prompt_sha256": "f388b42f0a680da0d82220833353c7c57fa5910c64420127898b02b3b2d9c2db",
+      "pose_before": {
+        "position_normalized_units": [
+          -3.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 100.10487943299995,
+      "pose_after": {
+        "position_normalized_units": [
+          -7.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "A",
+      "reason": "Continuing the A action to move the character left toward the pond. The character has visibly moved left compared to the initial image - she is now closer to the pond on the left side of the screen. The pond (blue water) is clearly visible on the left. The plan requires holding A for 4.5 seconds total; 1.8125 seconds have elapsed so far, leaving approximately 2.7 seconds remaining. The character is still on the paved area and needs to continue moving left to walk into the pond as required by the goal.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54NJQXSWofXfTBNW65b",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2929,
+        "output_tokens": 174,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"A\", \"reason\": \"Continuing the A action to move the character left toward the pond. The character has visibly moved left compared to the initial image - she is now closer to the pond on the left side of the screen. The pond (blue water) is clearly visible on the left. The plan requires holding A for 4.5 seconds total; 1.8125 seconds have elapsed so far, leaving approximately 2.7 seconds remaining. The character is still on the paved area and needs to continue moving left to walk into the pond as required by the goal.\"}]",
+      "prompt_sha256": "13b380df41e967d73f555be8efd8da8ce709d0bfcd4e27c0104b60191bff66fd",
+      "pose_before": {
+        "position_normalized_units": [
+          -7.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 109.0058209629999,
+      "pose_after": {
+        "position_normalized_units": [
+          -11.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "A",
+      "reason": "Continuing the A action to move the character left toward the pond. The character has moved noticeably left compared to the initial image - she is now positioned closer to the pond edge on the left side of the screen. The blue water of the pond is clearly visible on the left. The plan requires holding A for 4.5 seconds total; 2.8125 seconds have elapsed so far, leaving approximately 1.69 seconds remaining. The character needs to continue moving left to fully walk into the pond as required by the goal. No visual obstacles block the path to the pond.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54NyJMKa8Vmu93iBDrs",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3064,
+        "output_tokens": 180,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"A\", \"reason\": \"Continuing the A action to move the character left toward the pond. The character has moved noticeably left compared to the initial image - she is now positioned closer to the pond edge on the left side of the screen. The blue water of the pond is clearly visible on the left. The plan requires holding A for 4.5 seconds total; 2.8125 seconds have elapsed so far, leaving approximately 1.69 seconds remaining. The character needs to continue moving left to fully walk into the pond as required by the goal. No visual obstacles block the path to the pond.\"}]",
+      "prompt_sha256": "43ef0070ff0a24e2e745300c1fe2d2812fd5f453edde1c68c8ce2b95bff5094c",
+      "pose_before": {
+        "position_normalized_units": [
+          -11.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 118.27987661099996,
+      "pose_after": {
+        "position_normalized_units": [
+          -15.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "EXTEND",
+      "action": "A",
+      "reason": "Continuing the A action to move the character left toward the pond. The character has visibly moved left from the initial position - comparing the two images, she is now positioned closer to the pond edge on the left side of the screen. The blue water of the pond is clearly visible on the left, and the character is on the paved area approaching it. The plan requires holding A for 4.5 seconds total; 3.8125 seconds have elapsed so far, leaving approximately 0.6875 seconds remaining. The character needs to continue moving left for the final portion of the planned movement to fully walk into the pond as required by the goal.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54PgutoSsQxU6djPYfu",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3205,
+        "output_tokens": 194,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"A\", \"reason\": \"Continuing the A action to move the character left toward the pond. The character has visibly moved left from the initial position - comparing the two images, she is now positioned closer to the pond edge on the left side of the screen. The blue water of the pond is clearly visible on the left, and the character is on the paved area approaching it. The plan requires holding A for 4.5 seconds total; 3.8125 seconds have elapsed so far, leaving approximately 0.6875 seconds remaining. The character needs to continue moving left for the final portion of the planned movement to fully walk into the pond as required by the goal.\"}]",
+      "prompt_sha256": "a4b0fcb1dc43fafcaa8f85372b22c07fb10a03249a1e794f59ee79a41c3fcd21",
+      "pose_before": {
+        "position_normalized_units": [
+          -15.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 128.07031775699988,
+      "pose_after": {
+        "position_normalized_units": [
+          -19.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "END",
+      "action": null,
+      "reason": "The goal has been achieved. Comparing the initial image with the latest observation, the character has successfully walked left and is now positioned at the edge of the pond. In the initial image, the character stood in the center of the paved courtyard, far from the pond. In the latest image, the character is now standing at the pond's edge on the left side of the screen, much closer to the water. The character's position has shifted significantly leftward (approximately -19 units of intended odometry), and the character is visibly near the pond boundary. The blue water of the pond is now prominently visible on the left side of the current view. The 4.5-second plan to hold action A (move left) has been completed (4.8125 seconds elapsed), and the visual evidence confirms the character has walked left into/toward the pond as required by the goal.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54QSyX1aMb1BsKJnaGh",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3360,
+        "output_tokens": 242,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"The goal has been achieved. Comparing the initial image with the latest observation, the character has successfully walked left and is now positioned at the edge of the pond. In the initial image, the character stood in the center of the paved courtyard, far from the pond. In the latest image, the character is now standing at the pond's edge on the left side of the screen, much closer to the water. The character's position has shifted significantly leftward (approximately -19 units of intended odometry), and the character is visibly near the pond boundary. The blue water of the pond is now prominently visible on the left side of the current view. The 4.5-second plan to hold action A (move left) has been completed (4.8125 seconds elapsed), and the visual evidence confirms the character has walked left into/toward the pond as required by the goal.\"}]",
+      "prompt_sha256": "17407e9b4690f01a03910576c38cdd989dee69c771e703519712c56a1646581b",
+      "pose_before": {
+        "position_normalized_units": [
+          -19.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 139.3102115669999
+    }
+  ],
+  "chunks": [
+    {
+      "index": 0,
+      "path": "chunk-000.mp4",
+      "frames": 13,
+      "pixel_sha256": "f49b8dd194513ce70d94f395ab44f4c763e34845051456f90ba345fd69070cee",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.4911517680000088,
+        "mp4_encode": 0.483062807999886
+      },
+      "elapsed_s": 96.50791710599992,
+      "sha256": "422fd97dbe0cf196257c31b2ee63427ee2f4c55e58e1e50a6b3e62e213993e31"
+    },
+    {
+      "index": 1,
+      "path": "chunk-001.mp4",
+      "frames": 16,
+      "pixel_sha256": "e77a004bf94a15c39a4277c5960dcc25d42f35b911e25a89cedcca0ff9181105",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5845111230000839,
+        "mp4_encode": 0.4376384249999319
+      },
+      "elapsed_s": 105.020380875,
+      "sha256": "d852c21d650c6e2215e7606e5cab4043652a4141aa461d514262a24ccf17ea2a"
+    },
+    {
+      "index": 2,
+      "path": "chunk-002.mp4",
+      "frames": 16,
+      "pixel_sha256": "27ba04cfa27e4fae2d01e325e5b9ffc7ab0a94a6f77dae860135186b588a6472",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5823208650001561,
+        "mp4_encode": 0.4488092560000041
+      },
+      "elapsed_s": 114.34599984299984,
+      "sha256": "63eaf13536b68816904a663a05bbc94a904b56f06e4d1cbd6ff88a72e1d86caa"
+    },
+    {
+      "index": 3,
+      "path": "chunk-003.mp4",
+      "frames": 16,
+      "pixel_sha256": "7f0921f494ee7dfc4455923a98718590eb7fbbb74dfa73a7a30ae5ae08204951",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5846880779999992,
+        "mp4_encode": 0.44753826399983154
+      },
+      "elapsed_s": 124.09894303299984,
+      "sha256": "990be307fe46096ef0b26e01b22fa41bae5824dd32809064e5355f43f05cce05"
+    },
+    {
+      "index": 4,
+      "path": "chunk-004.mp4",
+      "frames": 16,
+      "pixel_sha256": "e548ddef6b46280ac18bafa8369fbc145bef5906350a48f7ceb405b5d9725fda",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5828444789999594,
+        "mp4_encode": 0.4392892660000598
+      },
+      "elapsed_s": 134.11384470500002,
+      "sha256": "e59d0b73020b5b1da9ffc0ed5557f4c2ecca6ab2ef99493df74ed702c00ef366"
+    }
+  ],
+  "published_score_reproduced": false,
+  "agent_interactions": 6,
+  "adapter_sha256": "6adfe0e38f5239d61b012e9947ad4e9e2012711ba5675e423eba6173ffc6cb9a",
+  "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+  "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+  "deviations": [
+    "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+    "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+    "Official 480p demo area; single NVIDIA H100 80GB HBM3, BF16 and valid-length SDPA backend",
+    "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+    "Claude diagnostic scoring differs from published Gemini judgments"
+  ],
+  "hardware": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4"
+  },
+  "attention_backend": "sdpa",
+  "optional_torch_dlpack_addon_disabled": false,
+  "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+  "checkpoint_loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "generated_frames": 77,
+  "generated_seconds": 4.8125,
+  "termination": "agent_end",
+  "elapsed_s": 139.31231707999996,
+  "camera_diagnostics": {
+    "chunks": 5,
+    "path_length": 19.0,
+    "net_yaw_degrees": 0.0,
+    "total_turn_degrees": 0.0,
+    "max_distance_from_start": 19.0,
+    "final_distance_from_start": 19.0,
+    "revisited_start_at_chunk": null,
+    "wait_chunks": 0,
+    "wait_pose_changes": 0
+  },
+  "peak_allocated_bytes": 72566169600
+}

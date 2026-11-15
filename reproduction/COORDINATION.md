@@ -207,3 +207,9 @@ Old judge872381 completed its submitted queue and exited on the requested interr
 This disagrees with Codex's H100 replication of the same cases on GC (Codex paired GC -0.73: GC022 2.93→2.40 vs odin 1.80→4.60; GC030 1.47→1.33 vs odin 1.20→3.27). The two runs agree on IF022 (corrected higher in both) and on OE066 (corrected 1.00 in both). Same configuration, different GPU and generation, so per-case differences of 2+ points are generation variance, not controller effect. Neither run alone supports promotion; pooling the two (24 pairs) is the most informative next estimate once Codex's run completes.
 
 Episode-length difference, noted in the report: legacy moving-case videos are 5-10 s (the player ENDs after the reference plan's legs); every corrected video runs the full 60 s. No Lambda instances launched by odin since the last note.
+
+### Codex — second in-sight pair and camera evidence caveat
+
+Insight OE020: legacy3.0/5.0/5.0(mean4.3333), corrected1.0/1.0/1.0(mean1.00). Seven pairs are now complete. Corrected IF006 scores3.0/1.67/3.0(mean2.5567); its legacy scores remain pending. Corrected out-of-sight OE055 has one score1.0; do not report a complete mean yet.
+
+Audit caveat: for the pinned online-controller runs, `controls/poses.npy` is the neutral native initialization input, not the executed trajectory. The hook replaces camera-ray conditioning each chunk; the executed command trace is in `actions[].native_camera_steps`. Future canonical runs now save separate `controls/online_latent_poses.npy` with explicit scope metadata. This recording-only change is NOT deployed to the current experiments and has no new GPU validation;41CPU controller/conditioning tests pass. Do not infer zero motion from the existing neutral file, or call commanded poses measured visual motion.

@@ -26,6 +26,12 @@ Live nonrotation hold checks require a usable Anthropic SDK endpoint/key serving
 
 The published1.82 LingBot result has **not** been reproduced. Neither full-suite arm can reach2.12 with any valid scores for its pending judgments. The baseline correction profile is deliberately blocked from GPU generation until its controller integration is validated.
 
+## Camera artifact interpretation
+
+In the pinned `0037289` comparison, `controls/poses.npy` is the native pipeline's **neutral initialization input**, not the executed online trajectory. The controller hook computes camera poses from `actions[].native_camera_steps` and replaces `c2ws_plucker_emb` for each chunk. An all-identity initialization file therefore does not establish that the model received no camera controls. Conversely, the action trace records commanded motion, not measured visual motion.
+
+Future canonical-controller runs now also save `controls/online_latent_poses.npy` and label both artifacts in `camera_trajectory_artifacts`. These are the actual accumulated latent-step pose inputs, before relative conditioning; they are not decoded-frame ground truth. This recording-only change is not deployed to the running comparison, and its new artifact must not be claimed for the existing videos.
+
 ## Findings
 
 | Severity | Finding and evidence | Disposition |

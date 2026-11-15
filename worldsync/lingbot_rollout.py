@@ -408,6 +408,16 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
             if controller_profile is not None:
                 from worldsync.native_reference_timeline import apply_camera_steps
                 poses = torch.from_numpy(apply_camera_steps(camera, metadata['native_camera_steps'])).float()
+                # The native pipeline's input poses.npy remains neutral; the hook
+                # replaces its rays below. Preserve the actual online pose prefix
+                # separately so offline audits do not mistake that input for it.
+                np.save(controls / 'online_latent_poses.npy', poses.numpy())
+                report['camera_trajectory_artifacts'] = {
+                    'initialization_only': 'controls/poses.npy',
+                    'online_latent_poses': 'controls/online_latent_poses.npy',
+                    'online_pose_samples': int(poses.shape[0]),
+                    'scope': 'Commanded latent-step camera-to-world poses before relative conditioning; not measured visual motion or decoded-frame poses',
+                }
             else:
                 poses = torch.from_numpy(camera.advance(decision["action"])).float()
             if memory:

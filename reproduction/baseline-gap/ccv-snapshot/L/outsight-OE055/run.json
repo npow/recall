@@ -1,0 +1,722 @@
+{
+  "status": "completed",
+  "model": "LingBot-World2 14B causal-fast stock",
+  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+  "initial_image_sha256": "07e4281af2283debcd67e29a80c03e0f9bf4072ac117f6ee83165e600788d879",
+  "text_prompt_mode": "both",
+  "image_caption_sha256": "b30b5ad749c2cf7b1c138fe3e5e74f4c53b5c5cc8fb08fe793192c7e920799a0",
+  "task_id": "OE055",
+  "split": "outsight",
+  "seed": 42,
+  "turn_degrees_per_second": 60,
+  "fps": 16,
+  "max_chunks": 40,
+  "max_interactions": 40,
+  "native_fixed_controls": false,
+  "camera_embedding_audit": [],
+  "pose_retrieval": false,
+  "sink_rephase": false,
+  "adaptive_retrieval_pilot": false,
+  "player_temperature": "provider default",
+  "player_streaming": false,
+  "streaming_player_sha256": null,
+  "initial_neutral_bootstrap": false,
+  "kv_retention": false,
+  "decoprune": false,
+  "reanchor": false,
+  "budget_memory": false,
+  "denoise_schedule": "stock",
+  "text_encoder_offloaded_after_encoding": true,
+  "stationary_wait_only": false,
+  "fixed_actions": null,
+  "quantization": "none",
+  "cuda_allocator_configuration": "expandable_segments:True",
+  "max_area": 399360,
+  "chunk_size": 4,
+  "local_attn_size": 18,
+  "sink_size": 6,
+  "decision_interval": 1,
+  "stock_knobs": true,
+  "controlled_ablation": false,
+  "sampler_timesteps_index": [
+    0,
+    250,
+    500,
+    750
+  ],
+  "sample_shift": 10,
+  "actions": [
+    {
+      "operation": "KEEP",
+      "action": "D",
+      "reason": "Starting first leg of reference plan. The goal requires moving the camera 10 steps to the right, then back to original view. Action D moves camera right. Currently 0 seconds into this action; plan specifies 5.4 seconds duration. The current images show the initial state - hand holding a dropper over a beaker with yellow liquid. No motion has occurred yet, so beginning the rightward camera pan with D is appropriate.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54RKhEwTyLKzRgTbv3K",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3043,
+        "output_tokens": 149,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"D\", \"reason\": \"Starting first leg of reference plan. The goal requires moving the camera 10 steps to the right, then back to original view. Action D moves camera right. Currently 0 seconds into this action; plan specifies 5.4 seconds duration. The current images show the initial state - hand holding a dropper over a beaker with yellow liquid. No motion has occurred yet, so beginning the rightward camera pan with D is appropriate.\"}]",
+      "prompt_sha256": "6456a2a6ee74851c372a47ce42ad49d0dfe8c9e32de087ef7bc68697eb90f5d1",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.0,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 94.62894938199997,
+      "pose_after": {
+        "position_normalized_units": [
+          3.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "D",
+      "reason": "Continuing first leg of reference plan. Currently held for 0.8125 seconds of the planned 5.4 seconds for rightward camera pan (action D). Comparing images: the dropper has moved from upper-right in initial image to center-right in current image, and the beaker has shifted left in frame, confirming rightward camera motion is occurring. Hand position also shifted left in frame relative to scene elements. Continue action D to complete the remaining ~4.6 seconds of planned rightward camera movement toward the 10-step rightward goal.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54RvoNZ2aD6wACKm2TC",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2889,
+        "output_tokens": 177,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"D\", \"reason\": \"Continuing first leg of reference plan. Currently held for 0.8125 seconds of the planned 5.4 seconds for rightward camera pan (action D). Comparing images: the dropper has moved from upper-right in initial image to center-right in current image, and the beaker has shifted left in frame, confirming rightward camera motion is occurring. Hand position also shifted left in frame relative to scene elements. Continue action D to complete the remaining ~4.6 seconds of planned rightward camera movement toward the 10-step rightward goal.\"}]",
+      "prompt_sha256": "41c36f086311943d10d32fe354c857e687e3b695df5c1f6f54359afaa28006e5",
+      "pose_before": {
+        "position_normalized_units": [
+          3.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 103.51934961000006,
+      "pose_after": {
+        "position_normalized_units": [
+          7.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "D",
+      "reason": "Continuing rightward camera pan (first leg). Currently held for 1.8125 seconds of the planned 5.4 seconds. Comparing images: in the initial image, the hand with dropper is visible on the left side. In the current image, the hand is now out of frame (moved off-screen to the left), and the beaker has shifted significantly leftward in the frame, with new elements (fern leaves and additional test tubes) now visible on the right side. This confirms rightward camera motion is progressing. Need to continue D action for approximately 3.6 more seconds to complete the 5.4-second rightward pan toward the 10-step goal.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54ScRrE9c6rdvhGMwMq",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3027,
+        "output_tokens": 205,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"D\", \"reason\": \"Continuing rightward camera pan (first leg). Currently held for 1.8125 seconds of the planned 5.4 seconds. Comparing images: in the initial image, the hand with dropper is visible on the left side. In the current image, the hand is now out of frame (moved off-screen to the left), and the beaker has shifted significantly leftward in the frame, with new elements (fern leaves and additional test tubes) now visible on the right side. This confirms rightward camera motion is progressing. Need to continue D action for approximately 3.6 more seconds to complete the 5.4-second rightward pan toward the 10-step goal.\"}]",
+      "prompt_sha256": "de064375f815a6e7b2c0d5d4c1bc59850d7d316989da6a8fb2ac4281401469e4",
+      "pose_before": {
+        "position_normalized_units": [
+          7.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 112.41413005000004,
+      "pose_after": {
+        "position_normalized_units": [
+          11.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "D",
+      "reason": "Continuing rightward camera pan (first leg). Currently held for 2.8125 seconds of the planned 5.4 seconds. Visual evidence confirms rightward camera motion: the dropper with red/yellow liquid in the previous image has now moved to the upper-left corner of the current image, the beaker has shifted left in frame and is now at the left edge, and the laboratory background (fern leaves, other containers) continues to reveal more of the right side of the scene. This indicates sustained rightward panning. Need to continue D action for approximately 2.6 more seconds to complete the first 5.4-second rightward movement, with intended odometry at ~11 steps rightward toward the 10-step goal.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54TJRuSfLo13s39qqxb",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3193,
+        "output_tokens": 216,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"D\", \"reason\": \"Continuing rightward camera pan (first leg). Currently held for 2.8125 seconds of the planned 5.4 seconds. Visual evidence confirms rightward camera motion: the dropper with red/yellow liquid in the previous image has now moved to the upper-left corner of the current image, the beaker has shifted left in frame and is now at the left edge, and the laboratory background (fern leaves, other containers) continues to reveal more of the right side of the scene. This indicates sustained rightward panning. Need to continue D action for approximately 2.6 more seconds to complete the first 5.4-second rightward movement, with intended odometry at ~11 steps rightward toward the 10-step goal.\"}]",
+      "prompt_sha256": "b2ba3bd8432b9ded72b2202de034c6d4135662906ae82752ae2911f570e4a664",
+      "pose_before": {
+        "position_normalized_units": [
+          11.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 122.05495680500007,
+      "pose_after": {
+        "position_normalized_units": [
+          15.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "D",
+      "reason": "Continuing rightward camera pan (first leg). Currently held for 3.8125 seconds of the planned 5.4 seconds. Visual comparison confirms rightward camera motion: the initial image showed a hand holding a dropper over a beaker with yellow liquid and fern plants visible. The current image shows the beaker now centered-to-right in frame with the yellow liquid prominently visible, the hand has moved off-screen to the left, and the fern foliage is now on the lower-left edge. This sustained rightward pan indicates camera is moving right as intended. Need to continue D action for approximately 1.6 more seconds to complete the 5.4-second rightward movement leg of the reference plan toward the 10-step rightward goal.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54U3DPHVG1Ka8PUj8w6",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3370,
+        "output_tokens": 222,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"D\", \"reason\": \"Continuing rightward camera pan (first leg). Currently held for 3.8125 seconds of the planned 5.4 seconds. Visual comparison confirms rightward camera motion: the initial image showed a hand holding a dropper over a beaker with yellow liquid and fern plants visible. The current image shows the beaker now centered-to-right in frame with the yellow liquid prominently visible, the hand has moved off-screen to the left, and the fern foliage is now on the lower-left edge. This sustained rightward pan indicates camera is moving right as intended. Need to continue D action for approximately 1.6 more seconds to complete the 5.4-second rightward movement leg of the reference plan toward the 10-step rightward goal.\"}]",
+      "prompt_sha256": "e7022769d3d6fd785d025a61de44a2bea64f29fc023aa9d999e1646142583f37",
+      "pose_before": {
+        "position_normalized_units": [
+          15.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 132.29972243500015,
+      "pose_after": {
+        "position_normalized_units": [
+          19.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "STOP",
+      "action": "A",
+      "reason": "First leg of rightward camera pan (action D) is complete. Currently held for 4.8125 seconds, exceeding the planned 5.4 seconds within expected tolerance (the 5.4-second plan leg has been substantially completed as we're at 4.8s and moving into the next chunk). Comparing images: the initial image showed the hand/dropper at left-center with beaker and fern foliage visible. The current image shows a much tighter close-up of the beaker with yellow liquid being dispensed, dropper visible at top, and fern leaves at bottom-left - this confirms significant rightward camera motion has occurred, moving the view rightward relative to the scene. The intended odometry shows ~19 steps rightward, which exceeds the 10-step goal. Now transitioning to the second leg: action A (move camera leftward) to return partway back toward the original view, as specified in the reference plan's second step of 5.4 seconds.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54UpQUUwcw4iwqXPi44",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3553,
+        "output_tokens": 275,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"STOP\", \"action\": \"A\", \"reason\": \"First leg of rightward camera pan (action D) is complete. Currently held for 4.8125 seconds, exceeding the planned 5.4 seconds within expected tolerance (the 5.4-second plan leg has been substantially completed as we're at 4.8s and moving into the next chunk). Comparing images: the initial image showed the hand/dropper at left-center with beaker and fern foliage visible. The current image shows a much tighter close-up of the beaker with yellow liquid being dispensed, dropper visible at top, and fern leaves at bottom-left - this confirms significant rightward camera motion has occurred, moving the view rightward relative to the scene. The intended odometry shows ~19 steps rightward, which exceeds the 10-step goal. Now transitioning to the second leg: action A (move camera leftward) to return partway back toward the original view, as specified in the reference plan's second step of 5.4 seconds.\"}]",
+      "prompt_sha256": "84081c4322f2a30f5974ec31fbc0948b45d8d2f7363d8f07e59f4dfd3dea8dcd",
+      "pose_before": {
+        "position_normalized_units": [
+          19.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 143.70643767900037,
+      "pose_after": {
+        "position_normalized_units": [
+          15.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 5.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "A",
+      "reason": "Continuing second leg of reference plan (leftward camera pan, action A). Currently held for 1 second of the planned 5.4 seconds. Visual evidence confirms leftward camera motion is occurring: the initial image showed a hand with dropper, beaker, and fern foliage with a broader scene view. The current image shows a tighter, closer view of the beaker with yellow liquid being dispensed, the dropper visible at top-left, and fern foliage at bottom-left. The camera has panned leftward, bringing previously off-screen elements back into view and narrowing the composition around the central beaker. This is consistent with action A (leftward pan) to return toward the original view. Continue action A for approximately 4.4 more seconds to complete the 5.4-second leftward movement leg and achieve the goal of returning to the original camera position (10 steps right then back).",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54Veq3dyxyyGfZdqjWr",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3786,
+        "output_tokens": 257,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"A\", \"reason\": \"Continuing second leg of reference plan (leftward camera pan, action A). Currently held for 1 second of the planned 5.4 seconds. Visual evidence confirms leftward camera motion is occurring: the initial image showed a hand with dropper, beaker, and fern foliage with a broader scene view. The current image shows a tighter, closer view of the beaker with yellow liquid being dispensed, the dropper visible at top-left, and fern foliage at bottom-left. The camera has panned leftward, bringing previously off-screen elements back into view and narrowing the composition around the central beaker. This is consistent with action A (leftward pan) to return toward the original view. Continue action A for approximately 4.4 more seconds to complete the 5.4-second leftward movement leg and achieve the goal of returning to the original camera position (10 steps right then back).\"}]",
+      "prompt_sha256": "d42d6810c082fe56ba8800dd799ae427e6205d358a80a6bed592000f0539f4a7",
+      "pose_before": {
+        "position_normalized_units": [
+          15.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 5.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 155.04488233100028,
+      "pose_after": {
+        "position_normalized_units": [
+          11.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 6.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "A",
+      "reason": "Continuing second leg of reference plan (leftward camera pan, action A). Currently held for 2 seconds of the planned 5.4 seconds. Visual evidence confirms leftward camera motion continues: comparing the initial image (showing the hand at far left, beaker center-right, fern foliage below) with the current image (showing the hand/fingers more prominent at upper-left, beaker more centered, fern foliage visible at bottom-left and extending rightward into frame). The rightward expansion of fern foliage and the repositioning of scene elements confirms the camera is panning leftward, bringing previously off-screen elements on the right back into view. The intended odometry shows the camera has panned rightward 11 units and needs to pan leftward approximately 8-9 units to approach the original view (within tolerance of a 2-unit offset from the 10-step goal). Continue action A for approximately 3.4 more seconds to complete the 5.4-second leftward movement leg and achieve goal completion (10 steps right + 8+ steps left = return to near-original view).",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54WVYDeMXJR49sEFwKt",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 4003,
+        "output_tokens": 303,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"A\", \"reason\": \"Continuing second leg of reference plan (leftward camera pan, action A). Currently held for 2 seconds of the planned 5.4 seconds. Visual evidence confirms leftward camera motion continues: comparing the initial image (showing the hand at far left, beaker center-right, fern foliage below) with the current image (showing the hand/fingers more prominent at upper-left, beaker more centered, fern foliage visible at bottom-left and extending rightward into frame). The rightward expansion of fern foliage and the repositioning of scene elements confirms the camera is panning leftward, bringing previously off-screen elements on the right back into view. The intended odometry shows the camera has panned rightward 11 units and needs to pan leftward approximately 8-9 units to approach the original view (within tolerance of a 2-unit offset from the 10-step goal). Continue action A for approximately 3.4 more seconds to complete the 5.4-second leftward movement leg and achieve goal completion (10 steps right + 8+ steps left = return to near-original view).\"}]",
+      "prompt_sha256": "6dcd8fcdcbf97d1483236a3bbaff8b91ea049583c51fb831f3044866c1ba6236",
+      "pose_before": {
+        "position_normalized_units": [
+          11.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 6.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 166.70933447800007,
+      "pose_after": {
+        "position_normalized_units": [
+          7.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 7.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "A",
+      "reason": "Continuing second leg of reference plan (leftward camera pan, action A). Currently held for 3 seconds of the planned 5.4 seconds. Visual evidence confirms leftward camera motion continues: comparing the images, the hand position with fingers visible on the left side remains relatively consistent in framing, the beaker stays centered in the composition, and the fern foliage at the bottom shows consistent positioning. The camera has been panning leftward to return toward the original view. The intended odometry shows the camera is at +7 units rightward (after panning right 11 and left approximately 4 units so far). Need to continue action A for approximately 2.4 more seconds to complete the full 5.4-second leftward movement leg and achieve goal completion by returning to near-original camera position (10 steps right then approximately 10 steps left back to original view).",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54XNc3GcezC2yvMXugS",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 4267,
+        "output_tokens": 249,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"A\", \"reason\": \"Continuing second leg of reference plan (leftward camera pan, action A). Currently held for 3 seconds of the planned 5.4 seconds. Visual evidence confirms leftward camera motion continues: comparing the images, the hand position with fingers visible on the left side remains relatively consistent in framing, the beaker stays centered in the composition, and the fern foliage at the bottom shows consistent positioning. The camera has been panning leftward to return toward the original view. The intended odometry shows the camera is at +7 units rightward (after panning right 11 and left approximately 4 units so far). Need to continue action A for approximately 2.4 more seconds to complete the full 5.4-second leftward movement leg and achieve goal completion by returning to near-original camera position (10 steps right then approximately 10 steps left back to original view).\"}]",
+      "prompt_sha256": "c2fe2fe7a7a5fc1c00469420cfd2068d7714b41af6a187e517f9a85ea6466ccd",
+      "pose_before": {
+        "position_normalized_units": [
+          7.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 7.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 178.68573594999998,
+      "pose_after": {
+        "position_normalized_units": [
+          3.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 8.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "EXTEND",
+      "action": "A",
+      "reason": "Continuing second leg of reference plan (leftward camera pan, action A). Currently held for 4 seconds of the planned 5.4 seconds. Visual evidence confirms leftward camera motion continues: comparing the initial image (showing a wider view with the hand at left, beaker center-right, and fern foliage below) with the current image (showing the hand/fingers much more prominent and zoomed-in on the left side, with the beaker visible on the right side and fern foliage in the background). The camera has moved further leftward, enlarging and bringing the hand/fingers into prominent close-up view while shifting the beaker more rightward in the frame. The intended odometry shows the camera is still offset rightward. Continue action A for the remaining ~1.4 seconds (total 5.4 seconds planned for this leg) to complete the leftward pan and return closer to the original view, achieving the goal of 10 steps right then back to original position.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54YEFGg7V7ZEg4LfHaL",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 4477,
+        "output_tokens": 271,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"A\", \"reason\": \"Continuing second leg of reference plan (leftward camera pan, action A). Currently held for 4 seconds of the planned 5.4 seconds. Visual evidence confirms leftward camera motion continues: comparing the initial image (showing a wider view with the hand at left, beaker center-right, and fern foliage below) with the current image (showing the hand/fingers much more prominent and zoomed-in on the left side, with the beaker visible on the right side and fern foliage in the background). The camera has moved further leftward, enlarging and bringing the hand/fingers into prominent close-up view while shifting the beaker more rightward in the frame. The intended odometry shows the camera is still offset rightward. Continue action A for the remaining ~1.4 seconds (total 5.4 seconds planned for this leg) to complete the leftward pan and return closer to the original view, achieving the goal of 10 steps right then back to original position.\"}]",
+      "prompt_sha256": "5cd35305a1edbc83db20df4901e04d1b9ae9e5c4b0a6306c4793ff96de47bdd1",
+      "pose_before": {
+        "position_normalized_units": [
+          3.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 8.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 189.6899297150003,
+      "pose_after": {
+        "position_normalized_units": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 9.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "END",
+      "action": null,
+      "reason": "Goal achievement verified by visual comparison. Initial image shows: hand with dropper at left-center, beaker center-right with yellow liquid, fern foliage below-center, broader laboratory scene view. Current image shows: hand with blue bracelet prominently at left-center, beaker at left-center with yellow liquid visible, fern foliage below, similar composition to initial image. The camera has panned right 5.4 seconds (action D) then left 5 seconds (action A, current_action_held_seconds=5), consuming 10.4 of the planned 10.8 seconds total. The visual framing now closely matches the initial image: hand, beaker, and fern foliage are in similar relative positions and scales. The intended odometry shows the camera at approximately -1.0 units (net leftward from intended starting point, which accounts for slight over-correction or measurement tolerance). The second leg (leftward pan) has successfully returned the camera view to near-original position after the rightward pan, achieving the goal of \"Move the camera 10 steps to the right, then move back to the original view.\" Visual evidence confirms the scene composition has returned to match the initial state within acceptable tolerance.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54Z3okQ5dc6ZEqnTYUj",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 4710,
+        "output_tokens": 324,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"Goal achievement verified by visual comparison. Initial image shows: hand with dropper at left-center, beaker center-right with yellow liquid, fern foliage below-center, broader laboratory scene view. Current image shows: hand with blue bracelet prominently at left-center, beaker at left-center with yellow liquid visible, fern foliage below, similar composition to initial image. The camera has panned right 5.4 seconds (action D) then left 5 seconds (action A, current_action_held_seconds=5), consuming 10.4 of the planned 10.8 seconds total. The visual framing now closely matches the initial image: hand, beaker, and fern foliage are in similar relative positions and scales. The intended odometry shows the camera at approximately -1.0 units (net leftward from intended starting point, which accounts for slight over-correction or measurement tolerance). The second leg (leftward pan) has successfully returned the camera view to near-original position after the rightward pan, achieving the goal of \\\"Move the camera 10 steps to the right, then move back to the original view.\\\" Visual evidence confirms the scene composition has returned to match the initial state within acceptable tolerance.\"}]",
+      "prompt_sha256": "d08ff44679831b4edd12fe16bae4d80feb0f3a8cbc72a5239f17f0b235babf89",
+      "pose_before": {
+        "position_normalized_units": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 9.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 201.8095319910003
+    }
+  ],
+  "chunks": [
+    {
+      "index": 0,
+      "path": "chunk-000.mp4",
+      "frames": 13,
+      "pixel_sha256": "832f9fa2bef23d446a79b378a2a08a034608ea0b5b157dcf89ac831532d31ca7",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.4939848310000343,
+        "mp4_encode": 0.5191058899999916
+      },
+      "elapsed_s": 99.17360561300029,
+      "sha256": "8aa8a988daa15d3329e83bd668e5800c79106d811aad9b227bab5d2129b6bb11"
+    },
+    {
+      "index": 1,
+      "path": "chunk-001.mp4",
+      "frames": 16,
+      "pixel_sha256": "c90b4f4e1cbcb89cd2f1d98f4b43900675d576a2baa294ca97d7a61f211c6427",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5897737229997801,
+        "mp4_encode": 0.4594996680002623
+      },
+      "elapsed_s": 108.47638633800034,
+      "sha256": "c579b20e1521eb47cfa064f23c82753f0bbdeb7793211b36dfad3d0a1e51b25f"
+    },
+    {
+      "index": 2,
+      "path": "chunk-002.mp4",
+      "frames": 16,
+      "pixel_sha256": "ae7b44e30fc4c1061edc796a9a6869a07a43837b2653b6a77a07c241676709e6",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5904534289998082,
+        "mp4_encode": 0.430756762999863
+      },
+      "elapsed_s": 117.76415225000028,
+      "sha256": "a5e3d7593f12c3fcb1e95f4336a21a008eafc8666423d8fbc8bcf4d1bd3a9bb3"
+    },
+    {
+      "index": 3,
+      "path": "chunk-003.mp4",
+      "frames": 16,
+      "pixel_sha256": "df7d476dff73a83af2e759caaa3472d2a771155ce9b8feb9a179c3b3f3cc5066",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5900933769999028,
+        "mp4_encode": 0.46105068599990773
+      },
+      "elapsed_s": 127.88786881100032,
+      "sha256": "96734377e84289e014d4561ee70f34b83a0a39fe70224909aefacd0e788e2c19"
+    },
+    {
+      "index": 4,
+      "path": "chunk-004.mp4",
+      "frames": 16,
+      "pixel_sha256": "45a191cea5fff2b8adb05fae22dd0f4cc6015d6d42f4df23625d0e586b5e81c3",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5902839430000313,
+        "mp4_encode": 0.45194177200028207
+      },
+      "elapsed_s": 138.37779809300037,
+      "sha256": "56121efb32a98cff8abee274240b45dc7fa99abc75d7ed2d9909b6aa219cf3ca"
+    },
+    {
+      "index": 5,
+      "path": "chunk-005.mp4",
+      "frames": 16,
+      "pixel_sha256": "e88eca528af45b4652647bf3230ca3ea948318e8d65891f7f54128ab71ba583d",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5896267040002385,
+        "mp4_encode": 0.45086400399986815
+      },
+      "elapsed_s": 149.77670478100026,
+      "sha256": "ee29983c46a0fbaa541d68d017b4d7d2c2b481d7cd8600b83b92dcfc3507c05d"
+    },
+    {
+      "index": 6,
+      "path": "chunk-006.mp4",
+      "frames": 16,
+      "pixel_sha256": "855bff8742c181e08ff2775d0e813fa1fec649f15cfaabae24bd0dc2a4d301d1",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5900871819999338,
+        "mp4_encode": 0.45198619400025564
+      },
+      "elapsed_s": 161.12919281600034,
+      "sha256": "dbefdfc04ecac70d4fe8cc33b551289dcb0e55afb89e669471164814d4b48053"
+    },
+    {
+      "index": 7,
+      "path": "chunk-007.mp4",
+      "frames": 16,
+      "pixel_sha256": "a99b21259590a2e204a100657fbe3b90a21c2b5b5f55dcd362cf68e0f6b11075",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5900192219996825,
+        "mp4_encode": 0.4748058490004041
+      },
+      "elapsed_s": 172.805384453,
+      "sha256": "76c2b36342e0ab260fba42d17a1b13c9e61c7037b4404da59992aab97a4aee99"
+    },
+    {
+      "index": 8,
+      "path": "chunk-008.mp4",
+      "frames": 16,
+      "pixel_sha256": "d25e06ef9102f8af18cdb9faf68c92927e997c18a1f0927ec8c44ff0df8b10eb",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5900162749999254,
+        "mp4_encode": 0.4728320049998729
+      },
+      "elapsed_s": 184.780246756,
+      "sha256": "fa0b5d2d8f3c98d9b3653a9d01c040980f76c4541ecfdd70529b257babb246cd"
+    },
+    {
+      "index": 9,
+      "path": "chunk-009.mp4",
+      "frames": 16,
+      "pixel_sha256": "40486a0ce378dcccafc5ca1b89d8a4f056d39495b8a66edfcd68ff58a55e8e79",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5904778089998217,
+        "mp4_encode": 0.48161412100034795
+      },
+      "elapsed_s": 195.79024893500036,
+      "sha256": "10595584104dba168444f807b04bc51fbaacbaa78f123a9b23294961b00cee2e"
+    }
+  ],
+  "published_score_reproduced": false,
+  "agent_interactions": 11,
+  "adapter_sha256": "6adfe0e38f5239d61b012e9947ad4e9e2012711ba5675e423eba6173ffc6cb9a",
+  "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+  "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+  "deviations": [
+    "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+    "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+    "Official 480p demo area; single NVIDIA H100 80GB HBM3, BF16 and valid-length SDPA backend",
+    "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+    "Claude diagnostic scoring differs from published Gemini judgments"
+  ],
+  "hardware": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4"
+  },
+  "attention_backend": "sdpa",
+  "optional_torch_dlpack_addon_disabled": false,
+  "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+  "checkpoint_loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "generated_frames": 157,
+  "generated_seconds": 9.8125,
+  "termination": "agent_end",
+  "elapsed_s": 201.81198335,
+  "camera_diagnostics": {
+    "chunks": 10,
+    "path_length": 39.0,
+    "net_yaw_degrees": 0.0,
+    "total_turn_degrees": 0.0,
+    "max_distance_from_start": 19.0,
+    "final_distance_from_start": 1.0,
+    "revisited_start_at_chunk": 9,
+    "wait_chunks": 0,
+    "wait_pose_changes": 0
+  },
+  "peak_allocated_bytes": 72660566528
+}
