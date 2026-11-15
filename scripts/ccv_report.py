@@ -120,10 +120,13 @@ def main():
         "- **Judge:** `worldsync/gemini_vertex_judge.py` (released rubric, gate and aggregation), `gemini-3.1-pro-preview` on Vertex, "
         "three independent calls per video (separate caches).", "",
         "## Results", "",
-        "| Dimension | Legacy | Corrected | Corrected − legacy |", "|---|---:|---:|---:|"]
+        "Arm means use completed cases only. Differences use matched case pairs; unequal completion can make the displayed arm means cover different cases. Overall and its interval remain withheld until all planned cases are complete.", "",
+        "| Dimension | Legacy | Corrected | Paired corrected − legacy |", "|---|---:|---:|---:|"]
     for s in SPLITS:
         a, b = means["L"][s], means["C"][s]
-        lines.append(f"| {NAMES[s]} (L={sum(r['L'] is not None for r in rows if r['split']==s)}/3, C={sum(r['C'] is not None for r in rows if r['split']==s)}/3) | {fmt(a)} | {fmt(b)} | {fmt(None if a is None or b is None else b - a)} |")
+        split_pairs = [r for r in pairs if r['split']==s]
+        paired_delta = st.mean(r['C']-r['L'] for r in split_pairs) if split_pairs else None
+        lines.append(f"| {NAMES[s]} (L={sum(r['L'] is not None for r in rows if r['split']==s)}/3, C={sum(r['C'] is not None for r in rows if r['split']==s)}/3, pairs={len(split_pairs)}/3) | {fmt(a)} | {fmt(b)} | {fmt(paired_delta)} |")
     lines.append(f"| **Overall (equal mean of dimensions)** | **{fmt(overall['L'])}** | **{fmt(overall['C'])}** | "
                  f"**{fmt(None if overall['L'] is None or overall['C'] is None else overall['C'] - overall['L'])}** |")
     lines += ["", f"Paired per-case difference (corrected − legacy): mean {fmt(st.mean(deltas) if deltas else None)} over {len(deltas)} pairs, "

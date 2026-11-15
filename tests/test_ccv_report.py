@@ -39,3 +39,18 @@ def test_partial_run_withholds_complete_overall(tmp_path):
     assert result['overall']=={'L':None,'C':None}
     assert result['ci']==[None,None]
     assert 'C=0/3' in (tmp_path/'report.md').read_text()
+
+
+def test_partial_dimension_difference_uses_only_matching_cases(tmp_path):
+    selection={'rule':'test','picked':{'gc':['GC024','GC022','GC030'],'if':['IF012','IF006','IF022'],
+                                   'insight':['OE066','OE009','OE020'],'outsight':['OE055','OE028','OE062']}}
+    path=tmp_path/'selection.json';path.write_text(json.dumps(selection))
+    for rep in ['rep1','rep2','rep3']:
+        folder=tmp_path/'judge'/rep/'episodes';folder.mkdir(parents=True)
+        for episode,score in [('L-gc-GC024',3),('C-gc-GC024',5),('C-gc-GC030',1)]:
+            (folder/(episode+'.json')).write_text(json.dumps({'episode_id':episode,'scores':{'official':score},'video_sha256':episode}))
+    report=tmp_path/'report.md'
+    subprocess.run([sys.executable,'scripts/ccv_report.py','--run',str(tmp_path),
+                    '--selection',str(path),'--output',str(report)],check=True,capture_output=True)
+    row=next(line for line in report.read_text().splitlines() if 'pairs=1/3' in line)
+    assert row.endswith('| 3.00 | 3.00 | 2.00 |')
