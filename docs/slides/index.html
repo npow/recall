@@ -89,6 +89,7 @@ video,img.media{display:block;width:100%;height:auto;border-radius:10px;backgrou
 .frag{opacity:.14;transition:opacity .3s}
 .frag.shown{opacity:1}
 .foot{margin-top:auto;padding-top:18px}
+.ctx-bg{position:absolute;top:180px;width:800px;height:412px;border-radius:12px;background-size:cover;background-position:center;opacity:.85}
 .slide aside.notes{display:none}
 /* notes */
 #notes{position:fixed;left:0;right:0;bottom:0;background:rgba(16,20,27,.96);border-top:2px solid var(--rel);
@@ -402,16 +403,21 @@ svg text{font-family:inherit}
 
   <section class="slide" data-sec="Multi-agent" id="shared-context">
     <h2>Shared plan + weights. Separate visual KV.</h2>
-    <img class="media" style="width:1728px;height:740px;background:transparent" src="media/multi-agent-architecture.svg" alt="Shared event plan and frozen DiT weights; per-agent text conditioning and private visual KV caches">
+    <div style="position:relative;width:1728px;height:740px">
+      <!-- each agent's own generated view (frame at 4.0 s of multi-agent-pov.mp4), faded behind its column of the diagram -->
+      <div class="ctx-bg" style="left:10px;background-image:linear-gradient(rgba(11,14,19,.1),rgba(11,14,19,.5)),url(media/ctx-agent-a.jpg)"></div>
+      <div class="ctx-bg" style="left:918px;background-image:linear-gradient(rgba(11,14,19,.1),rgba(11,14,19,.5)),url(media/ctx-agent-b.jpg)"></div>
+      <img class="media" style="position:relative;width:1728px;height:740px;background:transparent" src="media/multi-agent-architecture.svg" alt="Shared event plan and frozen DiT weights; per-agent text conditioning and private visual KV caches">
+    </div>
     <p class="tiny foot">Same DiT/KV architecture as before. Cross-agent visual retrieval is the next step.</p>
     <aside class="notes">Green is shared event information. The scene description and scripted timeline specify when the basket changes holder. Orange and Purple receive viewpoint-specific descriptions through the text encoder. Those form separate cross-attention keys and values. Blue is the causal video DiT used throughout this project. Each rollout keeps its own self-attention cache: the first six latent frames and most recent twelve. The dashed blue arrows mean that both rollouts reuse the same frozen forty-layer checkpoint, loaded once and served serially. They do not mean shared activations or exchanged visual KV. No RECALL retrieval splice is enabled across agents in these demonstration clips. Sharing revision-aware visual evidence is the next implementation step.</aside>
   </section>
 
   <section class="slide" data-sec="Multi-agent" id="multi-agent-demo">
 <h2>Two agents, two first-person views</h2>
-<div class="vwrap" style="margin-top:30px"><video muted loop playsinline preload="auto" poster="media/multi-agent-pov.jpg" src="media/multi-agent-pov.mp4"></video></div>
+<div class="vwrap" style="margin-top:30px"><video muted loop playsinline preload="auto" poster="media/multi-agent-pov.jpg" src="media/multi-agent-pov-2x.mp4"></video></div>
 <div style="display:flex;gap:24px;margin-top:34px"><span class="chip">Shared scripted plan</span><span class="chip">Two POVs</span><span class="chip" style="color:var(--warn);border-color:var(--warn)">Handoff unresolved</span></div>
-<p class="tiny foot">Exploratory prototype · independent visual histories · no multi-agent benchmark score.</p>
+<p class="tiny foot">Exploratory prototype · shown at 2× speed · independent visual histories · no multi-agent benchmark score.</p>
 <aside class="notes">Each tile is a genuine first-person LingBot render, not a crop of the observer video. Orange sees Purple; Purple sees Orange. Both use the same event boundaries and their own visual histories. The agents are scripted, and the reference viewpoints were generated from the same scene reference. The clip makes the remaining challenge visible: both characters reach for the basket, but the final release is not consistent enough to claim shared object ownership. The next step is shared, revision-aware visual evidence.</aside>
   </section>
 
@@ -436,6 +442,7 @@ svg text{font-family:inherit}
     <div class="row grow">
       <div class="col"><ul>
         <li><b>Share compatible views across agents.</b> Index the archive by scene, pose and object revision, so an old frame cannot restore an object that moved.</li>
+        <li><b>Share KV caches by heading.</b> Agents looking the same way could reuse each other's cached views, with moving objects masked out. This has not worked yet; more capable models may make the approach work.</li>
         <li><b>Retrieve by what is visible</b> (as in VMem) to handle forward-and-back motion.</li>
         <li><b>Longer-horizon tasks.</b> The benchmark's own episodes are mostly shorter than the model's memory; the interesting regime starts after it.</li>
       </ul></div>
@@ -448,7 +455,7 @@ svg text{font-family:inherit}
       </div></div>
     </div>
     <div class="foot"><p style="font-size:44px;font-weight:750;margin:0">github.com/npow/recall</p><p class="small" style="margin:6px 0 0">Built in two days · every number in these slides traces to a file in the repo</p></div>
-    <aside class="notes">Next steps: train a small memory layer so the model learns to use retrieved views, retrieve by what is actually visible, and test on longer tasks where memory matters. To sum up: a clear gain in judged consistency after looking away, a memory two hundred times smaller than the obvious design, a reproduced baseline, and an honest negative result on the benchmark's own short tasks. Thank you.</aside>
+    <aside class="notes">Next steps: train a small memory layer so the model learns to use retrieved views, share attention caches between agents that face the same way with moving objects masked out, which has not worked yet but may with more capable models, retrieve by what is actually visible, and test on longer tasks where memory matters. To sum up: a clear gain in judged consistency after looking away, a memory two hundred times smaller than the obvious design, a reproduced baseline, and an honest negative result on the benchmark's own short tasks. Thank you.</aside>
   </section>
 
 
