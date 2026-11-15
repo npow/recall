@@ -1,5 +1,6 @@
 """Profile warmed stock inference without changing sampler, precision, or cache."""
 import json
+import os
 from pathlib import Path
 import sys
 import time
@@ -35,6 +36,7 @@ def main():
         rows = []
         for event in events:
             rows.append({"name": event.key, "calls": event.count, "input_shapes": event.input_shapes,
+                         "device_type": str(event.device_type),
                          "self_cpu_us": event.self_cpu_time_total, "cpu_total_us": event.cpu_time_total,
                          "self_device_us": event.self_device_time_total,
                          "device_total_us": event.device_time_total})
@@ -43,6 +45,10 @@ def main():
 
     def configured(report, save):
         upstream = original_backend(report, save)
+        metadata["host_cache_indices"] = os.environ.get("WORLDSYNC_HOST_CACHE_INDICES") == "1"
+        if metadata["host_cache_indices"]:
+            from worldsync.lingbot_fast_metadata import install
+            install(upstream)
         from wan.modules import model_fast, model as base_model
         original_attention = model_fast.attention
 

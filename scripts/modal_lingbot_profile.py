@@ -18,7 +18,8 @@ app = modal.App("worldsync-lingbot-profile")
 
 @app.function(image=image, gpu="H200", cpu=8, memory=131072, timeout=1800,
               max_containers=1, volumes={"/cache": weights, "/results": results})
-def collect():
+def collect(fast_metadata: bool = False):
+    import os
     import gzip
     import shutil
     import subprocess
@@ -32,7 +33,8 @@ def collect():
     command = [sys.executable, "-u", "-m", "worldsync.lingbot_profile", "--split", "gc", "--task-id",
                "GC007", "--max-chunks", "10", "--fixed-actions", *(["WAIT"] * 10), "--output", str(output)]
     try:
-        outcome = subprocess.run(command, cwd="/work")
+        environment = dict(os.environ, WORLDSYNC_HOST_CACHE_INDICES="1" if fast_metadata else "0")
+        outcome = subprocess.run(command, cwd="/work", env=environment)
     finally:
         if output.exists():
             trace = output / "trace.json"
@@ -52,8 +54,9 @@ def collect():
 
 
 @app.local_entrypoint()
-def main():
-    report = collect.remote()
-    output = ROOT / "outputs/lingbot-reproduction/modal-h200-profile.json"
+def main(fast_metadata: bool = False):
+    report = collect.remote(fast_metadata)
+    filename = "modal-h200-profile-fast-metadata.json" if fast_metadata else "modal-h200-profile.json"
+    output = ROOT / "outputs/lingbot-reproduction" / filename
     output.write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps({key: value for key, value in report.items() if key != "operators"}, indent=2))

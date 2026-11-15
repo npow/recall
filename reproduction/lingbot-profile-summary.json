@@ -1,0 +1,232 @@
+{
+  "scope": "diagnostic profiling; not scored baseline",
+  "start_chunk": 6,
+  "stop_chunk": 8,
+  "pipeline_load_wall_s": 120.08168682399999,
+  "profile_completed": true,
+  "torch": "2.6.0+cu124",
+  "gpu": "NVIDIA H200",
+  "result_directory": "profile-h200-1794701964242320114",
+  "profiled_chunks": 2,
+  "gpu_operator_time_s": 10.968089595999984,
+  "scope_gpu_time_s": {
+    "worldsync/dit_denoise": 7.68907423699996,
+    "worldsync/attention": 4.255088215000015,
+    "worldsync/dit_clean_cache": 1.9275456369999726,
+    "worldsync/vae_decode": 1.1459111840000544
+  },
+  "cuda_stream_synchronizations": 1548,
+  "cpu_synchronization_wait_s": 7.632239511999975,
+  "note": "GPU scope times are inclusive. CPU synchronization waits overlap GPU execution; do not add them. CPU operator self-device times exclude separate CUDA event rows to avoid double counting.",
+  "top_gpu_operators": [
+    {
+      "name": "aten::_flash_attention_forward",
+      "calls": 400,
+      "self_gpu_s": 4.127361235000005,
+      "fraction": 0.37630630192018455,
+      "input_shapes": [
+        [
+          1,
+          6032,
+          40,
+          128
+        ],
+        [
+          1,
+          27144,
+          40,
+          128
+        ],
+        [
+          1,
+          27144,
+          40,
+          128
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "name": "aten::addmm",
+      "calls": 4030,
+      "self_gpu_s": 1.7931796460000033,
+      "fraction": 0.163490608852609,
+      "input_shapes": [
+        [
+          5120
+        ],
+        [
+          6032,
+          5120
+        ],
+        [
+          5120,
+          5120
+        ],
+        [],
+        []
+      ]
+    },
+    {
+      "name": "aten::addmm",
+      "calls": 400,
+      "self_gpu_s": 0.4814005509999932,
+      "fraction": 0.04389101190197771,
+      "input_shapes": [
+        [
+          13824
+        ],
+        [
+          6032,
+          5120
+        ],
+        [
+          5120,
+          13824
+        ],
+        [],
+        []
+      ]
+    },
+    {
+      "name": "aten::addmm",
+      "calls": 400,
+      "self_gpu_s": 0.4499048409999968,
+      "fraction": 0.0410194352500617,
+      "input_shapes": [
+        [
+          5120
+        ],
+        [
+          6032,
+          13824
+        ],
+        [
+          13824,
+          5120
+        ],
+        [],
+        []
+      ]
+    },
+    {
+      "name": "aten::addmm",
+      "calls": 10,
+      "self_gpu_s": 0.3814669209999995,
+      "fraction": 0.03477970503989308,
+      "input_shapes": [
+        [
+          30720
+        ],
+        [
+          6032,
+          5120
+        ],
+        [
+          5120,
+          30720
+        ],
+        [],
+        []
+      ]
+    },
+    {
+      "name": "aten::add",
+      "calls": 400,
+      "self_gpu_s": 0.3176808779999942,
+      "fraction": 0.028964103111981422,
+      "input_shapes": [
+        [
+          1,
+          1,
+          6,
+          5120
+        ],
+        [
+          1,
+          6032,
+          6,
+          5120
+        ],
+        []
+      ]
+    },
+    {
+      "name": "aten::add",
+      "calls": 2820,
+      "self_gpu_s": 0.267981726999989,
+      "fraction": 0.024432853566196323,
+      "input_shapes": [
+        [
+          1,
+          6032,
+          5120
+        ],
+        [
+          1,
+          6032,
+          5120
+        ],
+        []
+      ]
+    },
+    {
+      "name": "aten::cat",
+      "calls": 2854,
+      "self_gpu_s": 0.25765175599999696,
+      "fraction": 0.023491033123394747,
+      "input_shapes": [
+        [],
+        []
+      ]
+    },
+    {
+      "name": "aten::mul",
+      "calls": 2010,
+      "self_gpu_s": 0.2558041059999602,
+      "fraction": 0.023322576257332073,
+      "input_shapes": [
+        [
+          1,
+          6032,
+          5120
+        ],
+        [
+          1,
+          6032,
+          5120
+        ]
+      ]
+    },
+    {
+      "name": "aten::copy_",
+      "calls": 4430,
+      "self_gpu_s": 0.25526674599998966,
+      "fraction": 0.023273583222103177,
+      "input_shapes": [
+        [
+          1,
+          6032,
+          5120
+        ],
+        [
+          1,
+          6032,
+          5120
+        ],
+        []
+      ]
+    }
+  ]
+}
