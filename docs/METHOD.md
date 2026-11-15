@@ -60,7 +60,7 @@ These cover two of the four dimensions and are not comparable with Genie 3's 2.1
 ([table](../reproduction/full-run/table.md)): stock **1.85** [1.67, 2.04], budget memory **1.80** [1.63, 1.98];
 paired budget minus stock **-0.04** [-0.26, +0.16]. Per dimension (stock / budget): GC 2.41 / 2.37, IF 1.84 / 1.76,
 in-sight 1.68 / 1.72, out-of-sight 1.47 / 1.36. In-sight uses caption-only text (pre-declared amendment). An independent re-judging
-of the same videos gave stock 1.76-1.80 and budget 1.71-1.75, so single-call judge noise is of that size.
+of the same videos bounds stock at 1.76-1.80 and budget at 1.71-1.75 (possible ranges, with two judgments still missing), so single-call judge noise is of about that size.
 **Why memory gave no gain** ([memory audit](../reproduction/full-run-memory-audit.md)): the mechanism ran as coded and its fixed-path gain
 reproduces, but only about 12% of GC and out-of-sight chunks are real revisits, returns made by translation are not undone by it,
 and the 24-frame archive behaves like a roughly 6-second first-in-first-out buffer on distinct poses.
