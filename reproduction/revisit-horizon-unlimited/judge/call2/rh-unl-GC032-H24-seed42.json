@@ -1,0 +1,266 @@
+{
+ "task_id": "GC032",
+ "request_identity": {
+  "version": 3,
+  "video_sha256": "91208e8f28e0f9c8bc66edb7f0aeb1cdfee426b0ca16e3183bc0cbee1502b4ac",
+  "reference_sha256": "29538dae51c51acd9644e30513547663101b332077c3842689331b3c707ed082",
+  "task_sha256": "059491364bf4778d9fb0d59d5a57266f90cf83bada345b788da6f97ba8b6d6f8",
+  "world_model": "LingBot-World-Infinity",
+  "judge_model": "gemini-3.1-pro-preview",
+  "transport": "vertex",
+  "generation_config": {
+   "response_mime_type": "application/json",
+   "temperature": 0.1
+  },
+  "released_source_sha256": {
+   "metrics/vqa/rubric.py": "717337bf48986afd3bd239e838a30d2bc75788b5a3f1c76c3ceeb67f5997c945",
+   "metrics/vqa/instruction_gate.py": "216f4abc854bbc020819a55679b873cf5472bb2d72661659ed8674cca673df5f",
+   "metrics/vqa/sampling.py": "573be715981b64ac664be85f40337e8fce9002839698673de37300845eb6e0ca",
+   "metrics/vqa/score.py": "9e7656ea7aacde92b5c52ba4b401628ac5589c227935a18a0ab95b44870038a7",
+   "metrics/aggregate.py": "a11aa8c5da9a437d00e0b2205f5e72a48f953a68d63b6b3d804567008fe7adfd"
+  },
+  "adapter_source_sha256": {
+   "judge_integrity.py": "b4d5f5b249b1c4316a1a5c712cc37d2f60a381cd0f892f1611aa936494a22497",
+   "gemini_vertex_judge.py": "e0c3211328e2ea64695c7ad016b8aa20ef2ba493916a2b518b0e555118eb3e3e"
+  },
+  "fingerprint": "d7ec26cd34cc35850babc5fd69dc014eb9ddc78368c3cd4f4ef7c57a359f1d59"
+ },
+ "request_fingerprint": "d7ec26cd34cc35850babc5fd69dc014eb9ddc78368c3cd4f4ef7c57a359f1d59",
+ "world_model": "LingBot-World-Infinity",
+ "judge_provider": "google-vertex",
+ "judge_model": "gemini-3.1-pro-preview",
+ "judge_project": "seismic-fx-507702-v1",
+ "endpoint": "vertex-ai-global",
+ "video_sha256": "91208e8f28e0f9c8bc66edb7f0aeb1cdfee426b0ca16e3183bc0cbee1502b4ac",
+ "dry_run": false,
+ "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; Controller, adapter and checkpoint also differ.",
+ "gate": {
+  "applicable": "yes",
+  "task_id": "GC032",
+  "perspective": "first-person",
+  "verdict": "fail",
+  "instruction_following_score": 0,
+  "meaningful_requested_trajectory_progress": "no",
+  "revisit_required": "yes",
+  "revisit_observed": "no",
+  "observed_action_zh": "\u955c\u5934\u5728\u7ea627\u79d2\u5185\u4fdd\u6301\u9759\u6b62\uff0c\u968f\u540e\u5411\u5de6\u8f6c\u52a8\u3002",
+  "trajectory_evidence_zh": "\u4ece0.0\u79d2\u523027.4\u79d2\uff0c\u955c\u5934\u89c6\u89d2\u4fdd\u6301\u4e0d\u53d8\uff0c\u6ca1\u6709\u5411\u53f3\u8f6c\u52a8\u7684\u52a8\u4f5c\uff1b\u4ece27.5\u79d2\u5230\u89c6\u9891\u7ed3\u675f\uff0831.8\u79d2\uff09\uff0c\u955c\u5934\u5411\u5de6\u8f6c\u52a8\uff0c\u504f\u79bb\u4e86\u521d\u59cb\u89c6\u89d2\u3002",
+  "failure_reason_zh": "\u89c6\u9891\u5b8c\u5168\u6ca1\u6709\u6267\u884c\u521d\u59cb\u7684\u5411\u53f3\u8f6c\u52a8\u52a8\u4f5c\uff0c\u4e14\u5728\u6700\u540e\u5411\u5de6\u8f6c\u52a8\u5bfc\u81f4\u504f\u79bb\u4e86\u521d\u59cb\u89c6\u89d2\uff0c\u672a\u80fd\u5b8c\u6210\u8981\u6c42\u7684\u8f68\u8ff9\u548c\u8fd4\u56de\u4efb\u52a1\u3002",
+  "confidence_1_to_5": 5
+ },
+ "rubric": null,
+ "calls": [
+  {
+   "mode": "gate",
+   "cached": false,
+   "served_model_version": "gemini-3.1-pro-preview",
+   "response_id": "Ahr6avj6E7Sr4_UP6bz2-Ac",
+   "prompt_tokens": 21608,
+   "output_tokens": 238
+  }
+ ],
+ "sampling": {
+  "strategy": "dual-scale full-video contact-sheet sampling",
+  "chronological_order": true,
+  "contact_sheet_encoding": {
+   "format": "JPEG",
+   "quality": 70,
+   "subsampling": "4:2:0"
+  },
+  "primary": {
+   "fps": 10.0,
+   "sample_interval_seconds": 0.1,
+   "cell_size": [
+    384,
+    216
+   ],
+   "grid": [
+    5,
+    5
+   ],
+   "frames_per_sheet": 25,
+   "sheet_size": [
+    1920,
+    1080
+   ],
+   "frames_count": 319,
+   "sheets_count": 13,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 31.8,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 24,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 2.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 25,
+     "last_sample_index": 49,
+     "first_time_seconds": 2.5,
+     "last_time_seconds": 4.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 50,
+     "last_sample_index": 74,
+     "first_time_seconds": 5.0,
+     "last_time_seconds": 7.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 75,
+     "last_sample_index": 99,
+     "first_time_seconds": 7.5,
+     "last_time_seconds": 9.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 5,
+     "first_sample_index": 100,
+     "last_sample_index": 124,
+     "first_time_seconds": 10.0,
+     "last_time_seconds": 12.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 6,
+     "first_sample_index": 125,
+     "last_sample_index": 149,
+     "first_time_seconds": 12.5,
+     "last_time_seconds": 14.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 7,
+     "first_sample_index": 150,
+     "last_sample_index": 174,
+     "first_time_seconds": 15.0,
+     "last_time_seconds": 17.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 8,
+     "first_sample_index": 175,
+     "last_sample_index": 199,
+     "first_time_seconds": 17.5,
+     "last_time_seconds": 19.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 9,
+     "first_sample_index": 200,
+     "last_sample_index": 224,
+     "first_time_seconds": 20.0,
+     "last_time_seconds": 22.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 10,
+     "first_sample_index": 225,
+     "last_sample_index": 249,
+     "first_time_seconds": 22.5,
+     "last_time_seconds": 24.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 11,
+     "first_sample_index": 250,
+     "last_sample_index": 274,
+     "first_time_seconds": 25.0,
+     "last_time_seconds": 27.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 12,
+     "first_sample_index": 275,
+     "last_sample_index": 299,
+     "first_time_seconds": 27.5,
+     "last_time_seconds": 29.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 13,
+     "first_sample_index": 300,
+     "last_sample_index": 318,
+     "first_time_seconds": 30.0,
+     "last_time_seconds": 31.8,
+     "filled_cells": 19
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "detail": {
+   "fps": 0.5,
+   "sample_interval_seconds": 2.0,
+   "cell_size": [
+    800,
+    450
+   ],
+   "grid": [
+    2,
+    2
+   ],
+   "frames_per_sheet": 4,
+   "sheet_size": [
+    1600,
+    900
+   ],
+   "frames_count": 16,
+   "sheets_count": 4,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 30.0,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 3,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 6.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 4,
+     "last_sample_index": 7,
+     "first_time_seconds": 8.0,
+     "last_time_seconds": 14.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 8,
+     "last_sample_index": 11,
+     "first_time_seconds": 16.0,
+     "last_time_seconds": 22.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 12,
+     "last_sample_index": 15,
+     "first_time_seconds": 24.0,
+     "last_time_seconds": 30.0,
+     "filled_cells": 4
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "reference_image_role": "initial scene/style context only, if provided"
+ },
+ "gate_prompt_sha256": "d7c2ba7592b74a396ce8cbe331ddb9d55dea9914675b38ace1ae5e404af2a739",
+ "rubric_skipped": "trajectory failed; aggregate score is 1",
+ "scores": {
+  "official": 1.0,
+  "final_score": 1.0
+ },
+ "episode_id": "rh-unl-GC032-H24-seed42",
+ "arm": "memory_unlimited",
+ "horizon_s": 24,
+ "objective": "Turn right 180 degrees, wait for 24 seconds, then turn back to the original view."
+}
