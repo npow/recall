@@ -41,6 +41,11 @@ def main():
     montage = ROOT/"docs/slides/media/multi-agent-montage.mp4"
     if montage.exists():
         texts["demo"] = "We rendered several paired scenarios and selected three: a basket handoff, a greeting, and joint attention. Shared timing and object ownership still need validation."
+    shared_demo = ROOT/"docs/slides/media/shared-kv-demo.mp4"
+    if shared_demo.exists():
+        texts["bridge"] = "Each agent archives clean visual keys and values with its camera pose. At a matching view, the other agent retrieves them into attention."
+        texts["demo"] = "B scouts a view. A later looks there and retrieves B's visual keys and values. Three scenes show the same exchange, with the radar marking the return."
+        texts["close"] = "Shared visual memory across agents. Code and evidence on GitHub."
     for name, text in texts.items():
         call([args.piper_python, "-m", "piper", "-m", args.voice, "-f", work/f"{name}.wav"],
              input=text, text=True, capture_output=True)
@@ -49,10 +54,11 @@ def main():
     def font(n): return ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", n)
     draw.text((110, 200), "RECALL", font=font(110), fill="#3ddc97")
     draw.text((110, 390), "A world that remembers.", font=font(64), fill="white")
-    draw.text((110, 495), "Next: shared visual evidence across agents.", font=font(48), fill="#9aa4b2")
+    draw.text((110, 495), "Pose-matched visual memory across agents." if shared_demo.exists()
+              else "Next: shared visual evidence across agents.", font=font(48), fill="#9aa4b2")
     draw.text((110, 780), "github.com/npow/recall", font=font(48), fill="white")
     image.save(work/"close.png")
-    video = montage if montage.exists() else ROOT/"docs/slides/media/multi-agent-pov.mp4"
+    video = shared_demo if shared_demo.exists() else montage if montage.exists() else ROOT/"docs/slides/media/multi-agent-pov.mp4"
     # Fit narration with a short quiet tail; record the exact timing and wording.
     for name in texts:
         duration = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration",
@@ -77,7 +83,7 @@ def main():
           "-c:v", "libx264", "-preset", "veryfast", "-crf", "22", "-pix_fmt", "yuv420p",
           "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", args.output])
     report = {"output": str(args.output), "seconds": 120, "original_story_seconds": 96,
-              "new_scenes": lengths, "narration": texts, "scope": "selected scripted POV examples; cross-view consistency unresolved",
+              "new_scenes": lengths, "narration": texts, "scope": "GPU-verified peer visual KV injection in both directions; static serial visits" if shared_demo.exists() else "selected scripted POV examples; cross-view consistency unresolved",
               "demo_source": str(video.relative_to(ROOT))}
     (ROOT/"reproduction/submission-video.json").write_text(json.dumps(report, indent=2)+"\n")
     print(json.dumps(report))

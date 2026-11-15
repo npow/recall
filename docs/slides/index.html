@@ -368,7 +368,7 @@ svg text{font-family:inherit}
     </div>
     <div class="foot">
       <p style="margin-bottom:10px">Same nine player actions in both. Released: a traffic light and a changed sign are pushed into the returning view. Ours: the arch is framed as at the start.</p>
-      
+
     </div>
     <aside class="notes">This is one of PlayWorld's real tasks, with the agent player in the loop. The player took the same nine actions in both runs. The released model returns with a traffic light pushed into the frame; ours keeps the arch framed as at the start. I want to be straight about this one: across all 36 PlayWorld tasks that contain a revisit, our memory scored slightly lower than the released model. This is a selected example of what it looks like when it helps.</aside>
   </section>
@@ -397,54 +397,49 @@ svg text{font-family:inherit}
   </section>
 
   <section class="slide" data-sec="Multi-agent" id="multi-agent-bridge">
-<h2>The single-agent stack becomes two viewpoints</h2><svg viewBox="0 0 1728 720" width="1728" height="720"><defs><marker id="multi-agent-bridge-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10" fill="#9aa4b2"/></marker></defs><rect x="24" y="30" width="480" height="120" rx="16" fill="#151a22" stroke="#7aa2f7" stroke-width="3"/><text x="264.0" y="82.0" text-anchor="middle" font-size="38" fill="#7aa2f7" font-weight="700">Camera rollout</text><text x="264.0" y="130.0" text-anchor="middle" font-size="28" fill="#e8ecf2">a viewpoint per agent</text><rect x="624" y="30" width="480" height="120" rx="16" fill="#151a22" stroke="#7aa2f7" stroke-width="3"/><text x="864.0" y="82.0" text-anchor="middle" font-size="38" fill="#7aa2f7" font-weight="700">Text director</text><text x="864.0" y="130.0" text-anchor="middle" font-size="28" fill="#e8ecf2">events → descriptions</text><rect x="1224" y="30" width="480" height="120" rx="16" fill="#151a22" stroke="#7aa2f7" stroke-width="3"/><text x="1464.0" y="82.0" text-anchor="middle" font-size="38" fill="#7aa2f7" font-weight="700">Warm runtime</text><text x="1464.0" y="130.0" text-anchor="middle" font-size="28" fill="#e8ecf2">one pretrained model</text><path d="M264,153 V210 H864 V250" fill="none" stroke="#9aa4b2" stroke-width="4" marker-end="url(#multi-agent-bridge-arrow)"/><path d="M864,153 V250" fill="none" stroke="#9aa4b2" stroke-width="4" marker-end="url(#multi-agent-bridge-arrow)"/><path d="M1464,153 V210 H864 V250" fill="none" stroke="#9aa4b2" stroke-width="4" marker-end="url(#multi-agent-bridge-arrow)"/><rect x="470" y="260" width="788" height="120" rx="16" fill="#151a22" stroke="#3ddc97" stroke-width="3"/><text x="864.0" y="312.0" text-anchor="middle" font-size="38" fill="#3ddc97" font-weight="700">Two first-person histories</text><text x="864.0" y="360.0" text-anchor="middle" font-size="28" fill="#e8ecf2">same scripted event timeline</text><path d="M864,383 V420 H410 V455" fill="none" stroke="#9aa4b2" stroke-width="4" marker-end="url(#multi-agent-bridge-arrow)"/><path d="M864,420 H1318 V455" fill="none" stroke="#9aa4b2" stroke-width="4" marker-end="url(#multi-agent-bridge-arrow)"/><rect x="70" y="465" width="680" height="110" rx="16" fill="#151a22" stroke="#ffca65" stroke-width="3"/><text x="410.0" y="534.0" text-anchor="middle" font-size="38" fill="#ffca65" font-weight="700">Agent A · Orange POV</text><rect x="978" y="465" width="680" height="110" rx="16" fill="#151a22" stroke="#c5a3ff" stroke-width="3"/><text x="1318.0" y="534.0" text-anchor="middle" font-size="38" fill="#c5a3ff" font-weight="700">Agent B · Purple POV</text><rect x="40" y="630" width="700" height="80" rx="16" fill="#151a22" stroke="#6b7585" stroke-width="3"/><text x="390.0" y="684.0" text-anchor="middle" font-size="38" fill="#6b7585" font-weight="700">Pose archive + recompute</text><path d="M745,670 H985" fill="none" stroke="#9aa4b2" stroke-width="4" stroke-dasharray="12 10" marker-end="url(#multi-agent-bridge-arrow)"/><rect x="1000" y="630" width="680" height="80" rx="16" fill="#151a22" stroke="#6b7585" stroke-width="3"/><text x="1340.0" y="684.0" text-anchor="middle" font-size="38" fill="#6b7585" font-weight="700">Next: shared visual memory</text></svg><p class="tiny foot">Reused components above. Cross-agent visual retrieval is future work.</p>
+<h2>The same RECALL memory now serves two agents</h2><svg viewBox="0 0 1728 720" width="1728" height="720"><defs><marker id="multi-agent-bridge-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10" fill="#9aa4b2"/></marker></defs><rect x="24" y="30" width="480" height="120" rx="16" fill="#151a22" stroke="#7aa2f7" stroke-width="3"/><text x="264.0" y="82.0" text-anchor="middle" font-size="38" fill="#7aa2f7" font-weight="700">Camera pose tags</text><text x="264.0" y="130.0" text-anchor="middle" font-size="28" fill="#e8ecf2">common camera coordinates</text><rect x="624" y="30" width="480" height="120" rx="16" fill="#151a22" stroke="#7aa2f7" stroke-width="3"/><text x="864.0" y="82.0" text-anchor="middle" font-size="38" fill="#7aa2f7" font-weight="700">KV retrieval + splice</text><text x="864.0" y="130.0" text-anchor="middle" font-size="28" fill="#e8ecf2">reuse the attention hooks</text><rect x="1224" y="30" width="480" height="120" rx="16" fill="#151a22" stroke="#7aa2f7" stroke-width="3"/><text x="1464.0" y="82.0" text-anchor="middle" font-size="38" fill="#7aa2f7" font-weight="700">Warm runtime</text><text x="1464.0" y="130.0" text-anchor="middle" font-size="28" fill="#e8ecf2">one pretrained model</text><path d="M264,153 V210 H864 V250" fill="none" stroke="#9aa4b2" stroke-width="4" marker-end="url(#multi-agent-bridge-arrow)"/><path d="M864,153 V250" fill="none" stroke="#9aa4b2" stroke-width="4" marker-end="url(#multi-agent-bridge-arrow)"/><path d="M1464,153 V210 H864 V250" fill="none" stroke="#9aa4b2" stroke-width="4" marker-end="url(#multi-agent-bridge-arrow)"/><rect x="470" y="260" width="788" height="120" rx="16" fill="#151a22" stroke="#3ddc97" stroke-width="3"/><text x="864.0" y="312.0" text-anchor="middle" font-size="38" fill="#3ddc97" font-weight="700">Cross-agent RECALL</text><text x="864.0" y="360.0" text-anchor="middle" font-size="28" fill="#e8ecf2">one shared pose-indexed archive</text><path d="M864,383 V420 H410 V455" fill="none" stroke="#9aa4b2" stroke-width="4" marker-end="url(#multi-agent-bridge-arrow)"/><path d="M864,420 H1318 V455" fill="none" stroke="#9aa4b2" stroke-width="4" marker-end="url(#multi-agent-bridge-arrow)"/><rect x="70" y="465" width="680" height="110" rx="16" fill="#151a22" stroke="#ffca65" stroke-width="3"/><text x="410.0" y="534.0" text-anchor="middle" font-size="38" fill="#ffca65" font-weight="700">A reads B’s earlier view</text><rect x="978" y="465" width="680" height="110" rx="16" fill="#151a22" stroke="#c5a3ff" stroke-width="3"/><text x="1318.0" y="534.0" text-anchor="middle" font-size="38" fill="#c5a3ff" font-weight="700">B reads A’s earlier view</text><rect x="40" y="630" width="700" height="80" rx="16" fill="#151a22" stroke="#6b7585" stroke-width="3"/><text x="390.0" y="684.0" text-anchor="middle" font-size="38" fill="#6b7585" font-weight="700">Frame recomputation</text><path d="M745,670 H985" fill="none" stroke="#9aa4b2" stroke-width="4" stroke-dasharray="12 10" marker-end="url(#multi-agent-bridge-arrow)"/><rect x="1000" y="630" width="680" height="80" rx="16" fill="#151a22" stroke="#6b7585" stroke-width="3"/><text x="1340.0" y="684.0" text-anchor="middle" font-size="38" fill="#6b7585" font-weight="700">Next: compact shared storage</text></svg><p class="tiny foot">Reused components above. Pose archive and attention splice now feed both agents.</p>
 <aside class="notes">The next question follows directly from the memory work. If one agent can return to a place, can two agents agree about that place? We reused the real LingBot rollout, its camera conditioning, the event-caption director and the warm runtime. One event plan is projected into two first-person descriptions and rendered with separate histories. The pose archive and compact recomputation motivate the next shared visual memory, but that cross-agent archive is not implemented in this prototype. The earlier benchmark numbers remain single-camera results.</aside>
   </section>
 
   <section class="slide" data-sec="Multi-agent" id="shared-context">
-    <h2>Shared plan + weights. Separate visual KV.</h2>
-    <div style="position:relative;width:1728px;height:740px">
-      <!-- each agent's own generated view (frame at 4.0 s of multi-agent-pov.mp4), faded behind its column of the diagram -->
-      <div class="ctx-bg" style="left:10px;background-image:linear-gradient(rgba(11,14,19,.1),rgba(11,14,19,.5)),url(media/ctx-agent-a.jpg)"></div>
-      <div class="ctx-bg" style="left:918px;background-image:linear-gradient(rgba(11,14,19,.1),rgba(11,14,19,.5)),url(media/ctx-agent-b.jpg)"></div>
-      <img class="media" style="position:relative;width:1728px;height:740px;background:transparent" src="media/multi-agent-architecture.svg" alt="Shared event plan and frozen DiT weights; per-agent text conditioning and private visual KV caches">
-    </div>
-    <p class="tiny foot">Same DiT/KV architecture as before. Cross-agent visual retrieval is the next step.</p>
-    <aside class="notes">Green is shared event information. The scene description and scripted timeline specify when the basket changes holder. Orange and Purple receive viewpoint-specific descriptions through the text encoder. Those form separate cross-attention keys and values. Blue is the causal video DiT used throughout this project. Each rollout keeps its own self-attention cache: the first six latent frames and most recent twelve. The dashed blue arrows mean that both rollouts reuse the same frozen forty-layer checkpoint, loaded once and served serially. They do not mean shared activations or exchanged visual KV. No RECALL retrieval splice is enabled across agents in these demonstration clips. Sharing revision-aware visual evidence is the next implementation step.</aside>
-  </section>
+<h2>Look where another agent looked</h2>
+<img class="media" style="width:1728px;height:740px;background:transparent" src="media/multi-agent-architecture.svg" alt="Peer visual KV is retrieved from a shared pose-indexed archive into both agents attention windows">
+<p class="tiny foot">GPU-verified: matching peer KV injected at all 40 layers in both directions. Static scene · common-origin rotations.</p>
+<aside class="notes">This is now actual cross-agent RECALL, not the earlier shared-caption experiment. Both agents start from the same image and camera origin. B first scouts right. Clean canonical keys and values, after the denoising pass, are archived at all forty layers with agent ID and camera pose. A explores left, then turns into B's previously seen right-hand view. The pose query reads B's matching frames, rephases their keys to A's timeline and splices the keys and values into A's self-attention. B later turns into A's earlier left view and reads A's memory. Each live cache remains private. The shared object is the archived visual evidence. Up to four peer frames replace recent slots, keeping the eighteen-frame attention budget. This short diagnostic uses serial visits in a static scene, not simultaneous embodied interaction.</aside>
+</section>
+<section class="slide" data-sec="Multi-agent" id="shared-kv-demo">
+<h2>Two views. One visual memory.</h2>
+<div class="vwrap" style="width:1420px;margin:0 auto"><video muted loop playsinline preload="auto" poster="media/shared-kv-radar.jpg" src="media/shared-kv-radar.mp4"></video></div>
+<p class="tiny foot">FOV wedges: current commanded poses · dashed rays: earlier views · green: peer KV enters all 40 layers · serial visits, aligned replay.</p>
+<aside class="notes">The radar makes the experiment explicit. Both cameras rotate about the same origin, so their dots coincide. A looks left and B looks right. They then turn toward each other's earlier view. The dashed rays mark those prior views. The green readouts are driven by the actual attention trace, not a scripted annotation: A reads B at the right-hand revisit and B reads A at the left-hand revisit, at all forty layers. The field of view is derived from the released camera intrinsics. The display replays serial visits on aligned frame indices, rather than claiming a simultaneous live simulation. Injection is verified; no multi-agent consistency score is claimed.</aside>
+</section>
 
-  <section class="slide" data-sec="Multi-agent" id="multi-agent-demo">
-<h2>Two agents, two first-person views</h2>
-<div class="vwrap" style="margin-top:30px"><video muted loop playsinline preload="auto" poster="media/multi-agent-pov.jpg" src="media/multi-agent-pov-2x.mp4"></video></div>
-<div style="display:flex;gap:24px;margin-top:34px"><span class="chip">Shared scripted plan</span><span class="chip">Two POVs</span><span class="chip" style="color:var(--warn);border-color:var(--warn)">Handoff unresolved</span></div>
-<p class="tiny foot">Exploratory prototype · shown at 2× speed · independent visual histories · no multi-agent benchmark score.</p>
-<aside class="notes">Each tile is a genuine first-person LingBot render, not a crop of the observer video. Orange sees Purple; Purple sees Orange. Both use the same event boundaries and their own visual histories. The agents are scripted, and the reference viewpoints were generated from the same scene reference. The clip makes the remaining challenge visible: both characters reach for the basket, but the final release is not consistent enough to claim shared object ownership. The next step is shared, revision-aware visual evidence.</aside>
-  </section>
 
-  <section class="slide" data-sec="Multi-agent" id="multi-agent-wave">
-    <h2>Greeting: a wave and a reply</h2>
-    <div class="vwrap" style="margin-top:35px"><video muted loop playsinline preload="auto" poster="media/multi-agent-wave.jpg" src="media/multi-agent-wave.mp4"></video></div>
-    <div style="display:flex;gap:24px;margin-top:34px"><span class="chip">Two viewpoints</span><span class="chip">Shared greeting plan</span></div>
-    <p class="tiny foot">Selected qualitative example · scripted · both companions wave; event order differs across views.</p>
-    <aside class="notes">This is the selected greeting attempt. Both visible companions wave, and their clothing and identities are stable. It is a readable interaction, but the intended turn-taking is not consistent across the two histories. We selected this basket-reference attempt over a later object-free attempt that duplicated the purple character. The full attempts are retained. This is qualitative demonstration footage, not a multi-agent consistency result.</aside>
-  </section>
-  <section class="slide" data-sec="Multi-agent" id="multi-agent-point">
-    <h2>Joint attention: point toward the river</h2>
-    <div class="vwrap" style="margin-top:35px"><video muted loop playsinline preload="auto" poster="media/multi-agent-point.jpg" src="media/multi-agent-point.mp4"></video></div>
-    <div style="display:flex;gap:24px;margin-top:34px"><span class="chip">One intended target</span><span class="chip">Two visual histories</span></div>
-    <p class="tiny foot">Selected qualitative example · scripted · pointing is clearer in Agent B’s view; reciprocal action remains imperfect.</p>
-    <aside class="notes">The shared plan says Orange points at the river and Purple follows the gesture. Orange's pointing is clear in Purple's view, and Purple turns toward the river in Orange's view. The originating hand movement and exact target do not match perfectly across views. We selected the object-free reference attempt over the earlier basket attempt because the gesture is easier to read. Across the demo collection we generated six paired attempts and selected three scenarios by eye. No scores or success rate are claimed.</aside>
-  </section>
 
+
+
+
+
+<section class="slide" data-sec="Multi-agent" id="shared-kv-GC011">
+<h2>Shared KV: inside a room</h2>
+<div class="vwrap" style="width:1420px;margin:0 auto"><video muted loop playsinline preload="auto" poster="media/shared-kv-GC011-radar.jpg" src="media/shared-kv-GC011-radar.mp4"></video></div>
+<p class="tiny foot">GC011 · same starting image for both agents · peer KV injection verified at all 40 layers · radar shows commanded FOV and actual retrieval.</p>
+<aside class="notes">A second static-scene cross-agent revisit using the same frozen model and protocol. B first looks right, A explores left and later reads B's right-hand visual keys and values. B then reads A's earlier left-hand view. All forty layers inject peer KV on revisit chunks four and five. This is an injection diagnostic with serial visits, not a scored comparison to an independent-cache baseline.</aside>
+</section>
+<section class="slide" data-sec="Multi-agent" id="shared-kv-GC026">
+<h2>Shared KV: along a night street</h2>
+<div class="vwrap" style="width:1420px;margin:0 auto"><video muted loop playsinline preload="auto" poster="media/shared-kv-GC026-radar.jpg" src="media/shared-kv-GC026-radar.mp4"></video></div>
+<p class="tiny foot">GC026 · same starting image for both agents · peer KV injection verified at all 40 layers · radar shows commanded FOV and actual retrieval.</p>
+<aside class="notes">A second static-scene cross-agent revisit using the same frozen model and protocol. B first looks right, A explores left and later reads B's right-hand visual keys and values. B then reads A's earlier left-hand view. All forty layers inject peer KV on revisit chunks four and five. This is an injection diagnostic with serial visits, not a scored comparison to an independent-cache baseline.</aside>
+</section>
   <!-- 16 -->
   <section class="slide" data-sec="Future work">
-    <h2>What comes next: shared visual evidence</h2>
+    <h2>Next: longer, richer shared worlds</h2>
     <div class="row grow">
       <div class="col"><ul>
-        <li><b>Share compatible views across agents.</b> Index the archive by scene, pose and object revision, so an old frame cannot restore an object that moved.</li>
-        <li><b>Share KV caches by heading.</b> Agents looking the same way could reuse each other's cached views, with moving objects masked out. This has not worked yet; more capable models may make the approach work.</li>
-        <li><b>Retrieve by what is visible</b> (as in VMem) to handle forward-and-back motion.</li>
-        <li><b>Longer-horizon tasks.</b> The benchmark's own episodes are mostly shorter than the model's memory; the interesting regime starts after it.</li>
+        <li><b>Moving objects.</b> Invalidate archived views when their world state changes.</li>
+        <li><b>Compact shared storage.</b> Store frames and recompute peer KV, using the earlier memory result.</li>
+        <li><b>Longer paths.</b> Extend beyond common-origin rotations to translation and simultaneous agents.</li>
       </ul></div>
       <div class="col" style="flex:.8"><div class="card">
         <p style="font-weight:700;margin-bottom:14px">Take-aways</p>
@@ -460,60 +455,68 @@ svg text{font-family:inherit}
 
 
   <!-- A1 -->
-    <section class="slide" data-sec="Appendix">
-    <h2>More memory wins</h2>
+    <section class="slide" data-sec="Appendix" id="multi-agent-demo">
+<h2>Earlier prototype: shared text only</h2>
+<div class="vwrap" style="margin-top:30px"><video muted loop playsinline preload="auto" poster="media/multi-agent-pov.jpg" src="media/multi-agent-pov.mp4"></video></div>
+<div style="display:flex;gap:24px;margin-top:34px"><span class="chip">Shared scripted plan</span><span class="chip">Two POVs</span></div>
+<p class="tiny foot">Exploratory prototype · independent visual histories · no multi-agent benchmark score.</p>
+<aside class="notes">Each tile is a genuine first-person LingBot render, not a crop of the observer video. Orange sees Purple; Purple sees Orange. Both use the same event boundaries and their own visual histories. The agents are scripted, and the reference viewpoints were generated from the same scene reference. The clip makes the remaining challenge visible: both characters reach for the basket, but the final release is not consistent enough to claim shared object ownership. The next step is shared, revision-aware visual evidence.</aside>
+  </section>
+<section class="slide" data-sec="Appendix" id="multi-agent-wave">
+    <h2>Earlier prototype: greeting</h2>
+    <div class="vwrap" style="margin-top:35px"><video muted loop playsinline preload="auto" poster="media/multi-agent-wave.jpg" src="media/multi-agent-wave.mp4"></video></div>
+    <div style="display:flex;gap:24px;margin-top:34px"><span class="chip">Two viewpoints</span><span class="chip">Shared greeting plan</span></div>
+    <p class="tiny foot">Selected qualitative example · scripted · both companions wave; event order differs across views.</p>
+    <aside class="notes">This is the selected greeting attempt. Both visible companions wave, and their clothing and identities are stable. It is a readable interaction, but the intended turn-taking is not consistent across the two histories. We selected this basket-reference attempt over a later object-free attempt that duplicated the purple character. The full attempts are retained. This is qualitative demonstration footage, not a multi-agent consistency result.</aside>
+  </section>
+<section class="slide" data-sec="Appendix" id="multi-agent-point">
+    <h2>Earlier prototype: joint attention</h2>
+    <div class="vwrap" style="margin-top:35px"><video muted loop playsinline preload="auto" poster="media/multi-agent-point.jpg" src="media/multi-agent-point.mp4"></video></div>
+    <div style="display:flex;gap:24px;margin-top:34px"><span class="chip">One intended target</span><span class="chip">Two visual histories</span></div>
+    <p class="tiny foot">Selected qualitative example · scripted · pointing is clearer in Agent B’s view; reciprocal action remains imperfect.</p>
+    <aside class="notes">The shared plan says Orange points at the river and Purple follows the gesture. Orange's pointing is clear in Purple's view, and Purple turns toward the river in Orange's view. The originating hand movement and exact target do not match perfectly across views. We selected the object-free reference attempt over the earlier basket attempt because the gesture is easier to read. Across the demo collection we generated six paired attempts and selected three scenarios by eye. No scores or success rate are claimed.</aside>
+  </section>
+<section class="slide" data-sec="Appendix">
+    <h2>One more memory win</h2>
     <div class="grow" style="display:flex;flex-direction:column;gap:26px">
       <div class="row" style="gap:36px;align-items:center">
-        <div class="vwrap" style="width:880px;flex:none"><video muted loop playsinline preload="auto" poster="media/win-GC037.jpg" src="media/win-GC037.mp4" style="width:880px;display:block;border-radius:8px"></video>
+        <div class="vwrap" style="width:1200px;flex:none"><video muted loop playsinline preload="auto" poster="media/win-GC037.jpg" src="media/win-GC037.mp4" style="width:1200px;display:block;border-radius:8px"></video>
           </div>
         <div class="col"><p style="margin-bottom:8px"><b>GC037 · 12 s away</b> · judge <span class="rel">2.6</span> → <span class="ours">5.0</span></p>
-          <p class="small" style="margin:0">Released: a different kitchen with a wall clock.<br>Ours: the same window and counter are back.</p></div>
-      </div>
-      <div class="row" style="gap:36px;align-items:center">
-        <div class="vwrap" style="width:880px;flex:none"><video muted loop playsinline preload="auto" poster="media/win-GC021.jpg" src="media/win-GC021.mp4" style="width:880px;display:block;border-radius:8px"></video>
-          </div>
-        <div class="col"><p style="margin-bottom:8px"><b>GC021 · 24 s away</b> · judge <span class="rel">1.0</span> → <span class="ours">2.7</span></p>
-          <p class="small" style="margin:0">Released: a row of graffitied plinths that were never there.<br>Ours: the colonnade and statue.</p></div>
+          <p class="small" style="margin:0">Released: comes back to a different kitchen with a wall clock that was never there.<br>Ours: the same dark window and counter are back.</p></div>
       </div>
     </div>
-    <p class="tiny foot">Selected examples from the 20-scene revisit benchmark, chosen after seeing results (mean of 2 judge calls; 2× to 3.2× speed).</p>
-    <aside class="notes">More examples from the same revisit test. In the kitchen, the released model comes back to a different room with a clock on the wall, and ours brings back the window and the counter. On the statues, 24 seconds away, ours returns to the colonnade and the statue, while the released model invents a row of plinths. These were selected after seeing the scores.</aside>
+    <p class="tiny foot">Selected example from the 20-scene revisit benchmark, chosen after seeing results (mean of 2 judge calls; 2× speed; most of the 12 s looking-away stretch, identical in both, is cut).</p>
+    <aside class="notes">One more example from the same revisit test. The camera turns away from the kitchen window for twelve seconds; we skip most of that stretch because both sides look the same. When it turns back, the released model comes back to a different room with a clock on the wall, and ours brings back the window and the counter. This was selected after seeing the scores.</aside>
   </section>
 
 <section class="slide" data-sec="Appendix">
-    <h2>More examples: instruction following</h2>
-    <div class="row" style="gap:40px;align-items:flex-start">
-      <div style="width:1080px;flex:none"><video muted loop playsinline preload="auto" poster="media/appendix-if022.jpg" src="media/appendix-if022.mp4" style="width:1080px;display:block;border-radius:8px"></video><div style="height:12px"></div><video muted loop playsinline preload="auto" poster="media/appendix-if006.jpg" src="media/appendix-if006.mp4" style="width:1080px;display:block;border-radius:8px"></video></div>
+    <h2>Instruction following: the boardwalk</h2>
+    <div class="row" style="gap:40px;align-items:center">
+      <div style="width:1200px;flex:none"><video muted loop playsinline preload="auto" poster="media/appendix-if022.jpg" src="media/appendix-if022.mp4" style="width:1200px;display:block;border-radius:8px"></video></div>
       <div class="col">
-        <p class="small" style="margin:0 0 14px"><b>Boardwalk (IF022):</b> legacy <b>1.67</b> → corrected <b>3.50</b></p>
-        <p class="small" style="margin:0 0 14px"><b>Pond (IF006):</b> legacy <b>2.00</b> → corrected <b>2.56</b></p>
+        <p class="small" style="margin:0 0 14px"><b>Boardwalk (IF022):</b> legacy <b>1.67</b> → corrected <b>3.50</b>.</p>
         <p class="small" style="margin:0 0 14px">Same checkpoint, seed and GPU. Corrected = a canonical action controller; legacy = the frozen earlier controller. Scores are the mean of three judge calls on the full video; clips are excerpts.</p>
         <p class="small" style="margin:0"><b>Pre-declared 12-case check:</b> corrected 1.72 vs legacy 1.52, +0.20 [−0.68, +0.99]. Inconclusive.</p>
       </div>
     </div>
-    <div class="foot"><p class="tiny" style="margin:0">Selected examples, chosen after seeing results. These examples show the controller and director components.</p></div>
-    <aside class="notes">Appendix. Two more examples from the instruction-following tasks, comparing the frozen earlier action controller with a corrected one, same checkpoint and seed. The boardwalk task goes from 1.67 to 3.50 and the pond task from 2.00 to 2.56. These are examples we picked after seeing the scores. The declared twelve-case check across all categories was 1.72 against 1.52, with an interval that includes zero, so it is inconclusive. This is a different component from the memory result.</aside>
+    <div class="foot"><p class="tiny" style="margin:0">Selected example, chosen after seeing results. This example shows the action controller, not the memory.</p></div>
+    <aside class="notes">Appendix. One more example from the instruction-following tasks, comparing the frozen earlier action controller with a corrected one, same checkpoint and seed. The boardwalk task goes from 1.67 to 3.50. This is an example we picked after seeing the scores. The declared twelve-case check across all categories was 1.72 against 1.52, with an interval that includes zero, so it is inconclusive. This is a different component from the memory result.</aside>
   </section>
 
   <!-- A2 -->
     <section class="slide" data-sec="Appendix">
-    <h2>More examples: the scene director</h2>
+    <h2>The scene director: rowing out</h2>
     <div class="grow" style="display:flex;flex-direction:column;gap:26px">
       <div class="row" style="gap:36px;align-items:center">
-        <div class="vwrap" style="width:1150px;flex:none"><video muted loop playsinline preload="auto" poster="media/dir-IF013.jpg" src="media/dir-IF013.mp4" style="width:1150px;display:block;border-radius:8px"></video>
+        <div class="vwrap" style="width:1300px;flex:none"><video muted loop playsinline preload="auto" poster="media/dir-IF013.jpg" src="media/dir-IF013.mp4" style="width:1300px;display:block;border-radius:8px"></video>
           <div class="half l">stock</div><div class="half r">with director</div></div>
         <div class="col"><p style="margin-bottom:8px"><b>IF013 · row across the river</b> · judge <span class="rel">1.00</span> → <span class="ours">3.67</span></p>
           <p class="small" style="margin:0">Stock: the boat sits on the ice.<br>Director: the boat rows out onto open water.</p></div>
       </div>
-      <div class="row" style="gap:36px;align-items:center">
-        <div class="vwrap" style="width:1150px;flex:none"><video muted loop playsinline preload="auto" poster="media/dir-OE018.jpg" src="media/dir-OE018.mp4" style="width:1150px;display:block;border-radius:8px"></video>
-          <div class="half l">stock</div><div class="half r">with director</div></div>
-        <div class="col"><p style="margin-bottom:8px"><b>OE018 · pouring tea</b> · judge <span class="rel">1.00</span> → <span class="ours">4.80</span></p>
-          <p class="small" style="margin:0">Stock and director both pour; the judge scored the director clip higher.<br>The gap is hard to see in the frames.</p></div>
-      </div>
     </div>
-    <p class="tiny foot">Selected examples, chosen after seeing results (mean of 3 judge calls; the tea clip is sped up 3×). Full run, 171 tasks: +0.02 [−0.15, +0.19].</p>
-    <aside class="notes">Two more director examples, rowing across the river and pouring tea. In the rowing clip the boat leaves the ice in the director version. In the tea clip both versions pour, and the score gap is hard to see in the frames, so we show it as scored. Picked after seeing results, with three judge calls each.</aside>
+    <p class="tiny foot">Selected example, chosen after seeing results (mean of 3 judge calls). Full run, 171 tasks: +0.02 [−0.15, +0.19].</p>
+    <aside class="notes">One more director example, rowing across the river. In the director version the boat leaves the ice and rows onto open water; in the stock version it stays on the ice. Picked after seeing results, with three judge calls.</aside>
   </section>
 
   <section class="slide" data-sec="Appendix">
@@ -541,7 +544,7 @@ svg text{font-family:inherit}
     <h2>A failure we also found</h2>
     <div style="width:1500px;margin:0 auto"><video muted loop playsinline preload="auto" poster="media/appendix-piping.jpg" src="media/appendix-piping.mp4" style="width:1500px;display:block;border-radius:8px"></video></div>
     <div class="row foot" style="gap:40px;align-items:center">
-      
+
       <p class="col small" style="margin:0">Piping onto a tray (OE066): legacy 2.20, corrected <span class="warn"><b>1.00</b></span>. The corrected setup moves more, but the tool morphs instead of piping. Mean of three judge calls; excerpt of the first 10 seconds.</p>
     </div>
     <p class="tiny" style="margin:14px 0 0">Selected examples, chosen after seeing results. These examples show the controller and director components.</p>

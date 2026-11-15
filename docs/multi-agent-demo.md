@@ -1,8 +1,25 @@
 # Two-agent world-model video experiments
 
+## Current demo: actual cross-agent visual memory
+
+The main slides and two-minute video now use **actual shared archived visual KV**.
+Both agents start at the same image and camera origin, explore different
+directions, then look toward one another's earlier view. Pose-matched canonical
+KV is injected into the reader's self-attention at all 40 layers, preserving
+the native 18-frame budget. The live caches remain private.
+
+Three cases completed (GC007, GC011, GC026), with real peer injection verified
+in both directions. The video radar shows commanded FOV, earlier view directions
+and actual 40-layer injection flags. These are serial static-scene visits, not
+a simultaneous simulator or a scored consistency improvement.
+
+See the [shared-KV protocol and proof](../reproduction/shared-kv-revisit/README.md).
+The previous shared-caption character clips below are retained in the appendix
+as earlier prototypes; they are not presented as shared-KV results.
+
 ## Selected presentation examples
 
-The deck and two-minute video now show three selected paired scenarios: basket
+The earlier deck and two-minute video showed three selected paired scenarios: basket
 handoff, greeting, and joint attention. Six paired attempts (12 individual
 LingBot rollouts) were reviewed. Three new attempts ran concurrently on three
 ephemeral H200 workers. All jobs have stopped.

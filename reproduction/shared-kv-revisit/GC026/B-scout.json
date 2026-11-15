@@ -1,0 +1,1841 @@
+{
+  "status": "completed",
+  "model": "LingBot-World2 14B causal-fast + cross-agent visual KV retrieval",
+  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+  "initial_image_sha256": "961e0fe47d622afa0973f3c9b92eae4d1519d983ca26e3da5efb52d82c868874",
+  "text_prompt_mode": "caption",
+  "director_mode": "off",
+  "image_caption_sha256": "8f34ebf92520c979df1fb4e3cdf96e09a4668ae83e6978ad46c98ff585bbcb06",
+  "task_id": "GC026",
+  "split": "gc",
+  "seed": 42,
+  "turn_degrees_per_second": 60,
+  "fps": 16,
+  "max_chunks": 3,
+  "max_interactions": 40,
+  "native_fixed_controls": true,
+  "camera_embedding_audit": [
+    {
+      "chunk": 0,
+      "audit_version": "fp32-and-native-cast-v2",
+      "max_absolute_error": 0.0,
+      "fp32_max_absolute_error": 0.0,
+      "tensor_identical": true,
+      "native_cast_identical": true,
+      "within_tolerance": true
+    },
+    {
+      "chunk": 1,
+      "audit_version": "fp32-and-native-cast-v2",
+      "max_absolute_error": 0.0,
+      "fp32_max_absolute_error": 0.0,
+      "tensor_identical": true,
+      "native_cast_identical": true,
+      "within_tolerance": true
+    },
+    {
+      "chunk": 2,
+      "audit_version": "fp32-and-native-cast-v2",
+      "max_absolute_error": 0.0,
+      "fp32_max_absolute_error": 0.0,
+      "tensor_identical": true,
+      "native_cast_identical": true,
+      "within_tolerance": true
+    }
+  ],
+  "pose_retrieval": false,
+  "sink_rephase": false,
+  "adaptive_retrieval_pilot": false,
+  "player_temperature": "provider default",
+  "player_streaming": false,
+  "streaming_player_sha256": null,
+  "initial_neutral_bootstrap": false,
+  "kv_retention": false,
+  "decoprune": false,
+  "reanchor": false,
+  "budget_memory": false,
+  "budget_store": null,
+  "budget_layers": "all",
+  "fp8_kv": false,
+  "memory_v2": "off",
+  "denoise_schedule": "stock",
+  "text_encoder_offloaded_after_encoding": true,
+  "stationary_wait_only": false,
+  "fixed_actions": [
+    "WAIT",
+    "RIGHT",
+    "WAIT"
+  ],
+  "quantization": "none",
+  "cuda_allocator_configuration": "default",
+  "max_area": 399360,
+  "chunk_size": 4,
+  "local_attn_size": 18,
+  "sink_size": 6,
+  "decision_interval": 1,
+  "stock_knobs": true,
+  "controlled_ablation": false,
+  "sampler_timesteps_index": [
+    0,
+    250,
+    500,
+    750
+  ],
+  "sample_shift": 10,
+  "actions": [
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "fixed diagnostic",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 0.0,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 109.730177299,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "RIGHT",
+      "reason": "fixed diagnostic",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 114.14461366,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 59.99999999999999,
+        "accumulated_yaw_degrees": 59.99999999999999,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "fixed diagnostic",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 59.99999999999999,
+        "accumulated_yaw_degrees": 59.99999999999999,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 119.69049934799999,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 59.99999999999999,
+        "accumulated_yaw_degrees": 59.99999999999999,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    }
+  ],
+  "chunks": [
+    {
+      "index": 0,
+      "path": "chunk-000.mp4",
+      "frames": 13,
+      "pixel_sha256": "9c4e134e3484ab5aa20d6facef68c45e36e0b9ad54fa2babecac770634a11088",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5035134350000021,
+        "mp4_encode": 0.4317583640000038
+      },
+      "elapsed_s": 114.138234125,
+      "sha256": "883fc344e30d118964e68b2b846c5df6a593c9c4fbbe4451c8cc9e91e8763f00"
+    },
+    {
+      "index": 1,
+      "path": "chunk-001.mp4",
+      "frames": 16,
+      "pixel_sha256": "d70329e7c81a7a3376d675e882965f95706a5e888a0fd3ded1a67f1bee0f278d",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.521889972000011,
+        "mp4_encode": 0.34345280299999104
+      },
+      "elapsed_s": 119.683273145,
+      "sha256": "ca37ee9deb40ac565715cab02f01d111cac0443fafefbf7cde7bef50dfbb6855"
+    },
+    {
+      "index": 2,
+      "path": "chunk-002.mp4",
+      "frames": 16,
+      "pixel_sha256": "887363a0fc7bc92a8563cb3798a8e3b3257327772339836bce03306633bc6ab7",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5240397270000017,
+        "mp4_encode": 0.25741285899999866
+      },
+      "elapsed_s": 126.53911074400001,
+      "sha256": "e595095842ad9ebc018b9ea45e3dbb776d3ee3d345c39c42ece8ca426a367519"
+    }
+  ],
+  "published_score_reproduced": false,
+  "agent_interactions": 0,
+  "simulation_chunk_budget_override": null,
+  "adapter_sha256": "6aba3bd02c4e2908ef29617425ba02e513090c15234eb6f50cff2c3a591e555a",
+  "controls_sha256": "ef2d9f0c0ba25440964f19c3047108469016a48bfb40c04cc3777a0ade8eba63",
+  "player_sha256": "de34a8b7b8586d33b5faecfa57181fbf1d59f30e94cde051bd2095d1504f16b2",
+  "deviations": [
+    "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+    "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+    "Official 480p demo area; single NVIDIA H200, BF16 and valid-length SDPA backend",
+    "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+    "Claude diagnostic scoring differs from published Gemini judgments",
+    "EXPERIMENTAL external cross-agent visual KV archive; not a benchmark baseline"
+  ],
+  "hardware": {
+    "gpu": "NVIDIA H200",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4"
+  },
+  "expected_final_commanded_state": {
+    "position_normalized_units": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "heading_degrees": 59.99999999999999,
+    "accumulated_yaw_degrees": 59.99999999999999,
+    "yaw_limits_degrees": null,
+    "world_time_seconds": 2.75,
+    "scope": "Intended camera commands only; not measured visual motion or goal completion."
+  },
+  "attention_backend": "sdpa",
+  "optional_torch_dlpack_addon_disabled": false,
+  "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+  "checkpoint_loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "warm_runtime": {
+    "loaded_this_job": true,
+    "load_seconds": 98.91828344,
+    "job_index": 0
+  },
+  "turn_clamp": {
+    "mode": "off",
+    "yaw_limits_degrees": null
+  },
+  "generated_frames": 45,
+  "generated_seconds": 2.8125,
+  "memory": {
+    "method": "cross-agent pose-matched RECALL, canonical visual KV injected into self-attention",
+    "actor": "B",
+    "source_pass": "B-scout",
+    "revision": 0,
+    "attended_latent_frames": 18,
+    "peer_frame_limit": 4,
+    "key_positions": "canonical pre-RoPE keys rephased to reader virtual history",
+    "pose_gate": {
+      "max_angle_degrees": 20,
+      "max_distance": 0.01
+    },
+    "scope": "static scene; same start image, common origin; rotation-only paths",
+    "injections_by_layer": {},
+    "retrieval_attention_calls": 0,
+    "trace": [
+      {
+        "chunk": 0,
+        "reader": "B",
+        "revision": 0,
+        "target_pose": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "peer_frames": [],
+        "attention_replaced": false,
+        "layers_injected": [],
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 1,
+        "reader": "B",
+        "revision": 0,
+        "target_pose": [
+          [
+            0.5000000000000001,
+            0.0,
+            0.8660254037844386,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            -0.8660254037844386,
+            0.0,
+            0.5000000000000002,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "peer_frames": [],
+        "attention_replaced": false,
+        "layers_injected": [],
+        "temporary_read_bytes_released_before_decode": 0
+      },
+      {
+        "chunk": 2,
+        "reader": "B",
+        "revision": 0,
+        "target_pose": [
+          [
+            0.5000000000000001,
+            0.0,
+            0.8660254037844386,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            -0.8660254037844386,
+            0.0,
+            0.5000000000000002,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "peer_frames": [],
+        "attention_replaced": false,
+        "layers_injected": [],
+        "temporary_read_bytes_released_before_decode": 0
+      }
+    ],
+    "shared_archive": {
+      "frames": 6,
+      "frames_per_actor_limit": 8,
+      "bytes": 7412121600,
+      "committed_frames": 6,
+      "publications": [
+        {
+          "id": "B:B-scout:6",
+          "actor": "B",
+          "source_pass": "B-scout",
+          "index": 6,
+          "revision": 0,
+          "pose": [
+            [
+              0.7071067811865476,
+              0.0,
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.7071067811865475,
+              0.0,
+              0.7071067811865477,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-scout:7",
+          "actor": "B",
+          "source_pass": "B-scout",
+          "index": 7,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.8660254037844386,
+              0.0,
+              0.5000000000000002,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-scout:8",
+          "actor": "B",
+          "source_pass": "B-scout",
+          "index": 8,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.8660254037844386,
+              0.0,
+              0.5000000000000002,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-scout:9",
+          "actor": "B",
+          "source_pass": "B-scout",
+          "index": 9,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.8660254037844386,
+              0.0,
+              0.5000000000000002,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-scout:10",
+          "actor": "B",
+          "source_pass": "B-scout",
+          "index": 10,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.8660254037844386,
+              0.0,
+              0.5000000000000002,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-scout:11",
+          "actor": "B",
+          "source_pass": "B-scout",
+          "index": 11,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.8660254037844386,
+              0.0,
+              0.5000000000000002,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:6",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 6,
+          "revision": 0,
+          "pose": [
+            [
+              0.7071067811865476,
+              0.0,
+              -0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.7071067811865475,
+              0.0,
+              0.7071067811865477,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:7",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 7,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              -0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.8660254037844386,
+              0.0,
+              0.5000000000000002,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:8",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 8,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              -0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.8660254037844386,
+              0.0,
+              0.5000000000000002,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:9",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 9,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              -0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.8660254037844386,
+              0.0,
+              0.5000000000000002,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:10",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 10,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              -0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.8660254037844386,
+              0.0,
+              0.5000000000000002,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:11",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 11,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              -0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.8660254037844386,
+              0.0,
+              0.5000000000000002,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:12",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 12,
+          "revision": 0,
+          "pose": [
+            [
+              0.7071067811865476,
+              0.0,
+              -0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.7071067811865474,
+              0.0,
+              0.7071067811865477,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:13",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 13,
+          "revision": 0,
+          "pose": [
+            [
+              0.8660254037844387,
+              0.0,
+              -0.49999999999999994,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.49999999999999983,
+              0.0,
+              0.8660254037844388,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:14",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 14,
+          "revision": 0,
+          "pose": [
+            [
+              0.9659258262890683,
+              0.0,
+              -0.25881904510252074,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.2588190451025206,
+              0.0,
+              0.9659258262890684,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:15",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 15,
+          "revision": 0,
+          "pose": [
+            [
+              1.0,
+              0.0,
+              -1.2253002782949126e-17,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -1.7976556716952523e-16,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:16",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 16,
+          "revision": 0,
+          "pose": [
+            [
+              0.9659258262890683,
+              0.0,
+              0.25881904510252074,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.2588190451025209,
+              0.0,
+              0.9659258262890683,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:17",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 17,
+          "revision": 0,
+          "pose": [
+            [
+              0.8660254037844387,
+              0.0,
+              0.49999999999999994,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.5000000000000001,
+              0.0,
+              0.8660254037844387,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:18",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 18,
+          "revision": 0,
+          "pose": [
+            [
+              0.7071067811865476,
+              0.0,
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.7071067811865477,
+              0.0,
+              0.7071067811865476,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:19",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 19,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.8660254037844388,
+              0.0,
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:20",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 20,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.8660254037844388,
+              0.0,
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:21",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 21,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.8660254037844388,
+              0.0,
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:22",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 22,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.8660254037844388,
+              0.0,
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "A:A-visit:23",
+          "actor": "A",
+          "source_pass": "A-visit",
+          "index": 23,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.8660254037844388,
+              0.0,
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:6",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 6,
+          "revision": 0,
+          "pose": [
+            [
+              0.7071067811865476,
+              0.0,
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.7071067811865475,
+              0.0,
+              0.7071067811865477,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:7",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 7,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.8660254037844386,
+              0.0,
+              0.5000000000000002,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:8",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 8,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.8660254037844386,
+              0.0,
+              0.5000000000000002,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:9",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 9,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.8660254037844386,
+              0.0,
+              0.5000000000000002,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:10",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 10,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.8660254037844386,
+              0.0,
+              0.5000000000000002,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:11",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 11,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.8660254037844386,
+              0.0,
+              0.5000000000000002,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:12",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 12,
+          "revision": 0,
+          "pose": [
+            [
+              0.7071067811865476,
+              0.0,
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.7071067811865474,
+              0.0,
+              0.7071067811865477,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:13",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 13,
+          "revision": 0,
+          "pose": [
+            [
+              0.8660254037844387,
+              0.0,
+              0.49999999999999994,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.49999999999999983,
+              0.0,
+              0.8660254037844388,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:14",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 14,
+          "revision": 0,
+          "pose": [
+            [
+              0.9659258262890683,
+              0.0,
+              0.25881904510252074,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.2588190451025206,
+              0.0,
+              0.9659258262890684,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:15",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 15,
+          "revision": 0,
+          "pose": [
+            [
+              1.0,
+              0.0,
+              1.2253002782949126e-17,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.7976556716952523e-16,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:16",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 16,
+          "revision": 0,
+          "pose": [
+            [
+              0.9659258262890683,
+              0.0,
+              -0.25881904510252074,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.2588190451025209,
+              0.0,
+              0.9659258262890683,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:17",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 17,
+          "revision": 0,
+          "pose": [
+            [
+              0.8660254037844387,
+              0.0,
+              -0.49999999999999994,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.5000000000000001,
+              0.0,
+              0.8660254037844387,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:18",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 18,
+          "revision": 0,
+          "pose": [
+            [
+              0.7071067811865476,
+              0.0,
+              -0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.7071067811865477,
+              0.0,
+              0.7071067811865476,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:19",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 19,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              -0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.8660254037844388,
+              0.0,
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:20",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 20,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              -0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.8660254037844388,
+              0.0,
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:21",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 21,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              -0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.8660254037844388,
+              0.0,
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:22",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 22,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              -0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.8660254037844388,
+              0.0,
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        },
+        {
+          "id": "B:B-visit:23",
+          "actor": "B",
+          "source_pass": "B-visit",
+          "index": 23,
+          "revision": 0,
+          "pose": [
+            [
+              0.5000000000000001,
+              0.0,
+              -0.8660254037844386,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.8660254037844388,
+              0.0,
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "layers": 40
+        }
+      ]
+    }
+  },
+  "termination": "chunk_budget_exhausted",
+  "elapsed_s": 126.54906897,
+  "camera_diagnostics": {
+    "chunks": 3,
+    "path_length": 0.0,
+    "net_yaw_degrees": 59.999999999999986,
+    "total_turn_degrees": 59.999999999999986,
+    "max_distance_from_start": 0.0,
+    "final_distance_from_start": 0.0,
+    "revisited_start_at_chunk": null,
+    "wait_chunks": 2,
+    "wait_pose_changes": 0
+  },
+  "peak_allocated_bytes": 71994462720
+}

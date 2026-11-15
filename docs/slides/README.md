@@ -15,12 +15,14 @@ If a browser refuses to autoplay from a file, run `python3 -m http.server 8000` 
 Videos loop for as long as their slide is shown and rewind when you leave it. The URL keeps the slide number
 (`index.html#7`), so a reload returns to the same slide. `index.html?notes=1` opens with notes on.
 
-The main story runs from the single-camera memory problem and benchmark through the method,
-results, scope, and autoresearch loop. Slides 15–17 extend it to the multi-agent prototype:
-what is reused, how shared text context branches into two histories, then the labeled views. Slides 18–19 show selected greeting and joint-attention attempts. Slide 20 closes with
-shared visual evidence as the next step. The remaining slides are the results appendix.
-The multi-agent videos use scripted controllers and independent visual histories;
-they are not multi-agent benchmark results.
+The main story runs from the single-camera memory problem through the method,
+results and research loop. Slides 15–19 show the actual cross-agent extension:
+archive/splice/runtime reuse, the shared visual-KV architecture, and three
+pose-matched revisit videos with FOV radar. The radar's green readouts come from
+actual 40-layer injection traces. These are common-origin static-scene, serial
+visits; they are functional diagnostics rather than benchmark scores.
+The earlier text-conditioned character demonstrations are in the appendix.
+
 
 Plain-language definitions of every term are in [../EXPLAINER.md](../EXPLAINER.md).
 

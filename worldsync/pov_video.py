@@ -100,7 +100,7 @@ def probe(path):
     return data["streams"][0], float(data["format"]["duration"])
 
 
-def tile(orange, purple, destination):
+def tile(orange, purple, destination, labels=None):
     """Tile synchronized actual video streams; reject length or cadence mismatch.
 
     Each view is letterboxed to fit its panel. No spatial crop, frame freezing,
@@ -116,19 +116,22 @@ def tile(orange, purple, destination):
     destination = Path(destination)
     destination.parent.mkdir(parents=True, exist_ok=True)
     font = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+    labels = labels or ("AGENT A - ORANGE POV", "AGENT B - PURPLE POV")
+    if len(labels) != 2 or any(not label or any(c in label for c in "':;[]\\") for label in labels):
+        raise ValueError("two plain-text agent labels are required")
     def panel(index, label, color):
         return (f"[{index}:v]setpts=PTS-STARTPTS,scale=832:464:force_original_aspect_ratio=decrease,"
                 f"pad=832:464:(ow-iw)/2:(oh-ih)/2:color=black,setsar=1,"
                 f"pad=832:522:0:58:color=0x101724,drawtext=fontfile={font}:"
                 f"text='{label}':x=22:y=17:fontsize=23:fontcolor={color}[v{index}]")
-    filters = (panel(0, "AGENT A - ORANGE POV", "0xffca65")+";"+
-               panel(1, "AGENT B - PURPLE POV", "0xc5a3ff")+";"+
+    filters = (panel(0, labels[0], "0xffca65")+";"+
+               panel(1, labels[1], "0xc5a3ff")+";"+
                "[v0][v1]hstack=inputs=2,format=yuv420p[v]")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(orange), "-i", str(purple),
                     "-filter_complex", filters, "-map", "[v]", "-an", "-c:v", "libx264", "-crf", "21",
                     "-preset", "fast", "-movflags", "+faststart", str(destination)], check=True)
-    result = {"left": {"path": str(orange), "label": "Agent A - Orange POV", **a},
-              "right": {"path": str(purple), "label": "Agent B - Purple POV", **b},
+    result = {"left": {"path": str(orange), "label": labels[0], **a},
+              "right": {"path": str(purple), "label": labels[1], **b},
               "duration": da, "output": str(destination), "synchronization": "same source frame index"}
     destination.with_suffix(".json").write_text(json.dumps(result, indent=2)+"\n")
     return result

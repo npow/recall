@@ -30,7 +30,8 @@ def build_pipeline(upstream, configs, pack, knobs):
         local_attn_size=knobs["local_attn_size"], sink_size=knobs["sink_size"], infer_mode="causal_fast", convert_model_dtype=True)
 
 
-def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=None, controller_profile=None):
+def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=None, controller_profile=None,
+         memory_factory=None):
     """Run one rollout. `runtime` (worldsync/lingbot_runtime.py) may supply a warm pipeline; returns the report."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-root", type=Path, default=ROOT / "external/PlayWorld/data")
@@ -162,6 +163,8 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
         parser.error("memory storage ablations require --budget-memory on fixed native-camera paths")
     diagnostics = [args.pose_retrieval, args.rephase_sink, args.kv_retention, args.decoprune, args.reanchor, args.budget_memory, args.fp8_kv,
                    args.memory_v2 != "off"]
+    if memory_factory is not None and (any(diagnostics) or controller_profile is not None):
+        parser.error("external shared memory requires its own diagnostic rollout")
     if sum(diagnostics) > 1:
         parser.error("memory ablations must be tested separately")
     adaptive_memory_ok = (args.budget_memory or args.memory_v2 != "off") and lingbot_tuning.hillclimb_unlocked()
@@ -349,7 +352,11 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
         yaw_limits = plan_yaw_limits(task) if args.turn_clamp == "plan" else None
         report["turn_clamp"] = {"mode": args.turn_clamp, "yaw_limits_degrees": yaw_limits}
         camera = CameraPlan(turn_degrees_per_second=args.turn_degrees_per_second, yaw_limits_degrees=yaw_limits)
-        if args.pose_retrieval:
+        if memory_factory is not None:
+            memory = memory_factory(pipeline)
+            report["model"] = "LingBot-World2 14B causal-fast + cross-agent visual KV retrieval"
+            report["deviations"].append("EXPERIMENTAL external cross-agent visual KV archive; not a benchmark baseline")
+        elif args.pose_retrieval:
             from worldsync.lingbot_retrieval import PoseKVMemory
             memory = PoseKVMemory(pipeline, key_positions=args.retrieval_positions,
                                   retrieved_frames=args.retrieved_frames, selection=args.retrieval_selection,
