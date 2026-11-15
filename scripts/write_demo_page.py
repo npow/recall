@@ -40,7 +40,8 @@ def main():
     others = ""
     if h6 and h24:
         others = (f"; 6 s: {h6['stock'][0]:.2f} → {h6['memory'][0]:.2f} ({interval(h6['delta'])}); "
-                  f"24 s: {h24['stock'][0]:.2f} → {h24['memory'][0]:.2f} ({interval(h24['delta'])})")
+                  f"24 s: {h24['stock'][0]:.2f} → {h24['memory'][0]:.2f} ({interval(h24['delta'])}); "
+                  f"pooled {interval(pooled['delta'])}")
     rows = []
     for horizon, row in sorted(horizons.items()):
         rows.append(f"| {horizon} s | {row['n']} | {row['stock'][0]:.2f} | {row['memory'][0]:.2f} | {interval(row['delta'])} | "
@@ -187,7 +188,7 @@ same flags at commit `edb2b83` on Lambda H100s; pixels differ between GPU models
 - **A clear question with a baseline first.** We reproduced the published LingBot-World2 score on all 171 PlayWorld tasks before
   claiming anything, twice, on different hardware: 1.85 and 1.81 against 1.82 (`reproduction/full-run/table.md`, `reproduction/final-run/table.md`).
 - **Frozen before generation.** Every comparison has a config committed before its first video: `reproduction/full-run-config.json`,
-  `reproduction/final-run-config.json`, `docs/demo/sources/revisit-horizon-config.json`, `reproduction/memory-v2-config.json`,
+  `reproduction/final-run-config.json`, `reproduction/revisit-horizon-config.json`, `reproduction/memory-v2-config.json`,
   and a success criterion written before any full score existed (`reproduction/pass-criterion.md`).
 - **Paired designs with intervals.** Same task, same seed, same GPU model for both arms; bootstrap 95% intervals over tasks;
   development scenes excluded from held-out results; wins, ties and losses reported next to every mean.
@@ -256,7 +257,7 @@ only 8-bit floating point held up on both test scenes, at 2×.
   (`reproduction/lambda-log.md`), the note that coordinated three agent sessions (`reproduction/COORDINATION.md`), and what
   each experiment found, positive or negative (`reproduction/INTEGRATION.md`).
 - **Code runs.** The flags are default-off options of one rollout script; the test suite passes; the command block above
-  reproduces a side-by-side. Memory v2 and the storage variants live on branches `memory-v2` and `storage-ablation`.
+  reproduces a side-by-side. Memory v2 (`--memory-v2 recompute`) and the storage variants are wired into the same script.
 - **Failures are reported.** See the next section, [GALLERY.md](GALLERY.md) for losses shown next to wins, and
   [docs/METHOD.md](METHOD.md) for the methods that did not work.
 

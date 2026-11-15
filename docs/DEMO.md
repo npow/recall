@@ -13,7 +13,7 @@ the model's internal state on demand, which takes **about 200× less memory** th
 
 | | Headline result | Status |
 |---|---|---|
-| 1 | **After 12 s looking away, on 20 unseen PlayWorld scenes: judged consistency 1.86 → 2.52, paired +0.66 [+0.19, +1.12], 14 wins / 2 ties / 4 losses**; 6 s: 1.76 → 3.07 (+1.31 [+0.74, +1.89]); 24 s: 1.45 → 1.78 (+0.34 [+0.05, +0.64]) | pre-registered (interim) |
+| 1 | **After 12 s looking away, on 20 unseen PlayWorld scenes: judged consistency 1.86 → 2.52, paired +0.66 [+0.19, +1.12], 14 wins / 2 ties / 4 losses**; 6 s: 1.76 → 3.07 (+1.31 [+0.74, +1.89]); 24 s: 1.45 → 1.78 (+0.34 [+0.05, +0.64]); pooled +0.77 [+0.51, +1.03] | pre-registered |
 | 2 | **6.2 MB per remembered frame instead of 1,235 MB (about 200×) at about the same recall** (0.77 against 0.78; stock 0.35) | one scene, one seed, one GPU type |
 | 3 | **Published baseline reproduced twice with the open checkpoint: 1.85 and 1.81 overall against the published 1.82** | all 171 PlayWorld tasks |
 | 4 | **Best subset of PlayWorld's own tasks: out-of-sight evolution with our text director, 1.32 → 1.53, a trend of +0.20 [−0.12, +0.58]** | post-hoc choice of subset and metric |
@@ -36,14 +36,14 @@ PlayWorld's released consistency rubric. These are PlayWorld scenes with our own
 
 | seconds away | scenes | as released | with our memory | paired difference [95% CI] | wins/ties/losses |
 |---:|---:|---:|---:|---|---|
-| 0 s | 14 | 1.69 | 2.55 | +0.86 [+0.33, +1.44] | 10/1/3 |
+| 0 s | 20 | 1.84 | 2.69 | +0.85 [+0.29, +1.45] | 13/1/6 |
 | 6 s | 20 | 1.76 | 3.07 | +1.31 [+0.74, +1.89] | 17/1/2 |
 | 12 s | 20 | 1.86 | 2.52 | +0.66 [+0.19, +1.12] | 14/2/4 |
 | 24 s | 20 | 1.45 | 1.78 | +0.34 [+0.05, +0.64] | 12/3/5 |
 
-Pooled over the 6 s, 12 s and 24 s absences, scenes as units: +0.77 [+0.51, +1.03] (n = 20) (interim). The turn
+Pooled over the 6 s, 12 s and 24 s absences, scenes as units: +0.77 [+0.51, +1.03] (n = 20). The turn
 away and back adds about 6 s to each absence, so even the 0 s row is beyond the model's 4.5 s window. Source: `docs/demo/horizon-summary.json`
-(150 of 160 episodes scored).
+(160 of 160 episodes scored).
 
 ### Selected examples
 
@@ -131,7 +131,7 @@ same flags at commit `edb2b83` on Lambda H100s; pixels differ between GPU models
 - **A clear question with a baseline first.** We reproduced the published LingBot-World2 score on all 171 PlayWorld tasks before
   claiming anything, twice, on different hardware: 1.85 and 1.81 against 1.82 (`reproduction/full-run/table.md`, `reproduction/final-run/table.md`).
 - **Frozen before generation.** Every comparison has a config committed before its first video: `reproduction/full-run-config.json`,
-  `reproduction/final-run-config.json`, `docs/demo/sources/revisit-horizon-config.json`, `reproduction/memory-v2-config.json`,
+  `reproduction/final-run-config.json`, `reproduction/revisit-horizon-config.json`, `reproduction/memory-v2-config.json`,
   and a success criterion written before any full score existed (`reproduction/pass-criterion.md`).
 - **Paired designs with intervals.** Same task, same seed, same GPU model for both arms; bootstrap 95% intervals over tasks;
   development scenes excluded from held-out results; wins, ties and losses reported next to every mean.
@@ -200,7 +200,7 @@ only 8-bit floating point held up on both test scenes, at 2×.
   (`reproduction/lambda-log.md`), the note that coordinated three agent sessions (`reproduction/COORDINATION.md`), and what
   each experiment found, positive or negative (`reproduction/INTEGRATION.md`).
 - **Code runs.** The flags are default-off options of one rollout script; the test suite passes; the command block above
-  reproduces a side-by-side. Memory v2 and the storage variants live on branches `memory-v2` and `storage-ablation`.
+  reproduces a side-by-side. Memory v2 (`--memory-v2 recompute`) and the storage variants are wired into the same script.
 - **Failures are reported.** See the next section, [GALLERY.md](GALLERY.md) for losses shown next to wins, and
   [docs/METHOD.md](METHOD.md) for the methods that did not work.
 

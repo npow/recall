@@ -1,6 +1,6 @@
 # Demo appendix: the full rule-based set
 
-Rule: the largest paired judged differences at 12 s or 24 s away, one entry per scene, plus the most negative ones (interim). Every pair is in `horizon-summary.json`. Observations were written after viewing each strip.
+Rule: the largest paired judged differences at 12 s or 24 s away, one entry per scene, plus the most negative ones. Every pair is in `horizon-summary.json`. Observations were written after viewing each strip.
 
 | scene | away | as released | with memory | difference | judge calls (released / memory) | final-frame similarity |
 |---|---:|---:|---:|---:|---|---|
