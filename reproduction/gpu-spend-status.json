@@ -9,19 +9,19 @@
   "goal_status": "No verified score above2.12; no promise that moreGPUwouldachieveit.",
   "queued_b200": "Verifiedstopped2026-11-15 10:27:37UTC; zeroGPUcontainersallocated",
   "final_gpu_jobs_status": "Bothcompleted. Modalnissan-powcontainerlistempty; noGPUcontainersrunningatcheck.",
-  "remaining_gpu_minutes": 0,
+  "remaining_gpu_minutes": "At most60minute lease from launch, including boot/setup; actual inference not started",
   "authorization_update": "User explicitlyauthorized localGPU andLambda; Modalremainsstopped.",
   "lambda_scope": {
-    "max_concurrent_gpus": 1,
-    "type": "H10080GBPCIe",
-    "max_minutes": 60,
+    "instance_id": "05682393d6104a6aba07e830cc1bca31",
+    "type": "gpu_1x_h100_pcie",
     "price_usd_per_hour": 3.29,
-    "purpose": "Correctedbaselinevalidationonly",
-    "instance_id": "6d885894eff4432f994edf8830ced221",
-    "watchdog_pid": 341094,
-    "status": "terminated",
-    "stopped_reason": "Controller audit blocks baseline generation; avoid idle GPU spending",
-    "verified_at_utc": "2026-11-15T11:13:27.345528+00:00"
+    "max_minutes": 60,
+    "purpose": "Two-chunk corrected-controller runtime validation; not benchmark evidence",
+    "status": "booting",
+    "watchdog_pid": 427756,
+    "provision_pid": 430544,
+    "terminate_after_unix": 1794745244.2747562,
+    "checked_at_utc": "2026-11-15T11:22:18.203608+00:00"
   },
   "local_gpu": "Busywithcollaborator; do notoverlap orstopit"
 }
