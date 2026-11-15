@@ -28,6 +28,8 @@ def test_world_id_depends_on_start_conditions_not_memory_method():
         assert sw.world_id({**a, key: value}) != sw.world_id(a), key
     with pytest.raises(ValueError):
         sw.world_id({**a, "initial_image_sha256": None})
+    assert sw.world_id(sw.world_manifest({**run_json(), "world_text_sha256": "x" * 64})) != sw.world_id(a)
+    assert sw.world_id(sw.world_manifest(run_json())) == sw.world_id(a)
 
 
 def test_sightings_use_last_frame_of_each_chunk_and_pose_after():

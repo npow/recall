@@ -61,12 +61,16 @@ def world_manifest(run):
     """The fields that make two rollouts the same world, taken from a rollout's run.json."""
     keys = ("model", "source_revision", "checkpoint_revision", "task_id", "initial_image_sha256",
             "image_caption_sha256", "seed", "fps", "chunk_size")
-    return {key: run.get(key) for key in keys}
+    manifest = {key: run.get(key) for key in keys}
+    # A run whose conditioning text was changed (world_text_sha256) is a different world from the plain caption.
+    manifest["world_text_sha256"] = run.get("world_text_sha256") or run.get("image_caption_sha256")
+    return manifest
 
 
 def world_id(manifest):
     identity = {key: manifest.get(key) for key in ("source_revision", "checkpoint_revision", "initial_image_sha256",
                                                    "image_caption_sha256", "seed", "fps", "chunk_size")}
+    identity["world_text_sha256"] = manifest.get("world_text_sha256") or manifest.get("image_caption_sha256")
     missing = sorted(key for key, value in identity.items() if value in (None, ""))
     if missing:
         raise ValueError(f"run is missing world identity fields: {missing}")

@@ -45,27 +45,32 @@ def _panel(texts, label, captions, width, strip, size=15, chars=None):
     return ",".join(filters)
 
 
-def compose(left, right, out, left_label, right_label, left_captions, right_captions, strip=110, width=640, height=352,
-            title=None):
-    """Write ``out`` (mp4): both rollouts side by side, each with a caption strip; nothing else touches disk."""
+def compose(panels, out, strip=110, width=640, height=352, title=None):
+    """Write ``out`` (mp4): the agents' rollouts side by side, each with a caption strip; nothing else touches disk.
+
+    ``panels`` is a list of ``(video_path, label, captions)`` where captions are ``(start_s, end_s, text)`` windows.
+    """
     with tempfile.TemporaryDirectory() as tmp:
-        return _compose(_Texts(tmp), left, right, out, left_label, right_label, left_captions, right_captions, strip,
-                        width, height, title)
+        return _compose(_Texts(tmp), panels, out, strip, width, height, title)
 
 
-def _compose(texts, left, right, out, left_label, right_label, left_captions, right_captions, strip, width, height,
-             title):
-    graph = []
-    for tag, label, captions, name in (("0:v", left_label, left_captions, "l"), ("1:v", right_label, right_captions, "r")):
-        graph.append(f"[{tag}]scale={width}:{height},pad={width}:{height + strip}:0:0:color=0x1b1410,"
+def _compose(texts, panels, out, strip, width, height, title):
+    graph, names = [], []
+    for slot, (_, label, captions) in enumerate(panels):
+        name = f"p{slot}"
+        graph.append(f"[{slot}:v]scale={width}:{height},pad={width}:{height + strip}:0:0:color=0x1b1410,"
                      f"{_panel(texts, label, captions, width, strip)}[{name}]")
-    graph.append("[l][r]hstack=inputs=2,pad=iw+0:ih:0:0[s]")
+        names.append(f"[{name}]")
     last = "s"
+    graph.append(f"{''.join(names)}hstack=inputs={len(panels)}[s]" if len(panels) > 1 else f"[p0]copy[s]")
     if title:
         graph.append(f"[s]drawtext=fontfile={BOLD}:{texts(title)}:fontcolor=0xffd27a:fontsize=18:"
                      f"x=(w-text_w)/2:y=h-28[t]")
         last = "t"
-    cmd = ["ffmpeg", "-v", "error", "-y", "-i", str(left), "-i", str(right), "-filter_complex", ";".join(graph),
-           "-map", f"[{last}]", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18", "-shortest", str(out)]
+    cmd = ["ffmpeg", "-v", "error", "-y"]
+    for video, _, _ in panels:
+        cmd += ["-i", str(video)]
+    cmd += ["-filter_complex", ";".join(graph), "-map", f"[{last}]", "-c:v", "libx264", "-pix_fmt", "yuv420p",
+            "-crf", "18", "-shortest", str(out)]
     subprocess.run(cmd, check=True)
     return out
