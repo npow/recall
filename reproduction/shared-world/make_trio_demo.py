@@ -64,6 +64,8 @@ def captions(agent, others):
 LABELS = {"viewer": "viewer  (pans 0 -> 180 -> 0)", "duel-a": "duel-a  (faces 0, backs away)",
           "duel-b": "duel-b  (turns to 180, backs away)", "agent-a": "agent-a  (orbits the centre, full circle)",
           "agent-b": "agent-b  (walks to the far side, then orbits)"}
+if T.name == "arena":
+    LABELS = {"agent-a": "agent-a  (starts at (0,0), orbits)", "agent-b": "agent-b  (labelled opposite at (0,8), orbits)"}
 panels = [(T / agent / "rollout.mp4", LABELS.get(agent, agent), captions(agent, [o for o in AGENTS if o != agent]))
           for agent in AGENTS]
 out = compose(panels, T / f"{T.name}-shared-world-demo.mp4", strip=96,
