@@ -701,7 +701,7 @@ def scene_process(data, seconds):
                 draw.rounded_rectangle((cx, y, cx + width, y + 62), 31, outline=mix(BG, ACCENT, d), width=3)
                 draw.text((cx + width / 2, y + 31), chip, font=font(32), fill=mix(BG, FG, d), anchor="mm")
                 cx += width + 24
-        draw.text((W / 2, 940), "The loop found its own bugs and rebuilt memory v2; a human set goals and budget.",
+        draw.text((W / 2, 940), "The loop found its own bugs and rebuilt the memory; a human set goals and budget.",
                   font=font(30, False), fill=mix(BG, MUTED, ease((t - 4.6) / 0.6)), anchor="mm")
         caption(draw, "Agents ran, audited and fixed their own experiments.", 1.0)
         yield np.asarray(image)
