@@ -83,6 +83,11 @@ configuration and pass criterion first; findings are stored in [past.dev](https:
 
 ## Quickstart
 
+**Multi-agent video experiment:** `scripts/modal_two_agent_pov.py` renders two first-person LingBot
+videos against a shared handoff plan, then tiles them with persistent agent labels.
+This prototype uses scripted actions and separate visual histories; see the
+[video instructions and limitations](docs/multi-agent-demo.md).
+
 Requirements: one 80 GB GPU (our runs used H100 PCIe/SXM with `--offload-text-encoder`; stock-sized episodes need about 72 GB, and the
 memory adds a few GB, peak about 93 GB on a larger card), the
 [LingBot-World2 14B causal-fast weights](https://huggingface.co/robbyant/lingbot-world-v2-14b-causal-fast), the PlayWorld data, and a `gcloud` login or Gemini key for judging.
