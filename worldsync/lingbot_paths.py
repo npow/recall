@@ -5,6 +5,7 @@ from worldsync.lingbot_controls import CameraPlan
 
 PATHS = {
     "turn_return": ["WAIT"] + ["RIGHT"] * 3 + ["LEFT"] * 3 + ["WAIT"],
+    "turn_long_wait_return": ["WAIT"] + ["RIGHT"] * 3 + ["WAIT"] * 24 + ["LEFT"] * 3 + ["WAIT"],
     "turn_wait_return": ["WAIT"] + ["RIGHT"] * 3 + ["WAIT"] * 8 + ["LEFT"] * 3 + ["WAIT"],
     "translate_return": ["WAIT"] + ["W"] * 4 + ["S"] * 4 + ["WAIT"],
     "round_trip": ["WAIT"] + ["W"] * 4 + ["RIGHT"] * 3 + ["W"] * 4 + ["RIGHT"] * 3 + ["WAIT"],

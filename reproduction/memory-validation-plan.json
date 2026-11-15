@@ -1,0 +1,42 @@
+{
+  "scope": "Frozen validation of virtual-position historical-view retrieval beyond the rolling cache",
+  "candidate_frozen": "Existing PoseKVMemory virtual-position method, no new parameters or training",
+  "selection_basis": "GC007 seed42 development short and delayed returns; not native-key ablation or held-out results",
+  "attention_budget_both": 18,
+  "sink_frames_both": 6,
+  "archive_limit_frames_candidate": 16,
+  "archive_frame_ids": "6..21",
+  "retrieve_count": 4,
+  "cases": [
+    {
+      "task_id": "GC007",
+      "seed": 43,
+      "path": "turn_wait_return",
+      "partition": "development",
+      "purpose": "new seed at15.8 seconds /8-second away delay"
+    },
+    {
+      "task_id": "GC006",
+      "seed": 42,
+      "path": "turn_wait_return",
+      "partition": "held_out",
+      "purpose": "next unused held-out image in frozen split; fountain scene"
+    },
+    {
+      "task_id": "GC007",
+      "seed": 42,
+      "path": "turn_long_wait_return",
+      "partition": "development_stress",
+      "purpose": "extend horizon to31.8 seconds /24-second away delay"
+    }
+  ],
+  "failure_policy": "All pairs retained. Endpoint DINO alone cannot establish success. Require full-video continuity, actual reversal and recovered landmark identity; quantify pose offsets separately. Frozen memory may not be retuned on the held-out case.",
+  "evaluation": [
+    "Native camera tensor parity",
+    "Raw pixels equal until first intervention",
+    "Full-video anonymized Claude review",
+    "Endpoint DINO/PSNR and explicit disagreement with visual evidence",
+    "Memory and warmed generation cost"
+  ],
+  "training": "None. No benchmark assets are used for training."
+}

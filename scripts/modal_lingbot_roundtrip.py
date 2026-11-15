@@ -55,11 +55,23 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
 
 
 @app.local_entrypoint()
-def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", validation: bool = False, rephase_sink: bool = False, retrieval_positions: str = "virtual"):
+def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", validation: bool = False, memory_validation: bool = False, rephase_sink: bool = False, retrieval_positions: str = "virtual"):
     if retrieval_positions not in {"native", "virtual"} or (retrieval_positions != "virtual" and not retrieval):
         raise ValueError("native retrieval positions require retrieval mode")
     if cache_frames not in {18, 34} or ((retrieval or rephase_sink) and cache_frames != 18) or (retrieval and rephase_sink):
         raise ValueError("This declared pilot supports stock18, context34, or stock-budget retrieval")
+    if memory_validation:
+        if validation:
+            raise ValueError("Choose one frozen validation plan")
+        plan = json.loads((ROOT / "reproduction/memory-validation-plan.json").read_text())
+        jobs = [(case["path"], case["seed"], retrieval, 18, case["task_id"], False, "virtual")
+                for case in plan["cases"] for retrieval in (False, True)]
+        for result in generate.starmap(jobs):
+            run = result["run"]
+            output = ROOT / "outputs/lingbot-reproduction" / f"memory-validation-{run['task_id']}-{result['mode']}-{result['path']}-seed{run['seed']}.json"
+            output.write_text(json.dumps(result, indent=2) + "\n")
+            print(json.dumps({k: v for k, v in result.items() if k != "run"}, indent=2), flush=True)
+        return
     if validation:
         plan = json.loads((ROOT / "reproduction/context-validation-plan.json").read_text())
         jobs = [(plan["path"], case["seed"], False, cache, case["task_id"])
