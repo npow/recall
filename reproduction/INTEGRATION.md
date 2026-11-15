@@ -122,3 +122,11 @@ across 7 jobs (`reproduction/runner-validation/`). **Not re-run on current main:
 bit-exactness. Bit-exactness holds only within one GPU model (Modal can serve an H100 request on an H200).
 The runner needs a Modal workspace that can launch GPUs; the two newer workspaces could not when tried.
 
+
+## Gemini rescoring versus the powered test (inconsistent, effect not established)
+
+`reproduction/gemini-rescore.md` rescored the earlier cohorts with the released PlayWorld Gemini verifier over Vertex AI: 46/6
+came out **+0.69** over stock (95% CI [+0.19, +1.23], 24 pairs). The separate powered seed-42 test found 46/6 **+0.05** and budget
+memory **+0.40** (confidence interval includes 0). The two experiments used different episodes and different player
+rollouts, so the results are inconsistent, and a memory effect on judged scores is **not established**. Gemini also agreed
+only weakly with the Opus judge per episode, so the choice of judge changes the conclusion.
