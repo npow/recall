@@ -1,4 +1,6 @@
 """Guard an isolated two-chunk Thor child with a16GiB physical-memory reserve."""
+import argparse
+import shutil
 import json
 from pathlib import Path
 import subprocess
@@ -15,22 +17,28 @@ def available():
 
 
 def main():
-    output = ROOT / "outputs/lingbot-reproduction" / ("thor-two-chunk-smoke-" + str(time.time_ns()))
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--episode", choices=("smoke", "baseline", "file4"), default="smoke")
+    args = parser.parse_args()
+    estimate = APP_ESTIMATE if args.episode == "smoke" else 72_664_219_648 + 4_941_414_400 + 10_000_000_000
+    output = ROOT / "outputs/lingbot-reproduction" / ("thor-" + args.episode + "-" + str(time.time_ns()))
     output.mkdir()
     before = available()
-    report = {"scope": "supervised one-shot no-archive local memory smoke", "available_before_bytes": before,
-              "app_estimate_bytes": APP_ESTIMATE, "system_reserve_bytes": RESERVE,
+    report = {"scope": "supervised one-shot local memory experiment", "available_before_bytes": before,
+              "episode": args.episode, "app_estimate_bytes": estimate, "system_reserve_bytes": RESERVE,
               "output": str(output), "status": "not_launched"}
     gpu_processes = subprocess.run(["nvidia-smi", "--query-compute-apps=pid", "--format=csv,noheader"],
                                    capture_output=True, text=True, check=True).stdout.strip()
     if gpu_processes:
         report["status"] = "gpu_busy_not_launched"
-    elif before < APP_ESTIMATE + RESERVE:
+    elif args.episode == "file4" and shutil.disk_usage(output).free < 25_000_000_000:
+        report["status"] = "disk_budget_rejected"
+    elif before < estimate + RESERVE:
         report["status"] = "budget_rejected"
     else:
         with (output / "child.log").open("w") as log, (output / "supervisor-samples.jsonl").open("w") as samples:
             process = subprocess.Popen([str(ROOT / ".venv-lingbot/bin/python"), "-u", "-m", "worldsync.lingbot_thor_smoke",
-                                        "--output", str(output)], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
+                                        "--output", str(output), "--episode", args.episode], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
             report["status"] = "running"
             report["pid"] = process.pid
             (output / "supervisor.json").write_text(json.dumps(report, indent=2) + "\n")
