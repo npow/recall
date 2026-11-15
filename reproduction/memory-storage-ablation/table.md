@@ -16,7 +16,11 @@
 | top25 | 309 | 4.0x | 0.562 | missing | missing | gpu | 153 | 70.5 |
 | top10 | 124 | 10.0x | 0.608 | 0.367 |  | gpu | 145 | 68.8 |
 | rand25 | 309 | 4.0x | 0.693 | missing |  | gpu | 204 | 70.5 |
-| lr64 | 68 | 18.2x | 0.821 | missing | missing | gpu | 175 | 68.8 |
-| lr256 | 271 | 4.6x | 0.604 | missing |  | gpu | 245 | 70.9 |
+| lr64 | 68 | 18.2x | 0.821 | 0.394 | missing | gpu | 175 | 68.8 |
+| lr256 | 271 | 4.6x | 0.604 | 0.329 |  | gpu | 245 | 70.9 |
 | pool2fp8 | 162 | 7.6x | 0.626 | missing | missing | gpu | 223 | 69.8 |
 | pool2fp8-even | 81 | 15.2x | 0.374 | missing |  | gpu | 151 | 69.0 |
+| stock (seed 43) | 0 | n/a | 0.718 | missing |  |  | 134 | 68.8 |
+| exact (seed 43) | 1235 | 1.0x | 0.718 | missing |  | cpu | 202 | 75.1 |
+| fp8 (seed 43) | 627 | 2.0x | 0.755 | missing |  | gpu | 181 | 74.4 |
+| int8 (seed 43) | 0 | n/a | missing | missing |  |  | 0 | 0.0 |

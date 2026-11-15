@@ -116,9 +116,9 @@ def figure_footprint(path):
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     rows = [("exact internal state\n(what we started with)", 1235, 0.780), ("8-bit internal state", 627, 0.818),
-            ("low-rank internal state\n(rank 64, one run)", 68, 0.821), ("our memory v2:\nkeep the frame, recompute", 6.2, 0.765)]
+            ("our memory v2:\nkeep the frame, recompute", 6.2, 0.765)]
     fig, axes = plt.subplots(1, 2, figsize=(9, 4.2), dpi=160)
-    colours = ["#999999", "#999999", "#bbbbbb", "#3c96e8"]
+    colours = ["#999999", "#999999", "#3c96e8"]
     names = [r[0] for r in rows]
     axes[0].barh(names, [r[1] for r in rows], color=colours)
     axes[0].set_xscale("log")
@@ -137,7 +137,7 @@ def figure_footprint(path):
         for side in ("top", "right"):
             ax.spines[side].set_visible(False)
         ax.tick_params(labelsize=9)
-    fig.suptitle("About 200× less memory for the same recall", fontsize=13, x=0.02, ha="left")
+    fig.suptitle("Compressing the model's state saves 2×. Keeping the frame and recomputing saves about 200×.", fontsize=12, x=0.02, ha="left")
     fig.text(0.01, 0.01, "One scene, one seed, scripted path, Lambda H100; DINO similarity of the final frame to the start view. Not a benchmark score.",
              fontsize=7.5, color="#555555")
     fig.tight_layout(rect=(0, 0.03, 1, 0.94))

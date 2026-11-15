@@ -14,7 +14,7 @@ the model's internal state on demand, which takes **about 200× less memory** th
 | | Headline result | Status |
 |---|---|---|
 | 1 | **After 12 s looking away, on 20 unseen PlayWorld scenes: judged consistency 1.86 → 2.52, paired +0.66 [+0.19, +1.12], 14 wins / 2 ties / 4 losses** | pre-registered (interim) |
-| 2 | **6.2 MB per remembered frame instead of 1,235 MB (about 200×) at the same recall** (0.77 against 0.78; stock 0.35) | one scene, one seed |
+| 2 | **6.2 MB per remembered frame instead of 1,235 MB (about 200×) at about the same recall** (0.77 against 0.78; stock 0.35) | one scene, one seed |
 | 3 | **Published baseline reproduced twice with the open checkpoint: 1.85 and 1.81 overall against the published 1.82** | all 171 PlayWorld tasks |
 | 4 | **Best subset of PlayWorld's own tasks: out-of-sight evolution with our text director, 1.32 → 1.53, a trend of +0.20 [−0.12, +0.58]** | post-hoc choice of subset and metric |
 
@@ -37,11 +37,11 @@ PlayWorld's released consistency rubric. These are PlayWorld scenes with our own
 | seconds away | scenes | as released | with our memory | paired difference [95% CI] | wins/ties/losses |
 |---:|---:|---:|---:|---|---|
 | 0 s | 3 | 1.03 | 2.27 | +1.23 [+0.30, +2.60] | 3/0/0 |
-| 6 s | 7 | 1.43 | 2.34 | +0.91 [+0.47, +1.33] | 6/1/0 |
+| 6 s | 12 | 1.70 | 2.86 | +1.16 [+0.43, +1.88] | 10/1/1 |
 | 12 s | 20 | 1.86 | 2.52 | +0.66 [+0.19, +1.12] | 14/2/4 |
-| 24 s | 19 | 1.43 | 1.78 | +0.36 [+0.06, +0.68] | 12/2/5 |
+| 24 s | 20 | 1.45 | 1.78 | +0.34 [+0.05, +0.64] | 12/3/5 |
 
-Pooled over the 12 s and 24 s absences, scenes as units: +0.56 [+0.25, +0.88] (n = 20) (interim).
+Pooled over the 12 s and 24 s absences, scenes as units: +0.50 [+0.23, +0.75] (n = 20) (interim).
 
 ### Selected examples
 
@@ -63,9 +63,11 @@ Each clip shows the whole episode, sped up to about 10 s. The full rule-based se
 
 ![memory footprint](demo/fig2-footprint.png)
 
-To reuse an old frame, the model needs that frame's internal state at all 40 of its layers: 1,235 MB per frame. Memory v2 keeps
-only the frame, 6.2 MB with its conditioning, and recomputes the state when the camera returns: 13.5 s of extra compute in a
-14-chunk episode, GPU memory 72.4 GB against 68.8 GB for the stock model.
+To reuse an old frame, the model needs that frame's internal state at all 40 of its layers: 1,235 MB per frame. Compressing
+that state gets to 2× at best (8-bit floating point; nineteen formats tested, `reproduction/memory-storage-ablation.md`).
+Memory v2 keeps only the frame, 6.2 MB with its conditioning, and recomputes the state when the camera returns: 13.5 s of extra
+compute in a 14-chunk episode, GPU memory 72.4 GB against 68.8 GB for the stock model. The recall figures are from one scene
+and one seed on a scripted path.
 [Side-by-side video, GC007](demo/memv2-hold-GC007.mp4): stock ends at a storefront close-up; memory v2 ends on the facade and plaza seen at the start.
 
 ![memory v2 on GC007](demo/memv2-hold-GC007.jpg)
@@ -130,9 +132,11 @@ same flags at commit `edb2b83` on Lambda H100s; pixels differ between GPU models
   and a success criterion written before any full score existed (`reproduction/pass-criterion.md`).
 - **Paired designs with intervals.** Same task, same seed, same GPU model for both arms; bootstrap 95% intervals over tasks;
   development scenes excluded from held-out results; wins, ties and losses reported next to every mean.
-- **Ablations.** Nineteen storage formats for the memory (`docs/demo/sources/memory-storage-ablation-table.md`): 8-bit keeps
-  the quality at half the size, no subset of layers does, pooled summaries do not, low-rank at rank 64 looks promising in one
-  run. Retrieval rules v1, v2 and content-only side by side (`docs/demo/sources/memory-v2-step1-table.md`).
+- **Ablations with a clear conclusion.** Nineteen storage formats for the memory on two scenes
+  (`reproduction/memory-storage-ablation.md`): only exact storage and 8-bit floating point (2× smaller) keep the revisit on
+  both scenes; layer subsets, pooling, token subsets, integer 8-bit and low-rank each fail on at least one scene. So compressing
+  the cached state buys at most 2×, and the 200× comes from recomputing. Retrieval rules v1, v2 and content-only side by side
+  (`docs/demo/sources/memory-v2-step1-table.md`).
 - **Independent audits.** A five-lens audit of baseline fidelity with a skeptic per claim (`reproduction/baseline-fidelity-audit.md`),
   a code-and-trace audit of the memory (`reproduction/full-run-memory-audit.md`), and a judge-repeat study that measured the
   judge's own noise at 0.36 points per video (`reproduction/judge-repeat/README.md`).
@@ -164,7 +168,8 @@ stored on disk (0.77 against 0.82 on the hold path, 0.62 against 0.63 on the slo
 and it removes v1's harm on the slow 360° turn.
 
 Storing the frame and recomputing the state is what gives the 200× saving; we did not find it in the papers we surveyed, and
-we have not searched exhaustively. We also built 8-bit and low-rank variants of the stored state as ablations.
+we have not searched exhaustively. We also tested 8-bit, low-rank, pooled and layer-subset versions of the stored state;
+only 8-bit floating point held up on both test scenes, at 2×.
 
 ## Autonomy and self-improvement
 
@@ -219,4 +224,4 @@ we have not searched exhaustively. We also built 8-bit and low-rank variants of 
 4. **It is cheap, and it improved itself.** Show Figures 2 and 3. Agents audited the first version, found why it failed on real tasks, and built one that keeps the frame, not the model's state: 6 MB instead of 1.2 GB.
 5. **Where we stand, honestly.** We reproduced the published baseline twice. On PlayWorld's own tasks we are level with it, not above, because those tasks rarely look away for long. Long absences are where memory pays.
 
-Assets are built by `scripts/build_demo.py` and this page by `scripts/write_demo_page.py`.
+Assets are built by `scripts/build_demo.py` and this page by `scripts/write_demo_page.py`. A separate two-minute video from a parallel agent session, about its corrected player controller on three instruction-following tasks, is in [demo/README.md](demo/README.md).
