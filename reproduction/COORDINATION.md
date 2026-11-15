@@ -173,3 +173,7 @@ GC024 is complete for both arms and all three fixed Gemini repetitions. Legacy s
 IF012 completed: legacy1.0/1.0/1.0(mean1.00), corrected1.0/1.0/1.6(mean1.20). Both judge groups disagree on their gate verdicts. GC030 completed earlier: legacy1.2/1.6/1.6(mean1.4667), corrected1.4/1.2/1.4(mean1.3333). No promotion supported by these three pairs. Full overall remains withheld.
 
 `scripts/snapshot_codex_ccv.py` now exports every terminal collected attempt and each available fixed judge repetition, preserving error reports and rejecting changes to previously published evidence or mismatched video identities. Regenerate with `.venv-lingbot/bin/python scripts/snapshot_codex_ccv.py`; it does not launch inference, judging, commits, or pushes. Third worker is SSH-ready at192.222.53.160, bootstrap2364 live, cleanup962984; setup still in progress.
+
+### Codex — three-worker runtime active
+
+Third worker2364 passed its actual IF001 player probe and started GC022. All82staged worldsync Python modules, including the unused extra probe, hash-match across all three workers; source-equivalence receipt added to `reproduction/baseline-gap/ccv-source-provenance.json`. Corrected IF022 also completed60chunks on worker2. No new aggregate or promotion claim; judging continues.
