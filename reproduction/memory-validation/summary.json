@@ -1,6 +1,6 @@
 {
   "scope": "Frozen validation of virtual-position historical-view retrieval beyond the rolling cache",
-  "complete_pairs": 2,
+  "complete_pairs": 3,
   "declared_pairs": 3,
   "settings": "Existing PoseKVMemory virtual-position method, no new parameters or training",
   "results": [
@@ -84,6 +84,49 @@
         "preference": "A",
         "confidence": "high",
         "reasoning": "Both videos share an identical outbound turn and WAIT segment, so the difference lies entirely in the return. A retraces the outbound landmarks in reverse order and clearly re-presents the original fountain, barrel, white bench and background. Its only flaw is a heading overshoot at the end, which is a camera-control imprecision, not forgetting. B rotates as commanded but invents new geometry on the way back (multiple lattice benches, bare trees, a differently ornamented fountain) and ends in a scene inconsistent with the start. That is a memory/consistency failure with an implausible identity transition. A's return comes from continuous motion, not a reset, so recognizing it is warranted."
+      },
+      "label_mapping": {
+        "A": "retrieval",
+        "B": "stock"
+      }
+    },
+    {
+      "task_id": "GC007",
+      "seed": 42,
+      "path": "turn_long_wait_return",
+      "partition": "development_stress",
+      "purpose": "extend horizon to31.8 seconds /24-second away delay",
+      "stock_dino": 0.5741156339645386,
+      "candidate_dino": 0.7463608980178833,
+      "stock_psnr_db": 8.093157332096066,
+      "candidate_psnr_db": 8.344114713302755,
+      "warmed_suffix_s": {
+        "stock": 171.61424077099997,
+        "retrieval": 210.31706061700004
+      },
+      "peak_allocated_bytes": {
+        "stock": 80773645824,
+        "retrieval": 85713204736
+      },
+      "visual_preference": "retrieval",
+      "visual_assessment": {
+        "A": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "yes",
+          "discontinuity": "no",
+          "visual_evidence": "Frames 0-10 show the starting Primemall facade: a triangular dark roof and a diamond-patterned terracotta band carrying the 'Primemall' sign. From about frame 10 to 40 the camera pans right in a continuous motion. It passes the pink pyramid 'Dhrmall' building with its blue umbrellas, then the blue glass building, and settles on the blue umbrella over the planter with round tables. The camera then holds that view through about frame 280, roughly the long WAIT period. Small changes occur during the hold: storefront sign text morphs, and pedestrians and cars appear. From about frame 280 to 305 the camera pans left in a continuous motion. It passes the glass building again, then the Dhrmall pyramid with umbrellas and tables in a consistent arrangement, then the Primemall facade. The 'Primemall' sign text, roof shape and terracotta cladding all match the opening view. The final frames (305-318) settle slightly left of the original heading: Primemall sits right of center, and a dark blue building, a light pole and a white car appear on the left. That region was never shown in the opening frames, so it is new content in previously unseen space, not a contradiction.",
+          "failure_classification": "Minor camera-control imprecision (slight over-rotation on the return, about 15-20 degrees) and minor texture/sign drift during the hold. No forgetting: landmark identity, sign text and layout persist across the round trip."
+        },
+        "B": {
+          "realized_round_trip": "no",
+          "starting_place_recovered": "no",
+          "discontinuity": "yes",
+          "visual_evidence": "Frames 0-75 are essentially identical to A: the Primemall start, a right pan past the Dhrmall pyramid and the glass building, and a settle on the umbrella planter. During the hold (about frames 100-275), colors progressively oversaturate toward blue and red. A new glowing sign, garbled 'Preeme\u043call'-like text, appears on the glass building and drifts. The left pan begins around frame 280 and passes the glass building, but the Dhrmall pyramid never reappears. Instead, a brown diamond-tiled block with a 'Pitemall' sign appears (frames 285-300), and the camera continues onto a blue-and-brown faceted facade labeled 'Pienmeal'/'Piteneal' (frames 300-318). Neither the triangular-roofed Primemall building nor its correct sign is ever recovered. The final view is a different building with different geometry and garbled text.",
+          "failure_classification": "Forgetting / scene hallucination on return. Yaw motion does occur in both directions, so this is not primarily a camera-control failure. However, the remembered landmarks (Dhrmall pyramid, Primemall facade) are replaced by invented structures, compounded by progressive color and sign drift during the hold."
+        },
+        "preference": "A",
+        "confidence": "high",
+        "reasoning": "Both videos execute the right pan and the long static hold similarly. On the left return, A retraces the same landmark sequence (glass building, Dhrmall pyramid, Primemall) and closes on the original Primemall facade with matching sign text and geometry. Its only flaws are a modest overshoot exposing previously unseen space and minor sign morphing during the hold. B also rotates back, but it substitutes new buildings with garbled 'Pitemall/Pienmeal' signage and never recovers the starting view. It also shows strong color drift during the hold. B's failure is memory loss rather than camera control, which makes A clearly preferable."
       },
       "label_mapping": {
         "A": "retrieval",

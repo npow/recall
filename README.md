@@ -2,14 +2,16 @@
 
 **Current milestone: validate archived-view memory beyond the rolling cache.**
 
-[Historical-view retrieval](reproduction/turn-retrieval-v1/README.md) recovers
-the mall after an eight-second away-view hold in a development test where stock
-and the larger rolling cache fail. It retains stock's attention budget, with a
-bounded CPU archive and extra transfer cost. The return still overshoots, and
-final-frame similarity gets worse despite improved landmark identity in the
-full video. [Frozen validation](reproduction/memory-validation-plan.json) now
-tests another seed, an unused held-out scene and a 31.8-second horizon. No
-training or output-frame editing has been performed.
+[Historical-view retrieval](reproduction/memory-validation/README.md) now
+preserves returning landmarks in a new-seed trial, an image-held-out fountain
+scene, and a31.8-second mall return where stock forgets the starting building.
+The same18-frame attention budget is retained, with a bounded19.765GB CPU
+archive and about6% higher GPU peak allocation. Exact heading recovery and
+some texture/sign drift remain unresolved; endpoint similarity can decline
+when the camera overshoots. No training was used for these tests.
+
+[Task-matched released-rubric comparisons](reproduction/task-memory-benchmark-plan.json)
+are in progress. These results do not yet establish a PlayWorld score gain.
 
 Native moving-camera input parity is verified. Complete local stock episodes
 show substantial seed and player variance; see the [five-seed diagnostic](reproduction/GC007-v5-seeds.json).
