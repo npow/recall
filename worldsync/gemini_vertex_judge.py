@@ -207,9 +207,20 @@ def judge_episode(client, playworld, dataset_task, video, reference_image=None, 
                 continue
             else:
                 parts = released_score.build_evidence_parts(prompt, artifacts, reference)
-                response = generate_with_retries(
-                    client, model, types.Content(role="user", parts=parts),
-                    types.GenerateContentConfig(response_mime_type="application/json", temperature=0.1), retries=retries)
+                for empty_attempt in range(4):  # an empty candidate (text is None) is retried with the same prompt
+                    response = generate_with_retries(
+                        client, model, types.Content(role="user", parts=parts),
+                        types.GenerateContentConfig(response_mime_type="application/json", temperature=0.1), retries=retries)
+                    if response.text is not None:
+                        break
+                    candidates = getattr(response, "candidates", None) or []
+                    result.setdefault("empty_response_retries", []).append({
+                        "attempt": empty_attempt, "step": step,
+                        "finish_reason": str(getattr(candidates[0], "finish_reason", None)) if candidates else None,
+                        "prompt_feedback": str(getattr(response, "prompt_feedback", None))[:200]})
+                if response.text is None:
+                    raise RuntimeError("empty judge response after 4 attempts: "
+                                       + json.dumps(result.get("empty_response_retries"))[:600])
                 parsed = unwrap_json_object(released_score.json_from_response(response.text))
                 usage = getattr(response, "usage_metadata", None)
                 result["calls"].append({"mode": step, "cached": False,

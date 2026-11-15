@@ -1,0 +1,270 @@
+{
+  "all": {
+    "arms": {
+      "stock": {
+        "dimension_means": {
+          "gc": 2.4125,
+          "if": 1.8392,
+          "insight": 1.6844827586206896,
+          "outsight": 1.4709302325581395
+        },
+        "overall": 1.8517782477947073,
+        "overall_ci95": [
+          1.6719583600641539,
+          2.037297801390003
+        ],
+        "cases_scored": {
+          "gc": 48,
+          "if": 50,
+          "insight": 29,
+          "outsight": 43
+        }
+      },
+      "budget": {
+        "dimension_means": {
+          "gc": 2.370833333333333,
+          "if": 1.7553999999999998,
+          "insight": 1.72,
+          "outsight": 1.3604651162790697
+        },
+        "overall": 1.8016746124031007,
+        "overall_ci95": [
+          1.6342151162790697,
+          1.9793587209302324
+        ],
+        "cases_scored": {
+          "gc": 48,
+          "if": 50,
+          "insight": 30,
+          "outsight": 43
+        }
+      }
+    },
+    "paired": {
+      "delta": -0.04389673883988238,
+      "ci95": [
+        -0.2556191459502807,
+        0.16033936781609198
+      ],
+      "pairs": {
+        "gc": 48,
+        "if": 50,
+        "insight": 29,
+        "outsight": 43
+      },
+      "per_dimension": {
+        "gc": -0.041666666666666664,
+        "if": -0.08380000000000001,
+        "insight": 0.06034482758620693,
+        "outsight": -0.11046511627906977
+      }
+    }
+  },
+  "without_gc013": {
+    "arms": {
+      "stock": {
+        "dimension_means": {
+          "gc": 2.374468085106383,
+          "if": 1.8392,
+          "insight": 1.6844827586206896,
+          "outsight": 1.4709302325581395
+        },
+        "overall": 1.842270269071303,
+        "overall_ci95": [
+          1.6657790655018854,
+          2.033839098090737
+        ],
+        "cases_scored": {
+          "gc": 47,
+          "if": 50,
+          "insight": 29,
+          "outsight": 43
+        }
+      },
+      "budget": {
+        "dimension_means": {
+          "gc": 2.3148936170212764,
+          "if": 1.7553999999999998,
+          "insight": 1.72,
+          "outsight": 1.3604651162790697
+        },
+        "overall": 1.7876896833250866,
+        "overall_ci95": [
+          1.618517656275771,
+          1.9651165429655286
+        ],
+        "cases_scored": {
+          "gc": 47,
+          "if": 50,
+          "insight": 30,
+          "outsight": 43
+        }
+      }
+    },
+    "paired": {
+      "delta": -0.04837368919449231,
+      "ci95": [
+        -0.25721653073760004,
+        0.15220144431742566
+      ],
+      "pairs": {
+        "gc": 47,
+        "if": 50,
+        "insight": 29,
+        "outsight": 43
+      },
+      "per_dimension": {
+        "gc": -0.05957446808510638,
+        "if": -0.08380000000000001,
+        "insight": 0.06034482758620693,
+        "outsight": -0.11046511627906977
+      }
+    }
+  },
+  "insight_24_held_out": {
+    "arms": {
+      "stock": {
+        "dimension_means": {
+          "gc": 2.4125,
+          "if": 1.8392,
+          "insight": 1.8195652173913044,
+          "outsight": 1.4709302325581395
+        },
+        "overall": 1.885548862487361,
+        "overall_ci95": [
+          1.6976582406471183,
+          2.0857649561846983
+        ],
+        "cases_scored": {
+          "gc": 48,
+          "if": 50,
+          "insight": 23,
+          "outsight": 43
+        }
+      },
+      "budget": {
+        "dimension_means": {
+          "gc": 2.370833333333333,
+          "if": 1.7553999999999998,
+          "insight": 1.6333333333333335,
+          "outsight": 1.3604651162790697
+        },
+        "overall": 1.780007945736434,
+        "overall_ci95": [
+          1.6152761627906977,
+          1.961713372093023
+        ],
+        "cases_scored": {
+          "gc": 48,
+          "if": 50,
+          "insight": 24,
+          "outsight": 43
+        }
+      }
+    },
+    "paired": {
+      "delta": -0.09865685877991237,
+      "ci95": [
+        -0.3183768621503202,
+        0.1184482221098753
+      ],
+      "pairs": {
+        "gc": 48,
+        "if": 50,
+        "insight": 23,
+        "outsight": 43
+      },
+      "per_dimension": {
+        "gc": -0.041666666666666664,
+        "if": -0.08380000000000001,
+        "insight": -0.15869565217391302,
+        "outsight": -0.11046511627906977
+      }
+    }
+  },
+  "both_prompt_sensitivity_episodes": [
+    "budget-insight-OE025-seed42"
+  ],
+  "gates": {
+    "stock/gc": {
+      "n": 48,
+      "fail": 4,
+      "partial": 13,
+      "pass": 31,
+      "score_exactly_1.0": 13,
+      "revisit_required": 38,
+      "revisit_observed": 29
+    },
+    "stock/if": {
+      "n": 50,
+      "fail": 18,
+      "partial": 6,
+      "pass": 23,
+      "score_exactly_1.0": 24,
+      "revisit_required": 0,
+      "revisit_observed": 0
+    },
+    "stock/insight": {
+      "n": 29,
+      "fail": 0,
+      "partial": 0,
+      "pass": 0,
+      "score_exactly_1.0": 16,
+      "revisit_required": 0,
+      "revisit_observed": 0
+    },
+    "stock/outsight": {
+      "n": 43,
+      "fail": 10,
+      "partial": 6,
+      "pass": 27,
+      "score_exactly_1.0": 33,
+      "revisit_required": 39,
+      "revisit_observed": 28
+    },
+    "budget/gc": {
+      "n": 48,
+      "fail": 5,
+      "partial": 11,
+      "pass": 32,
+      "score_exactly_1.0": 13,
+      "revisit_required": 38,
+      "revisit_observed": 31
+    },
+    "budget/if": {
+      "n": 50,
+      "fail": 16,
+      "partial": 8,
+      "pass": 23,
+      "score_exactly_1.0": 28,
+      "revisit_required": 0,
+      "revisit_observed": 0
+    },
+    "budget/insight": {
+      "n": 30,
+      "fail": 0,
+      "partial": 0,
+      "pass": 0,
+      "score_exactly_1.0": 13,
+      "revisit_required": 0,
+      "revisit_observed": 0
+    },
+    "budget/outsight": {
+      "n": 43,
+      "fail": 6,
+      "partial": 8,
+      "pass": 29,
+      "score_exactly_1.0": 36,
+      "revisit_required": 39,
+      "revisit_observed": 32
+    }
+  },
+  "paper": {
+    "gc": 2.04,
+    "if": 2.13,
+    "insight": 1.95,
+    "outsight": 1.16,
+    "overall": 1.82,
+    "genie3_overall": 2.12
+  }
+}
