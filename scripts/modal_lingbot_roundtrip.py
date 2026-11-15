@@ -1,5 +1,6 @@
 """Stock native-control round-trip calibration; no adaptive player or memory edit."""
 import json
+import os
 import hashlib
 from pathlib import Path
 import sys
@@ -28,7 +29,7 @@ def mode_name(retrieval, cache_frames, rephase_sink, positions, retrieved_frames
 
 @app.function(image=image, gpu="H200", cpu=8, memory=131072, timeout=1800, max_containers=3,
               volumes={"/cache": weights, "/results": results})
-def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", rephase_sink: bool = False, retrieval_positions: str = "virtual", turn_rate: float = 60, offload_text_encoder: bool = False, retrieved_frames: int = 4, retrieval_selection: str = "nearest"):
+def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", rephase_sink: bool = False, retrieval_positions: str = "virtual", turn_rate: float = 60, offload_text_encoder: bool = False, retrieved_frames: int = 4, retrieval_selection: str = "nearest", allocator_expandable: bool = False):
     import shutil
     import subprocess
     import time
@@ -55,7 +56,10 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
             command.append("--rephase-sink")
         if cache_frames != 18:
             command.extend(["--controlled-ablation", "--local-attn-size", str(cache_frames)])
-        outcome = subprocess.run(command, cwd="/work")
+        child_env = dict(os.environ)
+        if allocator_expandable:
+            child_env["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
+        outcome = subprocess.run(command, cwd="/work", env=child_env)
     finally:
         if output.exists():
             shutil.copytree(output, Path("/results") / identifier)
@@ -71,11 +75,11 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
               volumes={"/cache": weights, "/results": results})
 def generate_h100(path_name: str, seed: int, retrieval: bool, cache_frames: int, task_id: str,
                   rephase_sink: bool, retrieval_positions: str, turn_rate: float,
-                  retrieved_frames: int = 4, retrieval_selection: str = "nearest"):
+                  retrieved_frames: int = 4, retrieval_selection: str = "nearest", allocator_expandable: bool = False):
     # Same GPU encoding and denoising arithmetic; only inactive encoder weights
     # move to CPU after the prompt context is computed.
     return generate.local(path_name, seed, retrieval, cache_frames, task_id,
-                          rephase_sink, retrieval_positions, turn_rate, True, retrieved_frames, retrieval_selection)
+                          rephase_sink, retrieval_positions, turn_rate, True, retrieved_frames, retrieval_selection, allocator_expandable)
 
 
 @app.local_entrypoint()
@@ -94,11 +98,20 @@ def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False,
         plan = json.loads((ROOT / "reproduction/multiview-retrieval-plan.json").read_text())
         case = plan["case"]
         jobs = [(case["path"], case["seed"], True, 18, case["task_id"], False, "virtual", 60,
-                 variant["retrieved_frames"], variant["selection"]) for variant in plan["variants"]]
-        failures = []
-        for index, result in enumerate(generate_h100.starmap(jobs, return_exceptions=True)):
+                 variant["retrieved_frames"], variant["selection"], True) for variant in plan["variants"]]
+        pending = []
+        for job in jobs:
+            mode = mode_name(True, 18, False, "virtual", job[8], job[9])
+            output = ROOT / "outputs/lingbot-reproduction" / f"multiview-{case['task_id']}-{mode}-{case['path']}-seed{case['seed']}.json"
+            if output.exists() and json.loads(output.read_text())["run"]["status"] == "completed":
+                print(f"Reusing completed multi-view variant {mode}", flush=True)
+            else:
+                pending.append(job)
+        failure_file = ROOT / "outputs/lingbot-reproduction/multiview-generation-failures.json"
+        failures = json.loads(failure_file.read_text()) if failure_file.exists() else []
+        for index, result in enumerate(generate_h100.starmap(pending, return_exceptions=True)):
             if isinstance(result, BaseException):
-                failures.append({"job": jobs[index], "error": str(result)})
+                failures.append({"job": pending[index], "error": str(result)})
                 (ROOT / "outputs/lingbot-reproduction/multiview-generation-failures.json").write_text(json.dumps(failures, indent=2) + "\n")
                 continue
             output = ROOT / "outputs/lingbot-reproduction" / f"multiview-{case['task_id']}-{result['mode']}-{case['path']}-seed{case['seed']}.json"

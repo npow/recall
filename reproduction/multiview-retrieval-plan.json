@@ -30,5 +30,6 @@
   "hardware": "All four runs useH100, Torch2.6/CUDA12.4, with the completed text encoder moved toCPU. Rerun the4-nearest control on this hardware rather than presuming equivalence to H200.",
   "primary_evaluation": "Complete-video blinded comparison against the4-nearest reference, tracking return landmark identity, continuity and actual camera motion. Also report endpoint DINO/PSNR, pixel-identical prefix, actual view counts, latency and GPU/CPU memory.",
   "selection_policy": "Report all four outcomes. No candidate selected on held-out scenes. Validate any promising read-count/selection change on a new image before recommending it.",
-  "training": "None; pretrained generator weights unchanged."
+  "training": "None; pretrained generator weights unchanged.",
+  "runtime_retry": "Eight-view diverse run reached the first return chunk then failed allocating an854MiB VAE buffer with800MiB free and5.86GiB reserved-but-unused. Preserve it and retry only this variant with expandable CUDA allocator segments. This changes memory allocation, not weights, inputs, cache content or view selection. Verify its already-generated raw-pixel prefix against the failed attempt before scoring."
 }

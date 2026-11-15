@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import json
 import logging
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -84,7 +85,7 @@ def main():
         "native_fixed_controls": args.native_fixed_controls, "camera_embedding_audit": [],
         "pose_retrieval": args.pose_retrieval, "sink_rephase": args.rephase_sink,
         "text_encoder_offloaded_after_encoding": args.offload_text_encoder,
-        "stationary_wait_only": stationary, "fixed_actions": args.fixed_actions, "quantization": "none",
+        "stationary_wait_only": stationary, "fixed_actions": args.fixed_actions, "quantization": "none", "cuda_allocator_configuration": os.environ.get("PYTORCH_CUDA_ALLOC_CONF", "default"),
         "max_area": 480 * 832, "chunk_size": 4, "local_attn_size": knobs["local_attn_size"], "sink_size": knobs["sink_size"],
         "decision_interval": knobs["decision_interval"], "stock_knobs": lingbot_tuning.is_stock(knobs),
         "controlled_ablation": args.controlled_ablation,
