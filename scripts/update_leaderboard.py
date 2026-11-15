@@ -10,6 +10,76 @@ def read(name):
     return json.loads(path.read_text()) if path.exists() else None
 
 
+def powered_rows():
+    """Seed-42 paired Gemini comparison on 14 GC/OE development cases (stock vs budget memory vs 46/6)."""
+    data = read("reproduction/powered-comparison/seed42/powered-analysis.json")
+    if not data or data.get("judge_errors") or data["episodes_scored"] != 42:
+        return None
+    names = {"stock": "stock 18/6", "budget": "budget memory (K10 native)", "cache46": "46/6 cache"}
+    rows = []
+    for arm, label in names.items():
+        stats = data["arms"][arm]
+        paired = data["paired"].get(arm, {}).get("gemini_all")
+        delta = (f"{paired['mean_delta']:+.2f} [{paired['ci95'][0]:+.2f}, {paired['ci95'][1]:+.2f}] "
+                 f"({paired['wins']}/{paired['ties']}/{paired['losses']})") if paired else "baseline"
+        rows.append(f"| {label} |{stats['n']}|{stats['gemini_mean']:.2f} "
+                    f"[{stats['gemini_ci95'][0]:.2f}, {stats['gemini_ci95'][1]:.2f}]|{stats['gc']:.2f}|{stats['oe']:.2f}"
+                    f"|{stats['gate_non_fail']}/{stats['n']}|{delta}|")
+    return rows
+
+
+def rescore_rows():
+    """Earlier 75-episode Gemini rescoring of the first cohorts; read from the committed arm table."""
+    path = ROOT / "reproduction/gemini-rescore/arm-table.md"
+    if not path.exists():
+        return None
+    rows = []
+    for line in path.read_text().splitlines():
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if len(cells) >= 7 and cells[0] in ("stock", "cache46", "fb", "fbcomp"):
+            label = {"stock": "stock 18/6", "cache46": "46/6 cache", "fb": "measured-motion feedback",
+                     "fbcomp": "feedback + turn compensation"}[cells[0]]
+            rows.append(f"| {label} |{cells[1]}|{cells[2]}|{cells[3]}|{cells[4]}|{cells[5]}|")
+    return rows or None
+
+
+def extra_sections():
+    lines = []
+    powered = powered_rows()
+    if powered:
+        lines.extend(["", "## Gemini — paired GC/OE development cohort (seed 42)", "",
+            "14 hash-selected GC and out-of-sight cases, three arms, same cases and seed, `--end-guard` and player retries on every arm. "
+            "Scores are the Gemini mean over GC and out-of-sight episodes only, **not** the four-dimension overall, "
+            "so they are **not comparable with 2.12 or 1.82**. Paired delta is against stock over (case, seed) pairs; "
+            "wins/ties/losses in brackets. Every interval includes zero: no arm is established better than stock. "
+            "Opus scores the same episodes without seeing the budget-memory effect (+0.02), so judge-specific noise is not ruled out.", "",
+            "| Arm | n | Gemini mean [95% CI] | GC | Out-of-sight | Gate non-fail | Paired Δ vs stock [95% CI] (W/T/L) |",
+            "|---|---:|---|---:|---:|---:|---|", *powered, "",
+            "Evidence: [analysis](reproduction/powered-comparison/seed42/powered-analysis.json), "
+            "[table](reproduction/powered-comparison/seed42/powered-table.md), [protocol](reproduction/powered-comparison.md). "
+            "A second seed was generated and is being scored; it is added here only when complete."])
+    rescore = rescore_rows()
+    if rescore:
+        lines.extend(["", "## Gemini — earlier rescoring of the first cohorts", "",
+            "75 episodes from the first stock / 46/6 / feedback cohorts, rescored with the same Gemini judge (GC and out-of-sight only; "
+            "10 generation failures excluded; different player rollouts per arm). A paired 46/6 change of +0.69 [+0.19, +1.23] over 24 pairs "
+            "was found here, but the powered cohort above found +0.05 on different episodes, so the effect is **not established**.", "",
+            "| Arm | n | GC (n) | Out-of-sight (n) | GC+OE mean | Gate non-fail |", "|---|---:|---:|---:|---:|---:|", *rescore, "",
+            "Evidence: [report](reproduction/gemini-rescore.md), [per-episode scores](reproduction/gemini-rescore/per-episode.csv)."])
+    lines.extend(["", "## Fixed-path revisit diagnostics (DINO, not a benchmark score)", "",
+        "Scripted camera paths with a guaranteed return to the start view; metric is DINO similarity of the final frame to the start view. "
+        "Single seeds, crude proxy, two scenes. They show *where* memory helps, not a PlayWorld gain. "
+        "On the long 24-chunk absence (GC007): stock about 0.30-0.40, bounded pose memory about 0.77, 46/6 cache about 0.89 (115 GB). "
+        "Negative results kept: memory LoRA (degrades ordinary generation), re-anchoring, DeCoPrune ports, prompt/translation tricks, "
+        "measured-motion feedback (within noise). See [integration summary](reproduction/INTEGRATION.md), "
+        "[revisit matrix](reproduction/revisit/README.md) and [budget memory](reproduction/budgetmem/README.md).",
+        "", "## What would change the headline", "",
+        "Nothing here is a full-benchmark score. The pass criterion for beating 2.12 was fixed in advance in "
+        "[pass-criterion.md](reproduction/pass-criterion.md): equal mean of four dimension means, released Gemini scorer, "
+        "identical-harness stock baseline, full 171 cases, lower CI bound above 2.12."])
+    return lines
+
+
 def generate():
     cohorts = []
     definitions = (
@@ -118,7 +188,9 @@ def generate():
         "- [Long-return memory](reproduction/memory-validation/README.md): a 31.8-second episode with 24 seconds away retained the landmark; residual framing/text drift remains. Not a benchmark score.",
         "- [Local submaps](reproduction/spatial-local-submaps/summary.json): better mall localization, bridge and drifted-stock failures; not generator conditioning.",
         "- [Persistent runner](reproduction/modal-runner.md): 3.6x steady short-job throughput in the reported seven-job trial, exact outputs on the same GPU model. [Mixed-scene batch](reproduction/lingbot-batch-validation/) preserves all 42 chunk hashes.",
-        "", "Regenerate: `.venv-lingbot/bin/python scripts/update_leaderboard.py`. Machine-readable snapshot: [leaderboard.json](leaderboard.json).", ""])
+        ""])
+    lines.extend(extra_sections())
+    lines.extend(["", "Regenerate: `.venv-lingbot/bin/python scripts/update_leaderboard.py`. Machine-readable snapshot: [leaderboard.json](leaderboard.json).", ""])
     (ROOT / "LEADERBOARD.md").write_text("\n".join(lines))
 
 

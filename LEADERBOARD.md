@@ -75,4 +75,38 @@ The adaptive four-view pilot changed 3.60→3.90, but neither seed visibly retur
 - [Local submaps](reproduction/spatial-local-submaps/summary.json): better mall localization, bridge and drifted-stock failures; not generator conditioning.
 - [Persistent runner](reproduction/modal-runner.md): 3.6x steady short-job throughput in the reported seven-job trial, exact outputs on the same GPU model. [Mixed-scene batch](reproduction/lingbot-batch-validation/) preserves all 42 chunk hashes.
 
+
+## Gemini — paired GC/OE development cohort (seed 42)
+
+14 hash-selected GC and out-of-sight cases, three arms, same cases and seed, `--end-guard` and player retries on every arm. Scores are the Gemini mean over GC and out-of-sight episodes only, **not** the four-dimension overall, so they are **not comparable with 2.12 or 1.82**. Paired delta is against stock over (case, seed) pairs; wins/ties/losses in brackets. Every interval includes zero: no arm is established better than stock. Opus scores the same episodes without seeing the budget-memory effect (+0.02), so judge-specific noise is not ruled out.
+
+| Arm | n | Gemini mean [95% CI] | GC | Out-of-sight | Gate non-fail | Paired Δ vs stock [95% CI] (W/T/L) |
+|---|---:|---|---:|---:|---:|---|
+| stock 18/6 |14|1.89 [1.29, 2.68]|2.57|1.21|10/14|baseline|
+| budget memory (K10 native) |14|2.29 [1.60, 3.07]|2.83|1.75|13/14|+0.40 [-0.03, +0.88] (4/7/3)|
+| 46/6 cache |14|1.94 [1.37, 2.67]|2.31|1.57|10/14|+0.05 [-0.79, +0.81] (5/5/4)|
+
+Evidence: [analysis](reproduction/powered-comparison/seed42/powered-analysis.json), [table](reproduction/powered-comparison/seed42/powered-table.md), [protocol](reproduction/powered-comparison.md). A second seed was generated and is being scored; it is added here only when complete.
+
+## Gemini — earlier rescoring of the first cohorts
+
+75 episodes from the first stock / 46/6 / feedback cohorts, rescored with the same Gemini judge (GC and out-of-sight only; 10 generation failures excluded; different player rollouts per arm). A paired 46/6 change of +0.69 [+0.19, +1.23] over 24 pairs was found here, but the powered cohort above found +0.05 on different episodes, so the effect is **not established**.
+
+| Arm | n | GC (n) | Out-of-sight (n) | GC+OE mean | Gate non-fail |
+|---|---:|---:|---:|---:|---:|
+| stock 18/6 |29|2.40 (16)|1.18 (13)|1.79|24/29|
+| 46/6 cache |25|3.21 (14)|1.56 (11)|2.39|21/25|
+| measured-motion feedback |10|2.28 (10)|n/a (0)|2.28|10/10|
+| feedback + turn compensation |10|2.14 (10)|n/a (0)|2.14|8/10|
+
+Evidence: [report](reproduction/gemini-rescore.md), [per-episode scores](reproduction/gemini-rescore/per-episode.csv).
+
+## Fixed-path revisit diagnostics (DINO, not a benchmark score)
+
+Scripted camera paths with a guaranteed return to the start view; metric is DINO similarity of the final frame to the start view. Single seeds, crude proxy, two scenes. They show *where* memory helps, not a PlayWorld gain. On the long 24-chunk absence (GC007): stock about 0.30-0.40, bounded pose memory about 0.77, 46/6 cache about 0.89 (115 GB). Negative results kept: memory LoRA (degrades ordinary generation), re-anchoring, DeCoPrune ports, prompt/translation tricks, measured-motion feedback (within noise). See [integration summary](reproduction/INTEGRATION.md), [revisit matrix](reproduction/revisit/README.md) and [budget memory](reproduction/budgetmem/README.md).
+
+## What would change the headline
+
+Nothing here is a full-benchmark score. The pass criterion for beating 2.12 was fixed in advance in [pass-criterion.md](reproduction/pass-criterion.md): equal mean of four dimension means, released Gemini scorer, identical-harness stock baseline, full 171 cases, lower CI bound above 2.12.
+
 Regenerate: `.venv-lingbot/bin/python scripts/update_leaderboard.py`. Machine-readable snapshot: [leaderboard.json](leaderboard.json).
