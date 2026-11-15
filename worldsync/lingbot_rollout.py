@@ -28,6 +28,7 @@ def main():
     parser.add_argument("--fixed-actions", nargs="+", help="Transport/parity diagnostic; not adaptive benchmark evidence")
     parser.add_argument("--native-fixed-controls", action="store_true", help="Use native precomputed poses and audit online camera embeddings")
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--pose-retrieval", action="store_true", help="Experimental bounded early-view retrieval on native fixed paths")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
@@ -35,6 +36,8 @@ def main():
         parser.error("chunk budget must be in [1,60]")
     if args.native_fixed_controls and (not args.fixed_actions or len(args.fixed_actions) != args.max_chunks):
         parser.error("native fixed controls require exactly max-chunks fixed actions")
+    if args.pose_retrieval and not args.native_fixed_controls:
+        parser.error("retrieval calibration requires native fixed controls")
     output = args.output.resolve()
     if output.exists() and any(output.iterdir()):
         parser.error("output directory must be empty")
@@ -55,6 +58,7 @@ def main():
         "source_revision": revision, "checkpoint_revision": WEIGHT_REVISION, "task_id": args.task_id,
         "split": args.split, "seed": args.seed, "fps": 16, "max_chunks": maximum, "max_interactions": 40,
         "native_fixed_controls": args.native_fixed_controls, "camera_embedding_audit": [],
+        "pose_retrieval": args.pose_retrieval,
         "stationary_wait_only": stationary, "fixed_actions": args.fixed_actions, "quantization": "none",
         "max_area": 480 * 832, "chunk_size": 4, "local_attn_size": 18, "sink_size": 6,
         "sampler_timesteps_index": [0, 250, 500, 750], "sample_shift": 10,
@@ -114,16 +118,22 @@ def main():
     report["status"] = "running"
     save()
     handles = []
+    memory = None
     try:
         upstream = configure_backend(report, save)
         pipeline = upstream.WanI2VCausal(WAN_CONFIGS["i2v-A14B"], str(pack),
             local_attn_size=18, sink_size=6, infer_mode="causal_fast", convert_model_dtype=True)
         stream = NativeVaeStream(pipeline.vae)
         camera = CameraPlan()
+        if args.pose_retrieval:
+            from worldsync.lingbot_retrieval import PoseKVMemory
+            memory = PoseKVMemory(pipeline)
         current_chunk = -1
         latest = initial
         def before(model, positional, kwargs):
             nonlocal current_chunk
+            if memory:
+                memory.clean = float(kwargs["t"].flatten()[0]) == 0
             index = int(kwargs["current_start"]) // (4 * int(kwargs["frame_seqlen"]))
             if index == current_chunk:
                 return
@@ -149,6 +159,8 @@ def main():
                 report["termination"] = "agent_end"
                 raise RolloutComplete
             poses = torch.from_numpy(camera.advance(decision["action"])).float()
+            if memory:
+                memory.begin(index, camera.poses)
             report["actions"][-1]["pose_after"] = camera.commanded_state()
             save()
             relative = compute_relative_poses(poses, framewise=True)[-4:].to(pipeline.device)
@@ -198,6 +210,8 @@ def main():
                 "elapsed_s": time.monotonic() - started, "sha256": hashlib.sha256(movie.read_bytes()).hexdigest()})
             report["generated_frames"] = sum(chunk["frames"] for chunk in report["chunks"])
             report["generated_seconds"] = report["generated_frames"] / 16
+            if memory:
+                report["memory"] = memory.metadata()
             save()
             print(json.dumps({"event": "chunk_saved", **report["chunks"][-1]}), flush=True)
             if len(report["chunks"]) >= maximum:
@@ -217,6 +231,8 @@ def main():
             report["player_failure"] = error.metadata
         raise
     finally:
+        if memory:
+            memory.close()
         for handle in handles:
             handle.remove()
         report["elapsed_s"] = time.monotonic() - started

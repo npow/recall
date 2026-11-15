@@ -18,7 +18,7 @@ app = modal.App("worldsync-lingbot-roundtrip")
 
 @app.function(image=image, gpu="H200", cpu=8, memory=131072, timeout=1800, max_containers=1,
               volumes={"/cache": weights, "/results": results})
-def generate(path_name: str = "round_trip", seed: int = 42):
+def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False):
     import shutil
     import subprocess
     import time
@@ -29,12 +29,16 @@ def generate(path_name: str = "round_trip", seed: int = 42):
     target.parent.mkdir(exist_ok=True)
     if not target.exists():
         target.symlink_to("/cache/14b-causal-fast")
-    identifier = f"stock-{path_name}-seed{seed}-{time.time_ns()}"
+    mode = "retrieval" if retrieval else "stock"
+    identifier = f"{mode}-{path_name}-seed{seed}-{time.time_ns()}"
     output = Path("/work/outputs") / identifier
     try:
-        outcome = subprocess.run([sys.executable, "-u", "-m", "worldsync.lingbot_rollout", "--split", "gc",
+        command = [sys.executable, "-u", "-m", "worldsync.lingbot_rollout", "--split", "gc",
             "--task-id", "GC007", "--seed", str(seed), "--max-chunks", str(len(actions)),
-            "--native-fixed-controls", "--fixed-actions", *actions, "--output", str(output)], cwd="/work")
+            "--native-fixed-controls", "--fixed-actions", *actions, "--output", str(output)]
+        if retrieval:
+            command.append("--pose-retrieval")
+        outcome = subprocess.run(command, cwd="/work")
     finally:
         if output.exists():
             shutil.copytree(output, Path("/results") / identifier)
@@ -47,8 +51,9 @@ def generate(path_name: str = "round_trip", seed: int = 42):
 
 
 @app.local_entrypoint()
-def main(path_name: str = "round_trip", seed: int = 42):
-    result = generate.remote(path_name, seed)
-    output = ROOT / "outputs/lingbot-reproduction" / f"native-{path_name}-seed{seed}.json"
+def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False):
+    result = generate.remote(path_name, seed, retrieval)
+    mode = "retrieval" if retrieval else "stock"
+    output = ROOT / "outputs/lingbot-reproduction" / f"native-{mode}-{path_name}-seed{seed}.json"
     output.write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({k: v for k, v in result.items() if k != "run"}, indent=2))
