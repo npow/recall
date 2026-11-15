@@ -1,6 +1,15 @@
 # WorldSync
 
-**Current milestone: test whether retained history improves actual revisits.**
+**Current milestone: validate archived-view memory beyond the rolling cache.**
+
+[Historical-view retrieval](reproduction/turn-retrieval-v1/README.md) recovers
+the mall after an eight-second away-view hold in a development test where stock
+and the larger rolling cache fail. It retains stock's attention budget, with a
+bounded CPU archive and extra transfer cost. The return still overshoots, and
+final-frame similarity gets worse despite improved landmark identity in the
+full video. [Frozen validation](reproduction/memory-validation-plan.json) now
+tests another seed, an unused held-out scene and a 31.8-second horizon. No
+training or output-frame editing has been performed.
 
 Native moving-camera input parity is verified. Complete local stock episodes
 show substantial seed and player variance; see the [five-seed diagnostic](reproduction/GC007-v5-seeds.json).
