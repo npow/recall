@@ -26,11 +26,15 @@ def main():
     parser.add_argument("--task-id", required=True)
     parser.add_argument("--max-chunks", type=int, default=40)
     parser.add_argument("--fixed-actions", nargs="+", help="Transport/parity diagnostic; not adaptive benchmark evidence")
+    parser.add_argument("--native-fixed-controls", action="store_true", help="Use native precomputed poses and audit online camera embeddings")
+    parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
     if not 1 <= args.max_chunks <= 60:
         parser.error("chunk budget must be in [1,60]")
+    if args.native_fixed_controls and (not args.fixed_actions or len(args.fixed_actions) != args.max_chunks):
+        parser.error("native fixed controls require exactly max-chunks fixed actions")
     output = args.output.resolve()
     if output.exists() and any(output.iterdir()):
         parser.error("output directory must be empty")
@@ -49,7 +53,8 @@ def main():
     frames = maximum * 16 - 3
     report = {"status": "prepared", "model": "LingBot-World2 14B causal-fast stock", "protocol_id": PROTOCOL_ID,
         "source_revision": revision, "checkpoint_revision": WEIGHT_REVISION, "task_id": args.task_id,
-        "split": args.split, "seed": 42, "fps": 16, "max_chunks": maximum, "max_interactions": 40,
+        "split": args.split, "seed": args.seed, "fps": 16, "max_chunks": maximum, "max_interactions": 40,
+        "native_fixed_controls": args.native_fixed_controls, "camera_embedding_audit": [],
         "stationary_wait_only": stationary, "fixed_actions": args.fixed_actions, "quantization": "none",
         "max_area": 480 * 832, "chunk_size": 4, "local_attn_size": 18, "sink_size": 6,
         "sampler_timesteps_index": [0, 250, 500, 750], "sample_shift": 10,
@@ -98,6 +103,11 @@ def main():
     controls = output / "controls"
     controls.mkdir()
     np.save(controls / "poses.npy", np.repeat(np.eye(4, dtype=np.float32)[None], frames, axis=0))
+    if args.native_fixed_controls:
+        from worldsync.lingbot_paths import native_frame_poses
+        native_poses, expected_final = native_frame_poses(args.fixed_actions)
+        np.save(controls / "poses.npy", native_poses)
+        report["expected_final_commanded_state"] = expected_final
     intrinsics = np.load(source / "examples/03/intrinsics.npy")[0]
     np.save(controls / "intrinsics.npy", np.repeat(intrinsics[None], frames, axis=0))
     started = time.monotonic()
@@ -154,9 +164,17 @@ def main():
                 h=condition.shape[-2], w=condition.shape[-1]).to(pipeline.param_dtype)
             if index == 0 and decision["action"] == "WAIT" and not torch.equal(embedding, condition):
                 raise ValueError("neutral adapter controls differ from native camera embeddings")
+            if args.native_fixed_controls:
+                error = float((embedding.float() - condition.float()).abs().max())
+                matched = torch.allclose(embedding.float(), condition.float(), atol=1e-5, rtol=1e-5)
+                report["camera_embedding_audit"].append({"chunk": index, "max_absolute_error": error,
+                    "tensor_identical": torch.equal(embedding, condition), "within_tolerance": matched})
+                if not matched:
+                    raise ValueError(f"online camera conditioning differs from native at chunk {index}: {error}")
             # This nested dict is shared by the native denoising and clean-cache
             # calls for this chunk. Only its external camera input is replaced.
-            kwargs["dit_cond_dict"]["c2ws_plucker_emb"] = [embedding]
+            if not args.native_fixed_controls:
+                kwargs["dit_cond_dict"]["c2ws_plucker_emb"] = [embedding]
             current_chunk = index
         def after(model, positional, kwargs, result):
             nonlocal latest
@@ -187,7 +205,7 @@ def main():
                    pipeline.model.register_forward_hook(after, with_kwargs=True)]
         pipeline.generate(task["image_caption"], Image.open(initial).convert("RGB"),
             action_path=str(controls), chunk_size=4, max_area=480 * 832, frame_num=frames,
-            shift=10, seed=42, offload_model=False)
+            shift=10, seed=args.seed, offload_model=False)
     except RolloutComplete:
         report["status"] = "completed" if report["chunks"] else "empty_rollout"
     except BaseException as error:
