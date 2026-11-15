@@ -1,0 +1,63 @@
+{
+  "scope": "CPU-only full-channel quantization plumbing; not GPU memory, video quality or PlayWorld evidence",
+  "command": ".venv-lingbot/bin/python -m pytest -q tests/test_lingbot_group_quant.py tests/test_lingbot_nanokv.py",
+  "passed": 23,
+  "elapsed_s": 7.58,
+  "new_group_quant_tests": 15,
+  "existing_nanokv_tests": 8,
+  "formats": {
+    "bits": [
+      4,
+      8
+    ],
+    "group_size": 32,
+    "stored_scale_dtype": "bfloat16",
+    "rounding_arithmetic": "float32",
+    "all_channels_retained": true,
+    "fitted_projection": false,
+    "nominal_bf16_payload_compression_including_scales": {
+      "int4": 3.5555555555555554,
+      "int8": 1.8823529411764706
+    }
+  },
+  "native_attention_tests": {
+    "dtypes": [
+      "float32",
+      "bfloat16"
+    ],
+    "head_dim": 128,
+    "heads": 4,
+    "layers": 2,
+    "chunks": 8,
+    "evaluations_per_chunk": 3,
+    "capacity_frames": 18,
+    "sinks": 6,
+    "first_block_outputs_exact": true,
+    "later_outputs_finite": true,
+    "asserted_relative_rms_error_upper_bound": {
+      "int4": 0.1,
+      "int8": 0.03
+    },
+    "noisy_evaluations_leave_committed_payloads_unchanged": true,
+    "all_native_cache_indices_match": true,
+    "parameter_versions_unchanged": true,
+    "normal_and_exception_cleanup": true
+  },
+  "other_checks": [
+    "zeros and dtype maxima remain finite",
+    "all storage bytes counted",
+    "multiple segments concatenate/decode identically to individual decoding",
+    "head groups require exact divisibility",
+    "malformed shapes/dtypes and nonfinite inputs/scales rejected"
+  ],
+  "not_validated": [
+    "GPU kernels and actual peak memory",
+    "14B rollout quality",
+    "long-episode geometry",
+    "PlayWorld score"
+  ],
+  "files": {
+    "worldsync/lingbot_group_quant.py": "f3328638440372e95500829eb150a11c907757b7ae14fdb71094a04137191c6b",
+    "tests/test_lingbot_group_quant.py": "5a9831cfd30492b918d3f19269c195c94f6a2b6e8fe48f3237fe593dd14a89cf"
+  }
+}
