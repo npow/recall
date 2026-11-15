@@ -28,7 +28,7 @@ app = modal.App("worldsync-lingbot-runtime-benchmark")
 
 @app.function(image=image, gpu="H100", cpu=8, memory=131072, timeout=1800, max_containers=3,
               volumes={"/cache": weights, "/results": results})
-def generate(mode: str):
+def generate(mode: str, disable_optional_addon: bool = False):
     import os
     import shutil
     import subprocess
@@ -36,12 +36,15 @@ def generate(mode: str):
 
     if mode not in {"sdpa26", "sdpa29", "fa4"}:
         raise ValueError("Unknown runtime mode")
+    if disable_optional_addon and mode != "fa4":
+        raise ValueError("Optional-addon diagnostic applies only to FA4")
     weights.reload()
     target = Path("/work/external/LingBot-World2/checkpoints/lingbot-world-v2-14b-causal-fast")
     target.parent.mkdir(exist_ok=True)
     if not target.exists():
         target.symlink_to("/cache/14b-causal-fast")
-    identifier = f"runtime-{mode}-GC007-wait10-seed42-{time.time_ns()}"
+    variant = mode + ("-no-addon" if disable_optional_addon else "")
+    identifier = f"runtime-{variant}-GC007-wait10-seed42-{time.time_ns()}"
     output = Path("/work/outputs") / identifier
     executable = sys.executable if mode == "sdpa26" else "/opt/fa4/bin/python"
     command = [executable, "-u", "-m", "worldsync.lingbot_rollout", "--split", "gc",
@@ -50,6 +53,8 @@ def generate(mode: str):
                "--offload-text-encoder", "--output", str(output)]
     environment = dict(os.environ, PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True",
                        WORLDSYNC_LINGBOT_ATTENTION="fa4" if mode == "fa4" else "sdpa")
+    if disable_optional_addon:
+        environment["TVM_FFI_DISABLE_TORCH_C_DLPACK"] = "1"
     try:
         outcome = subprocess.run(command, cwd="/work", env=environment)
     finally:

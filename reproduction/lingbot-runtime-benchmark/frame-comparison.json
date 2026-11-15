@@ -1,0 +1,105 @@
+{
+  "scope": "decoded-frame compatibility diagnostic on a stationary ten-chunk clip, not task quality",
+  "feature_model": {
+    "name": "facebook/dinov2-small",
+    "revision": "ed25f3a31f01632728cabb09d1542f84ab7b0056"
+  },
+  "reference": "sdpa29",
+  "video_integrity": {
+    "sdpa26": {
+      "decoded_frames": 157,
+      "sha256": "4ad516e1e71f643adf92515d058417228dbd0cbd18a0d8b987b618c8cbf2c75b"
+    },
+    "sdpa29": {
+      "decoded_frames": 157,
+      "sha256": "812f91de016626f89d81fd4d4c8efd90d71d461d62ad7d6104747738250ed5f0"
+    },
+    "fa4": {
+      "decoded_frames": 157,
+      "sha256": "083c624c05e953b3cd9d678a28707dbc527c8f0bbbb960cf875ddc7d6a75f1ca"
+    }
+  },
+  "comparisons": {
+    "sdpa26": {
+      "frame_indices": [
+        12,
+        28,
+        44,
+        60,
+        76,
+        92,
+        108,
+        124,
+        140,
+        156
+      ],
+      "psnr_db": [
+        34.946571350097656,
+        33.047882080078125,
+        29.672880172729492,
+        28.263280868530273,
+        28.117982864379883,
+        27.95783042907715,
+        25.43122100830078,
+        29.525787353515625,
+        26.806657791137695,
+        25.83930015563965
+      ],
+      "dino_cosine": [
+        0.9976702332496643,
+        0.9981470704078674,
+        0.997013509273529,
+        0.9965159893035889,
+        0.9954236149787903,
+        0.9941114187240601,
+        0.9925321936607361,
+        0.9918015599250793,
+        0.9924467206001282,
+        0.9898008108139038
+      ],
+      "mean_psnr_db": 28.960941314697266,
+      "mean_dino_cosine": 0.9945463120937348
+    },
+    "fa4": {
+      "frame_indices": [
+        12,
+        28,
+        44,
+        60,
+        76,
+        92,
+        108,
+        124,
+        140,
+        156
+      ],
+      "psnr_db": [
+        38.916770935058594,
+        36.10778045654297,
+        32.32321548461914,
+        28.52810287475586,
+        27.008766174316406,
+        25.169485092163086,
+        23.53501319885254,
+        27.60643768310547,
+        28.75179100036621,
+        25.746177673339844
+      ],
+      "dino_cosine": [
+        0.999052107334137,
+        0.9988836646080017,
+        0.9977539777755737,
+        0.9968826770782471,
+        0.9938138723373413,
+        0.9906003475189209,
+        0.9894291758537292,
+        0.9899818897247314,
+        0.9927734136581421,
+        0.9925482273101807
+      ],
+      "mean_psnr_db": 29.369354248046875,
+      "mean_dino_cosine": 0.9941719353199006
+    }
+  },
+  "inspection": "Unblinded contact-sheet inspection: mall roof, facade, sign and framing remain visibly similar in all three variants. No obvious corruption. This stationary diagnostic does not establish moving-camera or long-horizon quality equivalence."
+}

@@ -1,5 +1,6 @@
 """Opt-in FA4 bridge for native Wan attention, preserving valid sequence lengths."""
 from functools import lru_cache
+import os
 
 import torch
 
@@ -7,6 +8,11 @@ import torch
 @lru_cache(maxsize=1)
 def kernel():
     # Loading stays lazy so established SDPA environments need no FA4 packages.
+    if os.environ.get("TVM_FFI_DISABLE_TORCH_C_DLPACK", "0") == "1":
+        # Disabling the optional C++ addon also skips TVM's older-Torch stream
+        # protocol compatibility patch. Keep that official helper in place.
+        from tvm_ffi._optional_torch_c_dlpack import patch_torch_cuda_stream_protocol
+        patch_torch_cuda_stream_protocol()
     from flash_attn.cute import flash_attn_func
     return flash_attn_func
 

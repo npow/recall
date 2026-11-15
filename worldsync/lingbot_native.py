@@ -63,11 +63,14 @@ def configure_backend(report, save):
     else:
         raise ValueError(f"unsupported LingBot attention backend: {backend}")
     report["attention_backend"] = backend
+    report["optional_torch_dlpack_addon_disabled"] = os.environ.get("TVM_FFI_DISABLE_TORCH_C_DLPACK", "0") == "1"
     implementation = Path(__file__).with_name("lingbot_flash_attention.py" if backend == "fa4" else "matrix_attention.py")
     report["attention_implementation_sha256"] = hashlib.sha256(implementation.read_bytes()).hexdigest()
     if backend == "fa4":
-        report["deviations"] = [entry.replace("valid-length SDPA backend", "valid-length FlashAttention4 backend")
-                                for entry in report.get("deviations", [])]
+        for field in ("deviations", "hardware_substitutions"):
+            if field in report:
+                report[field] = [entry.replace("valid-length SDPA backend", "valid-length FlashAttention4 backend")
+                                     .replace("PyTorch SDPA", "FlashAttention4") for entry in report[field]]
     save()
     model_fast.flash_attention = attention
     model_fast.attention = attention

@@ -1,0 +1,141 @@
+{
+  "scope": "ten WAIT chunks, native controls; speed diagnostic, not task quality",
+  "status": "completed",
+  "matched_settings": {
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "task_id": "GC007",
+    "split": "gc",
+    "seed": 42,
+    "fps": 16,
+    "max_chunks": 10,
+    "max_area": 399360,
+    "chunk_size": 4,
+    "local_attn_size": 18,
+    "sink_size": 6,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "fixed_actions": [
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT"
+    ],
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "adapter_sha256": "735dbfacda63024b5bfa042e9107c850cabe5732cd0cafcdf2a463423d181ad1",
+    "text_encoder_offloaded_after_encoding": true,
+    "cuda_allocator_configuration": "expandable_segments:True",
+    "initial_image_sha256": "1b2cbe83fe7c49d0df1ca0d423a581cead1ab2144f38695fe953e0161ee67eea",
+    "image_caption_sha256": "dab923a881c58ec6e7a47f3f55e19e8026015b484575e5eb8643950fa1b8ed30",
+    "turn_degrees_per_second": 60
+  },
+  "results": {
+    "sdpa26": {
+      "result_directory": "runtime-sdpa26-GC007-wait10-seed42-1794716072789699128",
+      "hardware": {
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "torch": "2.6.0+cu124",
+        "cuda": "12.4"
+      },
+      "attention_backend": "sdpa",
+      "warmed_chunk_intervals_s": [
+        5.745945086000006,
+        5.758664457999998,
+        5.747217840000019,
+        5.7383336319999785
+      ],
+      "warmed_mean_s": 5.7475402540000005,
+      "warmed_median_s": 5.7465814630000125,
+      "first_chunk_elapsed_s": 114.876381783,
+      "peak_allocated_bytes": 71892867584,
+      "pixel_hashes_identical_to_sdpa29": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    "sdpa29": {
+      "result_directory": "runtime-sdpa29-GC007-wait10-seed42-1794716085454830842",
+      "hardware": {
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "torch": "2.9.1+cu128",
+        "cuda": "12.8"
+      },
+      "attention_backend": "sdpa",
+      "warmed_chunk_intervals_s": [
+        5.996316847999992,
+        5.962445330999998,
+        5.963350255999984,
+        5.9889360460000205
+      ],
+      "warmed_mean_s": 5.977762120249999,
+      "warmed_median_s": 5.976143151000002,
+      "first_chunk_elapsed_s": 96.89244262300001,
+      "peak_allocated_bytes": 71892867584,
+      "pixel_hashes_identical_to_sdpa29": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    "fa4": {
+      "result_directory": "runtime-fa4-GC007-wait10-seed42-1794716085502516001",
+      "hardware": {
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "torch": "2.9.1+cu128",
+        "cuda": "12.8"
+      },
+      "attention_backend": "fa4",
+      "warmed_chunk_intervals_s": [
+        4.941922836000003,
+        4.953327449,
+        4.937606767999995,
+        4.964413614000023
+      ],
+      "warmed_mean_s": 4.949317666750005,
+      "warmed_median_s": 4.9476251425000015,
+      "first_chunk_elapsed_s": 145.813032816,
+      "peak_allocated_bytes": 71892867584,
+      "pixel_hashes_identical_to_sdpa29": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    }
+  },
+  "fa4_speedup_vs_same_stack_sdpa": 1.2077951998129324,
+  "fa4_speedup_vs_stock_stack": 1.1612793198974742,
+  "caveat": "One container per mode; warmed intervals include decoding and transport. Different kernels can change BF16 rounding and subsequent generation. No scored-quality equivalence claim."
+}
