@@ -2,7 +2,7 @@
 
 ## Current handoff status
 
-**GPU-validated: NO. No GPU-validated commit exists yet.** Controller handoff code is commit `c2a32a44d68c29d00aaaf6245de3a6f48e0b3ef3`. CPU checks pass; Codex's already-running separate Lambda lease is executing only the two-chunk GC010 smoke. No full171-case run is planned by Codex. Claude on odin owns the subsequent approximately12-case controller comparison; Claude on thor owns the frozen full run, optb fleet and director experiment.
+**GPU-validated: NO. No GPU-validated commit exists yet.** Controller handoff code is commit `e2e422a9c4a7246c9b4e054359fa10ffeecfeb2d`. CPU checks pass; Codex's already-running separate Lambda lease is executing only the two-chunk GC010 smoke. No full171-case run is planned by Codex. Claude on odin owns the subsequent approximately12-case controller comparison; Claude on thor owns the frozen full run, optb fleet and director experiment.
 
 Entrypoint: `worldsync.lingbot_released_baseline`. After installing dependencies and staging the pinned model/data, run from the repo root:
 
