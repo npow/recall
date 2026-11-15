@@ -26,7 +26,7 @@ def main():
     work = ROOT/"outputs/submission"
     work.mkdir(parents=True, exist_ok=True)
     texts = {
-        "bridge": "We reused the rollout, camera conditioning, event-caption director, and warm runtime to render two first-person histories from one event plan.",
+        "bridge": "We reuse the director: shared events become each agent's text conditioning. The warm renderer keeps two separate visual histories.",
         "demo": "Each labeled tile is a real world-model view. The handoff is still unresolved: matching actions and time does not guarantee shared object ownership.",
         "close": "Next: shared visual memory. Code and evidence on GitHub.",
     }

@@ -410,6 +410,34 @@ svg text{font-family:inherit}
     <aside class="notes">The next question follows directly from the memory work. If one agent can return to a place, can two agents agree about that place? We reused the real LingBot rollout, its camera conditioning, the event-caption director and the warm runtime. One event plan is projected into two first-person descriptions and rendered with separate histories. The pose archive and compact recomputation motivate the next shared visual memory, but that cross-agent archive is not implemented in this prototype. The earlier benchmark numbers remain single-camera results.</aside>
   </section>
 
+  <section class="slide" data-sec="Multi-agent" id="shared-context">
+    <h2>How the shared context works</h2>
+    <p class="sub" style="font-size:34px">One event record; a different description for each observer.</p>
+    <svg viewBox="0 0 1728 570" width="1728" height="570" role="img" aria-label="A shared event record branches into agent-specific prompts, separate text conditioning and visual histories, then two labeled video tiles">
+      <defs><marker id="ctx-arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12" fill="none" stroke="#9aa4b2" stroke-width="2"/></marker></defs>
+      <rect x="400" y="12" width="928" height="132" rx="14" fill="#12382a" stroke="#3ddc97" stroke-width="3"/>
+      <text x="864" y="57" text-anchor="middle" font-size="34" fill="#3ddc97" font-weight="700">Shared scripted event record</text>
+      <text x="864" y="103" text-anchor="middle" font-size="28" fill="#e8ecf2">revision · event time · basket holder · handoff phase</text>
+      <path d="M864,145 V178 H410 V205 M864,178 H1318 V205" fill="none" stroke="#9aa4b2" stroke-width="3" marker-end="url(#ctx-arrow)"/>
+      <rect x="45" y="210" width="730" height="140" rx="12" fill="#151a22" stroke="#ffca65" stroke-width="2"/>
+      <text x="410" y="251" text-anchor="middle" font-size="32" fill="#ffca65" font-weight="700">Agent A · Orange viewpoint</text>
+      <text x="410" y="298" text-anchor="middle" font-size="27" fill="#e8ecf2">“Purple receives the basket; my hands release.”</text>
+      <rect x="953" y="210" width="730" height="140" rx="12" fill="#151a22" stroke="#c5a3ff" stroke-width="2"/>
+      <text x="1318" y="251" text-anchor="middle" font-size="32" fill="#c5a3ff" font-weight="700">Agent B · Purple viewpoint</text>
+      <text x="1318" y="298" text-anchor="middle" font-size="27" fill="#e8ecf2">“I receive the basket; Orange releases it.”</text>
+      <g fill="none" stroke="#9aa4b2" stroke-width="3" marker-end="url(#ctx-arrow)"><path d="M410,352 V388"/><path d="M1318,352 V388"/></g>
+      <rect x="45" y="393" width="730" height="127" rx="12" fill="#151a22" stroke="#2a3240" stroke-width="2"/>
+      <rect x="953" y="393" width="730" height="127" rx="12" fill="#151a22" stroke="#2a3240" stroke-width="2"/>
+      <text x="410" y="440" text-anchor="middle" font-size="29" fill="#e8ecf2">Text encoder → Agent A’s video history</text>
+      <text x="1318" y="440" text-anchor="middle" font-size="29" fill="#e8ecf2">Text encoder → Agent B’s video history</text>
+      <text x="410" y="485" text-anchor="middle" font-size="25" fill="#9aa4b2">own reference frame + own attention cache</text>
+      <text x="1318" y="485" text-anchor="middle" font-size="25" fill="#9aa4b2">own reference frame + own attention cache</text>
+    </svg>
+    <div class="card"><p style="font-size:30px;margin:0">The same event boundaries drive both renderers. <b>Text intent is shared; visual caches are separate.</b> Matching the two views is the remaining consistency problem.</p></div>
+    <p class="tiny foot">Implemented in pov_video.py and the existing director interface. Frames and KV caches are not exchanged between agents in this prototype.</p>
+    <aside class="notes">The shared context is a structured scripted record of the revision, event time, holder and phase. At each event boundary the code projects it into each observer's language. Orange sees the companion receiving the basket; Purple sees her own hands receiving it. The existing text encoder turns each description into conditioning for its own causal rollout, using its own reference frame and attention cache. A shared warm model serves both renderers serially. We synchronize their frame indices for the tiled output. This shares intended events, not a common 3D scene or visual cache, which explains why ownership can still disagree in the generated frames.</aside>
+  </section>
+
   <section class="slide" data-sec="Multi-agent" id="multi-agent-demo">
     <h2>Two agents, two first-person views</h2>
     <div class="vwrap" style="margin:12px 0 24px"><video muted loop playsinline preload="auto" poster="media/multi-agent-pov.jpg" src="media/multi-agent-pov.mp4"></video></div>

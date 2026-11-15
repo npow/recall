@@ -16,8 +16,8 @@ Videos loop for as long as their slide is shown and rewind when you leave it. Th
 (`index.html#7`), so a reload returns to the same slide. `index.html?notes=1` opens with notes on.
 
 The main story runs from the single-camera memory problem and benchmark through the method,
-results, scope, and autoresearch loop. Slides 15–16 extend it to the multi-agent prototype:
-what is reused, then two labeled first-person world-model views. Slide 17 closes with
+results, scope, and autoresearch loop. Slides 15–17 extend it to the multi-agent prototype:
+what is reused, how shared text context branches into two histories, then the labeled views. Slide 18 closes with
 shared visual evidence as the next step. The remaining slides are the results appendix.
 The multi-agent videos use scripted controllers and independent visual histories;
 they are not multi-agent benchmark results.
