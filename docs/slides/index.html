@@ -418,7 +418,27 @@ svg text{font-family:inherit}
 
 
   <!-- A1 -->
-  <section class="slide" data-sec="Appendix">
+    <section class="slide" data-sec="Appendix">
+    <h2>More memory wins</h2>
+    <div class="grow" style="display:flex;flex-direction:column;gap:26px">
+      <div class="row" style="gap:36px;align-items:center">
+        <div class="vwrap" style="width:880px;flex:none"><video muted loop playsinline preload="auto" poster="media/win-GC037.jpg" src="media/win-GC037.mp4" style="width:880px;display:block;border-radius:8px"></video>
+          </div>
+        <div class="col"><p style="margin-bottom:8px"><b>GC037 · 12 s away</b> · judge <span class="rel">2.6</span> → <span class="ours">5.0</span></p>
+          <p class="small" style="margin:0">Released: a different kitchen with a wall clock.<br>Ours: the same window and counter are back.</p></div>
+      </div>
+      <div class="row" style="gap:36px;align-items:center">
+        <div class="vwrap" style="width:880px;flex:none"><video muted loop playsinline preload="auto" poster="media/win-GC021.jpg" src="media/win-GC021.mp4" style="width:880px;display:block;border-radius:8px"></video>
+          </div>
+        <div class="col"><p style="margin-bottom:8px"><b>GC021 · 24 s away</b> · judge <span class="rel">1.0</span> → <span class="ours">2.7</span></p>
+          <p class="small" style="margin:0">Released: a row of graffitied plinths that were never there.<br>Ours: the colonnade and statue.</p></div>
+      </div>
+    </div>
+    <p class="tiny foot">Selected examples from the 20-scene revisit benchmark, chosen after seeing results (mean of 2 judge calls; 2× to 3.2× speed).</p>
+    <aside class="notes">More examples from the same revisit test. In the kitchen, the released model comes back to a different room with a clock on the wall, and ours brings back the window and the counter. On the statues, 24 seconds away, ours returns to the colonnade and the statue, while the released model invents a row of plinths. These were selected after seeing the scores.</aside>
+  </section>
+
+<section class="slide" data-sec="Appendix">
     <h2>More examples: instruction following</h2>
     <div class="row" style="gap:40px;align-items:flex-start">
       <div style="width:1080px;flex:none"><video muted loop playsinline preload="auto" poster="media/appendix-if022.jpg" src="media/appendix-if022.mp4" style="width:1080px;display:block;border-radius:8px"></video><div style="height:12px"></div><video muted loop playsinline preload="auto" poster="media/appendix-if006.jpg" src="media/appendix-if006.mp4" style="width:1080px;display:block;border-radius:8px"></video></div>
@@ -434,19 +454,44 @@ svg text{font-family:inherit}
   </section>
 
   <!-- A2 -->
-  <section class="slide" data-sec="Appendix">
+    <section class="slide" data-sec="Appendix">
     <h2>More examples: the scene director</h2>
-    <div class="row" style="gap:40px;align-items:flex-start">
-      <div style="width:1080px;flex:none"><video muted loop playsinline preload="auto" poster="media/appendix-rowing.jpg" src="media/appendix-rowing.mp4" style="width:1080px;display:block;border-radius:8px"></video><div style="height:12px"></div><video muted loop playsinline preload="auto" poster="media/appendix-pouring.jpg" src="media/appendix-pouring.mp4" style="width:1080px;display:block;border-radius:8px"></video></div>
-      <div class="col">
-        <p class="small" style="margin:0 0 14px"><b>Rowing (IF013):</b> stock <b>1.00</b> → director <b>4.00</b></p>
-        <p class="small" style="margin:0 0 14px"><b>Pouring tea (OE018):</b> stock <b>1.00</b> → director <b>4.40</b></p>
-        <p class="small" style="margin:0 0 14px">The director is a language model that writes a short event description for the model's text prompt. Same frozen model. One judge call per video.</p>
-        <p class="small" style="margin:0"><b>Full run, 171 tasks:</b> director minus stock +0.02 [−0.15, +0.19]. Not established.</p>
+    <div class="grow" style="display:flex;flex-direction:column;gap:26px">
+      <div class="row" style="gap:36px;align-items:center">
+        <div class="vwrap" style="width:1150px;flex:none"><video muted loop playsinline preload="auto" poster="media/dir-IF013.jpg" src="media/dir-IF013.mp4" style="width:1150px;display:block;border-radius:8px"></video>
+          <div class="half l">stock</div><div class="half r">with director</div></div>
+        <div class="col"><p style="margin-bottom:8px"><b>IF013 · row across the river</b> · judge <span class="rel">1.00</span> → <span class="ours">3.67</span></p>
+          <p class="small" style="margin:0">Stock: the boat sits on the ice.<br>Director: the boat rows out onto open water.</p></div>
+      </div>
+      <div class="row" style="gap:36px;align-items:center">
+        <div class="vwrap" style="width:1150px;flex:none"><video muted loop playsinline preload="auto" poster="media/dir-OE018.jpg" src="media/dir-OE018.mp4" style="width:1150px;display:block;border-radius:8px"></video>
+          <div class="half l">stock</div><div class="half r">with director</div></div>
+        <div class="col"><p style="margin-bottom:8px"><b>OE018 · pouring tea</b> · judge <span class="rel">1.00</span> → <span class="ours">4.80</span></p>
+          <p class="small" style="margin:0">Stock and director both pour; the judge scored the director clip higher.<br>The gap is hard to see in the frames.</p></div>
       </div>
     </div>
-    <div class="foot"><p class="tiny" style="margin:0">Selected examples, chosen after seeing results. These examples show the controller and director components.</p></div>
-    <aside class="notes">Appendix. Two examples where a text description of the event, written by a language model, kept the action going: rowing across the river and pouring tea. We picked these after seeing the scores, with one judge call each. Across all 171 tasks the director made no reliable difference: plus 0.02 with an interval from minus 0.15 to plus 0.19.</aside>
+    <p class="tiny foot">Selected examples, chosen after seeing results (mean of 3 judge calls; the tea clip is sped up 3×). Full run, 171 tasks: +0.02 [−0.15, +0.19].</p>
+    <aside class="notes">Two more director examples, rowing across the river and pouring tea. In the rowing clip the boat leaves the ice in the director version. In the tea clip both versions pour, and the score gap is hard to see in the frames, so we show it as scored. Picked after seeing results, with three judge calls each.</aside>
+  </section>
+
+  <section class="slide" data-sec="Appendix">
+    <h2>The scene director: walking and driving</h2>
+    <div class="grow" style="display:flex;flex-direction:column;gap:26px">
+      <div class="row" style="gap:36px;align-items:center">
+        <div class="vwrap" style="width:1150px;flex:none"><video muted loop playsinline preload="auto" poster="media/dir-OE036.jpg" src="media/dir-OE036.mp4" style="width:1150px;display:block;border-radius:8px"></video>
+          <div class="half l">stock</div><div class="half r">with director</div></div>
+        <div class="col"><p style="margin-bottom:8px"><b>OE036 · walk the dog</b> · judge <span class="rel">1.00</span> → <span class="ours">5.00</span></p>
+          <p class="small" style="margin:0">Stock: the camera ends up on the man’s face and the sky.<br>Director: the walk continues with the dog.</p></div>
+      </div>
+      <div class="row" style="gap:36px;align-items:center">
+        <div class="vwrap" style="width:1150px;flex:none"><video muted loop playsinline preload="auto" poster="media/dir-OE030.jpg" src="media/dir-OE030.mp4" style="width:1150px;display:block;border-radius:8px"></video>
+          <div class="half l">stock</div><div class="half r">with director</div></div>
+        <div class="col"><p style="margin-bottom:8px"><b>OE030 · car on a spiral ramp</b> · judge <span class="rel">1.00</span> → <span class="ours">3.92</span></p>
+          <p class="small" style="margin:0">Stock: the scene jumbles.<br>Director: the car keeps driving down the ramp.</p></div>
+      </div>
+    </div>
+    <p class="tiny foot">Selected examples, chosen after seeing results (mean of 3 judge calls). Full run, 171 tasks: director minus stock +0.02 [−0.15, +0.19].</p>
+    <aside class="notes">The scene director is a language model that writes a short event description for the model’s text prompt. On the dog walk the stock model drifts to the man’s face and the sky, while with the director the walk goes on. On the parking ramp the car keeps driving. We picked these after seeing the scores, three judge calls each. Across all 171 tasks the difference is plus 0.02, which is not established.</aside>
   </section>
 
   <!-- A3 -->
