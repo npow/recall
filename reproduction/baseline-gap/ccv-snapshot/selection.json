@@ -1,0 +1,42 @@
+{
+  "rule": "Three cases per split, sha256('42:'+task_id), retained from Odin's declared plan",
+  "picked": {
+    "gc": [
+      "GC024",
+      "GC022",
+      "GC030"
+    ],
+    "if": [
+      "IF012",
+      "IF006",
+      "IF022"
+    ],
+    "insight": [
+      "OE066",
+      "OE009",
+      "OE020"
+    ],
+    "outsight": [
+      "OE055",
+      "OE028",
+      "OE062"
+    ]
+  },
+  "seed": 42,
+  "legacy_commit": "5b8a5b8409a97fb609e72964f90b83d871ad6675",
+  "comparison": "Complete legacy configuration versus corrected configuration; not isolated controller ablation",
+  "judge_replicates": [
+    "rep1",
+    "rep2",
+    "rep3"
+  ],
+  "gpu_policy": "Two H100SXM workers; each complete legacy/corrected pair stays on one GPU",
+  "corrected_source_commit": "00372892bbb644964d0f15d7366739e754031352",
+  "source_verification": "82 tracked modules/worker files hash-matched remotely during first episode; one additional unused untracked probe staged",
+  "secondary_cases": [
+    "gc-GC030",
+    "if-IF022",
+    "insight-OE020",
+    "outsight-OE062"
+  ]
+}

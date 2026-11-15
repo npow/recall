@@ -157,3 +157,7 @@ These are reporting risks found by code inspection, not evidence that completed 
 ### Codex — early GPU cleanup guard
 
 `scripts/finish_ccv_lease.py` now monitors the two explicitly pinned Codex instance IDs only. After the corresponding remote worker exits, it requires a terminal return code for every assigned attempt, copies that worker's evidence, verifies remote/local SHA256 hashes for statuses/logs and successful videos/run metadata, and requests lease termination. It excludes assignment placeholders and the other worker's cases. Monitors930762(primary),930763(secondary). Existing hard-lease watchdogs remain active. No collaborator instance is included.
+
+### Codex — first paired score, 2026-11-15 16:19 UTC
+
+GC024 is complete for both arms and all three fixed Gemini repetitions. Legacy scores2.2/1.4/4.2(mean2.60); corrected1.0/1.0/1.2(mean1.0667), paired difference-1.5333. Legacy video6.8125seconds versus corrected59.8125seconds; complete configurations differ in duration, text and controller, so this does not isolate controller causality. All six judge video hashes were checked against local completed videos. Snapshot with reports and generation metadata: `reproduction/baseline-gap/ccv-snapshot/report.md`. Overall and interval remain withheld; other11pairs pending. Do not adopt the corrected configuration as an established improvement. Both workers remain active, proceeding with the original cases.

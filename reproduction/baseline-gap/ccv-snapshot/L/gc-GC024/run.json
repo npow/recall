@@ -1,0 +1,562 @@
+{
+  "status": "completed",
+  "model": "LingBot-World2 14B causal-fast stock",
+  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+  "initial_image_sha256": "ec6f68fd18c73921617043172294204f71ba428c47ad01222cd04cc80ce74561",
+  "text_prompt_mode": "both",
+  "image_caption_sha256": "468ca106a04a41eab77870319c7db19c56f33ef442aec4d9c555e4ea763b2982",
+  "task_id": "GC024",
+  "split": "gc",
+  "seed": 42,
+  "turn_degrees_per_second": 60,
+  "fps": 16,
+  "max_chunks": 40,
+  "max_interactions": 40,
+  "native_fixed_controls": false,
+  "camera_embedding_audit": [],
+  "pose_retrieval": false,
+  "sink_rephase": false,
+  "adaptive_retrieval_pilot": false,
+  "player_temperature": "provider default",
+  "player_streaming": false,
+  "streaming_player_sha256": null,
+  "initial_neutral_bootstrap": false,
+  "kv_retention": false,
+  "decoprune": false,
+  "reanchor": false,
+  "budget_memory": false,
+  "denoise_schedule": "stock",
+  "text_encoder_offloaded_after_encoding": true,
+  "stationary_wait_only": false,
+  "fixed_actions": null,
+  "quantization": "none",
+  "cuda_allocator_configuration": "expandable_segments:True",
+  "max_area": 399360,
+  "chunk_size": 4,
+  "local_attn_size": 18,
+  "sink_size": 6,
+  "decision_interval": 1,
+  "stock_knobs": true,
+  "controlled_ablation": false,
+  "sampler_timesteps_index": [
+    0,
+    250,
+    500,
+    750
+  ],
+  "sample_shift": 10,
+  "actions": [
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Starting the first action of the reference plan: hold W for 3.6 seconds to walk the person with the backpack forward past the hot dog stand on the busy street. The person in the striped top and brown backpack is currently positioned on the sidewalk near the hot dog stand (visible with yellow/red umbrella in the background). Walking forward will move the camera/subject along the street to pass the stand.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch51bWreDirGtp9svYHYm",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3047,
+        "output_tokens": 145,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Starting the first action of the reference plan: hold W for 3.6 seconds to walk the person with the backpack forward past the hot dog stand on the busy street. The person in the striped top and brown backpack is currently positioned on the sidewalk near the hot dog stand (visible with yellow/red umbrella in the background). Walking forward will move the camera/subject along the street to pass the stand.\"}]",
+      "prompt_sha256": "75b1cba069c4850e180ddfe178db4027f97b7326eacf46d5f37155690374c7f5",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.0,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 95.31833854499996,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Continuing the first leg of the reference plan: hold W to walk forward past the hot dog stand. Current action has been held for 0.8125 seconds out of the planned 3.6 seconds. Visual comparison shows the person with the backpack (in striped top and brown backpack) has moved slightly forward along the busy street. The hot dog stand (yellow/red umbrella structure visible in background) has shifted position, confirming forward motion. The person is still in the process of passing the stand and needs to continue walking forward to complete this portion of the goal.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch51c8dSWizX5dTCDFN9q",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2889,
+        "output_tokens": 179,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Continuing the first leg of the reference plan: hold W to walk forward past the hot dog stand. Current action has been held for 0.8125 seconds out of the planned 3.6 seconds. Visual comparison shows the person with the backpack (in striped top and brown backpack) has moved slightly forward along the busy street. The hot dog stand (yellow/red umbrella structure visible in background) has shifted position, confirming forward motion. The person is still in the process of passing the stand and needs to continue walking forward to complete this portion of the goal.\"}]",
+      "prompt_sha256": "73b9beb85efbcaef3d2e302ac8b798efe8e1d859b1da09ff17c0c53bd5dc276f",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 103.816572049,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          7.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Continuing to hold W to walk forward past the hot dog stand. The person with the brown backpack has moved noticeably closer to and is now adjacent to the hot dog stand (yellow/red umbrella structure visible behind them). Current elapsed time for this leg is approximately 1.8 seconds out of the planned 3.6 seconds. The forward motion is confirmed by the shift in the subject's position relative to the background buildings and the hot dog stand. Need to continue forward motion to complete the first phase of the goal where the person passes by the hot dog stand.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch51cnai5LyU9ktFzUAbp",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3029,
+        "output_tokens": 177,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Continuing to hold W to walk forward past the hot dog stand. The person with the brown backpack has moved noticeably closer to and is now adjacent to the hot dog stand (yellow/red umbrella structure visible behind them). Current elapsed time for this leg is approximately 1.8 seconds out of the planned 3.6 seconds. The forward motion is confirmed by the shift in the subject's position relative to the background buildings and the hot dog stand. Need to continue forward motion to complete the first phase of the goal where the person passes by the hot dog stand.\"}]",
+      "prompt_sha256": "5594bd8db0ddd6f6b8b65082aab7a951903600cc65665a9bc3fd3853e4fd19a5",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          7.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 112.35697997399996,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          11.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "STOP",
+      "action": "S",
+      "reason": "The person with the brown backpack has successfully passed the hot dog stand (yellow/red umbrella structure is now clearly behind them in the center-background). The first leg of the plan (hold W for 3.6 seconds) is complete at 2.8125 seconds elapsed, and the visual goal of walking past the stand has been achieved. Now transitioning to the second phase: hold S for 3.6 seconds to walk backward in place as required by the goal. The person is positioned on the busy street and can now walk backward while maintaining their position.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch51dUSb6wDmzFFscnJdZ",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3167,
+        "output_tokens": 177,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"STOP\", \"action\": \"S\", \"reason\": \"The person with the brown backpack has successfully passed the hot dog stand (yellow/red umbrella structure is now clearly behind them in the center-background). The first leg of the plan (hold W for 3.6 seconds) is complete at 2.8125 seconds elapsed, and the visual goal of walking past the stand has been achieved. Now transitioning to the second phase: hold S for 3.6 seconds to walk backward in place as required by the goal. The person is positioned on the busy street and can now walk backward while maintaining their position.\"}]",
+      "prompt_sha256": "8cc1736ca74bc148816e32848799b07997de162ae5d6f0f7c4a102fcb337a41d",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          11.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 122.02225798400002,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          7.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "S",
+      "reason": "Continuing to hold S to walk backward in place as required by the goal. The person with the brown backpack has successfully passed the hot dog stand (yellow/red umbrella structure is now in the background to the left). Current action has been held for 1 second out of the planned 3.6 seconds for the backward walk. Visual evidence: the person is positioned on the busy street and the camera view shows them walking backward as the scene composition has shifted slightly - the person is now more centered and slightly further into the street. The hot dog stand remains behind them, confirming the person has completed the first phase (walking past the stand) and is now in the second phase (walking backward in place).",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch51eCaPJ9otHMv6tBSdJ",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3302,
+        "output_tokens": 205,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"S\", \"reason\": \"Continuing to hold S to walk backward in place as required by the goal. The person with the brown backpack has successfully passed the hot dog stand (yellow/red umbrella structure is now in the background to the left). Current action has been held for 1 second out of the planned 3.6 seconds for the backward walk. Visual evidence: the person is positioned on the busy street and the camera view shows them walking backward as the scene composition has shifted slightly - the person is now more centered and slightly further into the street. The hot dog stand remains behind them, confirming the person has completed the first phase (walking past the stand) and is now in the second phase (walking backward in place).\"}]",
+      "prompt_sha256": "cd5edeaaa2b3875cdd9ebec307b1d2c5255638993c8f567ad3f67a4cb1778f43",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          7.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 132.15629044699995,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "S",
+      "reason": "Continuing to hold S to walk backward in place as required by the goal. The person with the brown backpack is now positioned further back on the sidewalk/street area, with the hot dog stand (yellow/red umbrella structure) clearly visible behind them in the mid-ground. Current action has been held for 2 seconds out of the planned 3.6 seconds for the backward walk phase. Visual evidence of backward motion: the subject has moved backward, with the buildings and street features shifting accordingly. The person remains on the busy street environment and is successfully executing the second phase of the goal. Will continue until the 3.6-second mark is reached.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch51eyKgwM2vQcYX9szaH",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3467,
+        "output_tokens": 196,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"S\", \"reason\": \"Continuing to hold S to walk backward in place as required by the goal. The person with the brown backpack is now positioned further back on the sidewalk/street area, with the hot dog stand (yellow/red umbrella structure) clearly visible behind them in the mid-ground. Current action has been held for 2 seconds out of the planned 3.6 seconds for the backward walk phase. Visual evidence of backward motion: the subject has moved backward, with the buildings and street features shifting accordingly. The person remains on the busy street environment and is successfully executing the second phase of the goal. Will continue until the 3.6-second mark is reached.\"}]",
+      "prompt_sha256": "746fc458d9d31c311cfc1cb7bf3587b05f87c00bc439cbfd454725bb6b9efd8e",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 142.9074451240001,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 5.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "S",
+      "reason": "Continuing to hold S to complete the backward walk phase. Current action has been held for 3 seconds out of the planned 3.6 seconds. Visual evidence confirms backward motion: the person with the brown backpack is now facing away from the camera, positioned on the busy street/crosswalk area. The hot dog stand (yellow/red umbrella structure) is visible in the left-background of the current frame. The camera has shifted to show the subject from behind, which is consistent with walking backward. Need to continue for the remaining 0.6 seconds to complete the full 3.6-second backward walk phase of the reference plan.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch51g7WqGxHQmhjC11jy2",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3680,
+        "output_tokens": 194,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"S\", \"reason\": \"Continuing to hold S to complete the backward walk phase. Current action has been held for 3 seconds out of the planned 3.6 seconds. Visual evidence confirms backward motion: the person with the brown backpack is now facing away from the camera, positioned on the busy street/crosswalk area. The hot dog stand (yellow/red umbrella structure) is visible in the left-background of the current frame. The camera has shifted to show the subject from behind, which is consistent with walking backward. Need to continue for the remaining 0.6 seconds to complete the full 3.6-second backward walk phase of the reference plan.\"}]",
+      "prompt_sha256": "72450764bc4ab790eb273c8c2c602bc5967df3fb31ca10fce2dee3ad40d79cc5",
+      "first_attempt_rejected_end": "The goal has been fully achieved and the reference plan is nearly complete. Visual evidence from the latest image confirms: (1) The person with the brown backpack has successfully passed the hot dog stand (yellow/red umbrella structure is now far behind them in the left-center background). (2) The person is currently walking backward in place as required - the current action has been held for 3 seconds out of the planned 3.6 seconds for the backward walk phase, and visual motion confirms backward movement with the street scene shifting. The plan_total_seconds is 7.2 seconds, and elapsed_commanded_seconds is 5.812 seconds, approaching completion. The person's body position (centered frame, striped shirt, brown backpack visible) demonstrates both legs of the plan have been executed: walking forward past the hot dog stand, then walking backward in place. The goal is visually complete.",
+      "first_attempt_response_id": "msg_011Ch51fkkuvpzhNiKWes1qs",
+      "first_attempt_usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3625,
+        "output_tokens": 248,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 5.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 157.8462037270001,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          -5.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 6.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "END",
+      "action": null,
+      "reason": "The goal has been successfully completed. Comparing the initial image (top) with the latest observation (bottom): 1) The person with the brown backpack has walked past the hot dog stand (yellow/red umbrella structure visible in the background center of both images, now clearly behind the person). 2) The person has walked backward in place - visual evidence shows the person is now positioned further back on the crosswalk/street, facing away from the camera in a backward-walking posture. The elapsed commanded time is 6.812 seconds out of the planned 7.2 seconds (current action held for 4 seconds on the backward walk), completing both phases of the reference plan: forward walk past the stand and backward walk in place. The goal is visually achieved.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch51gqZfUTfbn1GPjgCjd",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3780,
+        "output_tokens": 221,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"The goal has been successfully completed. Comparing the initial image (top) with the latest observation (bottom): 1) The person with the brown backpack has walked past the hot dog stand (yellow/red umbrella structure visible in the background center of both images, now clearly behind the person). 2) The person has walked backward in place - visual evidence shows the person is now positioned further back on the crosswalk/street, facing away from the camera in a backward-walking posture. The elapsed commanded time is 6.812 seconds out of the planned 7.2 seconds (current action held for 4 seconds on the backward walk), completing both phases of the reference plan: forward walk past the stand and backward walk in place. The goal is visually achieved.\"}]",
+      "prompt_sha256": "09217dcd1aab378a1e05f8493e7af47a01ac070b446e297a1ea356433a5c9f1b",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          -5.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 6.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 168.15173151599993
+    }
+  ],
+  "chunks": [
+    {
+      "index": 0,
+      "path": "chunk-000.mp4",
+      "frames": 13,
+      "pixel_sha256": "ca647b50e4bf83e61b4cf13470720420eb57071b7b72d37f8fecd0ca8d0d95a2",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.49405245200000536,
+        "mp4_encode": 0.4930066590000024
+      },
+      "elapsed_s": 99.82816736799998,
+      "sha256": "a7b03ac92171b1e5ac69e072f4f54134594e6d0badd7182469ce626061d1592e"
+    },
+    {
+      "index": 1,
+      "path": "chunk-001.mp4",
+      "frames": 16,
+      "pixel_sha256": "f5095c9fabf50939978f04cacc0ebdbf883a9667381f8bf1835c1681e07c07f1",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.586819179000031,
+        "mp4_encode": 0.45678078700007063
+      },
+      "elapsed_s": 108.76361887100006,
+      "sha256": "8871e629fb31885671bc79af12a31ec42714c4dd6e47671b025a0315b3e8ee97"
+    },
+    {
+      "index": 2,
+      "path": "chunk-002.mp4",
+      "frames": 16,
+      "pixel_sha256": "bbd8e4a47b0d9d182b90b3a6cceeec0b3aed0a1208438c4a5bc5e10da5b46d42",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5866795350000302,
+        "mp4_encode": 0.44770623099998375
+      },
+      "elapsed_s": 117.73690600199996,
+      "sha256": "58168247df341772b096ad637fd7a1f329d46ccba7c35d11e37c5cd7b8e90134"
+    },
+    {
+      "index": 3,
+      "path": "chunk-003.mp4",
+      "frames": 16,
+      "pixel_sha256": "81f730cb0dc67051d93c300145cc06becd6a04b8d6d6d40bd52b3eb1d3ebb93c",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.587534536000021,
+        "mp4_encode": 0.46157355899981667
+      },
+      "elapsed_s": 127.86634583799992,
+      "sha256": "1f33bc4db622c74f0a211f42f4ef8030f94474fdcf5b9ac232d9c5abaf8a7d6a"
+    },
+    {
+      "index": 4,
+      "path": "chunk-004.mp4",
+      "frames": 16,
+      "pixel_sha256": "2e166bf097ec43d7cf972fdc016507df46663f6de1accd1b1927bdc4aab44a68",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5876422659998752,
+        "mp4_encode": 0.4590824019999218
+      },
+      "elapsed_s": 138.24185835000003,
+      "sha256": "f16a766471fba29015b1ac057caa13606be2511cef5afb63addc61db15af2905"
+    },
+    {
+      "index": 5,
+      "path": "chunk-005.mp4",
+      "frames": 16,
+      "pixel_sha256": "eb8d976057076a5187013a2e871992cb21f1b98aad7f99e827eb78de0c4620f9",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5850422119999621,
+        "mp4_encode": 0.46142071200006285
+      },
+      "elapsed_s": 148.9798641,
+      "sha256": "63ce972be091571340ec066048e08d834d41df13dd150182ee6703b5282ca618"
+    },
+    {
+      "index": 6,
+      "path": "chunk-006.mp4",
+      "frames": 16,
+      "pixel_sha256": "825d7e129c81345da6bfab5fbbf2d06ad46dfddf799f3f2d2da8bdc37f452829",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5856373980000171,
+        "mp4_encode": 0.438352962999943
+      },
+      "elapsed_s": 163.89794129200004,
+      "sha256": "3f069d938c944492c5a09dc771f05bd9ad4385f3c010d5b079113c8c253ea8ad"
+    }
+  ],
+  "published_score_reproduced": false,
+  "agent_interactions": 8,
+  "adapter_sha256": "6adfe0e38f5239d61b012e9947ad4e9e2012711ba5675e423eba6173ffc6cb9a",
+  "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+  "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+  "deviations": [
+    "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+    "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+    "Official 480p demo area; single NVIDIA H100 80GB HBM3, BF16 and valid-length SDPA backend",
+    "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+    "Claude diagnostic scoring differs from published Gemini judgments"
+  ],
+  "hardware": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4"
+  },
+  "attention_backend": "sdpa",
+  "optional_torch_dlpack_addon_disabled": false,
+  "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+  "checkpoint_loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "generated_frames": 109,
+  "generated_seconds": 6.8125,
+  "termination": "agent_end",
+  "elapsed_s": 168.15388653900004,
+  "camera_diagnostics": {
+    "chunks": 7,
+    "path_length": 27.0,
+    "net_yaw_degrees": 0.0,
+    "total_turn_degrees": 0.0,
+    "max_distance_from_start": 11.0,
+    "final_distance_from_start": 5.0,
+    "revisited_start_at_chunk": 5,
+    "wait_chunks": 0,
+    "wait_pose_changes": 0
+  },
+  "peak_allocated_bytes": 72558379520
+}
