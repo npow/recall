@@ -1,0 +1,417 @@
+{
+  "scope": "frozen past-only point map localization and rendering prerequisite; not Gaussian memory improvement",
+  "source_frames": [
+    12,
+    20,
+    28,
+    36,
+    44,
+    52
+  ],
+  "target_frames": [
+    56,
+    60,
+    460,
+    476,
+    492,
+    508
+  ],
+  "geometry_sha256": "a89ae2a35e9ccf107c1eef816c944ef2eda66808605571d74a8dbba4bb0b5575",
+  "video_sha256": "87e3b9cab935ef1e7538a141d3a80139c57e6c072efb782948d8cbfbb37c5e9e",
+  "preprocessing": "same pinned two-stage upper-bound resize as source DA3 inputs",
+  "camera_intrinsics": "median of predicted past-view intrinsics; target RGB only used to fit pose",
+  "correspondence_filter": "SIFT ratio.7, past depth-confidence above each view's median; deduplicate target features",
+  "acceptance": "at least30 fitted inliers, fit and withheld fractions>=.5, fitted coverage>=.1, withheld median<=3px",
+  "point_count": 105441,
+  "accepted_targets": 1,
+  "targets": [
+    {
+      "usable": true,
+      "correspondences": 177,
+      "reason": "accepted",
+      "fit_inliers": 57,
+      "fit_inlier_fraction": 0.5181818181818182,
+      "fit_spatial_coverage": 0.13968013672276522,
+      "withheld_matches": 67,
+      "withheld_fraction_within3px": 0.5671641791044776,
+      "withheld_median_residual_px": 2.239884258695897,
+      "withheld_p90_residual_px": 29.3501525933086,
+      "estimated_world_to_camera": [
+        [
+          -0.6681583791818866,
+          -0.027032541350270414,
+          -0.7435278219657823,
+          0.08931301170122945
+        ],
+        [
+          0.01414645968590691,
+          0.9986975000707057,
+          -0.04902225036529693,
+          0.030023369400074558
+        ],
+        [
+          0.7438845730403267,
+          -0.04327291370671455,
+          -0.6669056881838256,
+          0.23793405795929112
+        ]
+      ],
+      "selected_source_view": 5,
+      "candidate_diagnostics": [
+        {
+          "usable": false,
+          "correspondences": 2,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 0,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 2,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 0,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 21,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": true,
+          "correspondences": 177,
+          "reason": "accepted",
+          "fit_inliers": 57,
+          "fit_inlier_fraction": 0.5181818181818182,
+          "fit_spatial_coverage": 0.13968013672276522,
+          "withheld_matches": 67,
+          "withheld_fraction_within3px": 0.5671641791044776,
+          "withheld_median_residual_px": 2.239884258695897,
+          "withheld_p90_residual_px": 29.3501525933086,
+          "estimated_world_to_camera": [
+            [
+              -0.6681583791818866,
+              -0.027032541350270414,
+              -0.7435278219657823,
+              0.08931301170122945
+            ],
+            [
+              0.01414645968590691,
+              0.9986975000707057,
+              -0.04902225036529693,
+              0.030023369400074558
+            ],
+            [
+              0.7438845730403267,
+              -0.04327291370671455,
+              -0.6669056881838256,
+              0.23793405795929112
+            ]
+          ]
+        }
+      ],
+      "frame": 56,
+      "matched_source_views": [
+        0,
+        2,
+        4,
+        5
+      ],
+      "render_coverage": 0.10960175736961451,
+      "render_rgb_mae_on_covered_pixels": 25.295553975129845
+    },
+    {
+      "usable": false,
+      "correspondences": 140,
+      "reason": "insufficient cross-validated geometry agreement",
+      "fit_inliers": 49,
+      "fit_inlier_fraction": 0.5632183908045977,
+      "fit_spatial_coverage": 0.18840498173019676,
+      "withheld_matches": 53,
+      "withheld_fraction_within3px": 0.49056603773584906,
+      "withheld_median_residual_px": 3.1230743052804972,
+      "withheld_p90_residual_px": 21.073823663631416,
+      "estimated_world_to_camera": [
+        [
+          -0.7863739765341778,
+          -0.04383170715248108,
+          -0.6161937604990199,
+          0.07031983136685917
+        ],
+        [
+          0.015402374968661195,
+          0.9957783522844375,
+          -0.09048889416395976,
+          0.013677431180538876
+        ],
+        [
+          0.6175586902272115,
+          -0.08064895888844871,
+          -0.7823790702434851,
+          0.21345202812418412
+        ]
+      ],
+      "selected_source_view": 5,
+      "candidate_diagnostics": [
+        {
+          "usable": false,
+          "correspondences": 1,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 0,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 3,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 0,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 10,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 140,
+          "reason": "insufficient cross-validated geometry agreement",
+          "fit_inliers": 49,
+          "fit_inlier_fraction": 0.5632183908045977,
+          "fit_spatial_coverage": 0.18840498173019676,
+          "withheld_matches": 53,
+          "withheld_fraction_within3px": 0.49056603773584906,
+          "withheld_median_residual_px": 3.1230743052804972,
+          "withheld_p90_residual_px": 21.073823663631416,
+          "estimated_world_to_camera": [
+            [
+              -0.7863739765341778,
+              -0.04383170715248108,
+              -0.6161937604990199,
+              0.07031983136685917
+            ],
+            [
+              0.015402374968661195,
+              0.9957783522844375,
+              -0.09048889416395976,
+              0.013677431180538876
+            ],
+            [
+              0.6175586902272115,
+              -0.08064895888844871,
+              -0.7823790702434851,
+              0.21345202812418412
+            ]
+          ]
+        }
+      ],
+      "frame": 60,
+      "matched_source_views": [
+        0,
+        2,
+        4,
+        5
+      ],
+      "render_coverage": 0.08839994331065759,
+      "render_rgb_mae_on_covered_pixels": 30.184822979291916
+    },
+    {
+      "usable": false,
+      "correspondences": 3,
+      "reason": "fewer than45 map correspondences",
+      "selected_source_view": 0,
+      "candidate_diagnostics": [
+        {
+          "usable": false,
+          "correspondences": 3,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 15,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 3,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 8,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 0,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 3,
+          "reason": "fewer than45 map correspondences"
+        }
+      ],
+      "frame": 460,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3,
+        5
+      ]
+    },
+    {
+      "usable": false,
+      "correspondences": 32,
+      "reason": "fewer than45 map correspondences",
+      "selected_source_view": 0,
+      "candidate_diagnostics": [
+        {
+          "usable": false,
+          "correspondences": 32,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 16,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 2,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 1,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 0,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 2,
+          "reason": "fewer than45 map correspondences"
+        }
+      ],
+      "frame": 476,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3,
+        5
+      ]
+    },
+    {
+      "usable": false,
+      "correspondences": 0,
+      "reason": "fewer than45 map correspondences",
+      "selected_source_view": 0,
+      "candidate_diagnostics": [
+        {
+          "usable": false,
+          "correspondences": 0,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 1,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 2,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 2,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 1,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 5,
+          "reason": "fewer than45 map correspondences"
+        }
+      ],
+      "frame": 492,
+      "matched_source_views": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "usable": false,
+      "correspondences": 3,
+      "reason": "fewer than45 map correspondences",
+      "selected_source_view": 0,
+      "candidate_diagnostics": [
+        {
+          "usable": false,
+          "correspondences": 3,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 0,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 3,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 2,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 0,
+          "reason": "fewer than45 map correspondences"
+        },
+        {
+          "usable": false,
+          "correspondences": 8,
+          "reason": "fewer than45 map correspondences"
+        }
+      ],
+      "frame": 508,
+      "matched_source_views": [
+        0,
+        2,
+        3,
+        5
+      ]
+    }
+  ],
+  "map_mode": "single-view local submaps; training-inlier selection; shared target-feature holdout",
+  "shared_feature_holdout": true,
+  "limitations": "Estimated depth, intrinsics and pose are not ground truth. Current observed RGB is used for localization. No generator conditioning or dynamic map updates tested."
+}

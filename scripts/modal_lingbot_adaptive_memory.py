@@ -3,19 +3,32 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import subprocess
 import sys
+import tempfile
 
 import modal
 
 ROOT = Path(__file__).resolve().parents[1]
+# Both arms must use the exact source uploaded for the corrected stock run,
+# even while collaborators continue changing main.
+PILOT_SOURCE_REVISION = "660fa4e93e0b70f4a2df6b7488785d11634ff17e"
 sys.path.insert(0, str(ROOT))
 if modal.is_local():
     from scripts.modal_lingbot_benchmark import runtime_image, weights, results
     from worldsync.credentials import load_local_credentials
     load_local_credentials()
     credentials = modal.Secret.from_dict({"ANTHROPIC_API_KEY": os.environ["ANTHROPIC_API_KEY"]})
+    frozen_source = tempfile.TemporaryDirectory(prefix="worldsync-adaptive-source-")
+    source_path = Path(frozen_source.name)
+    paths = subprocess.check_output(["git", "ls-tree", "-r", "--name-only",
+                                    PILOT_SOURCE_REVISION, "worldsync"], cwd=ROOT, text=True).splitlines()
+    for name in paths:
+        target = source_path / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(subprocess.check_output(["git", "show", f"{PILOT_SOURCE_REVISION}:{name}"], cwd=ROOT))
     image = (runtime_image.pip_install("anthropic==2.8.0")
-             .add_local_dir(ROOT / "worldsync", "/work/worldsync", ignore=["__pycache__"])
+             .add_local_dir(source_path / "worldsync", "/work/worldsync", ignore=["__pycache__"])
              .add_local_file(ROOT / "reproduction/lingbot-weights.json", "/work/reproduction/lingbot-weights.json")
              .add_local_file(ROOT / "external/PlayWorld/data/gc/data.json", "/work/external/PlayWorld/data/gc/data.json")
              .add_local_dir(ROOT / "external/PlayWorld/data/gc/images", "/work/external/PlayWorld/data/gc/images"))
@@ -89,6 +102,7 @@ def main(memory: bool = False):
             failures.append({"job": jobs[index], "error": str(result)})
             continue
         result["frozen_plan_sha256"] = hashlib.sha256(plan_path.read_bytes()).hexdigest()
+        result["source_revision"] = PILOT_SOURCE_REVISION
         path = ROOT / "outputs/lingbot-reproduction" / f"adaptive-four-view-{mode}-seed{result['seed']}.json"
         path.write_text(json.dumps(result, indent=2) + "\n")
         print(json.dumps({key: value for key, value in result.items() if key != "run"}, indent=2), flush=True)

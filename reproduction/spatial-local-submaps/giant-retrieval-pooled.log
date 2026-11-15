@@ -1,0 +1,255 @@
+{
+  "scope": "frozen past-only point map localization and rendering prerequisite; not Gaussian memory improvement",
+  "source_frames": [
+    12,
+    20,
+    28,
+    36,
+    44,
+    52
+  ],
+  "target_frames": [
+    56,
+    60,
+    460,
+    476,
+    492,
+    508
+  ],
+  "geometry_sha256": "93576da219d3493df3c4db793bacf43d697616f26a5722a4870387aa43baab0d",
+  "video_sha256": "be8baaab36be920de01eb673a351186e483f25c46c4b8ddbee0288b808ce6ee4",
+  "preprocessing": "same pinned two-stage upper-bound resize as source DA3 inputs",
+  "camera_intrinsics": "median of predicted past-view intrinsics; target RGB only used to fit pose",
+  "correspondence_filter": "SIFT ratio.7, past depth-confidence above each view's median; deduplicate target features",
+  "acceptance": "at least30 fitted inliers, fit and withheld fractions>=.5, fitted coverage>=.1, withheld median<=3px",
+  "point_count": 105648,
+  "accepted_targets": 2,
+  "targets": [
+    {
+      "usable": true,
+      "correspondences": 88,
+      "reason": "accepted",
+      "fit_inliers": 40,
+      "fit_inlier_fraction": 0.6779661016949152,
+      "fit_spatial_coverage": 0.33882953380838743,
+      "withheld_matches": 29,
+      "withheld_fraction_within3px": 0.5862068965517241,
+      "withheld_median_residual_px": 1.6758145558136912,
+      "withheld_p90_residual_px": 62.877084903680945,
+      "estimated_world_to_camera": [
+        [
+          -0.49244495680723455,
+          0.0980931114815095,
+          -0.864798072381638,
+          0.06257667643616234
+        ],
+        [
+          -0.019463925507057084,
+          0.9921386478052464,
+          0.12362062584792366,
+          -0.014153732875776039
+        ],
+        [
+          0.8701259219900166,
+          0.07770871901564683,
+          -0.4866643965506113,
+          0.0910684422665248
+        ]
+      ],
+      "frame": 56,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "render_coverage": 0.21486678004535148,
+      "render_rgb_mae_on_covered_pixels": 26.784688784820702
+    },
+    {
+      "usable": false,
+      "correspondences": 43,
+      "reason": "fewer than45 map correspondences",
+      "frame": 60,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ]
+    },
+    {
+      "usable": false,
+      "correspondences": 164,
+      "reason": "insufficient cross-validated geometry agreement",
+      "fit_inliers": 44,
+      "fit_inlier_fraction": 0.4,
+      "fit_spatial_coverage": 0.19282564906280453,
+      "withheld_matches": 54,
+      "withheld_fraction_within3px": 0.37037037037037035,
+      "withheld_median_residual_px": 4.412189994591694,
+      "withheld_p90_residual_px": 18.651723361642514,
+      "estimated_world_to_camera": [
+        [
+          0.33647422819210826,
+          0.12091659558599473,
+          -0.9338973555345459,
+          0.03419829832027203
+        ],
+        [
+          -0.054817739351744395,
+          0.9925553135241487,
+          0.10876104563373303,
+          0.022144952466902106
+        ],
+        [
+          0.9400957978923686,
+          0.014598852929999118,
+          0.34059765747614734,
+          0.07827656241720873
+        ]
+      ],
+      "frame": 460,
+      "matched_source_views": [
+        0,
+        2,
+        3,
+        4,
+        5
+      ],
+      "render_coverage": 0.30878684807256235,
+      "render_rgb_mae_on_covered_pixels": 30.744339391714092
+    },
+    {
+      "usable": true,
+      "correspondences": 160,
+      "reason": "accepted",
+      "fit_inliers": 52,
+      "fit_inlier_fraction": 0.5306122448979592,
+      "fit_spatial_coverage": 0.15689328658503832,
+      "withheld_matches": 62,
+      "withheld_fraction_within3px": 0.6129032258064516,
+      "withheld_median_residual_px": 2.160998031247567,
+      "withheld_p90_residual_px": 23.626606720700803,
+      "estimated_world_to_camera": [
+        [
+          0.989685624621665,
+          -0.04048128526381244,
+          -0.13741772069356498,
+          0.1035917073036887
+        ],
+        [
+          0.037320121676031576,
+          0.9989778515351925,
+          -0.02550413025800445,
+          0.030672369819422615
+        ],
+        [
+          0.13830969935370038,
+          0.020112625028098692,
+          0.9901847854714635,
+          0.07657588958805758
+        ]
+      ],
+      "frame": 476,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "render_coverage": 0.24740646258503401,
+      "render_rgb_mae_on_covered_pixels": 31.895342842412784
+    },
+    {
+      "usable": false,
+      "correspondences": 73,
+      "reason": "insufficient cross-validated geometry agreement",
+      "fit_inliers": 20,
+      "fit_inlier_fraction": 0.40816326530612246,
+      "fit_spatial_coverage": 0.0885374955227841,
+      "withheld_matches": 24,
+      "withheld_fraction_within3px": 0.3333333333333333,
+      "withheld_median_residual_px": 3.6585211189851314,
+      "withheld_p90_residual_px": 15.76521350677815,
+      "estimated_world_to_camera": [
+        [
+          0.7903573315258506,
+          -0.06255920104128938,
+          0.6094437093517432,
+          0.3111242772160636
+        ],
+        [
+          0.11589719183034662,
+          0.9920781229383441,
+          -0.04846482139626177,
+          0.08003727469246089
+        ],
+        [
+          -0.6015838507051002,
+          0.1089373414041634,
+          0.79134665363456,
+          -0.15400143759892157
+        ]
+      ],
+      "frame": 492,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "render_coverage": 0.13314909297052155,
+      "render_rgb_mae_on_covered_pixels": 34.181532730175626
+    },
+    {
+      "usable": false,
+      "correspondences": 103,
+      "reason": "insufficient cross-validated geometry agreement",
+      "fit_inliers": 37,
+      "fit_inlier_fraction": 0.5441176470588235,
+      "fit_spatial_coverage": 0.09836554582799839,
+      "withheld_matches": 35,
+      "withheld_fraction_within3px": 0.45714285714285713,
+      "withheld_median_residual_px": 8.214092891140872,
+      "withheld_p90_residual_px": 72.50274135241219,
+      "estimated_world_to_camera": [
+        [
+          0.620385752804795,
+          -0.09986969636564369,
+          0.7779123096240745,
+          -0.12978430144903425
+        ],
+        [
+          0.009516523669749845,
+          0.9927450886883049,
+          0.11986085542199654,
+          -0.3083371850432265
+        ],
+        [
+          -0.784239092046597,
+          -0.06695694611527474,
+          0.6168353215185114,
+          -0.15252473529085098
+        ]
+      ],
+      "frame": 508,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3,
+        5
+      ],
+      "render_coverage": 0.12627551020408162,
+      "render_rgb_mae_on_covered_pixels": 46.178189300411525
+    }
+  ],
+  "map_mode": "pooled global map",
+  "shared_feature_holdout": true,
+  "limitations": "Estimated depth, intrinsics and pose are not ground truth. Current observed RGB is used for localization. No generator conditioning or dynamic map updates tested."
+}

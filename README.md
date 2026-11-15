@@ -36,6 +36,11 @@ review. The four-view method remains selected.
 same beach video and identical prompts scored2.7 and3.75 in separate calls.
 Treat small differences as uncertain and inspect complete videos.
 
+[Separate local geometry maps](reproduction/spatial-local-submaps/summary.json)
+pass more revisit localization checks than a fused map on two mall seeds, but
+still fail the bridge returns and the drifted stock scene. These sparse maps
+are diagnostics; they have not been used to condition generation.
+
 [The four/eight-view ablation](reproduction/multiview-retrieval/README.md) finds
 that eight historical views degrade continuity when they displace recent
 context. Four diverse views tie the four-nearest reference.

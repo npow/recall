@@ -1,0 +1,43 @@
+{
+  "scope": "Development-only diagnostic, not generator improvement or held-out generalization",
+  "hypothesis": "Separate past-view depth maps avoid inconsistent cross-view fusion; choose map by training inlier count then training spatial coverage only.",
+  "inputs": "Existing pinned DA3 SMALL and GIANT reconstructions of GC007seed42 source frames12,20,28,36,44,52",
+  "targets": [
+    56,
+    60,
+    460,
+    476,
+    492,
+    508
+  ],
+  "controls": "Rerun pooled global map with identical target-feature identity holdout; no target RGB in reconstruction",
+  "selection": "One-third target feature identities deterministically held out across all candidate maps. Never use withheld residuals or acceptance to select a submap.",
+  "acceptance": "Unchanged >=30fitinliers, fitfrac>=.5, coverage>=.1, withheldfrac3px>=.5, median<=3px. Report all targets and all candidate diagnostics.",
+  "limitation": "Same development sequence already inspected. Single-view relative depth and predicted intrinsics are not ground truth. No Gaussian training or generator conditioning.",
+  "frozen_follow_up": {
+    "cases": [
+      "GC009-seed42",
+      "GC007-seed43"
+    ],
+    "generator": "Existing32chunk4view18frame reference videos; not stock and not geometry-conditioned",
+    "model": "DA3-SMALL only, no parameter or threshold tuning",
+    "source_frames": [
+      12,
+      20,
+      28,
+      36,
+      44,
+      52
+    ],
+    "targets": [
+      56,
+      60,
+      460,
+      476,
+      492,
+      508
+    ],
+    "comparison": "Shared-feature-holdout pooled vs one-view submap selection with identical fixed gates",
+    "scope": "New geometry evaluations on existing videos already used in a separate cache study; not untouched benchmark scenes"
+  }
+}

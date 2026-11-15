@@ -50,7 +50,8 @@ def evaluate(seed, mode, plan, plan_hash):
             subprocess.run([sys.executable, "-m", "worldsync.judge", "--dataset",
                 str(ROOT / "external/PlayWorld/data/gc/data.json"), "--task-id", plan["case"]["task_id"],
                 "--video", str(video), "--reference-image", str(ROOT / "external/PlayWorld/data/gc/images/GC027.jpg"),
-                "--world-model", "LingBot-World2 adaptive local trial", "--output", str(score_path)],
+                "--world-model", "LingBot-World2 adaptive local trial", "--provider", "anthropic",
+                "--model", "claude-opus-5-5", "--output", str(score_path)],
                 cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, check=True)
     score = json.loads(score_path.read_text())
     if score.get("reported_score") is None:

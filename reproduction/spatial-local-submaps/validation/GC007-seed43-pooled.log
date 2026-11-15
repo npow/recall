@@ -1,0 +1,168 @@
+{
+  "scope": "frozen past-only point map localization and rendering prerequisite; not Gaussian memory improvement",
+  "source_frames": [
+    12,
+    20,
+    28,
+    36,
+    44,
+    52
+  ],
+  "target_frames": [
+    56,
+    60,
+    460,
+    476,
+    492,
+    508
+  ],
+  "geometry_sha256": "25fe0dc6560b2d1f861a2df9785faea370d3b7c1288d4dfbe1956fe62ee8544b",
+  "video_sha256": "242318648f094345176ad0406612841eafdea9042cd3c2522319cad2495d4b79",
+  "preprocessing": "same pinned two-stage upper-bound resize as source DA3 inputs",
+  "camera_intrinsics": "median of predicted past-view intrinsics; target RGB only used to fit pose",
+  "correspondence_filter": "SIFT ratio.7, past depth-confidence above each view's median; deduplicate target features",
+  "acceptance": "at least30 fitted inliers, fit and withheld fractions>=.5, fitted coverage>=.1, withheld median<=3px",
+  "point_count": 105824,
+  "accepted_targets": 0,
+  "targets": [
+    {
+      "usable": false,
+      "correspondences": 22,
+      "reason": "fewer than45 map correspondences",
+      "frame": 56,
+      "matched_source_views": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "usable": false,
+      "correspondences": 13,
+      "reason": "fewer than45 map correspondences",
+      "frame": 60,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "usable": false,
+      "correspondences": 175,
+      "reason": "insufficient cross-validated geometry agreement",
+      "fit_inliers": 64,
+      "fit_inlier_fraction": 0.5203252032520326,
+      "fit_spatial_coverage": 0.5442680391611411,
+      "withheld_matches": 52,
+      "withheld_fraction_within3px": 0.3269230769230769,
+      "withheld_median_residual_px": 6.166232813628968,
+      "withheld_p90_residual_px": 20.41760311879431,
+      "estimated_world_to_camera": [
+        [
+          0.9942628245228877,
+          0.03511974051247588,
+          -0.10103484348533334,
+          0.01944930797774238
+        ],
+        [
+          -0.038527617998013734,
+          0.9987457300088424,
+          -0.03197795241261648,
+          0.032416740638871726
+        ],
+        [
+          0.09978506112223699,
+          0.03568712114251858,
+          0.9943688304454191,
+          0.043089268061022985
+        ]
+      ],
+      "frame": 460,
+      "matched_source_views": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "render_coverage": 0.34076672335600905,
+      "render_rgb_mae_on_covered_pixels": 36.50423866857979
+    },
+    {
+      "usable": false,
+      "correspondences": 166,
+      "reason": "insufficient cross-validated geometry agreement",
+      "fit_inliers": 54,
+      "fit_inlier_fraction": 0.48214285714285715,
+      "fit_spatial_coverage": 0.2564013540856462,
+      "withheld_matches": 54,
+      "withheld_fraction_within3px": 0.35185185185185186,
+      "withheld_median_residual_px": 6.39841593545511,
+      "withheld_p90_residual_px": 20.919302236499544,
+      "estimated_world_to_camera": [
+        [
+          0.4244927121144006,
+          0.04181960686799133,
+          0.9044650672321,
+          -0.0495410618057965
+        ],
+        [
+          0.00045530313087113533,
+          0.9989228026910695,
+          -0.046400721577122724,
+          0.016144236142700486
+        ],
+        [
+          -0.9054312398304023,
+          0.020108573923212355,
+          0.42401640910931154,
+          0.09707256684427491
+        ]
+      ],
+      "frame": 476,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "render_coverage": 0.21435657596371882,
+      "render_rgb_mae_on_covered_pixels": 35.884837465564736
+    },
+    {
+      "usable": false,
+      "correspondences": 41,
+      "reason": "fewer than45 map correspondences",
+      "frame": 492,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "usable": false,
+      "correspondences": 38,
+      "reason": "fewer than45 map correspondences",
+      "frame": 508,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "map_mode": "pooled global map",
+  "shared_feature_holdout": true,
+  "limitations": "Estimated depth, intrinsics and pose are not ground truth. Current observed RGB is used for localization. No generator conditioning or dynamic map updates tested."
+}

@@ -1,0 +1,99 @@
+{
+  "scope": "Geometry prerequisite, not generator conditioning, not Gaussian fitting, not a benchmark score",
+  "findings": [
+    {
+      "report": "reproduction/spatial-local-submaps/giant-retrieval-local/report.json",
+      "accepted": 3,
+      "total": 6,
+      "return_accepted": 2,
+      "return_total": 4
+    },
+    {
+      "report": "reproduction/spatial-local-submaps/giant-retrieval-pooled/report.json",
+      "accepted": 2,
+      "total": 6,
+      "return_accepted": 1,
+      "return_total": 4
+    },
+    {
+      "report": "reproduction/spatial-local-submaps/giant-stock-local/report.json",
+      "accepted": 1,
+      "total": 6,
+      "return_accepted": 0,
+      "return_total": 4
+    },
+    {
+      "report": "reproduction/spatial-local-submaps/giant-stock-pooled/report.json",
+      "accepted": 1,
+      "total": 6,
+      "return_accepted": 0,
+      "return_total": 4
+    },
+    {
+      "report": "reproduction/spatial-local-submaps/small-retrieval-local/report.json",
+      "accepted": 4,
+      "total": 6,
+      "return_accepted": 3,
+      "return_total": 4
+    },
+    {
+      "report": "reproduction/spatial-local-submaps/small-retrieval-pooled/report.json",
+      "accepted": 1,
+      "total": 6,
+      "return_accepted": 0,
+      "return_total": 4
+    },
+    {
+      "report": "reproduction/spatial-local-submaps/small-stock-local/report.json",
+      "accepted": 1,
+      "total": 6,
+      "return_accepted": 0,
+      "return_total": 4
+    },
+    {
+      "report": "reproduction/spatial-local-submaps/small-stock-pooled/report.json",
+      "accepted": 1,
+      "total": 6,
+      "return_accepted": 0,
+      "return_total": 4
+    },
+    {
+      "report": "reproduction/spatial-local-submaps/validation/GC007-seed43/local/report.json",
+      "accepted": 2,
+      "total": 6,
+      "return_accepted": 2,
+      "return_total": 4
+    },
+    {
+      "report": "reproduction/spatial-local-submaps/validation/GC007-seed43/pooled/report.json",
+      "accepted": 0,
+      "total": 6,
+      "return_accepted": 0,
+      "return_total": 4
+    },
+    {
+      "report": "reproduction/spatial-local-submaps/validation/GC009-seed42/local/report.json",
+      "accepted": 1,
+      "total": 6,
+      "return_accepted": 0,
+      "return_total": 4
+    },
+    {
+      "report": "reproduction/spatial-local-submaps/validation/GC009-seed42/pooled/report.json",
+      "accepted": 1,
+      "total": 6,
+      "return_accepted": 0,
+      "return_total": 4
+    }
+  ],
+  "conclusion": "Single-view submaps improve localization on mall revisit videos: SMALL3/4vs0/4returns on seed42 and2/4vs0/4onseed43. GIANT2/4vs1/4onseed42. FreshbridgeGC009 remains0/4forboth. Stockmallafterdrift0/4forboth.",
+  "selection": "Training inlier count then training spatial coverage; same target feature identities held out across every submap. Withheld errors never used for selection.",
+  "limits": [
+    "Only sparse point projections (~9-12% pixel coverage), not usable dense Gaussian rendering.",
+    "Observed target RGB is needed for localization; this cannot recover geometry after landmarks have disappeared.",
+    "Relative depth and predicted intrinsics, no physical ground truth.",
+    "New-seed/new-scene geometry comparisons use videos previously inspected in a separate study.",
+    "No generator modifications or training performed."
+  ],
+  "next_step": "Use confidence-gated separate submaps rather than one authoritative fused map if testing geometry-assisted historical-view retrieval. Do not condition unconditionally on these maps."
+}

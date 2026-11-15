@@ -32,12 +32,19 @@ def unproject(pixels, depth, intrinsics, extrinsics):
     return (camera - extrinsics[:, 3]) @ extrinsics[:, :3]
 
 
-def fit_pose(world, pixels, intrinsics, size):
+def fit_pose(world, pixels, intrinsics, size, feature_ids=None):
     result = {"usable": False, "correspondences": len(world)}
     if len(world) < 45:
         return {**result, "reason": "fewer than45 map correspondences"}, None
-    order = np.random.default_rng(147).permutation(len(world))
-    train, test = order[len(order) // 3:], order[:len(order) // 3]
+    if feature_ids is None:
+        order = np.random.default_rng(147).permutation(len(world))
+        train, test = order[len(order) // 3:], order[:len(order) // 3]
+    else:
+        # The same observed feature must stay held out across every candidate map.
+        held_out = ((np.asarray(feature_ids, dtype=np.uint64) * 2654435761) % (2 ** 32)) < (2 ** 32 // 3)
+        train, test = np.flatnonzero(~held_out), np.flatnonzero(held_out)
+        if len(train) < 30 or len(test) < 15:
+            return {**result, "reason": "insufficient shared train/held-out features"}, None
     cv2.setRNGSeed(147)
     ok, rotation, translation, inliers = cv2.solvePnPRansac(
         world[train], pixels[train], intrinsics, None, iterationsCount=500,
@@ -87,6 +94,10 @@ def main():
     parser.add_argument("--geometry", type=Path, required=True)
     parser.add_argument("--video", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--local-submaps", action="store_true",
+                        help="Choose one past-view map using training inliers only; hold target features out across all maps")
+    parser.add_argument("--shared-feature-holdout", action="store_true",
+                        help="Use target-feature identities for the pooled control's held-out split")
     args = parser.parse_args()
     cv2.setNumThreads(4)
     geometry = np.load(args.geometry / "geometry.npz")
@@ -121,7 +132,7 @@ def main():
         if target.shape[:2] != (height, width):
             raise ValueError("Target and source preprocessing dimensions differ")
         keys_target, descriptors_target = detector.detectAndCompute(cv2.cvtColor(target, cv2.COLOR_RGB2GRAY), None)
-        matches = {}
+        matches, view_matches = {}, [[] for _ in source_features]
         if descriptors_target is not None and len(descriptors_target) >= 2:
             for source_id, (keys, desc, depth, conf, threshold, k, pose) in enumerate(source_features):
                 if desc is None:
@@ -133,16 +144,39 @@ def main():
                     x, y = int(round(u)), int(round(v))
                     if not 0 <= x < width or not 0 <= y < height or conf[y, x] < threshold or depth[y, x] <= 0:
                         continue
+                    point = unproject(np.array([[u, v]]), np.array([depth[y, x]]), k, pose)[0]
+                    view_matches[source_id].append((first.trainIdx, first.distance, point, keys_target[first.trainIdx].pt, source_id))
                     if first.trainIdx in matches and matches[first.trainIdx][0] <= first.distance:
                         continue
-                    point = unproject(np.array([[u, v]]), np.array([depth[y, x]]), k, pose)[0]
                     matches[first.trainIdx] = (first.distance, point, keys_target[first.trainIdx].pt, source_id)
         points = np.array([value[1] for value in matches.values()], np.float64).reshape(-1, 3)
         pixels = np.array([value[2] for value in matches.values()], np.float64).reshape(-1, 2)
-        row, pose = fit_pose(points, pixels, intrinsics, (height, width))
+        if args.local_submaps:
+            candidates = []
+            for source_id, observed in enumerate(view_matches):
+                # Deduplicate target features within each submap, too.
+                deduplicated = {}
+                for item in sorted(observed, key=lambda value: value[1]):
+                    deduplicated.setdefault(item[0], item)
+                values = list(deduplicated.values())
+                candidate, estimate = fit_pose(
+                    np.array([v[2] for v in values], np.float64).reshape(-1, 3),
+                    np.array([v[3] for v in values], np.float64).reshape(-1, 2),
+                    intrinsics, (height, width), feature_ids=[v[0] for v in values])
+                candidates.append((candidate, estimate, source_id))
+            # Never inspect held-out residuals/acceptance when choosing the map.
+            row, pose, selected = max(candidates, key=lambda value: (
+                value[0].get("fit_inliers", 0), value[0].get("fit_spatial_coverage", 0)))
+            row = {**row, "selected_source_view": selected,
+                   "candidate_diagnostics": [candidate for candidate, _, _ in candidates]}
+            render_world, render_colors = clouds[selected], cloud_colors[selected]
+        else:
+            row, pose = fit_pose(points, pixels, intrinsics, (height, width),
+                                 feature_ids=list(matches) if args.shared_feature_holdout else None)
+            render_world, render_colors = world, colors
         row.update(frame=index, matched_source_views=sorted({value[3] for value in matches.values()}))
         if pose is not None:
-            rendered, mask = render_points(world, colors, pose, intrinsics, (height, width))
+            rendered, mask = render_points(render_world, render_colors, pose, intrinsics, (height, width))
             row["render_coverage"] = float(mask.mean())
             row["render_rgb_mae_on_covered_pixels"] = float(np.mean(np.abs(rendered[mask].astype(float) - target[mask]))) if mask.any() else None
             cv2.imwrite(str(output / f"frame-{index:03d}.jpg"), cv2.cvtColor(np.concatenate([target, rendered], axis=1), cv2.COLOR_RGB2BGR))
@@ -157,6 +191,8 @@ def main():
               "correspondence_filter": "SIFT ratio.7, past depth-confidence above each view's median; deduplicate target features",
               "acceptance": "at least30 fitted inliers, fit and withheld fractions>=.5, fitted coverage>=.1, withheld median<=3px",
               "point_count": len(world), "accepted_targets": sum(row["usable"] for row in rows), "targets": rows,
+              "map_mode": "single-view local submaps; training-inlier selection; shared target-feature holdout" if args.local_submaps else "pooled global map",
+              "shared_feature_holdout": args.local_submaps or args.shared_feature_holdout,
               "limitations": "Estimated depth, intrinsics and pose are not ground truth. Current observed RGB is used for localization. No generator conditioning or dynamic map updates tested."}
     (output / "report.json").write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps(report, indent=2))

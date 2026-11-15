@@ -1,0 +1,289 @@
+/home/npow/code/iteratehack/scripts/check_lingbot_geometry.py:79: RuntimeWarning: invalid value encountered in cast
+  xy = np.rint(projected[:, :2] / np.maximum(projected[:, 2:], 1e-8)).astype(np.int32)
+{
+  "scope": "frozen past-only point map localization and rendering prerequisite; not Gaussian memory improvement",
+  "source_frames": [
+    12,
+    20,
+    28,
+    36,
+    44,
+    52
+  ],
+  "target_frames": [
+    56,
+    60,
+    460,
+    476,
+    492,
+    508
+  ],
+  "geometry_sha256": "f488a26e970a2c6769d43ce160d1847710673652e188ca0143cdbadf24f56328",
+  "video_sha256": "be8baaab36be920de01eb673a351186e483f25c46c4b8ddbee0288b808ce6ee4",
+  "preprocessing": "same pinned two-stage upper-bound resize as source DA3 inputs",
+  "camera_intrinsics": "median of predicted past-view intrinsics; target RGB only used to fit pose",
+  "correspondence_filter": "SIFT ratio.7, past depth-confidence above each view's median; deduplicate target features",
+  "acceptance": "at least30 fitted inliers, fit and withheld fractions>=.5, fitted coverage>=.1, withheld median<=3px",
+  "point_count": 106113,
+  "accepted_targets": 1,
+  "targets": [
+    {
+      "usable": true,
+      "correspondences": 100,
+      "reason": "accepted",
+      "fit_inliers": 57,
+      "fit_inlier_fraction": 0.8382352941176471,
+      "fit_spatial_coverage": 0.34778995193773404,
+      "withheld_matches": 32,
+      "withheld_fraction_within3px": 0.78125,
+      "withheld_median_residual_px": 1.3172401832895537,
+      "withheld_p90_residual_px": 48.701379856251805,
+      "estimated_world_to_camera": [
+        [
+          0.36372421979203273,
+          0.006903972305009004,
+          -0.9314810932612044,
+          0.036796306355111566
+        ],
+        [
+          -0.0030034613708400785,
+          0.9999760276688427,
+          0.0062388546573372864,
+          -0.012234821478256348
+        ],
+        [
+          0.9315018363677395,
+          0.0005284449386420172,
+          0.3637362362887095,
+          0.010644983658149849
+        ]
+      ],
+      "frame": 56,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "render_coverage": 0.22973356009070295,
+      "render_rgb_mae_on_covered_pixels": 22.149280279662758
+    },
+    {
+      "usable": false,
+      "correspondences": 63,
+      "reason": "insufficient cross-validated geometry agreement",
+      "fit_inliers": 23,
+      "fit_inlier_fraction": 0.5111111111111111,
+      "fit_spatial_coverage": 0.0998870389061867,
+      "withheld_matches": 18,
+      "withheld_fraction_within3px": 0.6111111111111112,
+      "withheld_median_residual_px": 2.0166585588495143,
+      "withheld_p90_residual_px": 134.19083202019593,
+      "estimated_world_to_camera": [
+        [
+          0.14889016325173987,
+          0.035438837590542595,
+          -0.9882185021932657,
+          0.031649590415634136
+        ],
+        [
+          -0.01255998008016911,
+          0.9993447607072873,
+          0.03394548787807429,
+          -0.011078788611873372
+        ],
+        [
+          0.9887739712326857,
+          0.007357855470575533,
+          0.14923771566068048,
+          0.02725560833372094
+        ]
+      ],
+      "frame": 60,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "render_coverage": 0.16216695011337867,
+      "render_rgb_mae_on_covered_pixels": 27.45099410093948
+    },
+    {
+      "usable": false,
+      "correspondences": 152,
+      "reason": "insufficient cross-validated geometry agreement",
+      "fit_inliers": 52,
+      "fit_inlier_fraction": 0.5252525252525253,
+      "fit_spatial_coverage": 0.33796106305158596,
+      "withheld_matches": 53,
+      "withheld_fraction_within3px": 0.41509433962264153,
+      "withheld_median_residual_px": 3.6064424204377326,
+      "withheld_p90_residual_px": 21.81612095762175,
+      "estimated_world_to_camera": [
+        [
+          0.9304853310575516,
+          0.0524750386574525,
+          -0.3625512639677561,
+          0.005556378200552331
+        ],
+        [
+          -0.044057417553767096,
+          0.9985337521636944,
+          0.03145297678100873,
+          -0.008117869017580452
+        ],
+        [
+          0.3636701701338889,
+          -0.013293461091548936,
+          0.9314329236434559,
+          0.010217280107681786
+        ]
+      ],
+      "frame": 460,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "render_coverage": 0.28787556689342403,
+      "render_rgb_mae_on_covered_pixels": 28.231130256410257
+    },
+    {
+      "usable": false,
+      "correspondences": 179,
+      "reason": "insufficient cross-validated geometry agreement",
+      "fit_inliers": 54,
+      "fit_inlier_fraction": 0.48214285714285715,
+      "fit_spatial_coverage": 0.16989360174889218,
+      "withheld_matches": 67,
+      "withheld_fraction_within3px": 0.5074626865671642,
+      "withheld_median_residual_px": 2.922562537126284,
+      "withheld_p90_residual_px": 41.8381970163695,
+      "estimated_world_to_camera": [
+        [
+          0.6197149092037687,
+          0.018865383947739747,
+          0.7846002348961343,
+          -0.08389228201768514
+        ],
+        [
+          0.001837667548040786,
+          0.9996734338205004,
+          -0.02548820691050048,
+          -0.006882962375474736
+        ],
+        [
+          -0.7848248558044958,
+          0.017237256221161477,
+          0.619477862969629,
+          0.1055193139037964
+        ]
+      ],
+      "frame": 476,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "render_coverage": 0.2530753968253968,
+      "render_rgb_mae_on_covered_pixels": 32.15947994250621
+    },
+    {
+      "usable": false,
+      "correspondences": 80,
+      "reason": "insufficient cross-validated geometry agreement",
+      "fit_inliers": 23,
+      "fit_inlier_fraction": 0.4423076923076923,
+      "fit_spatial_coverage": 0.07290691014825158,
+      "withheld_matches": 28,
+      "withheld_fraction_within3px": 0.42857142857142855,
+      "withheld_median_residual_px": 3.3166126360319588,
+      "withheld_p90_residual_px": 17.408599070110593,
+      "estimated_world_to_camera": [
+        [
+          -0.38657936896244405,
+          0.03570035392387879,
+          0.9215649061364632,
+          0.013738008448041102
+        ],
+        [
+          -0.03863101606382954,
+          0.9977466635048141,
+          -0.05485654074845861,
+          -0.04925589402195023
+        ],
+        [
+          -0.9214467082205431,
+          -0.056807395598821,
+          -0.3843291346161573,
+          0.12303345993261106
+        ]
+      ],
+      "frame": 492,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "render_coverage": 0.140093537414966,
+      "render_rgb_mae_on_covered_pixels": 30.683813859382905
+    },
+    {
+      "usable": false,
+      "correspondences": 112,
+      "reason": "insufficient cross-validated geometry agreement",
+      "fit_inliers": 44,
+      "fit_inlier_fraction": 0.6111111111111112,
+      "fit_spatial_coverage": 0.13938307660342644,
+      "withheld_matches": 40,
+      "withheld_fraction_within3px": 0.475,
+      "withheld_median_residual_px": 3.50797117951352,
+      "withheld_p90_residual_px": 97.53728554152302,
+      "estimated_world_to_camera": [
+        [
+          -0.4515177106319023,
+          0.05509193851572594,
+          0.8905597314589883,
+          -0.030719929565120468
+        ],
+        [
+          -0.012833351551175784,
+          0.9975877937501039,
+          -0.06821949024116467,
+          -0.023010713966502266
+        ],
+        [
+          -0.8921698616707975,
+          -0.04223117416529997,
+          -0.4497215425737691,
+          0.12007461909008348
+        ]
+      ],
+      "frame": 508,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3,
+        5
+      ],
+      "render_coverage": 0.1345450680272109,
+      "render_rgb_mae_on_covered_pixels": 31.505837327294113
+    }
+  ],
+  "map_mode": "pooled global map",
+  "shared_feature_holdout": true,
+  "limitations": "Estimated depth, intrinsics and pose are not ground truth. Current observed RGB is used for localization. No generator conditioning or dynamic map updates tested."
+}

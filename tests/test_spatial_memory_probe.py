@@ -35,3 +35,20 @@ def test_depth_backprojection_uses_world_to_camera_convention():
     extrinsics = np.column_stack([np.eye(3), [-2., 0, 0]])
     world = unproject(np.array([[252., 140.]]), np.array([5.]), intrinsics, extrinsics)
     np.testing.assert_allclose(world, [[2., 0, 5.]])
+
+
+def test_shared_feature_holdout_never_influences_fitted_camera():
+    rng = np.random.default_rng(127)
+    world = rng.uniform([-2, -1, 4], [2, 1, 8], (400, 3))
+    intrinsics = np.array([[330., 0, 252], [0, 330, 140], [0, 0, 1]])
+    pixels = cv2.projectPoints(world, np.array([.02, .15, -.01]),
+                              np.array([.15, -.03, .08]), intrinsics, None)[0].reshape(-1, 2)
+    ids = np.arange(400, dtype=np.uint64)
+    held_out = ((ids * 2654435761) % (2 ** 32)) < (2 ** 32 // 3)
+    good, good_pose = fit_pose(world, pixels, intrinsics, (280, 504), feature_ids=ids)
+    corrupted = pixels.copy()
+    corrupted[held_out] += [70, 50]
+    bad, bad_pose = fit_pose(world, corrupted, intrinsics, (280, 504), feature_ids=ids)
+    assert good["usable"] and not bad["usable"]
+    assert good["fit_inliers"] == bad["fit_inliers"]
+    np.testing.assert_array_equal(good_pose, bad_pose)
