@@ -1,0 +1,432 @@
+{
+  "status": "completed",
+  "model": "LingBot-World2 14B causal-fast stock",
+  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+  "initial_image_sha256": "e18c1a4f6277759c0d5eb8687e0c3ea1a0c3678c03a6c58b7849f16eddfd21a0",
+  "text_prompt_mode": "both",
+  "image_caption_sha256": "dfbadac400c6fd221ff280e56653eeda610d28015e6b88ccc754d02557fb5cec",
+  "task_id": "IF030",
+  "split": "if",
+  "seed": 42,
+  "turn_degrees_per_second": 60,
+  "fps": 16,
+  "max_chunks": 40,
+  "max_interactions": 40,
+  "native_fixed_controls": false,
+  "camera_embedding_audit": [],
+  "pose_retrieval": false,
+  "sink_rephase": false,
+  "adaptive_retrieval_pilot": false,
+  "player_temperature": "provider default",
+  "player_streaming": false,
+  "streaming_player_sha256": null,
+  "initial_neutral_bootstrap": false,
+  "kv_retention": false,
+  "decoprune": false,
+  "reanchor": false,
+  "budget_memory": false,
+  "denoise_schedule": "stock",
+  "text_encoder_offloaded_after_encoding": true,
+  "stationary_wait_only": false,
+  "fixed_actions": null,
+  "quantization": "none",
+  "cuda_allocator_configuration": "default",
+  "max_area": 399360,
+  "chunk_size": 4,
+  "local_attn_size": 18,
+  "sink_size": 6,
+  "decision_interval": 1,
+  "stock_knobs": true,
+  "controlled_ablation": false,
+  "sampler_timesteps_index": [
+    0,
+    250,
+    500,
+    750
+  ],
+  "sample_shift": 10,
+  "actions": [
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Beginning the reference plan to walk forward. The man is currently on a raised platform (wooden walkway) facing forward. I need to hold W for 3600ms (3.6 seconds) to execute 8 steps while moving forward on the raised platform. Current elapsed time is 0.0 seconds, so initiating the forward walk now.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4Kp2kQYhDAKRYW9My4M",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2912,
+        "output_tokens": 131,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Beginning the reference plan to walk forward. The man is currently on a raised platform (wooden walkway) facing forward. I need to hold W for 3600ms (3.6 seconds) to execute 8 steps while moving forward on the raised platform. Current elapsed time is 0.0 seconds, so initiating the forward walk now.\"}]",
+      "prompt_sha256": "8e025181ac223a59db1f97852c2356a205a1594bccc63a10543e07554b5d5cb2",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.0,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 21.104961947999982,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Continuing forward walk on the raised wooden platform. The man has moved noticeably forward (comparing initial image to current image), and the background buildings and environment have shifted backward, confirming forward motion. The current action (W) has been held for 0.8125 seconds out of the required 3.6 seconds. The man is still walking on the raised platform and has not yet reached the edge where he needs to jump down. Continue holding W to accumulate the remaining distance/time needed to reach the platform's edge.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4KpVbBjBgYmYVxeti61",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2740,
+        "output_tokens": 168,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Continuing forward walk on the raised wooden platform. The man has moved noticeably forward (comparing initial image to current image), and the background buildings and environment have shifted backward, confirming forward motion. The current action (W) has been held for 0.8125 seconds out of the required 3.6 seconds. The man is still walking on the raised platform and has not yet reached the edge where he needs to jump down. Continue holding W to accumulate the remaining distance/time needed to reach the platform's edge.\"}]",
+      "prompt_sha256": "f518b40d613029719619aa5c32452b6915f48e73dd658ea9919dea1eabd451a9",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 28.012970569000117,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          7.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Continuing forward walk on the raised wooden platform. Visual comparison shows the man has moved significantly forward compared to the initial image - the camera position has advanced along the wooden walkway, and the buildings/walls in the background have shifted proportionally backward, confirming forward locomotion. The man is still on the raised wooden platform with the stone drop visible ahead. Current action (W) has been held for approximately 1.81 seconds out of the required 3.6 seconds total. The man appears to be approaching the edge of the platform where the jump will be needed. Continue holding W to complete the remaining ~1.8 seconds of forward movement to reach the platform edge and accumulate the 8 walking steps before jumping.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4Kq3gVGfDJiTBL7dpLt",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2869,
+        "output_tokens": 208,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Continuing forward walk on the raised wooden platform. Visual comparison shows the man has moved significantly forward compared to the initial image - the camera position has advanced along the wooden walkway, and the buildings/walls in the background have shifted proportionally backward, confirming forward locomotion. The man is still on the raised wooden platform with the stone drop visible ahead. Current action (W) has been held for approximately 1.81 seconds out of the required 3.6 seconds total. The man appears to be approaching the edge of the platform where the jump will be needed. Continue holding W to complete the remaining ~1.8 seconds of forward movement to reach the platform edge and accumulate the 8 walking steps before jumping.\"}]",
+      "prompt_sha256": "fd4596d0a5fa1a4903c4afb53bad348574977be002bfbab22c26468db8daaf2d",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          7.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 35.87187310199988,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          11.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "EXTEND",
+      "action": "W",
+      "reason": "Continuing forward walk toward the platform edge. Current action (W) has been held for 2.8125 seconds out of the required 3.6 seconds total. Visual comparison between initial and latest image shows the man has moved forward significantly along the raised platform - the camera is now closer to the red building and the stone structure. The man has not yet reached the edge of the platform where the jump will occur. The remaining time needed is approximately 0.8 seconds (3.6 - 2.8125). Continue holding W to complete the final portion of the forward walk and accumulate the remaining steps before reaching the platform edge for the jump.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4Kqf2FW71bPZr69VYgV",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3038,
+        "output_tokens": 195,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"W\", \"reason\": \"Continuing forward walk toward the platform edge. Current action (W) has been held for 2.8125 seconds out of the required 3.6 seconds total. Visual comparison between initial and latest image shows the man has moved forward significantly along the raised platform - the camera is now closer to the red building and the stone structure. The man has not yet reached the edge of the platform where the jump will occur. The remaining time needed is approximately 0.8 seconds (3.6 - 2.8125). Continue holding W to complete the final portion of the forward walk and accumulate the remaining steps before reaching the platform edge for the jump.\"}]",
+      "prompt_sha256": "da397277b2b19aa70b348f260adf4e411926b6a4d8498c654580132cc898de62",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          11.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 43.65660645300022,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          15.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "STOP",
+      "action": "WAIT",
+      "reason": "The man has completed the forward walk phase and is now positioned at the edge of the raised platform, facing toward where he needs to jump. Comparing the initial and current images: in the initial image, the man is on the wooden walkway in the middle distance; in the current image, the man is much closer to the camera and at the platform's edge with the red building very prominent behind him. The forward walking phase (W for 3.6 seconds) has been completed - the current action held time is 3.8125 seconds, which exceeds the planned 3.6 seconds. The next phase of the goal is to jump down from the raised platform to the flat ground. I need to transition from the walking action to the jump action. Using WAIT to establish a clean action boundary before initiating the jump command.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4KrGjLUh6FQUpmxqxKN",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3194,
+        "output_tokens": 232,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"STOP\", \"action\": \"WAIT\", \"reason\": \"The man has completed the forward walk phase and is now positioned at the edge of the raised platform, facing toward where he needs to jump. Comparing the initial and current images: in the initial image, the man is on the wooden walkway in the middle distance; in the current image, the man is much closer to the camera and at the platform's edge with the red building very prominent behind him. The forward walking phase (W for 3.6 seconds) has been completed - the current action held time is 3.8125 seconds, which exceeds the planned 3.6 seconds. The next phase of the goal is to jump down from the raised platform to the flat ground. I need to transition from the walking action to the jump action. Using WAIT to establish a clean action boundary before initiating the jump command.\"}]",
+      "prompt_sha256": "e091e438c1c6543a2aa23d48e4f184aa115ff3fc3f6771c0d5268bb46c989e86",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          15.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 53.39280895000002,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          15.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "END",
+      "action": null,
+      "reason": "The goal has been successfully completed. Comparing the initial image with the current image: (1) Initial image shows the man running on the raised wooden platform in the middle distance, approaching the corner/edge. (2) Current image shows the man in a crouched/landing position on the flat ground level below the raised platform, having jumped down from the platform. The man's position has dropped significantly in elevation (no longer on the raised walkway), and he is now at ground level. The red building wall and stone structures are now looming large above him, confirming he has descended. The goal explicitly required: \"walk forward 8 steps, then jump down from the raised platform to the flat ground.\" The forward walking phase was completed during the previous W actions (3.6+ seconds of forward movement on the platform), accumulating approximately 8 steps. The jump down from the raised platform to the flat ground has now been visually achieved in the current image - the man is no longer on the elevated wooden platform but is now positioned at the lower ground level, demonstrating successful completion of the entire goal sequence.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4Krziwe7BecfAtWep22",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3385,
+        "output_tokens": 288,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"The goal has been successfully completed. Comparing the initial image with the current image: (1) Initial image shows the man running on the raised wooden platform in the middle distance, approaching the corner/edge. (2) Current image shows the man in a crouched/landing position on the flat ground level below the raised platform, having jumped down from the platform. The man's position has dropped significantly in elevation (no longer on the raised walkway), and he is now at ground level. The red building wall and stone structures are now looming large above him, confirming he has descended. The goal explicitly required: \\\"walk forward 8 steps, then jump down from the raised platform to the flat ground.\\\" The forward walking phase was completed during the previous W actions (3.6+ seconds of forward movement on the platform), accumulating approximately 8 steps. The jump down from the raised platform to the flat ground has now been visually achieved in the current image - the man is no longer on the elevated wooden platform but is now positioned at the lower ground level, demonstrating successful completion of the entire goal sequence.\"}]",
+      "prompt_sha256": "47889722b4d5c40f3f2834076f074032be4b2a6a65eda8426dced12727c26fa9",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          15.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 63.9693979409999
+    }
+  ],
+  "chunks": [
+    {
+      "index": 0,
+      "path": "chunk-000.mp4",
+      "frames": 13,
+      "pixel_sha256": "e67f7bc45da9c51871330978cac22672ddcf2b9b8c7b12e503a6a16363967c51",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.4357062149997546,
+        "mp4_encode": 0.3303860480000367
+      },
+      "elapsed_s": 25.229187109000122,
+      "sha256": "e9740d139c27bdeec194aff2bdb3f636a8d06a92fdcb26733a3019254aedc830"
+    },
+    {
+      "index": 1,
+      "path": "chunk-001.mp4",
+      "frames": 16,
+      "pixel_sha256": "a884f8739c328abab45eeba98dddd09e480b0f3fb22acd9f765eaaee8147080d",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5372080960000858,
+        "mp4_encode": 0.3862270750000789
+      },
+      "elapsed_s": 32.74260303099982,
+      "sha256": "df56cb9d049657f1a061d4315686bc7a235673737088ed93eaad8d2197662847"
+    },
+    {
+      "index": 2,
+      "path": "chunk-002.mp4",
+      "frames": 16,
+      "pixel_sha256": "70cbb3f2844beec876c6f9b36bd95b261ad4039d719ed72a8fd7308c1f98bcf8",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5295260200000484,
+        "mp4_encode": 0.3409090290001586
+      },
+      "elapsed_s": 40.98942643200007,
+      "sha256": "7e4d727d71c2f2561b83c6866ce443e043cc86dac4a2fb99ca171fef42f99cfb"
+    },
+    {
+      "index": 3,
+      "path": "chunk-003.mp4",
+      "frames": 16,
+      "pixel_sha256": "8738b4a11b80f6ff886e3374cb029489bd4138ed3ab0114ff99cbd0211da8afc",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5327448519997233,
+        "mp4_encode": 0.31005206500003624
+      },
+      "elapsed_s": 49.18334893100018,
+      "sha256": "9ed07c9779c6b981b6933c403ef6fc6ef4525c72b622ac69c520167ff759ed41"
+    },
+    {
+      "index": 4,
+      "path": "chunk-004.mp4",
+      "frames": 16,
+      "pixel_sha256": "2e1cf0e46854c94a44549f343971c2402e0dc95bf81a56e15e87253e28583c2f",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5403004849999888,
+        "mp4_encode": 0.2772174069996254
+      },
+      "elapsed_s": 59.128037781999865,
+      "sha256": "e7b1ce9cc5d3b14e78aaa0bd1e00131a7d742104e532863892f3613e1225ee11"
+    }
+  ],
+  "published_score_reproduced": false,
+  "agent_interactions": 6,
+  "adapter_sha256": "6adfe0e38f5239d61b012e9947ad4e9e2012711ba5675e423eba6173ffc6cb9a",
+  "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+  "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+  "deviations": [
+    "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+    "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+    "Official 480p demo area; single NVIDIA H200, BF16 and valid-length SDPA backend",
+    "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+    "Claude diagnostic scoring differs from published Gemini judgments"
+  ],
+  "hardware": {
+    "gpu": "NVIDIA H200",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4"
+  },
+  "attention_backend": "sdpa",
+  "optional_torch_dlpack_addon_disabled": false,
+  "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+  "checkpoint_loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "warm_runtime": {
+    "loaded_this_job": false,
+    "load_seconds": 0.0,
+    "job_index": 24
+  },
+  "generated_frames": 77,
+  "generated_seconds": 4.8125,
+  "termination": "agent_end",
+  "elapsed_s": 63.972525289999794,
+  "camera_diagnostics": {
+    "chunks": 5,
+    "path_length": 15.0,
+    "net_yaw_degrees": 0.0,
+    "total_turn_degrees": 0.0,
+    "max_distance_from_start": 15.0,
+    "final_distance_from_start": 15.0,
+    "revisited_start_at_chunk": null,
+    "wait_chunks": 1,
+    "wait_pose_changes": 0
+  },
+  "peak_allocated_bytes": 72821826048
+}

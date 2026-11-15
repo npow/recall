@@ -1,0 +1,429 @@
+{
+  "task_id": "IF010",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "932f214990db17533d608c7c34c46707db138e03dbee96dbb89c212d07f080cc",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF010",
+    "perspective": "third-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "机器狗向左转动身体，随后一直向前直线行走。",
+    "trajectory_evidence_zh": "在主视图的第1张接触表中，机器狗初始朝向右侧，随后向左转动直到背对镜头（朝向正前方）。在第2至第4张接触表中，机器狗保持背对镜头的姿态，一直向场景深处直线行走。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.83,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "视频第2到第4帧，黄色的波士顿动力机器狗迅速发生形变，完全变成了一只背着黑色背包的棕色真实生物狗，属于严重的身份突变。"
+      },
+      "contact_support": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "突变后的生物狗在地面上行走时脚部与地面有接触，但初始机器狗在形变过程中的物理支撑状态混乱。"
+      },
+      "causal_response": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "背景环境发生了严重的硬重置，初始画面中悬挂的汽车底盘和两侧的工作台在几帧内完全消失，被替换成了一条停满汽车的通道。"
+      },
+      "lighting_shadow": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "由于主体和背景环境发生了剧烈的突变和重置，初始机器狗在抛光地面上的清晰倒影和光影关系在突变后未能保持一致。"
+      },
+      "motion_kinematics": {
+        "score": 1,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "主体未能展现出机器狗应有的四足机械步态，而是直接突变成了一只真实的生物狗并以生物的步态行走。"
+      },
+      "collision_boundary": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "突变后的生物狗在通道中向前行走，未与两侧的汽车发生明显的穿模或碰撞，但由于环境是凭空生成的，边界合理性大打折扣。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "no static tail observed",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "主体机器狗未能完成左转并直行的动作，而是在起步时就突变成了真实的狗。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "初始的工厂环境（悬挂的汽车、工作台）在第2到第6帧之间完全消失，发生了严重的硬重置。",
+      "post_completion_phase_zh": "突变后的通道环境在后续的行走过程中相对保持稳定。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial robot dog vs biological dog",
+        "anchors": [
+          "screen center position",
+          "continuous motion trajectory"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-10"
+      ],
+      "continuous_camera_motion": "no",
+      "tracked_structural_anchors": [
+        "悬挂的汽车底盘",
+        "左侧的工作台"
+      ],
+      "newly_revealed_regions_zh": "第5帧之后出现的停满汽车的通道是完全凭空出现的新区域，替换了原有的工厂环境。",
+      "evidence_zh": "背景的剧烈变化无法用摄像机的平移或旋转来解释，属于场景的硬重置。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "2-6",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "悬挂的汽车底盘",
+        "两侧的工作台"
+      ],
+      "evidence_zh": "在第2到第6帧之间，初始画面中悬挂在半空的汽车底盘和两侧的工厂工作台完全消失，背景被硬重置为一条停放着多辆汽车的狭窄通道。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作未完成，不适用完成后的调整。"
+    },
+    "final_state_check": {
+      "window": "75-78",
+      "visible_key_objects": [
+        "生物狗"
+      ],
+      "reappearance_consistency_zh": "不适用，主体已发生突变。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "主体在画面中持续向前移动。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "机器狗"
+      ],
+      "correspondence_anchors": [
+        "screen center position"
+      ],
+      "visible_intervals": [
+        "0-10"
+      ],
+      "before_developing_after_checkpoints": [
+        {
+          "surface": "机器狗身体",
+          "before_frame": 0,
+          "developing_frame": 3,
+          "after_frame": 6,
+          "observed_change_zh": "黄色的机械身体突变为棕色的生物狗毛发和黑色背包。"
+        }
+      ],
+      "intrinsic_color_drift": "verified",
+      "material_or_texture_drift": "verified",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "主体发生了严重的身份和材质突变，无法用光影或视角解释。"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "yes",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "主体（突变后的生物狗）在视频中持续向前行走。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "fail",
+      "instruction_following_score": 0,
+      "prompt_directed_forward_progress": "partial",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "机器狗在起步时迅速变成了一只真实的生物狗，随后这只生物狗一直向前行走。",
+      "trajectory_evidence_zh": "视频前几帧主体有轻微左转和向前的趋势，但随即发生严重的身份突变，变成了一只真实的狗向前走。",
+      "failure_reason_zh": "主体机器狗未能保持身份完成动作，而是变成了真实的狗。"
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "avoided",
+      "solid_interpenetration": "no",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "partial",
+      "evidence_zh": "主体在通道中行走，未与两侧的汽车或墙壁发生碰撞，但背景环境的突变使得边界互动的评估意义不大。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": "提示词未要求与特定边界互动。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "yes",
+      "proxy_evidence_observed": [
+        "weight_transfer",
+        "joint_motion"
+      ],
+      "proxy_supports_expected_locomotion": "partial",
+      "evidence_zh": "突变后的生物狗四肢可见且有交替行走的动作，但初始机器狗的机械步态未能体现。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "机器狗",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [],
+      "identity_failure": "morphing",
+      "evidence_zh": "视频第2到第4帧，黄色的波士顿动力机器狗迅速发生形变，变成了一只背着黑色背包的棕色真实生物狗。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于发生了灾难性的身份突变和背景硬重置，交互质量评级为1，主体身份得分不计入加权平均。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "主体发生灾难性的身份突变（机器狗变成真狗），且背景环境发生严重的硬重置。",
+      "positive_evidence_zh": "突变后的生物狗在地面上保持了向前的行走。",
+      "evidence_zh": "视频开始后不久，主体机器狗就完全变成了真实的生物狗，同时初始的工厂环境和悬挂的汽车也完全消失，被替换成了另一条停满汽车的通道，属于灾难性的生成失败。",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频生成出现了灾难性的失败，黄色的机器狗在起步时迅速突变成了一只真实的生物狗，同时初始的工厂背景和悬挂的汽车也发生了严重的硬重置，完全变成了另一个场景。",
+    "task_id": "IF010"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 7109,
+      "output_tokens": 213
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 39172,
+      "output_tokens": 3772
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 79,
+      "sheets_count": 4,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 7.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 78,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 7.8,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 4,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "83b6936be1ad27fdebead90f1a3e9e4d481febc0c2c38ba22efc2d47e733c095",
+  "score_prompt_sha256": "688fde4840650ddd990e17422c41803d93fbe41743cac7f150532f40c7213564",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "budget-if-IF010-seed42"
+}

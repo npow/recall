@@ -1,0 +1,392 @@
+{
+  "task_id": "OE034",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "f4b892376b35e3de717af86fc9122234850d85b89b1de5cb14dd56328c163750",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE034",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头先向右转动，随后向左转动并回到了初始的视角。",
+    "trajectory_evidence_zh": "在主视图表1中，帧0到帧18显示镜头持续向右平移，初始画面中的斑马向左移出视野；从帧20开始到主视图表2的帧38，镜头向左平移，初始的斑马重新进入视野，最终画面回到了与起始帧非常相似的视角。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头返回后，初始帧中位于左侧斑马后方的鸵鸟完全消失，且画面中凭空多出了一只斑马（斑马总数从三只变为四只），实体数量和身份发生了严重错误。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头返回后，原有的三只斑马的身体姿态、四肢位置和头部角度与初始帧完全一致，没有任何在镜头外持续活动或进食的迹象，表现为完全冻结。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "除了鸵鸟消失和斑马数量增加的错误外，原有斑马的精确姿态和地上的生菜分布与第一帧相比没有任何合理的演进差异，时间仿佛停滞。"
+      },
+      "process_accumulation": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "水泥地上的生菜堆在镜头返回后没有任何被消耗、减少或被拨弄散开的累积变化，与初始状态完全相同。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "The returned state is an artificial freeze of the initial state; no separate static tail penalty is applied as the failure is captured in the category scores.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 30,
+      "evidence_zh": "镜头向右转动后，在第30帧左右向左转回并重新对准了初始的场景区域。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头移动期间，背景的树木和木栅栏结构基本保持稳定。",
+      "post_completion_phase_zh": "镜头返回后，背景的木栅栏和水泥地与初始帧匹配，但鸵鸟消失。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial zebras and returned zebras",
+        "anchors": [
+          "concrete pad",
+          "wooden fencing"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-15",
+        "15-38"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "wooden fencing",
+        "concrete pad edge"
+      ],
+      "newly_revealed_regions_zh": "镜头向右转动时展示了右侧的栅栏和树木区域。",
+      "evidence_zh": "画面通过连续的平移展示了视角的向右转动和向左返回，符合摄像机运动特征。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "镜头运动是连续的，没有发生突兀的硬切。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "镜头返回后画面保持静止，没有额外的违规动作。"
+    },
+    "final_state_check": {
+      "window": "30-38",
+      "visible_key_objects": [
+        "three striped zebras",
+        "chopped green lettuce",
+        "concrete pad",
+        "wooden fencing"
+      ],
+      "reappearance_consistency_zh": "镜头返回后，原有的三只斑马和生菜重新出现，但鸵鸟消失，且多出了一只斑马，原有斑马的姿态呈现不合理的冻结。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "yes",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "zebras eating lettuce and moving slightly",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "三只斑马在吃生菜，左侧斑马后方有一只鸵鸟。",
+      "hidden_interval_zh": "镜头向右转动后返回，斑马应在镜头外继续进食和活动。",
+      "reappeared_state_zh": "镜头返回后，原有的三只斑马姿态完全冻结，鸵鸟消失，且凭空多出了一只斑马。",
+      "post_completion_static_tail": "yes",
+      "static_tail_first_frame": 30,
+      "terminal_static_reasonable": "no",
+      "terminal_pose_or_process_state": "unfinished_contact",
+      "support_and_pose_evidence_zh": "斑马保持低头进食的姿势完全静止，没有自然的动作变化。",
+      "terminal_state_reasoning_zh": "进食是一个持续的过程，镜头返回后斑马姿态完全冻结是不合理的。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无额外扣分，冻结状态已在各维度评分中体现。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "concrete pad",
+        "wooden fencing"
+      ],
+      "articulation_or_local_state_change_zh": "无，返回后原有斑马的姿态与初始帧完全一致。",
+      "uniquely_matched_anchor_relative_change_zh": "无，斑马相对于地面和栅栏的位置没有变化。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "无特定方向，应有局部的进食动作。",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "无，斑马姿态冻结。",
+      "unchanged_coupled_details_zh": "斑马的四肢位置、头部角度以及地上的生菜分布与初始帧完全相同，表现为复制粘贴式的冻结。",
+      "accumulated_change_zh": "无有效累积变化，生菜没有减少，斑马没有真实的动作进展，仅出现了鸵鸟消失和斑马数量增加的错误。",
+      "evidence_zh": "镜头返回后，原有的斑马姿态和生菜分布完全冻结，没有表现出任何时间流逝带来的合理变化，且出现了严重的实体一致性错误。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向右平移，随后向左平移返回了初始视角。",
+      "trajectory_evidence_zh": "视频前段镜头向右移动，后段向左移动并重新看到了初始的栅栏和地面区域，完成了要求的运镜轨迹。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "uncertain",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "three zebras, ostrich, lettuce, fencing",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "count",
+        "species",
+        "appearance"
+      ],
+      "identity_failure": "replacement",
+      "evidence_zh": "镜头返回后，左侧斑马后方的鸵鸟消失，且画面中凭空多出了一只斑马（总数变为四只）。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于视频在镜头返回后表现为完全冻结（缺乏有效的状态演进），演进质量评级为1，最终得分被限制为1，一致性错误作为诊断信息记录。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "镜头返回后，原有的斑马姿态和生菜分布呈现不合理的完全冻结，且出现了鸵鸟消失和斑马数量增加的严重一致性错误，缺乏任何有效的状态演进。",
+    "task_id": "OE034"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4716,
+      "output_tokens": 233
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 30395,
+      "output_tokens": 3550
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "36cc50a5d9c327508e2e9c4526e5dd6e4291983122f6aa41e3ef120a2748c763",
+  "score_prompt_sha256": "113cce46a3c46dca84c0d7525016cdf8fdfec1dab3d7d1f14561fb887a9cf5d4",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "budget-outsight-OE034-seed42"
+}

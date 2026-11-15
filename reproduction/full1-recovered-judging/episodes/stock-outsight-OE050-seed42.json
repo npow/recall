@@ -1,0 +1,394 @@
+{
+  "task_id": "OE050",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "1f60e856569effcd27f4725f4f5c5242dbd5e05c1beb62875ed1dc2af58cb1e0",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE050",
+    "perspective": "third-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头先向左转动，随后向前移动，最后向右转动回到初始视角的赛道画面。",
+    "trajectory_evidence_zh": "在第1张图的第0-10帧，镜头明显向左平移/转动，画面左侧出现铁丝网；第11-18帧，镜头向前移动，靠近铁丝网；从第19帧开始到第2张图结束，镜头向右转动，铁丝网移出画面，重新回到初始的赛道视角。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 5.0,
+    "final_score_1_to_5": 5,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "绿色赛车、粉蓝赛车、赛道、草地和Explora广告牌在整个视频中（包括被遮挡后重新出现时）均保持了高度一致的外观、颜色和形状，没有发生身份漂移或复制。"
+      },
+      "hidden_state_progression": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "在镜头向左转动并向前移动导致赛车不可见的期间，赛车没有冻结，而是继续在赛道上行驶，重新出现时两车的相对位置甚至发生了合理的改变（粉蓝车超越了绿车）。"
+      },
+      "revealed_state_difference": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "当镜头向右转回赛道时，两辆赛车都处于赛道上明显更靠前的位置，与初始位置相比有显著的推进。"
+      },
+      "trajectory_continuity": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "赛车重新出现时，继续沿着赛道向前行驶，方向与初始状态一致，没有出现位置跳跃或倒退的现象。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "无静止尾部，赛车在视频结束时仍在行驶。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 38,
+      "evidence_zh": "镜头完成了向左转、向前移动并向右转回原视角的完整指令序列。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头转动和移动期间，赛道边缘、草地、防护栏和轮胎墙等背景元素保持了良好的空间一致性。",
+      "post_completion_phase_zh": "镜头转回后，赛道和广告牌的背景与初始场景一致且符合视角前移的逻辑。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "初始视角的赛车与转回视角后的赛车",
+        "anchors": [
+          "赛道边界",
+          "Explora广告牌"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-10",
+        "10-25",
+        "25-38"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "防护栏",
+        "轮胎墙",
+        "赛道边界"
+      ],
+      "newly_revealed_regions_zh": "镜头向左转时展示了赛道内侧的防护栏和轮胎墙区域。",
+      "evidence_zh": "画面的变化完全由镜头的左转、前移和右转引起，运动平滑且符合透视规律。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频中没有出现硬切或重置，镜头运动和场景过渡自然连贯。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "视频在完成指令后自然结束，没有多余的失败或违规动作。"
+    },
+    "final_state_check": {
+      "window": "26-38",
+      "visible_key_objects": [
+        "green race car",
+        "pink-and-blue race car",
+        "paved track",
+        "Explora advertising boards"
+      ],
+      "reappearance_consistency_zh": "重新出现的赛车和广告牌在颜色、涂装和形状上与初始状态高度一致，且位置变化符合物理运动规律。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 5,
+      "named_process": "赛车在赛道上行驶",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "两辆赛车在赛道弯道处向右行驶，粉蓝赛车在左，绿色赛车在右（靠前）。",
+      "hidden_interval_zh": "镜头向左转并向前移动，赛车移出画面，在此期间赛车继续在赛道上行驶。",
+      "reappeared_state_zh": "镜头向右转回，两辆赛车出现在赛道更远处，且粉蓝赛车已超越绿色赛车。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "active_vehicle_state",
+      "support_and_pose_evidence_zh": "视频结束时赛车仍在赛道上高速行驶，车轮保持旋转模糊。",
+      "terminal_state_reasoning_zh": "赛车处于持续的运动状态，没有不自然的冻结。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无静止尾部惩罚。",
+      "camera_independent_subject_motion": "yes",
+      "stable_world_anchors_compared": [
+        "赛道边界",
+        "Explora广告牌"
+      ],
+      "articulation_or_local_state_change_zh": "两辆赛车的相对位置发生变化（粉蓝赛车超越了绿色赛车）。",
+      "uniquely_matched_anchor_relative_change_zh": "赛车相对于赛道弯道和广告牌的位置明显向前推进。",
+      "two_independent_motion_evidence_requirements_met": "yes",
+      "expected_world_motion_direction_zh": "沿赛道向前（画面中向右）行驶。",
+      "returned_motion_direction_consistent": "yes",
+      "rigid_vehicle_local_progression_zh": "车轮保持旋转模糊，车辆在赛道上的相对位置发生改变。",
+      "vehicle_front_rear_identification_zh": "赛车的前鼻翼和后尾翼特征清晰，始终保持车头向前。",
+      "vehicle_world_displacement_vs_heading_zh": "赛车沿车头朝向在赛道上向前位移。",
+      "vehicle_motion_direction": "forward",
+      "unexplained_reverse_motion": "no",
+      "subject_relative_change_zh": "赛车在赛道上的位置前移，且两车相对位置改变。",
+      "unchanged_coupled_details_zh": "无明显复制粘贴的冻结细节。",
+      "accumulated_change_zh": "赛车在不可见期间完成了沿赛道的前进和超车动作。",
+      "evidence_zh": "赛车在镜头移开期间继续行驶，重新出现时位置明显靠前且发生了超车，展现了极高质量的物理演变。",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向左转动约90度，向前移动一段距离，然后向右转回赛道方向。",
+      "trajectory_evidence_zh": "画面从赛道左转至防护栏，沿防护栏前移后，右转重新看到赛道和赛车，完全符合提示词要求。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "镜头完成了复杂的转动和移动，赛车也保持了高速行驶。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "green race car, pink-and-blue race car",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "body_proportions",
+        "colors",
+        "surface_appearance"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "两辆赛车在镜头移开前后保持了完全一致的颜色、涂装和车型特征，没有发生任何身份漂移或变形。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 5,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": null,
+      "evidence_zh": "赛车展现了高质量的持续运动和超车演变，身份一致性可以正常计入评分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 5,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 5
+    },
+    "summary_zh": "视频完美执行了复杂的镜头运动指令，且赛车在镜头移开期间不仅保持了身份一致，还合理地继续向前行驶并发生了超车，展现了极高的物理演变质量。",
+    "task_id": "OE050"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4743,
+      "output_tokens": 241
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 31127,
+      "output_tokens": 3590
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "7fe87420a0ce03249006ab7d52adef3cab001b042b09635a2505303b56c9d37c",
+  "score_prompt_sha256": "3804b9f6944c1720dc4519e2a85bc243ef4c6bd64d5f4aaf7d14841f8d942db5",
+  "scores": {
+    "official": 5.0,
+    "final_score": 5.0
+  },
+  "episode_id": "stock-outsight-OE050-seed42"
+}

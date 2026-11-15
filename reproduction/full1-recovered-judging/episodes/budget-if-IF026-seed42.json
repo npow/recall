@@ -1,0 +1,410 @@
+{
+  "task_id": "IF026",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "dfb2c8ae90bf1c988dabb96e110c8b0c86ce70dccb2cf533726927780596fe79",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF026",
+    "perspective": "third-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "partial",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "女子沿着花园台阶向前走，但手臂自然下垂或摆动，并没有明显地用手顺着绳索扶手滑动。",
+    "trajectory_evidence_zh": "在整个视频中，女子持续在狭窄的花园台阶上向前行走，完成了主要的行进轨迹，但她的手并未与旁边的绳索扶手产生明显的接触或滑动动作。",
+    "failure_reason_zh": "女子完成了向前走上台阶的轨迹，但没有执行“一只手顺着绳索扶手滑动”的动作细节。",
+    "confidence_1_to_5": 4
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 3.33,
+    "final_score_1_to_5": 3,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "女子的白色外套、黑色贝雷帽和整体外观在整个视频中保持高度一致，没有发生形变或颜色漂移。"
+      },
+      "contact_support": {
+        "score": 3,
+        "weight": 2.0,
+        "answer": "partial",
+        "evidence_zh": "女子沿着台阶向上移动，但双脚被遮挡，身体的垂直位移显得过于平滑，缺乏真实的踩踏感和高度变化；此外，她的手并未接触绳索扶手。"
+      },
+      "causal_response": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "女子在狭窄的路径中穿行，但周围密集的植物和花朵在她经过时没有任何物理反馈或摇晃；绳索扶手也因未被触碰而保持静止。"
+      },
+      "motion_kinematics": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "女子的腿部有交替走动的动作，但整体步态略显僵硬，身体向上滑行，缺乏上楼梯时应有的自然重心转移和膝盖弯曲。"
+      },
+      "collision_boundary": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "女子保持在狭窄的台阶路径内行走，没有与两侧的木柱、绳索扶手或石阶发生明显的穿模现象。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "视频中女子持续移动，未应用静止尾部惩罚。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "女子虽然沿着台阶向上走，但在整个视频中并未用手沿着绳索扶手滑动。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "视频中背景的植物、台阶和木柱在镜头跟随移动时保持结构稳定，没有发生变形或突变。",
+      "post_completion_phase_zh": "不适用，动作在整个视频中持续进行。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "背景台阶和木柱",
+        "anchors": [
+          "右侧的木柱",
+          "左侧的岩石和植物"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-68"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "右侧的木柱",
+        "左侧的岩石和植物"
+      ],
+      "newly_revealed_regions_zh": "随着镜头向前推进，台阶上方的新植物和路径逐渐显露。",
+      "evidence_zh": "镜头平稳地跟随女子向前和向上移动，背景元素的透视变化符合正常的摄像机运动。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频连贯，没有出现硬重置或不合理的镜头跳跃。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作未完全完成，且没有出现需要额外扣分的违规后继动作。"
+    },
+    "final_state_check": {
+      "window": "60-68",
+      "visible_key_objects": [
+        "女子",
+        "白色外套",
+        "黑色贝雷帽",
+        "台阶",
+        "绳索扶手",
+        "植物"
+      ],
+      "reappearance_consistency_zh": "不适用，没有物体离开后重新进入画面。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "not_applicable",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 5,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "yes",
+      "stable_world_anchors_compared": [
+        "台阶",
+        "木柱"
+      ],
+      "articulation_or_local_state_change_zh": "女子的双腿交替走动。",
+      "uniquely_matched_anchor_relative_change_zh": "女子相对于台阶和木柱不断向上方移动。",
+      "two_independent_motion_evidence_requirements_met": "yes",
+      "expected_world_motion_direction_zh": "沿着台阶向上",
+      "returned_motion_direction_consistent": "yes",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "女子相对于台阶向上移动，双腿有走动动作。",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "女子在整个视频中持续向上攀登了一段距离。",
+      "evidence_zh": "女子在整个视频中保持向上的运动，没有出现静止或无效重复。",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "女子在整个视频中持续向上走动。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "yes",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "女子在整个视频中持续沿着台阶向上移动。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "partial",
+      "instruction_following_score": 1,
+      "prompt_directed_forward_progress": "yes",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "女子沿着花园台阶向上走，但右手一直垂在身侧，没有触摸或沿着绳索扶手滑动。",
+      "trajectory_evidence_zh": "女子在整个视频中持续向台阶上方移动，但未能执行触摸扶手的动作。",
+      "failure_reason_zh": "女子未能按照提示要求用手沿着绳索扶手滑动。"
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "partial",
+      "observed_outcome": "avoided",
+      "solid_interpenetration": "no",
+      "support_after_contact": "plausible",
+      "boundary_response_plausible": "yes",
+      "evidence_zh": "女子在狭窄的台阶路径上行走，没有与两侧的木柱、绳索或植物发生明显的穿模。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "绳索扶手和台阶",
+      "target_type": "solid_boundary",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "yes",
+      "observed_trigger": "none",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "yes",
+      "evidence_zh": "绳索扶手和台阶在整个视频中保持结构稳定，没有发生无故消失或变形。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [
+        "joint_motion"
+      ],
+      "proxy_supports_expected_locomotion": "partial",
+      "evidence_zh": "女子的双脚被植物遮挡，虽然能看到腿部的交替运动，但身体缺乏明显的重心转移和垂直起伏，上楼梯的动作显得有些平滑。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "女子",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "clothing",
+        "body_proportions",
+        "face_or_hair",
+        "colors"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "女子的白色外套、黑色贝雷帽和发型在整个视频中保持高度一致，没有发生颜色漂移或形变。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 3,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": 3,
+      "evidence_zh": "女子表现出了明确的向上行走动作，交互质量达到3级，因此身份一致性正常计入评分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 3,
+      "interaction_opportunity_reached": "partial",
+      "physical_response_observed": "partial",
+      "core_failure_zh": "女子上楼梯的动作显得平滑且缺乏真实的踩踏感，且完全没有与绳索扶手产生互动。",
+      "positive_evidence_zh": "女子成功沿着台阶路径向上移动，没有发生穿模或严重的物理错误。",
+      "evidence_zh": "女子沿着台阶向上走，但步伐缺乏真实的重心转移和高度变化，且未能与绳索扶手互动，周围植物也没有物理反馈。",
+      "final_score_cap_applied": 3
+    },
+    "summary_zh": "女子沿着花园台阶向上走，但步伐略显僵硬且缺乏真实的踩踏感，且未能按照提示与绳索扶手产生互动，周围植物也缺乏物理反馈。",
+    "task_id": "IF026"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 5894,
+      "output_tokens": 238
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 38147,
+      "output_tokens": 3638
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 69,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 68,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 6.8,
+          "filled_cells": 19
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 4,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "50012c498db9e1778a79d8f66cd35fa84031c2c65153a6df7b20f717f47e97d7",
+  "score_prompt_sha256": "86d0e82a5d57e66adbb3b94ff3ef7d6dcaba77cdd6bb2fab8db53d4238b8d26e",
+  "scores": {
+    "official": 3.0,
+    "final_score": 3.0
+  },
+  "episode_id": "budget-if-IF026-seed42"
+}

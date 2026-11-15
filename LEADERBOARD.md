@@ -117,6 +117,17 @@ The development gain did not reproduce on the new seed; the frozen promotion con
 The60-update real-data fit passed frozen-base and checkpoint-reload checks, but correct memory beats both controls on only1/2 held-out sources. The predeclared surrogate gate failed; the adapter is not promoted. [Raw results and video diagnostic](reproduction/learned-memory-reader/README.md).
 
 
+## Full171 stock versus budget run
+
+All342 generation records are verified complete. Judging resumes from preserved video-hash-verified reports after the original scorer lost credentials. Overall scores remain pending until all171 cases in each arm are scored.
+
+| Arm | Generated | Judged | Overall |
+|---|---:|---:|---:|
+| stock |171/171|80/171|pending|
+| budget |171/171|149/171|pending|
+
+[Generation plan, completion records and judgments](reproduction/full1-recovered-judging/README.md). Uses the integrated checkpoint, streamed Haiku player and Gemini preview alias; hosted-service equivalence is not established. The released rubric admits partial returns, so an overall score alone does not prove revisit memory.
+
 ## Gemini — paired GC/OE development cohort (seeds 42 and 43)
 
 14 hash-selected GC and out-of-sight cases (7 GC, 7 out-of-sight), three arms, two seeds, same cases, `--end-guard` and player retries on every arm. Scores are the Gemini mean over GC and out-of-sight episodes only, **not** the four-dimension overall, so they are **not comparable with 2.12 or 1.82**. Paired delta is against stock over (case, seed) pairs; wins/ties/losses in brackets (28 pairs). No arm is established better than stock overall. The one interval that clears zero, 46/6 on out-of-sight (+0.84 [+0.20, +1.62]), is one of eight uncorrected contrasts, comes mostly from seed 43, and Opus sees nothing (+0.05), so it is a lead, not a result.

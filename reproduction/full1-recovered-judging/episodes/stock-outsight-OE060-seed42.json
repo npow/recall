@@ -1,0 +1,401 @@
+{
+  "task_id": "OE060",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "bcbd79390df28881b3d5633c361e94eb54aaed3ab20933700b7ab72fedfa2721",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE060",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "视角向右移动（画面中的杯子和罐子向左移出视野），随后视角向左移动，回到初始位置（杯子和罐子重新回到视野中央）。",
+    "trajectory_evidence_zh": "在第1张图的第0-24帧中，画面中的物体向左移动，表明视角正在向右平移；在第2张图的第0-10帧，物体完全移出视野；从第2张图的第11帧开始，物体从左侧重新进入视野并向右移动，表明视角正在向左平移返回；到第3张图时，视角已完全回到初始位置并保持稳定。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 2.0,
+    "final_score_1_to_5": 2.0,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "包装袋在镜头移动时从垂直握持的小袋变成了从左侧伸出的大袋子，倾倒物从粉末变成了液体水流，且场景发生了空间跳跃。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "杯子并未真正离开视线，而是发生了空间跳跃（第19-20帧），且过程被不连贯的倒液体动作取代，没有合理的隐藏状态推进。"
+      },
+      "revealed_state_difference": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "镜头移回后，杯中的水确实从初始的透明变成了深褐色，呈现出明显的演变差异。"
+      },
+      "process_accumulation": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "水在最初几帧突然变色缺乏渐进扩散过程，随后倾倒物变成液体，且过程被画面的硬重置打断，不是合理的累积过程。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail penalty applied; terminal state is a reasonable rest.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 50,
+      "evidence_zh": "镜头向右平移后又向左平移回到了初始视角的构图。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景墙面和桌面在镜头平移过程中基本保持一致，但前景物体发生了严重的相对位置跳跃。",
+      "post_completion_phase_zh": "回归初始视角后，背景墙面和桌面保持稳定。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "glass cup and Coco can",
+        "anchors": [
+          "wooden table",
+          "screen edges"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "15-25",
+        "30-40"
+      ],
+      "continuous_camera_motion": "no",
+      "tracked_structural_anchors": [
+        "wooden table",
+        "Coco can"
+      ],
+      "newly_revealed_regions_zh": "第20帧左侧凭空出现了一只拿着不同包装袋的手。",
+      "evidence_zh": "第19至20帧之间，物体在画面中的位置发生了无法用连续镜头运动解释的瞬间跳跃。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "19-20",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "glass cup",
+        "Coco can"
+      ],
+      "evidence_zh": "第19帧时杯子在画面最左侧边缘，Coco罐已从左侧出画；第20帧时杯子突然出现在画面中左侧，Coco罐出现在右侧，且左侧凭空出现一只拿着不同包装袋的手，发生严重的瞬移和场景重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作完成后没有多余的破坏性运动。"
+    },
+    "final_state_check": {
+      "window": "50-68",
+      "visible_key_objects": [
+        "glass cup",
+        "water",
+        "plain brown packet",
+        "wooden table",
+        "Coco can"
+      ],
+      "reappearance_consistency_zh": "杯子、桌子和Coco罐在最终画面中重新出现，相对位置与初始状态一致，但水已变色。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "partial",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 2,
+      "named_process": "coffee powder dissolving in water",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "杯中的水已经变成深褐色，杯子移动到画面左侧边缘。",
+      "hidden_interval_zh": "杯子并未真正隐藏，而是发生了空间跳跃，随后被注入液体而非粉末。",
+      "reappeared_state_zh": "镜头移回后，杯中的水保持深褐色。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "yes",
+      "terminal_pose_or_process_state": "natural_settled_rest",
+      "support_and_pose_evidence_zh": "倾倒动作停止，杯子稳定放置在桌面上。",
+      "terminal_state_reasoning_zh": "倾倒过程结束，画面回归静止是合理的完成状态。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无额外扣分。",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [
+        "wooden table"
+      ],
+      "articulation_or_local_state_change_zh": "水从透明变为深褐色。",
+      "uniquely_matched_anchor_relative_change_zh": "杯子相对于桌面的位置在重置前保持一致。",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "不适用",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "不适用",
+      "unchanged_coupled_details_zh": "不适用",
+      "accumulated_change_zh": "水从透明变为深褐色，但过程被硬重置打断。",
+      "evidence_zh": "视频展示了水变色的过程，但伴随着严重的场景重置和物体形态变化，演变质量低。",
+      "final_score_cap_applied": 2
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头先向右平移（物体向左移动），随后向左平移回到初始视角。",
+      "trajectory_evidence_zh": "画面前段物体向左移动表明镜头右移，后段物体向右移动表明镜头左移回归。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "none",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "plain brown packet and pouring stream",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "colors"
+      ],
+      "identity_failure": "replacement",
+      "evidence_zh": "包装袋在镜头移动时从垂直握持的小袋变成了从左侧伸出的大袋子，倾倒物从粉末变成了液体水流。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 2,
+      "meaningful_motion_or_evolution": "partial",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 2,
+      "evidence_zh": "演变质量仅为2级（伴随严重的硬重置），身份一致性得分不能提升最终得分上限。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频虽然展示了水变色的最终结果并完成了镜头的往返平移，但在平移过程中发生了严重的场景硬重置，包装袋和倾倒物完全改变，破坏了物理过程的连贯性和物体身份的一致性。",
+    "task_id": "OE060"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 5914,
+      "output_tokens": 272
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 31593,
+      "output_tokens": 3407
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 69,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 68,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 6.8,
+          "filled_cells": 19
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 4,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "f6f5bba1814103e667ebf76f64494c20d719350ee947ff5abf7d47b3f2a75e83",
+  "score_prompt_sha256": "64d37109ed0819754d5c026f9ef7420a147e5f7647a66dbd42708bab4fa1c4a2",
+  "scores": {
+    "official": 2.0,
+    "final_score": 2.0
+  },
+  "episode_id": "stock-outsight-OE060-seed42"
+}

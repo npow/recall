@@ -1,0 +1,404 @@
+{
+  "task_id": "OE029",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "18cbce6ea2e7e61cd074b2163d9b138115602fcfed93b728bbc4ae6fe8d41e11",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE029",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "视角向右转动，随后向前移动，最后保持静止。",
+    "trajectory_evidence_zh": "从第0帧到第13帧，视角向右转动；从第14帧到第29帧，视角向前移动并穿过火车；从第30帧到第48帧，视角保持静止。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "out_of_sight_evolution": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "火车在相机向右平移后完全停止了行驶，车轮和蒸汽冻结，没有继续沿轨道向右运动。"
+      },
+      "prompt_evolution_alignment": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "场景演变极不合理，火车不仅停止了运动，相机还直接穿透了实体的火车前部进入驾驶室，且驾驶室内的人物完全静止。"
+      },
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "火车的空间结构被严重破坏，相机从车头正面穿入后直接来到了位于车身中后部的驾驶室，违背了物体的同一性和空间结构。"
+      },
+      "temporal_scene_consistency": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "相机向右转动时，原本侧向行驶的火车突然变成了正对相机，轨道的空间布局发生了不可能的跳跃。"
+      },
+      "physical_causality": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "火车没有继续前进，且相机向前移动时发生了严重的穿模现象，直接穿透了金属车头进入内部。"
+      },
+      "trajectory_continuity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "火车的行驶轨迹完全中断，在相机视角改变后，火车停滞在原地并错误地面向相机。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "The video ends with a completely static tail after frame 31, but since the core evolution is missing and the train freezes unnaturally, the final score is capped at 1 by the dynamicity gate. No separate static tail penalty is applied.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 31,
+      "evidence_zh": "相机在第31帧进入驾驶室后停止移动，完成了向右转、向前走并保持静止的指令。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "相机向右转时，背景的天空和轨道发生不合理的空间跳跃，火车突然面向相机。",
+      "post_completion_phase_zh": "进入驾驶室后，背景通过窗户可见，但完全静止。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "locomotive side view vs locomotive front view",
+        "anchors": [
+          "tracks",
+          "horizon"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-14",
+        "15-30"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "locomotive front",
+        "tracks"
+      ],
+      "newly_revealed_regions_zh": "相机向右转后揭示了火车的前部，随后穿模进入驾驶室内部。",
+      "evidence_zh": "视角的改变是由相机的向右旋转和向前推进引起的，但场景本身的空间逻辑被破坏（火车突然面向相机）。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "30-31",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "locomotive front",
+        "cab interior"
+      ],
+      "evidence_zh": "相机向前推进穿过实体的火车前部（烟箱），直接进入了位于火车后部的驾驶室内部，这是不可能的空间转换。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作完成后画面完全静止，没有额外的错误动作。"
+    },
+    "final_state_check": {
+      "window": "31-48",
+      "visible_key_objects": [
+        "cab interior",
+        "crew members"
+      ],
+      "reappearance_consistency_zh": "驾驶室内部与初始侧面看到的驾驶室位置不符（相机从车头穿入）。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "yes",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "locomotive 5917 moving to the right",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "yes",
+      "static_tail_first_frame": 31,
+      "terminal_static_reasonable": "no",
+      "terminal_pose_or_process_state": "active_vehicle_state",
+      "support_and_pose_evidence_zh": "火车在行驶过程中突然静止，驾驶室内的乘务员也完全冻结，没有自然的停止动作。",
+      "terminal_state_reasoning_zh": "火车是一个正在行驶的交通工具，突然完全冻结是不合理的。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "诊断性说明：视频后半段完全静止，缺乏有意义的动态演变。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "tracks",
+        "horizon"
+      ],
+      "articulation_or_local_state_change_zh": "火车车轮停止转动，蒸汽不再喷发，乘务员静止。",
+      "uniquely_matched_anchor_relative_change_zh": "火车相对于轨道的相对位置没有继续向前推进。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "向右沿轨道行驶",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "车轮和连杆在初始几帧后停止运动。",
+      "vehicle_front_rear_identification_zh": "火车前部有圆形烟箱和车灯，后部是驾驶室。",
+      "vehicle_world_displacement_vs_heading_zh": "火车没有沿轨道继续前进，而是突然面向相机并静止。",
+      "vehicle_motion_direction": "static",
+      "unexplained_reverse_motion": "no",
+      "subject_relative_change_zh": "火车停止运动，相机穿模进入火车内部。",
+      "unchanged_coupled_details_zh": "驾驶室内的乘务员姿势完全冻结，没有任何动作。",
+      "accumulated_change_zh": "除了相机的移动，场景中的火车和人物没有产生任何有意义的累积状态变化。",
+      "evidence_zh": "火车在相机移动后完全冻结，没有继续行驶，且相机穿模进入驾驶室后画面完全静止。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "相机向右转动，向前移动，然后保持静止。",
+      "trajectory_evidence_zh": "视频显示相机视角向右平移，随后向前推进，最后在驾驶室内保持静止。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "locomotive 5917",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "colors",
+        "materials"
+      ],
+      "identity_failure": "contradictory_reappearance",
+      "evidence_zh": "火车的空间结构被严重破坏，相机从车头正面穿入后直接来到了位于车身中后部的驾驶室，违背了物体的同一性和空间结构。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于缺乏有意义的动态演变，同一性得分不能提升最终得分，最终得分被限制在1分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频中火车在相机移动后完全冻结停止行驶，且相机向前移动时穿透了火车前部实体直接进入驾驶室，导致严重的空间逻辑错误和物理因果失效，缺乏有意义的动态演变。",
+    "task_id": "OE029"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4740,
+      "output_tokens": 203
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 34580,
+      "output_tokens": 3602
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 49,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 48,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "8f20216ca3854fb0e5293d13d605781bbbd81cec00f367348785dc0f86721555",
+  "score_prompt_sha256": "939f4c2083ce05b85ea4016579191040ad9834b7509f7881fe0ff183d6e6032a",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "budget-outsight-OE029-seed42"
+}

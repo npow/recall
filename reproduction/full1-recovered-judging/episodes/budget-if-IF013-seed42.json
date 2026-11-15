@@ -1,0 +1,416 @@
+{
+  "task_id": "IF013",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "286e97ff975824a548b8cc35f24e6ffce78b6c553197594c3f4c7552f19ebdfa",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF013",
+    "perspective": "third-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "partial",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "老人划船，船只缓慢向对岸方向移动，但未到达对岸。",
+    "trajectory_evidence_zh": "视频中老人做出划船动作，船只从靠近画面的岸边起步，缓慢向对岸方向移动了一小段距离，直到视频结束时仍未完成横渡。",
+    "failure_reason_zh": "船只虽然向对岸移动，但移动距离较短，未能到达对岸，轨迹未完成。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.5,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "老人的外貌、衣着以及船只的特征在整个视频中保持一致。"
+      },
+      "contact_support": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "由于船只完全没有移动，未能测试前往对岸的接触和支撑，属于未测试的目标接触。"
+      },
+      "causal_response": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "船只没有移动，水面没有产生任何合理的物理反馈（如波纹或尾迹），浮冰也没有受到任何影响。"
+      },
+      "lighting_shadow": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "静态场景下的光影和水面倒影保持相对合理且稳定，但由于缺乏运动，未能展示动态的光影变化。"
+      },
+      "motion_kinematics": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "老人没有展示出自然的划船动作，船只也没有任何向前的动量，在世界空间中完全静止。"
+      },
+      "collision_boundary": {
+        "score": 1,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "由于船只完全没有移动，未能测试任何碰撞边界或到达对岸，属于未测试的边界交互。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored",
+      "subject_identity": "excluded from weighted mean because interaction_quality_level_1_to_5 is 1"
+    },
+    "static_tail_policy_applied": "The subject remains fully static throughout the video with no meaningful motion progress; interaction quality is capped at 1.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "船只完全没有移动，未能到达对岸。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景中的房屋、树木和浮冰在相机平移过程中保持结构稳定。",
+      "post_completion_phase_zh": "不适用，动作未完成。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "boat and adjacent ice chunk",
+        "anchors": [
+          "background houses",
+          "foreground snow bank"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-58"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "background houses",
+        "foreground snow bank"
+      ],
+      "newly_revealed_regions_zh": "随着相机向右平移，右侧的水面和浮冰逐渐显露。",
+      "evidence_zh": "相机持续向右平移，导致画面中的物体向左移动，但船只相对于背景房屋和浮冰的位置没有改变，证明船只在世界空间中是静止的。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频中没有发生硬重置，相机的平移是连续且合理的。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作未完成，没有完成后的额外阶段。"
+    },
+    "final_state_check": {
+      "window": "50-58",
+      "visible_key_objects": [
+        "elderly man",
+        "rowboat",
+        "floating ice",
+        "cabins"
+      ],
+      "reappearance_consistency_zh": "不适用，没有物体离开后重新进入画面。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "yes",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "background houses",
+        "foreground snow bank"
+      ],
+      "articulation_or_local_state_change_zh": "老人仅有轻微的手臂抖动，没有完整的划船动作。",
+      "uniquely_matched_anchor_relative_change_zh": "船只相对于背景房屋和浮冰的位置完全没有改变。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "向对岸（画面深处或左侧）移动。",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "static",
+      "unexplained_reverse_motion": "no",
+      "subject_relative_change_zh": "主体在世界空间中没有发生相对位移。",
+      "unchanged_coupled_details_zh": "船只与水面的接触几何形状完全没有改变，没有产生尾迹。",
+      "accumulated_change_zh": "整个视频中没有任何任务相关的进度。",
+      "evidence_zh": "主体完全静止，未能执行任何有意义的动作。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "yes",
+      "ineffective_repetition": "no",
+      "evidence_zh": "主体完全静止，仅有相机的平移。",
+      "final_score_gate_applied": 1
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "yes",
+      "camera_or_background_motion_only": "yes",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "视频中人物和船只在世界空间中保持静止，仅有轻微的动作抖动和相机的向右平移，没有产生任何有意义的位移。",
+      "final_score_gate_applied": 1
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "fail",
+      "instruction_following_score": 0,
+      "prompt_directed_forward_progress": "no",
+      "camera_or_background_motion_only": "yes",
+      "observed_action_zh": "老人仅有轻微的手臂抖动，船只完全没有向前移动，只有相机在向右平移。",
+      "trajectory_evidence_zh": "从第0帧到第58帧，船只相对于周围的浮冰和背景房屋的位置完全没有改变。",
+      "failure_reason_zh": "主体在世界空间中保持静止，未能执行划船过河的指令。"
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "no_motion",
+      "solid_interpenetration": "no",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "船只完全没有移动，因此没有到达或测试任何碰撞边界。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "opposite shore",
+      "target_type": "solid_boundary",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "yes",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "yes",
+      "evidence_zh": "对岸在整个视频中保持稳定，但船只从未移动去接触它。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "yes",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "船只与水面的接触界面可见，但没有任何运动或支撑代理证据，因为主体完全静止。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "elderly man and rowboat",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "clothing",
+        "body_proportions",
+        "face_or_hair",
+        "persistent_equipment",
+        "colors",
+        "materials",
+        "textures"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "老人的外貌、衣着以及船只的特征在整个视频中保持一致。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "no",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于主体完全静止，交互质量等级为1，主体身份的一致性不能提高最终得分，其权重被排除。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "主体完全静止，没有产生任何位移或物理交互。",
+      "positive_evidence_zh": "无",
+      "evidence_zh": "整个视频中，老人和船只在世界空间中保持静止，没有划船动作，也没有与水面或对岸产生任何交互。",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频中的老人和船只在世界空间中完全保持静止，未能执行划船过河的指令，属于严重的交互失败。",
+    "task_id": "IF013"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 5906,
+      "output_tokens": 219
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 40558,
+      "output_tokens": 3580
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 59,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 5.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 58,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 5.8,
+          "filled_cells": 9
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "0f894c5cc042c1a79492e1763fbcb60d07bb34118df2a6a2a430845e375e598f",
+  "score_prompt_sha256": "6a3216f1abfd098334af1649a917062a0d598e788c47cb74b2b68b0012e8e730",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "budget-if-IF013-seed42"
+}

@@ -1,0 +1,396 @@
+{
+  "task_id": "OE043",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "105da9a02e4f9d94dbcbdfc443e5e3912e0352111a2cb3cfb2c092687e885804",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE043",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头先向左移动，随后向右移动回到起始位置。",
+    "trajectory_evidence_zh": "在第一张图集（第0-24帧）中，镜头向左移动，画面中的人物从左侧逐渐移至右侧；在第二张图集（第25-48帧）中，镜头向右移动，人物从右侧移回左侧，最终回到与初始帧相似的视角和位置。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.25,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "人物、苹果、刀和桌上的物品在相机平移和移回的过程中保持了外观的一致性，但这主要是因为整个场景处于冻结状态，目标作为完全相同的静态副本重新出现，缺乏演进。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "在相机向左平移（第0-24帧）导致手和苹果移出画面的过程中，人物可见的身体部分完全静止，没有任何继续削苹果的动作暗示。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "当相机移回起始视角（第25-48帧）时，苹果的状态、人物的手部姿势与第0帧完全一致，没有增加任何裸露的果肉。"
+      },
+      "process_accumulation": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "视频中没有任何削苹果过程的积累证据，垂下的果皮形状和碗里的果皮数量从头到尾保持完全不变。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "The video is entirely static regarding the subject's action; the terminal freeze is penalized through the OE evolution categories and the level-1 dynamicity cap.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 48,
+      "evidence_zh": "相机成功向左平移并在第48帧回到了起始视角。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "在相机向左平移的过程中，背景窗户、桌子和桌上的物品保持稳定，符合透视变化。",
+      "post_completion_phase_zh": "不适用，动作在视频末尾完成。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "person and apple before and after camera pan",
+        "anchors": [
+          "table surface",
+          "background window"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-24",
+        "25-48"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "table edge",
+        "window frame"
+      ],
+      "newly_revealed_regions_zh": "相机向左平移时，画面左侧揭示了更多窗户和墙壁区域。",
+      "evidence_zh": "画面中所有的视觉位移均由相机的左右平移引起，场景中的人物和物体本身没有任何独立于相机的运动。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频通过连续的相机平移进行过渡，没有发生硬切或重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "无多余的尾部动作。"
+    },
+    "final_state_check": {
+      "window": "40-48",
+      "visible_key_objects": [
+        "person",
+        "apple",
+        "paring knife",
+        "ceramic bowl",
+        "medication bottles"
+      ],
+      "reappearance_consistency_zh": "相机移回后，所有物品和人物的姿态与初始帧完全一致，呈现出复制粘贴般的冻结状态。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "yes",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "peeling an apple",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "在相机向左平移前（第0帧），人拿着刀和苹果，苹果有部分果皮垂下。",
+      "hidden_interval_zh": "相机向左平移，手和苹果移出画面，但人物可见的身体部分完全静止，没有继续削苹果的动作暗示。",
+      "reappeared_state_zh": "相机移回后（第48帧），手、刀、苹果和垂下的果皮与第0帧完全一致，没有任何变化。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "no",
+      "terminal_pose_or_process_state": "unfinished_tool_action",
+      "support_and_pose_evidence_zh": "人物保持着削苹果的姿势，刀刃贴着苹果，这是一个正在进行中的动作，不应完全静止。",
+      "terminal_state_reasoning_zh": "削苹果是一个持续的动作，视频中人物在整个相机平移过程中完全冻结在削苹果的中间状态，这是不自然的。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "诊断性说明：人物动作的完全冻结已在演进类别得分中体现。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "table",
+        "window"
+      ],
+      "articulation_or_local_state_change_zh": "无，人物的姿势、手部关节和苹果的状态在整个视频中完全没有变化。",
+      "uniquely_matched_anchor_relative_change_zh": "无，人物相对于桌子和背景的位置没有发生独立于相机的移动。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "不适用，主要是原地的削苹果动作。",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "",
+      "vehicle_front_rear_identification_zh": "",
+      "vehicle_world_displacement_vs_heading_zh": "",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "无，只有相机平移带来的屏幕位置变化。",
+      "unchanged_coupled_details_zh": "垂下的果皮形状、刀与苹果的接触点、衣服的褶皱等细节在相机移回后与初始状态完全相同，表明是复制粘贴的冻结状态。",
+      "accumulated_change_zh": "无，苹果没有被削掉更多皮，碗里的果皮也没有增加。",
+      "evidence_zh": "整个视频中，除了相机的左右平移外，人物和场景完全冻结，没有任何削苹果的动作进展或状态积累。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "相机向左平移，然后向右平移回到起始视角。",
+      "trajectory_evidence_zh": "第0-24帧相机向左移动，第25-48帧相机向右移动并回到初始位置。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "yes",
+      "action_type": "cutting",
+      "tool_and_target": "paring knife and apple",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "no",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "人物和刀完全静止，没有产生任何新的切割结果或果皮积累。"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "yes",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "yes",
+      "camera_or_background_motion_only": "yes",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "uncertain",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "uncertain",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "uncertain",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "person, apple, knife, table items",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "clothing",
+        "face_or_hair",
+        "persistent_equipment",
+        "colors",
+        "materials",
+        "textures"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "人物、苹果、刀和桌上的物品在相机平移和移回的过程中保持了外观的一致性，但这主要是因为整个场景处于冻结状态。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于视频完全缺乏有意义的动作演进（演进质量为1），稳定的身份特征不能提升最终得分，最终得分被限制为1。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频虽然执行了相机向左平移并返回的指令，但场景中的人物和削苹果过程完全冻结，没有任何动作进展或状态积累，属于无效的演进。",
+    "task_id": "OE043"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4716,
+      "output_tokens": 228
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 30324,
+      "output_tokens": 3561
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 49,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 48,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "0102cf03da368801eca124dbd6aa322faf20397b2e3393cc1ea996c95b17bda8",
+  "score_prompt_sha256": "5ce91f50e48bee7cb883d37f08ce593bf1f40dbf41b2d12a4b90d5722a79fd8c",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "budget-outsight-OE043-seed42"
+}

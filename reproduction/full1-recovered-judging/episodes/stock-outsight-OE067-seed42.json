@@ -1,0 +1,401 @@
+{
+  "task_id": "OE067",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "4e9a62aed525688c2e5099a50f621837b53cd5c5ebd4e9ae0a4dc8770c9863f5",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE067",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头向左旋转约180度，展示了相反方向的楼梯和街道视图，随后向右旋转回到了最初向上的楼梯视图。",
+    "trajectory_evidence_zh": "Sheet 1显示镜头从初始向上的楼梯开始向左旋转；Sheet 2显示镜头到达相反方向的视图后开始向右旋转；Sheet 3显示镜头继续向右旋转并最终回到了初始的楼梯视图。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1.0,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "当镜头转回初始视角时，原本在楼梯上的女孩完全消失，发生了突然消失的严重错误。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头转回后女孩消失，没有任何证据表明她在视线外期间在原本的楼梯上继续向上行走。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头转回初始视角时，女孩并未出现在更高的台阶上，而是完全消失了。"
+      },
+      "process_accumulation": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "由于女孩在镜头转回后消失，未能展示任何合理的累积攀爬过程。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "无额外扣分，主体消失的严重错误已在各适用维度中体现为最低分。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 60,
+      "evidence_zh": "镜头向左旋转约180度后，在第60帧左右转回了初始视角的楼梯和出口。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头向左旋转时（第8-11帧），原本的砖墙和楼梯突变为黑墙和完全不同的建筑结构，发生严重的场景重置。",
+      "post_completion_phase_zh": "镜头转回后，初始的砖墙、楼梯和带有红色标志的出口重新出现，但女孩消失了。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "初始视角的女孩与转回初始视角后的女孩",
+        "anchors": [
+          "初始的砖墙",
+          "带有红色标志的街道出口"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-11",
+        "50-60"
+      ],
+      "continuous_camera_motion": "no",
+      "tracked_structural_anchors": [
+        "砖墙",
+        "楼梯台阶"
+      ],
+      "newly_revealed_regions_zh": "镜头向左旋转后出现的黑墙和新通道属于完全不同的场景，并非连续摄像机运动揭示的合理区域。",
+      "evidence_zh": "镜头旋转过程中，背景从砖墙瞬间突变为黑墙，属于场景重置而非单纯的摄像机运动。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "8-11",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "左侧墙壁",
+        "楼梯结构"
+      ],
+      "evidence_zh": "在第8-11帧，镜头向左旋转时，原本的砖墙瞬间变为黑墙，楼梯结构也完全改变，无法用摄像机运动解释，属于严重的场景重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作完成后没有额外的严重错误导致扣分（基础分已为1）。"
+    },
+    "final_state_check": {
+      "window": "60-68",
+      "visible_key_objects": [
+        "brick walls",
+        "stair treads",
+        "street-level exit",
+        "red-bordered sign"
+      ],
+      "reappearance_consistency_zh": "初始的砖墙、楼梯和出口标志在镜头转回后重新出现，但原本在楼梯上的女孩完全消失。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "girl climbing the stairs",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "第5帧，女孩在砖墙楼梯上向上走。",
+      "hidden_interval_zh": "镜头转向左侧，展示了一个完全不同的重置场景，女孩在这个新场景中行走。",
+      "reappeared_state_zh": "第60帧镜头转回初始楼梯，女孩完全消失。",
+      "post_completion_static_tail": "yes",
+      "static_tail_first_frame": 61,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "女孩在镜头转回后消失，无法评估其最终姿态。",
+      "terminal_state_reasoning_zh": "主体消失，无最终状态可言。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无额外扣分，主体消失已在各维度得1分。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "砖墙",
+        "带有红色标志的出口"
+      ],
+      "articulation_or_local_state_change_zh": "无，女孩在转回的视角中消失。",
+      "uniquely_matched_anchor_relative_change_zh": "无，女孩消失。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "沿着楼梯向上走向出口。",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "女孩消失，无相对变化。",
+      "unchanged_coupled_details_zh": "无。",
+      "accumulated_change_zh": "女孩在镜头转回后消失，未能积累任何合理的攀爬进度。",
+      "evidence_zh": "镜头转回初始场景后，原本正在爬楼梯的女孩完全消失，属于灾难性的演变失败。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向左旋转了约180度，随后又向右转回了初始的视角。",
+      "trajectory_evidence_zh": "视频前段镜头向左平移旋转，后段向右平移旋转回到起点，完成了要求的摄像机轨迹。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "no",
+      "ink_change_type": "none",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "不适用",
+      "change_sequence_zh": "不适用",
+      "resulting_ink_state_zh": "不适用",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "不适用"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "不适用",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "no",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "不适用"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "此用例为OE，适用OE动态性检查。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "不适用"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "此用例为OE。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "非IF用例",
+      "trajectory_evidence_zh": "非IF用例",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "not_applicable",
+      "solid_interpenetration": "not_applicable",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "非IF用例"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "not_applicable",
+      "remained_present_until_trigger": "not_applicable",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "not_applicable",
+      "evidence_zh": "非IF用例"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "非IF用例"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "young girl",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "clothing"
+      ],
+      "identity_failure": "contradictory_reappearance",
+      "evidence_zh": "镜头转回初始场景后，女孩完全消失。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "核心演变过程失败（主体消失），演变质量为1，身份一致性得分被限制。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "非IF用例",
+      "positive_evidence_zh": "非IF用例",
+      "evidence_zh": "非IF用例",
+      "final_score_cap_applied": null
+    },
+    "summary_zh": "镜头向左旋转时发生了严重的场景重置，且当镜头转回初始视角时，原本在爬楼梯的女孩完全消失，导致所有评估维度均得最低分。",
+    "task_id": "OE067"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 5918,
+      "output_tokens": 220
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 31870,
+      "output_tokens": 3477
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 69,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 68,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 6.8,
+          "filled_cells": 19
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 4,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "c225d892c7cfaf4b88c7991e6343ceeb721e45dcfba8401e5d27ede6aa4698fb",
+  "score_prompt_sha256": "ab3c6172b7df406cab3cfa07cd3174bf98a8fdd0b43a7bb5916a6664f4c9f4e1",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "stock-outsight-OE067-seed42"
+}

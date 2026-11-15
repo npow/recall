@@ -1,0 +1,410 @@
+{
+  "task_id": "GC042",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "2d67b6ac020b271b605ed0c0f12f2ce97178b02ee8c49e16a6b568805ea78431",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "GC042",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头先向左平移（或旋转），随后向右平移（或旋转）回到初始视角的背景区域。",
+    "trajectory_evidence_zh": "在主视图表1中（第0-24帧），镜头向左转动，背景从带有蓝色壁画的建筑变为深色带窗户的建筑；在主视图表2中（第25-48帧），镜头向右转动，带有蓝色壁画的初始背景重新回到视野中，完成了向左转再转回的轨迹要求。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.6,
+    "final_score_1_to_5": 1.6,
+    "category_scores_1_to_5": {
+      "identity_id": {
+        "score": 1,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "蓝白相间的汽车在第14-15帧之间发生了严重的水平翻转（车头从朝左突变为朝右）。当镜头在第40-48帧返回初始视角时，汽车的朝向与初始帧完全相反（从展示车尾变为展示车头），且背景中的大陶罐消失，白色汽车的位置和朝向也发生了改变，未能保持物体的身份和数量一致性。"
+      },
+      "identity_texture": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头返回初始视角后，背景壁画上的纹理细节（如初始帧中的人物）消失，变成了模糊的色块；汽车在翻转后其表面的细节纹理也发生了改变。"
+      },
+      "color": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "汽车的蓝白配色和背景壁画的蓝色调在整体上基本保持，但由于汽车发生水平翻转，颜色的空间分布在同一物体上发生了突变。"
+      },
+      "relative_position": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头返回初始视角后，蓝白汽车相对于背景壁画的朝向完全颠倒，白色汽车和陶罐的相对位置布局也被破坏，出现了不可能的空间重置。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail penalty applied as the video ends upon completing the requested return action.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 48,
+      "evidence_zh": "镜头向左旋转展示了新的背景区域，随后向右旋转返回了包含初始壁画建筑的视角。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头向左旋转时，背景平滑过渡到一栋带有绿叶壁画的深色建筑，背景运动与镜头旋转基本相符。",
+      "post_completion_phase_zh": "镜头返回初始视角时，背景壁画的整体轮廓还在，但细节（如人物）丢失，左侧的深色砖楼结构发生改变。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "蓝白汽车（第0帧与第48帧）",
+        "anchors": [
+          "背景蓝色山水壁画",
+          "鹅卵石车道"
+        ],
+        "same_object_or_region": "yes"
+      },
+      {
+        "comparison": "蓝白汽车（第14帧与第15帧）",
+        "anchors": [
+          "背景绿叶壁画建筑",
+          "鹅卵石车道"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-24",
+        "25-48"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "背景壁画建筑",
+        "鹅卵石车道"
+      ],
+      "newly_revealed_regions_zh": "第10-35帧中出现的带有绿叶壁画的深色建筑为新揭示的区域。",
+      "evidence_zh": "背景的水平滑动与镜头向左和向右的旋转动作相符，但前景汽车始终保持在画面中央，表现为镜头绕汽车旋转（orbit）而非纯粹的摇摄（pan）。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "背景的过渡是连续的，但前景汽车在第14-15帧发生了自身的结构翻转突变，属于物体身份一致性失败，而非整个场景的硬重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作在视频末尾完成，没有多余的导致世界破坏的尾部运动。"
+    },
+    "final_state_check": {
+      "window": "40-48",
+      "visible_key_objects": [
+        "two-tone blue-white passenger car",
+        "white car",
+        "nature-mural building"
+      ],
+      "reappearance_consistency_zh": "初始视角的关键物体在最终画面中重新出现时一致性极差：蓝白汽车朝向完全颠倒，大陶罐消失，白色汽车位置改变，壁画细节丢失。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "not_applicable",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": null,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": null,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "镜头成功执行了向左旋转并向右返回的动作，背景发生了相应的连续变化。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "two-tone blue-white passenger car",
+        "nature-mural building"
+      ],
+      "correspondence_anchors": [
+        "鹅卵石车道",
+        "背景建筑轮廓"
+      ],
+      "visible_intervals": [
+        "0-48"
+      ],
+      "before_developing_after_checkpoints": [
+        {
+          "surface": "蓝白汽车车身",
+          "before_frame": 14,
+          "developing_frame": 15,
+          "after_frame": 16,
+          "observed_change_zh": "汽车在连续的背景下发生了水平翻转，车头和车尾的位置瞬间对调。"
+        }
+      ],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "verified",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "汽车在第14-15帧发生翻转导致结构和纹理突变；镜头返回后壁画细节丢失。"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "not_applicable",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "yes",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "not_applicable",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": "not_applicable"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "two-tone blue-white passenger car",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "colors"
+      ],
+      "identity_failure": "morphing",
+      "evidence_zh": "蓝白汽车在第14-15帧之间发生了明显的水平翻转（车头车尾对调），且在镜头返回初始视角时，其朝向与初始状态完全相反，未能保持身份和结构的一致性。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "not_applicable",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": null,
+      "evidence_zh": "not_applicable"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "none",
+      "positive_evidence_zh": "none",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "summary_zh": "视频中镜头完成了向左转并返回的动作，但前景的蓝白汽车在第15帧发生了严重的水平翻转，且镜头返回初始视角后，汽车朝向完全颠倒，背景壁画细节丢失，陶罐消失，空间布局遭到严重破坏。",
+    "task_id": "GC042"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4711,
+      "output_tokens": 242
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 18405,
+      "output_tokens": 3711
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 49,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 48,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "8f275a66f99927f2daef611c2905d2d344256d26ed073395c67a6e76826920fd",
+  "score_prompt_sha256": "11339d8d0caa3b044260ca0db99c7a7655c8aad78eaa63c9ebcdc3dad537f6c7",
+  "scores": {
+    "official": 1.6,
+    "final_score": 1.6
+  },
+  "episode_id": "budget-gc-GC042-seed42"
+}

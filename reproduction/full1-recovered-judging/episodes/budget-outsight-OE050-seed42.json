@@ -1,0 +1,417 @@
+{
+  "task_id": "OE050",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "0478c9e646ae22a3177a679d78209110261ba4bc666235425a59e57eb978cbe1",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE050",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头先向左转动，接着向前移动，最后向右转动回到了最初的视角方向。",
+    "trajectory_evidence_zh": "在第一张图的第0-10帧，镜头明显向左平移；第11-24帧，镜头画面显示出向前的运动；在第二张图的第30-49帧，镜头向右平移，重新看到了赛道和赛车，回到了初始的视角方向。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 4.5,
+    "final_score_1_to_5": 4.5,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "绿色赛车和粉蓝赛车在重新出现时保持了基本颜色和身份，但粉蓝赛车的涂装比例和车型细节发生了变化；此外，赛道旁的“Explora”广告牌在重新出现时部分变成了“EAgloca”，存在文本和纹理漂移。"
+      },
+      "hidden_state_progression": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "在镜头向左转并向前移动的期间，赛车处于视野之外，但根据其重新出现时的位置可以推断，它们在不可见期间继续在赛道上向前行驶。"
+      },
+      "revealed_state_difference": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "当镜头转回赛道时，绿色赛车和粉蓝赛车已经行驶到了赛道更远的位置，呈现出明显的背影，与初始的侧面视角和位置有显著的推进差异。"
+      },
+      "trajectory_continuity": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "赛车重新出现时，位于同一赛道的前方，运动方向与初始行驶方向一致，没有出现位置错乱或倒退的情况。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "The video ends shortly after the camera turns back to the track, with the cars continuing to drive away; no static tail penalty is applicable.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 50,
+      "evidence_zh": "镜头在第0-15帧向左转90度，第15-35帧向前移动，第35-50帧向右转回原始视角方向，完成了所有要求的动作。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "在镜头移动期间，赛道、草地、护栏和广告牌的空间关系保持连贯，没有发生背景的突变或重置。",
+      "post_completion_phase_zh": "动作完成后，赛道背景保持稳定，赛车继续在赛道上行驶。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial green and pink-and-blue cars vs. reappeared cars",
+        "anchors": [
+          "paved racetrack surface",
+          "grass and advertising boards bordering the track"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-15",
+        "15-35",
+        "35-50"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "safety fencing",
+        "edge of the paved track"
+      ],
+      "newly_revealed_regions_zh": "镜头向前移动并转回后，展示了赛道更前方的区域。",
+      "evidence_zh": "视角的改变完全由镜头的左转、前移和右转引起，符合物理透视规律。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "整个视频中镜头的平移和旋转是连续的，没有出现硬切或场景重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作完成后视频很快结束，没有多余的导致扣分的镜头运动或画面崩坏。"
+    },
+    "final_state_check": {
+      "window": "50-58",
+      "visible_key_objects": [
+        "green race car",
+        "pink-and-blue race car",
+        "paved track",
+        "Explora advertising boards"
+      ],
+      "reappearance_consistency_zh": "赛车和赛道在最终视角中一致地重新出现，尽管广告牌文本和赛车细节有轻微变化，但整体场景布局和对象身份保持连贯。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 5,
+      "named_process": "race cars driving around the racetrack",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "赛车在镜头前从右向左行驶，展示侧面。",
+      "hidden_interval_zh": "镜头转向并沿着护栏前移，赛车在视野外继续沿着赛道行驶。",
+      "reappeared_state_zh": "镜头转回赛道，赛车已经行驶到前方较远处，展示背影。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "active_vehicle_state",
+      "support_and_pose_evidence_zh": "视频结束时赛车仍在赛道上行驶，没有不自然的静止。",
+      "terminal_state_reasoning_zh": "视频在赛车继续行驶的过程中自然结束，没有出现人工冻结。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无静止尾部，不适用。",
+      "camera_independent_subject_motion": "yes",
+      "stable_world_anchors_compared": [
+        "paved track",
+        "advertising boards"
+      ],
+      "articulation_or_local_state_change_zh": "赛车从侧面视角变为背面视角，表明其在赛道上发生了真实的位移和姿态变化。",
+      "uniquely_matched_anchor_relative_change_zh": "赛车相对于赛道边缘和广告牌的位置显著向前推进。",
+      "two_independent_motion_evidence_requirements_met": "yes",
+      "expected_world_motion_direction_zh": "沿着赛道向前行驶。",
+      "returned_motion_direction_consistent": "yes",
+      "rigid_vehicle_local_progression_zh": "赛车在赛道上的位置和遮挡关系发生了符合行驶逻辑的变化。",
+      "vehicle_front_rear_identification_zh": "通过赛车的尾翼和车头形状可以明确区分前后。",
+      "vehicle_world_displacement_vs_heading_zh": "赛车车头朝前，且在世界空间中向前位移。",
+      "vehicle_motion_direction": "forward",
+      "unexplained_reverse_motion": "no",
+      "subject_relative_change_zh": "赛车相对于赛道和镜头的相对位置发生了显著的向前推进。",
+      "unchanged_coupled_details_zh": "无复制粘贴的冻结迹象，赛车在重新出现时呈现了合理的透视和位置变化。",
+      "accumulated_change_zh": "赛车在不可见期间完成了显著的向前行驶，重新出现时位置大幅提前。",
+      "evidence_zh": "视频完整展示了赛车在视野外继续行驶并在镜头转回时处于更前方位置的合理演变过程。",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向左转90度，向前移动一段距离，然后向右转回，重新看向赛道。",
+      "trajectory_evidence_zh": "第0-15帧左转，第15-35帧前移，第35-50帧右转回看，轨迹完全符合提示词要求。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "镜头执行了复杂的转向和移动，赛车也发生了显著的位移。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "pink-and-blue race car",
+        "Explora advertising boards"
+      ],
+      "correspondence_anchors": [
+        "paved track",
+        "grass border"
+      ],
+      "visible_intervals": [
+        "0-15",
+        "45-58"
+      ],
+      "before_developing_after_checkpoints": [
+        {
+          "surface": "Explora advertising boards",
+          "before_frame": 0,
+          "developing_frame": 45,
+          "after_frame": 58,
+          "observed_change_zh": "广告牌上的文本从'Explora'部分变成了'EAgloca'。"
+        }
+      ],
+      "intrinsic_color_drift": "possible",
+      "material_or_texture_drift": "verified",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "粉蓝赛车的涂装比例在重新出现时有轻微变化，广告牌的文本发生了明显的漂移和改变。"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "yes",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "赛车在赛道上持续向前行驶。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "yes",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "yes",
+      "evidence_zh": "赛车的轮胎与赛道表面的接触清晰可见，支撑关系合理。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "race cars and advertising boards",
+      "same_entity_throughout": "partial",
+      "stable_identity_attributes": [
+        "colors",
+        "body_proportions"
+      ],
+      "identity_failure": "texture_drift",
+      "evidence_zh": "赛车的基本颜色和身份得以保持，但粉蓝赛车的细节和广告牌的文本在重新出现时发生了漂移和改变。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 5,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": null,
+      "evidence_zh": "视频展示了高质量的视野外演变，主体身份的一致性可以正常计入评分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 5,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "不适用，此为OE任务。",
+      "final_score_cap_applied": 5
+    },
+    "summary_zh": "视频完美执行了镜头左转、前移并右转回看的指令，赛车在视野外合理地向前行驶并在重新出现时位置大幅推进，展现了极佳的轨迹连续性，仅在广告牌文本和赛车细节上存在轻微的纹理漂移。",
+    "task_id": "OE050"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 5942,
+      "output_tokens": 227
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 32326,
+      "output_tokens": 3844
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 59,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 5.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 58,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 5.8,
+          "filled_cells": 9
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "c257b1dc2a31247ec2984d655b707ce6cc3bb0e36865b8f8634dad40fb3d8754",
+  "score_prompt_sha256": "d59ba29c4fccb031c43fd73bb5f07c6e2f8378f9f81e06e1a04da92b445079cb",
+  "scores": {
+    "official": 4.5,
+    "final_score": 4.5
+  },
+  "episode_id": "budget-outsight-OE050-seed42"
+}

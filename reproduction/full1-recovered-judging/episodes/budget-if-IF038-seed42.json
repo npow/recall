@@ -1,0 +1,424 @@
+{
+  "task_id": "IF038",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "80a3c5133057e4ceb75b36c88858c02445ee56ead2a77b8c10711706057d5eb6",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF038",
+    "perspective": "third-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "partial",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "男子最初在砖墙上向右走，随后视角切换，男子一直背对镜头向前走，没有跳下墙。",
+    "trajectory_evidence_zh": "在Primary Sheet 1的前几帧中，男子在砖墙上向右行走。随后视角突然切换到男子背后，在剩余的视频中（Sheet 1后半部分至Sheet 4），男子一直背对镜头向前走，始终没有执行跳下墙的动作。",
+    "failure_reason_zh": "男子虽然在墙上行走，但没有执行跳下墙的动作，且后半段视角切换导致运动方向变为向前而非向右。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 2.33,
+    "final_score_1_to_5": 2,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "男子的橙色外套、黑色裤子和针织帽在整个视频中保持一致。"
+      },
+      "contact_support": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男子在第11帧左右转身后，完全脱离了墙壁并在空中悬浮行走，严重缺乏支撑。"
+      },
+      "causal_response": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "在男子最初接触墙壁时，墙壁保持坚固，没有发生变形。"
+      },
+      "lighting_shadow": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "最初墙壁上的阴影基本合理，但男子悬空后阴影不再与环境匹配。"
+      },
+      "motion_kinematics": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男子最初有短暂的行走，但随后突然转身90度并开始悬空行走，步态与环境完全脱节。"
+      },
+      "collision_boundary": {
+        "score": 2,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "男子没有穿透墙壁，但他脱离了墙壁并在空中行走，从未到达或测试降落表面。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "The subject continues to move throughout the video, so no static tail penalty is applied.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "男子没有走满10米，也没有跳下墙壁。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景中的建筑和树木在相机移动过程中保持了相对稳定。",
+      "post_completion_phase_zh": "动作未完成。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "man",
+        "anchors": [
+          "clothing",
+          "body proportions"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-88"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "brick wall",
+        "background buildings"
+      ],
+      "newly_revealed_regions_zh": "随着男子转身和相机跟随，背景中的树木和建筑逐渐展现。",
+      "evidence_zh": "相机的移动和视角的改变是连续的，没有发生硬切或重置。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频中没有出现硬切或场景重置，相机的跟随运动是连续的。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作未完成，不适用完成后的调整。"
+    },
+    "final_state_check": {
+      "window": "75-88",
+      "visible_key_objects": [
+        "man"
+      ],
+      "reappearance_consistency_zh": "男子在视频末尾的外观与初始状态保持一致。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "not_applicable",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "not_applicable",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "yes",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "男子在视频中持续保持行走动作，尽管后期为悬空行走。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "partial",
+      "instruction_following_score": 1,
+      "prompt_directed_forward_progress": "partial",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "男子最初向右走，随后转身背对镜头在空中行走，没有跳下墙壁。",
+      "trajectory_evidence_zh": "视频前1秒男子在墙上向右走，之后突然转身背对镜头并悬空行走，未执行跳下动作。",
+      "failure_reason_zh": "男子未走满10米，且中途转身悬空行走，没有跳下墙壁。"
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "partial",
+      "observed_outcome": "unresolved",
+      "solid_interpenetration": "no",
+      "support_after_contact": "implausible",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "男子未穿透墙壁，但在转身后脱离了墙壁并在空中行走，未接触任何降落表面。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "brick wall",
+      "target_type": "solid_boundary",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "yes",
+      "observed_trigger": "contact",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "yes",
+      "evidence_zh": "墙壁在男子短暂接触期间保持稳定，没有发生无端变形或消失。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "partial",
+      "proxy_evidence_observed": [
+        "torso_or_head_bob",
+        "weight_transfer"
+      ],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "男子转身后脚部不可见，但身体的起伏表明他在行走，然而他明显处于悬空状态，缺乏合理的支撑。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "man",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "clothing",
+        "body_proportions",
+        "colors"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "穿着橙色外套和黑色裤子的男子在整个视频中保持了身份和外观的一致性。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 2,
+      "meaningful_motion_or_evolution": "partial",
+      "contact_or_support_demonstrated": "partial",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 2,
+      "evidence_zh": "由于整体交互质量仅为2级（严重悬空），主体身份的一致性不计入最终得分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 2,
+      "interaction_opportunity_reached": "partial",
+      "physical_response_observed": "no",
+      "core_failure_zh": "男子在转身后完全失去支撑，在空中悬浮行走。",
+      "positive_evidence_zh": "视频初始阶段男子在墙壁上有短暂的行走接触。",
+      "evidence_zh": "男子仅在最初短暂接触墙壁，随后转身并在空中悬浮行走，完全脱离了物理支撑，且未执行跳下动作，整体交互严重不合理。",
+      "final_score_cap_applied": 2
+    },
+    "summary_zh": "男子在短暂向右行走后突然转身并在空中悬浮行走，完全失去了物理支撑，且未执行跳下墙壁的动作。",
+    "task_id": "IF038"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 8296,
+      "output_tokens": 256
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 40410,
+      "output_tokens": 3453
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 89,
+      "sheets_count": 4,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 8.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 88,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 8.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 5,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 8.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 4,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 8.0,
+          "filled_cells": 1
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "53830f556f04b3d4cf0097d268bd4f7584cc0e379277785144ba330afd9b6e62",
+  "score_prompt_sha256": "178b32977dd07c9c1539e0028f7520285703ab672d648822bbf56e8bdd8b501f",
+  "scores": {
+    "official": 2.0,
+    "final_score": 2.0
+  },
+  "episode_id": "budget-if-IF038-seed42"
+}

@@ -1,0 +1,11 @@
+# Full171 two-arm judging recovery
+
+The frozen stock-versus-budget plan contains all171 PlayWorld tasks per arm, seed42:48 geometry,50 instruction following,30 in-sight evolution and43 out-of-sight evolution. All342 generation progress records were retrieved from the committed Modal results volume. One record says `skipped_already_complete`; its existing IF030 run was fetched and verified complete with matching task/split/seed, and both original status and verification hash are retained. There are no generation failures in this matrix.
+
+The original scorer stalled after226 judgments because its default Google credentials expired. This recovery preserves those reports only after checking each saved video SHA256, then judges the116 remaining episodes with the same neutral model label and Gemini preview model through working research-project credentials. It does not stop or edit the original scorer, change global cloud configuration, or regenerate any episode. Per-episode reports preserve failures for retries; judge failures never receive fabricated scores.
+
+`summary.json` deliberately withholds an arm's overall until every frozen case has a valid score. The overall is the equal mean of the four dimension means, not the pooled171-case mean. Regenerate it with `python scripts/summarize_full1.py`. The aggregator was checked against a synthetic complete matrix with unequal dimension sizes and a matrix missing one judgment; this checks arithmetic and missing-case handling, not visual judge accuracy.
+
+This is a local integrated open checkpoint with streamed Haiku player and `gemini-3.1-pro-preview` over Vertex. It is not a reproduction of the hosted LingBot1.82 service, and preview-model equivalence with the published judge is not established. The released rubric admits PARTIAL trajectories; a high score alone cannot establish successful revisits or long-horizon memory.
+
+`generation-plan.json`, `generation-progress.json`, `recovery.json` and `episodes/` retain the raw evidence. `pending-manifest.jsonl` records the local video paths used for recovery; those ignored video files remain on this machine or the existing Modal results volume. No credentials are stored here. The recovery script is resumable and skips already saved successful judgments.

@@ -1,0 +1,405 @@
+{
+  "task_id": "OE029",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "4e9963b05ed747f58e6842ce24bd0317593a6987bef535eefd0cd41fa60f7896",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE029",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "视角向右转动，随后向前移动并穿模进入火车内部，最后保持静止。",
+    "trajectory_evidence_zh": "在第一张图的第0-13帧中，视角向右平移旋转；在第一张图的第14帧到第二张图的第31帧中，视角持续向前推进；在第二张图的第32-48帧中，视角保持静止不动。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1.0,
+    "category_scores_1_to_5": {
+      "out_of_sight_evolution": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头向右转动后，原向右行驶的5917号机车消失，视野中出现的是一个迎面停放的机车，未能保持自然的行驶演进。"
+      },
+      "prompt_evolution_alignment": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "视频后续发展极不合理，镜头向前移动时直接穿透了迎面机车的金属前部，并瞬间传送到车厢内部，物理逻辑完全崩溃。"
+      },
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "侧面视角的5917号机车在镜头转动后消失，被替换为正面朝向的机车，随后又突变为车厢内部场景，主体特征完全丢失。"
+      },
+      "temporal_scene_consistency": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头穿模后，室外的轨道、植被和天空背景瞬间消失，被完全不同的车厢内部场景取代，场景连贯性彻底断裂。"
+      },
+      "physical_causality": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头没有观察到机车在轨道上的合理位移，反而发生了严重的穿模现象，直接穿过坚固的火车头进入内部。"
+      },
+      "trajectory_continuity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "机车没有继续沿轨道向右行驶，新出现的机车方向与原运动方向相反，且处于静止状态。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "穿模传送后的静止属于非自然的错误状态，已在各维度评分中体现为1分，不额外扣除尾部静止分。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 31,
+      "evidence_zh": "镜头在0-14帧向右转动，15-29帧向前移动，31帧后保持静止，完成了提示词要求的相机动作。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "0-29帧中，轨道、植被和天空背景在相机运动中保持了基本的空间一致性。",
+      "post_completion_phase_zh": "31帧之后，室外背景完全消失，被车厢内部场景取代，发生了严重的硬重置。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial locomotive 5917 vs front-facing locomotive",
+        "anchors": [
+          "tracks",
+          "horizon"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-14",
+        "15-29"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "tracks",
+        "horizon",
+        "vegetation"
+      ],
+      "newly_revealed_regions_zh": "镜头向右转动后展示了前方的轨道和迎面停放的火车头。",
+      "evidence_zh": "镜头在0-14帧向右平移旋转，15-29帧向前推进，属于连续的相机运动。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "30-31",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "outdoor tracks",
+        "locomotive front exterior",
+        "interior cab walls",
+        "interior seats"
+      ],
+      "evidence_zh": "镜头在第30帧穿过火车头前部，在第31帧瞬间传送到完全不同的车厢内部，没有任何合理的相机过渡。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "视频在完成动作后保持静止，没有额外的违规动作，基础分已为最低分1分。"
+    },
+    "final_state_check": {
+      "window": "31-48",
+      "visible_key_objects": [
+        "interior cab",
+        "two people"
+      ],
+      "reappearance_consistency_zh": "原室外轨道和机车场景完全消失，被车厢内部场景取代，一致性极差。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "locomotive 5917 moving to the right",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "侧面视角的5917号蒸汽机车向右行驶。",
+      "hidden_interval_zh": "镜头向右转动，机车移出视野。",
+      "reappeared_state_zh": "视野中出现一个迎面停放的火车头，随后镜头穿模进入车厢内部。",
+      "post_completion_static_tail": "yes",
+      "static_tail_first_frame": 31,
+      "terminal_static_reasonable": "no",
+      "terminal_pose_or_process_state": "other_unresolved",
+      "support_and_pose_evidence_zh": "镜头穿模进入车厢后画面静止，这是一个非自然的物理错误状态。",
+      "terminal_state_reasoning_zh": "穿模传送后的静止是不合理的错误状态。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "穿模导致的静止已在各维度评分中扣分，不额外扣分。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "tracks"
+      ],
+      "articulation_or_local_state_change_zh": "无，原机车消失。",
+      "uniquely_matched_anchor_relative_change_zh": "无，原机车消失。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "沿轨道向右（向前）行驶。",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "无，出现的机车是静止的。",
+      "vehicle_front_rear_identification_zh": "出现的机车正面朝向镜头。",
+      "vehicle_world_displacement_vs_heading_zh": "出现的机车没有位移。",
+      "vehicle_motion_direction": "static",
+      "unexplained_reverse_motion": "yes",
+      "subject_relative_change_zh": "原机车消失，被替换为静止的迎面机车。",
+      "unchanged_coupled_details_zh": "无。",
+      "accumulated_change_zh": "原机车的行驶过程完全丢失，发生了严重的穿模和场景替换。",
+      "evidence_zh": "视频未能保持机车的连续运动，发生了穿模和场景突变，演进质量极差。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "镜头向右转动并向前移动，随后保持静止。",
+      "trajectory_evidence_zh": "0-14帧镜头右转，15-29帧向前移动，31-48帧保持静止，符合提示词的相机运动要求。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "none",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "不适用",
+      "change_sequence_zh": "不适用",
+      "resulting_ink_state_zh": "不适用",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "不适用"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "不适用",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "不适用"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "不适用",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "不适用"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "yes",
+      "static_tail_first_frame": 31,
+      "static_tail_fraction_of_video": 0.375,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "机车未能保持合理的运动，镜头穿模后画面静止。",
+      "final_score_gate_applied": 1
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "first-person",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "不适用",
+      "trajectory_evidence_zh": "不适用",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "yes",
+      "observed_outcome": "solid_penetration",
+      "solid_interpenetration": "yes",
+      "support_after_contact": "implausible",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "镜头在第30帧直接穿透了坚固的金属火车头前部，并在第31帧传送到车厢内部。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "locomotive front",
+      "target_type": "solid_boundary",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "yes",
+      "observed_trigger": "contact",
+      "unsupported_change": "transformed",
+      "interaction_opportunity_preserved": "yes",
+      "evidence_zh": "镜头靠近火车头前部，接触时没有发生碰撞阻挡，而是直接穿模进入了内部。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "不适用，无相关支撑代理。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "locomotive 5917",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "colors"
+      ],
+      "identity_failure": "replacement",
+      "evidence_zh": "侧面视角的5917号机车消失，被正面朝向的机车取代，随后又突变为车厢内部。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "演进质量极差（穿模传送），主体一致性得分不能提升最终分数。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "yes",
+      "physical_response_observed": "no",
+      "core_failure_zh": "严重的穿模和场景传送",
+      "positive_evidence_zh": "无",
+      "evidence_zh": "镜头直接穿透了坚固的火车头前部并传送到车厢内部，物理交互完全失败。",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频中镜头向右转动后，原向右行驶的5917号机车消失，被一个迎面停放的机车取代，随后镜头直接穿透该机车前部并瞬间传送到车厢内部，导致物理因果、主体一致性和场景连贯性彻底崩溃。",
+    "task_id": "OE029"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4740,
+      "output_tokens": 223
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 34580,
+      "output_tokens": 3807
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 49,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 48,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "8f20216ca3854fb0e5293d13d605781bbbd81cec00f367348785dc0f86721555",
+  "score_prompt_sha256": "939f4c2083ce05b85ea4016579191040ad9834b7509f7881fe0ff183d6e6032a",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "stock-outsight-OE029-seed42"
+}

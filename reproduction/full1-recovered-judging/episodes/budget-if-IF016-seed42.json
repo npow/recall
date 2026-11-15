@@ -1,0 +1,307 @@
+{
+  "task_id": "IF016",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "57d8129e35118dd249004bbcbc42138e9c946cc25456c6ba64409633e0983b2f",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF016",
+    "perspective": "third-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "角色向前走，到达石墙（围栏）后继续向前移动，翻过围栏并向下掉落/滑翔。",
+    "trajectory_evidence_zh": "从第一张图开始，角色持续向前移动，在接触到前方的石墙后没有停止，而是继续向前越过了石墙，随后在空中继续向前滑翔/掉落。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.4,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 3,
+        "weight": 1,
+        "answer": "partial",
+        "evidence_zh": "角色的基本外观保持一致，但在第15帧左右，角色背部突然出现了一个大面积的深色图案，并一直持续到视频结束，存在明显的纹理突变。"
+      },
+      "contact_support": {
+        "score": 1,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "角色在到达石质走道边缘后，完全失去了支撑，在没有任何支撑物的情况下在半空中水平行走。"
+      },
+      "causal_response": {
+        "score": 2,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "角色的衣服有轻微的摆动，但在接触到坚固的石墙时，环境和物体没有产生任何合理的物理阻挡或交互反应。"
+      },
+      "motion_kinematics": {
+        "score": 2,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "角色保持了步行的步态，但在半空中悬空行走完全违背了物理运动规律，没有表现出应有的坠落或攀爬动作。"
+      },
+      "collision_boundary": {
+        "score": 1,
+        "weight": 2,
+        "answer": "no",
+        "evidence_zh": "角色直接穿过了坚固的石质围栏，发生了严重的穿模现象，完全没有受到边界的阻挡。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail; the character continues moving throughout the video.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 20,
+      "evidence_zh": "角色按照指令一直向前走，并在到达围栏后继续向前移动（尽管是穿模和悬空）。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景中的村庄和风车随着摄像机的向前移动产生合理的透视变化，保持一致。",
+      "post_completion_phase_zh": "背景继续保持一致的透视变化，没有出现扭曲或重置。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "character's back texture",
+        "anchors": [
+          "character's body",
+          "clothing structure"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-58"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "stone walkway",
+        "background windmill"
+      ],
+      "newly_revealed_regions_zh": "随着角色向前移动，摄像机跟随，展现了更多下方的村庄区域。",
+      "evidence_zh": "摄像机平滑地跟随角色向前推进，视角变化合理。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频连贯，没有发现硬重置或突然的场景切换。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "角色在完成指令动作后继续在空中行走，属于严重的物理错误，已在基础类别中扣分，不在此处重复扣分。"
+    },
+    "final_state_check": {
+      "window": "50-58",
+      "visible_key_objects": [
+        "character",
+        "background village"
+      ],
+      "reappearance_consistency_zh": "不适用，没有物体离开后重新进入视野。"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "yes",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "角色在整个视频中保持向前的移动。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "prompt_directed_forward_progress": "yes",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "角色一直向前走，穿过围栏后继续在空中向前走。",
+      "trajectory_evidence_zh": "角色在整个视频中保持向前的位移，符合指令要求的运动轨迹。",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "yes",
+      "observed_outcome": "solid_penetration",
+      "solid_interpenetration": "yes",
+      "support_after_contact": "implausible",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "角色在第15帧左右到达石质围栏，但没有发生碰撞阻挡，而是直接穿过了围栏并在空中行走。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "stone fence",
+      "target_type": "solid_boundary",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "yes",
+      "observed_trigger": "contact",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "yes",
+      "evidence_zh": "石质围栏在角色接触前一直稳定存在，但在角色接触时未能提供物理阻挡。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "yes",
+      "proxy_evidence_observed": [
+        "gait_synchronized_translation"
+      ],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "角色的脚部可见，但在穿过围栏后，脚部下方没有任何支撑面，角色在半空中行走。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "character",
+      "same_entity_throughout": "partial",
+      "stable_identity_attributes": [
+        "hair",
+        "body_proportions"
+      ],
+      "identity_failure": "texture_drift",
+      "evidence_zh": "角色背部在视频中段突然出现大面积深色图案，存在明显的纹理突变。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "no",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于交互质量等级为1（严重的穿模和悬空），身份一致性得分不计入最终加权平均分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "yes",
+      "physical_response_observed": "no",
+      "core_failure_zh": "角色直接穿过坚固的石墙并在空中行走，发生了严重的穿模和失去支撑的物理错误。",
+      "positive_evidence_zh": "无",
+      "evidence_zh": "角色到达围栏后没有发生碰撞或攀爬，而是直接穿模并悬空行走，属于灾难性的物理交互失败。",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "角色虽然按照指令一直向前走，但直接穿过了坚固的石墙并在空中悬空行走，发生了严重的穿模和物理支撑失败。",
+    "task_id": "IF016"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 5913,
+      "output_tokens": 206
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 36123,
+      "output_tokens": 2169
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 59,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 5.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 58,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 5.8,
+          "filled_cells": 9
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "a2913ec8e4cb16d21f85e6ad920c9622ab4361366ebe8fa958e65488bfb1bff0",
+  "score_prompt_sha256": "3dfc9414a86122f90211094cf7e3683a2683dbae5dbde73b7d3b22d96b364e36",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "budget-if-IF016-seed42"
+}

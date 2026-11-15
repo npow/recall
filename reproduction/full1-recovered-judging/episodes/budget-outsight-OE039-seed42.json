@@ -1,0 +1,405 @@
+{
+  "task_id": "OE039",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "b412ebf943fadffbd48a7e0ddfb14ef52a66558ad2df0d429f7fab890aec5bc3",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE039",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头向右旋转360度，回到初始视角，然后向后退。",
+    "trajectory_evidence_zh": "从第0帧到第70帧左右，镜头持续向右平移，完成了一整圈的旋转并回到了最初看到红色椅子上小狗的视角。从第72帧到第78帧，镜头向后移动，与前方椅子的距离逐渐拉远。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头向右环视的过程中，初始张嘴的白狗消失，随后画面中多次出现外貌、体型不同的其他白狗，发生了严重的对象替换和幻觉，空间结构完全不连贯。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "由于对象在视线外被完全替换且空间崩溃，初始的狗并没有进行任何合理的隐藏状态演变。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头似乎转回原位时，出现的白狗与初始狗的外貌特征完全不同，属于幻觉替换，而非同一对象的合理状态变化。"
+      },
+      "process_accumulation": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "环视过程中没有展示任何合理的持续过程，只有不断幻视出的新狗和不连贯的背景布局。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail penalty applied; the video is dynamic but fails due to catastrophic hallucination and lack of coherent evolution.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "镜头执行了向右的旋转，但由于空间崩溃，未能连贯地回到初始视角。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头环视时，背景空间完全不连贯，未能形成一个闭合的360度房间，而是不断生成新的吧台、窗户和座位区。",
+      "post_completion_phase_zh": "不适用，未完成连贯的环视回归。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial white dog vs. white dogs seen during rotation and at the end",
+        "anchors": [
+          "red metal chair",
+          "green wall"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-78"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "green wall",
+        "window frames"
+      ],
+      "newly_revealed_regions_zh": "镜头向右平移揭示的区域与初始区域无法构成连贯的物理空间，属于模型幻觉生成的新场景。",
+      "evidence_zh": "镜头保持连续向右旋转，但场景内容未能形成一致的360度环视，而是不断生成不连贯的新画面。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频是连续的镜头运动，没有明显的硬切，但存在严重的连续幻觉和空间不一致。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "无多余的动作尾段。"
+    },
+    "final_state_check": {
+      "window": "75-78",
+      "visible_key_objects": [
+        "scruffy white dog",
+        "red metal cafe chair"
+      ],
+      "reappearance_consistency_zh": "最终画面中虽然有白狗和红椅子，但狗的外貌、姿态以及周围的环境布局与初始画面完全不一致，未能实现一致的重现。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "the white dog's actions and the state of the room during the 360-degree rotation",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "初始画面中，一只毛发凌乱的白狗张着嘴坐在红色椅子上。",
+      "hidden_interval_zh": "镜头向右环视，期间出现了多只不同的白狗，空间完全不连贯。",
+      "reappeared_state_zh": "镜头似乎回到原位，但出现的是一只姿态和外貌都不同的白狗，且环境布局发生改变。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "不适用，对象已发生替换。",
+      "terminal_state_reasoning_zh": "不适用。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "diagnostic explanation only; no separate final-score deduction",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "red metal chair",
+        "green wall"
+      ],
+      "articulation_or_local_state_change_zh": "不适用，对象被替换。",
+      "uniquely_matched_anchor_relative_change_zh": "不适用，空间不连贯。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "不适用。",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "不适用。",
+      "vehicle_front_rear_identification_zh": "不适用。",
+      "vehicle_world_displacement_vs_heading_zh": "不适用。",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "不适用。",
+      "unchanged_coupled_details_zh": "不适用。",
+      "accumulated_change_zh": "没有连贯的累积变化，只有严重的幻觉和对象替换。",
+      "evidence_zh": "镜头环视过程中，原有的狗消失，并在不同位置幻视出多只不同的白狗，空间结构完全崩溃，没有实现合理的隐藏状态演变。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "partial",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "partial",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "no",
+      "observed_action_zh": "镜头持续向右环视，最后似乎有轻微的后退动作。",
+      "trajectory_evidence_zh": "镜头执行了向右的旋转动作，但未能连贯地回到初始视角。",
+      "failure_reason_zh": "未能连贯地回到初始视角，空间结构在旋转中崩溃。"
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "the scruffy white dog",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "clothing",
+        "face_or_hair",
+        "body_proportions"
+      ],
+      "identity_failure": "replacement",
+      "evidence_zh": "镜头环视期间，初始的白狗消失，随后在不同位置出现了多只外貌、体型和姿态不同的白狗，发生了严重的对象替换和幻觉。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于演变质量为1（完全没有合理的演变，只有幻觉替换），身份一致性得分不能提升最终分数，最终分数被限制为1。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频在执行360度环视时空间结构完全崩溃，初始的白狗消失，并在环视过程中幻视出多只不同的白狗，未能实现任何连贯的对象演变或状态回归。",
+    "task_id": "OE039"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 7122,
+      "output_tokens": 215
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 32810,
+      "output_tokens": 3419
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 79,
+      "sheets_count": 4,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 7.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 78,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 7.8,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 4,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "aee1052e619120414d267808ff122a89c43af4b2a84e2d172bca5fd64b0f7361",
+  "score_prompt_sha256": "ccca76d9cc1e765443b78bfcf186e819635db32b47d937c6d30e8ba782294360",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "budget-outsight-OE039-seed42"
+}

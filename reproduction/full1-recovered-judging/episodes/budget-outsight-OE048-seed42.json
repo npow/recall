@@ -1,0 +1,398 @@
+{
+  "task_id": "OE048",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "21f15ac5f122e0db668f46eebf4731989ad0acf7335fd597d2e611b35fcbb938",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE048",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头先向右转动，画面中的咖啡机向左移动并移出视野；随后镜头向左转动，画面中的物体向右移动，最终回到了初始的咖啡机和植物的视角。",
+    "trajectory_evidence_zh": "在第0-18帧中，画面中的咖啡机出水口和植物向左移动并逐渐消失，表明镜头在向右转动；从第19帧开始，画面中的物体开始向右移动，表明镜头开始向左转动；在第30-38帧中，初始的植物和咖啡机出水口从左侧重新进入视野并向右移动，最终在第38帧恢复到与初始帧非常相似的视角。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.5,
+    "final_score_1_to_5": 1.5,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "视频在第9-10帧和第25-26帧发生硬切。在中间段落（第10-25帧），原本无把手的双层玻璃杯被替换为一个有把手的单层玻璃杯，咖啡机出水口和背景墙砖也发生了改变，主体身份严重丢失。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "由于第9-10帧和第25-26帧的硬切，场景并未保持连续的隐藏状态，而是被完全替换为另一个画面，隐藏状态的连续演进被破坏。"
+      },
+      "revealed_state_difference": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "在第26帧硬切回原始场景后，杯中的咖啡液面确实比第5帧离开视线前更高，但这是通过硬切实现的，而非连续的镜头运动。"
+      },
+      "process_accumulation": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "对比第5帧和第26帧，原始杯子中的咖啡液面有增加，但中间段落（第10-25帧）出现了一个完全不同的杯子在接咖啡，累积过程被硬切和幻觉打断，缺乏物理合理性。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail penalty applied; the video ends while the coffee is still pouring.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "相机并未完成连续的向右转90度再转回的动作，而是通过硬切切换到了不同的视角和物体。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景在第9-10帧发生硬切，墙砖的比例和排列发生变化；第25-26帧再次硬切，背景瞬间变回包含绿植的原始场景。",
+      "post_completion_phase_zh": "不适用，动作未以连续方式完成。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "frame 0-5 glass cup vs frame 10-25 glass cup",
+        "anchors": [
+          "coffee machine spout",
+          "background wall tiles"
+        ],
+        "same_object_or_region": "no"
+      },
+      {
+        "comparison": "frame 0-5 glass cup vs frame 26-38 glass cup",
+        "anchors": [
+          "coffee machine drip tray",
+          "potted plant in background"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "frames 9-10",
+        "frames 25-26"
+      ],
+      "continuous_camera_motion": "no",
+      "tracked_structural_anchors": [
+        "background wall tiles",
+        "coffee machine body"
+      ],
+      "newly_revealed_regions_zh": "第10-25帧展示了一个全新的、不连贯的特写区域，包含一个带把手的杯子。",
+      "evidence_zh": "第9-10帧和第25-26帧发生了明显的硬切，场景瞬间被替换，无法用连续的相机平移或旋转来解释。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "frames 9-10 and 25-26",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "glass cup design (handle vs no handle)",
+        "background wall tiles"
+      ],
+      "evidence_zh": "第9-10帧从墙面平移瞬间跳变到带把手杯子的特写；第25-26帧从特写瞬间跳变回包含绿植的广角原始场景，存在严重的拓扑矛盾和物体替换。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作未以连续方式完成，无额外的尾部扣分。"
+    },
+    "final_state_check": {
+      "window": "frames 35-38",
+      "visible_key_objects": [
+        "matte black coffee machine",
+        "clear double-walled glass cup",
+        "slatted drip tray",
+        "potted plant"
+      ],
+      "reappearance_consistency_zh": "在第26帧硬切后，初始的无把手双层玻璃杯、咖啡机和绿植重新出现，与初始帧的外观基本一致，但这是通过硬切而非连续运动实现的。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "partial",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 2,
+      "named_process": "coffee pouring and accumulating in the cup",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "第5帧，无把手双层玻璃杯即将离开画面，杯底有少量咖啡。",
+      "hidden_interval_zh": "第6-25帧，原始杯子不可见，但中间段落（10-25帧）出现了幻觉的带把手杯子。",
+      "reappeared_state_zh": "第26帧，原始无把手杯子通过硬切重新出现，咖啡液面明显升高。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "视频结束时咖啡仍在倾倒，未达到静止状态。",
+      "terminal_state_reasoning_zh": "过程仍在进行中，无静止尾部。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无静止尾部扣分。",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "不适用",
+      "uniquely_matched_anchor_relative_change_zh": "不适用",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "不适用",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "不适用",
+      "unchanged_coupled_details_zh": "不适用",
+      "accumulated_change_zh": "对比第5帧和第26帧，原始杯子中的咖啡液面有所上升。",
+      "evidence_zh": "咖啡液面有上升，但视频存在严重的硬切和物体替换幻觉，演进质量低。",
+      "final_score_cap_applied": 2
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "partial",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "partial",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "相机向右平移（随后发生硬切），然后向左平移（再次发生硬切回到初始视角）。",
+      "trajectory_evidence_zh": "相机确实执行了向右和向左的运动趋势，并最终回到了类似初始视角的画面，尽管中间存在硬切。",
+      "failure_reason_zh": "相机运动被硬切打断，未能形成连续的90度旋转和返回轨迹。"
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "uncertain",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "uncertain",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "uncertain",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "glass cup",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "materials"
+      ],
+      "identity_failure": "replacement",
+      "evidence_zh": "在第10-25帧，原本无把手的双层玻璃杯被完全替换为一个有把手的单层玻璃杯，随后在第26帧又通过硬切变回原样。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 2,
+      "meaningful_motion_or_evolution": "partial",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 2,
+      "evidence_zh": "由于存在严重的硬切和幻觉，演进质量仅为2，主体身份得分受此上限限制。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频未能实现连续的相机旋转，而是在向右和向左的过程中发生了两次严重的硬切，导致中间段落出现了一个完全不同的带把手杯子，破坏了隐藏状态的连续性和主体身份。",
+    "task_id": "OE048"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4717,
+      "output_tokens": 280
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 30426,
+      "output_tokens": 3681
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "30d61e87c6eb073a3330e28d815bbd6ef552798d8c82f25e0e86b9d2c89e71c8",
+  "score_prompt_sha256": "a33d61abf5d37a7828b03c624809f3725f462a290377665a39551f5a50440be2",
+  "scores": {
+    "official": 1.5,
+    "final_score": 1.5
+  },
+  "episode_id": "budget-outsight-OE048-seed42"
+}

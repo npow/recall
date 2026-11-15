@@ -1,0 +1,400 @@
+{
+  "task_id": "IF040",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "dcbef1c74c5d6210c8a4aa52bb894c659427474e3215e539d7fca2690799593e",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF040",
+    "perspective": "third-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "男子向左走下铺砌的小路，进入高大的绿色灌木丛中，并继续在灌木丛中穿行。",
+    "trajectory_evidence_zh": "视频显示男子从铺砌的小路上向左转，走下小路并进入左侧茂密的绿色灌木丛中。随后镜头跟随他进入灌木丛，显示他在树叶中穿行。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.5,
+    "final_score_1_to_5": 1.5,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "男子的深色连帽衫和牛仔裤在整个过程中基本保持一致，但在转身进入灌木丛时身体比例有轻微变形。"
+      },
+      "contact_support": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男子走下小路时脚步滑动明显，脚部与草地的接触不自然，有融入地面的现象。"
+      },
+      "causal_response": {
+        "score": 1,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "男子走入高大的绿色灌木丛时，灌木丛的枝叶完全没有产生任何弯曲、分离或避让的物理反馈，如同穿过全息影像。"
+      },
+      "lighting_shadow": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男子最初在小路上的阴影在离开小路时未能自然过渡到草地上，而是直接在路面上淡出消失。"
+      },
+      "motion_kinematics": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男子的步态僵硬，缺乏自然的重心转移，且在进入灌木丛时完全没有抬起手臂拨开树枝的动作。"
+      },
+      "collision_boundary": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男子直接穿模进入了灌木丛的枝叶中，没有发生任何合理的碰撞或阻挡反应。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored",
+      "subject_identity": "excluded from weighted mean because interaction_quality_level_1_to_5 is 2"
+    },
+    "static_tail_policy_applied": "no static tail penalty applied as the subject completes meaningful motion before the video ends",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 20,
+      "evidence_zh": "男子在第20帧左右完全进入了左侧的灌木丛中。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "远处的山丘、城镇和右侧的灌木丛在男子移动期间保持稳定。",
+      "post_completion_phase_zh": "男子进入灌木丛后，背景环境依然保持稳定，没有明显的扭曲或重置。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "the man throughout the video",
+        "anchors": [
+          "the paved path",
+          "the tall green bushes on the left"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-48"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "the paved path",
+        "the distant town"
+      ],
+      "newly_revealed_regions_zh": "随着男子向左移动，左侧灌木丛的更多细节被展现出来。",
+      "evidence_zh": "摄像机保持相对静止，仅有轻微的视角跟随，背景锚点稳定。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频中没有出现硬重置，场景和人物的运动是连续的。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作完成后没有出现需要额外扣分的严重物理错误或过度执行。"
+    },
+    "final_state_check": {
+      "window": "40-48",
+      "visible_key_objects": [
+        "the man",
+        "the tall green bushes"
+      ],
+      "reappearance_consistency_zh": "男子在灌木丛中的背影与进入前保持一致。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "not_applicable",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "男子在视频中持续向左侧灌木丛移动。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "yes",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "男子在视频中表现出明显的向左移动并进入灌木丛的动作。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "prompt_directed_forward_progress": "yes",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "男子离开铺砌的小路向左走，进入了高大的绿色灌木丛中。",
+      "trajectory_evidence_zh": "从第0帧到第20帧，男子持续向左移动并最终进入灌木丛区域。",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "yes",
+      "observed_outcome": "solid_penetration",
+      "solid_interpenetration": "yes",
+      "support_after_contact": "implausible",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "男子在第15帧左右接触灌木丛，随后直接穿模进入枝叶中，没有产生任何物理碰撞或阻挡反应。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "tall green bushes",
+      "target_type": "flexible_contact_surface",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "yes",
+      "observed_trigger": "contact",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "yes",
+      "evidence_zh": "灌木丛在男子接触前后一直存在，但对男子的接触没有任何物理反馈。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "partial",
+      "proxy_evidence_observed": [
+        "torso_or_head_bob"
+      ],
+      "proxy_supports_expected_locomotion": "partial",
+      "evidence_zh": "男子的脚部在进入草地和灌木丛后部分被遮挡，身体有轻微的上下起伏，但步态显得僵硬且有滑动感。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "the man",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "clothing",
+        "colors"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "男子的深色连帽衫和牛仔裤在整个视频中保持一致，尽管在转身时身体比例有轻微变形，但整体身份特征稳定。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 2,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 2,
+      "evidence_zh": "由于交互质量评级为2（严重的物理穿模和缺乏因果反馈），主体身份得分不计入加权平均分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 2,
+      "interaction_opportunity_reached": "yes",
+      "physical_response_observed": "no",
+      "core_failure_zh": "男子直接穿模进入灌木丛，灌木丛没有任何物理反馈（因果响应失败），且男子没有拨开树枝的动作。",
+      "positive_evidence_zh": "男子成功执行了向左移动并到达灌木丛区域的轨迹。",
+      "evidence_zh": "虽然男子到达了目标区域，但与灌木丛的物理交互严重不合理，表现为完全的穿模和缺乏环境反馈。",
+      "final_score_cap_applied": 2
+    },
+    "summary_zh": "男子成功走向并进入了左侧的灌木丛，但与灌木丛的物理交互严重失败，表现为直接穿模且灌木丛没有任何物理反馈，同时步态僵硬且阴影过渡不自然。",
+    "task_id": "IF040"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4716,
+      "output_tokens": 211
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 38774,
+      "output_tokens": 3615
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 49,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 48,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "0d7565c2f87a6d7803acb9c607bc6610d8cff52f6af1d854bda368c085acc247",
+  "score_prompt_sha256": "a97a2f9f67a98abe200296ee312deed92979982bfca0cc7392001603f67a74ac",
+  "scores": {
+    "official": 1.5,
+    "final_score": 1.5
+  },
+  "episode_id": "budget-if-IF040-seed42"
+}

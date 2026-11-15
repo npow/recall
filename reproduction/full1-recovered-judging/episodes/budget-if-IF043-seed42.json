@@ -1,0 +1,407 @@
+{
+  "task_id": "IF043",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "2690909149aecb44e5decb804ca89879072b5da29d67f95dae6684d4ec0fc3d5",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF043",
+    "perspective": "third-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "男子向前滑板，跳上一个台阶并在上面向前滑行。",
+    "trajectory_evidence_zh": "男子从初始位置开始持续向前移动，跳上台阶后继续沿着台阶向前滑行。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 5.0,
+    "final_score_1_to_5": 5,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "男子的黑色T恤、橄榄色工装裤以及滑板在整个视频中保持高度一致，没有发生任何变形或身份漂移。"
+      },
+      "contact_support": {
+        "score": 5,
+        "weight": 2.0,
+        "answer": "yes",
+        "evidence_zh": "男子的双脚始终稳稳地踩在滑板上，滑板轮子在平地滑行、跳跃到台阶上以及落地时都与混凝土表面保持了坚实且合理的接触，没有出现悬空或滑脱。"
+      },
+      "causal_response": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "滑板在混凝土表面上平稳滚动，跳跃和落地时与台阶的物理交互非常自然，周围环境保持稳定，没有出现不合理的形变或场景拖拽。"
+      },
+      "lighting_shadow": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "男子和滑板在地面及台阶上投射的阴影清晰且随着跳跃和落地动作自然移动，与明亮的顶光环境完全一致。"
+      },
+      "motion_kinematics": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "男子在起跳和落地时自然地弯曲膝盖以转移重心和吸收冲击力，在整个向前滑行和跳跃过程中保持了极其逼真和平衡的滑板姿态。"
+      },
+      "collision_boundary": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "滑板和男子的双脚在接触地面和台阶时，均未出现穿模或陷入混凝土表面的现象，边界碰撞处理完美。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail penalty applied as the subject remains in meaningful motion throughout the video.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 38,
+      "evidence_zh": "男子成功完成了向前滑行并连续跳跃台阶的动作，动作连贯且完整。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景中的建筑、树木和滑板公园的坡道在相机跟随移动时保持了完美的空间一致性，没有发生扭曲或重置。",
+      "post_completion_phase_zh": "动作持续到视频结束，背景始终保持稳定。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "The man and his skateboard across all frames",
+        "anchors": [
+          "The concrete ledge he jumps onto",
+          "The background buildings and trees"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-38"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "The concrete ledge in the center",
+        "The curved ramp on the right"
+      ],
+      "newly_revealed_regions_zh": "随着相机向前推进，滑板公园前方的更多地面和远处的建筑自然显现。",
+      "evidence_zh": "相机的平滑推进完美跟随了男子的滑行轨迹，视角变化自然，没有不合理的跳跃。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频镜头连续，没有任何硬切或场景重置的迹象。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "视频在动作完成后自然结束，没有多余的导致物理错误的尾随画面。"
+    },
+    "final_state_check": {
+      "window": "35-38",
+      "visible_key_objects": [
+        "The man",
+        "The skateboard",
+        "The concrete ground"
+      ],
+      "reappearance_consistency_zh": "男子和滑板在落地后继续向前滑行，外观和状态与初始完全一致。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "not_applicable",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 5,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "yes",
+      "stable_world_anchors_compared": [
+        "The concrete ledge",
+        "The background buildings"
+      ],
+      "articulation_or_local_state_change_zh": "男子双腿弯曲起跳、在空中保持平衡并落地缓冲的动作非常清晰。",
+      "uniquely_matched_anchor_relative_change_zh": "男子相对于地面的台阶完成了跳上和跳下的空间位移。",
+      "two_independent_motion_evidence_requirements_met": "yes",
+      "expected_world_motion_direction_zh": "向前滑行",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "男子的姿态随着跳跃动作发生了真实的物理变化。",
+      "unchanged_coupled_details_zh": "没有发现复制粘贴的冻结现象，阴影和动作完美契合。",
+      "accumulated_change_zh": "男子成功跨越了台阶障碍并继续向前滑行。",
+      "evidence_zh": "男子在整个视频中保持了连贯且符合物理规律的滑板运动。",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "男子完成了向前滑行、跳上台阶、跳下台阶的完整动作序列。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "yes",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "男子在整个视频中都在进行有意义的滑板运动。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "prompt_directed_forward_progress": "yes",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "男子向前滑行，并成功跳跃越过了一个台阶障碍。",
+      "trajectory_evidence_zh": "从第0帧到第38帧，男子持续在世界空间中向前推进。",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "yes",
+      "observed_outcome": "stepped_or_climbed_onto",
+      "solid_interpenetration": "no",
+      "support_after_contact": "plausible",
+      "boundary_response_plausible": "yes",
+      "evidence_zh": "滑板在跳上台阶和落地时，轮子与混凝土表面发生了合理的物理接触，没有穿模。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "The concrete ledge",
+      "target_type": "solid_boundary",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "yes",
+      "observed_trigger": "contact",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "yes",
+      "evidence_zh": "台阶在男子跳跃前后保持了稳定的几何形态，没有发生不合理的形变或消失。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "yes",
+      "proxy_evidence_observed": [
+        "weight_transfer",
+        "joint_motion"
+      ],
+      "proxy_supports_expected_locomotion": "yes",
+      "evidence_zh": "男子的双脚和滑板轮子清晰可见，且其膝盖弯曲和重心转移的动作完美支持了滑板运动的物理逻辑。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "The man and his skateboard",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "clothing",
+        "body_proportions",
+        "face_or_hair",
+        "persistent_equipment",
+        "colors"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "男子的衣着（黑色T恤、橄榄色裤子）和滑板在整个运动过程中保持了完美的一致性。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 5,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": 5,
+      "evidence_zh": "核心物理交互（滑板滑行和跳跃）表现完美，身份一致性正常计入评分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 5,
+      "interaction_opportunity_reached": "yes",
+      "physical_response_observed": "yes",
+      "core_failure_zh": "无",
+      "positive_evidence_zh": "男子展示了极其流畅和符合物理规律的滑板动作，包括起跳、空中姿态控制、落地缓冲以及与地面的坚实接触。",
+      "evidence_zh": "整个滑板过程物理逻辑严密，动作连贯，没有任何穿模、漂浮或身份漂移的缺陷。",
+      "final_score_cap_applied": 5
+    },
+    "summary_zh": "视频完美地展示了男子向前滑行并跳跃台阶的动作，物理交互真实，动作流畅，身份和环境保持了极高的一致性。",
+    "task_id": "IF043"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4681,
+      "output_tokens": 175
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 36765,
+      "output_tokens": 3741
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "411352a20a5c4c23099ebd018ecfc5425537373f1502730baab35e880e40ea1f",
+  "score_prompt_sha256": "01da10a89e980809020eece8f12c01188cdbd01c7405fe5c434b7f7785b799e3",
+  "scores": {
+    "official": 5.0,
+    "final_score": 5.0
+  },
+  "episode_id": "budget-if-IF043-seed42"
+}

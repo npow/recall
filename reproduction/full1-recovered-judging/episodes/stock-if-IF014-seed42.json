@@ -1,0 +1,403 @@
+{
+  "task_id": "IF014",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "20720bd926456c44b4817a2f95d3e201902a8d9fa928ddb50a9a00dec8bc0262",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF014",
+    "perspective": "third-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "橙色汽车在街道上向前行驶，到达路口后向右转弯并继续行驶。",
+    "trajectory_evidence_zh": "在第一张接触表中，橙色汽车向前行驶并在接近路口时开始向右转弯；在第二张接触表中，汽车完成右转并向右侧行驶；第三张接触表显示汽车在右转后的新方向上。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.6,
+    "final_score_1_to_5": 1.6,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 2,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "场景重置后，橙色汽车的尾部车窗形状、尾灯发生变化，且后备箱上的Instagram标志消失，发生了明显的形变和替换。"
+      },
+      "contact_support": {
+        "score": 2,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "在右转和场景过渡期间（第30-45帧），汽车在没有合理车轮滚动的情况下发生横向滑动和漂浮。"
+      },
+      "causal_response": {
+        "score": 1,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "汽车在右转时穿透了咖啡馆的建筑，随后场景发生了硬重置，背景完全变成了另一条街道。"
+      },
+      "motion_kinematics": {
+        "score": 2,
+        "weight": 2,
+        "answer": "no",
+        "evidence_zh": "汽车的右转动作极不符合物理规律，伴随着横向滑动和瞬间的场景瞬移。"
+      },
+      "collision_boundary": {
+        "score": 1,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "汽车在右转时直接穿透了街角咖啡馆的实体玻璃店面，发生了严重的穿模。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored",
+      "subject_identity": "Excluded from scoring because interaction_quality_level_1_to_5 is 2."
+    },
+    "static_tail_policy_applied": "No static tail penalty applied as the subject remains active or the video ends during the action.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "partial",
+      "first_completion_frame": null,
+      "evidence_zh": "汽车向前行驶并开始右转，但动作被严重的穿模和场景重置打断，未能合理完成。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "初始的街道和咖啡馆背景在第30帧之前保持相对稳定。",
+      "post_completion_phase_zh": "在第31帧之后发生硬重置，背景被完全替换为带有拱门的另一条街道。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "转向前后的橙色汽车",
+        "anchors": [
+          "橙色涂装",
+          "连续的摄像机跟随（尝试）"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "25-45"
+      ],
+      "continuous_camera_motion": "no",
+      "tracked_structural_anchors": [
+        "咖啡馆店面",
+        "街道铺装"
+      ],
+      "newly_revealed_regions_zh": "第45帧之后出现的带有拱门建筑的街道是一个全新的、不可比较的区域。",
+      "evidence_zh": "摄像机视角突然改变，背景建筑被完全替换，这无法用连续的摄像机运动来解释。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "30-45",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "咖啡馆店面",
+        "街道布局"
+      ],
+      "evidence_zh": "初始的街道和咖啡馆在转弯过程中被突然替换为完全不同的街道和建筑，没有合理的过渡。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "没有在动作完成后的额外运动；失败发生在请求的动作期间。"
+    },
+    "final_state_check": {
+      "window": "60-68",
+      "visible_key_objects": [
+        "orange car"
+      ],
+      "reappearance_consistency_zh": "汽车在重置后重新出现，但尾部细节（车窗、标志）与初始状态不一致。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "not_applicable",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "汽车在视频前半段有明显的向前行驶动作。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "yes",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "橙色汽车在视频中主动向前行驶并尝试右转。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "partial",
+      "instruction_following_score": 1,
+      "prompt_directed_forward_progress": "yes",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "汽车向前行驶并在路口开始右转。",
+      "trajectory_evidence_zh": "汽车沿着街道前进，并在到达路口时向右改变方向。",
+      "failure_reason_zh": "转弯动作因严重的穿模和场景重置而未能合理完成。"
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "yes",
+      "observed_outcome": "solid_penetration",
+      "solid_interpenetration": "yes",
+      "support_after_contact": "implausible",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "汽车在右转时直接穿透了街角咖啡馆的实体玻璃店面。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "咖啡馆店面",
+      "target_type": "solid_boundary",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "yes",
+      "observed_trigger": "contact",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "yes",
+      "evidence_zh": "咖啡馆店面在汽车接触前保持稳定，但汽车直接穿透了它。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "yes",
+      "proxy_evidence_observed": [
+        "gait_synchronized_translation"
+      ],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "车轮可见，但在转弯和场景重置期间发生了不合理的横向滑动。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "橙色汽车",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "colors"
+      ],
+      "identity_failure": "morphing",
+      "evidence_zh": "场景重置后，汽车的尾部车窗形状、尾灯发生变化，且后备箱上的Instagram标志消失。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 2,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 2,
+      "evidence_zh": "由于发生了严重的穿模和场景重置，交互质量评级为2，因此主体身份得分不计入加权平均。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 2,
+      "interaction_opportunity_reached": "yes",
+      "physical_response_observed": "no",
+      "core_failure_zh": "汽车穿透了实体建筑，随后场景发生了硬重置。",
+      "positive_evidence_zh": "汽车在转弯前成功地向前行驶了一段距离。",
+      "evidence_zh": "汽车虽然执行了向前的行驶和转弯的尝试，但在转弯过程中直接穿透了建筑物，并导致了完全的场景重置，属于极其不合理的交互。",
+      "final_score_cap_applied": 2
+    },
+    "summary_zh": "橙色汽车向前行驶，但在右转时直接穿透了实体店面，导致了严重的场景硬重置和车辆外观的形变。",
+    "task_id": "IF014"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 5934,
+      "output_tokens": 210
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 36087,
+      "output_tokens": 3486
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 69,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 68,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 6.8,
+          "filled_cells": 19
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 4,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "432ca23b3259291a3dc261b0865ff9c27ee53b55625354acfeacdb940351b0f7",
+  "score_prompt_sha256": "936a3a577d40e0210931468e914a1467b0953542b153b4145542a0e140aaefb3",
+  "scores": {
+    "official": 1.6,
+    "final_score": 1.6
+  },
+  "episode_id": "stock-if-IF014-seed42"
+}

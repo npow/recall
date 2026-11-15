@@ -1,0 +1,393 @@
+{
+  "task_id": "OE021",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "fb78c20a0e574ea3b52c9ceed7e92a2e8530d39e23e7770c90bbb2aed59f6dad",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE021",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "视角沿着弯曲的公路向前行驶，随后跟在一辆黑色卡车后方继续前行。",
+    "trajectory_evidence_zh": "在Sheet 1中，视角在公路上向前移动；在Sheet 2中，一辆黑色卡车出现在视野中，视角移动到其后方；在Sheet 3中，视角稳定地跟在黑色卡车后方沿着弯曲的公路向前行驶。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1.0,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "视频出现了严重的幻觉和物体变形。从第20帧开始，左下角凭空出现一辆白色面包车，随后在第25帧左右突变为黑色面包车，并在第45帧左右再次变形为一辆黑色平板卡车。最初的红色掀背车在此过程中完全消失。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "由于前景中突然出现并不断变形的幻觉车辆（白色面包车变黑色平板卡车）完全占据了画面，最初的红色掀背车和前方两辆卡车的预期行进过程被彻底破坏，无法观察到合理的隐藏状态演进。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "视频后半段展现的状态与初始帧完全不符。原本应该继续沿着弯道行驶的红色掀背车消失，取而代之的是一辆凭空产生且占据主导地位的黑色平板卡车，完全违背了预期的场景延续。"
+      },
+      "trajectory_continuity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "红色掀背车的初始运动轨迹在幻觉车辆（白色汽车和随后的黑白变色卡车）从画面下方涌入并遮挡视线后彻底中断并丢失，没有任何连贯的轨迹可言。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "no static tail; the video contains continuous but incoherent motion",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "虽然相机有向前移动的趋势，但由于严重的物体幻觉和变形，未能连贯地完成'跟在卡车后面沿着弯曲的高速公路向前行驶'的任务，目标车辆丢失。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "高速公路、护栏和山体背景在相机向前移动时基本保持一致，但前景被幻觉物体破坏。",
+      "post_completion_phase_zh": "不适用，任务未连贯完成。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial red hatchback vs. red car in later frames",
+        "anchors": [
+          "highway lanes",
+          "metal guardrails"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-68"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "metal guardrails",
+        "lane markings"
+      ],
+      "newly_revealed_regions_zh": "随着相机向前推进，新的路段和远处的山体被揭示。",
+      "evidence_zh": "相机保持了连续的向前推进运动，但画面内容的剧变（车辆凭空出现和变形）不能用相机运动来解释。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频没有发生硬切，而是前景物体发生了严重的连续变形和幻觉替换。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "没有发生任务完成后的额外违规，所有严重错误均发生在主要行进过程中。"
+    },
+    "final_state_check": {
+      "window": "60-68",
+      "visible_key_objects": [
+        "metal guardrails",
+        "lane markings"
+      ],
+      "reappearance_consistency_zh": "初始的红色掀背车未能一致地重新出现，最终画面被一辆幻觉产生的黑色平板卡车占据。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "vehicles driving forward along the curving highway",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "lane markings",
+        "metal guardrails"
+      ],
+      "articulation_or_local_state_change_zh": "初始车辆有短暂的位移，但随后被幻觉物体取代。",
+      "uniquely_matched_anchor_relative_change_zh": "幻觉产生的黑色卡车相对于车道线有向前的位移。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "沿着车道线向前行驶。",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "幻觉产生的卡车在路面上移动，但其本身是由其他物体变形而来，不具备合理的局部演进。",
+      "vehicle_front_rear_identification_zh": "幻觉卡车的尾部朝向相机。",
+      "vehicle_world_displacement_vs_heading_zh": "幻觉卡车沿着车道向前移动。",
+      "vehicle_motion_direction": "forward",
+      "unexplained_reverse_motion": "no",
+      "subject_relative_change_zh": "主体发生了灾难性的类别改变和变形。",
+      "unchanged_coupled_details_zh": "无",
+      "accumulated_change_zh": "没有积累有意义的任务相关变化，只有灾难性的物体变形和替换。",
+      "evidence_zh": "视频虽然有运动，但由于前景车辆的严重幻觉和变形（白色面包车变为黑色平板卡车），导致完全没有连贯、有意义的演进。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "partial",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "partial",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "相机沿着弯曲的高速公路向前移动。",
+      "trajectory_evidence_zh": "相机视角确实沿着道路护栏和车道线向前推进，执行了部分轨迹要求，尽管场景内容完全崩溃。",
+      "failure_reason_zh": "虽然有向前的轨迹，但未能保持在目标卡车后方行驶，场景内容发生灾难性改变。"
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "red hatchback and other vehicles",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [],
+      "identity_failure": "replacement",
+      "evidence_zh": "初始的红色掀背车消失，被凭空出现并连续变形的白色/黑色面包车及平板卡车取代。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于演进质量极差（等级1），主体身份得分仅作为诊断，最终得分被限制在1分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频完全未能保持场景和主体的同一性，前景中凭空出现一辆白色面包车，随后突变为黑色面包车并最终变成黑色平板卡车，导致最初的红色掀背车消失，破坏了所有连贯的轨迹和状态演进。",
+    "task_id": "OE021"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 5887,
+      "output_tokens": 218
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 31895,
+      "output_tokens": 3458
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 69,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 68,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 6.8,
+          "filled_cells": 19
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 4,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "a597a3a6d8543a9540f6ff62a5e362953224fd76fa0b7ce04f6327a13cdf5827",
+  "score_prompt_sha256": "d10f31e43bce35e8705cf909b99dffbcd67f749b1fa28d8e2b896e6eb7235caf",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "stock-outsight-OE021-seed42"
+}

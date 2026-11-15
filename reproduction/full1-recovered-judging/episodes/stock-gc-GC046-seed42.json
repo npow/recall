@@ -1,0 +1,418 @@
+{
+  "task_id": "GC046",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "1bc0bdeeb9d979739c23f7050ae2e727317f7ae88f3b3e7d8e0a957a7f39054f",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "GC046",
+    "perspective": "first-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "partial",
+    "revisit_required": "yes",
+    "revisit_observed": "no",
+    "observed_action_zh": "视角向前移动到雕塑中间，然后开始向右旋转，但未能完成完整的360度旋转。",
+    "trajectory_evidence_zh": "在第0-25帧左右，视角向前移动靠近中心点；从第25帧开始，视角持续向右旋转，画面中依次出现不同颜色的建筑和雕塑，但直到视频结束（第98帧）也未能转回初始的画面视角。",
+    "failure_reason_zh": "虽然执行了前进和原位旋转的动作，但旋转角度不足360度，未能回到初始视角。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.8,
+    "final_score_1_to_5": 1.8,
+    "category_scores_1_to_5": {
+      "identity_id": {
+        "score": 1,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "视频初始展示了坐在长椅上的女子雕像、黑色纪念碑和另一座女孩雕像。随着相机向前移动并向右旋转，这些初始对象完全消失，取而代之的是一个站在圆形格栅上的全新女子雕像（约第45帧出现）。相机继续旋转360度，但初始的雕像、纪念碑以及黄粉色建筑从未再次出现，整个场景的物体和结构被完全替换。"
+      },
+      "identity_texture": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "虽然雕像的青铜材质在各自可见期间保持相对稳定，但地面的纹理和材质发生了严重突变，从最初的鹅卵石路面（第0-30帧）在相机旋转过程中变成了大型金属网格栅（第45帧起）。"
+      },
+      "color": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "在各个物体和建筑可见的期间，雕像的青铜色以及建筑立面的颜色基本保持稳定，没有出现明显的颜色漂移或闪烁。"
+      },
+      "relative_position": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "广场的空间布局完全崩溃。相机进行360度旋转时，未能保持初始雕像和建筑的相对位置关系，而是围绕一个凭空出现的站立雕像旋转，且背景建筑不断变换，最终未能回到初始的场景布局。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "视频持续发生视角变化，无静止尾部。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "相机向前移动并开始旋转，但由于场景完全改变，未能完成在初始雕像中心点原地旋转360度并看回原景的任务。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景建筑在相机旋转过程中完全改变，初始的黄色和粉色建筑消失，被不同风格和颜色的建筑取代，且旋转一圈后未能重现初始背景。",
+      "post_completion_phase_zh": "不适用，任务未连贯完成。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "初始的三个雕像与旋转后出现的站立雕像",
+        "anchors": [
+          "相机连续的旋转运动",
+          "广场中心位置"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-98"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "地面",
+        "建筑立面"
+      ],
+      "newly_revealed_regions_zh": "相机向右旋转时展示了新的建筑立面，但随后场景发生拓扑突变，未能回到初始区域。",
+      "evidence_zh": "画面变化由相机的平移和连续向右旋转引起，但旋转过程中场景内容发生了不符合物理逻辑的替换。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "场景的改变发生在连续的相机旋转过程中，没有相邻帧的硬切，但存在严重的世界模型拓扑失败。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "无"
+    },
+    "final_state_check": {
+      "window": "90-98",
+      "visible_key_objects": [],
+      "reappearance_consistency_zh": "相机完成旋转后，初始的三个青铜雕像、黑色纪念碑和石椅均未重新出现，取而代之的是一个站在格栅上的不同雕像和完全不同的背景建筑，重现一致性彻底失败。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "not_applicable",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": null,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": null,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "相机执行了明显的向前平移和连续的旋转运动。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "雕像青铜表面",
+        "地面"
+      ],
+      "correspondence_anchors": [
+        "相机连续运动"
+      ],
+      "visible_intervals": [
+        "0-98"
+      ],
+      "before_developing_after_checkpoints": [
+        {
+          "surface": "地面",
+          "before_frame": 25,
+          "developing_frame": 40,
+          "after_frame": 50,
+          "observed_change_zh": "地面从鹅卵石纹理变成了大型金属圆形格栅。"
+        }
+      ],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "verified",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "地面的材质和纹理在相机旋转过程中发生了无物理支撑的突变。"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "not_applicable",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "yes",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "第一人称视角，无受控主体。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "first-person",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": "not_applicable"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "subject_identity_check": {
+      "applicable": "no",
+      "tracked_subject": "not_applicable",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [],
+      "identity_failure": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": null,
+      "evidence_zh": "not_applicable"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "not_applicable",
+      "positive_evidence_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "summary_zh": "相机在旋转过程中未能保持场景的空间一致性，初始的雕像和建筑完全消失，被凭空出现的不同雕像和背景取代，导致严重的身份和相对位置失败。",
+    "task_id": "GC046"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 8314,
+      "output_tokens": 244
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 21978,
+      "output_tokens": 3457
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 99,
+      "sheets_count": 4,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 9.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 98,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 5,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 8.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 4,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 8.0,
+          "filled_cells": 1
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "bf4eee804ffa0fffbf5b5ae3a2e0f81d68310dfdb3591459203e6c194bc79a21",
+  "score_prompt_sha256": "417b8687ebf6f042a554901a401d6f2165568bad86397507744029a07e7dd5bf",
+  "scores": {
+    "official": 1.8,
+    "final_score": 1.8
+  },
+  "episode_id": "stock-gc-GC046-seed42"
+}

@@ -48,6 +48,17 @@ def rescore_rows():
 
 def extra_sections():
     lines = []
+    recovered = read("reproduction/full1-recovered-judging/summary.json")
+    if recovered:
+        lines.extend(["", "## Full171 stock versus budget run", "",
+            "All342 generation records are verified complete. Judging resumes from preserved video-hash-verified reports after the original scorer lost credentials. Overall scores remain pending until all171 cases in each arm are scored.", "",
+            "| Arm | Generated | Judged | Overall |", "|---|---:|---:|---:|"])
+        for arm, result in recovered["arms"].items():
+            count = sum(d["scored"] for d in result["dimensions"].values())
+            overall = result["overall_equal_dimension_mean"]
+            value = f"{overall:.4f}" if overall is not None else "pending"
+            lines.append(f"| {arm} |171/171|{count}/171|{value}|")
+        lines.extend(["", "[Generation plan, completion records and judgments](reproduction/full1-recovered-judging/README.md). Uses the integrated checkpoint, streamed Haiku player and Gemini preview alias; hosted-service equivalence is not established. The released rubric admits partial returns, so an overall score alone does not prove revisit memory."])
     powered = powered_rows()
     if powered:
         lines.extend(["", "## Gemini — paired GC/OE development cohort (seeds 42 and 43)", "",
@@ -147,7 +158,7 @@ def generate():
     reader_fit = read("reproduction/learned-memory-reader/real-fit-summary.json")
     small_context = read("reproduction/lingbot-small/gemini-summary.json")
     text_pilot = read("reproduction/task-text-pilot/summary.json")
-    snapshot = {"task_text_confirmation": text_confirmation, "learned_reader_surrogate": reader_fit, "small_model_context_diagnostic": small_context, "task_text_development": text_pilot, "target": 2.12, "full_benchmark_score": (full or {}).get("overall"), "gemini_moving_subsets": moving10, "full_171_run": full, "published_score_beaten": False,
+    snapshot = {"full1_recovered": read("reproduction/full1-recovered-judging/summary.json"), "task_text_confirmation": text_confirmation, "learned_reader_surrogate": reader_fit, "small_model_context_diagnostic": small_context, "task_text_development": text_pilot, "target": 2.12, "full_benchmark_score": (full or {}).get("overall"), "gemini_moving_subsets": moving10, "full_171_run": full, "published_score_beaten": False,
                 "gemini_model": "gemini-3.1-pro-preview", "endpoint": "Vertex AI global",
                 "gemini_local_cohorts": cohorts, "historical_claude_cohorts": historical,
                 "comparability": "Subset scores are not comparable to published four-dimension overall. Methods only compared within the same cohort/judge. Gemini model alias, player and adapter differences remain documented."}

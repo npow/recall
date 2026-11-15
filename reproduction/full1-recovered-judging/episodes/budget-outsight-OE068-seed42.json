@@ -1,0 +1,406 @@
+{
+  "task_id": "OE068",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "866efd49a68240e33d2359155c3c68c2bc6d96a02178c6b1c4a1cc7a4436da12",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE068",
+    "perspective": "third-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头向左环绕人物移动约180度，然后向右环绕返回初始视角。",
+    "trajectory_evidence_zh": "视频开始时镜头在人物后方，随后镜头向左环绕移动，展示了人物左侧的服装区，大约在第35帧到达最左侧（人物正前方偏左），之后镜头开始向右环绕移动，最终在结尾回到人物后方，面向自动扶梯的初始视角。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "虽然女子的外观基本保持一致，但她在相邻帧（帧4-5和帧59-60）发生了严重的瞬间移动和状态重置，从自动扶梯瞬间转移到地板上，然后又瞬间回到扶梯底部，破坏了实体的连续性。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "女子并没有在视线外继续乘坐自动扶梯上升；她在帧5瞬间移动到了地板上并开始走动，完全没有在扶梯上积累向上的进度。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "当镜头转回时，女子在帧60瞬间移动回了自动扶梯的最底部，与初始状态完全相同，没有任何向上的位置变化。"
+      },
+      "process_accumulation": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "女子的位置变化并非由自动扶梯的连续向上运动产生，而是通过瞬间移动离开扶梯并在最后瞬间移动回起点，完全违背了物理累积过程。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail penalty applied; the failure is due to catastrophic spatial resets and lack of expected process evolution.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 68,
+      "evidence_zh": "镜头成功向左旋转并最终转回了初始视角的自动扶梯区域。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头平移过程中，服装店的衣架、衣服和背景墙壁等结构基本保持一致，但人物与背景的空间关系发生了严重的逻辑断裂。",
+      "post_completion_phase_zh": "无明显的动作后阶段，视频在镜头转回后结束。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial woman on escalator vs. woman walking on floor vs. returned woman on escalator",
+        "anchors": [
+          "escalator steps",
+          "bottom landing",
+          "clothing racks"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "4-5",
+        "59-60"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "escalator handrail",
+        "clothing racks"
+      ],
+      "newly_revealed_regions_zh": "镜头向左平移展示了服装店的其他区域。",
+      "evidence_zh": "镜头的平移是连续的，但女子在帧4到帧5之间，以及帧59到帧60之间，相对于固定的自动扶梯和地板发生了不可能的瞬间移动，这无法用镜头运动来解释。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "4-5 and 59-60",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "escalator steps",
+        "bottom landing"
+      ],
+      "evidence_zh": "在帧4中女子站在自动扶梯上，帧5中她瞬间出现在地板上向左走；在帧59中她在地板上向右走，帧60中她瞬间回到了自动扶梯底部。这是明显的硬重置和瞬间移动。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "视频在完成镜头转回后结束，没有多余的尾部动作。"
+    },
+    "final_state_check": {
+      "window": "60-68",
+      "visible_key_objects": [
+        "blonde woman",
+        "red turtleneck",
+        "white skirt",
+        "burgundy shoulder bag",
+        "escalator steps"
+      ],
+      "reappearance_consistency_zh": "女子和自动扶梯在最终画面中重新出现，但女子的位置被重置回了最底部，没有体现出应有的时间流逝和位置上升。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "yes",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "woman riding the upward-moving escalator",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "女子在离开视线前（帧5）瞬间移动到了地板上。",
+      "hidden_interval_zh": "女子在视线外（或镜头平移时）在地板上走动，没有在扶梯上上升。",
+      "reappeared_state_zh": "女子在镜头转回时（帧60）瞬间移动回了自动扶梯的最底部。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "no",
+      "terminal_pose_or_process_state": "active_vehicle_state",
+      "support_and_pose_evidence_zh": "女子站在应该持续向上运动的自动扶梯台阶上。",
+      "terminal_state_reasoning_zh": "自动扶梯是一个持续运动的物理过程，女子不应该在经过一段时间后仍然停留在最底部，且瞬间移动破坏了过程的合理性。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无额外的静止尾部扣分，失败已在各维度评分中体现。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "escalator steps",
+        "bottom landing"
+      ],
+      "articulation_or_local_state_change_zh": "女子从站立在扶梯上变为在地板上行走，然后又变回站立在扶梯上。",
+      "uniquely_matched_anchor_relative_change_zh": "女子相对于自动扶梯底部的相对位置发生了瞬间的跳跃和重置。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "随着自动扶梯向上运动。",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "自动扶梯台阶的运动。",
+      "vehicle_front_rear_identification_zh": "自动扶梯的向上方向。",
+      "vehicle_world_displacement_vs_heading_zh": "女子没有随着扶梯向上位移，而是重置回了起点。",
+      "vehicle_motion_direction": "static",
+      "unexplained_reverse_motion": "yes",
+      "subject_relative_change_zh": "女子相对于扶梯发生了瞬间移动和重置。",
+      "unchanged_coupled_details_zh": "无",
+      "accumulated_change_zh": "没有任何累积的向上进度，最终状态与初始状态完全相同。",
+      "evidence_zh": "视频完全未能展现女子乘坐自动扶梯上升的过程，而是通过两次严重的瞬间移动（离开扶梯和回到扶梯底部）破坏了物理连续性，演进质量极差。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向左平移了约180度，然后向右平移回到了初始视角。",
+      "trajectory_evidence_zh": "画面内容从扶梯平移到服装区，再平移回扶梯，符合镜头运动指令。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "uncertain",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "uncertain",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "blonde woman",
+      "same_entity_throughout": "partial",
+      "stable_identity_attributes": [
+        "clothing",
+        "body_proportions",
+        "face_or_hair",
+        "colors"
+      ],
+      "identity_failure": "contradictory_reappearance",
+      "evidence_zh": "女子的外观特征基本保持一致，但她经历了两次严重的瞬间移动和位置重置，破坏了实体的时空连续性。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "no",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于视频完全未能展现预期的物理演进过程（乘坐扶梯上升），且发生了严重的瞬间移动重置，演进质量为1，因此最终得分被限制为1。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频完全未能展现女子乘坐自动扶梯上升的过程，女子在镜头平移时瞬间移动到了地板上，并在镜头转回时再次瞬间移动回扶梯最底部，发生了严重的物理逻辑断裂和状态重置。",
+    "task_id": "OE068"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 5918,
+      "output_tokens": 225
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 31622,
+      "output_tokens": 3639
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 69,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 68,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 6.8,
+          "filled_cells": 19
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 4,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "4c84e6fd5f3b31b9e0c93397dcecf9fe8a91b6370478a3d4cf863318608d87d5",
+  "score_prompt_sha256": "aac54d0b1920b79f9f304fc0db1c1a1d6e82ec8b0a5dbea0a3dad3bbdebd006f",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "budget-outsight-OE068-seed42"
+}

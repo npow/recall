@@ -1,0 +1,392 @@
+{
+  "task_id": "OE036",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "67ca576af6654d2306f3aa637b603a11b8de8abae2670f51e5e7c82464046644",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE036",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头先向上仰视约90度，直到只能看到天空和树冠边缘，随后镜头向下俯视，回到了初始的视角，再次看到遛狗的男子。",
+    "trajectory_evidence_zh": "在第一张图的第0-14帧，镜头持续向上仰视，画面从地面上的男子和狗逐渐变为天空；第15-24帧，镜头保持仰视天空的状态；在第二张图的第25-38帧，镜头开始向下俯视，画面逐渐从天空回到地面，最终在第38帧恢复到与初始帧相似的视角。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男子和狗在镜头返回后重新出现，虽然外观没有变化，但他们完全冻结在离开画面前的姿态（如男子右脚抬起），没有任何累积的进展，根据规则得分为1。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "在镜头向上倾斜期间，男子和狗没有继续向前的行走动作，而是完全冻结在原地。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头返回初始视角时，男子和狗相对于道路边缘和左侧草地的位置与离开画面前完全相同，没有沿着道路前进。"
+      },
+      "trajectory_continuity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男子和狗重新出现时，没有沿着道路前进，而是保持着与之前完全相同的行走中间姿态（右脚抬起），轨迹完全中断并冻结。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "无额外扣分，冻结问题已在各项评分中体现。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 35,
+      "evidence_zh": "第5-10帧镜头上移，第10-29帧保持仰视天空，第29-35帧镜头下移并返回初始视角。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头上移和下移过程中，天空、树木和道路的背景保持一致。",
+      "post_completion_phase_zh": "镜头返回后，背景与初始状态一致。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "man and dog",
+        "anchors": [
+          "road edge",
+          "grass patch on the left"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "5-10",
+        "29-35"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "road edge",
+        "trees"
+      ],
+      "newly_revealed_regions_zh": "镜头上移时展示了天空和树冠。",
+      "evidence_zh": "视角的改变完全由镜头的俯仰运动解释。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频中没有发生硬重置，镜头运动是连续的。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "镜头返回后没有多余的错误动作。"
+    },
+    "final_state_check": {
+      "window": "35-38",
+      "visible_key_objects": [
+        "man",
+        "dog",
+        "leash",
+        "road"
+      ],
+      "reappearance_consistency_zh": "男子和狗重新出现，但完全冻结在初始位置和姿态。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "yes",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "man and dog walking down the road",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "镜头上移前（第5-8帧），男子和狗在道路左侧行走，男子右脚在后。",
+      "hidden_interval_zh": "镜头上移看天空（第10-29帧），预期男子和狗继续向前走。",
+      "reappeared_state_zh": "镜头下移后（第35-38帧），男子和狗重新出现，但位置和姿态与离开画面前完全一致，没有前进。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "no",
+      "terminal_pose_or_process_state": "mid_step_or_limb_swing",
+      "support_and_pose_evidence_zh": "男子重新出现时右脚抬起，处于行走中间状态，并非自然的停止姿态。",
+      "terminal_state_reasoning_zh": "男子和狗在行走过程中被完全冻结，没有完成动作，属于不自然的静止。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无额外扣分，冻结问题已在各项评分中体现。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "road edge",
+        "grass patch on the left"
+      ],
+      "articulation_or_local_state_change_zh": "无变化，男子的肢体姿态（右脚抬起）和狗的姿态与离开画面前完全相同。",
+      "uniquely_matched_anchor_relative_change_zh": "无变化，男子和狗相对于左侧草地和道路边缘的位置没有改变。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "沿着道路向前（远离镜头）行走。",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "无相对变化，完全冻结。",
+      "unchanged_coupled_details_zh": "牵引绳的形状、男子和狗的阴影、肢体姿态完全一致，表明是复制粘贴/冻结。",
+      "accumulated_change_zh": "在整个镜头移开并返回的过程中，男子和狗没有任何累积的位移或状态变化。",
+      "evidence_zh": "镜头返回后，男子和狗的位置、姿态与离开画面前完全相同，没有表现出任何隐藏状态的进展。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向上倾斜约90度看到天空，然后向下倾斜返回初始视角。",
+      "trajectory_evidence_zh": "第5-10帧镜头上移，第10-29帧保持仰视天空，第29-35帧镜头下移返回。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "uncertain",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "man and dog",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "clothing",
+        "body_proportions",
+        "colors"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "男子和狗的外观在重新出现时保持一致，但由于完全冻结，身份一致性无法弥补缺乏演变的问题。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于视频中男子和狗完全冻结，没有表现出任何有意义的演变，身份一致性得分被限制在1分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频成功执行了镜头上移并返回的指令，但镜头返回后，男子和狗完全冻结在离开画面前的位置和姿态，没有任何向前的行走进展，属于严重的演变失败。",
+    "task_id": "OE036"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4716,
+      "output_tokens": 258
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 30435,
+      "output_tokens": 3444
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "03c9c40e00571d220725d0bc69e6dac82fa3c88a9a59379a69732def075eb3b8",
+  "score_prompt_sha256": "8c0a429f752a1bca596e448ba745882dbb53cbcb73a22526d681c05f1a4c9b6f",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "budget-outsight-OE036-seed42"
+}
