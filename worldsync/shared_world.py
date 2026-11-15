@@ -280,9 +280,46 @@ def divergence_point(wid, agents, run_a, run_b):
             "metadata": {"kind": "sync", "world_id": wid, "agents": list(agents), "first_divergent_chunk": first}}
 
 
+def from_hynomas(raw, walk_speed=2.8):
+    """Convert a Hy-Nomas duel run JSON to this module's run format.
+
+    Heading is the measured yaw. Position is dead-reckoned from it: each W chunk moves ``walk_speed`` units/s along the
+    mean of the measured headings before and after that chunk (the commanded plan's position ignores how far the model
+    actually turned). The commanded pose is kept alongside.
+    """
+    revisions = raw["revisions"]
+    run = {"model": raw["model"], "source_revision": revisions["hy_nomas"], "checkpoint_revision": revisions["hy_weights"],
+           "task_id": raw["task_id"], "initial_image_sha256": raw["initial_image_sha256"],
+           "image_caption_sha256": raw["caption_sha256"], "seed": raw["seed"], "fps": raw["fps"],
+           "chunk_size": raw["frames_per_chunk_requested"], "chunks": [], "actions": []}
+    x = z = previous = 0.0
+    for expected, chunk in enumerate(raw["chunks"]):
+        if chunk["index"] != expected or chunk["first_frame_index"] + chunk["frame_count"] != chunk["cumulative_frames"]:
+            raise ValueError(f"chunk {expected} has inconsistent indices: {chunk}")
+        after = chunk["after"]
+        heading = after["measured_heading_deg"]
+        if chunk["action"] == "W":
+            mean = math.radians(previous + ((heading - previous + 180) % 360 - 180) / 2)
+            step = walk_speed * chunk["frame_count"] / raw["fps"]
+            x, z = x + step * math.sin(mean), z + step * math.cos(mean)
+        elif chunk["action"] in ("S", "A", "D"):
+            raise ValueError(f"dead reckoning for {chunk['action']} is not implemented")
+        previous = heading
+        run["chunks"].append({"index": chunk["index"], "frames": chunk["frame_count"],
+                              "pixel_sha256": chunk["pixel_sha256"]})
+        run["actions"].append({"action": chunk["action"], "prompt": chunk.get("prompt"),
+                               "pose_after": {"heading_degrees": heading, "world_time_seconds": after["world_time_s"],
+                                              "position_normalized_units": [round(x, 3), 0.0, round(z, 3)],
+                                              "commanded_heading_degrees": after["commanded_heading_deg"],
+                                              "commanded_position": after["commanded_position"]}})
+    return run
+
+
 def load_run(run_dir):
     run_dir = Path(run_dir)
     run = json.loads((run_dir / "run.json").read_text())
+    if "revisions" in run:
+        run = from_hynomas(run)
     video = run_dir / "rollout.mp4"
     if not video.is_file():
         raise FileNotFoundError(f"{video} not found")

@@ -150,3 +150,33 @@ def test_opponent_cue_places_the_other_duellist():
     assert "ahead to your left" in sw.cowboy_prompt(sw.opponent_cue(db, wid, "b", "a"))
     with pytest.raises(LookupError):
         sw.opponent_cue(db, wid, "a", "c")
+
+
+def hynomas_json(actions=("LEFT", "W", "RIGHT"), measured=(-10.0, -30.0, 60.0)):
+    chunks, start = [], 0
+    for index, (action, heading) in enumerate(zip(actions, measured)):
+        count = 44 if index == 0 else 72
+        chunks.append({"index": index, "action": action, "frame_count": count, "first_frame_index": start,
+                       "cumulative_frames": start + count, "pixel_sha256": f"p{index}", "prompt": "{}",
+                       "after": {"world_time_s": (start + count) / 24, "commanded_heading_deg": 0.0,
+                                 "commanded_position": {"x": 9.0, "z": 9.0}, "measured_heading_deg": heading}})
+        start += count
+    return {"agent": "agent-a", "model": "Hy-Nomas", "revisions": {"hy_nomas": "s", "hy_weights": "w"}, "seed": 42,
+            "task_id": "GC010", "initial_image_sha256": "i" * 64, "caption_sha256": "t" * 64, "fps": 24,
+            "frames_per_chunk_requested": 72, "chunks": chunks}
+
+
+def test_from_hynomas_uses_measured_heading_and_dead_reckons_walks():
+    run = sw.from_hynomas(hynomas_json())
+    sightings = sw.run_sightings(run)
+    assert [s["frame_index"] for s in sightings] == [43, 115, 187]
+    assert [s["heading"] for s in sightings] == [350.0, 330.0, 60.0]
+    x, _, z = sightings[1]["position"]
+    assert x == pytest.approx(-8.4 * 0.3420, abs=1e-3) and z == pytest.approx(8.4 * 0.9397, abs=1e-3)
+    assert sightings[2]["position"] == sightings[1]["position"]
+    assert sw.world_id(sw.world_manifest(run)) == sw.world_id(sw.world_manifest(sw.from_hynomas(hynomas_json(
+        actions=("RIGHT", "W", "LEFT")))))
+    broken = hynomas_json()
+    broken["chunks"][1]["first_frame_index"] = 40
+    with pytest.raises(ValueError):
+        sw.from_hynomas(broken)
