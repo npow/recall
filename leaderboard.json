@@ -1,6 +1,39 @@
 {
   "target": 2.12,
   "full_benchmark_score": null,
+  "gemini_moving_subsets": [
+    {
+      "cohort": "Moving-10 subset (4 GC / 3 IF / 3 out-of-sight), seed 42",
+      "method": "stock caption text, v5 player",
+      "scored": 10,
+      "expected": 10,
+      "complete": true,
+      "score": 1.642,
+      "judgements_per_video": 3,
+      "source": "reproduction/gemini-rejudge-baseline-v6.json"
+    },
+    {
+      "cohort": "Moving-10 subset (4 GC / 3 IF / 3 out-of-sight), seed 42",
+      "method": "v6 player (plan progress)",
+      "scored": 10,
+      "expected": 10,
+      "complete": true,
+      "score": 1.7449999999999999,
+      "judgements_per_video": 3,
+      "source": "reproduction/gemini-rejudge-baseline-v6.json"
+    },
+    {
+      "cohort": "Insight-4 (60-second WAIT episodes), seed 42",
+      "method": "stock caption text",
+      "scored": 4,
+      "expected": 4,
+      "complete": true,
+      "score": 1.45,
+      "judgements_per_video": 3,
+      "source": "reproduction/gemini-rejudge-baseline-v6.json"
+    }
+  ],
+  "full_171_run": null,
   "published_score_beaten": false,
   "gemini_model": "gemini-3.1-pro-preview",
   "endpoint": "Vertex AI global",
@@ -125,6 +158,24 @@
       "method": "start-anchor",
       "score": 3.75,
       "source": "reproduction/start-anchor-replay/scores-summary.json"
+    },
+    {
+      "cohort": "Moving-10 subset, seed 42 (Claude judge)",
+      "method": "stock",
+      "score": 2.22,
+      "source": "reproduction/hillclimb-v6-s42.json"
+    },
+    {
+      "cohort": "Moving-10 subset, seed 42 (Claude judge)",
+      "method": "v6 player",
+      "score": 2.675,
+      "source": "reproduction/hillclimb-v6-s42.json"
+    },
+    {
+      "cohort": "Declared 16-episode cohort, seed 42 (Claude judge, incl. 4 insight)",
+      "method": "stock",
+      "score": 2.17,
+      "source": "reproduction/cohort-stock-v5-s42.json"
     }
   ],
   "comparability": "Subset scores are not comparable to published four-dimension overall. Methods only compared within the same cohort/judge. Gemini model alias, player and adapter differences remain documented."
