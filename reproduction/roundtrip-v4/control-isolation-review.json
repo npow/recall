@@ -1,0 +1,51 @@
+{
+  "scope": "Native-control isolation on one development scene/seed; not memory or leaderboard score",
+  "sampling": "released PlayWorld complete-video primary10fps/detail0.5fps contact sheets",
+  "model": "claude-opus-5-5",
+  "response_id": "msg_011Ch3qVdjJ6WaCqZ9XhPYnx",
+  "usage": {
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "inference_geo": "global",
+    "input_tokens": 28352,
+    "output_tokens": 4803,
+    "output_tokens_details": {
+      "thinking_tokens": 2420
+    },
+    "server_tool_use": null,
+    "service_tier": "standard",
+    "speed": "standard"
+  },
+  "prompt": "Assess two complete STOCK world-model camera diagnostics. A: initial hold; yaw right 180 degrees over 3 seconds; yaw left 180 degrees over 3 seconds; final hold. No translation commanded. B: initial hold; forward 4 seconds; backward 4 seconds; final hold. No rotation commanded. Judge REALIZED motion from frames, not commanded poses. Do not credit a frozen video as a successful round trip. For A check whether the camera sweeps and reverses, whether the initial facade, roof, sign, entrance and spatial layout are restored, and whether apparent translation or geometry changes are introduced. Do not claim numerical angle accuracy without sufficient visual evidence. For B check for actual approach THEN retreat rather than only retreat, parallax/size changes, and recovery of the starting viewpoint. Return English JSON with A and B each containing meaningful_departure: yes|no|uncertain, direction_reversal_observed: yes|no|uncertain, starting_view_recovered: yes|no|uncertain, control_fidelity: pass|partial|fail|uncertain, visual_evidence, geometry_identity_changes, limitations. Also return diagnosis and recommended_next_test. These are calibration videos, not benchmark scores.",
+  "prompt_sha256": "15c2d792fa0cb5c37df82b1104d80c263452702cb19b86f556d86585fa3fcdf9",
+  "label_mapping": {
+    "A": "turn_return",
+    "B": "translate_return"
+  },
+  "result": {
+    "A": {
+      "meaningful_departure": "yes",
+      "direction_reversal_observed": "yes",
+      "starting_view_recovered": "no",
+      "control_fidelity": "partial",
+      "visual_evidence": "Frames 0-9 hold steadily on the Primemall facade: tall dark triangular roof, diamond-patterned terracotta cladding, 'Primemall' sign, glazed entrance and small blue/white umbrella. From about frame 10 the scene content slides left and a second terracotta building ('Diemell') enters from the right, consistent with a rightward yaw. Frames 15-29 continue rightward past the Diemell building, a large blue umbrella and the plaza. Frames 30-40 reach a glass-fronted building on the right side of the plaza. Around frames 41-44 the motion reverses: the Diemell facade re-enters from the left and the content slides rightward, consistent with a leftward yaw. Frames 50-59 show a Primemall-like facade with a triangular roof. The leftward motion then continues past where the start view should be. A previously unseen building ('Dunno'/'Dinno') enters from the left in frames 60-64. From roughly frame 65 to the last frame (78) the video settles on this new building, which has a large white umbrella and darker, cooler, overcast-looking light. The final hold never shows the original Primemall facade.",
+      "geometry_identity_changes": "Severe. (1) The outbound sign 'Primemall' is re-rendered as 'Diemell', and on the return as 'Pitemall/iremall' with a duplicated second 'Prime...' sign stacked beneath it (frames ~49-62). That duplicated, misspelled sign is not present at the start. (2) On the return, the roof and facade blend features of the original Primemall and the Diemell building rather than restoring the original. (3) The final view is a newly hallucinated building with garbled signage ('Dinno / Prientcrall') that did not exist in the initial frames. (4) A glass balustrade appears in the near foreground during the sweep (frames ~22-49) and was absent in the start view. This, plus changing ground-plane perspective, suggests apparent translation or viewpoint/height drift despite no commanded translation. (5) A noticeable camera roll/tilt of the horizon appears mid-sweep. (6) Global lighting and color shift from bright sunny to dim and cool by the end.",
+      "limitations": "The sheets are low resolution (384x216 at 10 FPS, plus 4 detail frames at 0.5 FPS). Angle magnitude cannot be measured. The out-and-back clearly changes direction, but whether the outbound sweep approached 180 degrees cannot be confirmed: the visible content spans only adjacent plaza buildings. Timing appears asymmetric (outbound ~frames 10-40, return ~41-64), but phase boundaries are estimated visually. Any apparent translation is inferred from perspective cues, not measured. 'Partial' reflects correct direction and reversal only; loop closure and scene identity failed."
+    },
+    "B": {
+      "meaningful_departure": "yes",
+      "direction_reversal_observed": "no",
+      "starting_view_recovered": "no",
+      "control_fidelity": "fail",
+      "visual_evidence": "Frames 0 to ~68 show the same Primemall framing with almost no change. The sign's position and width in the cell stay essentially constant. Detail frames at 0, 2, 4 and 6 s differ by at most a few percent in sign width (~208 to ~218 px in 800-px cells), with a slight downward shift of the roof apex. That is too small to establish a clear forward approach, and it shows no convergence of parallax toward the facade. Starting around frame 69, new near-field objects enter from the frame edges and grow over frames 69-98: a blue umbrella at bottom right, a traffic-signal pole with a blue sign at left, and a person at bottom center. The building's apparent scale changes little. The last detail frame (8 s) and the final primary frames end on a framing that clearly differs from the start. Foreground objects entering from the edges while a distant facade stays nearly constant is most consistent with a retreat-like or backward displacement late in the clip. There is no observable approach before it.",
+      "geometry_identity_changes": "The building's identity, sign text and layout stay stable and legible throughout, unlike in A. Foreground content (umbrella, traffic light with signage, pedestrian) appears only in the final ~3 s. It may be revealed by backward motion or partly hallucinated. The sky becomes noticeably more saturated blue and contrast increases toward the end. No obvious warping of the facade was seen.",
+      "limitations": "The facade is distant and large, so true forward or backward motion of modest magnitude would produce small scale changes that are hard to resolve at this resolution. A very small forward approach in the first half therefore cannot be fully ruled out, but it is not visually established. The late change could be backward translation, partial downward or lateral drift, or edge-inpainted props; parallax evidence is limited. The clip should not be credited as a round trip: it is near-frozen through most of the commanded forward phase and ends at a different viewpoint."
+    },
+    "diagnosis": "In A, the model responds to yaw commands with real, direction-correct rotation, including an observable reversal. However, it has no persistent scene memory. Content leaving the frame is regenerated on return as morphed or duplicated geometry with garbled signage. The leftward return also overshoots into a hallucinated new building with altered lighting, so loop closure fails. There are also signs of unintended translation, height drift and roll. In B, translation control is weak. The commanded forward phase produces little or no visible approach (near-frozen video). The only clear change is a late retreat-like shift that adds foreground objects, so the endpoint differs from the start. This 'retreat only, no approach' pattern means the forward/backward round trip was not executed. Overall: rotation controllability is partial, rotational and translational loop consistency is poor, and translation responsiveness, especially forward, is the weakest axis. These are calibration observations, not benchmark scores.",
+    "recommended_next_test": "1) Yaw: run a small-amplitude out-and-back (e.g., 30-45 degrees right then left, with holds) so the start landmarks partly stay in frame. This separates control fidelity from memory/hallucination failure, and repeating with an amplitude ladder (30/60/90/180) shows where identity breaks. 2) Translation: run forward-only and backward-only clips separately, with larger commanded magnitude and a scene that has near-field landmarks (e.g., the umbrella or a pole at mid-distance), so scale and parallax changes are measurable. 3) Repeat each with several seeds. Score with automatic tools: feature-match or optical-flow tracking against frame 0 for direction/magnitude, and first-vs-last-frame similarity (e.g., LPIPS/SSIM plus OCR on the 'Primemall' sign) for loop closure. Also log global color statistics to quantify lighting drift."
+  }
+}

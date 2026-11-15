@@ -54,6 +54,31 @@ the original mall facade.
 Next: isolate translation and rotation with native controls. Do not proceed to
 more memory tuning on the assumption that forgetting is the only bottleneck.
 
+## Completed control-isolation results
+
+Both predeclared isolation paths completed with native camera conditioning and
+passed the per-chunk online/native input audit. The complete-video Claude review
+and our contact-sheet inspection find:
+
+* **Rotation-only (7.8125 s):** a visible pan and direction reversal occur, but
+  the returning mall facade, roof, signs and layout morph or duplicate. Exact
+  180-degree execution is not established, and there is some apparent drift.
+  This exposes geometric/identity inconsistency as well as imperfect control.
+* **Translation-only (9.8125 s):** the forward phase produces little visible
+  approach; a late retreat-like change introduces foreground content. The
+  requested forward/backward round trip is not visually demonstrated. Similar
+  frames during the frozen phase must not be credited as memory success.
+
+These are one-scene/one-seed calibration observations with different path
+durations, not a statistical comparison between control axes. The next useful
+control tests are small-amplitude yaw loops and translation-only sequences with
+near-field landmarks and measurable parallax. No further tuning has been
+declared successful, and the baseline/control gate remains closed.
+
+* [Rotation-only video](turn.mp4), [contact sheet](turn-contact.jpg), [run](turn-run.json)
+* [Translation-only video](translate.mp4), [contact sheet](translate-contact.jpg), [run](translate-run.json)
+* [Full independent control review, prompt and sampling protocol](control-isolation-review.json)
+
 * [Stock video](stock.mp4) and [contact sheet](stock-contact.jpg)
 * [Retrieval video](retrieval.mp4) and [contact sheet](retrieval-contact.jpg)
 * [Comparison, metrics, complete blinded assessment](comparison.json)
