@@ -82,3 +82,49 @@ def test_constant_latent_with_changing_hidden_cache_is_not_a_fixed_point():
     assert stats['encoder_calls']==52
     assert stats['repeated_groups']==0
     assert not stats['full_cache_bitwise_equal']
+
+
+@pytest.mark.parametrize('dtype',[torch.float32,torch.bfloat16])
+def test_byte_or_guard_matches_byte_count_on_edge_values(dtype):
+    from worldsync.lingbot_vae_fixedpoint import positive_zero_tail
+    x=torch.zeros(1,3,5,2,3,dtype=dtype)
+    x[:,:,0]=torch.randn(1,3,2,3).to(dtype)
+    for value in [0.,-0.,float('nan'),float('inf'),torch.finfo(dtype).tiny]:
+        x[:,:,1:]=value
+        expected=torch.count_nonzero(x[:,:,1:].view(torch.uint8)).item()==0
+        assert positive_zero_tail(x)==expected
+        assert positive_zero_tail(x)==(value==0. and str(value)!='-0.0')
+
+
+@pytest.mark.parametrize('prior_override',[False,True])
+def test_instance_wrapper_restores_exact_binding_on_failure(monkeypatch,prior_override):
+    import worldsync.lingbot_vae_fixedpoint as shortcut
+    class Model(torch.nn.Module):
+        def encode(self,x,scale):
+            return x*scale
+    model=Model()
+    other=Model()
+    original_class=Model.encode
+    if prior_override:model.encode=lambda x,scale:x+scale
+    prior=model.__dict__.get('encode')
+    def checked(model,x,scale,original,stats):
+        stats['tested']=True
+        return original(x,scale)
+    monkeypatch.setattr(shortcut,'encode_zero_tail',checked)
+    handle=shortcut.VaeFixedPoint(model,enabled=True)
+    with pytest.raises(RuntimeError,match='intentional'):
+        with handle:
+            assert model.encode(torch.full((1,1,1,1,1),2.),3).item()==(5 if prior_override else 6)
+            assert other.encode(torch.full((1,1,1,1,1),2.),3).item()==6
+            raise RuntimeError('intentional')
+    assert Model.encode is original_class
+    assert model.__dict__.get('encode') is prior
+    assert ('encode' in model.__dict__) is prior_override
+    assert not hasattr(model,'_worldsync_fixedpoint_owner')
+    assert handle.closed and not handle.active
+    handle.close()
+    disabled=shortcut.VaeFixedPoint(model)
+    with disabled:
+        assert model.__dict__.get('encode') is prior
+        assert not hasattr(model,'_worldsync_fixedpoint_owner')
+    assert disabled.calls==[]

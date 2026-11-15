@@ -1,0 +1,16 @@
+{
+  "scope": "Byte-OR eligibility and instance binding CPU proof only",
+  "command": ".venv-lingbot/bin/python -m pytest tests/test_lingbot_vae_fixedpoint.py -q",
+  "result": "9 passed in6.66s",
+  "checks": [
+    "Native tiny causal VAE output bits at13/205/637frames",
+    "Complete-cache snapshots detect in-place changes and signed zero",
+    "Constant output cannot hide changing cache state",
+    "Nonzero tails fall back to native encode",
+    "Byte-OR agrees with byte-count on FP32/BF16 positivezero,negativezero,NaN,infinity,tinypositive",
+    "Instance/class bindings remain isolated and are restored on exceptions; disabled context changes nothing"
+  ],
+  "gpu_peak_after_byte_or": "not measured",
+  "full_rollout_pixel_parity": "not established; native control interrupted by concurrentGPU ownership",
+  "defaults_changed": false
+}

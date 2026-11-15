@@ -30,6 +30,15 @@ def same_cache(snapshot,values):
     return bool(torch.stack(checks).all()) if checks else True
 
 
+def positive_zero_tail(x):
+    """A byte OR reduction avoids count_nonzero's large integer temporary.
+
+    The full input must be contiguous; its tail view can have channel gaps.
+    Signed zero is intentionally rejected to preserve every conditioning bit.
+    """
+    return not torch.any(x[:,:,1:].view(torch.uint8)).item()
+
+
 def encode_zero_tail(model,x,scale,*,original=None,stats=None):
     """Repeat an encoder output only after its COMPLETE cached state is fixed.
 
@@ -47,7 +56,7 @@ def encode_zero_tail(model,x,scale,*,original=None,stats=None):
     if (model.training or torch.is_grad_enabled() or x.ndim!=5 or x.shape[2]<1
             or (x.shape[2]-1)%4 or not x.is_contiguous()):
         return fallback('requires frozen eval inference and native contiguous1+4n input')
-    if torch.count_nonzero(x[:,:,1:].view(torch.uint8)).item()!=0:
+    if not positive_zero_tail(x):
         return fallback('tail is not bitwise positive zero')
     groups=1+(x.shape[2]-1)//4
     stats['native_groups']=groups
@@ -83,3 +92,71 @@ def encode_zero_tail(model,x,scale,*,original=None,stats=None):
         stats['status']='fixed_point_used' if stats['repeated_groups'] else 'native_groups_executed'
         return mu
     finally:model.clear_cache()
+
+
+class VaeFixedPoint:
+    """Opt-in, instance-scoped encode binding with unconditional cleanup.
+
+    Disabled contexts do not touch the model. No class method, pipeline
+    constructor, or native generator default is changed.
+    """
+
+    def __init__(self, model, *, enabled=False):
+        self.model = model
+        self.enabled = enabled
+        self.calls = []
+        self.active = False
+        self.closed = False
+
+    def __enter__(self):
+        if self.closed or self.active:
+            raise RuntimeError("VAE shortcut context cannot be reused")
+        if not self.enabled:
+            return self
+        if hasattr(self.model, "_worldsync_fixedpoint_owner"):
+            raise RuntimeError("VAE shortcut is already installed on this instance")
+        self.had_override = "encode" in self.model.__dict__
+        self.prior_override = self.model.__dict__.get("encode")
+        self.original = self.model.encode
+
+        def wrapped(x, scale):
+            stats = {"input_rgb_frames": int(x.shape[2])}
+            self.calls.append(stats)
+            try:
+                result = encode_zero_tail(
+                    self.model, x, scale, original=self.original, stats=stats
+                )
+                stats["normalized_latent_shape"] = list(result.shape)
+                stats["normalized_latent_dtype"] = str(result.dtype)
+                return result
+            except BaseException:
+                stats["status"] = "failed"
+                raise
+
+        self.wrapped = wrapped
+        self.model.encode = wrapped
+        self.model._worldsync_fixedpoint_owner = self
+        self.active = True
+        return self
+
+    def close(self):
+        if self.closed:
+            return
+        if self.active:
+            if self.had_override:
+                self.model.encode = self.prior_override
+            else:
+                del self.model.encode
+            del self.model._worldsync_fixedpoint_owner
+            self.active = False
+            self.wrapped = None
+            self.original = None
+            self.prior_override = None
+        self.model = None
+        self.closed = True
+
+    def metadata(self):
+        return {"enabled": self.enabled, "closed": self.closed, "calls": self.calls}
+
+    def __exit__(self, *_):
+        self.close()

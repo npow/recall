@@ -1,0 +1,180 @@
+{
+  "status": "running",
+  "model": "LingBot-World2 14B causal-fast stock",
+  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+  "initial_image_sha256": "cfe324c6dacbb91123a74ad7d5c80f75fe4bd5e3cfd040af201e4ee0742cd33f",
+  "text_prompt_mode": "caption",
+  "image_caption_sha256": "58e9282a2acfdc3b580ea4b33b69ea092305a35869f31226b2981a2e17cbcf65",
+  "task_id": "GC027",
+  "split": "gc",
+  "seed": 42,
+  "turn_degrees_per_second": 30.0,
+  "fps": 16,
+  "max_chunks": 40,
+  "max_interactions": 40,
+  "native_fixed_controls": true,
+  "camera_embedding_audit": [],
+  "pose_retrieval": false,
+  "sink_rephase": false,
+  "adaptive_retrieval_pilot": false,
+  "player_temperature": "provider default",
+  "player_streaming": false,
+  "streaming_player_sha256": null,
+  "initial_neutral_bootstrap": false,
+  "kv_retention": false,
+  "decoprune": false,
+  "reanchor": false,
+  "budget_memory": false,
+  "denoise_schedule": "stock",
+  "text_encoder_offloaded_after_encoding": true,
+  "stationary_wait_only": false,
+  "fixed_actions": [
+    "WAIT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT"
+  ],
+  "quantization": "none",
+  "cuda_allocator_configuration": "default",
+  "max_area": 399360,
+  "chunk_size": 4,
+  "local_attn_size": 18,
+  "sink_size": 6,
+  "decision_interval": 1,
+  "stock_knobs": true,
+  "controlled_ablation": false,
+  "sampler_timesteps_index": [
+    0,
+    250,
+    500,
+    750
+  ],
+  "sample_shift": 10,
+  "actions": [
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "fixed diagnostic",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 0.0,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 277.5032706219936,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    }
+  ],
+  "chunks": [],
+  "published_score_reproduced": false,
+  "agent_interactions": 0,
+  "adapter_sha256": "d629d0082a1ed2c4c3b60af3f93214ad9d1dc8708252ebe8991c237570d85fff",
+  "controls_sha256": "ef2d9f0c0ba25440964f19c3047108469016a48bfb40c04cc3777a0ade8eba63",
+  "player_sha256": "de34a8b7b8586d33b5faecfa57181fbf1d59f30e94cde051bd2095d1504f16b2",
+  "deviations": [
+    "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+    "Reconstructed Haiku reference-guided prompt and camera mapping: 30 deg/s turns, unit-normalized translations",
+    "Official 480p demo area; single NVIDIA Thor, BF16 and valid-length SDPA backend",
+    "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+    "Claude diagnostic scoring differs from published Gemini judgments"
+  ],
+  "hardware": {
+    "gpu": "NVIDIA Thor",
+    "torch": "2.15.0+cu132",
+    "cuda": "13.2"
+  },
+  "expected_final_commanded_state": {
+    "position_normalized_units": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "heading_degrees": -4.05506770679017e-14,
+    "accumulated_yaw_degrees": 360.00000000000006,
+    "yaw_limits_degrees": null,
+    "world_time_seconds": 39.75,
+    "scope": "Intended camera commands only; not measured visual motion or goal completion."
+  },
+  "runtime_validation": {
+    "scope": "637-frame conditioning, intentionally stop after two rendered chunks",
+    "benchmark_eligible": false,
+    "declared_chunks": 40,
+    "rendered_chunk_limit": 2,
+    "vae_fixedpoint_enabled": false,
+    "prototype_sha256": "3b824e709c41a4d9245a9c511a8a9fa62f01d0c97b7862e3da0da9c263361c84"
+  },
+  "attention_backend": "sdpa",
+  "optional_torch_dlpack_addon_disabled": false,
+  "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+  "checkpoint_loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "local_memory_prototype": {
+    "one_shot_t5_discard": true,
+    "archive": "none",
+    "forced_flash_sdpa": true,
+    "not_scored": true
+  },
+  "turn_clamp": {
+    "mode": "off",
+    "yaw_limits_degrees": null
+  }
+}

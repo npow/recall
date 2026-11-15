@@ -1,0 +1,88 @@
+{
+  "scope": "Opt-in exact VAE conditioning integration validation; not episode quality/score",
+  "status": "prepared; blocked on exclusive GPU ownership",
+  "preferred_device": "One H200 with nativeTorch2.6/cu124; no new cloud launch yet",
+  "model": "Official14B release, source1895d300, checkpoint5c33dd40, original BF16 weights",
+  "arms": [
+    {
+      "name": "native",
+      "shortcut": false
+    },
+    {
+      "name": "fixedpoint-byte-or",
+      "shortcut": true
+    }
+  ],
+  "shared": {
+    "task": "GC027",
+    "seed": 42,
+    "declared_max_chunks": 40,
+    "conditioning_rgb_frames": 637,
+    "conditioning_latent_frames": 160,
+    "rendered_chunk_limit": 2,
+    "cache_frames": 18,
+    "sink_frames": 6,
+    "turn_degrees_per_second": 30,
+    "api_calls": 0,
+    "fixed_actions": [
+      "WAIT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT"
+    ]
+  },
+  "checks": [
+    "Both complete two chunks and produce29frames; explicit early-stop/benchmark-ineligible labels",
+    "Both full-shape conv1 inputs have160latent groups",
+    "Native encoder executes160groups; optimized cache is fully bitwise fixed before repetition",
+    "Both raw output chunk hashes exactly match",
+    "Same upstream/checkpoint/image/caption/seed/sampler/backend and adapter/prototype hashes",
+    "Instance encode binding restored and all wrapper hooks removed, including exceptions",
+    "Record CUDAallocated/reserved and real physical reserve; exclusive GPU ownership required"
+  ],
+  "commands": [
+    "python scripts/guard_lingbot_vae_rollout.py",
+    "python scripts/guard_lingbot_vae_rollout.py --enable-shortcut"
+  ],
+  "limitations": [
+    "CPU byte-OR edge cases pass; improved GPU peak is not yet measured",
+    "Previous native control aborted under concurrent collaboratorGPU use before first frame; no shortcut integration claim",
+    "No default generator/backend change and no quality claim"
+  ]
+}
