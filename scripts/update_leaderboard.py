@@ -150,12 +150,12 @@ def generate():
     (ROOT / "leaderboard.json").write_text(json.dumps(snapshot, indent=2) + "\n")
     lines = ["# WorldSync leaderboard", "",
         "**Goal: beat Genie 3’s published overall 2.12. No comparable full-benchmark score yet.**", "",
-        "Compare methods only within the same table/cohort and judge. A higher subset score does not beat the published record.", "",
+        "Compare methods only within the same table/cohort and judge. A higher subset score does not beat the published record.", "", "Method and evidence: [METHOD.md](METHOD.md).", "",
         "## Published references — not reproduced here", "",
         "| Model | Overall | Scope |", "|---|---:|---|",
         "| Genie 3 |2.12|Published closed-model result|",
         "| LingBot-World2 |1.82|Published hosted-service result; not our local checkpoint measurement|", "",
-        "Source: [pinned PlayWorld leaderboard](external/PlayWorld/README.md#leaderboard). Overall averages GC, IF, in-sight evolution and out-of-sight evolution; the full dataset has 171 tasks (48/50/30/43).", "",
+        "Source: [pinned PlayWorld leaderboard](https://github.com/kxding/PlayWorld/blob/eeaea12e050a90b815d11d030e943e7b3181da21/README.md#leaderboard). Overall averages GC, IF, in-sight evolution and out-of-sight evolution; the full dataset has 171 tasks (48/50/30/43).", "",
         "## Gemini — local cohorts", "",
         "Released prompts, sampling, gate and aggregation; Vertex `gemini-3.1-pro-preview`. The paper's `gemini-3.1-pro` API name is unavailable to our configured API key. Preview-model equivalence is not established. These are GC subsets, not overall scores.", "",
         "| Cohort | Method | Scored | Score | Judge reports revisit |", "|---|---|---:|---:|---:|"]

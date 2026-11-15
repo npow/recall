@@ -4,6 +4,8 @@
 
 Compare methods only within the same table/cohort and judge. A higher subset score does not beat the published record.
 
+Method and evidence: [METHOD.md](METHOD.md).
+
 ## Published references — not reproduced here
 
 | Model | Overall | Scope |
@@ -11,7 +13,7 @@ Compare methods only within the same table/cohort and judge. A higher subset sco
 | Genie 3 |2.12|Published closed-model result|
 | LingBot-World2 |1.82|Published hosted-service result; not our local checkpoint measurement|
 
-Source: [pinned PlayWorld leaderboard](external/PlayWorld/README.md#leaderboard). Overall averages GC, IF, in-sight evolution and out-of-sight evolution; the full dataset has 171 tasks (48/50/30/43).
+Source: [pinned PlayWorld leaderboard](https://github.com/kxding/PlayWorld/blob/eeaea12e050a90b815d11d030e943e7b3181da21/README.md#leaderboard). Overall averages GC, IF, in-sight evolution and out-of-sight evolution; the full dataset has 171 tasks (48/50/30/43).
 
 ## Gemini — local cohorts
 
