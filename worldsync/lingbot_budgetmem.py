@@ -137,3 +137,119 @@ class BudgetPoseMemory(PoseKVMemory):
                      "attended_latent_frames": self.sink + self.retrieved + TAIL, "rope": self.rope,
                      "selection": "commanded pose distance + heading to the chunk's target pose; eviction by pose redundancy"})
         return data
+
+
+class StoredBudgetMemory(BudgetPoseMemory):
+    """Bounded pose memory with a storage codec and an optional layer subset (see lingbot_memstore).
+
+    Same selection, eviction, window and RoPE as BudgetPoseMemory. Differences: archived K/V go through
+    `codec`; only `layers` archive and substitute (other layers attend the stock window); retrieved frames
+    stay in stored form (GPU if small, else pinned CPU) and are decoded per attention call.
+    """
+    release_before_decode = True
+
+    def __init__(self, pipeline, codec, layers=None, gpu_resident_bytes=7.5e9, **kwargs):
+        super().__init__(pipeline, **kwargs)
+        from worldsync import lingbot_memstore
+        self.store = lingbot_memstore
+        self.codec = codec
+        self.layers = None if layers is None else set(layers)
+        self.gpu_resident_bytes = gpu_resident_bytes
+        self.frame_bytes = {}
+        self.resident = None
+        self.decode_seconds = 0.0
+
+    def begin(self, chunk, poses):
+        super().begin(chunk, poses)
+        self.resident = None
+
+    def release_read_cache(self):
+        released = sum(self.store.nbytes(entry) for entries in self.cached.values() for entry in entries)
+        self.cached.clear()
+        if self.trace:
+            self.trace[-1]["temporary_read_bytes_released_before_decode"] = released
+        return released
+
+    def _uses(self, layer):
+        return self.layers is None or layer in self.layers
+
+    def attend(self, query, key, value, **kwargs):
+        if self.active is None:
+            return self.original_attention(query, key, value, **kwargs)
+        import time
+        layer, start, frame_tokens, grid, freqs = self.active
+        self.frame_tokens = frame_tokens
+        first_frame = start // frame_tokens
+        uses = self._uses(layer)
+        bank = self.banks.setdefault(layer, {})
+        if self.clean:
+            if self.raw_key is None:
+                raise RuntimeError("canonical key capture missing")
+            raw = self.raw_key.view_as(query)
+            v_current = value[:, -query.shape[1]:]
+            hw = (int(grid[0, 1]), int(grid[0, 2]))
+            for offset in range(query.shape[1] // frame_tokens):
+                index = first_frame + offset
+                if index < self.sink:
+                    continue
+                if layer == 0:
+                    self.available.add(index)
+                if uses:
+                    lo, hi = offset * frame_tokens, (offset + 1) * frame_tokens
+                    bank[index] = self.codec.encode(raw[:, lo:hi], v_current[:, lo:hi], hw)
+                    self.frame_bytes[layer] = self.store.nbytes(bank[index])
+        if (not uses or key.shape[1] % frame_tokens or key.shape[1] != self.window * frame_tokens
+                or not self.selected):
+            return self.original_attention(query, key, value, **kwargs)
+        started = time.monotonic()
+        if layer not in self.cached:
+            missing = [i for i in self.selected if i not in bank]
+            if missing:
+                raise RuntimeError(f"selected memory frames {missing} not archived in layer {layer}")
+            if self.resident is None:
+                used = len(self.layers) if self.layers is not None else self.layer_count
+                total = sum(self.store.nbytes(bank[i]) for i in self.selected) * used
+                self.resident = "gpu" if total <= self.gpu_resident_bytes else "cpu"
+                self.trace[-1]["read_resident"] = self.resident
+                self.trace[-1]["read_stored_bytes_all_layers"] = total
+            device = key.device if self.resident == "gpu" else "cpu"
+            self.cached[layer] = [self.store.to_device(bank[i], device, pin=True) for i in self.selected]
+        keys, values = [], []
+        virtual_start = max(first_frame - TAIL - len(self.selected), 0)
+        with torch.amp.autocast("cuda", enabled=False):
+            for position, (frame, entry) in enumerate(zip(self.selected, self.cached[layer])):
+                if self.resident == "cpu":
+                    entry = self.store.to_device(entry, key.device)
+                canonical, retrieved_value, index = self.codec.decode(entry, key.dtype)
+                where = frame if self.rope == "native" else virtual_start + position
+                keys.append(self.store.positioned_keys(self.module.causal_rope_apply, canonical, index,
+                                                       frame_tokens, where, grid, freqs).to(key.dtype))
+                values.append(retrieved_value.to(value.dtype))
+        retrieved_key, retrieved_value = torch.cat(keys, dim=1), torch.cat(values, dim=1)
+        combined_key = torch.cat([key[:, :self.sink * frame_tokens], retrieved_key, key[:, -TAIL * frame_tokens:]], dim=1)
+        combined_value = torch.cat([value[:, :self.sink * frame_tokens], retrieved_value, value[:, -TAIL * frame_tokens:]], dim=1)
+        self.decode_seconds += time.monotonic() - started
+        self.trace[-1]["attention_replaced"] = True
+        self.retrieval_calls += 1
+        return self.original_attention(query, combined_key, combined_value, **kwargs)
+
+    @property
+    def layer_count(self):
+        return len(self.handles) // 3
+
+    def metadata(self):
+        banks, self.banks = self.banks, {}  # the parent sums (k, v) pairs; stored entries are dicts
+        try:
+            data = super().metadata()
+        finally:
+            self.banks = banks
+        data["archive_bytes"] = sum(self.store.nbytes(entry) for bank in banks.values() for entry in bank.values())
+        per_frame = sum(self.frame_bytes.values())
+        exact = self.store.EXACT_BYTES_PER_LAYER * self.layer_count
+        data.update({"storage_codec": self.codec.name,
+                     "storage_layers": "all" if self.layers is None else sorted(self.layers),
+                     "stored_bytes_per_archived_frame": per_frame,
+                     "exact_bytes_per_archived_frame": exact,
+                     "compression_ratio": (exact / per_frame) if per_frame else None,
+                     "read_decode_seconds_total": self.decode_seconds})
+        return data

@@ -84,6 +84,22 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
     parser.add_argument("--budget-retrieved", type=int, default=10)
     parser.add_argument("--budget-archive", type=int, default=24)
     parser.add_argument("--budget-rope", choices=["virtual", "native"], default="virtual")
+    parser.add_argument("--budget-store", default=None,
+        help="Storage codec for archived memory frames (exact, fp8, int8, pool2, pool4, top25, top10, rand25, lr64, lr256, poolN+fp8); storage ablation, fixed native paths only")
+    parser.add_argument("--budget-layers", default="all",
+        help="Layers that archive and substitute memory (all, even, every4, first10, last10, first20, last20, mid20); storage ablation")
+    parser.add_argument("--memory-v2", choices=["off", "disk", "recompute"], default="off",
+        help="EXPERIMENTAL (worldsync/lingbot_memv2.py): content-verified retrieval over the whole episode; "
+             "disk = exact K/V archived on local disk, recompute = clean latents kept and K/V recomputed when retrieved")
+    parser.add_argument("--memv2-select", choices=["verified", "content", "pose"], default="verified")
+    parser.add_argument("--memv2-retrieved", type=int, default=10)
+    parser.add_argument("--memv2-rope", choices=["virtual", "native"], default="native")
+    parser.add_argument("--memv2-descriptor", choices=["dino", "thumbnail"], default="dino")
+    parser.add_argument("--memv2-stride", type=int, default=1)
+    parser.add_argument("--memv2-tau-verify", type=float, default=0.75)
+    parser.add_argument("--memv2-tau-direct", type=float, default=0.80)
+    parser.add_argument("--memv2-tau-content", type=float, default=0.75)
+    parser.add_argument("--memv2-store-dir", type=Path, help="directory for the temporary KV archive (default: WORLDSYNC_KV_DIR or the temp dir)")
     parser.add_argument("--offload-text-encoder", action="store_true", help="Release the completed GPU text encoder before denoising")
     parser.add_argument("--fp8-kv", action="store_true", help="Experimental fp8 (e4m3) self-attention KV cache; weights stay bf16 (native fixed paths)")
     parser.add_argument("--fp8-kv-quantize-current", action="store_true", help="Also attend to the fp8-rounded K/V of the chunk being generated (v1 behaviour; worse)")
@@ -141,10 +157,14 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
             or knobs["local_attn_size"] != 22 or args.retrieval_selection != "nearest"
             or args.retrieval_positions != "virtual"):
         parser.error("gated attention pilot requires22 frames,8 nearest views,virtual positions and pose retrieval")
-    diagnostics = [args.pose_retrieval, args.rephase_sink, args.kv_retention, args.decoprune, args.reanchor, args.budget_memory, args.fp8_kv]
+    if (args.budget_store is not None or args.budget_layers != "all") and not (
+            args.budget_memory and args.native_fixed_controls and args.fixed_actions):
+        parser.error("memory storage ablations require --budget-memory on fixed native-camera paths")
+    diagnostics = [args.pose_retrieval, args.rephase_sink, args.kv_retention, args.decoprune, args.reanchor, args.budget_memory, args.fp8_kv,
+                   args.memory_v2 != "off"]
     if sum(diagnostics) > 1:
         parser.error("memory ablations must be tested separately")
-    adaptive_memory_ok = args.budget_memory and lingbot_tuning.hillclimb_unlocked()
+    adaptive_memory_ok = (args.budget_memory or args.memory_v2 != "off") and lingbot_tuning.hillclimb_unlocked()
     if ((any(diagnostics) or args.denoise_schedule != "stock") and not args.native_fixed_controls
             and not args.adaptive_retrieval_pilot and not adaptive_memory_ok):
         parser.error("retrieval requires native fixed controls, the declared adaptive pilot, or unlocked budget-memory")
@@ -185,7 +205,7 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
                                     if args.stream_player_actions else None),
         "initial_neutral_bootstrap": args.adaptive_retrieval_pilot,
         "kv_retention": args.kv_retention, "decoprune": args.decoprune, "reanchor": args.reanchor,
-        "budget_memory": args.budget_memory, "fp8_kv": args.fp8_kv, "denoise_schedule": args.denoise_schedule,
+        "budget_memory": args.budget_memory, "budget_store": args.budget_store, "budget_layers": args.budget_layers, "fp8_kv": args.fp8_kv, "memory_v2": args.memory_v2, "denoise_schedule": args.denoise_schedule,
         "text_encoder_offloaded_after_encoding": args.offload_text_encoder,
         "stationary_wait_only": stationary, "fixed_actions": args.fixed_actions, "quantization": ("none (weights bf16); KV cache fp8 e4m3 [diagnostic, non-stock]" if args.fp8_kv else "none"), "cuda_allocator_configuration": os.environ.get("PYTORCH_CUDA_ALLOC_CONF", "default"),
         "max_area": 480 * 832, "chunk_size": 4, "local_attn_size": knobs["local_attn_size"], "sink_size": knobs["sink_size"],
@@ -348,21 +368,42 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
             from worldsync.lingbot_reanchor import ReanchorMemory
             memory = ReanchorMemory(pipeline)
         elif args.budget_memory:
-            from worldsync.lingbot_budgetmem import BudgetPoseMemory
-            memory = BudgetPoseMemory(pipeline, sink_size=knobs["sink_size"], local_attn_size=knobs["local_attn_size"],
+            from worldsync.lingbot_budgetmem import BudgetPoseMemory, StoredBudgetMemory
+            budget_arguments = dict(sink_size=knobs["sink_size"], local_attn_size=knobs["local_attn_size"],
                 retrieved=args.budget_retrieved, archive_frames=args.budget_archive, rope=args.budget_rope)
+            if args.budget_store is not None or args.budget_layers != "all":
+                from worldsync import lingbot_memstore
+                memory = StoredBudgetMemory(pipeline, lingbot_memstore.make_codec(args.budget_store or "exact"),
+                    layers=None if args.budget_layers == "all" else lingbot_memstore.layer_set(args.budget_layers, len(pipeline.model.blocks)),
+                    **budget_arguments)
+            else:
+                memory = BudgetPoseMemory(pipeline, **budget_arguments)
         elif args.fp8_kv:
             from worldsync.lingbot_fp8kv import Fp8KVCache
             audit = [int(item) for item in args.fp8_kv_audit_layers.split(",") if item.strip()]
             memory = Fp8KVCache(pipeline, audit_layers=audit, quantize_current=args.fp8_kv_quantize_current)
+        elif args.memory_v2 != "off":
+            from worldsync.lingbot_memv2 import MemoryV2
+            from worldsync.lingbot_memv2_recompute import MemoryV2Recompute
+            memory = (MemoryV2 if args.memory_v2 == "disk" else MemoryV2Recompute)(pipeline, sink_size=knobs["sink_size"], local_attn_size=knobs["local_attn_size"],
+                retrieved=args.memv2_retrieved, rope=args.memv2_rope, select=args.memv2_select,
+                descriptor=args.memv2_descriptor, stride=args.memv2_stride, tau_verify=args.memv2_tau_verify,
+                tau_direct=args.memv2_tau_direct, tau_content=args.memv2_tau_content, store_root=args.memv2_store_dir)
+            report["deviations"].append("EXPERIMENTAL memory v2 (worldsync/lingbot_memv2.py): exact per-layer K/V of every "
+                "generated latent frame archived on local disk; retrieved frames replace part of the attended window")
+            report["model"] = "LingBot-World2 14B causal-fast stock weights + memory v2 (non-stock attention window)"
         current_chunk = -1
         latest = initial
         def before(model, positional, kwargs):
             nonlocal current_chunk, pending_player, director_context
+            if memory is not None and getattr(memory, "recomputing", False):
+                return  # nested t=0 pass that recomputes retrieved K/V (memory v2 recompute)
             if memory:
                 memory.clean = float(kwargs["t"].flatten()[0]) == 0
             index = int(kwargs["current_start"]) // (4 * int(kwargs["frame_seqlen"]))
             if index == current_chunk:
+                if memory is not None and memory.clean and hasattr(memory, "store_clean"):
+                    memory.store_clean(index, kwargs)
                 if director_context is not None:
                     kwargs["context"] = director_context
                 return
@@ -485,13 +526,17 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
                 if director_context is not None:
                     kwargs["context"] = director_context
                 report["director"] = director.metadata()
+            if memory is not None and hasattr(memory, "prepare"):
+                memory.prepare(kwargs)
             current_chunk = index
         def after(model, positional, kwargs, result):
             nonlocal latest, pending_player
+            if memory is not None and getattr(memory, "recomputing", False):
+                return
             if float(kwargs["t"].flatten()[0]) != 0:
                 return
             decode_started = time.monotonic()
-            if args.pose_retrieval:
+            if args.pose_retrieval or getattr(memory, "release_before_decode", False):
                 memory.release_read_cache()
             video = stream.decode(kwargs["x"][0])
             if not torch.isfinite(video).all():
@@ -499,6 +544,8 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
             pixels = np.ascontiguousarray(((video.permute(1, 2, 3, 0) + 1) * 127.5).clamp(0, 255).cpu().numpy().astype(np.uint8))
             decoded_at = time.monotonic()
             index = len(report["chunks"])
+            if memory is not None and hasattr(memory, "observe"):
+                memory.observe(index, pixels)
             movie = output / f"chunk-{index:03d}.mp4"
             imageio.mimwrite(movie, pixels, fps=16, codec="libx264", quality=8, macro_block_size=1)
             encoded_at = time.monotonic()

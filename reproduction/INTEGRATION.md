@@ -130,3 +130,13 @@ came out **+0.69** over stock (95% CI [+0.19, +1.23], 24 pairs). The separate po
 memory **+0.40** (confidence interval includes 0). The two experiments used different episodes and different player
 rollouts, so the results are inconsistent, and a memory effect on judged scores is **not established**. Gemini also agreed
 only weakly with the Opus judge per episode, so the choice of judge changes the conclusion.
+
+## Memory v2, storage ablation and revisit-horizon code (added later)
+
+* `--memory-v2 {disk,recompute}` with `--memv2-*` (branch `memory-v2`, dbdb3a4) and `--budget-store` / `--budget-layers`
+  (branch `storage-ablation`, c8a996c; `StoredBudgetMemory`, `worldsync/lingbot_memstore.py`) are wired into
+  `worldsync/lingbot_rollout.py`: default off, memory v2 is mutually exclusive with the other memory diagnostics, and the
+  storage flags require `--budget-memory` on fixed native-camera paths. Verified on main by unit tests and `--dry-run` only;
+  the GPU results were measured on the branches' own rollout (based on abfa73a).
+* `scripts/revisit_horizon.py`, `reproduction/revisit-horizon-config.json` and its job list are from branch `revisit-horizon`
+  (7c15041, frozen before generation). Its results and write-up were not finished when this was added.

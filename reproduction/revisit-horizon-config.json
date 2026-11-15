@@ -1,0 +1,138 @@
+{
+  "name": "revisit-horizon",
+  "frozen_before_generation": true,
+  "question": "How long can the camera look away before the generated world is no longer found again on return, and does archived-view memory extend that horizon?",
+  "model": "LingBot-World2 14B causal-fast (stock weights, no training)",
+  "code_base_commit": "edb2b838d4b043435fe38fe44aea7b98f639b09b",
+  "hardware": "Lambda gpu_1x_h100_pcie (both arms on the same GPU model)",
+  "seed": 42,
+  "scene_selection": {
+    "rule": "GC split, sort by sha256('revisit-horizon-2026-11-15:' + task_id), first 20 after excluding development scenes",
+    "excluded_development_scenes": [
+      "GC001",
+      "GC006",
+      "GC007",
+      "GC010",
+      "GC013",
+      "GC027",
+      "GC033",
+      "GC040",
+      "GC045",
+      "GC046"
+    ],
+    "scenes": [
+      "GC042",
+      "GC014",
+      "GC032",
+      "GC019",
+      "GC011",
+      "GC034",
+      "GC002",
+      "GC044",
+      "GC035",
+      "GC009",
+      "GC022",
+      "GC037",
+      "GC015",
+      "GC018",
+      "GC021",
+      "GC016",
+      "GC026",
+      "GC003",
+      "GC025",
+      "GC041"
+    ],
+    "next_in_hash_order_not_run": [
+      "GC038",
+      "GC039",
+      "GC012",
+      "GC017"
+    ]
+  },
+  "path": {
+    "actions": "WAIT, RIGHT x3, WAIT x H, LEFT x3, WAIT (one action = one 1-second chunk; native fixed controls)",
+    "turn_degrees_per_second": 68,
+    "turn_note": "3 chunks at 68 deg/s commanded; realized rotation was measured at about 0.9 of commanded on GC007/GC001, i.e. about 180 degrees. Decided on those two development scenes only.",
+    "horizons_seconds_away": [
+      0,
+      6,
+      12,
+      24
+    ],
+    "chunks_by_horizon": {
+      "0": 8,
+      "6": 14,
+      "12": 20,
+      "24": 32
+    },
+    "text_prompt": "caption (rollout default)"
+  },
+  "arms": {
+    "stock": {
+      "flags": [],
+      "note": "rolling window 18 latent frames incl. 6 sink frames (about 4.5 s)"
+    },
+    "memory": {
+      "flags": [
+        "--budget-memory",
+        "--budget-rope",
+        "native",
+        "--budget-retrieved",
+        "10",
+        "--budget-store",
+        "exact",
+        "--budget-layers",
+        "all"
+      ],
+      "note": "exact bounded pose memory: 24-frame archive, pose-redundancy eviction, 10 retrieved frames, native RoPE, same attended budget. Valid at every horizon here because the frames added during the stationary hold are pose duplicates and are evicted first; the outbound sweep and start frames stay archived. Chosen on GC007/GC001 before this run."
+    },
+    "memory_v2_disk": "not included: it had not passed its fixed-path step 1 when this file was frozen"
+  },
+  "judge": {
+    "primary": "released PlayWorld verifier (gate + rubric + released aggregation) through worldsync.gemini_vertex_judge, Vertex gemini-3.1-pro-preview",
+    "task_record": "each scene's released GC record (image, caption, policies, its own rubric questions) with `prompt`, `action_sequence`, `action_sequence_steps` and `action` replaced by the scripted objective below",
+    "objective_template": {
+      "0": "Turn right 180 degrees, then turn back to the original view.",
+      "6": "Turn right 180 degrees, wait for 6 seconds, then turn back to the original view.",
+      "12": "Turn right 180 degrees, wait for 12 seconds, then turn back to the original view.",
+      "24": "Turn right 180 degrees, wait for 24 seconds, then turn back to the original view."
+    },
+    "action_sequence_template": {
+      "0": "hold(Right,3000ms); hold(Left,3000ms)",
+      "6": "hold(Right,3000ms); wait(6000ms); hold(Left,3000ms)",
+      "12": "hold(Right,3000ms); wait(12000ms); hold(Left,3000ms)",
+      "24": "hold(Right,3000ms); wait(24000ms); hold(Left,3000ms)"
+    },
+    "calls_per_video": 2,
+    "score_per_video": "mean of the calls' official scores",
+    "world_model_name_shown_to_judge": "LingBot-World-Infinity (same for both arms; no arm label)",
+    "reference_image": "the task's released first image"
+  },
+  "metrics": {
+    "primary": "judged official score (1-5), mean of 2 calls",
+    "secondary": [
+      "DINOv2-small CLS cosine, final frame vs frame 12 (end of the opening hold) and vs frame 0",
+      "judge field revisit_observed (yes counts per arm)",
+      "gate verdict counts"
+    ]
+  },
+  "analysis": {
+    "paired": "memory minus stock per horizon over scenes with both arms complete; bootstrap 95% CI over scenes (10000 draws, seed 11); wins/ties/losses",
+    "curve": "mean score and mean DINO vs horizon for both arms with bootstrap CIs (PNG)",
+    "pooled": "paired difference pooled over horizons 6, 12, 24 with scenes as the resampling unit",
+    "truncation_rule": "generation order is horizon 12, 24, 6, 0, scenes in hash order, stock then memory. If the run is cut at the 12:00 PST Lambda hard stop, each horizon is reported on the scenes whose two arms both completed, with the count stated; no horizon is dropped silently.",
+    "examples": "strips for 4 scenes chosen by rule at horizon 12: the two largest and the two smallest paired judged differences (ties broken by hash order)"
+  },
+  "prediction_on_record": "On development scenes memory lifted DINO at H=6 from about 0.3-0.4 to about 0.78. We expect a positive paired DINO difference at H>=6 and little difference at H=0 (the start view is still inside the stock window). Whether the judged score moves is unknown.",
+  "limits": [
+    "scripted actions and objective, not the PlayWorld agent player: not a leaderboard score",
+    "rotation-only path; the audit found forward-then-back returns are not helped",
+    "one seed",
+    "Gemini preview model on Vertex; within-video judge SD was about 0.35 in earlier runs"
+  ],
+  "jobs": {
+    "file": "reproduction/revisit-horizon-jobs.jsonl",
+    "count": 160,
+    "chunks": 2960
+  }
+}
