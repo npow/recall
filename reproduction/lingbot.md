@@ -177,3 +177,27 @@ walking speed is constant by construction.
 (stock 1; the action is held between player calls) exist on the rollout and suite CLIs.
 Non-stock values are refused until `state.json` has `phase: hillclimbing` with a
 reproduced baseline. The rolling window (local attention minus sink) must be a multiple of 4.
+
+## Four-dimension comparison protocol (stock vs bounded pose memory)
+
+`scripts/modal_lingbot_fourdim.py` runs 48 hash-selected cases (12 each of GC, IF, insight and
+out-of-sight OE; `worldsync/fourdim.py`) for a stock 18/6 arm and a `--budget-memory` arm
+(K=10 retrieved frames, native positions, 24-frame archive). Deviations from the published
+protocol, in addition to those above:
+
+* 48 of 171 cases, selected by a salted hash of the case id, not by outcome. GC013 is excluded
+  before generation because its released image contradicts its caption and rubric
+  (`reproduction/input-audit-gc013.md`); the next case in hash order replaces it.
+* The world model receives `--text-prompt both` (image caption, then the task objective), the
+  closest local match to what released PlayWorld adapters submit. Earlier local baselines used the
+  caption only, so scores here are not comparable with those.
+* Insight cases are stationary WAIT for 60 chunks (59.8 s) with no player; the other dimensions use
+  the Haiku reference-guided player (Player v6, END challenge) for up to 40 interactions.
+* `--player-retries 2` resamples the player after an invalid response; applied equally to both arms
+  and logged as `player_retry_events` in `run.json`.
+* Primary judge: the released PlayWorld Gemini rubric, gate and aggregation through Vertex AI
+  (`gemini-3.1-pro-preview`, gcloud login), see above. Opus (`worldsync.judge`) is secondary.
+  `reproduction/state.json` still has `gemini_calls_authorized: false`; the user authorised Gemini
+  scoring for this comparison in the running session.
+* Overall = equal mean of the four dimension means; bootstrap CIs resample cases within each
+  dimension. One seed unless a second is stated in `reproduction/four-dimension-comparison.md`.
