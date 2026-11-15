@@ -286,22 +286,11 @@ svg text{font-family:inherit}
   <!-- 8 -->
   <section class="slide" data-sec="Method">
     <h2>Storing less: keep the frame, rebuild its values on demand</h2>
-    <div class="row grow">
-      <div class="col" style="flex:1.1">
-        <table>
-          <tr><th>Three ways to remember one frame</th><th>Size</th></tr>
-          <tr><td>Cache its 40-layer values</td><td>1,235 MB</td></tr>
-          <tr><td>The same, 8-bit</td><td>627 MB</td></tr>
-          <tr class="hl"><td>Store the frame, rebuild the values on demand</td><td>6.2 MB<br><span class="small ours">≈ 200× less</span></td></tr>
-        </table>
-        <p class="small" style="margin-top:22px">Rebuilding 22 frames in a 14-chunk episode took 13.5 s in total. No archive on disk, GPU memory close to stock (72.4 GB against 68.8 GB).</p>
-      </div>
-      <div class="col">
-        <p style="margin-bottom:6px"><b>Does it still recall?</b></p>
-        <svg viewBox="0 0 980 470" width="860" height="413" id="abl"></svg>
-        <p class="tiny" style="margin-top:6px">Scripted turn away, hold, turn back (scene GC007).</p>
-      </div>
+    <div style="display:flex;flex-direction:column;align-items:center;margin-top:6px">
+      <p style="margin:0 0 4px;font-size:34px"><b>Does it still recall?</b> <span class="small">Scripted turn away, hold, turn back (scene GC007)</span></p>
+      <svg viewBox="0 0 980 470" width="1240" height="595" id="abl"></svg>
     </div>
+    <p class="small" style="margin:6px 0 0;text-align:center">Rebuilding 22 frames in a 14-chunk episode took 13.5 s in total; GPU memory stays close to stock (72.4 GB against 68.8 GB).</p>
     <p class="tiny foot">Sizes measured on LingBot-World2 14B at 480×832.</p>
     <aside class="notes">This is a storage finding, separate from the main result. What attention needs from a remembered frame is its values at all 40 layers: 1,235 megabytes per frame, which is why the memory on the previous slide keeps only 24 frames. We also tried storing just the frame, 6.2 megabytes, and rebuilding the values with one extra pass when the frame is needed. 1,235 divided by 6.2 is about two hundred times less, the same information traded for a little compute. On a scripted turn-away path it recalled the start view about as well as exact storage, 0.77 against 0.78, where the released model scores 0.35.</aside>
   </section>
@@ -632,7 +621,7 @@ svg text{font-family:inherit}
     var svg=document.getElementById('abl'), NS='http://www.w3.org/2000/svg';
     function el(n,a,t){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(t)e.textContent=t;svg.appendChild(e);return e;}
     var rows=[['As released (no memory)','',0.35,'#8a93a3'],['Cached values','1,235 MB / frame',0.78,'#5f7fc2'],
-              ['Cached values, 8-bit','627 MB / frame',0.82,'#5f7fc2'],['Store frame, recompute','6 MB / frame',0.77,'#3ddc97']];
+              ['Cached values, 8-bit','627 MB / frame',0.82,'#5f7fc2'],['Store frame, recompute','6 MB / frame · ≈ 200× less',0.77,'#3ddc97']];
     var x0=470,W=420;
     rows.forEach(function(r,i){
       var y=40+i*104;
