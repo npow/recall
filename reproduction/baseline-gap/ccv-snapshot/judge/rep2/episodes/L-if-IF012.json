@@ -1,0 +1,151 @@
+{
+  "task_id": "IF012",
+  "request_identity": {
+    "version": 3,
+    "video_sha256": "7c995f09a18f12afbac39659225ce6222d777e039b78949a6d50091d0d7c2cc0",
+    "reference_sha256": "04c0c12c8a5b8bdf524fe8881cabd29bb6bcb3d5703f0e553e6b3f6e68a97381",
+    "task_sha256": "33b5eec112550ec2d5bcdc3611064481fd699bd86bf6dd7364c9ec3854e47f75",
+    "world_model": "LingBot-World2 14B causal-fast",
+    "judge_model": "gemini-3.1-pro-preview",
+    "transport": "vertex",
+    "generation_config": {
+      "response_mime_type": "application/json",
+      "temperature": 0.1
+    },
+    "released_source_sha256": {
+      "metrics/vqa/rubric.py": "717337bf48986afd3bd239e838a30d2bc75788b5a3f1c76c3ceeb67f5997c945",
+      "metrics/vqa/instruction_gate.py": "216f4abc854bbc020819a55679b873cf5472bb2d72661659ed8674cca673df5f",
+      "metrics/vqa/sampling.py": "573be715981b64ac664be85f40337e8fce9002839698673de37300845eb6e0ca",
+      "metrics/vqa/score.py": "9e7656ea7aacde92b5c52ba4b401628ac5589c227935a18a0ab95b44870038a7",
+      "metrics/aggregate.py": "a11aa8c5da9a437d00e0b2205f5e72a48f953a68d63b6b3d804567008fe7adfd"
+    },
+    "adapter_source_sha256": {
+      "judge_integrity.py": "b4d5f5b249b1c4316a1a5c712cc37d2f60a381cd0f892f1611aa936494a22497",
+      "gemini_vertex_judge.py": "e0c3211328e2ea64695c7ad016b8aa20ef2ba493916a2b518b0e555118eb3e3e"
+    },
+    "fingerprint": "553da2dc0d7bb328aa06a3b184ad19fb31f3e461a506d5c48613ac5f28631b59"
+  },
+  "request_fingerprint": "553da2dc0d7bb328aa06a3b184ad19fb31f3e461a506d5c48613ac5f28631b59",
+  "world_model": "LingBot-World2 14B causal-fast",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "judge_project": "seismic-fx-507702-v1",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "7c995f09a18f12afbac39659225ce6222d777e039b78949a6d50091d0d7c2cc0",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; Controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF012",
+    "perspective": "third-person",
+    "verdict": "fail",
+    "instruction_following_score": 0,
+    "meaningful_requested_trajectory_progress": "no",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "角色在整个视频中一直站在原地，没有任何移动或行走的动作。",
+    "trajectory_evidence_zh": "从第1帧到第49帧，角色始终保持在初始位置，没有向前走向路灯的轨迹。",
+    "failure_reason_zh": "角色没有执行向前行走的指令，而是保持静止状态。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": null,
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "R935atXFK6GQ9LsPpfqFgAM",
+      "prompt_tokens": 4685,
+      "output_tokens": 192
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 49,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 48,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "ad05fc4645ecb96c0f96d437f4153515fde49a19e6d1c42e2c89a2b82cf44b7d",
+  "rubric_skipped": "trajectory failed; aggregate score is 1",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "L-if-IF012"
+}

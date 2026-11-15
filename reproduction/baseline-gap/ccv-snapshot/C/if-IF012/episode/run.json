@@ -1,0 +1,4328 @@
+{
+  "status": "completed",
+  "model": "LingBot-World2 14B causal-fast stock",
+  "protocol_id": "lingbot-local-released-objective-reference-transfer-v1",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+  "initial_image_sha256": "04c0c12c8a5b8bdf524fe8881cabd29bb6bcb3d5703f0e553e6b3f6e68a97381",
+  "text_prompt_mode": "prompt",
+  "director_mode": "off",
+  "image_caption_sha256": "cb29dd8c34ec459df5168947ef8e6ccd1b0c185b74536db8e4e9bf80015bb88e",
+  "task_id": "IF012",
+  "split": "if",
+  "seed": 42,
+  "turn_degrees_per_second": 60.0,
+  "fps": 16,
+  "max_chunks": 60,
+  "max_interactions": 40,
+  "native_fixed_controls": false,
+  "camera_embedding_audit": [],
+  "pose_retrieval": false,
+  "sink_rephase": false,
+  "adaptive_retrieval_pilot": false,
+  "player_temperature": "provider default",
+  "player_streaming": false,
+  "streaming_player_sha256": null,
+  "initial_neutral_bootstrap": true,
+  "kv_retention": false,
+  "decoprune": false,
+  "reanchor": false,
+  "budget_memory": false,
+  "fp8_kv": false,
+  "denoise_schedule": "stock",
+  "text_encoder_offloaded_after_encoding": true,
+  "stationary_wait_only": false,
+  "fixed_actions": null,
+  "quantization": "none",
+  "cuda_allocator_configuration": "expandable_segments:True",
+  "max_area": 399360,
+  "chunk_size": 4,
+  "local_attn_size": 18,
+  "sink_size": 6,
+  "decision_interval": 1,
+  "stock_knobs": true,
+  "controlled_ablation": false,
+  "sampler_timesteps_index": [
+    0,
+    250,
+    500,
+    750
+  ],
+  "sample_shift": 10,
+  "actions": [
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "bootstrap": true,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 0,
+      "plan_complete": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 0.0,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 97.06450176399994,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 1,
+      "translation_scale": 1.0,
+      "released_controller": {
+        "profile": "released-hy-hold-check-service-strict-v1",
+        "model": "claude-haiku-4-5-20251001",
+        "released_source_sha256": "d7a90541a19c27cf4c7ed298510fb1585974c85bdd90ea39547150093b287291",
+        "released_function_sha256": {
+          "extract_chat_text": "bbbd952ef1f7f29114ddba22852ec47b26d320e704f708a11624dbbd00a9d7d8",
+          "extract_json_object": "de8634b2568cd9af5c79675560b17bc9c217694438d4ac9c20142524ba485d9e",
+          "claude_viewer_screenshot": "7c888cfcbba52e18be17c4028c50452566e41d6aa2c875612d94364d75849726",
+          "request_claude_hold_decision": "63bdb91f6e06f7d147de553cb0c80e828d1572c1f643e33d7a9ccb33a6194e35",
+          "parse_actions": "d1b23517a023cd7aeec38e8a7b8c23a3afc99802b5d96797900b184ab19bf9c6"
+        },
+        "exact_paper_lingbot_controller": false,
+        "reference_guided": true,
+        "output_token_policy": {
+          "released_max_tokens": 60,
+          "override": 400,
+          "effective_max_tokens": 400,
+          "deviation_from_released_cap": true
+        },
+        "scheduler_policy": null,
+        "remaining_differences": [
+          "No public LingBot player exists; this transfers HY-specific reference-guided behavior, not verified paper LingBot behavior.",
+          "Native generation pauses during SDK calls; released browser controls remain held while the request runs.",
+          "Released prompt uses the latest screenshot only, not an initial/current image pair or arbitrary history.",
+          "Decoded native frames replace browser screenshots; the released JPEG65 then640x360/JPEG45 preprocessing is retained.",
+          "Anthropic SDK replaces the released OpenAI-compatible HTTP proxy; malformed/API failures abort instead of silently continuing.",
+          "Raw response schema and served snapshot are now checked before the permissive released parser; this is intentional fail-closed hardening.",
+          "Only native camera controls are supported; avatar interactions and simultaneous keys are rejected, not synthesized."
+        ],
+        "low_level_service_only": true,
+        "hy_action_parser_and_scheduler_used": false,
+        "shared_dsl_source_sha256": "906e1b993b4261cbb7d56013c4fd3f52676120cc234c5bce497016dd5a7ce6d0",
+        "caller_responsibilities": [
+          "Canonical phase parsing, clock and angle calibration",
+          "Check cadence, minimum hold/release, phase progression and rotation-release policy",
+          "Global interaction budget and extension/correction application"
+        ]
+      },
+      "player_transport": {
+        "prompt_sha256": "1271a70c1a7fcab757132ff2490b268b0e0f34ddc79885fff356bc09ddea4b16",
+        "response_id": "msg_011Ch51q4cxawUj8JDZsDUU4",
+        "served_model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 856,
+          "output_tokens": 79,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "max_tokens": 400,
+        "released_max_tokens": 60,
+        "raw_response": "```json\n{\n  \"release_now\": false,\n  \"extend_ms\": 0,\n  \"adaptive_direction\": \"none\",\n  \"reason\": \"Elapsed time is 0ms, below the 1000ms minimum hold threshold. Character has not yet begun moving toward the street lamp. Continue holding W.\"\n}\n```",
+        "stop_reason": "end_turn"
+      },
+      "released_hold_decision": {
+        "enabled": true,
+        "model": "claude-haiku-4-5-20251001",
+        "action_index": 0,
+        "action": "hold(W,4500ms)",
+        "elapsed_hold_ms": 0,
+        "planned_hold_ms": 4500,
+        "release_now": false,
+        "extend_ms": 0,
+        "adaptive_direction": null,
+        "http_status": 200,
+        "wall_elapsed_s": 1.512,
+        "raw_response": "```json\n{\n  \"release_now\": false,\n  \"extend_ms\": 0,\n  \"adaptive_direction\": \"none\",\n  \"reason\": \"Elapsed time is 0ms, below the 1000ms minimum hold threshold. Character has not yet begun moving toward the street lamp. Continue holding W.\"\n}\n```",
+        "reason": "Elapsed time is 0ms, below the 1000ms minimum hold threshold. Character has not yet begun moving toward the street lamp. Continue holding W."
+      },
+      "explicit_phase_index": 0,
+      "explicit_elapsed_ms": 0,
+      "explicit_planned_ms": 4500,
+      "shared_dsl_source_sha256": "906e1b993b4261cbb7d56013c4fd3f52676120cc234c5bce497016dd5a7ce6d0",
+      "native_camera_steps": [
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        }
+      ],
+      "haiku_requests_total": 1,
+      "plan_complete": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 103.28092397899991,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          4.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        }
+      ],
+      "haiku_requests_total": 1,
+      "plan_complete": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          4.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 108.40062279699987,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          8.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 1,
+      "translation_scale": 1.0,
+      "released_controller": {
+        "profile": "released-hy-hold-check-service-strict-v1",
+        "model": "claude-haiku-4-5-20251001",
+        "released_source_sha256": "d7a90541a19c27cf4c7ed298510fb1585974c85bdd90ea39547150093b287291",
+        "released_function_sha256": {
+          "extract_chat_text": "bbbd952ef1f7f29114ddba22852ec47b26d320e704f708a11624dbbd00a9d7d8",
+          "extract_json_object": "de8634b2568cd9af5c79675560b17bc9c217694438d4ac9c20142524ba485d9e",
+          "claude_viewer_screenshot": "7c888cfcbba52e18be17c4028c50452566e41d6aa2c875612d94364d75849726",
+          "request_claude_hold_decision": "63bdb91f6e06f7d147de553cb0c80e828d1572c1f643e33d7a9ccb33a6194e35",
+          "parse_actions": "d1b23517a023cd7aeec38e8a7b8c23a3afc99802b5d96797900b184ab19bf9c6"
+        },
+        "exact_paper_lingbot_controller": false,
+        "reference_guided": true,
+        "output_token_policy": {
+          "released_max_tokens": 60,
+          "override": 400,
+          "effective_max_tokens": 400,
+          "deviation_from_released_cap": true
+        },
+        "scheduler_policy": null,
+        "remaining_differences": [
+          "No public LingBot player exists; this transfers HY-specific reference-guided behavior, not verified paper LingBot behavior.",
+          "Native generation pauses during SDK calls; released browser controls remain held while the request runs.",
+          "Released prompt uses the latest screenshot only, not an initial/current image pair or arbitrary history.",
+          "Decoded native frames replace browser screenshots; the released JPEG65 then640x360/JPEG45 preprocessing is retained.",
+          "Anthropic SDK replaces the released OpenAI-compatible HTTP proxy; malformed/API failures abort instead of silently continuing.",
+          "Raw response schema and served snapshot are now checked before the permissive released parser; this is intentional fail-closed hardening.",
+          "Only native camera controls are supported; avatar interactions and simultaneous keys are rejected, not synthesized."
+        ],
+        "low_level_service_only": true,
+        "hy_action_parser_and_scheduler_used": false,
+        "shared_dsl_source_sha256": "906e1b993b4261cbb7d56013c4fd3f52676120cc234c5bce497016dd5a7ce6d0",
+        "caller_responsibilities": [
+          "Canonical phase parsing, clock and angle calibration",
+          "Check cadence, minimum hold/release, phase progression and rotation-release policy",
+          "Global interaction budget and extension/correction application"
+        ]
+      },
+      "player_transport": {
+        "prompt_sha256": "4e30b89cd6fa39a6ee154bb885a23de6e4e5b97722bf5ba11b9efd686b4b3caa",
+        "response_id": "msg_011Ch51qy9KfJ5Rq1LCDhy1M",
+        "served_model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 857,
+          "output_tokens": 92,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "max_tokens": 400,
+        "released_max_tokens": 60,
+        "raw_response": "```json\n{\n  \"release_now\": false,\n  \"extend_ms\": 2500,\n  \"adaptive_direction\": \"none\",\n  \"reason\": \"Elapsed 2000ms of 4500ms planned hold. Lumine has moved forward but remains far from the street lamp visible in the distance. Insufficient progress toward goal; extension needed to continue forward movement.\"\n}\n```",
+        "stop_reason": "end_turn"
+      },
+      "released_hold_decision": {
+        "enabled": true,
+        "model": "claude-haiku-4-5-20251001",
+        "action_index": 0,
+        "action": "hold(W,4500ms)",
+        "elapsed_hold_ms": 2000,
+        "planned_hold_ms": 4500,
+        "release_now": false,
+        "extend_ms": 2500,
+        "adaptive_direction": null,
+        "http_status": 200,
+        "wall_elapsed_s": 1.759,
+        "raw_response": "```json\n{\n  \"release_now\": false,\n  \"extend_ms\": 2500,\n  \"adaptive_direction\": \"none\",\n  \"reason\": \"Elapsed 2000ms of 4500ms planned hold. Lumine has moved forward but remains far from the street lamp visible in the distance. Insufficient progress toward goal; extension needed to continue forward movement.\"\n}\n```",
+        "reason": "Elapsed 2000ms of 4500ms planned hold. Lumine has moved forward but remains far from the street lamp visible in the distance. Insufficient progress toward goal; extension needed to continue forward movement."
+      },
+      "explicit_phase_index": 0,
+      "explicit_elapsed_ms": 2000,
+      "explicit_planned_ms": 4500,
+      "shared_dsl_source_sha256": "906e1b993b4261cbb7d56013c4fd3f52676120cc234c5bce497016dd5a7ce6d0",
+      "native_camera_steps": [
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        }
+      ],
+      "haiku_requests_total": 2,
+      "plan_complete": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          8.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 115.7194026279999,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          12.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 1,
+      "translation_scale": 1.0,
+      "released_controller": {
+        "profile": "released-hy-hold-check-service-strict-v1",
+        "model": "claude-haiku-4-5-20251001",
+        "released_source_sha256": "d7a90541a19c27cf4c7ed298510fb1585974c85bdd90ea39547150093b287291",
+        "released_function_sha256": {
+          "extract_chat_text": "bbbd952ef1f7f29114ddba22852ec47b26d320e704f708a11624dbbd00a9d7d8",
+          "extract_json_object": "de8634b2568cd9af5c79675560b17bc9c217694438d4ac9c20142524ba485d9e",
+          "claude_viewer_screenshot": "7c888cfcbba52e18be17c4028c50452566e41d6aa2c875612d94364d75849726",
+          "request_claude_hold_decision": "63bdb91f6e06f7d147de553cb0c80e828d1572c1f643e33d7a9ccb33a6194e35",
+          "parse_actions": "d1b23517a023cd7aeec38e8a7b8c23a3afc99802b5d96797900b184ab19bf9c6"
+        },
+        "exact_paper_lingbot_controller": false,
+        "reference_guided": true,
+        "output_token_policy": {
+          "released_max_tokens": 60,
+          "override": 400,
+          "effective_max_tokens": 400,
+          "deviation_from_released_cap": true
+        },
+        "scheduler_policy": null,
+        "remaining_differences": [
+          "No public LingBot player exists; this transfers HY-specific reference-guided behavior, not verified paper LingBot behavior.",
+          "Native generation pauses during SDK calls; released browser controls remain held while the request runs.",
+          "Released prompt uses the latest screenshot only, not an initial/current image pair or arbitrary history.",
+          "Decoded native frames replace browser screenshots; the released JPEG65 then640x360/JPEG45 preprocessing is retained.",
+          "Anthropic SDK replaces the released OpenAI-compatible HTTP proxy; malformed/API failures abort instead of silently continuing.",
+          "Raw response schema and served snapshot are now checked before the permissive released parser; this is intentional fail-closed hardening.",
+          "Only native camera controls are supported; avatar interactions and simultaneous keys are rejected, not synthesized."
+        ],
+        "low_level_service_only": true,
+        "hy_action_parser_and_scheduler_used": false,
+        "shared_dsl_source_sha256": "906e1b993b4261cbb7d56013c4fd3f52676120cc234c5bce497016dd5a7ce6d0",
+        "caller_responsibilities": [
+          "Canonical phase parsing, clock and angle calibration",
+          "Check cadence, minimum hold/release, phase progression and rotation-release policy",
+          "Global interaction budget and extension/correction application"
+        ]
+      },
+      "player_transport": {
+        "prompt_sha256": "e226eacc70ab1800042e8af9468cbc5069fb89ad9d46b7ac3a969602ecbf1cb6",
+        "response_id": "msg_011Ch51rZ9isB1dSVm5NxNo1",
+        "served_model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 858,
+          "output_tokens": 87,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "max_tokens": 400,
+        "released_max_tokens": 60,
+        "raw_response": "```json\n{\n  \"release_now\": false,\n  \"extend_ms\": 1500,\n  \"adaptive_direction\": \"none\",\n  \"reason\": \"Lumine has traveled ~3000ms worth of distance but remains on dirt/grass ground outside the street lamp region. Goal requires reaching the lamp area. Continue forward movement to close remaining distance.\"\n}\n```",
+        "stop_reason": "end_turn"
+      },
+      "released_hold_decision": {
+        "enabled": true,
+        "model": "claude-haiku-4-5-20251001",
+        "action_index": 0,
+        "action": "hold(W,4500ms)",
+        "elapsed_hold_ms": 3000,
+        "planned_hold_ms": 4500,
+        "release_now": false,
+        "extend_ms": 1500,
+        "adaptive_direction": null,
+        "http_status": 200,
+        "wall_elapsed_s": 2.008,
+        "raw_response": "```json\n{\n  \"release_now\": false,\n  \"extend_ms\": 1500,\n  \"adaptive_direction\": \"none\",\n  \"reason\": \"Lumine has traveled ~3000ms worth of distance but remains on dirt/grass ground outside the street lamp region. Goal requires reaching the lamp area. Continue forward movement to close remaining distance.\"\n}\n```",
+        "reason": "Lumine has traveled ~3000ms worth of distance but remains on dirt/grass ground outside the street lamp region. Goal requires reaching the lamp area. Continue forward movement to close remaining distance."
+      },
+      "explicit_phase_index": 0,
+      "explicit_elapsed_ms": 3000,
+      "explicit_planned_ms": 4500,
+      "shared_dsl_source_sha256": "906e1b993b4261cbb7d56013c4fd3f52676120cc234c5bce497016dd5a7ce6d0",
+      "native_camera_steps": [
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          12.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 123.7534823179999,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          16.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          16.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 130.0000743789999,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          20.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 5.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          20.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 5.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 136.224546359,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          24.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 6.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          24.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 6.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 142.46221259899994,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          28.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 7.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          28.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 7.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 148.69656916099984,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          32.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 8.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "W",
+          "turn_degrees": 0,
+          "translation_scale": 1.0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          32.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 8.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 154.92541743399988,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 9.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 9.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 161.14554188900001,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 10.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 10.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 167.360147503,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 11.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 11.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 173.54456152800003,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 12.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 12.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 179.72697183299988,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 13.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 13.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 185.92831408200004,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 14.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 14.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 192.12005374599994,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 15.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 15.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 198.32825370599994,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 16.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 16.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 204.55396962199984,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 17.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 17.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 210.75809015599998,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 18.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 18.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 216.95888265300005,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 19.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 19.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 223.151968572,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 20.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 20.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 229.33988172699992,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 21.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 21.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 235.53754371299988,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 22.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 22.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 241.73777885200002,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 23.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 23.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 247.965565943,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 24.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 24.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 254.17033878400002,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 25.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 25.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 260.37493508499983,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 26.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 26.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 266.58193651600004,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 27.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 27.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 272.77840304200004,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 28.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 28.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 279.02163086899986,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 29.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 29.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 285.235025899,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 30.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 30.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 291.45409857699997,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 31.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 31.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 297.65976648799983,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 32.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 32.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 303.84726425300005,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 33.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 33.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 310.06238770799996,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 34.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 34.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 316.25899308299995,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 35.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 35.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 322.45570506299987,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 36.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 36.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 328.65044971399993,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 37.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 37.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 334.83285157399996,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 38.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 38.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 341.02384150700004,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 39.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 39.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 347.22655385999997,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 40.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 40.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 353.4201447109999,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 41.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 41.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 359.6263220599999,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 42.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 42.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 365.82333679199996,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 43.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 43.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 372.0243194039999,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 44.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 44.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 378.21219536800004,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 45.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 45.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 384.4141538439999,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 46.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 46.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 390.618355136,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 47.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 47.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 396.82985373099996,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 48.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 48.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 403.0384481209999,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 49.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 49.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 409.23473149100005,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 50.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 50.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 415.44821826299994,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 51.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 51.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 421.65499530399984,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 52.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 52.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 427.883768872,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 53.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 53.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 434.11224276099983,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 54.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 54.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 440.32270692299994,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 55.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 55.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 446.53516381500003,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 56.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 56.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 452.730652772,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 57.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 57.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 458.93370827599983,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 58.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "Canonical quarter-second schedule; no visual success assertion",
+      "agent_interaction_increment": 0,
+      "translation_scale": 1.0,
+      "native_camera_steps": [
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        },
+        {
+          "action": "WAIT",
+          "turn_degrees": 0
+        }
+      ],
+      "haiku_requests_total": 3,
+      "plan_complete": true,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 58.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 465.14196621899987,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          34.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "yaw_limits_degrees": null,
+        "world_time_seconds": 59.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    }
+  ],
+  "chunks": [
+    {
+      "index": 0,
+      "path": "chunk-000.mp4",
+      "frames": 13,
+      "pixel_sha256": "5ea1da3d06cb79229009d0c13e57406bcb1ec307cb4a86e8689a6e27723acd18",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.49317963599992254,
+        "mp4_encode": 0.4964587570000276
+      },
+      "elapsed_s": 101.73859438499994,
+      "sha256": "d380d80bc47e6ba41bc44e4d14d8a91aa4858861fda8eec2d85d962f5db3c765"
+    },
+    {
+      "index": 1,
+      "path": "chunk-001.mp4",
+      "frames": 16,
+      "pixel_sha256": "37d2e177d3b7afa1904fd46f318809fa03cbd4d464a1de82df3278df619f7791",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5861374930000238,
+        "mp4_encode": 0.4812434030000077
+      },
+      "elapsed_s": 108.39751228499995,
+      "sha256": "98ce22435d3339060c280b8afe07ef48a81168196499bedc7b8c0e786fde4843"
+    },
+    {
+      "index": 2,
+      "path": "chunk-002.mp4",
+      "frames": 16,
+      "pixel_sha256": "067a0e69afe26ac611d216ea8d5613961d6874fd74ec1e4d7cda7a359c1694b2",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5842033129999891,
+        "mp4_encode": 0.4687918150000314
+      },
+      "elapsed_s": 113.93157462599993,
+      "sha256": "f336f5370a90f24132c6b22bad3bc7178b71c83921d74077126573f3ba1c70ee"
+    },
+    {
+      "index": 3,
+      "path": "chunk-003.mp4",
+      "frames": 16,
+      "pixel_sha256": "e47b35fc27f2b779b7555ce976e89e7afc5c5707c7a66e0073da81f48478cc27",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5848558689999663,
+        "mp4_encode": 0.46803188700005194
+      },
+      "elapsed_s": 121.71744536599999,
+      "sha256": "becfc213d0d74d7a5a0821381bba1f2cff00fda400ef415d24437633d9032df5"
+    },
+    {
+      "index": 4,
+      "path": "chunk-004.mp4",
+      "frames": 16,
+      "pixel_sha256": "dcf9b0d395a07d1ec25fb8b527714267efaab4f1bf6251ce21838a4593477a2e",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5861073070000202,
+        "mp4_encode": 0.459579167000129
+      },
+      "elapsed_s": 129.99656430599998,
+      "sha256": "90a2c31f3a047aa4b36ef9f3704b3d5600dc9f0eb17ab5fb8427b394a7c5258f"
+    },
+    {
+      "index": 5,
+      "path": "chunk-005.mp4",
+      "frames": 16,
+      "pixel_sha256": "c9309ddcd4adf881480ed8c6bbeb7349b5fad76afd6662922bbcf8bb40f646f4",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5851850709998416,
+        "mp4_encode": 0.4593326609999622
+      },
+      "elapsed_s": 136.22124101199984,
+      "sha256": "9aa78c02707fc64644e8dd944eaab1b454bd2a9ddd1b44da86f10fd9e0e51f6b"
+    },
+    {
+      "index": 6,
+      "path": "chunk-006.mp4",
+      "frames": 16,
+      "pixel_sha256": "339ff578a7efdbfee728e4220ca75f8780c6a263bc8710aa8ab44abb8341db14",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5858555529998739,
+        "mp4_encode": 0.4691095470000164
+      },
+      "elapsed_s": 142.45872797699985,
+      "sha256": "29c358149a8440dde09f2cd83de5423699acdff18817372a82a669a43ddeddc5"
+    },
+    {
+      "index": 7,
+      "path": "chunk-007.mp4",
+      "frames": 16,
+      "pixel_sha256": "72f54871b779cc783e75933c11257c250153d0bd814bfb641f2a8e8c40439aae",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5860184919999938,
+        "mp4_encode": 0.4693501770000239
+      },
+      "elapsed_s": 148.69299670600003,
+      "sha256": "ca9a095c6fe1d3e7f89c25a083383135ccc14355440aecdebedece1a79bdc7be"
+    },
+    {
+      "index": 8,
+      "path": "chunk-008.mp4",
+      "frames": 16,
+      "pixel_sha256": "86d35ab2993f079345920ed727411e8d147e9b7507a30b7adab218fe65a51877",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5858783900000617,
+        "mp4_encode": 0.469434339999907
+      },
+      "elapsed_s": 154.92172085099992,
+      "sha256": "886f6aaaec6474624401058f72a29d0f4cd58a2529a580f47195111bae3b31b5"
+    },
+    {
+      "index": 9,
+      "path": "chunk-009.mp4",
+      "frames": 16,
+      "pixel_sha256": "5cbd6d093973cc9b14b808110c0ade25630980d0bbb6fb86372b1509216f2224",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5851602000000184,
+        "mp4_encode": 0.46027796199996374
+      },
+      "elapsed_s": 161.141891106,
+      "sha256": "3dea635e4b071328776e7f35477e8289b7e4be18bd32b898943009b9a5af65dc"
+    },
+    {
+      "index": 10,
+      "path": "chunk-010.mp4",
+      "frames": 16,
+      "pixel_sha256": "7aff28db1c0ae59d14690f89a0a86c641f0458b173c7ebd34c0b8a65dd798f40",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5856605140002102,
+        "mp4_encode": 0.4495880579997902
+      },
+      "elapsed_s": 167.35660772699998,
+      "sha256": "ef5aac22cbf6e1a13e15955c4037e80588459e79785fc980cfaa5cb9184a3f3b"
+    },
+    {
+      "index": 11,
+      "path": "chunk-011.mp4",
+      "frames": 16,
+      "pixel_sha256": "91cd49081844ce9c96970fdcf737e984b4527da294b28292a88b40be9084bbb9",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5863782569999785,
+        "mp4_encode": 0.43034373799991954
+      },
+      "elapsed_s": 173.5409659479999,
+      "sha256": "87a9be8450e76d239fc507be72961ddcbcd6990d89c13e2cf83f4d39ff1d83ef"
+    },
+    {
+      "index": 12,
+      "path": "chunk-012.mp4",
+      "frames": 16,
+      "pixel_sha256": "672d2bc223c67477a55209a5176204370209ff0e15999100bbea1074eb6baf9f",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5862875960001475,
+        "mp4_encode": 0.44005911299996114
+      },
+      "elapsed_s": 179.723425678,
+      "sha256": "8c2f5f89e7c4045d22c74b286131b1c0a93b254fa6e9628d076e71d767d500aa"
+    },
+    {
+      "index": 13,
+      "path": "chunk-013.mp4",
+      "frames": 16,
+      "pixel_sha256": "1cfd70768587ce2817dcda9f787b1ffb1add5d78b3200ddc0093522e2a5db5ef",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5862658899998223,
+        "mp4_encode": 0.4491337780000322
+      },
+      "elapsed_s": 185.92449205399998,
+      "sha256": "9337b02f4d29e1426ec42c5fac6a036eaeaed6d2991048c7f59a9097befa6697"
+    },
+    {
+      "index": 14,
+      "path": "chunk-014.mp4",
+      "frames": 16,
+      "pixel_sha256": "79b9a3532aedc2ee250c314786380efad269c481f8535c8b0f5ea2493c5bd42c",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5864813189998586,
+        "mp4_encode": 0.44065948200000093
+      },
+      "elapsed_s": 192.11630109299995,
+      "sha256": "5f8ef0c4bb806076419f893c92760595b0ef16e48583e094a651b49620ed3f08"
+    },
+    {
+      "index": 15,
+      "path": "chunk-015.mp4",
+      "frames": 16,
+      "pixel_sha256": "91859e5a41283d189d81ed68b6f387a2e85ea1ee9ef722050bf6f0328980ced5",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5857024360000196,
+        "mp4_encode": 0.4592909860000418
+      },
+      "elapsed_s": 198.32412875599994,
+      "sha256": "d3c5187be247c55bda6b84a6c812b1f18621eda30dd561a92e8c170c639c9b7e"
+    },
+    {
+      "index": 16,
+      "path": "chunk-016.mp4",
+      "frames": 16,
+      "pixel_sha256": "38192980b621d2493f5037375c20f5c867bb950392198eafff3b2621dfc58754",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5866925010000159,
+        "mp4_encode": 0.4736419119999482
+      },
+      "elapsed_s": 204.54995986899985,
+      "sha256": "fa2dad49936b0ba864650255c081bb70bbd00f218bd8f2bfce835a4c87587fdf"
+    },
+    {
+      "index": 17,
+      "path": "chunk-017.mp4",
+      "frames": 16,
+      "pixel_sha256": "eefd1816e9d47cfa05af4c5337112a07e1d504cb493755fe472a8f3733dd0a7f",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5855972120000388,
+        "mp4_encode": 0.44973999299986644
+      },
+      "elapsed_s": 210.75410284600002,
+      "sha256": "d227566f91faf38872d53eca7fbc939f88efdf8b5664c5ae309a63583db9b532"
+    },
+    {
+      "index": 18,
+      "path": "chunk-018.mp4",
+      "frames": 16,
+      "pixel_sha256": "0d6b26ae6769cca7e40346d444d34b08743cfa099e68cdeb34f8d0650113a88f",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.585825653000029,
+        "mp4_encode": 0.4534570610001083
+      },
+      "elapsed_s": 216.95486483599984,
+      "sha256": "f613fe9f9549aef314b02173c49ce1fdbb5a40dcdf79fac3a3dfdd71daeb95cd"
+    },
+    {
+      "index": 19,
+      "path": "chunk-019.mp4",
+      "frames": 16,
+      "pixel_sha256": "f7174359f189159e1f18254163d54e5d8f6bbba64f84e7c2eae90c5dd9510a2d",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5857006670000828,
+        "mp4_encode": 0.44911709099983455
+      },
+      "elapsed_s": 223.1478534549999,
+      "sha256": "eadafc62f471dc0521a760fcefdc6a9d74b19ac31d0c9013a54537406c81b14e"
+    },
+    {
+      "index": 20,
+      "path": "chunk-020.mp4",
+      "frames": 16,
+      "pixel_sha256": "0223d1f8d7a6dcb110af004e0bbfd2a0602edb52aba4c78f33aafabaa4765be2",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5852361839999958,
+        "mp4_encode": 0.4382812249998551
+      },
+      "elapsed_s": 229.3356583289999,
+      "sha256": "25a19e0e74b242f162e55aa2b5b71099437b2b0cc56efd0962414609024982d9"
+    },
+    {
+      "index": 21,
+      "path": "chunk-021.mp4",
+      "frames": 16,
+      "pixel_sha256": "af0bd827832831d9ef079112323bbbe02ace49427f041c11e5560ce745421205",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5861159480000424,
+        "mp4_encode": 0.4503518530000292
+      },
+      "elapsed_s": 235.53329023499987,
+      "sha256": "aee21bd6b11b760e6a853d40c5900b333c3ea29eb6ccfe4eecaf2434737a85ec"
+    },
+    {
+      "index": 22,
+      "path": "chunk-022.mp4",
+      "frames": 16,
+      "pixel_sha256": "624d0d573c91fcc07bd09d2060dfadc8ef897d54eb88ad743336b2016d301650",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5856000539999968,
+        "mp4_encode": 0.44819383799995194
+      },
+      "elapsed_s": 241.73333824899987,
+      "sha256": "c11b8b0d1515524c280440c33eee9de4954ecb688e72706d2bf0d1438271491f"
+    },
+    {
+      "index": 23,
+      "path": "chunk-023.mp4",
+      "frames": 16,
+      "pixel_sha256": "af79857051b932734a26b280c96bf3b902644d03d0d4b89637cf51036b43e351",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5863600479999604,
+        "mp4_encode": 0.4749044299999241
+      },
+      "elapsed_s": 247.96079007899993,
+      "sha256": "aea6d8a34e68c31d1f1e90be3f67be978e2e3ac9882aded26ac3a7ffc148d8db"
+    },
+    {
+      "index": 24,
+      "path": "chunk-024.mp4",
+      "frames": 16,
+      "pixel_sha256": "6493a9ea370578e98813603e73097c74617be1e79e13abfb2120729fe3fc0fc1",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5858301759999449,
+        "mp4_encode": 0.44837894199986295
+      },
+      "elapsed_s": 254.16586209899992,
+      "sha256": "08468c6b3195eaa1d4f618a8a5fb855fd418fa2e3d42373dbe32ed90e2315244"
+    },
+    {
+      "index": 25,
+      "path": "chunk-025.mp4",
+      "frames": 16,
+      "pixel_sha256": "bd0c59ad6ecfa56dbcefe3e0c4340dbf85c05a6ee01eeb35d52d58d907adec6c",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.586033665000059,
+        "mp4_encode": 0.45091282700013835
+      },
+      "elapsed_s": 260.370351946,
+      "sha256": "da8de73163cec6dc7e2fcbb4cf7f5a153dd5eadbc15a2a6a5644a01f9b44ef63"
+    },
+    {
+      "index": 26,
+      "path": "chunk-026.mp4",
+      "frames": 16,
+      "pixel_sha256": "8bd1f2d52fe5629ffb3cf5c4e47c55e0846e9fe4b8a0c69793d9083fcc8b6b1a",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5871238880001783,
+        "mp4_encode": 0.4531133419998241
+      },
+      "elapsed_s": 266.57738325499986,
+      "sha256": "54b0e4f0d740cca492e538badcd85492ca79737d2ca788f0e06a1277003f940e"
+    },
+    {
+      "index": 27,
+      "path": "chunk-027.mp4",
+      "frames": 16,
+      "pixel_sha256": "aa375cd48bd77453f97b98ac87fb9e7a3acfd7538f0bff96e2bac2d1dcb9a0c6",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5858716860000186,
+        "mp4_encode": 0.43951445000016065
+      },
+      "elapsed_s": 272.7737407049999,
+      "sha256": "3a07d65670a2e225192e6556e1d233b61a56e4a833ea8b3f0dd9c273446676b0"
+    },
+    {
+      "index": 28,
+      "path": "chunk-028.mp4",
+      "frames": 16,
+      "pixel_sha256": "91f0134b601e3d5b3002dafd64061ca148eb64061d9ac85cd0fd2bcdb08e0181",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5860382870000649,
+        "mp4_encode": 0.47791040599986445
+      },
+      "elapsed_s": 279.016896931,
+      "sha256": "063dc479564fc1188be14ccf5c3b82e43798c381f6b8c70e214f341e4b72a21a"
+    },
+    {
+      "index": 29,
+      "path": "chunk-029.mp4",
+      "frames": 16,
+      "pixel_sha256": "d1ade5b4d9a75a71ed20b1c1c8c6bdfb9f71696daf89c166101b68c1f79ceef0",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.585570731999951,
+        "mp4_encode": 0.4599978070000361
+      },
+      "elapsed_s": 285.230295907,
+      "sha256": "a5ec0a30385d02263f09f377fc57880c9efa3dd1c9b8af5c006c9cfff5923452"
+    },
+    {
+      "index": 30,
+      "path": "chunk-030.mp4",
+      "frames": 16,
+      "pixel_sha256": "622a6c3645d526037e190bc3d42cdb1ed5550d7d7f3c7071f5bfb926051b007e",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5859689379999509,
+        "mp4_encode": 0.46127884800012
+      },
+      "elapsed_s": 291.4491604069999,
+      "sha256": "340d5665cb989773d4e05af94941c52a553ed4d197fbf161ada286e8e1883196"
+    },
+    {
+      "index": 31,
+      "path": "chunk-031.mp4",
+      "frames": 16,
+      "pixel_sha256": "4c78f7720e7e65c95b86b78cdd4f16960d026a83b8f2aa09ae52db48611483d4",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5869773230001556,
+        "mp4_encode": 0.45039128499979597
+      },
+      "elapsed_s": 297.6549985019999,
+      "sha256": "defe079128602a9838720bca2e7b14dd6c8ddc0bdbc06916356243fb8ba7a9fb"
+    },
+    {
+      "index": 32,
+      "path": "chunk-032.mp4",
+      "frames": 16,
+      "pixel_sha256": "27edcc39abe2cc333189375fc1affedfa8f9a0f9ba8a2068a9eef41c70e65747",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.58708212800002,
+        "mp4_encode": 0.4395398879998993
+      },
+      "elapsed_s": 303.84243174899984,
+      "sha256": "f66c62a99dfc41c525049e835b8606be061ae703a65ab33bcd7c44d331a75f40"
+    },
+    {
+      "index": 33,
+      "path": "chunk-033.mp4",
+      "frames": 16,
+      "pixel_sha256": "d5a1c5c56f64890fe85ffdd0fc5b176c1caf596d2b1b88d4917f11c3841eedce",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5871683870000197,
+        "mp4_encode": 0.4571737750000011
+      },
+      "elapsed_s": 310.05724566000004,
+      "sha256": "8df24a38710f98f03244601867a81e82345cd029ad66fa80dcfbda74d65e254e"
+    },
+    {
+      "index": 34,
+      "path": "chunk-034.mp4",
+      "frames": 16,
+      "pixel_sha256": "51f0a67d5de9c039cd2578f0347977e358fea4fcfb404ab778bf4214a2f86d12",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5856842359999064,
+        "mp4_encode": 0.44169406500009245
+      },
+      "elapsed_s": 316.25410807000003,
+      "sha256": "7bb8aaaf5a8df03dd39794c96753363682bdfc947ac4670b6f1c5fbb83389cfa"
+    },
+    {
+      "index": 35,
+      "path": "chunk-035.mp4",
+      "frames": 16,
+      "pixel_sha256": "9a391cf60b7f883ec2fc23d90ab3f7dd3250c201a71b4d60b50473fb57c12d62",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5855432440000641,
+        "mp4_encode": 0.4433651959998315
+      },
+      "elapsed_s": 322.45072387100004,
+      "sha256": "75c7f29bff5230ed945f1fc368c94f480f50a18fdd7a84c9c47d522d520f6c9c"
+    },
+    {
+      "index": 36,
+      "path": "chunk-036.mp4",
+      "frames": 16,
+      "pixel_sha256": "c4edc104cde83606139013819ddd47cc8f5503fdfabc55816ef2d57422c0aa3d",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.585885350999888,
+        "mp4_encode": 0.44045053700006065
+      },
+      "elapsed_s": 328.64544162899983,
+      "sha256": "5c10b0d4b642537aa4c31450fe2983faeba01f5a732b9c642262863df20690a0"
+    },
+    {
+      "index": 37,
+      "path": "chunk-037.mp4",
+      "frames": 16,
+      "pixel_sha256": "95f0bfb14752a6ea340f9ae02d52e2e32dae99fee3ca651743d4cde8beb6b093",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.586038568000049,
+        "mp4_encode": 0.428883937999899
+      },
+      "elapsed_s": 334.82775550199995,
+      "sha256": "da8edebd3c3cea03341bac606ef25e8e45a88d7a9a4c0cb7c31a3f089c92187c"
+    },
+    {
+      "index": 38,
+      "path": "chunk-038.mp4",
+      "frames": 16,
+      "pixel_sha256": "a7de1905283cf666ca751876dd8b095bed3a5a377a45c03a87fdc0c65ddd1047",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5856321629999002,
+        "mp4_encode": 0.4379107690001547
+      },
+      "elapsed_s": 341.0186926019999,
+      "sha256": "6fc84c80c6540b501069b5beed81cd3acfc3eb5ed3211495d10f367286e4c3d7"
+    },
+    {
+      "index": 39,
+      "path": "chunk-039.mp4",
+      "frames": 16,
+      "pixel_sha256": "13f3dbc3f5db894bf6ca9746f23951a7f6afaec502eca0605090ed0d383af52b",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.585985036000011,
+        "mp4_encode": 0.43802582499984055
+      },
+      "elapsed_s": 347.2213370469999,
+      "sha256": "9ebe45b8334fb27837dcbbace94f22dee2b43b3598b90ac4d7f1895766f11a97"
+    },
+    {
+      "index": 40,
+      "path": "chunk-040.mp4",
+      "frames": 16,
+      "pixel_sha256": "5408ab2f7f412777de2b0d1135767ee6790ab7033b9bdf718ded989920ca86a0",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.586640430999978,
+        "mp4_encode": 0.43792641999993975
+      },
+      "elapsed_s": 353.41489041499995,
+      "sha256": "4d72d88e3c2d22b459a6b6996f419b6625c663fb40b061eb38c193ce1aec09b9"
+    },
+    {
+      "index": 41,
+      "path": "chunk-041.mp4",
+      "frames": 16,
+      "pixel_sha256": "4bd62f4cf2fe9d08e8e3ce92612e2719bf71635b0407e06de1f0a24bc5a028e2",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5863732140001048,
+        "mp4_encode": 0.44938378799997736
+      },
+      "elapsed_s": 359.62105910499986,
+      "sha256": "0cae820a26b6be9dc96779d748a8476c09af8bd5fb219c357f23e4429e8cd8b4"
+    },
+    {
+      "index": 42,
+      "path": "chunk-042.mp4",
+      "frames": 16,
+      "pixel_sha256": "86dd88a547a436edebf3f29c90164b164002c81c4beaf06db4ee6a1f81f71198",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5861650420001752,
+        "mp4_encode": 0.4385129089998827
+      },
+      "elapsed_s": 365.818002706,
+      "sha256": "8ca7894d7ef0be35464c16de0561cc57dae3a0a385a688799dcc6ad275c0610c"
+    },
+    {
+      "index": 43,
+      "path": "chunk-043.mp4",
+      "frames": 16,
+      "pixel_sha256": "ba89c9c09aff74088523b9a1c8eac296e3c7dd61d3e9b78cbe4d4bb41df995f6",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5865458009998292,
+        "mp4_encode": 0.4410612280000805
+      },
+      "elapsed_s": 372.01893094699994,
+      "sha256": "2fe9662b3d33cf3281e93e184058dcb63375fa2da26a8ff9300cc823f3e6443a"
+    },
+    {
+      "index": 44,
+      "path": "chunk-044.mp4",
+      "frames": 16,
+      "pixel_sha256": "a7c8bcbeaceb2be4be9b6a4ea6fe93e4731671c327bc24274876f48eb4111497",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.586549388000094,
+        "mp4_encode": 0.44028121399992415
+      },
+      "elapsed_s": 378.20669982100003,
+      "sha256": "c6de9fa6c6bf2da0264e4be1d988075974c2892074e12cf798b7f5d6c5515d42"
+    },
+    {
+      "index": 45,
+      "path": "chunk-045.mp4",
+      "frames": 16,
+      "pixel_sha256": "72200084aa39d8d1340b8349d37aad5cbe5c7874d27ba390347bd08027cd82aa",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5859276710000358,
+        "mp4_encode": 0.4503188639998825
+      },
+      "elapsed_s": 384.408536015,
+      "sha256": "8c46424b39e408f8fb2f5b19d809622c65bb515c29f950e935545a035ee9b2b8"
+    },
+    {
+      "index": 46,
+      "path": "chunk-046.mp4",
+      "frames": 16,
+      "pixel_sha256": "62e8b357e753429e189b7dda1099f5a8b899fcb23d547adef6034c824891da68",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5856052849999287,
+        "mp4_encode": 0.4506013929999426
+      },
+      "elapsed_s": 390.61272927999994,
+      "sha256": "0a952d7806536949b9344a326704458153c1443b1083f57fce99133fa5d3a777"
+    },
+    {
+      "index": 47,
+      "path": "chunk-047.mp4",
+      "frames": 16,
+      "pixel_sha256": "97732a0b10f02dcd85c9f5db2a86a57ece0ee5b10d205f68e2a4a683424fd7ea",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5859358039999734,
+        "mp4_encode": 0.46215352200010784
+      },
+      "elapsed_s": 396.82422505499994,
+      "sha256": "5e306c5a9760fcba2ca345c96cd334405f0aacb746ff5abad36f12f3bd6e1fd9"
+    },
+    {
+      "index": 48,
+      "path": "chunk-048.mp4",
+      "frames": 16,
+      "pixel_sha256": "533a6cc0df59c0dfe06e16b66195ebe35554a544fb17b4a91cd9f0d20d3b570e",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5865307480000865,
+        "mp4_encode": 0.4511713540000528
+      },
+      "elapsed_s": 403.03282866199993,
+      "sha256": "17bc45703cb6ecdbcf1b45ba9ad3bf9ce3a33f634bf13eb1a7f0447aa0d8f14c"
+    },
+    {
+      "index": 49,
+      "path": "chunk-049.mp4",
+      "frames": 16,
+      "pixel_sha256": "40b0e0bd4a2e22555febfc3229a59fc5933192b0158e61a057cd3572f6816775",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5861104640000576,
+        "mp4_encode": 0.4383552299998428
+      },
+      "elapsed_s": 409.22896422099984,
+      "sha256": "8bbfe3cfede858e63483264bcafed09fec54c9f4af14bcece3e334fddfd3e9f5"
+    },
+    {
+      "index": 50,
+      "path": "chunk-050.mp4",
+      "frames": 16,
+      "pixel_sha256": "8886c943e492934c71b9515839bcb651056d2a520c985055578a325972a6c2b7",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5862220989999969,
+        "mp4_encode": 0.4590474350000022
+      },
+      "elapsed_s": 415.44235871699993,
+      "sha256": "583df98720eb5bfb649212ad5bda415378b6e0782465c8036b6e2b753f5c9338"
+    },
+    {
+      "index": 51,
+      "path": "chunk-051.mp4",
+      "frames": 16,
+      "pixel_sha256": "22f35d2e6e8e819cb9d7da5502c804d4ce944655d79cf6d36faea3600e380b88",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5864199869999993,
+        "mp4_encode": 0.44773643500002436
+      },
+      "elapsed_s": 421.64912223199985,
+      "sha256": "77c06efd539cda3e112c051cd685b05031af1ab317dd4e0b9c0ca924668aeeaf"
+    },
+    {
+      "index": 52,
+      "path": "chunk-052.mp4",
+      "frames": 16,
+      "pixel_sha256": "83eb805a965b582d31ffcac4c01b41c917d02ab0e53bbc02e46f21a1422567f4",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5872656040000948,
+        "mp4_encode": 0.46722814599979756
+      },
+      "elapsed_s": 427.87748786199995,
+      "sha256": "d5e8488e9eb8246bb22218d37e30f9e8bccf877cde7dac068ad67e4711677574"
+    },
+    {
+      "index": 53,
+      "path": "chunk-053.mp4",
+      "frames": 16,
+      "pixel_sha256": "ff09c41e41f2da31e07226b30d1e53f460c39a93c7c0b28e7b79b0c2cd54f25a",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.585760030000074,
+        "mp4_encode": 0.46306423700002597
+      },
+      "elapsed_s": 434.10620458899984,
+      "sha256": "9b314b707ae093fcb06a295d1a2c67e23c8c74b20384bd2b72eff9448060638c"
+    },
+    {
+      "index": 54,
+      "path": "chunk-054.mp4",
+      "frames": 16,
+      "pixel_sha256": "fccb41bae14634347361ab04e854ed12f08593e777bab252393a4ed82127bfc3",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5874921510001059,
+        "mp4_encode": 0.44720202399980735
+      },
+      "elapsed_s": 440.316625381,
+      "sha256": "e864678501e75e0d5fc578e352b31ca614aee6b0d07b9ade02eb2b9340eb74fa"
+    },
+    {
+      "index": 55,
+      "path": "chunk-055.mp4",
+      "frames": 16,
+      "pixel_sha256": "985067609173cab9720c9ce37a04f1f8fdf11dda747d3639318f14928b837054",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5864434640000127,
+        "mp4_encode": 0.44871245699982865
+      },
+      "elapsed_s": 446.52911668699994,
+      "sha256": "47adba99c415b924254678f0009312aef6c3e4466ad4e7544eb63010bc8d2dfd"
+    },
+    {
+      "index": 56,
+      "path": "chunk-056.mp4",
+      "frames": 16,
+      "pixel_sha256": "17c3d3f7cbace47f242a0148dccf25c8a6ee625a5fbebc064ff20c336f1770d9",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5863992619999863,
+        "mp4_encode": 0.4381506309998713
+      },
+      "elapsed_s": 452.72458128899984,
+      "sha256": "0515275e0cf9d3c68a262e96c6d8b048b88f31acc6588f902d68b50530d43a56"
+    },
+    {
+      "index": 57,
+      "path": "chunk-057.mp4",
+      "frames": 16,
+      "pixel_sha256": "3e8b6687379c6e2b2fe512dbe2a05632a4c245900638857fe36efb29542757cb",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5859613439999976,
+        "mp4_encode": 0.4397588940000787
+      },
+      "elapsed_s": 458.9274918639999,
+      "sha256": "f19e184568cb0233d6e6aa795746d9ae24c8ab128be8a764b022ae278ffe4bfd"
+    },
+    {
+      "index": 58,
+      "path": "chunk-058.mp4",
+      "frames": 16,
+      "pixel_sha256": "517e340c920fe13f63b80139298228248d95e864f95f5618144518dac9b236b3",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5868911459999708,
+        "mp4_encode": 0.4497304379999605
+      },
+      "elapsed_s": 465.1357173859999,
+      "sha256": "faac9a4dc89d08fd03c021b6ac7469a194392cebad6caad0d8b33ea69e8f918a"
+    },
+    {
+      "index": 59,
+      "path": "chunk-059.mp4",
+      "frames": 16,
+      "pixel_sha256": "3ba21cb7f2f5fc8adaf6147488f12e10c59d943281dca06efe4f0001d7f6edb9",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5856994069999928,
+        "mp4_encode": 0.44747907800001485
+      },
+      "elapsed_s": 471.3418749949999,
+      "sha256": "c16859514e05d1b44a5fecb4fc0931e7df75e409f455b67abd2258bcc4357664"
+    }
+  ],
+  "published_score_reproduced": false,
+  "agent_interactions": 3,
+  "simulation_chunk_budget_override": 60,
+  "adapter_sha256": "1502b0be4b703287fdd658297fdb5cd4470b02530c29e9d6e2d40230c75772db",
+  "controls_sha256": "ef2d9f0c0ba25440964f19c3047108469016a48bfb40c04cc3777a0ade8eba63",
+  "player_sha256": "53cc8a1de1861c0095a7f27e883e3a23750a71d3ef20ecfa4af5a985c3b77933",
+  "deviations": [
+    "Hosted service intentionally excluded.",
+    "Paper LingBot-specific controller/native keyboard timing is not released; HY reference behavior is transferred explicitly.",
+    "Native frame-time chunk quantization and paused API calls differ from browser wall-clock control.",
+    "40Haiku requests is an explicit local budget definition, not verified paper LingBot interaction counting.",
+    "Exact judge alias currently404 with configured released client; preview scores remain qualified."
+  ],
+  "controller_profile": {
+    "profile": "lingbot-local-released-objective-reference-transfer-v1",
+    "task_id": "IF012",
+    "split": "if",
+    "seed": 42,
+    "world_text": "Lumine walks straight forward to the street lamp.",
+    "world_text_source": "task.prompt exactly; no static-caption substitution",
+    "simulation_chunks": 60,
+    "max_haiku_requests": 40,
+    "controller": {
+      "profile": "released-hy-hold-check-service-strict-v1",
+      "model": "claude-haiku-4-5-20251001",
+      "released_source_sha256": "d7a90541a19c27cf4c7ed298510fb1585974c85bdd90ea39547150093b287291",
+      "released_function_sha256": {
+        "extract_chat_text": "bbbd952ef1f7f29114ddba22852ec47b26d320e704f708a11624dbbd00a9d7d8",
+        "extract_json_object": "de8634b2568cd9af5c79675560b17bc9c217694438d4ac9c20142524ba485d9e",
+        "claude_viewer_screenshot": "7c888cfcbba52e18be17c4028c50452566e41d6aa2c875612d94364d75849726",
+        "request_claude_hold_decision": "63bdb91f6e06f7d147de553cb0c80e828d1572c1f643e33d7a9ccb33a6194e35",
+        "parse_actions": "d1b23517a023cd7aeec38e8a7b8c23a3afc99802b5d96797900b184ab19bf9c6"
+      },
+      "exact_paper_lingbot_controller": false,
+      "reference_guided": true,
+      "output_token_policy": {
+        "released_max_tokens": 60,
+        "override": 400,
+        "effective_max_tokens": 400,
+        "deviation_from_released_cap": true
+      },
+      "scheduler_policy": null,
+      "remaining_differences": [
+        "No public LingBot player exists; this transfers HY-specific reference-guided behavior, not verified paper LingBot behavior.",
+        "Native generation pauses during SDK calls; released browser controls remain held while the request runs.",
+        "Released prompt uses the latest screenshot only, not an initial/current image pair or arbitrary history.",
+        "Decoded native frames replace browser screenshots; the released JPEG65 then640x360/JPEG45 preprocessing is retained.",
+        "Anthropic SDK replaces the released OpenAI-compatible HTTP proxy; malformed/API failures abort instead of silently continuing.",
+        "Raw response schema and served snapshot are now checked before the permissive released parser; this is intentional fail-closed hardening.",
+        "Only native camera controls are supported; avatar interactions and simultaneous keys are rejected, not synthesized."
+      ],
+      "low_level_service_only": true,
+      "hy_action_parser_and_scheduler_used": false,
+      "shared_dsl_source_sha256": "906e1b993b4261cbb7d56013c4fd3f52676120cc234c5bce497016dd5a7ce6d0",
+      "caller_responsibilities": [
+        "Canonical phase parsing, clock and angle calibration",
+        "Check cadence, minimum hold/release, phase progression and rotation-release policy",
+        "Global interaction budget and extension/correction application"
+      ]
+    },
+    "stock_cache": {
+      "frames": 18,
+      "sink": 6
+    },
+    "backbone_modified": false,
+    "training": false,
+    "streamed_legacy_player": false,
+    "exact_published_baseline_reproduced": false,
+    "judge": {
+      "requested_model": "gemini-3.1-pro",
+      "transport": "released Gemini API client",
+      "silent_alias_fallback": false
+    },
+    "native_capability": "Camera rays only; no trained avatar-action channel is invented.",
+    "remaining_differences": [
+      "Hosted service intentionally excluded.",
+      "Paper LingBot-specific controller/native keyboard timing is not released; HY reference behavior is transferred explicitly.",
+      "Native frame-time chunk quantization and paused API calls differ from browser wall-clock control.",
+      "40Haiku requests is an explicit local budget definition, not verified paper LingBot interaction counting.",
+      "Exact judge alias currently404 with configured released client; preview scores remain qualified."
+    ],
+    "timeline": {
+      "interval_ms": 250,
+      "method": "Nearest cumulative boundary; explicit degree targets divided across their rounded phase steps",
+      "reference_total_ms": 4500,
+      "scheduled_total_ms": 4500,
+      "nominal_turn_rate_for_unspecified_angles": 50,
+      "explicit_angle_phases": 0,
+      "unresolved_angle_phases": 0,
+      "angle_binding": "Text-number heuristic; not validated semantic grounding",
+      "native_translation_normalization_validated": false
+    },
+    "status": "ready_for_generation_validation",
+    "reference_actions": [
+      {
+        "type": "hold",
+        "keys": [
+          "KeyW"
+        ],
+        "duration_ms": 4500,
+        "raw": "hold(W,4500ms)",
+        "index": 0,
+        "rotation_extra_ms": 0,
+        "source": "released shared action DSL; no HY timing conversion",
+        "native_pitch_aliases": []
+      }
+    ],
+    "generation_blocker": "Canonical controller and fixed-scale conditioning are integrated; full rollout hook execution and output provenance still require runtime validation.",
+    "source_sha256": {
+      "worldsync/lingbot_released_baseline.py": "d1017044e5230b2b64cbbe9673bee7d94016d0075a4fb6a599f5c7877cb9c082",
+      "worldsync/released_reference_player.py": "53cc8a1de1861c0095a7f27e883e3a23750a71d3ef20ecfa4af5a985c3b77933",
+      "worldsync/lingbot_rollout.py": "1502b0be4b703287fdd658297fdb5cd4470b02530c29e9d6e2d40230c75772db",
+      "worldsync/lingbot_controls.py": "ef2d9f0c0ba25440964f19c3047108469016a48bfb40c04cc3777a0ade8eba63",
+      "worldsync/native_reference_timeline.py": "7e7e8bbd2b62a2cd6ac2ac1cb433d8652ae65d63ad66855e1c055bc044d827c7",
+      "worldsync/camera_conditioning.py": "6c93722a16978998e7164161d5c71d52aed431962b3ea5bab42e8ef138f32fd6",
+      "worldsync/canonical_camera_plan.py": "c551c6681645e643d531fe34c1a4b3aadec948cde0d96646319e1c0a9be44210",
+      "reproduction/baseline-gap/explicit-angle-bindings.json": "852fb14ae3ce4394adb1b4e239656c572e001ded2d14ff20b22fb644f9fb0dc6",
+      "external/PlayWorld/Agent_player/hyworld2/player.py": "d7a90541a19c27cf4c7ed298510fb1585974c85bdd90ea39547150093b287291",
+      "external/PlayWorld/data/if/data.json": "d852a5b6ebdc32b3267974e4c16efc9c0e585c95153b0a5cfb41dee2f5657f3a"
+    },
+    "scope": "controller validation episode; not published benchmark reproduction"
+  },
+  "observation_encoding": "lossless PNG before released JPEG stages",
+  "hardware": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4"
+  },
+  "attention_backend": "sdpa",
+  "optional_torch_dlpack_addon_disabled": false,
+  "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+  "checkpoint_loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "turn_clamp": {
+    "mode": "off",
+    "yaw_limits_degrees": null
+  },
+  "generated_frames": 957,
+  "generated_seconds": 59.8125,
+  "termination": "chunk_budget_exhausted",
+  "elapsed_s": 471.34917119399984,
+  "camera_diagnostics": {
+    "position_normalized_units": [
+      0.0,
+      0.0,
+      34.0
+    ],
+    "heading_degrees": 0.0,
+    "accumulated_yaw_degrees": 0.0,
+    "yaw_limits_degrees": null,
+    "world_time_seconds": 59.75,
+    "scope": "Intended camera commands only; not measured visual motion or goal completion."
+  },
+  "peak_allocated_bytes": 73014023168
+}

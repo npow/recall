@@ -167,3 +167,9 @@ GC024 is complete for both arms and all three fixed Gemini repetitions. Legacy s
 - H100SXM capacity reopened. Allocated own `e84fbb24a8a943aaa731fdf855bc09ec`, us-south-2, hard75minute lease at$4.29/hour(max$5.3625), watchdog953485. Logged in lambda-log. Provisioner956255 waits for SSH, then stages only needed images and the same controller source.
 - Three unstarted complete pairs transferred from primary: GC022, IF006, insight OE009. Assignment is now5primary +4secondary +3third. Primary reservation markers are excluded from collection. Remote generation and actor tunnels were preserved. Primary collector957149 and cleanup957150 replace their old local monitor processes.
 - Early cleanup now pins all three owned IDs and the revised case ownership. The second worker's assignment remains unchanged. No additional cases, retries, algorithm changes or collaborator resources are involved.
+
+### Codex — instruction-following pair and snapshot tooling
+
+IF012 completed: legacy1.0/1.0/1.0(mean1.00), corrected1.0/1.0/1.6(mean1.20). Both judge groups disagree on their gate verdicts. GC030 completed earlier: legacy1.2/1.6/1.6(mean1.4667), corrected1.4/1.2/1.4(mean1.3333). No promotion supported by these three pairs. Full overall remains withheld.
+
+`scripts/snapshot_codex_ccv.py` now exports every terminal collected attempt and each available fixed judge repetition, preserving error reports and rejecting changes to previously published evidence or mismatched video identities. Regenerate with `.venv-lingbot/bin/python scripts/snapshot_codex_ccv.py`; it does not launch inference, judging, commits, or pushes. Third worker is SSH-ready at192.222.53.160, bootstrap2364 live, cleanup962984; setup still in progress.

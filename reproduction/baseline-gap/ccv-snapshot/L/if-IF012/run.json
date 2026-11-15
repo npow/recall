@@ -1,0 +1,427 @@
+{
+  "status": "completed",
+  "model": "LingBot-World2 14B causal-fast stock",
+  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+  "initial_image_sha256": "04c0c12c8a5b8bdf524fe8881cabd29bb6bcb3d5703f0e553e6b3f6e68a97381",
+  "text_prompt_mode": "both",
+  "image_caption_sha256": "cb29dd8c34ec459df5168947ef8e6ccd1b0c185b74536db8e4e9bf80015bb88e",
+  "task_id": "IF012",
+  "split": "if",
+  "seed": 42,
+  "turn_degrees_per_second": 60,
+  "fps": 16,
+  "max_chunks": 40,
+  "max_interactions": 40,
+  "native_fixed_controls": false,
+  "camera_embedding_audit": [],
+  "pose_retrieval": false,
+  "sink_rephase": false,
+  "adaptive_retrieval_pilot": false,
+  "player_temperature": "provider default",
+  "player_streaming": false,
+  "streaming_player_sha256": null,
+  "initial_neutral_bootstrap": false,
+  "kv_retention": false,
+  "decoprune": false,
+  "reanchor": false,
+  "budget_memory": false,
+  "denoise_schedule": "stock",
+  "text_encoder_offloaded_after_encoding": true,
+  "stationary_wait_only": false,
+  "fixed_actions": null,
+  "quantization": "none",
+  "cuda_allocator_configuration": "expandable_segments:True",
+  "max_area": 399360,
+  "chunk_size": 4,
+  "local_attn_size": 18,
+  "sink_size": 6,
+  "decision_interval": 1,
+  "stock_knobs": true,
+  "controlled_ablation": false,
+  "sampler_timesteps_index": [
+    0,
+    250,
+    500,
+    750
+  ],
+  "sample_shift": 10,
+  "actions": [
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Starting the reference plan: hold W for 4500ms to walk Lumine straight forward toward the street lamp. The lamp post is visible directly ahead on the left side of the path. Lumine is currently at rest in the center of the scene facing forward. Beginning forward motion now.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch52RZh8cqmc6ic8n93zm",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3012,
+        "output_tokens": 117,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Starting the reference plan: hold W for 4500ms to walk Lumine straight forward toward the street lamp. The lamp post is visible directly ahead on the left side of the path. Lumine is currently at rest in the center of the scene facing forward. Beginning forward motion now.\"}]",
+      "prompt_sha256": "20798c94a614dad3d56f3e5b22a99365db1e7e409efc58febb83bb9651a7f9d2",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.0,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 94.01802751900004,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Continuing forward motion toward the street lamp. The lamp post is visible on the left side of the path directly ahead. Lumine is walking along the path with visible forward progress - the lamp post and background elements are incrementally approaching and shifting relative to the character position. The plan requires holding W for 4500ms total; currently at 0.8125 seconds held, with 3.69 seconds remaining. The realized motion matches the intended forward walking command. Continuing W as planned.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch52S7tNwcZAB5u1ZqWEs",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2826,
+        "output_tokens": 160,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Continuing forward motion toward the street lamp. The lamp post is visible on the left side of the path directly ahead. Lumine is walking along the path with visible forward progress - the lamp post and background elements are incrementally approaching and shifting relative to the character position. The plan requires holding W for 4500ms total; currently at 0.8125 seconds held, with 3.69 seconds remaining. The realized motion matches the intended forward walking command. Continuing W as planned.\"}]",
+      "prompt_sha256": "7b58b6e2579269f33d6f8e4c5349b50269fe3dfe3fa754718e1dc2cab5e94b2d",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 102.342112284,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          7.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Continuing forward motion toward the street lamp. The lamp post remains visible on the left side of the scene ahead. Comparing the initial and current images, Lumine has made clear forward progress along the path\u2014the surrounding elements (tower, barriers, background mountains) have shifted indicating the character is advancing. Current action held is 1.8125 seconds; plan requires 4500ms (4.5 seconds) total. Approximately 2.7 seconds remain. The realized motion matches the intended forward walk command. Holding W as planned.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch52SmrQKutXdJ5JUwBf3",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2947,
+        "output_tokens": 172,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Continuing forward motion toward the street lamp. The lamp post remains visible on the left side of the scene ahead. Comparing the initial and current images, Lumine has made clear forward progress along the path\\u2014the surrounding elements (tower, barriers, background mountains) have shifted indicating the character is advancing. Current action held is 1.8125 seconds; plan requires 4500ms (4.5 seconds) total. Approximately 2.7 seconds remain. The realized motion matches the intended forward walk command. Holding W as planned.\"}]",
+      "prompt_sha256": "eec26a0f7a0dceb5336992c46a815d14057d8b5267a64569e8e8bdab0b8ed6bb",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          7.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 112.19715213699988,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          11.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Continuing forward motion toward the street lamp. Lumine is walking along the path with clear forward progress - comparing the initial and current images, the lamp post on the left side has grown visibly larger and is now more prominent in the scene, indicating significant approach. The background elements (tower, white rock formations, barriers) have shifted upward in the frame, which is consistent with forward camera motion. Current action held is 2.8125 seconds; plan requires 4500ms (4.5 seconds) total. Approximately 1.69 seconds remain before the planned duration is complete. The realized motion matches the intended forward walk command. Holding W as planned to reach the lamp post.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch52TY9g1o2p5J8J3BsNM",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3080,
+        "output_tokens": 203,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Continuing forward motion toward the street lamp. Lumine is walking along the path with clear forward progress - comparing the initial and current images, the lamp post on the left side has grown visibly larger and is now more prominent in the scene, indicating significant approach. The background elements (tower, white rock formations, barriers) have shifted upward in the frame, which is consistent with forward camera motion. Current action held is 2.8125 seconds; plan requires 4500ms (4.5 seconds) total. Approximately 1.69 seconds remain before the planned duration is complete. The realized motion matches the intended forward walk command. Holding W as planned to reach the lamp post.\"}]",
+      "prompt_sha256": "2b8a9752eb6c723e65b3fc75cfc071f6e07228829cb1da0e7f0b06091484d234",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          11.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 122.76653971299993,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          15.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Continuing forward motion toward the street lamp. Lumine has made substantial forward progress\u2014comparing initial and current images, the lamp post on the left has shifted significantly upward and the scene has advanced. The path ahead is clear. Current action held is 3.8125 seconds; plan requires 4500ms total. Approximately 0.69 seconds remain. The street lamp is still visible ahead-left. Holding W for the final segment to complete the planned 4.5 second forward walk as instructed.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch52UNY14TuktYARsja2C",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3244,
+        "output_tokens": 167,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Continuing forward motion toward the street lamp. Lumine has made substantial forward progress\\u2014comparing initial and current images, the lamp post on the left has shifted significantly upward and the scene has advanced. The path ahead is clear. Current action held is 3.8125 seconds; plan requires 4500ms total. Approximately 0.69 seconds remain. The street lamp is still visible ahead-left. Holding W for the final segment to complete the planned 4.5 second forward walk as instructed.\"}]",
+      "prompt_sha256": "493e570b4c95dff6637805ca1015a99516c3f04824f5be94c17ee44708b1b744",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          15.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 132.90227620799988,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          19.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "END",
+      "action": null,
+      "reason": "Goal achieved. Comparing initial and latest images, Lumine has walked forward along the path and is now positioned much closer to the street lamp (the yellow lantern-topped pole on the left). In the initial image, the lamp was small and distant on the far left. In the current image, the lamp is significantly larger, more prominent, and positioned directly ahead-left, indicating Lumine has advanced toward it. The elapsed commanded time (4.812 seconds) has exceeded the planned duration (4.5 seconds), and the visual progress confirms forward motion toward the street lamp has been completed. The character remains on the sandy path heading toward the lamp post as intended.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch52V7V9nwRziZf3ptU4D",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3372,
+        "output_tokens": 197,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"Goal achieved. Comparing initial and latest images, Lumine has walked forward along the path and is now positioned much closer to the street lamp (the yellow lantern-topped pole on the left). In the initial image, the lamp was small and distant on the far left. In the current image, the lamp is significantly larger, more prominent, and positioned directly ahead-left, indicating Lumine has advanced toward it. The elapsed commanded time (4.812 seconds) has exceeded the planned duration (4.5 seconds), and the visual progress confirms forward motion toward the street lamp has been completed. The character remains on the sandy path heading toward the lamp post as intended.\"}]",
+      "prompt_sha256": "118b944f37883e3994ab42b941ed42738e1a02d430d9d0c041627a05b5ef8a42",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          19.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 143.087307539
+    }
+  ],
+  "chunks": [
+    {
+      "index": 0,
+      "path": "chunk-000.mp4",
+      "frames": 13,
+      "pixel_sha256": "c85b8682c160e6d892976dc4ea72f596afb7c6a2e4739a045545f6ed228e6f7d",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.49343489299985777,
+        "mp4_encode": 0.5204122540001208
+      },
+      "elapsed_s": 98.54183758099998,
+      "sha256": "6777cfeff5e5bd21785eb8b3861ff0f113a17977caf7e8234ec1d9e3fc8c6199"
+    },
+    {
+      "index": 1,
+      "path": "chunk-001.mp4",
+      "frames": 16,
+      "pixel_sha256": "265a46da68f9cd1684316dd9f8e879aa371ea9bb2e97cd9edb6b3f6ab35a1535",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5863159390000874,
+        "mp4_encode": 0.482157849000032
+      },
+      "elapsed_s": 107.31530195799996,
+      "sha256": "cf30d4c1f23d34431c831a9aa0885faa2e1a38fbed11fc7f96828845eb511531"
+    },
+    {
+      "index": 2,
+      "path": "chunk-002.mp4",
+      "frames": 16,
+      "pixel_sha256": "a26c9408f4c911cbdd78c63c328271ad97bbe2a39bf7e24106401084b199746d",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5845863700001246,
+        "mp4_encode": 0.4823985119999179
+      },
+      "elapsed_s": 117.60365796199994,
+      "sha256": "1de483a4069c928315dc95186d479e6d4aaeb9b028c0cd3b9d8c76dbf4e8a9c7"
+    },
+    {
+      "index": 3,
+      "path": "chunk-003.mp4",
+      "frames": 16,
+      "pixel_sha256": "76036ce5cce3f3085d76e8d39d0a29615152d0aae7ca1567925db80b668a1cd5",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5852754070001538,
+        "mp4_encode": 0.4611038389998612
+      },
+      "elapsed_s": 128.598545845,
+      "sha256": "fd9c777afff665ac038cc7bd11c48cb30ed391525550d2341941dafb5605de0d"
+    },
+    {
+      "index": 4,
+      "path": "chunk-004.mp4",
+      "frames": 16,
+      "pixel_sha256": "73df402549695ba53ee229e634d180c21f1a4aac169f48055a656eda35d52be4",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5847300390000782,
+        "mp4_encode": 0.471320065999862
+      },
+      "elapsed_s": 138.99512689999983,
+      "sha256": "d0f729df6817f0dafbe9ed2227d71559954c1d8ca4eac9e4054d7589eb00251d"
+    }
+  ],
+  "published_score_reproduced": false,
+  "agent_interactions": 6,
+  "adapter_sha256": "6adfe0e38f5239d61b012e9947ad4e9e2012711ba5675e423eba6173ffc6cb9a",
+  "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+  "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+  "deviations": [
+    "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+    "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+    "Official 480p demo area; single NVIDIA H100 80GB HBM3, BF16 and valid-length SDPA backend",
+    "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+    "Claude diagnostic scoring differs from published Gemini judgments"
+  ],
+  "hardware": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4"
+  },
+  "attention_backend": "sdpa",
+  "optional_torch_dlpack_addon_disabled": false,
+  "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+  "checkpoint_loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "generated_frames": 77,
+  "generated_seconds": 4.8125,
+  "termination": "agent_end",
+  "elapsed_s": 143.08929140700002,
+  "camera_diagnostics": {
+    "chunks": 5,
+    "path_length": 19.0,
+    "net_yaw_degrees": 0.0,
+    "total_turn_degrees": 0.0,
+    "max_distance_from_start": 19.0,
+    "final_distance_from_start": 19.0,
+    "revisited_start_at_chunk": null,
+    "wait_chunks": 0,
+    "wait_pose_changes": 0
+  },
+  "peak_allocated_bytes": 72566200832
+}

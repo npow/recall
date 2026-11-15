@@ -18,15 +18,15 @@ Arm means use completed cases only. Differences use matched case pairs; unequal 
 | Dimension | Legacy | Corrected | Paired corrected − legacy |
 |---|---:|---:|---:|
 | GC (L=2/3, C=2/3, pairs=2/3) | 2.03 | 1.20 | -0.83 |
-| IF (L=0/3, C=0/3, pairs=0/3) | — | — | — |
+| IF (L=1/3, C=1/3, pairs=1/3) | 1.00 | 1.20 | 0.20 |
 | In-sight (L=0/3, C=0/3, pairs=0/3) | — | — | — |
 | Out-of-sight (L=0/3, C=0/3, pairs=0/3) | — | — | — |
 | **Overall (equal mean of dimensions)** | **—** | **—** | **—** |
 
-Paired per-case difference (corrected − legacy): mean -0.83 over 2 pairs, split-stratified paired-bootstrap 95% interval (withheld until complete) [—, —]; 0 better / 0 equal / 2 worse.
+Paired per-case difference (corrected − legacy): mean -0.49 over 3 pairs, split-stratified paired-bootstrap 95% interval (withheld until complete) [—, —]; 1 better / 0 equal / 2 worse.
 
-- **Gate verdicts, Legacy:** pass 3, partial 3, fail 0, not applicable 0 (of 6 judge calls).
-- **Gate verdicts, Corrected:** pass 2, partial 4, fail 0, not applicable 0 (of 6 judge calls).
+- **Gate verdicts, Legacy:** pass 4, partial 3, fail 2, not applicable 0 (of 9 judge calls).
+- **Gate verdicts, Corrected:** pass 3, partial 5, fail 1, not applicable 0 (of 9 judge calls).
 
 ## Per case
 
@@ -35,7 +35,7 @@ Paired per-case difference (corrected − legacy): mean -0.83 over 2 pairs, spli
 | gc:GC024 | 2.60 (3/3) | 1.07 (3/3) | -1.53 | partial, partial, partial | partial, partial, pass | 1.00 |
 | gc:GC022 | — (0/0) | — (0/0) | — |  |  | 2.40 |
 | gc:GC030 | 1.47 (3/3) | 1.33 (3/3) | -0.13 | pass, pass, pass | pass, partial, partial | 1.20 |
-| if:IF012 | — (0/0) | — (0/0) | — |  |  | 1.00 |
+| if:IF012 | 1.00 (3/3) | 1.20 (3/3) | 0.20 | fail, fail, pass | pass, partial, fail | 1.00 |
 | if:IF006 | — (0/0) | — (0/0) | — |  |  | 2.00 |
 | if:IF022 | — (0/0) | — (0/0) | — |  |  | 1.00 |
 | insight:OE066 | — (0/0) | — (0/0) | — |  |  | 1.40 |
@@ -52,7 +52,7 @@ Paired per-case difference (corrected − legacy): mean -0.83 over 2 pairs, spli
 | gc:GC024 | 6.8125, agent_end, 8 | 59.8125, chunk_budget_exhausted, 6 |
 | gc:GC022 | None, None, None | None, None, None |
 | gc:GC030 | 7.8125, agent_end, 9 | 59.8125, chunk_budget_exhausted, 0 |
-| if:IF012 | None, None, None | None, None, None |
+| if:IF012 | 4.8125, agent_end, 6 | 59.8125, chunk_budget_exhausted, 3 |
 | if:IF006 | None, None, None | None, None, None |
 | if:IF022 | None, None, None | None, None, None |
 | insight:OE066 | None, None, None | None, None, None |
@@ -67,4 +67,4 @@ Paired per-case difference (corrected − legacy): mean -0.83 over 2 pairs, spli
 - Twelve cases and one seed; this cannot establish the full benchmark result or seed robustness.
 - The arms differ in more than the controller: text (caption+objective vs objective only; insight caption vs "wait and observe") and chunk budget (40 vs 60 for moving cases). This compares the two complete configurations as specified.
 - Hold-service token cap raised (above). Proxy transport for the player.
-- Missing judgements: L-gc-GC022: 0 scored of 0 calls; C-gc-GC022: 0 scored of 0 calls; L-if-IF012: 0 scored of 0 calls; C-if-IF012: 0 scored of 0 calls; L-if-IF006: 0 scored of 0 calls; C-if-IF006: 0 scored of 0 calls; L-if-IF022: 0 scored of 0 calls; C-if-IF022: 0 scored of 0 calls; L-insight-OE066: 0 scored of 0 calls; C-insight-OE066: 0 scored of 0 calls; L-insight-OE009: 0 scored of 0 calls; C-insight-OE009: 0 scored of 0 calls; L-insight-OE020: 0 scored of 0 calls; C-insight-OE020: 0 scored of 0 calls; L-outsight-OE055: 0 scored of 0 calls; C-outsight-OE055: 0 scored of 0 calls; L-outsight-OE028: 0 scored of 0 calls; C-outsight-OE028: 0 scored of 0 calls; L-outsight-OE062: 0 scored of 0 calls; C-outsight-OE062: 0 scored of 0 calls. Not imputed.
+- Missing judgements: L-gc-GC022: 0 scored of 0 calls; C-gc-GC022: 0 scored of 0 calls; L-if-IF006: 0 scored of 0 calls; C-if-IF006: 0 scored of 0 calls; L-if-IF022: 0 scored of 0 calls; C-if-IF022: 0 scored of 0 calls; L-insight-OE066: 0 scored of 0 calls; C-insight-OE066: 0 scored of 0 calls; L-insight-OE009: 0 scored of 0 calls; C-insight-OE009: 0 scored of 0 calls; L-insight-OE020: 0 scored of 0 calls; C-insight-OE020: 0 scored of 0 calls; L-outsight-OE055: 0 scored of 0 calls; C-outsight-OE055: 0 scored of 0 calls; L-outsight-OE028: 0 scored of 0 calls; C-outsight-OE028: 0 scored of 0 calls; L-outsight-OE062: 0 scored of 0 calls; C-outsight-OE062: 0 scored of 0 calls. Not imputed.
