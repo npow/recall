@@ -23,14 +23,18 @@ class _Texts:
 
 
 def _wrap(text, width):
-    lines, line = [], ""
-    for word in text.split():
-        if line and len(line) + 1 + len(word) > width:
-            lines.append(line)
-            line = word
-        else:
-            line = f"{line} {word}".strip()
-    return lines + ([line] if line else [])
+    """Word-wrap each explicit line of ``text`` to ``width`` characters."""
+    lines = []
+    for paragraph in text.split("\n"):
+        line = ""
+        for word in paragraph.split():
+            if line and len(line) + 1 + len(word) > width:
+                lines.append(line)
+                line = word
+            else:
+                line = f"{line} {word}".strip()
+        lines.append(line)
+    return lines
 
 
 def _panel(texts, label, captions, width, strip, size=15, chars=None):

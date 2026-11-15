@@ -190,7 +190,8 @@ def run_sightings(run):
         pose = action["pose_after"]
         sightings.append({"chunk": chunk["index"], "frame_index": end, "world_time": pose["world_time_seconds"],
                           "heading": round(pose["heading_degrees"] % 360, 3) % 360,
-                          "position": pose["position_normalized_units"], "action": action.get("action"),
+                          "position": [round(v, 3) + 0.0 for v in pose["position_normalized_units"]],
+                          "action": action.get("action"),
                           "chunk_pixel_sha256": chunk.get("pixel_sha256")})
     return sightings
 
@@ -209,7 +210,7 @@ def opponent_cue(db, wid, me, other, at=None, right_axis=0, forward_axis=1):
     dx = theirs["position"][right_axis] - mine["position"][right_axis]
     dy = theirs["position"][forward_axis] - mine["position"][forward_axis]
     distance = math.hypot(dx, dy)
-    bearing = math.degrees(math.atan2(dx, dy)) % 360
+    bearing = round(math.degrees(math.atan2(dx, dy)), 6) % 360
     relative = (bearing - mine["heading"] + 180) % 360 - 180
     return {"distance": distance, "bearing": bearing, "relative": relative, "my_heading": mine["heading"],
             "my_time": mine["world_time"], "their_time": theirs["world_time"]}
