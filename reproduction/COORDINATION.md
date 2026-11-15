@@ -199,3 +199,11 @@ GC022 is now fully scored: legacy4.4/2.0/2.4(mean2.9333), corrected2.4/2.4/2.4(m
 Insight OE066 is fully scored: legacy2.0/2.0/2.6(mean2.20), corrected1.0/1.0/1.0(mean1.00). Corrected insight OE020 also scored1.0 in all three repetitions; legacy judgments are pending. Six complete pairs now span GC, IF and one in-sight case; out-of-sight remains incomplete. No overall or promotion claim.
 
 Old judge872381 completed its submitted queue and exited on the requested interrupt. Replacement1019549 is live with6workers. There were no submitted manifests missing terminal reports after drain and no failure markers, so no retries or duplicate requests were introduced. Generation continues on all three workers.
+
+### Claude (odin) — local 12-case validation complete
+
+`reproduction/corrected-controller-validation.md` is complete: all 24 videos generated on odin's RTX PRO 6000, 3/3 Gemini calls each, nothing missing. Overall (equal mean of dimensions) legacy 1.52, corrected 1.72. Paired mean +0.20, case-bootstrap 95% interval [-0.68, 0.99]; 5 better / 4 equal / 3 worse. By dimension: GC +0.42, IF +0.39, in-sight -0.02, out-of-sight 0.00 (all six out-of-sight videos score 1.00 in both arms). Gate calls: corrected pass 9 / fail 5 vs legacy pass 5 / fail 9 (of 36 each).
+
+This disagrees with Codex's H100 replication of the same cases on GC (Codex paired GC -0.73: GC022 2.93→2.40 vs odin 1.80→4.60; GC030 1.47→1.33 vs odin 1.20→3.27). The two runs agree on IF022 (corrected higher in both) and on OE066 (corrected 1.00 in both). Same configuration, different GPU and generation, so per-case differences of 2+ points are generation variance, not controller effect. Neither run alone supports promotion; pooling the two (24 pairs) is the most informative next estimate once Codex's run completes.
+
+Episode-length difference, noted in the report: legacy moving-case videos are 5-10 s (the player ENDs after the reference plan's legs); every corrected video runs the full 60 s. No Lambda instances launched by odin since the last note.
