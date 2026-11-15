@@ -666,41 +666,54 @@ def scene_limits(data, seconds):
         yield np.asarray(image)
 
 
-LAPS = [("Reproduce the open baseline", "kept"), ("Pose memory on scripted paths", "kept"), ("Four vs eight retrieved views", "partial"),
-        ("Re-anchor on the start image", "dropped"), ("WorldKV-style retention", "dropped"), ("DeCoPrune port", "dropped"),
-        ("Commit Forcing transfer", "dropped"), ("Keyframe restart", "dropped"), ("Bigger and fp8 caches", "partial"),
-        ("Memory LoRA", "dropped"), ("Prompt and motion tricks", "dropped"), ("Full 171-task run", "partial"),
-        ("Text director", "partial"), ("Store the frame, rebuild values", "kept"), ("Storage ablations", "partial"),
-        ("Verified retrieval", "dropped"), ("Revisit-horizon test", "kept")]
+LAPS = [("Reproduce the open baseline", "1.81\u20131.85 vs 1.82", "kept"), ("Pose memory on scripted paths", "similarity 0.30 \u2192 0.78", "kept"),
+        ("Four vs eight retrieved views", "four kept", "partial"), ("WorldKV-style retention", "no gain", "dropped"),
+        ("DeCoPrune port", "no gain", "dropped"), ("Memory LoRA", "lower quality", "dropped"),
+        ("Prompt and motion tricks", "no gain", "dropped"), ("Re-anchor on the start image", "no gain", "dropped"),
+        ("Commit Forcing transfer", "no revisit gain shown", "dropped"), ("Keyframe restart", "hard cuts", "dropped"),
+        ("Bigger and fp8 caches", "diagnostic only", "partial"), ("Full 171-task run", "no gain; audit finds bugs", "partial"),
+        ("Text director", "+0.02, not established", "partial"), ("Storage ablations", "fp8 holds", "partial"),
+        ("Store the frame, rebuild values", "200\u00d7 smaller", "kept"), ("Verified retrieval", "\u22120.35 on 36 real tasks", "dropped"),
+        ("Revisit-horizon test", "+0.77, pre-registered", "kept")]
 
 
 def scene_process(data, seconds):
-    loop = data.board["loop"]
-    names = [name for name, _ in loop]
     colour_of = {"kept": OURS, "partial": ACCENT, "dropped": MUTED}
-    counts = {k: sum(1 for _, o in LAPS if o == k) for k in colour_of}
+    counts = {k: sum(1 for _, _, o in LAPS if o == k) for k in colour_of}
+    step, y0, spine = 37, 352, W // 2
     for index in range(int(seconds * FPS)):
         t = index / FPS
         image, draw = canvas("Autoresearch", "An autoresearch loop", "AUTONOMY", 58)
         h = ease(t / 0.5)
-        draw.text((90, 250), f"{len(LAPS)} ideas tried in two days", font=font(64), fill=mix(BG, FG, h), anchor="lm")
-        x = 90
+        draw.text((90, 232), f"{len(LAPS)} ideas tried in two days", font=font(56), fill=mix(BG, FG, h), anchor="lm")
+        x = 90 + draw.textlength(f"{len(LAPS)} ideas tried in two days", font=font(56)) + 50
         for k in ("kept", "partial", "dropped"):
-            draw.ellipse((x, 312, x + 22, 334), fill=mix(BG, colour_of[k], h))
+            draw.ellipse((x, 222, x + 20, 242), fill=mix(BG, colour_of[k], h))
             label = f"{counts[k]} {k}"
-            draw.text((x + 34, 323), label, font=font(34, False), fill=mix(BG, MUTED, h), anchor="lm")
-            x += 34 + draw.textlength(label, font=font(34, False)) + 50
-        loop_line = "  \u2192  ".join(names) + "  \u21ba"
-        lp = ease((t - 0.3) / 0.6)
-        draw.text((90, 398), loop_line, font=font(30, False), fill=mix(BG, ACCENT, lp), anchor="lm")
-        draw.text((90, 440), "findings memory \u00b7 stored in past.dev", font=font(26, False), fill=mix(BG, MUTED, lp), anchor="lm")
-        cols, per = 3, 6
-        for n, (title, outcome) in enumerate(LAPS):
-            a = ease((t - 0.8 - 0.17 * n) / 0.4)
-            col, row = n // per, n % per
-            x0, y0 = 90 + col * 600, 505 + row * 72
-            draw.ellipse((x0, y0 - 11, x0 + 22, y0 + 11), fill=mix(BG, colour_of[outcome], a))
-            draw.text((x0 + 38, y0), title, font=font(32, False), fill=mix(BG, FG, a), anchor="lm")
+            draw.text((x + 30, 232), label, font=font(32, False), fill=mix(BG, MUTED, h), anchor="lm")
+            x += 30 + draw.textlength(label, font=font(32, False)) + 40
+        draw.text((90, 290), "Findings memory: past.dev", font=font(28, False), fill=mix(BG, MUTED, h), anchor="lm")
+        last = y0 + (len(LAPS) - 1) * step
+        draw.line((spine, y0 - 14, spine, last + 14), fill=mix(BG, LINE, ease((t - 0.2) / 0.6)), width=3)
+        for n, (title, outcome, kind) in enumerate(LAPS):
+            a = ease((t - 0.6 - 0.2 * n) / 0.35)
+            y = y0 + n * step
+            big = kind == "kept"
+            tf, of = font(32 if big else 28), font(28 if big else 26, False)
+            tcol = mix(BG, OURS if big else (FG if kind == "partial" else MUTED), a)
+            r = 12 if big else 8
+            draw.ellipse((spine - r, y - r, spine + r, y + r), fill=mix(BG, colour_of[kind], a))
+            if n % 2 == 0:
+                xo = spine - 34
+                draw.text((xo, y), outcome, font=of, fill=mix(BG, MUTED, a), anchor="rm")
+                draw.text((xo - draw.textlength(outcome, font=of) - 14, y), title, font=tf, fill=tcol, anchor="rm")
+            else:
+                xo = spine + 34
+                draw.text((xo, y), title, font=tf, fill=tcol, anchor="lm")
+                draw.text((xo + draw.textlength(title, font=tf) + 14, y), outcome, font=of, fill=mix(BG, MUTED, a), anchor="lm")
+        for n, label in ((0, "Nov 14"), (8, "Nov 15")):
+            a = ease((t - 0.6 - 0.2 * n) / 0.35)
+            draw.text((spine + 34, y0 + n * step), label, font=font(26), fill=mix(BG, MUTED, a), anchor="lm")
         caption(draw, "AI agents ran the loop; a human set goals and budget.", 1.0)
         yield np.asarray(image)
 
