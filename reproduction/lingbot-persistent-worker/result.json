@@ -1,0 +1,160 @@
+{
+  "status": "completed",
+  "workspace": "nissan-pow",
+  "result_directory": "persistent-worker-1794717161710142411",
+  "verification_record_sha256": null,
+  "verification_scope": "reuse previously verified primary baseline checkpoint; byte-size inventory rechecked",
+  "summary": {
+    "scope": "persistent pipeline throughput/state-isolation diagnostic; stock Torch2.6 SDPA",
+    "status": "completed",
+    "episodes": [
+      {
+        "name": "cold-memory42",
+        "seed": 42,
+        "memory": true,
+        "status": "completed",
+        "total_request_wall_s": 210.435883998,
+        "first_chunk_elapsed_s": 128.32054033100002,
+        "persistent_worker": {
+          "pipeline_reused": false,
+          "constructor_or_reuse_wall_s": 104.01089013400001,
+          "text_cache_entries_before_generation": 0,
+          "encoder_device_before_generation": "cpu"
+        },
+        "cleanup": {
+          "remaining_model_hooks": 0,
+          "dit_parameter_versions_unchanged": true,
+          "encoder_device_after_request": "cpu",
+          "text_cache_entries_after_request": 1
+        },
+        "pixel_hashes": [
+          "6a32187699a0e11270e0ffb0963349b3c07c5fae77b95aa4c1c2b727e1ca68fb",
+          "471046256e9715e4ce50f94b55e1e20bc47eb8fb7e8204e1e1dd6c5d10772853",
+          "e0f0de2dd3580857d69db9114e136cd4dd178483c12027172f377f60655b1642",
+          "460fe0789b436853b282897c832a5f7e7adec379276f021fc80b0ce68ae4511c",
+          "6ecaa5cae564998aa1638db8d0d5a7856a4927d3121da08d9ae105c347d7818a",
+          "b27134b44b343a87e4ca41176604bb1ffa3a8631d8482717966620d47a97e9b2",
+          "ad16911b0b474e4ee3d41d7ed70bf461948b15123bc8375eb4213bf7c381d1f1",
+          "6e95eb06097a9a5390bdc445f19bdd8537036ed91e283cd3288512575ad6df9e",
+          "090b55b193acf81fc7b9c9fa82c29ece89828d27c9449136d49340f2a18858f2",
+          "a7e653d14a98fbfd692566304631fc99f32fe761d78baab5acf15603da4ab2ea"
+        ]
+      },
+      {
+        "name": "reuse-plain43",
+        "seed": 43,
+        "memory": false,
+        "status": "completed",
+        "total_request_wall_s": 70.45574730500002,
+        "first_chunk_elapsed_s": 18.942084573000017,
+        "persistent_worker": {
+          "pipeline_reused": true,
+          "constructor_or_reuse_wall_s": 0.005735608999998476,
+          "text_cache_entries_before_generation": 0,
+          "encoder_device_before_generation": "cpu"
+        },
+        "cleanup": {
+          "remaining_model_hooks": 0,
+          "dit_parameter_versions_unchanged": true,
+          "encoder_device_after_request": "cpu",
+          "text_cache_entries_after_request": 1
+        },
+        "pixel_hashes": [
+          "28d91a705a009d445edc2b33ec6a554de87a3778f47c41c55dd9d00d669acfb4",
+          "8995cf8272bbcb5bc5f7a08bce57463e49454571a8769b443bcb722c9746da39",
+          "8e23b1000a5efc7a26c967a1393a517a340973e462d3fbf190b92b812b7ebdc8",
+          "c0aceeef0e504c728960e37ebf3522a093c1edea51052c1b2c859ddc0da05377",
+          "600e223a010edfad238fee945698f9c99a3d3ce8f5f64c48e147ff72f6f45856",
+          "83efe658795edcf71cb400957cde60b940bd8c976abdc7372bc032308fbabbe8",
+          "bd70bf9f53e62b68b70a46d673edb0c99cf2c18edfb6b2b06a3e8e12cf897fee",
+          "fae4aeff38d55c027a2f1120c3b8290e707893e34a440fd4bf768ca8b6ae203c",
+          "6057f1c3f9337ab6f75d772da811d4834e4720e944976ef2db78572262b79630",
+          "7f4e0fad4a472e2f414c29f4535c1e0463791a704dd0670a40dc8dcce3875eca"
+        ]
+      },
+      {
+        "name": "reuse-memory42",
+        "seed": 42,
+        "memory": true,
+        "status": "completed",
+        "total_request_wall_s": 92.77781214200002,
+        "first_chunk_elapsed_s": 18.896740213999976,
+        "persistent_worker": {
+          "pipeline_reused": true,
+          "constructor_or_reuse_wall_s": 0.006263380000007146,
+          "text_cache_entries_before_generation": 0,
+          "encoder_device_before_generation": "cpu"
+        },
+        "cleanup": {
+          "remaining_model_hooks": 0,
+          "dit_parameter_versions_unchanged": true,
+          "encoder_device_after_request": "cpu",
+          "text_cache_entries_after_request": 1
+        },
+        "pixel_hashes": [
+          "6a32187699a0e11270e0ffb0963349b3c07c5fae77b95aa4c1c2b727e1ca68fb",
+          "471046256e9715e4ce50f94b55e1e20bc47eb8fb7e8204e1e1dd6c5d10772853",
+          "e0f0de2dd3580857d69db9114e136cd4dd178483c12027172f377f60655b1642",
+          "460fe0789b436853b282897c832a5f7e7adec379276f021fc80b0ce68ae4511c",
+          "6ecaa5cae564998aa1638db8d0d5a7856a4927d3121da08d9ae105c347d7818a",
+          "b27134b44b343a87e4ca41176604bb1ffa3a8631d8482717966620d47a97e9b2",
+          "ad16911b0b474e4ee3d41d7ed70bf461948b15123bc8375eb4213bf7c381d1f1",
+          "6e95eb06097a9a5390bdc445f19bdd8537036ed91e283cd3288512575ad6df9e",
+          "090b55b193acf81fc7b9c9fa82c29ece89828d27c9449136d49340f2a18858f2",
+          "a7e653d14a98fbfd692566304631fc99f32fe761d78baab5acf15603da4ab2ea"
+        ]
+      },
+      {
+        "name": "reuse-plain42",
+        "seed": 42,
+        "memory": false,
+        "status": "completed",
+        "total_request_wall_s": 69.03887677099999,
+        "first_chunk_elapsed_s": 17.647968123,
+        "persistent_worker": {
+          "pipeline_reused": true,
+          "constructor_or_reuse_wall_s": 0.005699037999988832,
+          "text_cache_entries_before_generation": 0,
+          "encoder_device_before_generation": "cpu"
+        },
+        "cleanup": {
+          "remaining_model_hooks": 0,
+          "dit_parameter_versions_unchanged": true,
+          "encoder_device_after_request": "cpu",
+          "text_cache_entries_after_request": 1
+        },
+        "pixel_hashes": [
+          "6a32187699a0e11270e0ffb0963349b3c07c5fae77b95aa4c1c2b727e1ca68fb",
+          "471046256e9715e4ce50f94b55e1e20bc47eb8fb7e8204e1e1dd6c5d10772853",
+          "e0f0de2dd3580857d69db9114e136cd4dd178483c12027172f377f60655b1642",
+          "460fe0789b436853b282897c832a5f7e7adec379276f021fc80b0ce68ae4511c",
+          "de6676e84fb17b9eff8e7e0a1e5159cfe53eca1da9486d5fd7f3d29f58f61676",
+          "2f402ba0c2cda013fd16afd12d618900d69ebd9ae1c1e3c0789828b63670d420",
+          "36fda71582374d667f92011a59f5fabcd8745e0586bccf8556785d658e366062",
+          "e82e01487f9ae87629248c736914af356d85947263144fd69ce0a3fa53179fc8",
+          "5ab8bc39c8ae88137be258c71451a0902ba3fa5323412d0d74759f92474c7e10",
+          "135e43d51584141617fc7f977826ffec97a66829cea9c44533088e417e2f1229"
+        ]
+      }
+    ],
+    "constructor_calls": 1,
+    "sequence": [
+      "cold-memory42",
+      "reuse-plain43",
+      "reuse-memory42",
+      "reuse-plain42"
+    ],
+    "training": false,
+    "text_cache_policy": "clear on reuse; recompute native prompt context and retain original encoder placement",
+    "memory42_repeat_pixel_identical": true,
+    "plain42_matches_fresh_external_control": true,
+    "different_seed_changes_output": true,
+    "fresh_plain42_control_wall_s": 165.46073811099998,
+    "fresh_plain42_control_hardware": {
+      "gpu": "NVIDIA H100 80GB HBM3",
+      "torch": "2.6.0+cu124",
+      "cuda": "12.4"
+    },
+    "worker_wall_s": 444.080583008
+  }
+}
