@@ -231,3 +231,7 @@ User priority is now the two-minute hackathon presentation. `docs/demo/worldsync
 All24controller videos completed. All72judge attempts are terminal, but legacy insight OE009 repetition2 failed with RemoteProtocolError; it is preserved without silent retry. There are71valid scores and11complete pairs. Corrected overall1.5322; legacy overall and paired confidence interval remain withheld. The final snapshot includes all attempts, including the error. The IF evidence is complete and unaffected.
 
 All three owned H100 instances were collected, hash-verified and terminated; API absence was checked at17:11UTC and recorded in lambda-log. No further GPU jobs launched for the presentation.
+
+### Codex — saved-video in-sight audit
+
+Added `reproduction/baseline-gap/insight-motion-audit/`: hashes, one-second pixel-change measurements for all6in-sight originals, and OE020 contact sheet. Corrected OE020 is less dynamic but not literally frozen; preserve judge scores while qualifying the first report’s description. OE066 has more pixel change despite worse semantic results. Next isolated hypothesis is caption-plus-task versus task-only on the fixed corrected controller, initially OE020/OE066. No GPU jobs or paid calls launched.
