@@ -1,6 +1,11 @@
 # Local baseline before hillclimbing
 
-**Current target: LingBot-World2 14B causal-fast. Baseline not measured yet.**
+**Current target: LingBot-World2 14B causal-fast. First complete episode scored;
+control validation remains incomplete.**
+
+[GC007 measured 3.2/5 on the local visual rubric](GC007-stock-v3.md), but the
+requested return/revisit failed. This is a single-case diagnostic, not a full
+benchmark overall or evidence of memory improvement.
 
 The published **1.82** belongs to the hosted LingBot service. It is a reference,
 not an expected score for the public local checkpoint or our Claude evaluator.
