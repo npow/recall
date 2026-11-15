@@ -11,22 +11,24 @@ import time
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / 'outputs/codex-ccv'
 SECONDARY = {'gc-GC030', 'if-IF022', 'insight-OE020', 'outsight-OE062'}
+THIRD = {'gc-GC022', 'if-IF006', 'insight-OE009'}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('worker', choices=['primary', 'secondary'])
+    parser.add_argument('worker', choices=['primary', 'secondary', 'third'])
     args = parser.parse_args()
     secondary = args.worker == 'secondary'
-    lease_path = ROOT / 'outputs/lambda' / ('codex-ccv-extra-lease.json' if secondary else 'codex-ccv-lease.json')
+    third = args.worker == 'third'
+    lease_path = ROOT / 'outputs/lambda' / ('codex-ccv-third-lease.json' if third else 'codex-ccv-extra-lease.json' if secondary else 'codex-ccv-lease.json')
     lease = json.loads(lease_path.read_text())
-    expected = 'daa2be26cc0c4638ac2c9ec881b45160' if secondary else '7287b46fd8c14c2b80abc7a681412452'
+    expected = 'e84fbb24a8a943aaa731fdf855bc09ec' if third else 'daa2be26cc0c4638ac2c9ec881b45160' if secondary else '7287b46fd8c14c2b80abc7a681412452'
     if lease['instance_id'] != expected or not lease['name'].startswith('worldsync-baseline-'):
-        raise ValueError('This cleanup is restricted to the two recorded comparison leases')
-    process = json.loads((BASE / ('extra-remote-process.json' if secondary else 'remote-process.json')).read_text())
+        raise ValueError('This cleanup is restricted to the three recorded comparison leases')
+    process = json.loads((BASE / ('third-remote-process.json' if third else 'extra-remote-process.json' if secondary else 'remote-process.json')).read_text())
     from run_codex_ccv import CASES
-    cases = [f'{split}-{task}' for split, tasks in CASES.items() for task in tasks
-             if (f'{split}-{task}' in SECONDARY) == secondary]
+    all_cases = {f'{split}-{task}' for split, tasks in CASES.items() for task in tasks}
+    cases = sorted(THIRD if third else SECONDARY if secondary else all_cases - SECONDARY - THIRD)
     ssh = ['ssh', '-i', str(Path.home()/'.ssh/id_ed25519'), '-o', 'BatchMode=yes', '-o', 'ConnectTimeout=10',
            '-o', 'UserKnownHostsFile='+str(ROOT/'outputs/lambda/known_hosts'), 'ubuntu@'+lease['ip']]
     remote_root = '/home/ubuntu/worldsync/outputs/codex-ccv/'

@@ -161,3 +161,9 @@ These are reporting risks found by code inspection, not evidence that completed 
 ### Codex — first paired score, 2026-11-15 16:19 UTC
 
 GC024 is complete for both arms and all three fixed Gemini repetitions. Legacy scores2.2/1.4/4.2(mean2.60); corrected1.0/1.0/1.2(mean1.0667), paired difference-1.5333. Legacy video6.8125seconds versus corrected59.8125seconds; complete configurations differ in duration, text and controller, so this does not isolate controller causality. All six judge video hashes were checked against local completed videos. Snapshot with reports and generation metadata: `reproduction/baseline-gap/ccv-snapshot/report.md`. Overall and interval remain withheld; other11pairs pending. Do not adopt the corrected configuration as an established improvement. Both workers remain active, proceeding with the original cases.
+
+### Codex — third worker allocated, 2026-11-15 16:25 UTC
+
+- H100SXM capacity reopened. Allocated own `e84fbb24a8a943aaa731fdf855bc09ec`, us-south-2, hard75minute lease at$4.29/hour(max$5.3625), watchdog953485. Logged in lambda-log. Provisioner956255 waits for SSH, then stages only needed images and the same controller source.
+- Three unstarted complete pairs transferred from primary: GC022, IF006, insight OE009. Assignment is now5primary +4secondary +3third. Primary reservation markers are excluded from collection. Remote generation and actor tunnels were preserved. Primary collector957149 and cleanup957150 replace their old local monitor processes.
+- Early cleanup now pins all three owned IDs and the revised case ownership. The second worker's assignment remains unchanged. No additional cases, retries, algorithm changes or collaborator resources are involved.
