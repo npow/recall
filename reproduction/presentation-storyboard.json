@@ -60,7 +60,7 @@
   "loop": [
     [
       "Experiment",
-      "memory v1: 0.35 → 0.78 on a test path"
+      "memory v1: 1.80 vs 1.85 on 171 tasks, no gain"
     ],
     [
       "Audit",
@@ -76,7 +76,7 @@
     ],
     [
       "Re-test",
-      "36 real tasks: −0.12 [−0.55, +0.28]; null, reported"
+      "36 real tasks: −0.35 [−0.71, −0.01]; not better, reported"
     ]
   ],
   "text": {
@@ -100,7 +100,7 @@
     "ours_video": "/home/npow/code/iteratehack/.claude/worktrees/agent-a9e1baed8edee1ee7/outputs/memv2-step2/memv2-gc-GC045-seed42/rollout.mp4",
     "source": "/home/npow/code/iteratehack/.claude/worktrees/agent-a9e1baed8edee1ee7/reproduction/memory-v2-step2/per-case.csv (GC045: 2.4 vs 4.0, memory fired in 5 chunks)",
     "score_text": "judge score (1–5): 2.4 as released, 4.0 with our memory",
-    "scope_text": "one selected task; across 36 such tasks there is no measurable gain"
+    "scope_text": "one selected task; across 36 such tasks ours scores lower (−0.35)"
   },
   "benchmark": {
     "dimensions": [
@@ -202,5 +202,7 @@
     "A trained, compact memory layer",
     "Retrieval by visible surfaces (VMem-style)",
     "Long-horizon tasks, where memory matters"
-  ]
+  ],
+  "real_null": "36 revisit tasks: −0.35 [−0.71, −0.01].",
+  "real_null_source": "memory-v2 final (3 judge calls per video), 9 wins / 12 ties / 15 losses, as reported by the coordinator from the memory-v2 fork"
 }

@@ -615,8 +615,8 @@ def scene_limits(data, seconds):
     pair = data.pair(loss)
     small = (500, 288)
     a_clip, b_clip = load_clip(pair["stock"]["video"], small), load_clip(pair["memory"]["video"], small)
-    bullets = [("PlayWorld's own tasks are short: memory rarely fires.",
-                f"Full benchmark: memory {stats['a_memory']:.2f} vs {stats['a_stock']:.2f}, director {stats['b_director']:.2f} vs {stats['b_stock']:.2f}: no gain."),
+    bullets = [("On PlayWorld's own tasks our memory does not help.",
+                data.board["real_null"] + f" Full benchmark: memory {stats['a_memory']:.2f} vs {stats['a_stock']:.2f}, director {stats['b_director']:.2f} vs {stats['b_stock']:.2f}."),
                ("The model does not undo forward motion.", "A return by walking back often never happens."),
                ("Frozen scenes and unattempted actions", "are not memory problems."),
                (f"The judge is noisy: SD {numbers['judge_sd']:.2f}.", "Same video, three scores.")]
@@ -629,7 +629,8 @@ def scene_limits(data, seconds):
             y = 230 + n * 170
             draw.ellipse((84, y + 14, 104, y + 34), fill=mix(BG, WARN, a))
             draw.text((130, y + 24), head, font=font(38), fill=mix(BG, FG, a), anchor="lm")
-            draw.text((130, y + 82), sub, font=font(30, False), fill=mix(BG, MUTED, a), anchor="lm")
+            for k, part in enumerate(wrap(draw, sub, font(28, False), 1140)):
+                draw.text((130, y + 78 + k * 38), part, font=font(28, False), fill=mix(BG, MUTED, a), anchor="lm")
         draw.text((px, 216), f"A loss: scene {loss['scene']}", font=font(32), fill=WARN, anchor="lm")
         draw.text((px, 560), "as released" + (f" · judge {pair['stock']['score']:.1f}" if pair["stock"]["score"] is not None else ""), font=font(28, False), fill=MUTED, anchor="lm")
         draw.text((px, 900), "with our memory" + (f" · judge {pair['memory']['score']:.1f}" if pair["memory"]["score"] is not None else ""), font=font(28, False), fill=MUTED, anchor="lm")
