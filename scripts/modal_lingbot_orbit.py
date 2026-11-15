@@ -34,7 +34,7 @@ EXPORTERS = {"agent-a"}
 
 @app.function(image=image, gpu="H200", cpu=8, memory=131072, timeout=3600,
               volumes={"/cache": weights, "/results": results})
-def orbit(image_bytes: bytes, seed: int = 42, task_id: str = "GC010", text: str = TEXT, turn_rate: float = 60,
+def orbit(image_bytes: bytes, image_b_bytes: bytes = b"", seed: int = 42, task_id: str = "GC010", text: str = TEXT, turn_rate: float = 60,
           only: str = "", archive_until: int = 40, archive_stride: int = 1, min_retrieved: int = 1):
     from worldsync.lingbot_paths import PATHS
     weights.reload()
@@ -54,6 +54,11 @@ def orbit(image_bytes: bytes, seed: int = 42, task_id: str = "GC010", text: str 
             record["image_caption"] = CAPTION
     (data_root / "gc/data.json").write_text(json.dumps(tasks))
     (data_root / f"gc/clean/{task_id}.jpg").write_bytes(image_bytes)
+    # Agent B starts from A's halfway frame (opposite side of the circle, facing A), via its own data root.
+    data_root_b = Path("/tmp/cleandata-b")
+    (data_root_b / "gc/clean").mkdir(parents=True, exist_ok=True)
+    (data_root_b / "gc/data.json").write_text(json.dumps(tasks))
+    (data_root_b / f"gc/clean/{task_id}.jpg").write_bytes(image_b_bytes or image_bytes)
     done = {}
     for name, path, sources, start_pose in AGENTS:
         if only and name not in only.split(","):
@@ -64,7 +69,7 @@ def orbit(image_bytes: bytes, seed: int = 42, task_id: str = "GC010", text: str 
                    "--task-id", task_id, "--seed", str(seed), "--turn-degrees-per-second", str(turn_rate),
                    "--max-chunks", str(len(actions)), "--native-fixed-controls", "--fixed-actions", *actions,
                    "--pose-retrieval", "--world-text-suffix", text, "--output", str(output),
-                   "--data-root", str(data_root), "--archive-until", str(archive_until),
+                   "--data-root", str(data_root_b if name == "agent-b" else data_root), "--archive-until", str(archive_until),
                    "--archive-stride", str(archive_stride), "--min-retrieved-frames", str(min_retrieved)]
         if start_pose:
             command += ["--start-pose", *start_pose]
@@ -85,5 +90,6 @@ def orbit(image_bytes: bytes, seed: int = 42, task_id: str = "GC010", text: str 
 
 
 @app.local_entrypoint()
-def main(image: str, seed: int = 42, task_id: str = "GC010", only: str = ""):
-    print(json.dumps(orbit.remote(Path(image).read_bytes(), seed=seed, task_id=task_id, only=only)))
+def main(image: str, image_b: str = "", seed: int = 42, task_id: str = "GC010", only: str = ""):
+    b = Path(image_b).read_bytes() if image_b else b""
+    print(json.dumps(orbit.remote(Path(image).read_bytes(), b, seed=seed, task_id=task_id, only=only)))
