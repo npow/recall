@@ -16,7 +16,7 @@ OUTPUT = ROOT / "reproduction/protected-recent-memory"
 def fetch(label, manifest_path, directory_root=OUTPUT):
     manifest = json.loads(manifest_path.read_text())
     run = manifest["run"]
-    if run["status"] != "completed" or len(run["chunks"]) != 32:
+    if run["status"] != "completed" or len(run["chunks"]) != run["max_chunks"]:
         raise ValueError(f"Incomplete variant{label}")
     directory = directory_root / label
     directory.mkdir(parents=True, exist_ok=True)
