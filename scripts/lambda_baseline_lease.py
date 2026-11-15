@@ -49,8 +49,8 @@ def main():
         if args.lease.exists() or not 1 <= args.minutes <= 240:
             raise ValueError('Use a new lease file and at most240minutes')
         existing = call(client,'GET','instances')['data']
-        if any(x.get('name','').startswith('worldsync-baseline-') for x in existing):
-            raise ValueError('A baseline lease already exists; inspect it before launching another')
+        if sum(x.get('name','').startswith('worldsync-baseline-') and x.get('status') not in {'terminating','terminated'} for x in existing) >= 4:
+            raise ValueError('Four baseline leases already exist; no further allocation allowed')
         types = call(client,'GET','instance-types')['data']
         candidate = types[args.instance_type]
         if candidate['instance_type']['price_cents_per_hour'] > (329 if args.instance_type=='gpu_1x_h100_pcie' else 429):

@@ -95,7 +95,7 @@ def main():
             reports=list((RUN/'judge').glob('rep*/episodes/*.json'))
             (BASE/'judge-progress.json').write_text(json.dumps({'report_count':len(reports),'expected':72,'pending':len(pending),'updated_at':time.time()})+'\n')
             if len(reports)==72 and not pending:break
-            if (RUN/'generation-terminal.json').exists() and not pending and generation_accounted_for(scheduled):
+            if bool(list(RUN.glob('generation-terminal*.json'))) and not pending and generation_accounted_for(scheduled):
                 # Every successful generation has been scheduled; failures stay missing.
                 break
             time.sleep(30)

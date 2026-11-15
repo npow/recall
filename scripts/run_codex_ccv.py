@@ -20,6 +20,9 @@ def main():
     (output/'selection.json').write_text(json.dumps(selection,indent=2)+'\n')
     env=dict(os.environ,PYTORCH_CUDA_ALLOC_CONF='expandable_segments:True',WORLDSYNC_HOLD_MAX_TOKENS='400')
     jobs=[(split,task,arm) for i in range(3) for split in CASES for task in [CASES[split][i]] for arm in ['C','L']]
+    shard=int(os.environ.get('CCV_SHARD','0'));shards=int(os.environ.get('CCV_SHARDS','1'))
+    if not 0 <= shard < shards:raise ValueError('Invalid paired shard')
+    jobs=[job for index,job in enumerate(jobs) if (index//2)%shards==shard]
     for split,task,arm in jobs:
         episode=output/arm/f'{split}-{task}'
         status=output/f'{arm}-{split}-{task}-status.json'
@@ -39,7 +42,7 @@ def main():
         record={'arm':arm,'split':split,'task_id':task,'returncode':result.returncode,'elapsed_seconds':time.time()-started,'argv':args}
         status.write_text(json.dumps(record,indent=2)+'\n')
         print(json.dumps(record),flush=True)
-    (output/'generation-terminal.json').write_text(json.dumps({'jobs_attempted':len(jobs),'completed_at':time.time()})+'\n')
+    (output/f'generation-terminal-shard{shard}.json').write_text(json.dumps({'jobs_attempted':len(jobs),'completed_at':time.time()})+'\n')
 
 
 if __name__=='__main__':main()
