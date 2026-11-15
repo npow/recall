@@ -48,6 +48,10 @@ class PoseKVMemory:
         if history_weight is not None and not 0 <= history_weight <= 1:
             raise ValueError("history output weight must be in[0,1]")
         self.history_weight = history_weight
+        self.readers = {i: block.self_attn.memory_reader for i, block in enumerate(pipeline.model.blocks)
+                        if hasattr(block.self_attn, "memory_reader")}
+        if self.readers and (history_weight is not None or cache_frames != 18 or retrieved_frames != 4):
+            raise ValueError("trained reader requires the matched18-frame four-view joint-attention layout")
         self.cache_frames = cache_frames
         self.retrieved_frames = retrieved_frames
         self.selection = selection
@@ -165,10 +169,14 @@ class PoseKVMemory:
             return torch.lerp(recent_output, history_output, self.history_weight)
         combined_key = torch.cat([key[:, :6 * frame_tokens], retrieved_key, key[:, -tail * frame_tokens:]], dim=1)
         combined_value = torch.cat([value[:, :6 * frame_tokens], retrieved_value, value[:, -tail * frame_tokens:]], dim=1)
-        return self.original_attention(query, combined_key, combined_value, **kwargs)
+        output = self.original_attention(query, combined_key, combined_value, **kwargs)
+        if layer in self.readers:
+            output = output + self.readers[layer](query, retrieved_key, retrieved_value).to(output.dtype)
+        return output
 
     def metadata(self):
         return {"method": "bounded early-view pose KV retrieval; diagnostic, not paper reproduction",
+                "learned_reader_layers": sorted(self.readers),
                 "archive_limit_latent_frames": 16, "retrieved_latent_frames": self.retrieved_frames,
                 "retrieved_frame_count_is_limit": True, "selection": self.selection,
                 "attention_composition": "joint softmax" if self.history_weight is None else "separately normalized recent/history outputs",

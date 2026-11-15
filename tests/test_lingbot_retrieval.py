@@ -31,7 +31,7 @@ def test_diverse_retrieval_does_not_spend_all_slots_on_duplicate_hold_views():
     assert len(diverse) == unique_views(diverse) == 5
 
 
-@pytest.mark.parametrize("method", ["retrieval", "retrieval_native", "retrieval_eight", "retrieval_diverse", "retrieval_eight_diverse", "retrieval_context22", "retrieval_eight_context22", "retrieval_eight_context22_gated", "sink_rephase"])
+@pytest.mark.parametrize("method", ["retrieval", "retrieval_reader", "retrieval_native", "retrieval_eight", "retrieval_diverse", "retrieval_eight_diverse", "retrieval_context22", "retrieval_eight_context22", "retrieval_eight_context22_gated", "sink_rephase"])
 def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds_memory(monkeypatch, method):
     import copy
     import sys
@@ -59,6 +59,9 @@ def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds
     tokens = capacity * 4
     original = model_fast.CausalWanSelfAttention(64, 4, local_attn_size=capacity, sink_size=6).eval()
     candidate = copy.deepcopy(original)
+    if method == "retrieval_reader":
+        from worldsync.lingbot_memory_reader import MemoryReader
+        candidate.memory_reader = MemoryReader(candidate.head_dim, rank=4)
     pipeline = SimpleNamespace(model=SimpleNamespace(blocks=[SimpleNamespace(self_attn=candidate)]))
     from worldsync.lingbot_sink_rephase import SinkRephaseMemory
     memory = (PoseKVMemory(pipeline, key_positions="native" if method == "retrieval_native" else "virtual",
@@ -108,6 +111,8 @@ def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds
                     for name, value in modified_cache.items():
                         torch.testing.assert_close(value, native_before[name], atol=0, rtol=0)
         assert memory.retrieval_calls > 0
+        if method == "retrieval_reader":
+            assert memory.metadata()["learned_reader_layers"] == [0]
         if method in {"retrieval", "retrieval_native", "sink_rephase"}:
             assert memory.trace[-1]["attention_replaced"]
         if "eight" in method:

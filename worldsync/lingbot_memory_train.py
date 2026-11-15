@@ -86,6 +86,11 @@ def layer_forward(block, x, group, freqs, text, context_kv=None):
     k = rope_at(k, group.positions, group.h, group.w, freqs).type_as(v)
     all_k, all_v = (k, v) if context_kv is None else (torch.cat([context_kv[0], k], 1), torch.cat([context_kv[1], v], 1))
     out = F.scaled_dot_product_attention(q.transpose(1, 2), all_k.transpose(1, 2), all_v.transpose(1, 2)).transpose(1, 2)
+    reader = getattr(attn, "memory_reader", None)
+    frame_tokens = group.h * group.w
+    if reader is not None and context_kv is not None and context_kv[0].shape[1] == 14 * frame_tokens:
+        memory = slice(SINK * frame_tokens, (SINK + CHUNK) * frame_tokens)
+        out = out + reader(q, context_kv[0][:, memory], context_kv[1][:, memory]).to(out.dtype)
     out = attn.o(out.flatten(2))
     with torch.amp.autocast("cuda", dtype=torch.float32, cache_enabled=False):
         x = x + out * e[2].squeeze(2)
@@ -211,14 +216,15 @@ def memory_loss(pipeline, clip, mode="correct", step_index=0, generator=None, lo
 
 
 @torch.no_grad()
-def evaluate(pipeline, clip, modes=("correct", "wrong", "none"), seeds=(0, 1), loss_space="velocity"):
+def evaluate(pipeline, clip, modes=("correct", "wrong", "none"), seeds=(0, 1), loss_space="velocity",
+             schedule_indices=None):
     """Mean loss per (mode, schedule step) on fixed noise draws."""
     result = {}
     for mode in modes:
         if mode == "wrong" and clip.wrong is None:
             continue
         per_step = []
-        for step in range(len(SCHEDULE_INDEX)):
+        for step in (range(len(SCHEDULE_INDEX)) if schedule_indices is None else schedule_indices):
             values = []
             for seed in seeds:
                 g = torch.Generator(device=clip.latent.device).manual_seed(1000 * step + seed)

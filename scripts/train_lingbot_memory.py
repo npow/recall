@@ -6,6 +6,7 @@ Reports: stock-parity check, loss before/after per memory mode, throughput, peak
 and a LoRA save/load round trip. Not a PlayWorld score.
 """
 import argparse
+import hashlib
 import json
 import random
 import sys
@@ -86,18 +87,26 @@ def main():
     parser.add_argument("--steps", type=int, default=40)
     parser.add_argument("--lr", type=float, default=1e-4)
     parser.add_argument("--rank", type=int, default=32)
+    parser.add_argument("--adapter", choices=["lora", "memory-reader"], default="lora")
+    parser.add_argument("--gradient-smoke", action="store_true",
+                        help="One training step and single-noise/schedule evaluation; plumbing evidence only")
     parser.add_argument("--alpha", type=float, default=32.0)
     parser.add_argument("--loss", choices=["velocity", "x0"], default="velocity")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--parity", action="store_true")
     parser.add_argument("--log-every", type=int, default=5)
     args = parser.parse_args()
+    if args.gradient_smoke:
+        args.steps = 1
     args.output.mkdir(parents=True, exist_ok=True)
     import numpy as np
     import torch
     from worldsync import lingbot_lora, lingbot_memory_data as data
     from worldsync.lingbot_memory_train import evaluate, memory_loss
     report = {"status": "running", "args": {k: str(v) for k, v in vars(args).items()}, "scope": "harness validation; not a PlayWorld score"}
+    report["source_sha256"] = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
+        for name in ("scripts/train_lingbot_memory.py", "worldsync/lingbot_memory_train.py",
+                     "worldsync/lingbot_memory_reader.py")}
     path = args.output / "train.json"
 
     def save():
@@ -143,12 +152,16 @@ def main():
         save()
 
     def snapshot(label):
-        report[label] = {c.name: evaluate(pipeline, c, loss_space=args.loss) for c in heldout + train_clips[:1]}
+        evaluation = {"seeds": (0,), "schedule_indices": (0,)} if args.gradient_smoke else {}
+        report[label] = {c.name: evaluate(pipeline, c, loss_space=args.loss, **evaluation) for c in heldout + train_clips[:1]}
         print(json.dumps({label: report[label]}), flush=True)
         save()
 
     snapshot("eval_before")  # adapter not attached yet: exactly the stock model
-    trainable = lingbot_lora.apply_lora(model, args.rank, args.alpha)
+    from worldsync import lingbot_memory_reader
+    adapter = lingbot_lora if args.adapter == "lora" else lingbot_memory_reader
+    trainable = (lingbot_lora.apply_lora(model, args.rank, args.alpha) if args.adapter == "lora"
+                 else lingbot_memory_reader.attach(model, args.rank))
     report["trainable_parameters"] = sum(p.numel() for p in trainable)
     optimizer = torch.optim.AdamW(trainable, lr=args.lr, weight_decay=0.0)
     rng = random.Random(args.seed)
@@ -162,6 +175,12 @@ def main():
         optimizer.zero_grad(set_to_none=True)
         loss = memory_loss(pipeline, clip, "correct", index, generator, args.loss)
         loss.backward()
+        if args.adapter == "memory-reader":
+            if (not torch.isfinite(loss) or not any(p.grad is not None and torch.isfinite(p.grad).all()
+                    and p.grad.abs().sum() > 0 for p in trainable)):
+                raise RuntimeError("reader update has no finite nonzero learning signal")
+            if any(p.grad is not None for p in model.parameters() if not p.requires_grad):
+                raise RuntimeError("frozen base model unexpectedly accumulated gradients")
         norm = float(torch.nn.utils.clip_grad_norm_(trainable, 1.0))
         optimizer.step()
         torch.cuda.synchronize()
@@ -177,22 +196,26 @@ def main():
         "peak_allocated_gb": torch.cuda.max_memory_allocated() / 1e9,
         "peak_reserved_gb": torch.cuda.max_memory_reserved() / 1e9}
     snapshot("eval_after")
-    lora_path = args.output / "lora.pt"
-    digest = lingbot_lora.save_lora(model, lora_path, extra={"steps": args.steps, "clips": report["clips"], "loss": args.loss})
+    lora_path = args.output / ("lora.pt" if args.adapter == "lora" else "memory-reader.pt")
+    save_adapter = adapter.save_lora if args.adapter == "lora" else adapter.save
+    load_adapter = adapter.load_lora if args.adapter == "lora" else adapter.load
+    digest = save_adapter(model, lora_path, extra={"steps": args.steps, "clips": report["clips"], "loss": args.loss})
     probe = heldout[0] if heldout else train_clips[0]
-    measure = lambda: evaluate(pipeline, probe, modes=("correct",), seeds=(0,), loss_space=args.loss)["correct"]["mean"]
+    measure = lambda: evaluate(pipeline, probe, modes=("correct",), seeds=(0,), loss_space=args.loss,
+                               schedule_indices=(0,) if args.gradient_smoke else None)["correct"]["mean"]
     trained = measure()
     for p in trainable:
         p.data.zero_()
     zeroed = measure()
-    meta = lingbot_lora.load_lora(model, lora_path)
+    meta = load_adapter(model, lora_path)
     reloaded = measure()
-    report["lora_roundtrip"] = {"sha256": digest, "loaded": meta["sha256"], "loss_trained": trained, "loss_zeroed": zeroed,
+    roundtrip_key = "lora_roundtrip" if args.adapter == "lora" else "reader_roundtrip"
+    report[roundtrip_key] = {"sha256": digest, "loaded": meta["sha256"], "loss_trained": trained, "loss_zeroed": zeroed,
         "loss_reloaded": reloaded, "reload_matches": abs(trained - reloaded) < 1e-6 * max(1.0, abs(trained))}
     report["status"] = "completed"
     report["elapsed_s"] = time.monotonic() - started
     save()
-    print(json.dumps({k: report[k] for k in ("status", "train", "lora_roundtrip")}, indent=2))
+    print(json.dumps({k: report[k] for k in ("status", "train", roundtrip_key)}, indent=2))
 
 
 if __name__ == "__main__":

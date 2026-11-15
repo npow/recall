@@ -71,6 +71,7 @@ def main(argv=None, runtime=None):
     parser.add_argument("--budget-rope", choices=["virtual", "native"], default="virtual")
     parser.add_argument("--offload-text-encoder", action="store_true", help="Release the completed GPU text encoder before denoising")
     parser.add_argument("--lora", type=Path, help="Memory LoRA adapter (scripts/train_lingbot_memory.py); non-stock weights")
+    parser.add_argument("--memory-reader", type=Path, help="Experimental trained residual reader; standalone fixed diagnostics only")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--dry-run", action="store_true")
     lingbot_tuning.add_arguments(parser)
@@ -80,6 +81,13 @@ def main(argv=None, runtime=None):
     if args.lora and not args.lora.is_file():
         parser.error("LoRA file not found")
     knobs = lingbot_tuning.resolve(args, parser)
+    if args.memory_reader:
+        if (runtime is not None or args.lora or not args.memory_reader.is_file()
+                or not args.controlled_ablation or not args.native_fixed_controls or not args.fixed_actions
+                or not args.pose_retrieval or args.retrieved_frames != 4
+                or args.retrieval_positions != "virtual" or knobs["local_attn_size"] != 18
+                or args.history_output_weight is not None):
+            parser.error("memory reader requires standalone native fixed diagnostics, an existing checkpoint and virtual18/6 four-view retrieval")
     from worldsync import lingbot_adaptive_pilot
     lingbot_adaptive_pilot.validate(args, knobs, parser)
     if args.text_prompt != "caption" and not lingbot_tuning.hillclimb_unlocked():
@@ -235,6 +243,11 @@ def main(argv=None, runtime=None):
             from worldsync import lingbot_lora
             report["lora"] = lingbot_lora.load_lora(pipeline.model, args.lora)
             report["model"] = "LingBot-World2 14B causal-fast + memory LoRA (non-stock)"
+            save()
+        if args.memory_reader:
+            from worldsync import lingbot_memory_reader
+            report["memory_reader"] = lingbot_memory_reader.load(pipeline.model, args.memory_reader)
+            report["model"] = "LingBot-World2 14B causal-fast + learned memory reader (non-stock)"
             save()
         stream = NativeVaeStream(pipeline.vae)
         camera = CameraPlan(turn_degrees_per_second=args.turn_degrees_per_second)
