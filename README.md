@@ -11,7 +11,7 @@ The [full-history pilot](reproduction/context34-v1/README.md) retains 34 instead
 of 18 latent frames. On one turn-and-return scene it recovers the starting
 building better: endpoint DINO similarity rises from 0.579 to 0.848 and the
 blinded full-video review prefers it. It costs 25% more peak GPU memory and
-about 10% more warmed generation time in this pair. This is a short diagnostic,
+about 8% more warmed generation time in this pair. This is a short diagnostic,
 not a PlayWorld score. [Frozen additional seed/scene comparisons](reproduction/context-validation-plan.json)
 test whether it generalizes. The [earlier retrieval trial](reproduction/roundtrip-v4/README.md)
 failed and remains published.

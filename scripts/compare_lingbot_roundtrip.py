@@ -64,7 +64,7 @@ def main():
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(video), "-vf", f"select=eq(n\\,{frame})",
                             "-frames:v", "1", str(image)], check=True)
             endpoints[label, part] = image
-    report = {"comparison": args.comparison, "cache_frames": {"stock": stock["local_attn_size"], "candidate": candidate["local_attn_size"]}, "scope": "single controlled development round trip; no PlayWorld score or SOTA claim",
+    report = {"comparison": args.comparison, "cache_frames": {"stock": stock["local_attn_size"], "candidate": candidate["local_attn_size"]}, "scope": "single controlled fixed path; no PlayWorld score or SOTA claim",
         "matched_settings": {key: stock[key] for key in fields}, "native_camera_inputs_verified": True,
         "pre_intervention_pixel_identical_chunks": first, "modified_chunks": modified,
         "stock_wall_s": stock["elapsed_s"], "candidate_wall_s": candidate["elapsed_s"],

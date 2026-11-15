@@ -1,6 +1,6 @@
 {
   "scope": "Predeclared small validation of fixed cache34; not PlayWorld or published-score reproduction",
-  "complete_pairs": 1,
+  "complete_pairs": 2,
   "declared_pairs": 3,
   "settings": {
     "local_attn_size": 34,
@@ -44,6 +44,48 @@
         "preference": "B",
         "confidence": "high",
         "reasoning": "Both videos execute the WAIT and RIGHT phases identically, so the outcome hinges on the reversal. In B the glass building keeps its logo and the camera rotates back to Primemall with consistent signage and geometry, reaching a recognizable near-start view without discontinuities. Its main flaw is viewpoint drift and some altered foreground. In A the glass building's sign abruptly changes at ~frame 49, new foreground objects appear around Primemall, and the camera keeps rotating past the start to end on an unseen 'Romal' building. That makes A a failed return (overshoot or drift) compounded by landmark inconsistency."
+      },
+      "label_mapping": {
+        "A": "stock",
+        "B": "context34"
+      }
+    },
+    {
+      "task_id": "GC004",
+      "seed": 42,
+      "partition": "development",
+      "reason": "different outdoor scene: windmill",
+      "stock_dino": 0.727086067199707,
+      "candidate_dino": 0.677692711353302,
+      "stock_psnr_db": 9.695007921848488,
+      "candidate_psnr_db": 9.893741081498376,
+      "warmed_suffix_s": {
+        "stock": 37.52863198999998,
+        "context34": 40.99520754599996
+      },
+      "peak_allocated_bytes": {
+        "stock": 80201542656,
+        "context34": 99913948160
+      },
+      "visual_preference": "context34",
+      "visual_assessment": {
+        "A": {
+          "realized_round_trip": "uncertain",
+          "starting_place_recovered": "no",
+          "discontinuity": "yes",
+          "visual_evidence": "Frames 0-9 hold the starting view: a stone tower mill with lattice sails, a small rust-colored wind-rose wheel on the right, birch trees on the left and a fence. During RIGHT (about frames 10-39) the scene pans left in a plausible way. A dark gable-roofed post mill comes into view, then a brown barn, then a stone tower with a balcony and an arched door. During LEFT (frames 40 onward) the motion reverses: the balcony tower slides right and the barn returns. The dark post mill does not reappear on the way back. Around frames 46-50 it is replaced by unfamiliar lattice sails over the barn. The original wind-rose mill reappears around frames 51-59, close to the start framing near frame 57-59, which is early. The view then keeps panning left. The original mill smears off to the right with morphing sails and ends up cropped in a tower at the left edge (frames 60-64). Frame 64 to 65 shows a scale and position jump. The video settles (frames 65-78) on a different mill: an evenly coursed stone drum, a brick-arched brown door at the base, no wind-rose wheel, different sails, open field to the left and no birch trees.",
+          "failure_classification": "Mixed. The outbound yaw is well realized. On the return, the start view is passed well before the LEFT phase ends, so the return pan overshoots and/or the revisited content is compressed. The mill visible at the end is a hallucinated new landmark, not the start mill. The intermediate post mill was also forgotten and replaced. Some transition artifacts appear: sail morphing and a scale jump around frames 64-65."
+        },
+        "B": {
+          "realized_round_trip": "uncertain",
+          "starting_place_recovered": "no",
+          "discontinuity": "uncertain",
+          "visual_evidence": "Frames 0-~43 are essentially identical to A: the same start view and the same rightward pan past the dark post mill, barn and balcony tower. On the LEFT return, B does bring back a dark gabled wooden mill structure with a long beam near the barn (frames 44-52). It is geometrically distorted (tilted, warped roof) but plausibly the same post mill landmark. The original wind-rose tower mill with birch trees then returns (frames 52-60), with framing near frames 57-59 similar to the start. The pan continues left past it: new wooden sheds and outbuildings appear that were never seen at the start (frames 60-64). The video settles (frames 65-78) on a different conical-roof mill with a green door, sheds on both sides, bare sail poles and no wind-rose wheel. The transitions are smoother than in A, with no obvious single-frame jump, but there is heavy geometric warping of the post mill.",
+          "failure_classification": "Mixed. The outbound yaw is well realized. The return pan reaches the start view early and then overshoots or keeps rotating. At the end it lands on a hallucinated landmark with new surrounding buildings, which is a forgetting/hallucination failure at the endpoint. Memory of the intermediate landmark (the post mill) is partially retained, though distorted."
+        },
+        "preference": "B",
+        "confidence": "low",
+        "reasoning": "Both videos share an identical, plausible outbound right turn and both reverse direction on LEFT. Both briefly pass a view resembling the starting mill partway through the LEFT phase, then continue panning. Both end on a different mill: A's has a brick-arched brown door, B's a green door with sheds. Neither recovers the starting viewpoint or the wind-rose landmark at the end, so neither earns credit for the final frame. B is marginally better as a diagnostic: it re-presents the dark post mill on the return path, while A replaces it with unrelated sails. B's transitions are also somewhat smoother than A's morphing and scale jump around frames 64-65. The core failure, an end-state hallucination after overshooting, is shared, so the preference is weak."
       },
       "label_mapping": {
         "A": "stock",

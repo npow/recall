@@ -35,7 +35,7 @@ def evaluate(case, output, judge):
                    "--output", str(comparison), "--dino"]
         if judge:
             command.append("--judge")
-        with (directory / "evaluation.log").open("w") as log:
+        with (ROOT / "outputs/lingbot-reproduction" / f"context-evaluation-{name}.log").open("w") as log:
             subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, check=True)
     report = json.loads(comparison.read_text())
     summary = {**case, "stock_dino": report["stock"]["endpoint_dino_cosine"],

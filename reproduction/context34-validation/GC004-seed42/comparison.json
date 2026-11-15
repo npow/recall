@@ -1,0 +1,119 @@
+{
+  "comparison": "context",
+  "cache_frames": {
+    "stock": 18,
+    "candidate": 34
+  },
+  "scope": "single controlled development round trip; no PlayWorld score or SOTA claim",
+  "matched_settings": {
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v5",
+    "task_id": "GC004",
+    "split": "gc",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "seed": 42,
+    "fps": 16,
+    "max_chunks": 8,
+    "max_area": 399360,
+    "chunk_size": 4,
+    "sink_size": 6,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "fixed_actions": [
+      "WAIT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "LEFT",
+      "LEFT",
+      "LEFT",
+      "WAIT"
+    ]
+  },
+  "native_camera_inputs_verified": true,
+  "pre_intervention_pixel_identical_chunks": 4,
+  "modified_chunks": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "stock_wall_s": 131.23150954300002,
+  "candidate_wall_s": 137.220019148,
+  "stock_peak_allocated_bytes": 80201542656,
+  "candidate_peak_allocated_bytes": 99913948160,
+  "memory": null,
+  "caveat": "Commanded camera closure does not prove realized closure. Endpoint image similarity cannot establish world memory if the realized route fails.",
+  "stock": {
+    "endpoint_psnr_db": 9.695007921848488,
+    "video_sha256": "1d66ebf6b3e97bf9afd6d7d2748794325cf54a0a50355aee18ed250208e626bf",
+    "endpoint_dino_cosine": 0.727086067199707
+  },
+  "context34": {
+    "endpoint_psnr_db": 9.893741081498376,
+    "video_sha256": "817080ef81a2acb9a4de1ee0db3b0ab879e55a663526497d4350138b947227e1",
+    "endpoint_dino_cosine": 0.677692711353302
+  },
+  "candidate_label": "context34",
+  "warmed_suffix_s": {
+    "stock": 37.52863198999998,
+    "context34": 40.99520754599996
+  },
+  "feature_model": {
+    "name": "facebook/dinov2-small",
+    "revision": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+    "feature": "normalized CLS token"
+  },
+  "visual_judge": {
+    "model": "claude-opus-5-5",
+    "response_id": "msg_011Ch3sz2aEQcD3emNmCMvaN",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 26419,
+      "output_tokens": 2821,
+      "output_tokens_details": {
+        "thinking_tokens": 1439
+      },
+      "server_tool_use": null,
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "label_mapping": {
+      "A": "stock",
+      "B": "context34"
+    },
+    "prompt": "Evaluate two anonymized world-model videos independently and then compare. Each was given the same image and fixed camera path. Commands by one-second chunk: ['WAIT', 'RIGHT', 'RIGHT', 'RIGHT', 'LEFT', 'LEFT', 'LEFT', 'WAIT']. RIGHT and LEFT yaw 60 degrees per second; W moves forward. Commands are NOT proof that motion happened. Inspect actual frames. Assess whether each video realizes a turnaround and return to the starting viewpoint; whether persistent landmark identity, any sign text, geometry and spatial layout match on return; and whether there are sudden jumps, frozen motion or implausible transitions. Distinguish camera-control failures from forgetting. Do not reward a similar final building if reaching it required a reset. Do not invent unseen geometry. Return English JSON with keys A and B (each with realized_round_trip: yes|no|uncertain, starting_place_recovered: yes|no|uncertain, discontinuity: yes|no|uncertain, visual_evidence, failure_classification), preference: A|B|tie|neither, confidence: low|medium|high, and reasoning. This is a diagnostic comparison, not a benchmark score.",
+    "prompt_sha256": "e1a922549def88b7dd266ebc3078977ba7d30afcfab87ca2cd6f81bdfebddc76",
+    "result": {
+      "A": {
+        "realized_round_trip": "uncertain",
+        "starting_place_recovered": "no",
+        "discontinuity": "yes",
+        "visual_evidence": "Frames 0-9 hold the starting view: a stone tower mill with lattice sails, a small rust-colored wind-rose wheel on the right, birch trees on the left and a fence. During RIGHT (about frames 10-39) the scene pans left in a plausible way. A dark gable-roofed post mill comes into view, then a brown barn, then a stone tower with a balcony and an arched door. During LEFT (frames 40 onward) the motion reverses: the balcony tower slides right and the barn returns. The dark post mill does not reappear on the way back. Around frames 46-50 it is replaced by unfamiliar lattice sails over the barn. The original wind-rose mill reappears around frames 51-59, close to the start framing near frame 57-59, which is early. The view then keeps panning left. The original mill smears off to the right with morphing sails and ends up cropped in a tower at the left edge (frames 60-64). Frame 64 to 65 shows a scale and position jump. The video settles (frames 65-78) on a different mill: an evenly coursed stone drum, a brick-arched brown door at the base, no wind-rose wheel, different sails, open field to the left and no birch trees.",
+        "failure_classification": "Mixed. The outbound yaw is well realized. On the return, the start view is passed well before the LEFT phase ends, so the return pan overshoots and/or the revisited content is compressed. The mill visible at the end is a hallucinated new landmark, not the start mill. The intermediate post mill was also forgotten and replaced. Some transition artifacts appear: sail morphing and a scale jump around frames 64-65."
+      },
+      "B": {
+        "realized_round_trip": "uncertain",
+        "starting_place_recovered": "no",
+        "discontinuity": "uncertain",
+        "visual_evidence": "Frames 0-~43 are essentially identical to A: the same start view and the same rightward pan past the dark post mill, barn and balcony tower. On the LEFT return, B does bring back a dark gabled wooden mill structure with a long beam near the barn (frames 44-52). It is geometrically distorted (tilted, warped roof) but plausibly the same post mill landmark. The original wind-rose tower mill with birch trees then returns (frames 52-60), with framing near frames 57-59 similar to the start. The pan continues left past it: new wooden sheds and outbuildings appear that were never seen at the start (frames 60-64). The video settles (frames 65-78) on a different conical-roof mill with a green door, sheds on both sides, bare sail poles and no wind-rose wheel. The transitions are smoother than in A, with no obvious single-frame jump, but there is heavy geometric warping of the post mill.",
+        "failure_classification": "Mixed. The outbound yaw is well realized. The return pan reaches the start view early and then overshoots or keeps rotating. At the end it lands on a hallucinated landmark with new surrounding buildings, which is a forgetting/hallucination failure at the endpoint. Memory of the intermediate landmark (the post mill) is partially retained, though distorted."
+      },
+      "preference": "B",
+      "confidence": "low",
+      "reasoning": "Both videos share an identical, plausible outbound right turn and both reverse direction on LEFT. Both briefly pass a view resembling the starting mill partway through the LEFT phase, then continue panning. Both end on a different mill: A's has a brick-arched brown door, B's a green door with sheds. Neither recovers the starting viewpoint or the wind-rose landmark at the end, so neither earns credit for the final frame. B is marginally better as a diagnostic: it re-presents the dark post mill on the return path, while A replaces it with unrelated sails. B's transitions are also somewhat smoother than A's morphing and scale jump around frames 64-65. The core failure, an end-state hallucination after overshooting, is shared, so the preference is weak."
+    }
+  }
+}
