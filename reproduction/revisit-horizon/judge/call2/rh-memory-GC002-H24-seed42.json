@@ -1,0 +1,367 @@
+{
+ "task_id": "GC002",
+ "judge_provider": "google-vertex",
+ "judge_model": "gemini-3.1-pro-preview",
+ "endpoint": "vertex-ai-global",
+ "video_sha256": "344e6f9bcf73b10005bde156d582b5d6653c7b198e228cf9b472c066c27818fc",
+ "dry_run": false,
+ "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+ "gate": {
+  "applicable": "yes",
+  "task_id": "GC002",
+  "perspective": "first-person",
+  "verdict": "partial",
+  "instruction_following_score": 1,
+  "meaningful_requested_trajectory_progress": "partial",
+  "revisit_required": "yes",
+  "revisit_observed": "yes",
+  "observed_action_zh": "镜头向右转动约90度，随后静止等待约24秒，最后向左转动回到初始方向，但画面内容已完全改变。",
+  "trajectory_evidence_zh": "0.0s-3.0s镜头向右转动；3.0s-27.0s镜头保持静止；27.0s-31.8s镜头向左转动。",
+  "failure_reason_zh": "镜头向右转动仅约90度（面向侧墙）而非要求的180度，且最后向左转回时画面内容发生严重改变，未能恢复初始的走廊视角。",
+  "confidence_1_to_5": 5
+ },
+ "rubric": {
+  "base_non_task_score_1_to_5": 1.4,
+  "final_score_1_to_5": 1.4,
+  "category_scores_1_to_5": {
+   "identity_id": {
+    "score": 1,
+    "weight": 2.0,
+    "answer": "no",
+    "evidence_zh": "镜头向左转回初始区域时，原本的中央全身雕像、拱形玻璃天花板和白色大理石雕像完全消失，被一面带有青铜雕像的连续墙壁取代，发生了彻底的遗忘和替换。"
+   },
+   "identity_texture": {
+    "score": 2,
+    "weight": 1.0,
+    "answer": "no",
+    "evidence_zh": "在24秒的等待期内，右侧墙壁雕像的材质保持稳定；但当镜头向左转回初始区域时，原本的白色大理石材质完全丢失，被错误的青铜/金属材质取代，重现彻底失败。"
+   },
+   "color": {
+    "score": 2,
+    "weight": 1.0,
+    "answer": "no",
+    "evidence_zh": "等待期间雕像和墙壁颜色稳定；但镜头转回时，初始区域的雕像颜色从白色突变为青铜色/金黄色，发生了严重的颜色替换。"
+   },
+   "relative_position": {
+    "score": 1,
+    "weight": 1.0,
+    "answer": "no",
+    "evidence_zh": "房间的空间布局发生严重变异，原本的中央过道消失，变成了一堵连续的平墙，破坏了所有初始物体的相对位置关系和建筑结构。"
+   }
+  },
+  "excluded_categories": {
+   "task_specific": "not scored"
+  },
+  "static_tail_policy_applied": "视频在动作完成后仅有极短的尾声，无额外扣分。",
+  "action_inconsistency_penalties": [],
+  "requested_action_completion": {
+   "completed": "yes",
+   "first_completion_frame": 305,
+   "evidence_zh": "镜头按照提示词要求完成了向右旋转、约24秒的静止等待，随后向左旋转（尽管未能重现初始视图，但动作指令已执行完毕）。"
+  },
+  "background_consistency": {
+   "required_action_phase_zh": "在等待期间（帧50-274），红墙和地板图案保持高度稳定，无明显漂移或噪点。",
+   "post_completion_phase_zh": "动作完成后（帧305-318），背景墙壁和地板随着镜头平移保持连续，但整体建筑结构已与初始状态矛盾。"
+  },
+  "object_correspondence_checks": [
+   {
+    "comparison": "initial central bay vs revisited central bay region",
+    "anchors": [
+     "deep red gallery walls",
+     "patterned floor axis"
+    ],
+    "same_object_or_region": "yes"
+   }
+  ],
+  "camera_motion_disambiguation": {
+   "intervals_checked": [
+    "0-25",
+    "275-318"
+   ],
+   "continuous_camera_motion": "yes",
+   "tracked_structural_anchors": [
+    "deep red gallery walls",
+    "patterned floor axis"
+   ],
+   "newly_revealed_regions_zh": "镜头向右转时展示的右侧墙壁及雕像为新区域；但向左转回时展示的青铜雕像墙壁占据了本应是初始中央过道的空间，属于生成错误而非合理的新区域。",
+   "evidence_zh": "视频全程由连续的镜头向右旋转、静止等待和向左旋转组成，没有硬切，但向左转回时未能重建初始场景。"
+  },
+  "hard_reset_check": {
+   "hard_reset_claimed": "no",
+   "adjacent_frame_interval": "none",
+   "no_plausible_camera_transform": "no",
+   "persistent_anchor_contradiction": "yes",
+   "contradicting_anchors": [],
+   "evidence_zh": "场景的变化是由连续的镜头平移（向左旋转）引起的，虽然生成了错误的内容，但不存在相邻帧之间的瞬间硬切或跳跃。"
+  },
+  "post_completion_adjustment": {
+   "value": 0.0,
+   "evidence_zh": "动作完成后的尾声很短，没有出现新的严重错误。"
+  },
+  "final_state_check": {
+   "window": "300-318",
+   "visible_key_objects": [
+    "deep red gallery walls",
+    "patterned floor axis"
+   ],
+   "reappearance_consistency_zh": "镜头向左转回时，未能重现初始的中央过道、拱形天花板和白色雕像，而是生成了完全不同的青铜雕像和连续墙壁，重现一致性极差。"
+  },
+  "gc_dynamicity_check": {
+   "meaningful_action_progress": "yes",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evidence_zh": "镜头按照提示词要求完成了向右旋转、长时间静止等待以及向左旋转的动作序列，具有明确的动作进展。",
+   "final_score_gate_applied": null
+  },
+  "gc_appearance_stability_check": {
+   "applicable": "yes",
+   "tracked_objects_or_surfaces": [
+    "initial white marble statues",
+    "deep red gallery walls"
+   ],
+   "correspondence_anchors": [
+    "deep red gallery walls",
+    "patterned floor axis"
+   ],
+   "visible_intervals": [
+    "0-25",
+    "275-318"
+   ],
+   "before_developing_after_checkpoints": [
+    {
+     "surface": "statues in the central bay region",
+     "before_frame": 0,
+     "developing_frame": 290,
+     "after_frame": 318,
+     "observed_change_zh": "初始的白色大理石雕像在镜头转回时被替换为青铜色雕像。"
+    }
+   ],
+   "intrinsic_color_drift": "verified",
+   "material_or_texture_drift": "verified",
+   "generated_noise_artifacts": "none",
+   "noise_type": "none",
+   "allowed_visual_explanation": "none",
+   "evidence_zh": "等待期间画面稳定，但镜头转回初始区域时，雕像的颜色和材质发生了彻底的替换，无法用光照或视角解释。"
+  },
+  "summary_zh": "视频虽然准确执行了向右旋转、长时间静止等待和向左转回的动作序列，且在等待期间画面保持高度稳定，但在向左转回时完全未能重现初始的中央过道和白色大理石雕像，而是生成了完全不同的青铜雕像和连续墙壁，导致严重的世界一致性灾难性遗忘。",
+  "task_id": "GC002"
+ },
+ "calls": [
+  {
+   "mode": "gate",
+   "cached": false,
+   "prompt_tokens": 21608,
+   "output_tokens": 260
+  },
+  {
+   "mode": "score",
+   "cached": false,
+   "prompt_tokens": 35323,
+   "output_tokens": 1713
+  }
+ ],
+ "sampling": {
+  "strategy": "dual-scale full-video contact-sheet sampling",
+  "chronological_order": true,
+  "contact_sheet_encoding": {
+   "format": "JPEG",
+   "quality": 70,
+   "subsampling": "4:2:0"
+  },
+  "primary": {
+   "fps": 10.0,
+   "sample_interval_seconds": 0.1,
+   "cell_size": [
+    384,
+    216
+   ],
+   "grid": [
+    5,
+    5
+   ],
+   "frames_per_sheet": 25,
+   "sheet_size": [
+    1920,
+    1080
+   ],
+   "frames_count": 319,
+   "sheets_count": 13,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 31.8,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 24,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 2.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 25,
+     "last_sample_index": 49,
+     "first_time_seconds": 2.5,
+     "last_time_seconds": 4.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 50,
+     "last_sample_index": 74,
+     "first_time_seconds": 5.0,
+     "last_time_seconds": 7.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 75,
+     "last_sample_index": 99,
+     "first_time_seconds": 7.5,
+     "last_time_seconds": 9.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 5,
+     "first_sample_index": 100,
+     "last_sample_index": 124,
+     "first_time_seconds": 10.0,
+     "last_time_seconds": 12.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 6,
+     "first_sample_index": 125,
+     "last_sample_index": 149,
+     "first_time_seconds": 12.5,
+     "last_time_seconds": 14.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 7,
+     "first_sample_index": 150,
+     "last_sample_index": 174,
+     "first_time_seconds": 15.0,
+     "last_time_seconds": 17.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 8,
+     "first_sample_index": 175,
+     "last_sample_index": 199,
+     "first_time_seconds": 17.5,
+     "last_time_seconds": 19.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 9,
+     "first_sample_index": 200,
+     "last_sample_index": 224,
+     "first_time_seconds": 20.0,
+     "last_time_seconds": 22.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 10,
+     "first_sample_index": 225,
+     "last_sample_index": 249,
+     "first_time_seconds": 22.5,
+     "last_time_seconds": 24.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 11,
+     "first_sample_index": 250,
+     "last_sample_index": 274,
+     "first_time_seconds": 25.0,
+     "last_time_seconds": 27.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 12,
+     "first_sample_index": 275,
+     "last_sample_index": 299,
+     "first_time_seconds": 27.5,
+     "last_time_seconds": 29.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 13,
+     "first_sample_index": 300,
+     "last_sample_index": 318,
+     "first_time_seconds": 30.0,
+     "last_time_seconds": 31.8,
+     "filled_cells": 19
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "detail": {
+   "fps": 0.5,
+   "sample_interval_seconds": 2.0,
+   "cell_size": [
+    800,
+    450
+   ],
+   "grid": [
+    2,
+    2
+   ],
+   "frames_per_sheet": 4,
+   "sheet_size": [
+    1600,
+    900
+   ],
+   "frames_count": 16,
+   "sheets_count": 4,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 30.0,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 3,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 6.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 4,
+     "last_sample_index": 7,
+     "first_time_seconds": 8.0,
+     "last_time_seconds": 14.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 8,
+     "last_sample_index": 11,
+     "first_time_seconds": 16.0,
+     "last_time_seconds": 22.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 12,
+     "last_sample_index": 15,
+     "first_time_seconds": 24.0,
+     "last_time_seconds": 30.0,
+     "filled_cells": 4
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "reference_image_role": "initial scene/style context only, if provided"
+ },
+ "gate_prompt_sha256": "2e7ef3799ae462794868d69509142663b8127d29e83c8fb62b53a9fffa99bf3b",
+ "score_prompt_sha256": "6a00efb8ab7ac6ebb6d0ecdb188d669b0a4aa40b3194f2f3e51c06f437a3dad1",
+ "scores": {
+  "official": 1.4,
+  "final_score": 1.4
+ },
+ "episode_id": "rh-memory-GC002-H24-seed42",
+ "arm": "memory",
+ "horizon_s": 24,
+ "objective": "Turn right 180 degrees, wait for 24 seconds, then turn back to the original view."
+}

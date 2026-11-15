@@ -1,0 +1,517 @@
+{
+ "task_id": "GC015",
+ "judge_provider": "google-vertex",
+ "judge_model": "gemini-3.1-pro-preview",
+ "endpoint": "vertex-ai-global",
+ "video_sha256": "9aff3e475bd365a0047eb9c68a0e480dc601f413015d3efe73dbe0803d86c943",
+ "dry_run": false,
+ "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+ "gate": {
+  "applicable": "yes",
+  "task_id": "GC015",
+  "perspective": "first-person",
+  "verdict": "pass",
+  "instruction_following_score": 1,
+  "meaningful_requested_trajectory_progress": "yes",
+  "revisit_required": "yes",
+  "revisit_observed": "yes",
+  "observed_action_zh": "镜头向右旋转约180度，静止等待了约24秒，然后向左旋转回到了初始视角。",
+  "trajectory_evidence_zh": "在第1张接触图中，镜头向右旋转，从看向室外转为看向室内厨房区域；在第2至第11张接触图中，镜头保持静止长达约25秒；在第12和第13张接触图中，镜头向左旋转，最终回到了初始的室外视角。",
+  "failure_reason_zh": "",
+  "confidence_1_to_5": 5
+ },
+ "rubric": {
+  "base_non_task_score_1_to_5": 1.6,
+  "final_score_1_to_5": 1.6,
+  "category_scores_1_to_5": {
+   "identity_id": {
+    "score": 1,
+    "weight": 2.0,
+    "answer": "no",
+    "evidence_zh": "视频在向右旋转时（约第20-30帧），房间布局和物体发生完全改变，原本带有格子衬衫的餐桌被带有花纹桌布的餐桌取代，背景墙上的架子变成了窗户。在视频结尾向左旋转回原视角时，未能还原初始的房间布局，格子衬衫、扶手椅和原有的厨房操作台均消失或被替换。"
+   },
+   "identity_texture": {
+    "score": 4,
+    "weight": 1.0,
+    "answer": "partial",
+    "evidence_zh": "尽管房间物体发生了替换，但静止等待期间（第30-280帧）新出现的木墙和桌布纹理保持相对稳定，未见明显的噪点或纹理漂移。"
+   },
+   "color": {
+    "score": 1,
+    "weight": 1.0,
+    "answer": "no",
+    "evidence_zh": "视频在静止等待期间（约第50-250帧）发生了严重的颜色漂移，整个房间的木墙、家具从温暖的棕色逐渐变成了深蓝色，且无合理的光照或时间流逝解释。"
+   },
+   "relative_position": {
+    "score": 1,
+    "weight": 1.0,
+    "answer": "no",
+    "evidence_zh": "房间的空间布局在镜头旋转过程中发生了不可能的重置，原本在背景墙上的架子跑到了左侧墙壁，窗户的位置也发生了不合理的移动，结尾未能恢复初始的空间关系。"
+   }
+  },
+  "excluded_categories": {
+   "task_specific": "not scored"
+  },
+  "static_tail_policy_applied": "No static tail penalty applied as the action completes at the end of the video.",
+  "action_inconsistency_penalties": [],
+  "requested_action_completion": {
+   "completed": "yes",
+   "first_completion_frame": 318,
+   "evidence_zh": "镜头完成了向右旋转、长时间等待以及向左旋转回原方向的动作序列。"
+  },
+  "background_consistency": {
+   "required_action_phase_zh": "背景在镜头旋转时发生了严重的硬重置，墙壁布局和窗户位置完全改变，且在等待期间发生了严重的颜色漂移。",
+   "post_completion_phase_zh": "无明显的动作后阶段。"
+  },
+  "object_correspondence_checks": [
+   {
+    "comparison": "initial room layout vs room layout after right turn",
+    "anchors": [
+     "back wall",
+     "dining table"
+    ],
+    "same_object_or_region": "no"
+   }
+  ],
+  "camera_motion_disambiguation": {
+   "intervals_checked": [
+    "15-30",
+    "280-318"
+   ],
+   "continuous_camera_motion": "yes",
+   "tracked_structural_anchors": [
+    "back wall",
+    "dining table"
+   ],
+   "newly_revealed_regions_zh": "镜头向右旋转揭示了房间的右侧区域，但同时导致了已知区域（如背景墙和餐桌）的完全重置。",
+   "evidence_zh": "镜头有明确的水平旋转运动，但伴随着场景布局的重置，无法用单纯的视角变化来解释。"
+  },
+  "hard_reset_check": {
+   "hard_reset_claimed": "yes",
+   "adjacent_frame_interval": "20-30",
+   "no_plausible_camera_transform": "yes",
+   "persistent_anchor_contradiction": "yes",
+   "contradicting_anchors": [
+    "back wall with shelves",
+    "dining table"
+   ],
+   "evidence_zh": "在第20至30帧的向右旋转过程中，原本带有架子的背景墙变成了带有窗户的墙壁，架子移动到了左侧，且带有格子衬衫的餐桌被带有花纹桌布的餐桌瞬间替换，属于明显的场景重置。"
+  },
+  "post_completion_adjustment": {
+   "value": 0.0,
+   "evidence_zh": "动作在视频结尾完成，无多余的动作后阶段。"
+  },
+  "final_state_check": {
+   "window": "310-318",
+   "visible_key_objects": [
+    "wooden dining table",
+    "cabin structure"
+   ],
+   "reappearance_consistency_zh": "结尾视角未能还原初始场景，格子衬衫、扶手椅和原有的厨房操作台均未一致重现，房间布局完全不同。"
+  },
+  "oe_dynamicity_check": {
+   "mode": "not_applicable",
+   "meaningful_evolution": "not_applicable",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evolution_quality_level_1_to_5": null,
+   "named_process": "not_applicable",
+   "phase_comparison_applicable": "no",
+   "pre_occlusion_state_zh": "not_applicable",
+   "hidden_interval_zh": "not_applicable",
+   "reappeared_state_zh": "not_applicable",
+   "post_completion_static_tail": "no",
+   "static_tail_first_frame": null,
+   "terminal_static_reasonable": "not_applicable",
+   "terminal_pose_or_process_state": "not_applicable",
+   "support_and_pose_evidence_zh": "not_applicable",
+   "terminal_state_reasoning_zh": "not_applicable",
+   "static_tail_score_adjustment": 0,
+   "static_tail_penalty_zh": "not_applicable",
+   "camera_independent_subject_motion": "not_applicable",
+   "stable_world_anchors_compared": [],
+   "articulation_or_local_state_change_zh": "not_applicable",
+   "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+   "two_independent_motion_evidence_requirements_met": "not_applicable",
+   "expected_world_motion_direction_zh": "not_applicable",
+   "returned_motion_direction_consistent": "not_applicable",
+   "rigid_vehicle_local_progression_zh": "not_applicable",
+   "vehicle_front_rear_identification_zh": "not_applicable",
+   "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+   "vehicle_motion_direction": "not_applicable",
+   "unexplained_reverse_motion": "not_applicable",
+   "subject_relative_change_zh": "not_applicable",
+   "unchanged_coupled_details_zh": "not_applicable",
+   "accumulated_change_zh": "not_applicable",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": null
+  },
+  "oe_instruction_following_check": {
+   "applicable": "no",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "meaningful_requested_trajectory_progress": "not_applicable",
+   "revisit_required": "no",
+   "starting_pose_revisited": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "oe003_ink_deposition_check": {
+   "applicable": "no",
+   "persistent_new_ink": "uncertain",
+   "ink_change_type": "uncertain",
+   "same_anchored_paper_region_compared": "no",
+   "initial_ink_state_zh": "not_applicable",
+   "change_sequence_zh": "not_applicable",
+   "resulting_ink_state_zh": "not_applicable",
+   "hand_or_pen_motion_without_ink_change": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "oe_productive_action_check": {
+   "applicable": "no",
+   "action_type": "other",
+   "tool_and_target": "not_applicable",
+   "persistent_result_created": "no",
+   "result_recognizable_and_intentional": "no",
+   "tool_contact_causes_local_change": "no",
+   "action_result_temporally_coherent": "no",
+   "prompt_named_requirement": "not_specified",
+   "result_matches_named_requirement": "not_applicable",
+   "result_later_disappears_or_resets": "uncertain",
+   "visible_reversal_explanation": "not_applicable",
+   "productive_action_quality_level_1_to_5": 1,
+   "evidence_zh": "not_applicable"
+  },
+  "gc_dynamicity_check": {
+   "meaningful_action_progress": "yes",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evidence_zh": "镜头成功执行了向右旋转、等待和向左旋转的动作，有明确的动作进展。",
+   "final_score_gate_applied": null
+  },
+  "gc_appearance_stability_check": {
+   "applicable": "yes",
+   "tracked_objects_or_surfaces": [
+    "wooden walls",
+    "cabinets"
+   ],
+   "correspondence_anchors": [
+    "window",
+    "table"
+   ],
+   "visible_intervals": [
+    "50-250"
+   ],
+   "before_developing_after_checkpoints": [
+    {
+     "surface": "wooden walls",
+     "before_frame": 50,
+     "developing_frame": 150,
+     "after_frame": 250,
+     "observed_change_zh": "木墙从温暖的棕色逐渐漂移为深蓝色。"
+    }
+   ],
+   "intrinsic_color_drift": "verified",
+   "material_or_texture_drift": "none",
+   "generated_noise_artifacts": "none",
+   "noise_type": "none",
+   "allowed_visual_explanation": "none",
+   "evidence_zh": "在静止等待期间，房间的木墙和家具发生了严重的颜色漂移，变成了深蓝色，且无合理的光照解释。"
+  },
+  "if_subject_motion_check": {
+   "subject_expected_to_move": "no",
+   "meaningful_subject_motion": "not_applicable",
+   "static_or_near_static": "no",
+   "camera_or_background_motion_only": "yes",
+   "post_action_static_tail": "no",
+   "static_tail_first_frame": null,
+   "static_tail_fraction_of_video": 0.0,
+   "post_action_static_penalty": 0,
+   "evidence_zh": "not_applicable",
+   "final_score_gate_applied": null
+  },
+  "if_instruction_following_check": {
+   "applicable": "no",
+   "perspective": "first-person",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "prompt_directed_forward_progress": "not_applicable",
+   "camera_or_background_motion_only": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "if_collision_boundary_checklist": {
+   "applicable": "no",
+   "interaction_opportunity_reached": "no",
+   "observed_outcome": "not_applicable",
+   "solid_interpenetration": "uncertain",
+   "support_after_contact": "not_applicable",
+   "boundary_response_plausible": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "if_target_boundary_stability_check": {
+   "target_boundary": "not_applicable",
+   "target_type": "not_applicable",
+   "tracked_before_contact": "uncertain",
+   "remained_present_until_trigger": "uncertain",
+   "observed_trigger": "not_applicable",
+   "unsupported_change": "none",
+   "interaction_opportunity_preserved": "uncertain",
+   "evidence_zh": "not_applicable"
+  },
+  "if_support_proxy_check": {
+   "direct_support_interface_visible": "no",
+   "proxy_evidence_observed": [],
+   "proxy_supports_expected_locomotion": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "subject_identity_check": {
+   "applicable": "no",
+   "tracked_subject": "not_applicable",
+   "same_entity_throughout": "no",
+   "stable_identity_attributes": [],
+   "identity_failure": "none",
+   "evidence_zh": "not_applicable"
+  },
+  "subject_identity_eligibility_check": {
+   "core_process": "not_applicable",
+   "core_process_level": 1,
+   "meaningful_motion_or_evolution": "no",
+   "contact_or_support_demonstrated": "not_applicable",
+   "identity_eligible_for_normal_weighting": "no",
+   "final_score_cap_applied": null,
+   "evidence_zh": "not_applicable"
+  },
+  "if_interaction_quality_check": {
+   "interaction_quality_level_1_to_5": 1,
+   "interaction_opportunity_reached": "no",
+   "physical_response_observed": "no",
+   "core_failure_zh": "not_applicable",
+   "positive_evidence_zh": "not_applicable",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": null
+  },
+  "summary_zh": "视频在镜头旋转时发生了严重的场景硬重置，初始物体消失且布局改变，并在静止等待期间出现了严重的颜色漂移，结尾未能还原初始视角。",
+  "task_id": "GC015"
+ },
+ "calls": [
+  {
+   "mode": "gate",
+   "cached": false,
+   "prompt_tokens": 21608,
+   "output_tokens": 234
+  },
+  {
+   "mode": "score",
+   "cached": false,
+   "prompt_tokens": 35327,
+   "output_tokens": 3520
+  }
+ ],
+ "sampling": {
+  "strategy": "dual-scale full-video contact-sheet sampling",
+  "chronological_order": true,
+  "contact_sheet_encoding": {
+   "format": "JPEG",
+   "quality": 70,
+   "subsampling": "4:2:0"
+  },
+  "primary": {
+   "fps": 10.0,
+   "sample_interval_seconds": 0.1,
+   "cell_size": [
+    384,
+    216
+   ],
+   "grid": [
+    5,
+    5
+   ],
+   "frames_per_sheet": 25,
+   "sheet_size": [
+    1920,
+    1080
+   ],
+   "frames_count": 319,
+   "sheets_count": 13,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 31.8,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 24,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 2.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 25,
+     "last_sample_index": 49,
+     "first_time_seconds": 2.5,
+     "last_time_seconds": 4.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 50,
+     "last_sample_index": 74,
+     "first_time_seconds": 5.0,
+     "last_time_seconds": 7.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 75,
+     "last_sample_index": 99,
+     "first_time_seconds": 7.5,
+     "last_time_seconds": 9.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 5,
+     "first_sample_index": 100,
+     "last_sample_index": 124,
+     "first_time_seconds": 10.0,
+     "last_time_seconds": 12.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 6,
+     "first_sample_index": 125,
+     "last_sample_index": 149,
+     "first_time_seconds": 12.5,
+     "last_time_seconds": 14.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 7,
+     "first_sample_index": 150,
+     "last_sample_index": 174,
+     "first_time_seconds": 15.0,
+     "last_time_seconds": 17.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 8,
+     "first_sample_index": 175,
+     "last_sample_index": 199,
+     "first_time_seconds": 17.5,
+     "last_time_seconds": 19.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 9,
+     "first_sample_index": 200,
+     "last_sample_index": 224,
+     "first_time_seconds": 20.0,
+     "last_time_seconds": 22.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 10,
+     "first_sample_index": 225,
+     "last_sample_index": 249,
+     "first_time_seconds": 22.5,
+     "last_time_seconds": 24.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 11,
+     "first_sample_index": 250,
+     "last_sample_index": 274,
+     "first_time_seconds": 25.0,
+     "last_time_seconds": 27.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 12,
+     "first_sample_index": 275,
+     "last_sample_index": 299,
+     "first_time_seconds": 27.5,
+     "last_time_seconds": 29.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 13,
+     "first_sample_index": 300,
+     "last_sample_index": 318,
+     "first_time_seconds": 30.0,
+     "last_time_seconds": 31.8,
+     "filled_cells": 19
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "detail": {
+   "fps": 0.5,
+   "sample_interval_seconds": 2.0,
+   "cell_size": [
+    800,
+    450
+   ],
+   "grid": [
+    2,
+    2
+   ],
+   "frames_per_sheet": 4,
+   "sheet_size": [
+    1600,
+    900
+   ],
+   "frames_count": 16,
+   "sheets_count": 4,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 30.0,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 3,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 6.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 4,
+     "last_sample_index": 7,
+     "first_time_seconds": 8.0,
+     "last_time_seconds": 14.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 8,
+     "last_sample_index": 11,
+     "first_time_seconds": 16.0,
+     "last_time_seconds": 22.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 12,
+     "last_sample_index": 15,
+     "first_time_seconds": 24.0,
+     "last_time_seconds": 30.0,
+     "filled_cells": 4
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "reference_image_role": "initial scene/style context only, if provided"
+ },
+ "gate_prompt_sha256": "d7cdc6039f5824e6ecdc597976045f9923b8219b85cc0abba66cf76179852661",
+ "score_prompt_sha256": "75dc0bfdf75a1138178d6001296f7845b0f64587c14b2dac677c08916423bc70",
+ "scores": {
+  "official": 1.6,
+  "final_score": 1.6
+ },
+ "episode_id": "rh-memory-GC015-H24-seed42",
+ "arm": "memory",
+ "horizon_s": 24,
+ "objective": "Turn right 180 degrees, wait for 24 seconds, then turn back to the original view."
+}

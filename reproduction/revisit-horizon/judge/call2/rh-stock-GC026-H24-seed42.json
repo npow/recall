@@ -1,0 +1,371 @@
+{
+ "task_id": "GC026",
+ "judge_provider": "google-vertex",
+ "judge_model": "gemini-3.1-pro-preview",
+ "endpoint": "vertex-ai-global",
+ "video_sha256": "50cde2eeca6b42ba022442639c751f505354da2aa8169edc6019765b0c49dc28",
+ "dry_run": false,
+ "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+ "gate": {
+  "applicable": "yes",
+  "task_id": "GC026",
+  "perspective": "first-person",
+  "verdict": "pass",
+  "instruction_following_score": 1,
+  "meaningful_requested_trajectory_progress": "yes",
+  "revisit_required": "yes",
+  "revisit_observed": "yes",
+  "observed_action_zh": "镜头向右转动，随后静止等待了约27秒，最后向左转动回到了初始的视角方向。",
+  "trajectory_evidence_zh": "0.0秒至1.0秒，镜头向右转动；1.1秒至28.0秒，镜头保持静止；28.1秒至30.5秒，镜头向左转动并回到初始方向；30.5秒至31.8秒，镜头保持静止。",
+  "failure_reason_zh": "",
+  "confidence_1_to_5": 5
+ },
+ "rubric": {
+  "base_non_task_score_1_to_5": 3.0,
+  "final_score_1_to_5": 3.0,
+  "category_scores_1_to_5": {
+   "identity_id": {
+    "score": 2,
+    "weight": 2.0,
+    "answer": "no",
+    "evidence_zh": "镜头向左转回初始区域时，虽然店面的整体结构（尖顶、柱子、红色遮阳篷）还在，但左侧遮阳篷的身份发生改变，橱窗内部的楼梯消失并被货架取代，且左侧小树的数量从两棵变为一棵。"
+   },
+   "identity_texture": {
+    "score": 1,
+    "weight": 1.0,
+    "answer": "no",
+    "evidence_zh": "初始画面中清晰的'DIAMOND DESIGN'和'Tim Hortons'文字在镜头转回时完全丢失，两侧遮阳篷上的文字均变成了'Tiktarc OGN'。"
+   },
+   "color": {
+    "score": 5,
+    "weight": 1.0,
+    "answer": "yes",
+    "evidence_zh": "遮阳篷的鲜红色、屋顶的深色以及树木的绿色在镜头转回重新出现时保持稳定，没有发生颜色漂移。"
+   },
+   "relative_position": {
+    "score": 5,
+    "weight": 1.0,
+    "answer": "yes",
+    "evidence_zh": "重新出现的中央入口、两侧的红色遮阳篷以及支撑柱之间的空间布局关系保持一致，没有发生错位或跳跃。"
+   }
+  },
+  "excluded_categories": {
+   "task_specific": "not scored"
+  },
+  "static_tail_policy_applied": "视频在完成向右转后按提示要求静止了24秒，随后向左转回，这不是无意义的静止尾部，而是符合提示词的等待动作。",
+  "action_inconsistency_penalties": [],
+  "requested_action_completion": {
+   "completed": "yes",
+   "first_completion_frame": 318,
+   "evidence_zh": "镜头向右旋转，静止等待了一段时间，然后向左旋转回到了初始的店面区域。"
+  },
+  "background_consistency": {
+   "required_action_phase_zh": "镜头转回初始区域时，背景建筑的整体结构基本保持，但橱窗内部细节和招牌文字发生了严重变化。",
+   "post_completion_phase_zh": "动作在视频末尾完成，没有额外的后完成阶段。"
+  },
+  "object_correspondence_checks": [
+   {
+    "comparison": "初始店面与镜头转回后重新出现的店面",
+    "anchors": [
+     "尖顶入口",
+     "支撑柱",
+     "红色遮阳篷"
+    ],
+    "same_object_or_region": "yes"
+   }
+  ],
+  "camera_motion_disambiguation": {
+   "intervals_checked": [
+    "0-30",
+    "270-318"
+   ],
+   "continuous_camera_motion": "yes",
+   "tracked_structural_anchors": [
+    "尖顶",
+    "玻璃门",
+    "柱子"
+   ],
+   "newly_revealed_regions_zh": "镜头向右旋转后看到的带有两侧'Tim Hortons'的店面是一个新揭示的区域（或幻觉出的街道对面），不与初始区域直接对比。",
+   "evidence_zh": "镜头进行了连续的向右平移旋转，随后静止，最后连续向左平移旋转回到初始区域，运动轨迹清晰。"
+  },
+  "hard_reset_check": {
+   "hard_reset_claimed": "no",
+   "adjacent_frame_interval": "none",
+   "no_plausible_camera_transform": "no",
+   "persistent_anchor_contradiction": "no",
+   "contradicting_anchors": [],
+   "evidence_zh": "视频中的视角变化均由连续的镜头旋转引起，没有发生硬切或突然的场景重置。"
+  },
+  "post_completion_adjustment": {
+   "value": 0.0,
+   "evidence_zh": "视频在镜头转回初始视角后结束，没有多余的过度运动。"
+  },
+  "final_state_check": {
+   "window": "300-318",
+   "visible_key_objects": [
+    "peaked-roof entrance",
+    "supporting columns",
+    "red awnings",
+    "small trees"
+   ],
+   "reappearance_consistency_zh": "初始区域重新出现时，整体结构布局一致，但招牌文字完全改变，橱窗内部细节和树木数量也有所变化。"
+  },
+  "gc_dynamicity_check": {
+   "meaningful_action_progress": "yes",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evidence_zh": "视频包含了明确的镜头向右旋转和向左旋转动作，中间的静止是响应提示词的等待要求，整体具有有意义的动作进展。",
+   "final_score_gate_applied": null
+  },
+  "gc_appearance_stability_check": {
+   "applicable": "yes",
+   "tracked_objects_or_surfaces": [
+    "DIAMOND DESIGN 遮阳篷",
+    "Tim Hortons 遮阳篷"
+   ],
+   "correspondence_anchors": [
+    "尖顶入口",
+    "支撑柱"
+   ],
+   "visible_intervals": [
+    "0-10",
+    "300-318"
+   ],
+   "before_developing_after_checkpoints": [
+    {
+     "surface": "左侧遮阳篷",
+     "before_frame": 0,
+     "developing_frame": 300,
+     "after_frame": 318,
+     "observed_change_zh": "文字从'DIAMOND DESIGN'变成了'Tiktarc OGN'。"
+    }
+   ],
+   "intrinsic_color_drift": "none",
+   "material_or_texture_drift": "verified",
+   "generated_noise_artifacts": "none",
+   "noise_type": "none",
+   "allowed_visual_explanation": "none",
+   "evidence_zh": "重新出现时，遮阳篷上的文字纹理发生了完全的替换，属于严重的纹理一致性失败。"
+  },
+  "summary_zh": "视频成功执行了向右旋转、等待并转回的动作，重新出现时店面的空间布局和颜色保持一致，但遮阳篷上的文字完全改变，且橱窗内部细节和树木数量发生变化。",
+  "task_id": "GC026"
+ },
+ "calls": [
+  {
+   "mode": "gate",
+   "cached": false,
+   "prompt_tokens": 21608,
+   "output_tokens": 234
+  },
+  {
+   "mode": "score",
+   "cached": false,
+   "prompt_tokens": 36756,
+   "output_tokens": 1629
+  }
+ ],
+ "sampling": {
+  "strategy": "dual-scale full-video contact-sheet sampling",
+  "chronological_order": true,
+  "contact_sheet_encoding": {
+   "format": "JPEG",
+   "quality": 70,
+   "subsampling": "4:2:0"
+  },
+  "primary": {
+   "fps": 10.0,
+   "sample_interval_seconds": 0.1,
+   "cell_size": [
+    384,
+    216
+   ],
+   "grid": [
+    5,
+    5
+   ],
+   "frames_per_sheet": 25,
+   "sheet_size": [
+    1920,
+    1080
+   ],
+   "frames_count": 319,
+   "sheets_count": 13,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 31.8,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 24,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 2.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 25,
+     "last_sample_index": 49,
+     "first_time_seconds": 2.5,
+     "last_time_seconds": 4.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 50,
+     "last_sample_index": 74,
+     "first_time_seconds": 5.0,
+     "last_time_seconds": 7.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 75,
+     "last_sample_index": 99,
+     "first_time_seconds": 7.5,
+     "last_time_seconds": 9.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 5,
+     "first_sample_index": 100,
+     "last_sample_index": 124,
+     "first_time_seconds": 10.0,
+     "last_time_seconds": 12.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 6,
+     "first_sample_index": 125,
+     "last_sample_index": 149,
+     "first_time_seconds": 12.5,
+     "last_time_seconds": 14.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 7,
+     "first_sample_index": 150,
+     "last_sample_index": 174,
+     "first_time_seconds": 15.0,
+     "last_time_seconds": 17.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 8,
+     "first_sample_index": 175,
+     "last_sample_index": 199,
+     "first_time_seconds": 17.5,
+     "last_time_seconds": 19.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 9,
+     "first_sample_index": 200,
+     "last_sample_index": 224,
+     "first_time_seconds": 20.0,
+     "last_time_seconds": 22.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 10,
+     "first_sample_index": 225,
+     "last_sample_index": 249,
+     "first_time_seconds": 22.5,
+     "last_time_seconds": 24.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 11,
+     "first_sample_index": 250,
+     "last_sample_index": 274,
+     "first_time_seconds": 25.0,
+     "last_time_seconds": 27.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 12,
+     "first_sample_index": 275,
+     "last_sample_index": 299,
+     "first_time_seconds": 27.5,
+     "last_time_seconds": 29.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 13,
+     "first_sample_index": 300,
+     "last_sample_index": 318,
+     "first_time_seconds": 30.0,
+     "last_time_seconds": 31.8,
+     "filled_cells": 19
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "detail": {
+   "fps": 0.5,
+   "sample_interval_seconds": 2.0,
+   "cell_size": [
+    800,
+    450
+   ],
+   "grid": [
+    2,
+    2
+   ],
+   "frames_per_sheet": 4,
+   "sheet_size": [
+    1600,
+    900
+   ],
+   "frames_count": 16,
+   "sheets_count": 4,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 30.0,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 3,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 6.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 4,
+     "last_sample_index": 7,
+     "first_time_seconds": 8.0,
+     "last_time_seconds": 14.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 8,
+     "last_sample_index": 11,
+     "first_time_seconds": 16.0,
+     "last_time_seconds": 22.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 12,
+     "last_sample_index": 15,
+     "first_time_seconds": 24.0,
+     "last_time_seconds": 30.0,
+     "filled_cells": 4
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "reference_image_role": "initial scene/style context only, if provided"
+ },
+ "gate_prompt_sha256": "1e80b9a338d4843dfda9743debdc6036c7f6092eeace46eb4a01db98f4177af9",
+ "score_prompt_sha256": "6a8ce1e2a0c1e0b68fa67118559890a83ca8ff9fdf92309f569eb376a0616edb",
+ "scores": {
+  "official": 3.0,
+  "final_score": 3.0
+ },
+ "episode_id": "rh-stock-GC026-H24-seed42",
+ "arm": "stock",
+ "horizon_s": 24,
+ "objective": "Turn right 180 degrees, wait for 24 seconds, then turn back to the original view."
+}

@@ -1,0 +1,512 @@
+{
+ "task_id": "GC032",
+ "judge_provider": "google-vertex",
+ "judge_model": "gemini-3.1-pro-preview",
+ "endpoint": "vertex-ai-global",
+ "video_sha256": "878e2f800278fa1789228e746a4467dcf026a531d38964a61112a1be83ffb9e9",
+ "dry_run": false,
+ "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+ "gate": {
+  "applicable": "yes",
+  "task_id": "GC032",
+  "perspective": "first-person",
+  "verdict": "pass",
+  "instruction_following_score": 1,
+  "meaningful_requested_trajectory_progress": "yes",
+  "revisit_required": "yes",
+  "revisit_observed": "yes",
+  "observed_action_zh": "镜头向右转动，随后保持静止约25秒，最后向左转动回到了初始视角。",
+  "trajectory_evidence_zh": "Sheet 1-2显示镜头向右平移；Sheet 3-11显示镜头保持静止，期间有车辆经过并停在镜头前；Sheet 12-13显示镜头向左平移，最终画面回到了最初面向塔桥双塔的视角。",
+  "failure_reason_zh": "",
+  "confidence_1_to_5": 5
+ },
+ "rubric": {
+  "base_non_task_score_1_to_5": 1.6,
+  "final_score_1_to_5": 1.6,
+  "category_scores_1_to_5": {
+   "identity_id": {
+    "score": 1,
+    "weight": 2.0,
+    "answer": "no",
+    "evidence_zh": "当镜头向左转回原始视角时（第275-318帧），原本标志性的右侧桥塔和上层连廊完全消失，被一个不相关的单拱石造结构取代，严重破坏了地标的定义性结构。"
+   },
+   "identity_texture": {
+    "score": 1,
+    "weight": 1.0,
+    "answer": "no",
+    "evidence_zh": "镜头转回后，新生成的桥梁部分引入了不相关的石拱纹理，丢失了原有右侧桥塔的华丽窗户和尖顶等表面细节。"
+   },
+   "color": {
+    "score": 4,
+    "weight": 1.0,
+    "answer": "partial",
+    "evidence_zh": "尽管桥梁的整体结构发生了严重变异，但保留下来并被持续追踪的左侧桥塔和悬索依然保持了灰石和蓝色的基本颜色特征，没有出现明显的色调漂移。"
+   },
+   "relative_position": {
+    "score": 1,
+    "weight": 1.0,
+    "answer": "no",
+    "evidence_zh": "最终视图中，两座桥塔相对并由上层连廊连接的内部布局被完全破坏，右侧桥塔和连廊缺失。"
+   }
+  },
+  "excluded_categories": {
+   "task_specific": "not scored"
+  },
+  "static_tail_policy_applied": "动作完成后视频很快结束，没有触发静态尾部惩罚。",
+  "action_inconsistency_penalties": [],
+  "requested_action_completion": {
+   "completed": "yes",
+   "first_completion_frame": 300,
+   "evidence_zh": "镜头向右转动，等待一段时间后，在第275帧左右开始向左转回，并在第300帧左右完成转回动作。"
+  },
+  "background_consistency": {
+   "required_action_phase_zh": "在镜头向右转动并等待期间，左侧的桥塔作为背景锚点保持可见且相对稳定。",
+   "post_completion_phase_zh": "镜头转回后，背景中的桥梁结构发生了严重突变。"
+  },
+  "object_correspondence_checks": [
+   {
+    "comparison": "Tower Bridge initial view vs final view",
+    "anchors": [
+     "left tower",
+     "bridge deck"
+    ],
+    "same_object_or_region": "yes"
+   }
+  ],
+  "camera_motion_disambiguation": {
+   "intervals_checked": [
+    "0-30",
+    "275-300"
+   ],
+   "continuous_camera_motion": "yes",
+   "tracked_structural_anchors": [
+    "left tower",
+    "bridge deck"
+   ],
+   "newly_revealed_regions_zh": "镜头向左转回时重新露出的右侧桥梁区域。",
+   "evidence_zh": "镜头连续向右平移、静止等待，然后向左平移，左侧桥塔在整个过程中保持可见，证明是同一场景的连续观察。"
+  },
+  "hard_reset_check": {
+   "hard_reset_claimed": "no",
+   "adjacent_frame_interval": "none",
+   "no_plausible_camera_transform": "no",
+   "persistent_anchor_contradiction": "no",
+   "contradicting_anchors": [],
+   "evidence_zh": "场景过渡由连续的镜头平移解释，并非硬切，但视野外的物体在重新进入画面时发生了变异。"
+  },
+  "post_completion_adjustment": {
+   "value": 0.0,
+   "evidence_zh": "动作完成后视频很快结束，没有多余的无效运动。"
+  },
+  "final_state_check": {
+   "window": "300-318",
+   "visible_key_objects": [
+    "Tower Bridge"
+   ],
+   "reappearance_consistency_zh": "初始视图中的右侧桥塔和上层连廊在最终视图中完全消失，被一个不相关的单拱石造结构取代，一致性极差。"
+  },
+  "oe_dynamicity_check": {
+   "mode": "not_applicable",
+   "meaningful_evolution": "no",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evolution_quality_level_1_to_5": 1,
+   "named_process": "not_applicable",
+   "phase_comparison_applicable": "no",
+   "pre_occlusion_state_zh": "not_applicable",
+   "hidden_interval_zh": "not_applicable",
+   "reappeared_state_zh": "not_applicable",
+   "post_completion_static_tail": "no",
+   "static_tail_first_frame": null,
+   "terminal_static_reasonable": "not_applicable",
+   "terminal_pose_or_process_state": "not_applicable",
+   "support_and_pose_evidence_zh": "not_applicable",
+   "terminal_state_reasoning_zh": "not_applicable",
+   "static_tail_score_adjustment": 0,
+   "static_tail_penalty_zh": "not_applicable",
+   "camera_independent_subject_motion": "not_applicable",
+   "stable_world_anchors_compared": [],
+   "articulation_or_local_state_change_zh": "not_applicable",
+   "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+   "two_independent_motion_evidence_requirements_met": "not_applicable",
+   "expected_world_motion_direction_zh": "not_applicable",
+   "returned_motion_direction_consistent": "not_applicable",
+   "rigid_vehicle_local_progression_zh": "not_applicable",
+   "vehicle_front_rear_identification_zh": "not_applicable",
+   "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+   "vehicle_motion_direction": "not_applicable",
+   "unexplained_reverse_motion": "not_applicable",
+   "subject_relative_change_zh": "not_applicable",
+   "unchanged_coupled_details_zh": "not_applicable",
+   "accumulated_change_zh": "not_applicable",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": null
+  },
+  "oe_instruction_following_check": {
+   "applicable": "no",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "meaningful_requested_trajectory_progress": "not_applicable",
+   "revisit_required": "no",
+   "starting_pose_revisited": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "oe003_ink_deposition_check": {
+   "applicable": "no",
+   "persistent_new_ink": "uncertain",
+   "ink_change_type": "uncertain",
+   "same_anchored_paper_region_compared": "no",
+   "initial_ink_state_zh": "not_applicable",
+   "change_sequence_zh": "not_applicable",
+   "resulting_ink_state_zh": "not_applicable",
+   "hand_or_pen_motion_without_ink_change": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "oe_productive_action_check": {
+   "applicable": "no",
+   "action_type": "other",
+   "tool_and_target": "not_applicable",
+   "persistent_result_created": "no",
+   "result_recognizable_and_intentional": "no",
+   "tool_contact_causes_local_change": "no",
+   "action_result_temporally_coherent": "no",
+   "prompt_named_requirement": "not_specified",
+   "result_matches_named_requirement": "not_applicable",
+   "result_later_disappears_or_resets": "uncertain",
+   "visible_reversal_explanation": "not_applicable",
+   "productive_action_quality_level_1_to_5": 1,
+   "evidence_zh": "not_applicable"
+  },
+  "gc_dynamicity_check": {
+   "meaningful_action_progress": "yes",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evidence_zh": "镜头执行了向右平移、长时间等待以及向左平移转回的动作，有明确的动作进展。",
+   "final_score_gate_applied": null
+  },
+  "gc_appearance_stability_check": {
+   "applicable": "yes",
+   "tracked_objects_or_surfaces": [
+    "Tower Bridge"
+   ],
+   "correspondence_anchors": [
+    "left tower",
+    "bridge deck"
+   ],
+   "visible_intervals": [
+    "0-318"
+   ],
+   "before_developing_after_checkpoints": [
+    {
+     "surface": "Tower Bridge right section",
+     "before_frame": 0,
+     "developing_frame": 285,
+     "after_frame": 318,
+     "observed_change_zh": "原本的右侧桥塔和上层连廊在镜头转回时消失，被新的石拱结构取代。"
+    }
+   ],
+   "intrinsic_color_drift": "none",
+   "material_or_texture_drift": "verified",
+   "generated_noise_artifacts": "none",
+   "noise_type": "none",
+   "allowed_visual_explanation": "none",
+   "evidence_zh": "重新进入画面的桥梁部分凭空生成了不相关的石拱结构，丢失了原有的建筑纹理和特征。"
+  },
+  "if_subject_motion_check": {
+   "subject_expected_to_move": "no",
+   "meaningful_subject_motion": "no",
+   "static_or_near_static": "no",
+   "camera_or_background_motion_only": "no",
+   "post_action_static_tail": "no",
+   "static_tail_first_frame": null,
+   "static_tail_fraction_of_video": 0,
+   "post_action_static_penalty": 0,
+   "evidence_zh": "not_applicable",
+   "final_score_gate_applied": null
+  },
+  "if_instruction_following_check": {
+   "applicable": "no",
+   "perspective": "other",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "prompt_directed_forward_progress": "not_applicable",
+   "camera_or_background_motion_only": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "if_collision_boundary_checklist": {
+   "applicable": "no",
+   "interaction_opportunity_reached": "no",
+   "observed_outcome": "other",
+   "solid_interpenetration": "uncertain",
+   "support_after_contact": "not_applicable",
+   "boundary_response_plausible": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "if_target_boundary_stability_check": {
+   "target_boundary": "not_applicable",
+   "target_type": "not_applicable",
+   "tracked_before_contact": "uncertain",
+   "remained_present_until_trigger": "uncertain",
+   "observed_trigger": "not_applicable",
+   "unsupported_change": "none",
+   "interaction_opportunity_preserved": "uncertain",
+   "evidence_zh": "not_applicable"
+  },
+  "if_support_proxy_check": {
+   "direct_support_interface_visible": "no",
+   "proxy_evidence_observed": [],
+   "proxy_supports_expected_locomotion": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "subject_identity_check": {
+   "applicable": "no",
+   "tracked_subject": "not_applicable",
+   "same_entity_throughout": "no",
+   "stable_identity_attributes": [],
+   "identity_failure": "none",
+   "evidence_zh": "not_applicable"
+  },
+  "subject_identity_eligibility_check": {
+   "core_process": "OE_evolution",
+   "core_process_level": 1,
+   "meaningful_motion_or_evolution": "no",
+   "contact_or_support_demonstrated": "not_applicable",
+   "identity_eligible_for_normal_weighting": "no",
+   "final_score_cap_applied": null,
+   "evidence_zh": "not_applicable"
+  },
+  "if_interaction_quality_check": {
+   "interaction_quality_level_1_to_5": 1,
+   "interaction_opportunity_reached": "no",
+   "physical_response_observed": "no",
+   "core_failure_zh": "none",
+   "positive_evidence_zh": "none",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": 1
+  },
+  "summary_zh": "视频虽然执行了镜头的转动和等待动作，但在镜头转回原始视角时，伦敦塔桥的右侧桥塔和上层连廊完全消失并被不相关的结构取代，导致地标的结构和内部布局严重失效。",
+  "task_id": "GC032"
+ },
+ "calls": [
+  {
+   "mode": "gate",
+   "cached": false,
+   "prompt_tokens": 21608,
+   "output_tokens": 221
+  },
+  {
+   "mode": "score",
+   "cached": false,
+   "prompt_tokens": 33538,
+   "output_tokens": 3426
+  }
+ ],
+ "sampling": {
+  "strategy": "dual-scale full-video contact-sheet sampling",
+  "chronological_order": true,
+  "contact_sheet_encoding": {
+   "format": "JPEG",
+   "quality": 70,
+   "subsampling": "4:2:0"
+  },
+  "primary": {
+   "fps": 10.0,
+   "sample_interval_seconds": 0.1,
+   "cell_size": [
+    384,
+    216
+   ],
+   "grid": [
+    5,
+    5
+   ],
+   "frames_per_sheet": 25,
+   "sheet_size": [
+    1920,
+    1080
+   ],
+   "frames_count": 319,
+   "sheets_count": 13,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 31.8,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 24,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 2.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 25,
+     "last_sample_index": 49,
+     "first_time_seconds": 2.5,
+     "last_time_seconds": 4.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 50,
+     "last_sample_index": 74,
+     "first_time_seconds": 5.0,
+     "last_time_seconds": 7.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 75,
+     "last_sample_index": 99,
+     "first_time_seconds": 7.5,
+     "last_time_seconds": 9.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 5,
+     "first_sample_index": 100,
+     "last_sample_index": 124,
+     "first_time_seconds": 10.0,
+     "last_time_seconds": 12.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 6,
+     "first_sample_index": 125,
+     "last_sample_index": 149,
+     "first_time_seconds": 12.5,
+     "last_time_seconds": 14.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 7,
+     "first_sample_index": 150,
+     "last_sample_index": 174,
+     "first_time_seconds": 15.0,
+     "last_time_seconds": 17.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 8,
+     "first_sample_index": 175,
+     "last_sample_index": 199,
+     "first_time_seconds": 17.5,
+     "last_time_seconds": 19.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 9,
+     "first_sample_index": 200,
+     "last_sample_index": 224,
+     "first_time_seconds": 20.0,
+     "last_time_seconds": 22.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 10,
+     "first_sample_index": 225,
+     "last_sample_index": 249,
+     "first_time_seconds": 22.5,
+     "last_time_seconds": 24.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 11,
+     "first_sample_index": 250,
+     "last_sample_index": 274,
+     "first_time_seconds": 25.0,
+     "last_time_seconds": 27.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 12,
+     "first_sample_index": 275,
+     "last_sample_index": 299,
+     "first_time_seconds": 27.5,
+     "last_time_seconds": 29.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 13,
+     "first_sample_index": 300,
+     "last_sample_index": 318,
+     "first_time_seconds": 30.0,
+     "last_time_seconds": 31.8,
+     "filled_cells": 19
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "detail": {
+   "fps": 0.5,
+   "sample_interval_seconds": 2.0,
+   "cell_size": [
+    800,
+    450
+   ],
+   "grid": [
+    2,
+    2
+   ],
+   "frames_per_sheet": 4,
+   "sheet_size": [
+    1600,
+    900
+   ],
+   "frames_count": 16,
+   "sheets_count": 4,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 30.0,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 3,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 6.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 4,
+     "last_sample_index": 7,
+     "first_time_seconds": 8.0,
+     "last_time_seconds": 14.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 8,
+     "last_sample_index": 11,
+     "first_time_seconds": 16.0,
+     "last_time_seconds": 22.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 12,
+     "last_sample_index": 15,
+     "first_time_seconds": 24.0,
+     "last_time_seconds": 30.0,
+     "filled_cells": 4
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "reference_image_role": "initial scene/style context only, if provided"
+ },
+ "gate_prompt_sha256": "d7c2ba7592b74a396ce8cbe331ddb9d55dea9914675b38ace1ae5e404af2a739",
+ "score_prompt_sha256": "5c92cbee951b03e1dbe237bf4775bae06c98780bef7fb01e5ecc4468d25c83f2",
+ "scores": {
+  "official": 1.6,
+  "final_score": 1.6
+ },
+ "episode_id": "rh-stock-GC032-H24-seed42",
+ "arm": "stock",
+ "horizon_s": 24,
+ "objective": "Turn right 180 degrees, wait for 24 seconds, then turn back to the original view."
+}

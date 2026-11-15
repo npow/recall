@@ -1,0 +1,473 @@
+{
+ "task_id": "GC011",
+ "judge_provider": "google-vertex",
+ "judge_model": "gemini-3.1-pro-preview",
+ "endpoint": "vertex-ai-global",
+ "video_sha256": "bb79aa2e574beb77295e8bc91bb37a800341b78396385bbc5bfba5bb7467b971",
+ "dry_run": false,
+ "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+ "gate": {
+  "applicable": "yes",
+  "task_id": "GC011",
+  "perspective": "first-person",
+  "verdict": "pass",
+  "instruction_following_score": 1,
+  "meaningful_requested_trajectory_progress": "yes",
+  "revisit_required": "yes",
+  "revisit_observed": "yes",
+  "observed_action_zh": "镜头向右转动，静止等待了约14秒，然后向左转动回到了初始视角。",
+  "trajectory_evidence_zh": "0.0秒至1.5秒，镜头向右转动；1.5秒至16.0秒，镜头保持静止，画面停留在黑色玄关桌处；16.0秒至17.5秒，镜头向左转动并回到初始视角；17.5秒至视频结束，镜头在初始视角保持静止。",
+  "failure_reason_zh": "",
+  "confidence_1_to_5": 5
+ },
+ "rubric": {
+  "base_non_task_score_1_to_5": 1.0,
+  "final_score_1_to_5": 1,
+  "category_scores_1_to_5": {
+   "identity_id": {
+    "score": 1,
+    "weight": 2.0,
+    "answer": "no",
+    "evidence_zh": "在第12至13帧，棕色玄关桌、白色花瓶和圆形大镜子在同一锚定墙面位置突然变成了一个没有花瓶的黑色柜子和一面较小的镜子；在第186至187帧又突然变回原样，物体身份和结构发生严重突变。"
+   },
+   "identity_texture": {
+    "score": 1,
+    "weight": 1.0,
+    "answer": "no",
+    "evidence_zh": "玄关桌的材质和表面纹理在第12至13帧从木纹突变为黑色漆面，并在第186至187帧变回，材质无法保持一致。"
+   },
+   "color": {
+    "score": 1,
+    "weight": 1.0,
+    "answer": "no",
+    "evidence_zh": "玄关桌的颜色在第12至13帧从棕色突变为黑色，并在第186至187帧突变回棕色，颜色发生严重漂移和替换。"
+   },
+   "relative_position": {
+    "score": 1,
+    "weight": 1.0,
+    "answer": "no",
+    "evidence_zh": "在第12至13帧，左侧的法式门突然消失，且玄关桌在相对于右侧走廊的同一锚定位置被完全替换，破坏了原有的空间布局；法式门在第187帧又突然出现。"
+   }
+  },
+  "excluded_categories": {
+   "task_specific": "not scored"
+  },
+  "static_tail_policy_applied": "The requested action sequence completes at the end of the video, so there is no post-completion static tail.",
+  "action_inconsistency_penalties": [],
+  "requested_action_completion": {
+   "completed": "yes",
+   "first_completion_frame": 198,
+   "evidence_zh": "镜头完成了向右平移、等待以及向左平移返回原视角的完整动作序列。"
+  },
+  "background_consistency": {
+   "required_action_phase_zh": "右侧新展现的走廊和白色门在等待期间保持了相对稳定，但左侧的黄色墙面区域发生了严重的物体替换。",
+   "post_completion_phase_zh": "动作在视频末尾完成，无明显的动作后阶段。"
+  },
+  "object_correspondence_checks": [
+   {
+    "comparison": "brown console table and white vase vs black console table",
+    "anchors": [
+     "yellow wall",
+     "floor boundary",
+     "right-side hallway entrance"
+    ],
+    "same_object_or_region": "yes"
+   }
+  ],
+  "camera_motion_disambiguation": {
+   "intervals_checked": [
+    "12-13",
+    "186-187"
+   ],
+   "continuous_camera_motion": "yes",
+   "tracked_structural_anchors": [
+    "yellow wall",
+    "floor boundary",
+    "hallway entrance"
+   ],
+   "newly_revealed_regions_zh": "右侧的走廊和白色门是随着镜头向右移动新展现的区域。",
+   "evidence_zh": "镜头在向右和向左平移时保持了连续的运动，但画面左侧的玄关桌、花瓶和镜子在连续的镜头运动中发生了突然的替换和形变，这不是由视角变化引起的。"
+  },
+  "hard_reset_check": {
+   "hard_reset_claimed": "no",
+   "adjacent_frame_interval": "12-13",
+   "no_plausible_camera_transform": "no",
+   "persistent_anchor_contradiction": "yes",
+   "contradicting_anchors": [],
+   "evidence_zh": "虽然发生了严重的物体替换，但右侧走廊的平移运动是连续且合理的，因此不属于全画面的硬切/重置，而是局部的严重形变和替换。"
+  },
+  "post_completion_adjustment": {
+   "value": 0.0,
+   "evidence_zh": "动作在视频末尾完成，无多余的动作后阶段。"
+  },
+  "final_state_check": {
+   "window": "188-198",
+   "visible_key_objects": [
+    "dark console table body",
+    "tall white vase body",
+    "round mirror",
+    "open white French doors"
+   ],
+   "reappearance_consistency_zh": "初始的棕色玄关桌、花瓶和镜子在视频末尾重新出现，但这是在经历了严重的中间替换（变成黑色柜子）之后突变回来的。"
+  },
+  "oe_dynamicity_check": {
+   "mode": "not_applicable",
+   "meaningful_evolution": "not_applicable",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evolution_quality_level_1_to_5": null,
+   "named_process": "not_applicable",
+   "phase_comparison_applicable": "no",
+   "pre_occlusion_state_zh": "not_applicable",
+   "hidden_interval_zh": "not_applicable",
+   "reappeared_state_zh": "not_applicable",
+   "post_completion_static_tail": "no",
+   "static_tail_first_frame": null,
+   "terminal_static_reasonable": "not_applicable",
+   "terminal_pose_or_process_state": "not_applicable",
+   "support_and_pose_evidence_zh": "not_applicable",
+   "terminal_state_reasoning_zh": "not_applicable",
+   "static_tail_score_adjustment": 0,
+   "static_tail_penalty_zh": "not_applicable",
+   "camera_independent_subject_motion": "not_applicable",
+   "stable_world_anchors_compared": [],
+   "articulation_or_local_state_change_zh": "not_applicable",
+   "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+   "two_independent_motion_evidence_requirements_met": "not_applicable",
+   "expected_world_motion_direction_zh": "not_applicable",
+   "returned_motion_direction_consistent": "not_applicable",
+   "rigid_vehicle_local_progression_zh": "not_applicable",
+   "vehicle_front_rear_identification_zh": "not_applicable",
+   "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+   "vehicle_motion_direction": "not_applicable",
+   "unexplained_reverse_motion": "not_applicable",
+   "subject_relative_change_zh": "not_applicable",
+   "unchanged_coupled_details_zh": "not_applicable",
+   "accumulated_change_zh": "not_applicable",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": null
+  },
+  "oe_instruction_following_check": {
+   "applicable": "no",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "meaningful_requested_trajectory_progress": "not_applicable",
+   "revisit_required": "no",
+   "starting_pose_revisited": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "oe003_ink_deposition_check": {
+   "applicable": "no",
+   "persistent_new_ink": "uncertain",
+   "ink_change_type": "uncertain",
+   "same_anchored_paper_region_compared": "no",
+   "initial_ink_state_zh": "not_applicable",
+   "change_sequence_zh": "not_applicable",
+   "resulting_ink_state_zh": "not_applicable",
+   "hand_or_pen_motion_without_ink_change": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "oe_productive_action_check": {
+   "applicable": "no",
+   "action_type": "other",
+   "tool_and_target": "not_applicable",
+   "persistent_result_created": "no",
+   "result_recognizable_and_intentional": "no",
+   "tool_contact_causes_local_change": "no",
+   "action_result_temporally_coherent": "no",
+   "prompt_named_requirement": "not_specified",
+   "result_matches_named_requirement": "not_applicable",
+   "result_later_disappears_or_resets": "uncertain",
+   "visible_reversal_explanation": "not_applicable",
+   "productive_action_quality_level_1_to_5": null,
+   "evidence_zh": "not_applicable"
+  },
+  "gc_dynamicity_check": {
+   "meaningful_action_progress": "yes",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evidence_zh": "视频展示了清晰的向右平移、长时间的等待以及向左平移返回原视角的动作，有明显的镜头运动进展。",
+   "final_score_gate_applied": null
+  },
+  "gc_appearance_stability_check": {
+   "applicable": "yes",
+   "tracked_objects_or_surfaces": [
+    "dark console table body",
+    "round mirror"
+   ],
+   "correspondence_anchors": [
+    "yellow wall",
+    "floor boundary",
+    "hallway entrance"
+   ],
+   "visible_intervals": [
+    "0-12",
+    "13-186",
+    "187-198"
+   ],
+   "before_developing_after_checkpoints": [
+    {
+     "surface": "dark console table body",
+     "before_frame": 12,
+     "developing_frame": 13,
+     "after_frame": 14,
+     "observed_change_zh": "玄关桌从棕色木质突变为黑色漆面"
+    }
+   ],
+   "intrinsic_color_drift": "verified",
+   "material_or_texture_drift": "verified",
+   "generated_noise_artifacts": "none",
+   "noise_type": "none",
+   "allowed_visual_explanation": "none",
+   "evidence_zh": "玄关桌和镜子在第12至13帧以及第186至187帧发生了明显的颜色、材质和身份的突变，无法用光照或视角变化解释。"
+  },
+  "if_subject_motion_check": {
+   "subject_expected_to_move": "no",
+   "meaningful_subject_motion": "not_applicable",
+   "static_or_near_static": "no",
+   "camera_or_background_motion_only": "yes",
+   "post_action_static_tail": "no",
+   "static_tail_first_frame": null,
+   "static_tail_fraction_of_video": 0.0,
+   "post_action_static_penalty": 0,
+   "evidence_zh": "本用例为第一人称视角环境漫游，无预期移动的主体。",
+   "final_score_gate_applied": null
+  },
+  "if_instruction_following_check": {
+   "applicable": "no",
+   "perspective": "first-person",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "prompt_directed_forward_progress": "not_applicable",
+   "camera_or_background_motion_only": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "if_collision_boundary_checklist": {
+   "applicable": "no",
+   "interaction_opportunity_reached": "no",
+   "observed_outcome": "not_applicable",
+   "solid_interpenetration": "not_applicable",
+   "support_after_contact": "not_applicable",
+   "boundary_response_plausible": "not_applicable",
+   "evidence_zh": "not_applicable"
+  },
+  "if_target_boundary_stability_check": {
+   "target_boundary": "not_applicable",
+   "target_type": "not_applicable",
+   "tracked_before_contact": "not_applicable",
+   "remained_present_until_trigger": "not_applicable",
+   "observed_trigger": "not_applicable",
+   "unsupported_change": "none",
+   "interaction_opportunity_preserved": "not_applicable",
+   "evidence_zh": "not_applicable"
+  },
+  "if_support_proxy_check": {
+   "direct_support_interface_visible": "not_applicable",
+   "proxy_evidence_observed": [],
+   "proxy_supports_expected_locomotion": "not_applicable",
+   "evidence_zh": "not_applicable"
+  },
+  "subject_identity_check": {
+   "applicable": "no",
+   "tracked_subject": "not_applicable",
+   "same_entity_throughout": "not_applicable",
+   "stable_identity_attributes": [],
+   "identity_failure": "none",
+   "evidence_zh": "not_applicable"
+  },
+  "subject_identity_eligibility_check": {
+   "core_process": "not_applicable",
+   "core_process_level": null,
+   "meaningful_motion_or_evolution": "not_applicable",
+   "contact_or_support_demonstrated": "not_applicable",
+   "identity_eligible_for_normal_weighting": "no",
+   "final_score_cap_applied": null,
+   "evidence_zh": "not_applicable"
+  },
+  "if_interaction_quality_check": {
+   "interaction_quality_level_1_to_5": null,
+   "interaction_opportunity_reached": "no",
+   "physical_response_observed": "no",
+   "core_failure_zh": "not_applicable",
+   "positive_evidence_zh": "not_applicable",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": null
+  },
+  "summary_zh": "视频在镜头平移过程中，原有的棕色玄关桌、白色花瓶和镜子在同一锚定位置突然被替换为黑色柜子和不同的镜子，随后又突变回原样，存在严重的对象身份、颜色、材质和空间关系一致性失败。",
+  "task_id": "GC011"
+ },
+ "calls": [
+  {
+   "mode": "gate",
+   "cached": false,
+   "prompt_tokens": 14353,
+   "output_tokens": 240
+  },
+  {
+   "mode": "score",
+   "cached": false,
+   "prompt_tokens": 30990,
+   "output_tokens": 3647
+  }
+ ],
+ "sampling": {
+  "strategy": "dual-scale full-video contact-sheet sampling",
+  "chronological_order": true,
+  "contact_sheet_encoding": {
+   "format": "JPEG",
+   "quality": 70,
+   "subsampling": "4:2:0"
+  },
+  "primary": {
+   "fps": 10.0,
+   "sample_interval_seconds": 0.1,
+   "cell_size": [
+    384,
+    216
+   ],
+   "grid": [
+    5,
+    5
+   ],
+   "frames_per_sheet": 25,
+   "sheet_size": [
+    1920,
+    1080
+   ],
+   "frames_count": 199,
+   "sheets_count": 8,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 19.8,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 24,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 2.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 25,
+     "last_sample_index": 49,
+     "first_time_seconds": 2.5,
+     "last_time_seconds": 4.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 50,
+     "last_sample_index": 74,
+     "first_time_seconds": 5.0,
+     "last_time_seconds": 7.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 75,
+     "last_sample_index": 99,
+     "first_time_seconds": 7.5,
+     "last_time_seconds": 9.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 5,
+     "first_sample_index": 100,
+     "last_sample_index": 124,
+     "first_time_seconds": 10.0,
+     "last_time_seconds": 12.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 6,
+     "first_sample_index": 125,
+     "last_sample_index": 149,
+     "first_time_seconds": 12.5,
+     "last_time_seconds": 14.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 7,
+     "first_sample_index": 150,
+     "last_sample_index": 174,
+     "first_time_seconds": 15.0,
+     "last_time_seconds": 17.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 8,
+     "first_sample_index": 175,
+     "last_sample_index": 198,
+     "first_time_seconds": 17.5,
+     "last_time_seconds": 19.8,
+     "filled_cells": 24
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "detail": {
+   "fps": 0.5,
+   "sample_interval_seconds": 2.0,
+   "cell_size": [
+    800,
+    450
+   ],
+   "grid": [
+    2,
+    2
+   ],
+   "frames_per_sheet": 4,
+   "sheet_size": [
+    1600,
+    900
+   ],
+   "frames_count": 10,
+   "sheets_count": 3,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 18.0,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 3,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 6.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 4,
+     "last_sample_index": 7,
+     "first_time_seconds": 8.0,
+     "last_time_seconds": 14.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 8,
+     "last_sample_index": 9,
+     "first_time_seconds": 16.0,
+     "last_time_seconds": 18.0,
+     "filled_cells": 2
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "reference_image_role": "initial scene/style context only, if provided"
+ },
+ "gate_prompt_sha256": "69e3cfb90b7984fd5da5bbb5748624d906b63e1479b5d644e81cee87969b8de6",
+ "score_prompt_sha256": "a77fdef37fcaa8e054ecbed7a36addaa3ec27939e20cb4d5484a669fd3264cdb",
+ "scores": {
+  "official": 1.0,
+  "final_score": 1.0
+ },
+ "episode_id": "rh-memory-GC011-H12-seed42",
+ "arm": "memory",
+ "horizon_s": 12,
+ "objective": "Turn right 180 degrees, wait for 12 seconds, then turn back to the original view."
+}

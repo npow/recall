@@ -162,6 +162,34 @@ Paired director minus stock, mean of 3: all 171 +0.07 [-0.06, +0.22] (GC +0.00, 
 
 Evidence: [table](reproduction/final-run/table.md), [analysis](reproduction/final-run/analysis.json), [per-episode scores](reproduction/final-run/per-episode.csv), [verifier outputs](reproduction/final-run/gemini-call1/), [frozen config](reproduction/final-run-config.json), [development experiment](reproduction/director-dev.md).
 
+## Revisit-horizon benchmark (pre-registered; scripted; NOT PlayWorld's own tasks)
+
+20 held-out PlayWorld GC scenes, a scripted 180-degree look-away and return, scored with the released PlayWorld verifier (2 Gemini calls per video). These are our scripted paths, **not PlayWorld's tasks, and not comparable with 1.82 or 2.12**. The memory arm is the exact bounded pose memory (v1 with exact storage), not memory v2. One seed.
+
+| Time away | Stock | Memory | Paired difference [95% CI] | W/T/L |
+|---|---:|---:|---|---|
+| 0 s |1.84|2.69|+0.85 [+0.28, +1.47]|13/1/6|
+| 6 s |1.76|3.06|+1.31 [+0.74, +1.90]|17/1/2|
+| 12 s |1.86|2.52|+0.66 [+0.18, +1.13]|14/2/4|
+| 24 s |1.44|1.79|+0.34 [+0.05, +0.64]|12/3/5|
+
+Pooled over 6, 12 and 24 s: **+0.77 [+0.51, +1.04]**. DINO final-frame similarity does not show it (+0.02 to +0.08, intervals touch zero). Judge noise is large: two calls on the same video differ by 0.6 to 1.0 on average, and with a single call three of eight intervals include zero.
+
+Evidence: [write-up](reproduction/revisit-horizon.md), [table](reproduction/revisit-horizon/table.md), [analysis](reproduction/revisit-horizon/analysis.json), [robustness](reproduction/revisit-horizon/robustness.json), [frozen config](reproduction/revisit-horizon-config.json), [verifier outputs](reproduction/revisit-horizon/judge/).
+
+## Memory v2 on real PlayWorld revisit tasks (null)
+
+Content-verified retrieval over the whole episode (`--memory-v2`), against stock on real PlayWorld GC and out-of-sight revisit tasks with the adaptive player; released verifier, mean of three Gemini calls. Positive on scripted paths, but **no gain here**: the all-cases interval is below zero and the held-out interval includes zero.
+
+| Set | Pairs | Memory v2 minus stock [95% CI] | W/T/L |
+|---|---:|---|---|
+| all cases |36|-0.35 [-0.71, -0.01]|9/12/15|
+| held-out |31|-0.26 [-0.66, +0.10]|9/11/11|
+| GC |22|-0.45 [-0.95, +0.02]|8/3/11|
+| out-of-sight |14|-0.20 [-0.67, +0.15]|1/9/4|
+
+Evidence: [write-up](reproduction/memory-v2.md), [report](reproduction/memory-v2-step2/report.json), [per-case scores](reproduction/memory-v2-step2/per-case.csv), [frozen config](reproduction/memory-v2-config.json).
+
 ## Full171 stock versus budget run
 
 All342 generation records are verified complete. Judging resumes from preserved video-hash-verified reports after the original scorer lost credentials. Overall scores remain pending until all171 cases in each arm are scored.

@@ -1,0 +1,415 @@
+{
+ "task_id": "GC003",
+ "judge_provider": "google-vertex",
+ "judge_model": "gemini-3.1-pro-preview",
+ "endpoint": "vertex-ai-global",
+ "video_sha256": "759bcf26c9e244bfa388dc2e01b9a8b57c1da8dbaaa002a8589f386d2a63603d",
+ "dry_run": false,
+ "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+ "gate": {
+  "applicable": "yes",
+  "task_id": "GC003",
+  "perspective": "first-person",
+  "verdict": "partial",
+  "instruction_following_score": 1,
+  "meaningful_requested_trajectory_progress": "yes",
+  "revisit_required": "yes",
+  "revisit_observed": "no",
+  "observed_action_zh": "视角先向右环视，随后向左环视，但视频结束时未能回到初始视角。",
+  "trajectory_evidence_zh": "视频前段（第11帧至第55帧）视角持续向右转动，画面中依次出现斑马、黑色大象和另一只斑马；随后（第56帧至第78帧）视角开始向左转动，画面回到黑色大象，但直到视频结束未能转回初始的灰色大象视角。",
+  "failure_reason_zh": "视角向右转动后虽然开始向左转回，但未能转回到初始视角，轨迹不完整。",
+  "confidence_1_to_5": 5
+ },
+ "rubric": {
+  "base_non_task_score_1_to_5": 2.8,
+  "final_score_1_to_5": 2.3,
+  "category_scores_1_to_5": {
+   "identity_id": {
+    "score": 2,
+    "weight": 2.0,
+    "answer": "no",
+    "evidence_zh": "相机向左返回初始锚定区域（帧60-68）时，灰色大象雕塑重现，但原有的鳄鱼雕塑和水池中的火烈鸟消失，被岩石和水面取代。"
+   },
+   "identity_texture": {
+    "score": 4,
+    "weight": 1.0,
+    "answer": "partial",
+    "evidence_zh": "重现的灰色大象雕塑和斑马雕塑的表面纹理基本保持一致，但鳄鱼消失处的岩石纹理发生了改变。"
+   },
+   "color": {
+    "score": 4,
+    "weight": 1.0,
+    "answer": "yes",
+    "evidence_zh": "重现的雕塑和水池边缘的橙色等固有颜色保持稳定，未见明显颜色漂移。"
+   },
+   "relative_position": {
+    "score": 2,
+    "weight": 1.0,
+    "answer": "no",
+    "evidence_zh": "鳄鱼和火烈鸟从相对于大象的锚定位置消失；此外，相机向左越过初始场景后（帧70-78），在左侧展现了与右侧完全相同的深色大象和火烈鸟场景，导致严重的空间布局冲突和不可能的重复。"
+   }
+  },
+  "excluded_categories": {
+   "task_specific": "not scored"
+  },
+  "static_tail_policy_applied": "视频在动作完成后没有明显的长时间静止尾部，相机持续移动。",
+  "action_inconsistency_penalties": [],
+  "requested_action_completion": {
+   "completed": "yes",
+   "first_completion_frame": 65,
+   "evidence_zh": "相机完成了向右平移并向左返回初始视角的动作，但随后发生了过度旋转。"
+  },
+  "background_consistency": {
+   "required_action_phase_zh": "向右和向左平移期间，水池边缘和地面岩石等背景锚点保持了基本的空间连续性。",
+   "post_completion_phase_zh": "越过初始视角后，背景出现了与右侧场景完全相同的错误重复。"
+  },
+  "object_correspondence_checks": [
+   {
+    "comparison": "初始场景与返回后的场景",
+    "anchors": [
+     "橙色水池边缘",
+     "灰色大象雕塑"
+    ],
+    "same_object_or_region": "yes"
+   },
+   {
+    "comparison": "右侧的深色大象场景与左侧的深色大象场景",
+    "anchors": [
+     "无共同锚点"
+    ],
+    "same_object_or_region": "no"
+   }
+  ],
+  "camera_motion_disambiguation": {
+   "intervals_checked": [
+    "0-30",
+    "30-78"
+   ],
+   "continuous_camera_motion": "yes",
+   "tracked_structural_anchors": [
+    "橙色水池边缘",
+    "地面岩石层"
+   ],
+   "newly_revealed_regions_zh": "帧10-45中向右平移揭示的斑马和深色大象属于新区域。",
+   "evidence_zh": "视角的改变由连续的相机水平平移引起，并非场景的突然切换。"
+  },
+  "hard_reset_check": {
+   "hard_reset_claimed": "no",
+   "adjacent_frame_interval": "none",
+   "no_plausible_camera_transform": "no",
+   "persistent_anchor_contradiction": "no",
+   "contradicting_anchors": [],
+   "evidence_zh": "视频全程保持连续的相机平移，物体的消失和场景的重复是在镜头移动到画面外或移动过程中发生的，没有相邻帧的硬重置。"
+  },
+  "post_completion_adjustment": {
+   "value": -0.5,
+   "evidence_zh": "相机在向左返回并经过初始视角后未停止，继续向左平移并展示了错误的重复场景，属于明显的动作过度和空间错误。"
+  },
+  "final_state_check": {
+   "window": "75-78",
+   "visible_key_objects": [],
+   "reappearance_consistency_zh": "最终画面中没有初始场景的关键物体，相机过度旋转到了一个错误生成的重复场景中。"
+  },
+  "oe_dynamicity_check": {
+   "mode": "not_applicable",
+   "meaningful_evolution": "not_applicable",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evolution_quality_level_1_to_5": null,
+   "named_process": "not_applicable",
+   "phase_comparison_applicable": "no",
+   "pre_occlusion_state_zh": "not_applicable",
+   "hidden_interval_zh": "not_applicable",
+   "reappeared_state_zh": "not_applicable",
+   "post_completion_static_tail": "no",
+   "static_tail_first_frame": null,
+   "terminal_static_reasonable": "not_applicable",
+   "terminal_pose_or_process_state": "not_applicable",
+   "support_and_pose_evidence_zh": "not_applicable",
+   "terminal_state_reasoning_zh": "not_applicable",
+   "static_tail_score_adjustment": 0,
+   "static_tail_penalty_zh": "not_applicable",
+   "camera_independent_subject_motion": "not_applicable",
+   "stable_world_anchors_compared": [],
+   "articulation_or_local_state_change_zh": "not_applicable",
+   "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+   "two_independent_motion_evidence_requirements_met": "not_applicable",
+   "expected_world_motion_direction_zh": "not_applicable",
+   "returned_motion_direction_consistent": "not_applicable",
+   "rigid_vehicle_local_progression_zh": "not_applicable",
+   "vehicle_front_rear_identification_zh": "not_applicable",
+   "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+   "vehicle_motion_direction": "not_applicable",
+   "unexplained_reverse_motion": "not_applicable",
+   "subject_relative_change_zh": "not_applicable",
+   "unchanged_coupled_details_zh": "not_applicable",
+   "accumulated_change_zh": "not_applicable",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": null
+  },
+  "oe_instruction_following_check": {
+   "applicable": "no",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "meaningful_requested_trajectory_progress": "not_applicable",
+   "revisit_required": "no",
+   "starting_pose_revisited": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "oe003_ink_deposition_check": {
+   "applicable": "no",
+   "persistent_new_ink": "uncertain",
+   "ink_change_type": "uncertain",
+   "same_anchored_paper_region_compared": "no",
+   "initial_ink_state_zh": "not_applicable",
+   "change_sequence_zh": "not_applicable",
+   "resulting_ink_state_zh": "not_applicable",
+   "hand_or_pen_motion_without_ink_change": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "oe_productive_action_check": {
+   "applicable": "no",
+   "action_type": "other",
+   "tool_and_target": "not_applicable",
+   "persistent_result_created": "no",
+   "result_recognizable_and_intentional": "no",
+   "tool_contact_causes_local_change": "no",
+   "action_result_temporally_coherent": "no",
+   "prompt_named_requirement": "not_specified",
+   "result_matches_named_requirement": "not_applicable",
+   "result_later_disappears_or_resets": "uncertain",
+   "visible_reversal_explanation": "not_applicable",
+   "productive_action_quality_level_1_to_5": null,
+   "evidence_zh": "not_applicable"
+  },
+  "gc_dynamicity_check": {
+   "meaningful_action_progress": "yes",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evidence_zh": "相机执行了明显的向右平移和向左平移的动作，覆盖了较大的场景范围。",
+   "final_score_gate_applied": null
+  },
+  "gc_appearance_stability_check": {
+   "applicable": "yes",
+   "tracked_objects_or_surfaces": [
+    "large grey elephant statue",
+    "zebra statue"
+   ],
+   "correspondence_anchors": [
+    "橙色水池边缘",
+    "地面岩石层"
+   ],
+   "visible_intervals": [
+    "0-20",
+    "50-68"
+   ],
+   "before_developing_after_checkpoints": [],
+   "intrinsic_color_drift": "none",
+   "material_or_texture_drift": "none",
+   "generated_noise_artifacts": "none",
+   "noise_type": "none",
+   "allowed_visual_explanation": "none",
+   "evidence_zh": "重现的灰色大象和斑马雕塑在纹理和颜色上保持稳定，未见明显的漂移或噪点。"
+  },
+  "if_subject_motion_check": {
+   "subject_expected_to_move": "no",
+   "meaningful_subject_motion": "not_applicable",
+   "static_or_near_static": "no",
+   "camera_or_background_motion_only": "yes",
+   "post_action_static_tail": "no",
+   "static_tail_first_frame": null,
+   "static_tail_fraction_of_video": 0,
+   "post_action_static_penalty": 0,
+   "evidence_zh": "这是一个第一人称视角的相机运动任务，场景中的雕塑预期是静止的。",
+   "final_score_gate_applied": null
+  },
+  "if_instruction_following_check": {
+   "applicable": "no",
+   "perspective": "first-person",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "prompt_directed_forward_progress": "not_applicable",
+   "camera_or_background_motion_only": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "if_collision_boundary_checklist": {
+   "applicable": "no",
+   "interaction_opportunity_reached": "no",
+   "observed_outcome": "other",
+   "solid_interpenetration": "uncertain",
+   "support_after_contact": "not_applicable",
+   "boundary_response_plausible": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "if_target_boundary_stability_check": {
+   "target_boundary": "not_applicable",
+   "target_type": "not_applicable",
+   "tracked_before_contact": "uncertain",
+   "remained_present_until_trigger": "uncertain",
+   "observed_trigger": "not_applicable",
+   "unsupported_change": "none",
+   "interaction_opportunity_preserved": "uncertain",
+   "evidence_zh": "not_applicable"
+  },
+  "if_support_proxy_check": {
+   "direct_support_interface_visible": "no",
+   "proxy_evidence_observed": [],
+   "proxy_supports_expected_locomotion": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "subject_identity_check": {
+   "applicable": "no",
+   "tracked_subject": "not_applicable",
+   "same_entity_throughout": "no",
+   "stable_identity_attributes": [],
+   "identity_failure": "none",
+   "evidence_zh": "not_applicable"
+  },
+  "subject_identity_eligibility_check": {
+   "core_process": "IF_interaction_quality",
+   "core_process_level": 5,
+   "meaningful_motion_or_evolution": "not_applicable",
+   "contact_or_support_demonstrated": "not_applicable",
+   "identity_eligible_for_normal_weighting": "no",
+   "final_score_cap_applied": null,
+   "evidence_zh": "not_applicable"
+  },
+  "if_interaction_quality_check": {
+   "interaction_quality_level_1_to_5": 5,
+   "interaction_opportunity_reached": "no",
+   "physical_response_observed": "no",
+   "core_failure_zh": "none",
+   "positive_evidence_zh": "none",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": null
+  },
+  "summary_zh": "视频中相机向右环视后向左返回，初始场景中的大象雕塑成功重现，但鳄鱼雕塑和火烈鸟在原位消失，且相机向左过度旋转时在左侧生成了与右侧完全相同的错误重复场景。",
+  "task_id": "GC003"
+ },
+ "calls": [
+  {
+   "mode": "gate",
+   "cached": false,
+   "prompt_tokens": 7103,
+   "output_tokens": 257
+  },
+  {
+   "mode": "score",
+   "cached": false,
+   "prompt_tokens": 20872,
+   "output_tokens": 3439
+  }
+ ],
+ "sampling": {
+  "strategy": "dual-scale full-video contact-sheet sampling",
+  "chronological_order": true,
+  "contact_sheet_encoding": {
+   "format": "JPEG",
+   "quality": 70,
+   "subsampling": "4:2:0"
+  },
+  "primary": {
+   "fps": 10.0,
+   "sample_interval_seconds": 0.1,
+   "cell_size": [
+    384,
+    216
+   ],
+   "grid": [
+    5,
+    5
+   ],
+   "frames_per_sheet": 25,
+   "sheet_size": [
+    1920,
+    1080
+   ],
+   "frames_count": 79,
+   "sheets_count": 4,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 7.8,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 24,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 2.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 25,
+     "last_sample_index": 49,
+     "first_time_seconds": 2.5,
+     "last_time_seconds": 4.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 50,
+     "last_sample_index": 74,
+     "first_time_seconds": 5.0,
+     "last_time_seconds": 7.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 75,
+     "last_sample_index": 78,
+     "first_time_seconds": 7.5,
+     "last_time_seconds": 7.8,
+     "filled_cells": 4
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "detail": {
+   "fps": 0.5,
+   "sample_interval_seconds": 2.0,
+   "cell_size": [
+    800,
+    450
+   ],
+   "grid": [
+    2,
+    2
+   ],
+   "frames_per_sheet": 4,
+   "sheet_size": [
+    1600,
+    900
+   ],
+   "frames_count": 4,
+   "sheets_count": 1,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 6.0,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 3,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 6.0,
+     "filled_cells": 4
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "reference_image_role": "initial scene/style context only, if provided"
+ },
+ "gate_prompt_sha256": "5cc15177a17da8e9aba110669e707255ffdbb23ffa6e1e18b21703694aaf8057",
+ "score_prompt_sha256": "0b7507394e1346489d319aa8d4cae03a056c619de12bda293f2834c3c59c775f",
+ "scores": {
+  "official": 2.8,
+  "final_score": 2.3
+ },
+ "episode_id": "rh-stock-GC003-H00-seed42",
+ "arm": "stock",
+ "horizon_s": 0,
+ "objective": "Turn right 180 degrees, then turn back to the original view."
+}

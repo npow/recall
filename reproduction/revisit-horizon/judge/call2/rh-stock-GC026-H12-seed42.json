@@ -1,0 +1,467 @@
+{
+ "task_id": "GC026",
+ "judge_provider": "google-vertex",
+ "judge_model": "gemini-3.1-pro-preview",
+ "endpoint": "vertex-ai-global",
+ "video_sha256": "34864a93fc403a457f0e41d4c8fec9bc105d2b7b1e24caf066a8f95330cf1573",
+ "dry_run": false,
+ "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+ "gate": {
+  "applicable": "yes",
+  "task_id": "GC026",
+  "perspective": "first-person",
+  "verdict": "pass",
+  "instruction_following_score": 1,
+  "meaningful_requested_trajectory_progress": "yes",
+  "revisit_required": "yes",
+  "revisit_observed": "yes",
+  "observed_action_zh": "镜头向右转动，随后保持静止约12秒，最后向左转动回到了初始视角。",
+  "trajectory_evidence_zh": "从第1张图集到第2张图集前半部分（约0-3.5秒），镜头向右转动；从第2张图集后半部分到第7张图集前半部分（约3.5-16.0秒），镜头保持静止；从第7张图集后半部分到第8张图集（约16.0-19.8秒），镜头向左转动并回到了初始的视角。",
+  "failure_reason_zh": "",
+  "confidence_1_to_5": 5
+ },
+ "rubric": {
+  "base_non_task_score_1_to_5": 1.6,
+  "final_score_1_to_5": 1.6,
+  "category_scores_1_to_5": {
+   "identity_id": {
+    "score": 1,
+    "weight": 2,
+    "answer": "no",
+    "evidence_zh": "镜头转回初始视角时（帧175-198），原本的店面结构发生严重改变，'Tim Hortons'遮阳篷消失，被多个带有'DAOND DESIGN'字样的拱形窗户和遮阳篷取代，建筑结构和物体数量发生突变。"
+   },
+   "identity_texture": {
+    "score": 1,
+    "weight": 1,
+    "answer": "no",
+    "evidence_zh": "初始清晰的'DIAMOND DESIGN'和'Tim Hortons'文字在镜头移动过程中发生形变，最终转回时文字变成了'DAOND DESIGN'和'Tims'等错误拼写，未能保持精确的文本特征。"
+   },
+   "color": {
+    "score": 4,
+    "weight": 1,
+    "answer": "partial",
+    "evidence_zh": "遮阳篷的红色、树木的绿色以及整体的冷色调夜景灯光在整个视频中基本保持稳定，未出现明显的颜色漂移或闪烁。"
+   },
+   "relative_position": {
+    "score": 1,
+    "weight": 1,
+    "answer": "no",
+    "evidence_zh": "镜头转回后，原本位于中央入口两侧的不同招牌的相对位置关系完全丢失，变成了多个相似拱形窗户和招牌的重复排列（帧175-198），空间布局发生重置。"
+   }
+  },
+  "excluded_categories": {
+   "task_specific": "not scored"
+  },
+  "static_tail_policy_applied": "The video ends shortly after the camera turns back; no extensive static tail penalty is needed.",
+  "action_inconsistency_penalties": [],
+  "requested_action_completion": {
+   "completed": "yes",
+   "first_completion_frame": 198,
+   "evidence_zh": "镜头向右旋转，静止等待一段时间后，向左旋转回到大致初始方向。"
+  },
+  "background_consistency": {
+   "required_action_phase_zh": "在镜头旋转和等待期间，背景建筑的结构和文字发生持续的形变和漂移。",
+   "post_completion_phase_zh": "动作完成时视频结束，无额外背景变化。"
+  },
+  "object_correspondence_checks": [
+   {
+    "comparison": "initial storefront vs reappearing storefront",
+    "anchors": [
+     "peaked-roof entrance",
+     "curb line"
+    ],
+    "same_object_or_region": "yes"
+   }
+  ],
+  "camera_motion_disambiguation": {
+   "intervals_checked": [
+    "13-40",
+    "150-198"
+   ],
+   "continuous_camera_motion": "yes",
+   "tracked_structural_anchors": [
+    "storefront facade",
+    "curb line"
+   ],
+   "newly_revealed_regions_zh": "镜头向右旋转时展示了建筑右侧的区域。",
+   "evidence_zh": "视角的改变由明显的镜头水平旋转引起，符合物理透视变化。"
+  },
+  "hard_reset_check": {
+   "hard_reset_claimed": "no",
+   "adjacent_frame_interval": "none",
+   "no_plausible_camera_transform": "no",
+   "persistent_anchor_contradiction": "no",
+   "contradicting_anchors": [],
+   "evidence_zh": "场景的变化是在镜头连续旋转过程中逐渐发生的形变和幻觉，而非相邻帧之间的硬切。"
+  },
+  "post_completion_adjustment": {
+   "value": 0.0,
+   "evidence_zh": "视频在完成向左转回的动作后结束，没有出现超出提示词要求的过度运动。"
+  },
+  "final_state_check": {
+   "window": "175-198",
+   "visible_key_objects": [
+    "peaked-roof entrance",
+    "red awnings"
+   ],
+   "reappearance_consistency_zh": "极差。原本的'Tim Hortons'招牌被替换，建筑立面变成了多个重复的拱形结构，文字也发生改变。"
+  },
+  "oe_dynamicity_check": {
+   "mode": "not_applicable",
+   "meaningful_evolution": "not_applicable",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evolution_quality_level_1_to_5": null,
+   "named_process": "not_applicable",
+   "phase_comparison_applicable": "no",
+   "pre_occlusion_state_zh": "not_applicable",
+   "hidden_interval_zh": "not_applicable",
+   "reappeared_state_zh": "not_applicable",
+   "post_completion_static_tail": "no",
+   "static_tail_first_frame": null,
+   "terminal_static_reasonable": "not_applicable",
+   "terminal_pose_or_process_state": "not_applicable",
+   "support_and_pose_evidence_zh": "not_applicable",
+   "terminal_state_reasoning_zh": "not_applicable",
+   "static_tail_score_adjustment": 0,
+   "static_tail_penalty_zh": "not_applicable",
+   "camera_independent_subject_motion": "not_applicable",
+   "stable_world_anchors_compared": [],
+   "articulation_or_local_state_change_zh": "not_applicable",
+   "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+   "two_independent_motion_evidence_requirements_met": "not_applicable",
+   "expected_world_motion_direction_zh": "not_applicable",
+   "returned_motion_direction_consistent": "not_applicable",
+   "rigid_vehicle_local_progression_zh": "not_applicable",
+   "vehicle_front_rear_identification_zh": "not_applicable",
+   "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+   "vehicle_motion_direction": "not_applicable",
+   "unexplained_reverse_motion": "not_applicable",
+   "subject_relative_change_zh": "not_applicable",
+   "unchanged_coupled_details_zh": "not_applicable",
+   "accumulated_change_zh": "not_applicable",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": null
+  },
+  "oe_instruction_following_check": {
+   "applicable": "no",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "meaningful_requested_trajectory_progress": "not_applicable",
+   "revisit_required": "no",
+   "starting_pose_revisited": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "oe003_ink_deposition_check": {
+   "applicable": "no",
+   "persistent_new_ink": "uncertain",
+   "ink_change_type": "uncertain",
+   "same_anchored_paper_region_compared": "no",
+   "initial_ink_state_zh": "not_applicable",
+   "change_sequence_zh": "not_applicable",
+   "resulting_ink_state_zh": "not_applicable",
+   "hand_or_pen_motion_without_ink_change": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "oe_productive_action_check": {
+   "applicable": "no",
+   "action_type": "other",
+   "tool_and_target": "not_applicable",
+   "persistent_result_created": "no",
+   "result_recognizable_and_intentional": "no",
+   "tool_contact_causes_local_change": "no",
+   "action_result_temporally_coherent": "no",
+   "prompt_named_requirement": "not_specified",
+   "result_matches_named_requirement": "not_applicable",
+   "result_later_disappears_or_resets": "uncertain",
+   "visible_reversal_explanation": "not_applicable",
+   "productive_action_quality_level_1_to_5": null,
+   "evidence_zh": "not_applicable"
+  },
+  "gc_dynamicity_check": {
+   "meaningful_action_progress": "yes",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evidence_zh": "视频完整执行了向右旋转、静止等待和向左旋转的镜头动作。",
+   "final_score_gate_applied": null
+  },
+  "gc_appearance_stability_check": {
+   "applicable": "yes",
+   "tracked_objects_or_surfaces": [
+    "red awnings",
+    "sign texts"
+   ],
+   "correspondence_anchors": [
+    "storefront facade",
+    "curb line"
+   ],
+   "visible_intervals": [
+    "0-24",
+    "175-198"
+   ],
+   "before_developing_after_checkpoints": [
+    {
+     "surface": "sign texts",
+     "before_frame": 0,
+     "developing_frame": 100,
+     "after_frame": 198,
+     "observed_change_zh": "招牌文字从'Tim Hortons'变为'Tims'再变为'DAOND DESIGN'，建筑结构发生改变。"
+    }
+   ],
+   "intrinsic_color_drift": "none",
+   "material_or_texture_drift": "verified",
+   "generated_noise_artifacts": "none",
+   "noise_type": "none",
+   "allowed_visual_explanation": "none",
+   "evidence_zh": "招牌上的文字在镜头旋转和静止期间发生明显的形变和漂移，最终转回时文字和建筑结构均与初始状态不符。"
+  },
+  "if_subject_motion_check": {
+   "subject_expected_to_move": "no",
+   "meaningful_subject_motion": "not_applicable",
+   "static_or_near_static": "no",
+   "camera_or_background_motion_only": "yes",
+   "post_action_static_tail": "no",
+   "static_tail_first_frame": null,
+   "static_tail_fraction_of_video": 0,
+   "post_action_static_penalty": 0,
+   "evidence_zh": "not_applicable",
+   "final_score_gate_applied": null
+  },
+  "if_instruction_following_check": {
+   "applicable": "no",
+   "perspective": "other",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "prompt_directed_forward_progress": "not_applicable",
+   "camera_or_background_motion_only": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "if_collision_boundary_checklist": {
+   "applicable": "no",
+   "interaction_opportunity_reached": "no",
+   "observed_outcome": "other",
+   "solid_interpenetration": "uncertain",
+   "support_after_contact": "not_applicable",
+   "boundary_response_plausible": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "if_target_boundary_stability_check": {
+   "target_boundary": "not_applicable",
+   "target_type": "not_applicable",
+   "tracked_before_contact": "uncertain",
+   "remained_present_until_trigger": "uncertain",
+   "observed_trigger": "not_applicable",
+   "unsupported_change": "none",
+   "interaction_opportunity_preserved": "uncertain",
+   "evidence_zh": "not_applicable"
+  },
+  "if_support_proxy_check": {
+   "direct_support_interface_visible": "no",
+   "proxy_evidence_observed": [],
+   "proxy_supports_expected_locomotion": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "subject_identity_check": {
+   "applicable": "no",
+   "tracked_subject": "not_applicable",
+   "same_entity_throughout": "no",
+   "stable_identity_attributes": [],
+   "identity_failure": "none",
+   "evidence_zh": "not_applicable"
+  },
+  "subject_identity_eligibility_check": {
+   "core_process": "OE_evolution",
+   "core_process_level": 1,
+   "meaningful_motion_or_evolution": "no",
+   "contact_or_support_demonstrated": "not_applicable",
+   "identity_eligible_for_normal_weighting": "no",
+   "final_score_cap_applied": null,
+   "evidence_zh": "not_applicable"
+  },
+  "if_interaction_quality_check": {
+   "interaction_quality_level_1_to_5": null,
+   "interaction_opportunity_reached": "no",
+   "physical_response_observed": "no",
+   "core_failure_zh": "none",
+   "positive_evidence_zh": "none",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": null
+  },
+  "summary_zh": "视频完成了镜头旋转和等待的动作，但转回初始视角时，原本的店面结构、招牌文字和空间布局发生了严重的重置和替换，未能保持场景的一致性。",
+  "task_id": "GC026"
+ },
+ "calls": [
+  {
+   "mode": "gate",
+   "cached": false,
+   "prompt_tokens": 14353,
+   "output_tokens": 263
+  },
+  {
+   "mode": "score",
+   "cached": false,
+   "prompt_tokens": 29501,
+   "output_tokens": 3432
+  }
+ ],
+ "sampling": {
+  "strategy": "dual-scale full-video contact-sheet sampling",
+  "chronological_order": true,
+  "contact_sheet_encoding": {
+   "format": "JPEG",
+   "quality": 70,
+   "subsampling": "4:2:0"
+  },
+  "primary": {
+   "fps": 10.0,
+   "sample_interval_seconds": 0.1,
+   "cell_size": [
+    384,
+    216
+   ],
+   "grid": [
+    5,
+    5
+   ],
+   "frames_per_sheet": 25,
+   "sheet_size": [
+    1920,
+    1080
+   ],
+   "frames_count": 199,
+   "sheets_count": 8,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 19.8,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 24,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 2.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 25,
+     "last_sample_index": 49,
+     "first_time_seconds": 2.5,
+     "last_time_seconds": 4.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 50,
+     "last_sample_index": 74,
+     "first_time_seconds": 5.0,
+     "last_time_seconds": 7.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 75,
+     "last_sample_index": 99,
+     "first_time_seconds": 7.5,
+     "last_time_seconds": 9.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 5,
+     "first_sample_index": 100,
+     "last_sample_index": 124,
+     "first_time_seconds": 10.0,
+     "last_time_seconds": 12.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 6,
+     "first_sample_index": 125,
+     "last_sample_index": 149,
+     "first_time_seconds": 12.5,
+     "last_time_seconds": 14.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 7,
+     "first_sample_index": 150,
+     "last_sample_index": 174,
+     "first_time_seconds": 15.0,
+     "last_time_seconds": 17.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 8,
+     "first_sample_index": 175,
+     "last_sample_index": 198,
+     "first_time_seconds": 17.5,
+     "last_time_seconds": 19.8,
+     "filled_cells": 24
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "detail": {
+   "fps": 0.5,
+   "sample_interval_seconds": 2.0,
+   "cell_size": [
+    800,
+    450
+   ],
+   "grid": [
+    2,
+    2
+   ],
+   "frames_per_sheet": 4,
+   "sheet_size": [
+    1600,
+    900
+   ],
+   "frames_count": 10,
+   "sheets_count": 3,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 18.0,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 3,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 6.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 4,
+     "last_sample_index": 7,
+     "first_time_seconds": 8.0,
+     "last_time_seconds": 14.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 8,
+     "last_sample_index": 9,
+     "first_time_seconds": 16.0,
+     "last_time_seconds": 18.0,
+     "filled_cells": 2
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "reference_image_role": "initial scene/style context only, if provided"
+ },
+ "gate_prompt_sha256": "74df0eabfc6c3f889137b95789dbfb5ec6c14efd674ee6c0b27945c2468a53ed",
+ "score_prompt_sha256": "931b32b491df856b9be6b118777e0490bfc0af5b62e40ec06e30bdb5de79980f",
+ "scores": {
+  "official": 1.6,
+  "final_score": 1.6
+ },
+ "episode_id": "rh-stock-GC026-H12-seed42",
+ "arm": "stock",
+ "horizon_s": 12,
+ "objective": "Turn right 180 degrees, wait for 12 seconds, then turn back to the original view."
+}

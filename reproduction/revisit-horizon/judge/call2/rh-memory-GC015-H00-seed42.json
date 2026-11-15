@@ -1,0 +1,417 @@
+{
+ "task_id": "GC015",
+ "judge_provider": "google-vertex",
+ "judge_model": "gemini-3.1-pro-preview",
+ "endpoint": "vertex-ai-global",
+ "video_sha256": "7f88cd5cf15dd645e37558e03bc91ea65fe159bf52b684438a597fa4c0ab7491",
+ "dry_run": false,
+ "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+ "gate": {
+  "applicable": "yes",
+  "task_id": "GC015",
+  "perspective": "first-person",
+  "verdict": "pass",
+  "instruction_following_score": 1,
+  "meaningful_requested_trajectory_progress": "yes",
+  "revisit_required": "yes",
+  "revisit_observed": "yes",
+  "observed_action_zh": "镜头先向右旋转约180度，看到房间另一侧的角落和架子，然后向左旋转，回到了初始视角的画面。",
+  "trajectory_evidence_zh": "在主视图第1张中，镜头从第10帧开始向右旋转；在第2张中，镜头继续向右旋转并停留在房间另一侧的角落（约第35帧至第55帧）；在第3张中，镜头从第56帧开始向左旋转；在第4张中，镜头继续向左旋转并最终回到了与初始帧相同的视角。",
+  "failure_reason_zh": "",
+  "confidence_1_to_5": 5
+ },
+ "rubric": {
+  "base_non_task_score_1_to_5": 3.0,
+  "final_score_1_to_5": 3.0,
+  "category_scores_1_to_5": {
+   "identity_id": {
+    "score": 2,
+    "weight": 2.0,
+    "answer": "no",
+    "evidence_zh": "当相机在第55-78帧回到初始视角区域时，原本搭在靠近相机椅背上的红蓝格子衬衫瞬间转移到了桌子左侧的椅子上；原本位于左下角前景的木制扶手椅消失；厨房操作台右侧的白色水壶也消失了。"
+   },
+   "identity_texture": {
+    "score": 4,
+    "weight": 1.0,
+    "answer": "yes",
+    "evidence_zh": "木屋的木材纹理、衬衫的布料图案以及室外的树叶在视频全程和重新出现时基本保持一致，没有出现明显的纹理漂移或生成的噪点。"
+   },
+   "color": {
+    "score": 5,
+    "weight": 1.0,
+    "answer": "yes",
+    "evidence_zh": "木屋的棕色调、衬衫的红蓝白颜色以及室外树木的绿色在整个平移过程和重新出现时都保持了稳定的色相，没有发生颜色漂移或闪烁。"
+   },
+   "relative_position": {
+    "score": 2,
+    "weight": 1.0,
+    "answer": "no",
+    "evidence_zh": "格子衬衫相对于餐桌和椅子的位置发生了不可能的跳跃（从近处的椅子转移到了左侧的椅子）；前景的扶手椅在其原本的相对位置上消失。"
+   }
+  },
+  "excluded_categories": {
+   "task_specific": "not scored"
+  },
+  "static_tail_policy_applied": "相机在第60帧左右回到初始视角后保持静止，符合允许的动作完成后静止尾段规则，不扣分。",
+  "action_inconsistency_penalties": [],
+  "requested_action_completion": {
+   "completed": "yes",
+   "first_completion_frame": 60,
+   "evidence_zh": "相机成功执行了向右平移，并在第60帧左右向左平移回到了初始视角的区域并停止。"
+  },
+  "background_consistency": {
+   "required_action_phase_zh": "在向右和向左平移期间，新揭示的墙壁、窗户和架子等背景结构保持稳定。",
+   "post_completion_phase_zh": "回到初始视角后，背景的木墙和室外树木结构保持稳定，但厨房操作台上的物品（如水壶）发生了消失。"
+  },
+  "object_correspondence_checks": [
+   {
+    "comparison": "Frames 0-10 (initial view) vs Frames 60-78 (returned view)",
+    "anchors": [
+     "kitchenette counter",
+     "open wall structure",
+     "dining table"
+    ],
+    "same_object_or_region": "yes"
+   }
+  ],
+  "camera_motion_disambiguation": {
+   "intervals_checked": [
+    "0-30",
+    "30-60"
+   ],
+   "continuous_camera_motion": "yes",
+   "tracked_structural_anchors": [
+    "open wall structure",
+    "kitchenette counter",
+    "new wall with windows"
+   ],
+   "newly_revealed_regions_zh": "第15-45帧中出现的带有窗户的墙壁、另一把扶手椅和架子是相机向右平移时新揭示的区域。",
+   "evidence_zh": "视角的改变是由相机连续的向右然后向左平移引起的，符合物理逻辑，没有发生空间突变。"
+  },
+  "hard_reset_check": {
+   "hard_reset_claimed": "no",
+   "adjacent_frame_interval": "none",
+   "no_plausible_camera_transform": "no",
+   "persistent_anchor_contradiction": "no",
+   "contradicting_anchors": [],
+   "evidence_zh": "视频中没有发生硬切，视角的转换是通过连续的相机平移完成的。"
+  },
+  "post_completion_adjustment": {
+   "value": 0.0,
+   "evidence_zh": "相机在第60帧回到初始视角后保持静止，没有多余的错误动作，不扣分。"
+  },
+  "final_state_check": {
+   "window": "60-78",
+   "visible_key_objects": [
+    "wooden dining table",
+    "dining chairs",
+    "red and blue plaid shirt",
+    "kitchenette counter",
+    "cabin structure"
+   ],
+   "reappearance_consistency_zh": "初始视角的格子衬衫从靠近相机的椅子转移到了左侧的椅子上，左下角前景的木制扶手椅消失，厨房操作台上的白色水壶消失，存在明显的重新出现不一致。"
+  },
+  "oe_dynamicity_check": {
+   "mode": "not_applicable",
+   "meaningful_evolution": "not_applicable",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evolution_quality_level_1_to_5": null,
+   "named_process": "not_applicable",
+   "phase_comparison_applicable": "no",
+   "pre_occlusion_state_zh": "not_applicable",
+   "hidden_interval_zh": "not_applicable",
+   "reappeared_state_zh": "not_applicable",
+   "post_completion_static_tail": "no",
+   "static_tail_first_frame": null,
+   "terminal_static_reasonable": "not_applicable",
+   "terminal_pose_or_process_state": "not_applicable",
+   "support_and_pose_evidence_zh": "not_applicable",
+   "terminal_state_reasoning_zh": "not_applicable",
+   "static_tail_score_adjustment": 0,
+   "static_tail_penalty_zh": "not_applicable",
+   "camera_independent_subject_motion": "not_applicable",
+   "stable_world_anchors_compared": [],
+   "articulation_or_local_state_change_zh": "not_applicable",
+   "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+   "two_independent_motion_evidence_requirements_met": "not_applicable",
+   "expected_world_motion_direction_zh": "not_applicable",
+   "returned_motion_direction_consistent": "not_applicable",
+   "rigid_vehicle_local_progression_zh": "not_applicable",
+   "vehicle_front_rear_identification_zh": "not_applicable",
+   "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+   "vehicle_motion_direction": "not_applicable",
+   "unexplained_reverse_motion": "not_applicable",
+   "subject_relative_change_zh": "not_applicable",
+   "unchanged_coupled_details_zh": "not_applicable",
+   "accumulated_change_zh": "not_applicable",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": null
+  },
+  "oe_instruction_following_check": {
+   "applicable": "no",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "meaningful_requested_trajectory_progress": "not_applicable",
+   "revisit_required": "no",
+   "starting_pose_revisited": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "oe003_ink_deposition_check": {
+   "applicable": "no",
+   "persistent_new_ink": "uncertain",
+   "ink_change_type": "uncertain",
+   "same_anchored_paper_region_compared": "no",
+   "initial_ink_state_zh": "not_applicable",
+   "change_sequence_zh": "not_applicable",
+   "resulting_ink_state_zh": "not_applicable",
+   "hand_or_pen_motion_without_ink_change": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "oe_productive_action_check": {
+   "applicable": "no",
+   "action_type": "other",
+   "tool_and_target": "not_applicable",
+   "persistent_result_created": "no",
+   "result_recognizable_and_intentional": "no",
+   "tool_contact_causes_local_change": "no",
+   "action_result_temporally_coherent": "no",
+   "prompt_named_requirement": "not_specified",
+   "result_matches_named_requirement": "not_applicable",
+   "result_later_disappears_or_resets": "uncertain",
+   "visible_reversal_explanation": "not_applicable",
+   "productive_action_quality_level_1_to_5": null,
+   "evidence_zh": "not_applicable"
+  },
+  "gc_dynamicity_check": {
+   "meaningful_action_progress": "yes",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evidence_zh": "相机成功执行了向右平移并向左平移返回的动作，有明显的视角变化。",
+   "final_score_gate_applied": null
+  },
+  "gc_appearance_stability_check": {
+   "applicable": "yes",
+   "tracked_objects_or_surfaces": [
+    "wooden dining table",
+    "red and blue plaid shirt",
+    "cabin structure"
+   ],
+   "correspondence_anchors": [
+    "kitchenette counter",
+    "open wall structure"
+   ],
+   "visible_intervals": [
+    "0-10",
+    "60-78"
+   ],
+   "before_developing_after_checkpoints": [],
+   "intrinsic_color_drift": "none",
+   "material_or_texture_drift": "none",
+   "generated_noise_artifacts": "none",
+   "noise_type": "none",
+   "allowed_visual_explanation": "none",
+   "evidence_zh": "木材纹理、衬衫图案和整体颜色在重新出现时保持一致，没有明显的漂移或噪点。"
+  },
+  "if_subject_motion_check": {
+   "subject_expected_to_move": "no",
+   "meaningful_subject_motion": "not_applicable",
+   "static_or_near_static": "no",
+   "camera_or_background_motion_only": "yes",
+   "post_action_static_tail": "no",
+   "static_tail_first_frame": null,
+   "static_tail_fraction_of_video": 0,
+   "post_action_static_penalty": 0,
+   "evidence_zh": "not_applicable",
+   "final_score_gate_applied": null
+  },
+  "if_instruction_following_check": {
+   "applicable": "no",
+   "perspective": "other",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "prompt_directed_forward_progress": "not_applicable",
+   "camera_or_background_motion_only": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "if_collision_boundary_checklist": {
+   "applicable": "no",
+   "interaction_opportunity_reached": "no",
+   "observed_outcome": "other",
+   "solid_interpenetration": "uncertain",
+   "support_after_contact": "not_applicable",
+   "boundary_response_plausible": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "if_target_boundary_stability_check": {
+   "target_boundary": "not_applicable",
+   "target_type": "not_applicable",
+   "tracked_before_contact": "uncertain",
+   "remained_present_until_trigger": "uncertain",
+   "observed_trigger": "not_applicable",
+   "unsupported_change": "none",
+   "interaction_opportunity_preserved": "uncertain",
+   "evidence_zh": "not_applicable"
+  },
+  "if_support_proxy_check": {
+   "direct_support_interface_visible": "no",
+   "proxy_evidence_observed": [],
+   "proxy_supports_expected_locomotion": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "subject_identity_check": {
+   "applicable": "no",
+   "tracked_subject": "not_applicable",
+   "same_entity_throughout": "no",
+   "stable_identity_attributes": [],
+   "identity_failure": "none",
+   "evidence_zh": "not_applicable"
+  },
+  "subject_identity_eligibility_check": {
+   "core_process": "IF_interaction_quality",
+   "core_process_level": null,
+   "meaningful_motion_or_evolution": "no",
+   "contact_or_support_demonstrated": "not_applicable",
+   "identity_eligible_for_normal_weighting": "no",
+   "final_score_cap_applied": null,
+   "evidence_zh": "not_applicable"
+  },
+  "if_interaction_quality_check": {
+   "interaction_quality_level_1_to_5": null,
+   "interaction_opportunity_reached": "no",
+   "physical_response_observed": "no",
+   "core_failure_zh": "none",
+   "positive_evidence_zh": "none",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": null
+  },
+  "summary_zh": "相机完成了向右和向左的平移，但在回到初始视角时，格子衬衫的位置发生了瞬间转移，前景的扶手椅和厨房的水壶消失，导致身份和相对位置得分较低。",
+  "task_id": "GC015"
+ },
+ "calls": [
+  {
+   "mode": "gate",
+   "cached": false,
+   "prompt_tokens": 7103,
+   "output_tokens": 256
+  },
+  {
+   "mode": "score",
+   "cached": false,
+   "prompt_tokens": 20822,
+   "output_tokens": 3486
+  }
+ ],
+ "sampling": {
+  "strategy": "dual-scale full-video contact-sheet sampling",
+  "chronological_order": true,
+  "contact_sheet_encoding": {
+   "format": "JPEG",
+   "quality": 70,
+   "subsampling": "4:2:0"
+  },
+  "primary": {
+   "fps": 10.0,
+   "sample_interval_seconds": 0.1,
+   "cell_size": [
+    384,
+    216
+   ],
+   "grid": [
+    5,
+    5
+   ],
+   "frames_per_sheet": 25,
+   "sheet_size": [
+    1920,
+    1080
+   ],
+   "frames_count": 79,
+   "sheets_count": 4,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 7.8,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 24,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 2.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 25,
+     "last_sample_index": 49,
+     "first_time_seconds": 2.5,
+     "last_time_seconds": 4.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 50,
+     "last_sample_index": 74,
+     "first_time_seconds": 5.0,
+     "last_time_seconds": 7.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 75,
+     "last_sample_index": 78,
+     "first_time_seconds": 7.5,
+     "last_time_seconds": 7.8,
+     "filled_cells": 4
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "detail": {
+   "fps": 0.5,
+   "sample_interval_seconds": 2.0,
+   "cell_size": [
+    800,
+    450
+   ],
+   "grid": [
+    2,
+    2
+   ],
+   "frames_per_sheet": 4,
+   "sheet_size": [
+    1600,
+    900
+   ],
+   "frames_count": 4,
+   "sheets_count": 1,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 6.0,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 3,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 6.0,
+     "filled_cells": 4
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "reference_image_role": "initial scene/style context only, if provided"
+ },
+ "gate_prompt_sha256": "21eeade55ea3c104526f0a8f30764770a262951714a0e57bb6386f6667f85859",
+ "score_prompt_sha256": "c0f9630d7a75c63eb349337938ea78cb09fcbd2749a8cf3a34036cfd4e86b3b7",
+ "scores": {
+  "official": 3.0,
+  "final_score": 3.0
+ },
+ "episode_id": "rh-memory-GC015-H00-seed42",
+ "arm": "memory",
+ "horizon_s": 0,
+ "objective": "Turn right 180 degrees, then turn back to the original view."
+}

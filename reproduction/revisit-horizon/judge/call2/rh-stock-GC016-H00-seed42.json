@@ -1,0 +1,434 @@
+{
+ "task_id": "GC016",
+ "judge_provider": "google-vertex",
+ "judge_model": "gemini-3.1-pro-preview",
+ "endpoint": "vertex-ai-global",
+ "video_sha256": "9d2a04567a4470886a6005951bbab8d8ca2b0165559ada8a4ebc937764f5e86c",
+ "dry_run": false,
+ "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+ "gate": {
+  "applicable": "yes",
+  "task_id": "GC016",
+  "perspective": "third-person",
+  "verdict": "pass",
+  "instruction_following_score": 1,
+  "meaningful_requested_trajectory_progress": "yes",
+  "revisit_required": "yes",
+  "revisit_observed": "yes",
+  "observed_action_zh": "镜头首先向右环绕人物180度，从人物背后转到人物正前方，随后向左环绕返回，最终回到人物背后的初始视角。",
+  "trajectory_evidence_zh": "在第1张图（帧0-24）中，镜头向右环绕，背景从佛塔变为一座建筑的门，镜头转到人物正前方，完成了约180度的向右旋转。在第2张图（帧25-49）和第3张图（帧50-74）中，镜头开始向左环绕，背景中的门逐渐移出画面，佛塔重新进入视野，最终在第3张图后半段和第4张图（帧75-78）中，镜头完全回到了初始的视角（人物背后，面向佛塔）。",
+  "failure_reason_zh": "",
+  "confidence_1_to_5": 5
+ },
+ "rubric": {
+  "base_non_task_score_1_to_5": 2.8,
+  "final_score_1_to_5": 2.3,
+  "category_scores_1_to_5": {
+   "identity_id": {
+    "score": 3,
+    "weight": 2.0,
+    "answer": "partial",
+    "evidence_zh": "男子的右腕在初始时是空的，但在第60帧左右凭空出现了一条黑色腕带；背包的左侧在视频后半段突变出一块明显的红白相间的补丁。"
+   },
+   "identity_texture": {
+    "score": 3,
+    "weight": 1.0,
+    "answer": "partial",
+    "evidence_zh": "石板路的材质和结构发生了根本性变化，从初始的平坦铺装路面变成了返回时的抬升石坡道。"
+   },
+   "color": {
+    "score": 4,
+    "weight": 1.0,
+    "answer": "yes",
+    "evidence_zh": "整体颜色基本稳定，但背包左侧突变出的红白补丁引入了不合理的颜色变化。"
+   },
+   "relative_position": {
+    "score": 1,
+    "weight": 1.0,
+    "answer": "no",
+    "evidence_zh": "当相机在第50帧回到初始视角时发生了严重的空间布局重置：原本宝塔左侧只有树木，现在却凭空出现了一大段带有绿色屋顶的围墙；原本平坦的石板路也变成了高起的石坡道。"
+   }
+  },
+  "excluded_categories": {
+   "task_specific": "not scored"
+  },
+  "static_tail_policy_applied": "The video does not have a static tail; the camera continues to pan left until the end.",
+  "action_inconsistency_penalties": [],
+  "requested_action_completion": {
+   "completed": "yes",
+   "first_completion_frame": 50,
+   "evidence_zh": "相机向右平移后向左平移，在第50帧左右回到了包含男子和宝塔的初始视角，随后继续向左过度平移。"
+  },
+  "background_consistency": {
+   "required_action_phase_zh": "相机向右平移时展示了新的建筑区域，背景连贯。",
+   "post_completion_phase_zh": "相机回到初始视角时，背景发生了严重的布局重置（凭空出现围墙，平地变坡道），随后相机继续向左平移展示了更多不属于初始视角的围墙区域。"
+  },
+  "object_correspondence_checks": [
+   {
+    "comparison": "initial view vs returned view at frame 50",
+    "anchors": [
+     "man",
+     "pagoda"
+    ],
+    "same_object_or_region": "yes"
+   }
+  ],
+  "camera_motion_disambiguation": {
+   "intervals_checked": [
+    "0-25",
+    "25-50",
+    "50-78"
+   ],
+   "continuous_camera_motion": "yes",
+   "tracked_structural_anchors": [
+    "man",
+    "pagoda",
+    "stone path"
+   ],
+   "newly_revealed_regions_zh": "向右平移时出现的绿色屋顶建筑属于新区域；但向左平移回到宝塔时，宝塔左侧出现的绿顶围墙属于与初始视角矛盾的重置区域。",
+   "evidence_zh": "视角的改变由相机的左右平移引起，但回到初始视角时背景发生了不合理的重置。"
+  },
+  "hard_reset_check": {
+   "hard_reset_claimed": "no",
+   "adjacent_frame_interval": "none",
+   "no_plausible_camera_transform": "no",
+   "persistent_anchor_contradiction": "yes",
+   "contradicting_anchors": [],
+   "evidence_zh": "视频没有发生相邻帧的硬切，相机的平移是连续的，但当相机回到初始锚定区域（宝塔）时，周围的空间布局发生了严重矛盾（凭空出现了围墙，平地变成了坡道）。"
+  },
+  "post_completion_adjustment": {
+   "value": -0.5,
+   "evidence_zh": "在第50帧完成回到初始视角的动作后，相机继续向左平移了近3秒，严重超出了提示词要求的停止位置。"
+  },
+  "final_state_check": {
+   "window": "75-78",
+   "visible_key_objects": [
+    "man",
+    "black backpack",
+    "cap",
+    "camera"
+   ],
+   "reappearance_consistency_zh": "由于相机过度向左平移，最终画面中宝塔已移出视野，男子及其背包、帽子、相机依然可见，但背包和手腕的细节与初始状态不一致。"
+  },
+  "oe_dynamicity_check": {
+   "mode": "not_applicable",
+   "meaningful_evolution": "not_applicable",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evolution_quality_level_1_to_5": null,
+   "named_process": "not_applicable",
+   "phase_comparison_applicable": "no",
+   "pre_occlusion_state_zh": "not_applicable",
+   "hidden_interval_zh": "not_applicable",
+   "reappeared_state_zh": "not_applicable",
+   "post_completion_static_tail": "no",
+   "static_tail_first_frame": null,
+   "terminal_static_reasonable": "not_applicable",
+   "terminal_pose_or_process_state": "not_applicable",
+   "support_and_pose_evidence_zh": "not_applicable",
+   "terminal_state_reasoning_zh": "not_applicable",
+   "static_tail_score_adjustment": 0,
+   "static_tail_penalty_zh": "not_applicable",
+   "camera_independent_subject_motion": "not_applicable",
+   "stable_world_anchors_compared": [],
+   "articulation_or_local_state_change_zh": "not_applicable",
+   "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+   "two_independent_motion_evidence_requirements_met": "not_applicable",
+   "expected_world_motion_direction_zh": "not_applicable",
+   "returned_motion_direction_consistent": "not_applicable",
+   "rigid_vehicle_local_progression_zh": "not_applicable",
+   "vehicle_front_rear_identification_zh": "not_applicable",
+   "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+   "vehicle_motion_direction": "not_applicable",
+   "unexplained_reverse_motion": "not_applicable",
+   "subject_relative_change_zh": "not_applicable",
+   "unchanged_coupled_details_zh": "not_applicable",
+   "accumulated_change_zh": "not_applicable",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": null
+  },
+  "oe_instruction_following_check": {
+   "applicable": "no",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "meaningful_requested_trajectory_progress": "not_applicable",
+   "revisit_required": "no",
+   "starting_pose_revisited": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "oe003_ink_deposition_check": {
+   "applicable": "no",
+   "persistent_new_ink": "uncertain",
+   "ink_change_type": "uncertain",
+   "same_anchored_paper_region_compared": "no",
+   "initial_ink_state_zh": "not_applicable",
+   "change_sequence_zh": "not_applicable",
+   "resulting_ink_state_zh": "not_applicable",
+   "hand_or_pen_motion_without_ink_change": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "oe_productive_action_check": {
+   "applicable": "no",
+   "action_type": "other",
+   "tool_and_target": "not_applicable",
+   "persistent_result_created": "no",
+   "result_recognizable_and_intentional": "no",
+   "tool_contact_causes_local_change": "no",
+   "action_result_temporally_coherent": "no",
+   "prompt_named_requirement": "not_specified",
+   "result_matches_named_requirement": "not_applicable",
+   "result_later_disappears_or_resets": "uncertain",
+   "visible_reversal_explanation": "not_applicable",
+   "productive_action_quality_level_1_to_5": 1,
+   "evidence_zh": "not_applicable"
+  },
+  "gc_dynamicity_check": {
+   "meaningful_action_progress": "yes",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evidence_zh": "相机成功执行了向右平移并向左返回的动作，画面具有明显的动态进展。",
+   "final_score_gate_applied": null
+  },
+  "gc_appearance_stability_check": {
+   "applicable": "yes",
+   "tracked_objects_or_surfaces": [
+    "man's right wrist",
+    "backpack",
+    "stone path"
+   ],
+   "correspondence_anchors": [
+    "man",
+    "pagoda"
+   ],
+   "visible_intervals": [
+    "0-78"
+   ],
+   "before_developing_after_checkpoints": [
+    {
+     "surface": "man's right wrist",
+     "before_frame": 0,
+     "developing_frame": 55,
+     "after_frame": 65,
+     "observed_change_zh": "原本空无一物的右腕凭空出现了一条黑色腕带。"
+    },
+    {
+     "surface": "stone path",
+     "before_frame": 0,
+     "developing_frame": 25,
+     "after_frame": 50,
+     "observed_change_zh": "原本平坦的石板路在相机移回时变成了高起的石坡道。"
+    }
+   ],
+   "intrinsic_color_drift": "possible",
+   "material_or_texture_drift": "verified",
+   "generated_noise_artifacts": "none",
+   "noise_type": "none",
+   "allowed_visual_explanation": "none",
+   "evidence_zh": "男子的手腕和背包细节发生了无端突变，石板路的结构和材质在返回时发生了重置。"
+  },
+  "if_subject_motion_check": {
+   "subject_expected_to_move": "no",
+   "meaningful_subject_motion": "not_applicable",
+   "static_or_near_static": "no",
+   "camera_or_background_motion_only": "yes",
+   "post_action_static_tail": "no",
+   "static_tail_first_frame": null,
+   "static_tail_fraction_of_video": 0,
+   "post_action_static_penalty": 0,
+   "evidence_zh": "not_applicable",
+   "final_score_gate_applied": null
+  },
+  "if_instruction_following_check": {
+   "applicable": "no",
+   "perspective": "other",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "prompt_directed_forward_progress": "not_applicable",
+   "camera_or_background_motion_only": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "if_collision_boundary_checklist": {
+   "applicable": "no",
+   "interaction_opportunity_reached": "no",
+   "observed_outcome": "other",
+   "solid_interpenetration": "uncertain",
+   "support_after_contact": "not_applicable",
+   "boundary_response_plausible": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "if_target_boundary_stability_check": {
+   "target_boundary": "not_applicable",
+   "target_type": "not_applicable",
+   "tracked_before_contact": "uncertain",
+   "remained_present_until_trigger": "uncertain",
+   "observed_trigger": "not_applicable",
+   "unsupported_change": "none",
+   "interaction_opportunity_preserved": "uncertain",
+   "evidence_zh": "not_applicable"
+  },
+  "if_support_proxy_check": {
+   "direct_support_interface_visible": "no",
+   "proxy_evidence_observed": [],
+   "proxy_supports_expected_locomotion": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "subject_identity_check": {
+   "applicable": "yes",
+   "tracked_subject": "man",
+   "same_entity_throughout": "partial",
+   "stable_identity_attributes": [
+    "clothing",
+    "cap",
+    "camera"
+   ],
+   "identity_failure": "morphing",
+   "evidence_zh": "男子的主体衣着保持一致，但右腕凭空出现腕带，背包左侧突变出红白补丁。"
+  },
+  "subject_identity_eligibility_check": {
+   "core_process": "IF_interaction_quality",
+   "core_process_level": 5,
+   "meaningful_motion_or_evolution": "not_applicable",
+   "contact_or_support_demonstrated": "not_applicable",
+   "identity_eligible_for_normal_weighting": "yes",
+   "final_score_cap_applied": null,
+   "evidence_zh": "not_applicable"
+  },
+  "if_interaction_quality_check": {
+   "interaction_quality_level_1_to_5": 5,
+   "interaction_opportunity_reached": "no",
+   "physical_response_observed": "no",
+   "core_failure_zh": "none",
+   "positive_evidence_zh": "not_applicable",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": 5
+  },
+  "summary_zh": "视频成功执行了相机的左右平移，但在回到初始视角时发生了严重的空间布局重置（宝塔左侧凭空出现围墙，平地变坡道），且男子手腕凭空出现腕带，动作完成后相机存在明显的过度平移。",
+  "task_id": "GC016"
+ },
+ "calls": [
+  {
+   "mode": "gate",
+   "cached": false,
+   "prompt_tokens": 7103,
+   "output_tokens": 307
+  },
+  {
+   "mode": "score",
+   "cached": false,
+   "prompt_tokens": 20749,
+   "output_tokens": 3652
+  }
+ ],
+ "sampling": {
+  "strategy": "dual-scale full-video contact-sheet sampling",
+  "chronological_order": true,
+  "contact_sheet_encoding": {
+   "format": "JPEG",
+   "quality": 70,
+   "subsampling": "4:2:0"
+  },
+  "primary": {
+   "fps": 10.0,
+   "sample_interval_seconds": 0.1,
+   "cell_size": [
+    384,
+    216
+   ],
+   "grid": [
+    5,
+    5
+   ],
+   "frames_per_sheet": 25,
+   "sheet_size": [
+    1920,
+    1080
+   ],
+   "frames_count": 79,
+   "sheets_count": 4,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 7.8,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 24,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 2.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 25,
+     "last_sample_index": 49,
+     "first_time_seconds": 2.5,
+     "last_time_seconds": 4.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 50,
+     "last_sample_index": 74,
+     "first_time_seconds": 5.0,
+     "last_time_seconds": 7.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 75,
+     "last_sample_index": 78,
+     "first_time_seconds": 7.5,
+     "last_time_seconds": 7.8,
+     "filled_cells": 4
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "detail": {
+   "fps": 0.5,
+   "sample_interval_seconds": 2.0,
+   "cell_size": [
+    800,
+    450
+   ],
+   "grid": [
+    2,
+    2
+   ],
+   "frames_per_sheet": 4,
+   "sheet_size": [
+    1600,
+    900
+   ],
+   "frames_count": 4,
+   "sheets_count": 1,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 6.0,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 3,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 6.0,
+     "filled_cells": 4
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "reference_image_role": "initial scene/style context only, if provided"
+ },
+ "gate_prompt_sha256": "7d56210d7a68d11d8954d436048b3b0754d1d2251f3238ac7873116df3c72e33",
+ "score_prompt_sha256": "b7d768d8331354bcfd2284f07b8fb7f49f902407fe89bccdbe720a48631f64af",
+ "scores": {
+  "official": 2.8,
+  "final_score": 2.3
+ },
+ "episode_id": "rh-stock-GC016-H00-seed42",
+ "arm": "stock",
+ "horizon_s": 0,
+ "objective": "Turn right 180 degrees, then turn back to the original view."
+}

@@ -1,0 +1,448 @@
+{
+ "task_id": "GC034",
+ "judge_provider": "google-vertex",
+ "judge_model": "gemini-3.1-pro-preview",
+ "endpoint": "vertex-ai-global",
+ "video_sha256": "17767150658b3642b57f51e1bbc3cb79514a3552ad6db7327b0d7fd807b93fe5",
+ "dry_run": false,
+ "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+ "gate": {
+  "applicable": "yes",
+  "task_id": "GC034",
+  "perspective": "first-person",
+  "verdict": "pass",
+  "instruction_following_score": 1,
+  "meaningful_requested_trajectory_progress": "yes",
+  "revisit_required": "yes",
+  "revisit_observed": "yes",
+  "observed_action_zh": "镜头向右旋转约180度，停顿等待了一段时间，然后向左旋转回到了初始视角。",
+  "trajectory_evidence_zh": "在主视图第1张中，镜头开始向右旋转；第2张中，镜头完成向右旋转并停留在新的视角（看向草坪）；第3、4张和第5张前半部分，镜头保持静止，符合等待6秒的指令；第5张后半部分，镜头开始向左旋转；第6张中，镜头继续向左旋转并最终回到了初始的门和木质岗亭的视角。",
+  "failure_reason_zh": "",
+  "confidence_1_to_5": 5
+ },
+ "rubric": {
+  "base_non_task_score_1_to_5": 2.0,
+  "final_score_1_to_5": 2,
+  "category_scores_1_to_5": {
+   "identity_id": {
+    "score": 1,
+    "weight": 2.0,
+    "answer": "no",
+    "evidence_zh": "镜头转回初始区域时（第115帧起），石门重新出现时结构完全改变，顶部变成平的，失去了原有的三角形山花和尖顶装饰；随后在第124至125帧之间，石门顶部又突然跳变出三角形结构。右侧的木质岗亭重新出现时，其屋顶形状也变得更平坦，结构发生明显改变。"
+   },
+   "identity_texture": {
+    "score": 2,
+    "weight": 1.0,
+    "answer": "no",
+    "evidence_zh": "石门重新出现时，表面原有的风化污迹和细节纹理完全丢失并被替换；木质岗亭的木板纹理也与初始状态不符。"
+   },
+   "color": {
+    "score": 3,
+    "weight": 1.0,
+    "answer": "partial",
+    "evidence_zh": "重新出现时，石门的灰色、岗亭的棕色以及草地的绿色等基础固有色大体保持一致，没有出现严重的颜色类别替换或闪烁，但由于物体结构改变，具体的阴影和色块分布有所不同。"
+   },
+   "relative_position": {
+    "score": 3,
+    "weight": 1.0,
+    "answer": "partial",
+    "evidence_zh": "尽管物体本身发生了形变和替换，但石门、门后的墙壁以及右侧岗亭的整体空间布局和相对左右位置关系在重新出现时基本得到了保持。"
+   }
+  },
+  "excluded_categories": {
+   "task_specific": "not scored"
+  },
+  "static_tail_policy_applied": "No significant static tail after the requested action is completed at the end of the video.",
+  "action_inconsistency_penalties": [],
+  "requested_action_completion": {
+   "completed": "yes",
+   "first_completion_frame": 138,
+   "evidence_zh": "镜头成功向右旋转了约180度，停留了约6秒，然后向左旋转回到了初始视角的区域。"
+  },
+  "background_consistency": {
+   "required_action_phase_zh": "镜头旋转过程中，背景的天空、草地和远处的树木在连续的镜头运动中保持了合理的空间关系，新展现的180度视角区域背景稳定。",
+   "post_completion_phase_zh": "动作在视频末尾完成，无明显的动作后阶段。"
+  },
+  "object_correspondence_checks": [
+   {
+    "comparison": "Initial gate and booth vs Reappearing gate and booth",
+    "anchors": [
+     "ground and grass boundary",
+     "general layout of the entrance"
+    ],
+    "same_object_or_region": "yes"
+   }
+  ],
+  "camera_motion_disambiguation": {
+   "intervals_checked": [
+    "10-45",
+    "100-138"
+   ],
+   "continuous_camera_motion": "yes",
+   "tracked_structural_anchors": [
+    "stone gate",
+    "wooden booth",
+    "metal fence"
+   ],
+   "newly_revealed_regions_zh": "镜头向右旋转180度后（约第45-105帧）看到的带有黑色铁门和绿篱小径的区域是新展现的场景，不与初始区域进行一致性对比。",
+   "evidence_zh": "视频中的视角变化由清晰的镜头向右旋转、悬停等待以及向左旋转返回构成，符合物理相机的运动规律。"
+  },
+  "hard_reset_check": {
+   "hard_reset_claimed": "yes",
+   "adjacent_frame_interval": "124-125",
+   "no_plausible_camera_transform": "yes",
+   "persistent_anchor_contradiction": "yes",
+   "contradicting_anchors": [
+    "brown wooden booth",
+    "ground"
+   ],
+   "evidence_zh": "在第124帧到第125帧之间，随着镜头向左平移，右侧的木质岗亭和地面保持连续，但左侧石门的顶部突然从平顶跳变为带有三角形山花的结构，发生了无法用相机运动解释的瞬间几何突变。"
+  },
+  "post_completion_adjustment": {
+   "value": 0.0,
+   "evidence_zh": "视频在完成返回初始视角的动作后即结束，没有多余的动作或需要扣分的尾部崩坏。"
+  },
+  "final_state_check": {
+   "window": "125-138",
+   "visible_key_objects": [
+    "weathered stone entrance gate",
+    "wall behind gate",
+    "brown wooden booth"
+   ],
+   "reappearance_consistency_zh": "初始的核心物体在最终视角中重新出现，但石门和岗亭的结构、形状及纹理均发生了明显的改变，未能保持一致性。"
+  },
+  "oe_dynamicity_check": {
+   "mode": "not_applicable",
+   "meaningful_evolution": "not_applicable",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evolution_quality_level_1_to_5": null,
+   "named_process": "not_applicable",
+   "phase_comparison_applicable": "no",
+   "pre_occlusion_state_zh": "not_applicable",
+   "hidden_interval_zh": "not_applicable",
+   "reappeared_state_zh": "not_applicable",
+   "post_completion_static_tail": "no",
+   "static_tail_first_frame": null,
+   "terminal_static_reasonable": "not_applicable",
+   "terminal_pose_or_process_state": "not_applicable",
+   "support_and_pose_evidence_zh": "not_applicable",
+   "terminal_state_reasoning_zh": "not_applicable",
+   "static_tail_score_adjustment": 0,
+   "static_tail_penalty_zh": "not_applicable",
+   "camera_independent_subject_motion": "not_applicable",
+   "stable_world_anchors_compared": [],
+   "articulation_or_local_state_change_zh": "not_applicable",
+   "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+   "two_independent_motion_evidence_requirements_met": "not_applicable",
+   "expected_world_motion_direction_zh": "not_applicable",
+   "returned_motion_direction_consistent": "not_applicable",
+   "rigid_vehicle_local_progression_zh": "not_applicable",
+   "vehicle_front_rear_identification_zh": "not_applicable",
+   "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+   "vehicle_motion_direction": "not_applicable",
+   "unexplained_reverse_motion": "not_applicable",
+   "subject_relative_change_zh": "not_applicable",
+   "unchanged_coupled_details_zh": "not_applicable",
+   "accumulated_change_zh": "not_applicable",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": null
+  },
+  "oe_instruction_following_check": {
+   "applicable": "no",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "meaningful_requested_trajectory_progress": "not_applicable",
+   "revisit_required": "no",
+   "starting_pose_revisited": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "oe003_ink_deposition_check": {
+   "applicable": "no",
+   "persistent_new_ink": "uncertain",
+   "ink_change_type": "uncertain",
+   "same_anchored_paper_region_compared": "no",
+   "initial_ink_state_zh": "not_applicable",
+   "change_sequence_zh": "not_applicable",
+   "resulting_ink_state_zh": "not_applicable",
+   "hand_or_pen_motion_without_ink_change": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "oe_productive_action_check": {
+   "applicable": "no",
+   "action_type": "other",
+   "tool_and_target": "not_applicable",
+   "persistent_result_created": "no",
+   "result_recognizable_and_intentional": "no",
+   "tool_contact_causes_local_change": "no",
+   "action_result_temporally_coherent": "no",
+   "prompt_named_requirement": "not_specified",
+   "result_matches_named_requirement": "not_applicable",
+   "result_later_disappears_or_resets": "uncertain",
+   "visible_reversal_explanation": "not_applicable",
+   "productive_action_quality_level_1_to_5": null,
+   "evidence_zh": "not_applicable"
+  },
+  "gc_dynamicity_check": {
+   "meaningful_action_progress": "yes",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evidence_zh": "镜头成功执行了向右旋转180度、等待以及向左旋转返回的动作，有明确的动作进展。",
+   "final_score_gate_applied": null
+  },
+  "gc_appearance_stability_check": {
+   "applicable": "yes",
+   "tracked_objects_or_surfaces": [
+    "weathered stone entrance gate",
+    "brown wooden booth"
+   ],
+   "correspondence_anchors": [
+    "ground and grass boundary",
+    "general layout of the entrance"
+   ],
+   "visible_intervals": [
+    "0-10",
+    "115-138"
+   ],
+   "before_developing_after_checkpoints": [
+    {
+     "surface": "stone gate",
+     "before_frame": 10,
+     "developing_frame": 120,
+     "after_frame": 130,
+     "observed_change_zh": "石门重新出现时结构变为平顶，随后在第125帧跳变为带有三角形山花的结构，且表面纹理被替换。"
+    }
+   ],
+   "intrinsic_color_drift": "possible",
+   "material_or_texture_drift": "verified",
+   "generated_noise_artifacts": "none",
+   "noise_type": "none",
+   "allowed_visual_explanation": "none",
+   "evidence_zh": "石门和岗亭在重新出现时发生了严重的结构改变和纹理替换，且在第124-125帧之间发生了瞬间的几何跳变。"
+  },
+  "if_subject_motion_check": {
+   "subject_expected_to_move": "no",
+   "meaningful_subject_motion": "not_applicable",
+   "static_or_near_static": "no",
+   "camera_or_background_motion_only": "yes",
+   "post_action_static_tail": "no",
+   "static_tail_first_frame": null,
+   "static_tail_fraction_of_video": 0.0,
+   "post_action_static_penalty": 0,
+   "evidence_zh": "not_applicable",
+   "final_score_gate_applied": null
+  },
+  "if_instruction_following_check": {
+   "applicable": "no",
+   "perspective": "first-person",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "prompt_directed_forward_progress": "not_applicable",
+   "camera_or_background_motion_only": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "if_collision_boundary_checklist": {
+   "applicable": "no",
+   "interaction_opportunity_reached": "no",
+   "observed_outcome": "not_applicable",
+   "solid_interpenetration": "uncertain",
+   "support_after_contact": "not_applicable",
+   "boundary_response_plausible": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "if_target_boundary_stability_check": {
+   "target_boundary": "not_applicable",
+   "target_type": "not_applicable",
+   "tracked_before_contact": "uncertain",
+   "remained_present_until_trigger": "uncertain",
+   "observed_trigger": "not_applicable",
+   "unsupported_change": "none",
+   "interaction_opportunity_preserved": "uncertain",
+   "evidence_zh": "not_applicable"
+  },
+  "if_support_proxy_check": {
+   "direct_support_interface_visible": "no",
+   "proxy_evidence_observed": [],
+   "proxy_supports_expected_locomotion": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "subject_identity_check": {
+   "applicable": "no",
+   "tracked_subject": "not_applicable",
+   "same_entity_throughout": "no",
+   "stable_identity_attributes": [],
+   "identity_failure": "none",
+   "evidence_zh": "not_applicable"
+  },
+  "subject_identity_eligibility_check": {
+   "core_process": "not_applicable",
+   "core_process_level": null,
+   "meaningful_motion_or_evolution": "not_applicable",
+   "contact_or_support_demonstrated": "not_applicable",
+   "identity_eligible_for_normal_weighting": "no",
+   "final_score_cap_applied": null,
+   "evidence_zh": "not_applicable"
+  },
+  "if_interaction_quality_check": {
+   "interaction_quality_level_1_to_5": null,
+   "interaction_opportunity_reached": "no",
+   "physical_response_observed": "no",
+   "core_failure_zh": "not_applicable",
+   "positive_evidence_zh": "not_applicable",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": null
+  },
+  "summary_zh": "视频成功执行了旋转和返回的动作，但在返回初始区域时，核心物体（石门和木质岗亭）发生了严重的结构改变和瞬间跳变，未能保持物体的一致性。",
+  "task_id": "GC034"
+ },
+ "calls": [
+  {
+   "mode": "gate",
+   "cached": false,
+   "prompt_tokens": 10740,
+   "output_tokens": 256
+  },
+  {
+   "mode": "score",
+   "cached": false,
+   "prompt_tokens": 24442,
+   "output_tokens": 3649
+  }
+ ],
+ "sampling": {
+  "strategy": "dual-scale full-video contact-sheet sampling",
+  "chronological_order": true,
+  "contact_sheet_encoding": {
+   "format": "JPEG",
+   "quality": 70,
+   "subsampling": "4:2:0"
+  },
+  "primary": {
+   "fps": 10.0,
+   "sample_interval_seconds": 0.1,
+   "cell_size": [
+    384,
+    216
+   ],
+   "grid": [
+    5,
+    5
+   ],
+   "frames_per_sheet": 25,
+   "sheet_size": [
+    1920,
+    1080
+   ],
+   "frames_count": 139,
+   "sheets_count": 6,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 13.8,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 24,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 2.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 25,
+     "last_sample_index": 49,
+     "first_time_seconds": 2.5,
+     "last_time_seconds": 4.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 50,
+     "last_sample_index": 74,
+     "first_time_seconds": 5.0,
+     "last_time_seconds": 7.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 75,
+     "last_sample_index": 99,
+     "first_time_seconds": 7.5,
+     "last_time_seconds": 9.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 5,
+     "first_sample_index": 100,
+     "last_sample_index": 124,
+     "first_time_seconds": 10.0,
+     "last_time_seconds": 12.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 6,
+     "first_sample_index": 125,
+     "last_sample_index": 138,
+     "first_time_seconds": 12.5,
+     "last_time_seconds": 13.8,
+     "filled_cells": 14
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "detail": {
+   "fps": 0.5,
+   "sample_interval_seconds": 2.0,
+   "cell_size": [
+    800,
+    450
+   ],
+   "grid": [
+    2,
+    2
+   ],
+   "frames_per_sheet": 4,
+   "sheet_size": [
+    1600,
+    900
+   ],
+   "frames_count": 7,
+   "sheets_count": 2,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 12.0,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 3,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 6.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 4,
+     "last_sample_index": 6,
+     "first_time_seconds": 8.0,
+     "last_time_seconds": 12.0,
+     "filled_cells": 3
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "reference_image_role": "initial scene/style context only, if provided"
+ },
+ "gate_prompt_sha256": "c2bba8d5318694e328000772efb66c55a462bc286401f3ace37a2eafd3330d24",
+ "score_prompt_sha256": "41807c0f815262f8bacbd11b469b04bb9e2c391ff80d04d008e93069cdb1d86c",
+ "scores": {
+  "official": 2.0,
+  "final_score": 2.0
+ },
+ "episode_id": "rh-memory-GC034-H06-seed42",
+ "arm": "memory",
+ "horizon_s": 6,
+ "objective": "Turn right 180 degrees, wait for 6 seconds, then turn back to the original view."
+}

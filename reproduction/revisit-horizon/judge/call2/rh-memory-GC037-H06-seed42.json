@@ -1,0 +1,292 @@
+{
+ "task_id": "GC037",
+ "judge_provider": "google-vertex",
+ "judge_model": "gemini-3.1-pro-preview",
+ "endpoint": "vertex-ai-global",
+ "video_sha256": "84edaf2c0af5727e06ba9d511d674fe743c5a146700366bb4ddb6bf9b31894bb",
+ "dry_run": false,
+ "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+ "gate": {
+  "applicable": "yes",
+  "task_id": "GC037",
+  "perspective": "first-person",
+  "verdict": "pass",
+  "instruction_following_score": 1,
+  "meaningful_requested_trajectory_progress": "yes",
+  "revisit_required": "yes",
+  "revisit_observed": "yes",
+  "observed_action_zh": "视角向右转动，随后保持静止等待，之后向左转动回到了初始视角。视频末尾出现了画面跳变，但在此之前已完整执行了要求的轨迹。",
+  "trajectory_evidence_zh": "第1至第2张接触图（0.0秒至3.5秒），视角向右平移转动；第2至第5张接触图（3.5秒至10.0秒），视角保持静止；第5张接触图（10.0秒至12.4秒），视角向左平移转动，并在12.4秒时回到了初始的吧台视角；第6张接触图（12.5秒起）画面发生跳变，但不影响此前已完成的轨迹。",
+  "failure_reason_zh": "",
+  "confidence_1_to_5": 5
+ },
+ "rubric": {
+  "base_non_task_score_1_to_5": 5.0,
+  "final_score_1_to_5": 5,
+  "category_scores_1_to_5": {
+   "identity_id": {
+    "score": 5,
+    "weight": 2.0,
+    "answer": "yes",
+    "evidence_zh": "垂直玻璃展示牌、金属牛奶罐、微波炉、黑色咖啡机和分层吊灯在镜头旋转离开视野后，随着镜头转回初始视角，均以原有的身份、数量和结构特征一致地重新出现。"
+   },
+   "identity_texture": {
+    "score": 5,
+    "weight": 1.0,
+    "answer": "yes",
+    "evidence_zh": "木制台面的木纹、玻璃展示牌的透明度和椭圆形标志、牛奶罐的金属表面以及墙面瓷砖的纹理细节在重新出现时均与初始状态保持高度一致。"
+   },
+   "color": {
+    "score": 5,
+    "weight": 1.0,
+    "answer": "yes",
+    "evidence_zh": "棕色木制台面、黑色微波炉、灰色金属牛奶罐和透明玻璃牌的固有颜色在整个可见期间及重新出现时均保持稳定，无颜色漂移。"
+   },
+   "relative_position": {
+    "score": 5,
+    "weight": 1.0,
+    "answer": "yes",
+    "evidence_zh": "玻璃展示牌、牛奶罐、微波炉和咖啡机在台面上及台面下的相对空间位置关系在镜头返回初始视角时得到了完美的保留，没有发生不合理的跳跃或位置重置。"
+   }
+  },
+  "excluded_categories": {
+   "task_specific": "not scored"
+  },
+  "static_tail_policy_applied": "No static tail penalty applied as the video completes the requested action and ends.",
+  "action_inconsistency_penalties": [],
+  "requested_action_completion": {
+   "completed": "yes",
+   "first_completion_frame": 138,
+   "evidence_zh": "镜头成功执行了向右旋转、停留等待，然后向左旋转回到初始视角的完整指令序列。"
+  },
+  "background_consistency": {
+   "required_action_phase_zh": "镜头向右旋转时，新展现的厨房水槽区域背景稳定，没有发生扭曲或突变。随后镜头向左旋转回到初始视角，初始的墙面、窗户和操作台背景均一致重现。",
+   "post_completion_phase_zh": "动作在视频末尾完成，无明显的额外阶段。"
+  },
+  "object_correspondence_checks": [
+   {
+    "comparison": "initial countertop objects vs reappeared countertop objects",
+    "anchors": [
+     "wooden countertop edge",
+     "back-wall tiles"
+    ],
+    "same_object_or_region": "yes"
+   }
+  ],
+  "camera_motion_disambiguation": {
+   "intervals_checked": [
+    "0-35",
+    "102-138"
+   ],
+   "continuous_camera_motion": "yes",
+   "tracked_structural_anchors": [
+    "wooden countertop edge",
+    "window frame"
+   ],
+   "newly_revealed_regions_zh": "镜头向右旋转时展现的水槽、橱柜和炉灶区域为新区域。",
+   "evidence_zh": "视角的改变完全由连贯的镜头水平旋转引起，符合物理规律，无空间突变。"
+  },
+  "hard_reset_check": {
+   "hard_reset_claimed": "no",
+   "adjacent_frame_interval": "none",
+   "no_plausible_camera_transform": "no",
+   "persistent_anchor_contradiction": "no",
+   "contradicting_anchors": [],
+   "evidence_zh": "视频中没有发生硬切或重置，所有场景转换均由平滑的镜头运动过渡。"
+  },
+  "post_completion_adjustment": {
+   "value": 0.0,
+   "evidence_zh": "视频在完成回到初始视角的动作后结束，没有多余的运动或破坏一致性的画面。"
+  },
+  "final_state_check": {
+   "window": "130-138",
+   "visible_key_objects": [
+    "vertical glass display sign",
+    "metal milk can",
+    "microwave",
+    "black coffee maker",
+    "tiered hanging light"
+   ],
+   "reappearance_consistency_zh": "在视频最后的帧中，初始视角中的所有关键物体均一致地重新出现，位置、形状和材质均与初始状态完美相符。"
+  },
+  "gc_dynamicity_check": {
+   "meaningful_action_progress": "yes",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evidence_zh": "视频清晰地展示了镜头向右旋转、停留等待以及向左旋转返回的完整过程，动作进展显著。",
+   "final_score_gate_applied": null
+  },
+  "gc_appearance_stability_check": {
+   "applicable": "yes",
+   "tracked_objects_or_surfaces": [
+    "vertical glass display sign",
+    "metal milk can",
+    "microwave",
+    "wooden countertop"
+   ],
+   "correspondence_anchors": [
+    "wooden countertop edge",
+    "back-wall tiles"
+   ],
+   "visible_intervals": [
+    "0-20",
+    "115-138"
+   ],
+   "before_developing_after_checkpoints": [],
+   "intrinsic_color_drift": "none",
+   "material_or_texture_drift": "none",
+   "generated_noise_artifacts": "none",
+   "noise_type": "none",
+   "allowed_visual_explanation": "none",
+   "evidence_zh": "所有被追踪的物体和表面在离开视野并重新出现后，其颜色、材质和纹理均保持高度一致，未发现漂移或噪点。"
+  },
+  "summary_zh": "视频完美执行了向右旋转、等待并返回初始视角的指令，初始场景中的所有关键物体在重新进入视野时均保持了极高的身份、材质、颜色和相对位置一致性。",
+  "task_id": "GC037"
+ },
+ "calls": [
+  {
+   "mode": "gate",
+   "cached": false,
+   "prompt_tokens": 10740,
+   "output_tokens": 294
+  },
+  {
+   "mode": "score",
+   "cached": false,
+   "prompt_tokens": 24499,
+   "output_tokens": 1522
+  }
+ ],
+ "sampling": {
+  "strategy": "dual-scale full-video contact-sheet sampling",
+  "chronological_order": true,
+  "contact_sheet_encoding": {
+   "format": "JPEG",
+   "quality": 70,
+   "subsampling": "4:2:0"
+  },
+  "primary": {
+   "fps": 10.0,
+   "sample_interval_seconds": 0.1,
+   "cell_size": [
+    384,
+    216
+   ],
+   "grid": [
+    5,
+    5
+   ],
+   "frames_per_sheet": 25,
+   "sheet_size": [
+    1920,
+    1080
+   ],
+   "frames_count": 139,
+   "sheets_count": 6,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 13.8,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 24,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 2.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 25,
+     "last_sample_index": 49,
+     "first_time_seconds": 2.5,
+     "last_time_seconds": 4.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 50,
+     "last_sample_index": 74,
+     "first_time_seconds": 5.0,
+     "last_time_seconds": 7.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 75,
+     "last_sample_index": 99,
+     "first_time_seconds": 7.5,
+     "last_time_seconds": 9.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 5,
+     "first_sample_index": 100,
+     "last_sample_index": 124,
+     "first_time_seconds": 10.0,
+     "last_time_seconds": 12.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 6,
+     "first_sample_index": 125,
+     "last_sample_index": 138,
+     "first_time_seconds": 12.5,
+     "last_time_seconds": 13.8,
+     "filled_cells": 14
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "detail": {
+   "fps": 0.5,
+   "sample_interval_seconds": 2.0,
+   "cell_size": [
+    800,
+    450
+   ],
+   "grid": [
+    2,
+    2
+   ],
+   "frames_per_sheet": 4,
+   "sheet_size": [
+    1600,
+    900
+   ],
+   "frames_count": 7,
+   "sheets_count": 2,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 12.0,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 3,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 6.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 4,
+     "last_sample_index": 6,
+     "first_time_seconds": 8.0,
+     "last_time_seconds": 12.0,
+     "filled_cells": 3
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "reference_image_role": "initial scene/style context only, if provided"
+ },
+ "gate_prompt_sha256": "7b0b37186ff34b9012c1b17427e51273e151e8db537af8213b0dcbb614aa5746",
+ "score_prompt_sha256": "e111c6d5ac96228e83c04f3d1bded5c131f0f10afcb3d5b148df9c0463e3c270",
+ "scores": {
+  "official": 5.0,
+  "final_score": 5.0
+ },
+ "episode_id": "rh-memory-GC037-H06-seed42",
+ "arm": "memory",
+ "horizon_s": 6,
+ "objective": "Turn right 180 degrees, wait for 6 seconds, then turn back to the original view."
+}

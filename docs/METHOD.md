@@ -68,6 +68,16 @@ The pre-registered pass criterion for beating 2.12 is **not met**. Memory did fi
 replicate on its own 14 cases inside the full run (+0.04), and the judge scored 5 of 28 identical-pixel video pairs differently (by up to 4.0 points),
 so single-call differences under about 0.3 are noise ([exploratory analysis](../reproduction/full-run-memory-fired.md)).
 
+**Revisit-horizon benchmark** ([write-up](../reproduction/revisit-horizon.md); pre-registered; 20 held-out PlayWorld GC scenes; scripted
+180-degree look-away and return; released verifier, 2 Gemini calls per video; one seed; NOT PlayWorld's own tasks, so not comparable with 1.82 or 2.12).
+Exact bounded pose memory against stock, by time away: 0 s 1.84 vs 2.69 (+0.85 [+0.28, +1.47]); 6 s 1.76 vs 3.06 (+1.31 [+0.74, +1.90]);
+12 s 1.86 vs 2.52 (+0.66 [+0.18, +1.13]); 24 s 1.44 vs 1.79 (+0.34 [+0.05, +0.64]); pooled 6/12/24 s +0.77 [+0.51, +1.04].
+DINO final-frame similarity does not show it (+0.02 to +0.08, intervals touch zero), and judge noise is large (two calls on one video
+differ by 0.6 to 1.0 on average; with a single call three of eight intervals include zero).
+
+**Memory v2 on real tasks** ([write-up](../reproduction/memory-v2.md)): content-verified whole-episode retrieval, positive on scripted paths,
+but on 36 real PlayWorld revisit tasks it scores -0.35 [-0.71, -0.01] against stock on three judge calls (held-out -0.26 [-0.66, +0.10]). A null.
+
 ### Director (text state tracking)
 
 **What it is.** `--director static` (default off, `worldsync/lingbot_director.py`): Claude Haiku writes one event description per case

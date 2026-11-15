@@ -133,8 +133,55 @@ def final_run_section():
         "[frozen config](reproduction/final-run-config.json), [development experiment](reproduction/director-dev.md)."]
 
 
+def revisit_horizon_section():
+    """Pre-registered scripted revisit benchmark: stock versus exact bounded pose memory by time away."""
+    data = read("reproduction/revisit-horizon/analysis.json")
+    if not data or data.get("fully_scored") != data.get("jobs"):
+        return []
+    rows = []
+    for horizon, block in data["horizons"].items():
+        paired = block["paired_score"]
+        low, high = paired["ci95"]
+        rows.append(f"| {horizon} s |{block['stock']['score']['mean']:.2f}|{block['memory']['score']['mean']:.2f}"
+                    f"|{paired['mean']:+.2f} [{low:+.2f}, {high:+.2f}]|{paired['wins']}/{paired['ties']}/{paired['losses']}|")
+    pooled = data["pooled_h6_h12_h24"]["score"]
+    dino = [block["paired_dino"]["mean"] for block in data["horizons"].values()]
+    return ["", "## Revisit-horizon benchmark (pre-registered; scripted; NOT PlayWorld's own tasks)", "",
+        "20 held-out PlayWorld GC scenes, a scripted 180-degree look-away and return, scored with the released PlayWorld verifier "
+        "(2 Gemini calls per video). These are our scripted paths, **not PlayWorld's tasks, and not comparable with 1.82 or 2.12**. "
+        "The memory arm is the exact bounded pose memory (v1 with exact storage), not memory v2. One seed.", "",
+        "| Time away | Stock | Memory | Paired difference [95% CI] | W/T/L |", "|---|---:|---:|---|---|", *rows, "",
+        f"Pooled over 6, 12 and 24 s: **{pooled['mean']:+.2f} [{pooled['ci95'][0]:+.2f}, {pooled['ci95'][1]:+.2f}]**. "
+        f"DINO final-frame similarity does not show it ({min(dino):+.2f} to {max(dino):+.2f}, intervals touch zero). "
+        "Judge noise is large: two calls on the same video differ by 0.6 to 1.0 on average, and with a single call three of eight "
+        "intervals include zero.", "",
+        "Evidence: [write-up](reproduction/revisit-horizon.md), [table](reproduction/revisit-horizon/table.md), "
+        "[analysis](reproduction/revisit-horizon/analysis.json), [robustness](reproduction/revisit-horizon/robustness.json), "
+        "[frozen config](reproduction/revisit-horizon-config.json), [verifier outputs](reproduction/revisit-horizon/judge/)."]
+
+
+def memory_v2_section():
+    """Memory v2 on real PlayWorld revisit tasks (a null, kept on the board)."""
+    data = read("reproduction/memory-v2-step2/report.json")
+    judge = ((data or {}).get("summary") or {}).get("judge_delta")
+    if not judge:
+        return []
+    def cell(key):
+        mean, low, high = judge[key]["mean_ci95"]
+        wins, ties, losses = judge[key]["wins_ties_losses"]
+        return f"|{judge[key]['pairs']}|{mean:+.2f} [{low:+.2f}, {high:+.2f}]|{wins}/{ties}/{losses}|"
+    return ["", "## Memory v2 on real PlayWorld revisit tasks (null)", "",
+        "Content-verified retrieval over the whole episode (`--memory-v2`), against stock on real PlayWorld GC and out-of-sight "
+        "revisit tasks with the adaptive player; released verifier, mean of three Gemini calls. Positive on scripted paths, "
+        "but **no gain here**: the all-cases interval is below zero and the held-out interval includes zero.", "",
+        "| Set | Pairs | Memory v2 minus stock [95% CI] | W/T/L |", "|---|---:|---|---|",
+        "| all cases " + cell("all"), "| held-out " + cell("held_out"), "| GC " + cell("gc"), "| out-of-sight " + cell("outsight"), "",
+        "Evidence: [write-up](reproduction/memory-v2.md), [report](reproduction/memory-v2-step2/report.json), "
+        "[per-case scores](reproduction/memory-v2-step2/per-case.csv), [frozen config](reproduction/memory-v2-config.json)."]
+
+
 def extra_sections():
-    lines = official_full_run_section() + final_run_section()
+    lines = official_full_run_section() + final_run_section() + revisit_horizon_section() + memory_v2_section()
     recovered = read("reproduction/full1-recovered-judging/summary.json")
     if recovered:
         lines.extend(["", "## Full171 stock versus budget run", "",
