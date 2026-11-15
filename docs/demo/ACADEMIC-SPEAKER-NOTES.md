@@ -1,35 +1,43 @@
 # WorldSync — two-minute research presentation
 
-Silent video for live presenting: **worldsync-academic-2min.mp4**. The clock below is the video timestamp. Approximately 300 spoken words; rehearse at a natural pace. The original demo cut remains available separately.
+Silent video: **worldsync-academic-2min.mp4**. All clips play at normal speed. Four short side-by-side comparisons follow the four-quadrant overview. Approximately260spoken words; timings below follow the revised cut.
 
 ## 0:00–0:10 — Problem
 
-World models generate the next frames in response to actions. But realistic frames are not enough. We ask: can the same world persist while an agent interacts with it?
+World models generate frames in response to actions. But realistic frames are not enough. Can the same world persist while an agent interacts with it?
 
-## 0:10–0:22 — Task and benchmark
+## 0:10–0:20 — Benchmark
 
-We start from frozen LingBot-World2 weights and evaluate with PlayWorld. Its four dimensions test geometry, instruction following, and process evolution both in sight and out of sight.
+We start from frozen LingBot-World2 weights. PlayWorld tests geometry, instruction following, and the evolution of processes both in sight and out of sight.
 
-## 0:22–0:42 — Four failure videos
+## 0:20–0:36 — Four failures
 
-These are actual generated episodes. Top left, returning views drift. Top right, the character stops before completing the instruction. Bottom left, the piping tool changes identity instead of completing its process. Bottom right, a cup transforms, destroying the hidden process we wanted to observe.
+These are actual outputs at normal speed. Returning views drift, a walk stops early, a piping tool changes identity, and a cup transforms. Each failure breaks a different part of the world.
 
-## 0:42–1:02 — Method and architecture
+## 0:36–0:52 — Method and architecture
 
-We investigated two components. First, persistent camera state, precise action scheduling, and visual feedback keep control aligned with the task. Second, archived attention features can be retrieved when returning to an earlier view. Both use a frozen generator. We evaluated these separately; we have not demonstrated a combined improvement.
+We investigated two components: persistent camera state with precise scheduling and visual feedback; and retrieval of archived attention features when returning to a place. Both use frozen weights. We evaluated them separately, not as a combined system.
 
-## 1:02–1:14 — Quantitative result
+## 0:52–1:02 — Scores
 
-On three preselected instruction-following tasks, the corrected configuration improves from one point five six to two point four two. All three improve. This is an exploratory subset, not an overall benchmark win.
+On three preselected instruction-following tasks, our configuration improves from one point five six to two point four two. This is exploratory, not an overall benchmark win.
 
-## 1:14–1:34 — Controller comparison
+## 1:02–1:14 — Boardwalk
 
-Here is the boardwalk task, with complete episodes accelerated three times. The legacy player ends early; that panel is explicitly held. Our configuration continues longer and earns a higher score, although the instruction is still only partly completed.
+The legacy player ends early, so its final frame is held. Our configuration continues longer and scores higher, although completing the instruction remains a problem.
 
-## 1:34–1:48 — Separate memory result
+## 1:14–1:26 — Pond
 
-In a separate scripted revisit, archived visual memory improves endpoint similarity from point five seven four to point seven four six. This measures visual recovery, not a PlayWorld score.
+Here is a second task: walk left into the pond. The corrected configuration improves the full-episode score, but later appearance artifacts remain. These are short excerpts.
 
-## 1:48–2:00 — Limitations and future work
+## 1:26–1:38 — Memory
 
-Objects still morph and processes reset. Next we will isolate prompt effects, combine control with memory, and test more seeds. Our result is promising components, not a solved world simulator.
+This separate revisit test compares stock inference with archived memory. We cut the waiting period from both videos. Endpoint visual similarity improves; this is not a PlayWorld score.
+
+## 1:38–1:48 — Process failure
+
+Here our configuration does worse. The tool morphs instead of piping. Motion alone does not establish coherent progress, and geometric memory cannot solve every process failure.
+
+## 1:48–2:00 — Next steps
+
+Next: isolate prompt effects, combine control with retrieval, and track evolving processes. We need more seeds and held-out tests. These are promising components, with clear remaining failures.

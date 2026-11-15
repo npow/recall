@@ -259,3 +259,7 @@ Thor was idle after the successful smoke. Reserved for two sequential full60chun
 ### Codex — missing-score sensitivity and report correction
 
 The single failed legacy OE009 judge attempt remains unaltered. Bounding that unknown score over1..5 gives legacy overall[2.1153,2.2264], corrected1.5322, and corrected-minus-legacy[-0.6942,-0.5831] on these12cases. This is deterministic sensitivity, not an imputed score or confidence interval; it cannot establish a full-benchmark result. The failure cannot reverse the overall decline. IF subset evidence is unchanged. Removed an obsolete hard-coded sanity-check paragraph from `scripts/ccv_report.py` that incorrectly claimed frozen-baseline reproduction using numbers from a different run. Six report tests pass. Local prompt-pair generation continues.
+
+### Codex — presentation revision: more examples, normal speed
+
+User requested more videos, shorter clips, then explicitly preferred normal speed over speeding them up. Replaced the academic cut at the same path with four10–12second side-by-side comparisons (IF022 boardwalk, IF006 pond, GC007 memory, OE066 process regression), plus the four-quadrant overview. All playback1×. Memory uses identical opening0–4s plus return23.8125–31.8125s excerpts, with omitted waiting explicitly labeled. Full originals remain the scored evidence. Exactly120s/3600frames, silent; updated notes, PDF and hash receipt. Local prompt comparison continues independently.
