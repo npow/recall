@@ -692,7 +692,7 @@ def scene_process(data, seconds):
             draw.ellipse((x, 111, x + 22, 133), fill=mix(BG, colour_of[k], h))
             draw.text((x + 34, 122), label, font=font(36, False), fill=mix(BG, FG, h), anchor="lm")
             x += 34 + draw.textlength(label, font=font(36, False)) + 50
-        draw.text((90, 200), "Findings memory: past.dev", font=font(28, False), fill=mix(BG, MUTED, h), anchor="lm")
+        draw.text((90, 200), "Findings recorded in research memory", font=font(28, False), fill=mix(BG, MUTED, h), anchor="lm")
         last = y0 + (len(LAPS) - 1) * step
         draw.line((spine, y0 - 14, spine, last + 14), fill=mix(BG, LINE, ease((t - 0.2) / 0.6)), width=3)
         for n, (title, outcome, kind) in enumerate(LAPS):
