@@ -1,0 +1,472 @@
+{
+  "task_id": "GC009",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "judge_project": "servo-tpu-20260901",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "19a7fb63ec90f248ab3439c9b51a37acc8bed5e7e378fd14c591d213efebf808",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "GC009",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "视频首先控制视角在桥上向前移动，随后在桥上原地向右旋转360度，最后保持视角方向不变向后退回起始端。",
+    "trajectory_evidence_zh": "0.0-4.5秒，视角在桥上向前移动；4.5-12.6秒，视角向右水平旋转，依次看到桥的右侧、后方、左侧，最终回到正前方，完成360度旋转；12.6-17.8秒，视角方向保持向前，但画面显示正在向后退，返回桥的起始端。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "identity_id": {
+        "score": 1,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "镜头环视360度回到初始方向后（第150帧起），原本的拱形石门、大教堂、帆船和桥柱上的花篮全部消失，被完全不同的建筑和桥柱取代。"
+      },
+      "identity_texture": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "桥柱的木雕纹理在镜头环视前后完全不同，初始的雕花图案在环视后被替换为另一种设计。"
+      },
+      "color": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "随着初始区域建筑的替换，原本灰色的石门被替换为棕红色的建筑，花篮的粉红色也随之消失，发生了严重的颜色替换。"
+      },
+      "relative_position": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头回到初始方向后，桥头的建筑布局完全重置，原本位于正前方的拱形石门和大教堂消失，空间关系彻底破坏。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "无明显的静态尾部，视频在动作完成后结束。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 178,
+      "evidence_zh": "镜头在桥上向前移动，随后完成了360度环视，并在最后向后移动。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "在镜头向前移动和环视的过程中，远处的城镇背景和建筑不断发生形变和替换。",
+      "post_completion_phase_zh": "无明显的动作后阶段，视频在向后移动时结束。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "初始方向的桥头区域与环视360度后再次看到的桥头区域",
+        "anchors": [
+          "桥面",
+          "桥两侧的栏杆"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-178"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "桥面",
+        "桥栏杆"
+      ],
+      "newly_revealed_regions_zh": "镜头环视时（第50-140帧）展示了河流两侧的新区域。",
+      "evidence_zh": "镜头进行了连续的向前平移和360度旋转，但环视结束后回到初始方向时，锚定的桥头区域发生了彻底改变，这无法用镜头运动来解释。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "uncertain",
+      "persistent_anchor_contradiction": "uncertain",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频中没有相邻帧的硬切重置，场景的改变是在镜头移动和物体移出视野时逐渐发生的。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作在视频末尾完成，没有多余的导致额外错误的尾部动作。"
+    },
+    "final_state_check": {
+      "window": "150-178",
+      "visible_key_objects": [
+        "ornately carved wooden bridge"
+      ],
+      "reappearance_consistency_zh": "极度不一致。初始的拱形石门、大教堂、帆船和花篮全部消失，桥柱雕花改变，城镇天际线完全重置。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "视频展示了明显的镜头向前移动和完整的360度环视动作。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "桥柱",
+        "桥头建筑"
+      ],
+      "correspondence_anchors": [
+        "桥面",
+        "桥栏杆"
+      ],
+      "visible_intervals": [
+        "0-50",
+        "150-178"
+      ],
+      "before_developing_after_checkpoints": [
+        {
+          "surface": "桥柱",
+          "before_frame": 0,
+          "developing_frame": 75,
+          "after_frame": 150,
+          "observed_change_zh": "桥柱上的花篮消失，木雕纹理完全改变。"
+        }
+      ],
+      "intrinsic_color_drift": "verified",
+      "material_or_texture_drift": "verified",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "在镜头环视回到初始区域后，桥柱的纹理和桥头建筑的颜色、材质均发生了无法用光影或视角解释的彻底替换。"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "yes",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "第一人称视角，无主体运动。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "first-person",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": "not_applicable"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "桥梁及周边建筑",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "colors",
+        "materials",
+        "textures",
+        "surface_appearance"
+      ],
+      "identity_failure": "replacement",
+      "evidence_zh": "镜头环视后，初始区域的建筑和桥柱被完全替换。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": null,
+      "evidence_zh": "not_applicable"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "none",
+      "positive_evidence_zh": "none",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频在完成360度环视回到初始方向后，原本的拱形石门、大教堂、帆船和桥柱花篮全部消失，建筑布局和桥柱纹理发生彻底重置，世界模型完全崩溃。",
+    "task_id": "GC009"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "Ln35au7hO-z1tALHxLm4DQ",
+      "prompt_tokens": 14374,
+      "output_tokens": 257
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "TH35aum7AruU9LsP2OyOyAs",
+      "prompt_tokens": 28118,
+      "output_tokens": 3452
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 179,
+      "sheets_count": 8,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 17.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 149,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 14.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 7,
+          "first_sample_index": 150,
+          "last_sample_index": 174,
+          "first_time_seconds": 15.0,
+          "last_time_seconds": 17.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 8,
+          "first_sample_index": 175,
+          "last_sample_index": 178,
+          "first_time_seconds": 17.5,
+          "last_time_seconds": 17.8,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 9,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 16.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 7,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 14.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 8,
+          "last_sample_index": 8,
+          "first_time_seconds": 16.0,
+          "last_time_seconds": 16.0,
+          "filled_cells": 1
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "51b87d61050f3b4cb47255139e80528f40be553f9de320093884ef1e9fd2c521",
+  "score_prompt_sha256": "8305dd9e52caa54e3fbc3711a874df95ea5ae84d7839afcabead52c17bd7737f",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "stock-gc-GC009-seed42"
+}

@@ -1,0 +1,612 @@
+{
+  "task_id": "OE071",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "judge_project": "servo-tpu-20260901",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "77ada283a65351d9371a702b0a3879af84912ef78be9d1e1ac6e038a06cd19ef",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "verdict": "not_applicable",
+    "instruction_following_score": null
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.2,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "insight_evolution": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "女人和狗在整个视频中完全冻结在迈步姿势，没有任何向前的移动或动作进展。"
+      },
+      "prompt_evolution_alignment": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "主要对象在半空中冻结长达60秒，完全不符合物理规律和自然演变。"
+      },
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "狗的品种和毛色发生剧变（从浅色垂耳犬变成红白相间的尖耳犬），且凭空出现了带有绿色发光点的黑色粗背带。"
+      },
+      "temporal_scene_consistency": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "背景中左侧原本走动的人消失，随后凭空出现一名穿蓝外套的人并向镜头走来，场景元素不连贯。"
+      },
+      "physical_causality": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "女人和狗在迈步时完全定格，女人的右脚长时间悬空，违背了基本的物理常理。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail adjustment applied; the main subjects are frozen mid-step throughout the entire video, which is penalized directly in the base category scores.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 0,
+      "evidence_zh": "提示词为'wait and observe'，镜头保持了观察状态。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景树木和草地基本保持稳定，但背景人物存在突然消失和出现的情况。",
+      "post_completion_phase_zh": "同上，背景人物的演变不连贯。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "the dog",
+        "anchors": [
+          "attached to the same leash held by the woman",
+          "same relative position on the grass"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-598"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "background trees",
+        "parked cars"
+      ],
+      "newly_revealed_regions_zh": "随着镜头缓慢推进，画面边缘的区域发生变化。",
+      "evidence_zh": "镜头呈现缓慢的向前推进（zoom in）效果，背景树木和汽车的相对位置变化符合透视规律。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频没有发生硬切，镜头运动是连续的。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "无额外扣分，主要问题已在基础评分中体现。"
+    },
+    "final_state_check": {
+      "window": "575-598",
+      "visible_key_objects": [
+        "woman",
+        "dog",
+        "leash"
+      ],
+      "reappearance_consistency_zh": "主要对象始终在视野内，未发生遮挡后重现的情况。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "in_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "yes",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "woman and dog walking",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "yes",
+      "static_tail_first_frame": 0,
+      "terminal_static_reasonable": "no",
+      "terminal_pose_or_process_state": "mid_step_or_limb_swing",
+      "support_and_pose_evidence_zh": "女人的右脚悬空，狗保持迈步姿势，全程静止。",
+      "terminal_state_reasoning_zh": "人物和狗在半空中完全冻结，属于不合理的非自然静止。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "主要对象全程冻结，已在insight_evolution和physical_causality中扣分。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "grass surface",
+        "background trees"
+      ],
+      "articulation_or_local_state_change_zh": "女人和狗的肢体关节没有任何变化。",
+      "uniquely_matched_anchor_relative_change_zh": "女人和狗相对于草地的位置没有发生实质性位移。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "向前（远离镜头）",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "无相对变化，完全静止。",
+      "unchanged_coupled_details_zh": "衣服褶皱、牵引绳的弧度等细节全程保持不变，表明是复制粘贴式的冻结。",
+      "accumulated_change_zh": "背景中出现新的人物走动，但画面的主要对象（女人和狗）全程冻结无任何动作进展。",
+      "evidence_zh": "女人和狗在整个60秒的视频中完全冻结在迈步的姿势，没有任何动作。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "uncertain",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "uncertain",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "uncertain",
+      "unsupported_change": "other",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "dog",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "leash_connection"
+      ],
+      "identity_failure": "morphing",
+      "evidence_zh": "狗从浅色垂耳犬变成了尖耳、红白相间的犬，且背带变成了带有绿色发光点的黑色粗背带。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于主要对象全程冻结，演变质量极低，身份一致性得分无法提升最终得分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频中的女人和狗全程冻结在迈步姿势，狗的外观发生严重突变，且背景人物出现不连贯的消失与凭空出现，缺乏合理的物理演变。",
+    "task_id": "OE071"
+  },
+  "calls": [
+    {
+      "mode": "score",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "enz5apK7A7mA9LsPg6HfqA4",
+      "prompt_tokens": 61723,
+      "output_tokens": 3343
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 599,
+      "sheets_count": 24,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 59.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 149,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 14.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 7,
+          "first_sample_index": 150,
+          "last_sample_index": 174,
+          "first_time_seconds": 15.0,
+          "last_time_seconds": 17.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 8,
+          "first_sample_index": 175,
+          "last_sample_index": 199,
+          "first_time_seconds": 17.5,
+          "last_time_seconds": 19.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 9,
+          "first_sample_index": 200,
+          "last_sample_index": 224,
+          "first_time_seconds": 20.0,
+          "last_time_seconds": 22.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 10,
+          "first_sample_index": 225,
+          "last_sample_index": 249,
+          "first_time_seconds": 22.5,
+          "last_time_seconds": 24.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 11,
+          "first_sample_index": 250,
+          "last_sample_index": 274,
+          "first_time_seconds": 25.0,
+          "last_time_seconds": 27.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 12,
+          "first_sample_index": 275,
+          "last_sample_index": 299,
+          "first_time_seconds": 27.5,
+          "last_time_seconds": 29.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 13,
+          "first_sample_index": 300,
+          "last_sample_index": 324,
+          "first_time_seconds": 30.0,
+          "last_time_seconds": 32.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 14,
+          "first_sample_index": 325,
+          "last_sample_index": 349,
+          "first_time_seconds": 32.5,
+          "last_time_seconds": 34.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 15,
+          "first_sample_index": 350,
+          "last_sample_index": 374,
+          "first_time_seconds": 35.0,
+          "last_time_seconds": 37.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 16,
+          "first_sample_index": 375,
+          "last_sample_index": 399,
+          "first_time_seconds": 37.5,
+          "last_time_seconds": 39.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 17,
+          "first_sample_index": 400,
+          "last_sample_index": 424,
+          "first_time_seconds": 40.0,
+          "last_time_seconds": 42.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 18,
+          "first_sample_index": 425,
+          "last_sample_index": 449,
+          "first_time_seconds": 42.5,
+          "last_time_seconds": 44.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 19,
+          "first_sample_index": 450,
+          "last_sample_index": 474,
+          "first_time_seconds": 45.0,
+          "last_time_seconds": 47.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 20,
+          "first_sample_index": 475,
+          "last_sample_index": 499,
+          "first_time_seconds": 47.5,
+          "last_time_seconds": 49.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 21,
+          "first_sample_index": 500,
+          "last_sample_index": 524,
+          "first_time_seconds": 50.0,
+          "last_time_seconds": 52.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 22,
+          "first_sample_index": 525,
+          "last_sample_index": 549,
+          "first_time_seconds": 52.5,
+          "last_time_seconds": 54.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 23,
+          "first_sample_index": 550,
+          "last_sample_index": 574,
+          "first_time_seconds": 55.0,
+          "last_time_seconds": 57.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 24,
+          "first_sample_index": 575,
+          "last_sample_index": 598,
+          "first_time_seconds": 57.5,
+          "last_time_seconds": 59.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 30,
+      "sheets_count": 8,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 58.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 7,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 14.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 8,
+          "last_sample_index": 11,
+          "first_time_seconds": 16.0,
+          "last_time_seconds": 22.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 12,
+          "last_sample_index": 15,
+          "first_time_seconds": 24.0,
+          "last_time_seconds": 30.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 16,
+          "last_sample_index": 19,
+          "first_time_seconds": 32.0,
+          "last_time_seconds": 38.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 20,
+          "last_sample_index": 23,
+          "first_time_seconds": 40.0,
+          "last_time_seconds": 46.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 7,
+          "first_sample_index": 24,
+          "last_sample_index": 27,
+          "first_time_seconds": 48.0,
+          "last_time_seconds": 54.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 8,
+          "first_sample_index": 28,
+          "last_sample_index": 29,
+          "first_time_seconds": 56.0,
+          "last_time_seconds": 58.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "score_prompt_sha256": "69fd6d04ab32461665c463cd15083701808c7ab728ced057ba420ef6d6fb7304",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "budget-insight-OE071-seed42"
+}
