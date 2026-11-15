@@ -1,6 +1,6 @@
 # WorldSync
 
-[Experiment leaderboard](LEADERBOARD.md) · [How the methods work](METHOD.md) · [Machine-readable results](leaderboard.json)
+[Experiment leaderboard](LEADERBOARD.md) · [Method overview](METHOD.md) · [Detailed memory methods](docs/METHOD.md) · [Machine-readable results](leaderboard.json)
 
 **Current milestone: validate archived-view memory beyond the rolling cache.**
 

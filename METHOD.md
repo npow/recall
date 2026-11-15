@@ -2,6 +2,8 @@
 
 The strongest controlled result is **historical-view KV retrieval**: keep a small archive of what the model previously saw, then let it attend to relevant old views when returning. It improves several scripted returns without training or editing output frames. **It has not established an improvement on the full PlayWorld benchmark or beaten Genie 3.**
 
+For the larger-cache and bounded-memory variants, see the [detailed method notes](docs/METHOD.md).
+
 ## Results and their limits
 
 These are separate experiments, not one ranking. Gemini uses the released scorer through Vertex with `gemini-3.1-pro-preview`; equivalence to the paper’s model alias is not established.
