@@ -440,7 +440,7 @@ svg text{font-family:inherit}
         <li><b>Moving objects.</b> Invalidate archived views when their world state changes.</li>
         <li><b>Compact shared storage.</b> Store frames and recompute peer KV, using the earlier memory result.</li>
         <li><b>Longer paths.</b> Extend beyond common-origin rotations to translation and simultaneous agents.</li>
-        <li><b>Share KV caches by heading.</b> Agents looking the same way could reuse each other's cached views, with moving objects masked out. This has not worked yet; more capable models may make the approach work.</li>
+        <li><b>Shared KV under motion.</b> Sharing cached views by heading works in static scenes. Masking out moving objects could extend it to scenes with motion, which has not yet been shown to work; more capable models may make it work.</li>
       </ul></div>
       <div class="col" style="flex:.8"><div class="card">
         <p style="font-weight:700;margin-bottom:14px">Take-aways</p>
@@ -451,7 +451,7 @@ svg text{font-family:inherit}
       </div></div>
     </div>
     <div class="foot"><p style="font-size:44px;font-weight:750;margin:0">github.com/npow/recall</p><p class="small" style="margin:6px 0 0">Built in two days · every number in these slides traces to a file in the repo</p></div>
-    <aside class="notes">Next steps: train a small memory layer so the model learns to use retrieved views, share attention caches between agents that face the same way with moving objects masked out, which has not worked yet but may with more capable models, retrieve by what is actually visible, and test on longer tasks where memory matters. To sum up: a clear gain in judged consistency after looking away, a memory two hundred times smaller than the obvious design, a reproduced baseline, and an honest negative result on the benchmark's own short tasks. Thank you.</aside>
+    <aside class="notes">Next steps: train a small memory layer so the model learns to use retrieved views, extend shared attention caches to scenes with motion by masking out moving objects, which has not yet been shown to work but may with more capable models, retrieve by what is actually visible, and test on longer tasks where memory matters. To sum up: a clear gain in judged consistency after looking away, a memory two hundred times smaller than the obvious design, a reproduced baseline, and an honest negative result on the benchmark's own short tasks. Thank you.</aside>
   </section>
 
 
