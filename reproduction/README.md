@@ -1,5 +1,11 @@
 # Local baseline before hillclimbing
 
+**Latest:** [the corrected-native fixed-path comparison](roundtrip-v4/README.md)
+verified moving-camera input parity and rejected the first bounded retrieval
+variant. Both videos failed the realized return; translation/rotation isolation
+comes before further memory tuning. The v3 diagnostic below predates a camera
+ray precision correction and must not be reused as the v4 baseline.
+
 **Current target: LingBot-World2 14B causal-fast. First complete episode scored;
 control validation remains incomplete.**
 
