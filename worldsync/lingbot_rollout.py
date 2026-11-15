@@ -24,7 +24,14 @@ class RolloutComplete(Exception):
     pass
 
 
-def main():
+def build_pipeline(upstream, configs, pack, knobs):
+    """One-shot pipeline construction; the persistent runner supplies its own warm pipeline."""
+    return upstream.WanI2VCausal(configs["i2v-A14B"], str(pack),
+        local_attn_size=knobs["local_attn_size"], sink_size=knobs["sink_size"], infer_mode="causal_fast", convert_model_dtype=True)
+
+
+def main(argv=None, runtime=None):
+    """Run one rollout. `runtime` (worldsync/lingbot_runtime.py) may supply a warm pipeline; returns the report."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-root", type=Path, default=ROOT / "external/PlayWorld/data")
     parser.add_argument("--split", choices=["gc", "if", "insight", "outsight"], required=True)
@@ -56,10 +63,15 @@ def main():
     parser.add_argument("--budget-archive", type=int, default=24)
     parser.add_argument("--budget-rope", choices=["virtual", "native"], default="virtual")
     parser.add_argument("--offload-text-encoder", action="store_true", help="Release the completed GPU text encoder before denoising")
+    parser.add_argument("--lora", type=Path, help="Memory LoRA adapter (scripts/train_lingbot_memory.py); non-stock weights")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--dry-run", action="store_true")
     lingbot_tuning.add_arguments(parser)
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
+    if args.lora and not (args.controlled_ablation and args.native_fixed_controls and args.fixed_actions):
+        parser.error("--lora changes the model; allowed only on fixed native-camera diagnostics with --controlled-ablation")
+    if args.lora and not args.lora.is_file():
+        parser.error("LoRA file not found")
     knobs = lingbot_tuning.resolve(args, parser)
     if not 0 < args.turn_degrees_per_second <= 90:
         parser.error("turn rate must be in (0,90] degrees per second")
@@ -157,7 +169,8 @@ def main():
     from einops import rearrange
     from worldsync.lingbot_vae import NativeVaeStream
     from worldsync.reference_player import decide
-    sys.path.insert(0, str(source))
+    if str(source) not in sys.path:
+        sys.path.insert(0, str(source))
     from wan.configs import WAN_CONFIGS
     from wan.utils.cam_utils import compute_relative_poses, get_plucker_embeddings, get_Ks_transformed
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
@@ -176,6 +189,7 @@ def main():
     intrinsics = np.load(source / "examples/03/intrinsics.npy")[0]
     np.save(controls / "intrinsics.npy", np.repeat(intrinsics[None], frames, axis=0))
     started = time.monotonic()
+    torch.cuda.reset_peak_memory_stats()
     report["status"] = "running"
     save()
     handles = []
@@ -193,8 +207,15 @@ def main():
                 native_rays["fp32"] = rays.detach().cpu()
                 return rays
             upstream.get_plucker_embeddings = capture_native_rays
-        pipeline = upstream.WanI2VCausal(WAN_CONFIGS["i2v-A14B"], str(pack),
-            local_attn_size=knobs["local_attn_size"], sink_size=knobs["sink_size"], infer_mode="causal_fast", convert_model_dtype=True)
+        if runtime is None:
+            pipeline = build_pipeline(upstream, WAN_CONFIGS, pack, knobs)
+        else:
+            pipeline = runtime.pipeline_for(upstream, WAN_CONFIGS, pack, knobs, report)
+        if args.lora:
+            from worldsync import lingbot_lora
+            report["lora"] = lingbot_lora.load_lora(pipeline.model, args.lora)
+            report["model"] = "LingBot-World2 14B causal-fast + memory LoRA (non-stock)"
+            save()
         stream = NativeVaeStream(pipeline.vae)
         camera = CameraPlan(turn_degrees_per_second=args.turn_degrees_per_second)
         if args.pose_retrieval:
@@ -352,6 +373,7 @@ def main():
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(listing),
                 "-c", "copy", str(output / "rollout.mp4")], check=True)
     print(json.dumps({"status": report["status"], "chunks": len(report["chunks"])}))
+    return report
 
 
 if __name__ == "__main__":
