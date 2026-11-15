@@ -1,4 +1,7 @@
-"""Compose the three-agent demo: duel-a | viewer | duel-b, with each agent's shared-memory facts per chunk."""
+"""Compose a shared-world demo: the agents' rollouts side by side, with each agent's memory facts per chunk.
+
+usage: make_trio_demo.py RUN_ROOT [AGENT ...]   (RUN_ROOT/<agent>/{rollout.mp4,run.json}; DB at RUN_ROOT/../<root>.db)
+"""
 import json
 import sys
 from pathlib import Path
@@ -7,12 +10,21 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from worldsync import shared_world as sw
 from worldsync.duel_demo import compose
 
-# Run dirs (rollout.mp4 + run.json per agent, from scripts/modal_lingbot_trio.py) and the SQLite DB built by
-# `python -m worldsync.shared_world --db outputs/shared-world/trio.db ingest-run outputs/shared-world/trio/<agent> ...`.
 T = Path(sys.argv[1] if len(sys.argv) > 1 else "outputs/shared-world/trio").resolve()
-db = sw.FrameDB(T.parent / "trio.db")
-WID = "w-ea4cc9b26e3af54b"
+AGENTS = sys.argv[2:] or ["duel-a", "viewer", "duel-b"]
+db = sw.FrameDB(T.parent / f"{T.name}.db")
 FPS = 16
+WID = sw.world_id(sw.world_manifest(sw.load_run(T / AGENTS[0])[0]))
+
+
+def source_label(ids):
+    """'agent-a's views 19-22' or 'own views 8-11' for a retrieved id list (own ints, foreign 'name:idx')."""
+    shared = [i for i in ids if isinstance(i, str)]
+    own = [i for i in ids if not isinstance(i, str)]
+    if shared:
+        frames = [int(i.split(":")[1]) for i in shared]
+        return f"{shared[0].split(':')[0]}'s views {min(frames)}-{max(frames)}"
+    return f"own views {min(own)}-{max(own)}"
 
 
 def captions(agent, others):
@@ -27,11 +39,11 @@ def captions(agent, others):
         shared = [i for i in ids if isinstance(i, str)]
         own = [i for i in ids if not isinstance(i, str)]
         if row.get("attention_replaced"):
-            src = (f"viewer's views {min(int(i.split(':')[1]) for i in shared)}-{max(int(i.split(':')[1]) for i in shared)}"
-                   if shared else f"own views {min(own)}-{max(own)}")
-            mem = f"RECALL: attending to {src}"
+            mem = f"RECALL: attending to {source_label(ids)}"
         elif shared:
-            mem = f"RECALL: {len(shared)} viewer view(s) match by pose, not applied (needs 4)"
+            mem = f"RECALL: {len(shared)} other-agent view(s) match by pose, not applied"
+        elif own:
+            mem = "RECALL: own views match by pose, not applied"
         else:
             mem = "RECALL: no stored view within range"
         where = f"{s['action']}  heading {s['heading']:.0f}  z {s['position'][2]:+.0f}  t {s['world_time']:.1f}s"
@@ -49,9 +61,11 @@ def captions(agent, others):
     return windows
 
 
-panels = [(T / "duel-a/rollout.mp4", "duel-a  (faces 0, backs away)", captions("duel-a", ["viewer", "duel-b"])),
-          (T / "viewer/rollout.mp4", "viewer  (pans 0 -> 180 -> 0)", captions("viewer", ["duel-a", "duel-b"])),
-          (T / "duel-b/rollout.mp4", "duel-b  (turns to 180, backs away)", captions("duel-b", ["viewer", "duel-a"]))]
-out = compose(panels, T / "trio-shared-world-demo.mp4", strip=96,
-              title=f"Three agents, one LingBot world {WID}: seed 42, GC010 - shared RECALL archive + past.dev positions")
+LABELS = {"viewer": "viewer  (pans 0 -> 180 -> 0)", "duel-a": "duel-a  (faces 0, backs away)",
+          "duel-b": "duel-b  (turns to 180, backs away)", "agent-a": "agent-a  (orbits the centre, full circle)",
+          "agent-b": "agent-b  (walks to the far side, then orbits)"}
+panels = [(T / agent / "rollout.mp4", LABELS.get(agent, agent), captions(agent, [o for o in AGENTS if o != agent]))
+          for agent in AGENTS]
+out = compose(panels, T / f"{T.name}-shared-world-demo.mp4", strip=96,
+              title=f"{len(AGENTS)} agents, one LingBot world {WID}: seed 42, GC010 - shared RECALL archive + past.dev positions")
 print(out)
