@@ -32,6 +32,10 @@ ul{margin:0;padding-left:44px}
 li{margin:0 0 20px}
 .sub{font-size:40px;color:var(--dim)}
 .small{font-size:26px;color:var(--dim);line-height:1.35}
+.lims{display:grid;grid-template-columns:1fr 1fr;gap:26px 34px;margin-top:18px}
+.lim{background:#151a22;border:2px solid #2a3240;border-radius:14px;padding:22px 28px}
+.lt{font-size:38px;font-weight:700;margin:0 0 8px}
+.ld{font-size:28px;color:var(--dim);line-height:1.35}
 .tiny{font-size:22px;color:var(--faint);line-height:1.35}
 .rel{color:var(--rel)} .ours{color:var(--ours)} .warn{color:var(--warn)} .dim{color:var(--dim)}
 b{font-weight:750}
@@ -384,14 +388,14 @@ svg text{font-family:inherit}
   <!-- 14 -->
   <section class="slide" data-sec="Limitations">
     <h2>Where it still breaks</h2>
-    <ul>
-      <li><b>Record not beaten.</b> On the full PlayWorld benchmark our methods score <b>1.80–1.86</b>: level with the published 1.82, below Genie 3's 2.12.</li>
-      <li><b>Memory rarely fires on PlayWorld's own tasks.</b> Episodes are short: only 12% of chunks revisit a view the model had already forgotten.</li>
-      <li><b>The model does not undo forward motion.</b> Walk forward and back, and the picture does not return, so there is nothing correct to recall.</li>
-      <li><b>Frozen scenes and unattempted interactions come from the model's own dynamics.</b> Most minimum scores come from these.</li>
-      <li><b>What the audits taught us.</b> Retrieving only on a verified return removed unneeded swaps (338 to 0 on 611 non-revisit chunks) but was not better on 36 real revisit tasks: −0.35 [−0.71, −0.01].</li>
-      <li><b>The judge is noisy.</b> The same video scored three times varies by 0.36 on average; identical videos have received 1.0 and 5.0.</li>
-    </ul>
+    <div class="lims">
+      <div class="lim"><div class="lt">Record not beaten</div><div class="ld">1.80–1.86 on the full benchmark: level with the published 1.82, below Genie 3's 2.12.</div></div>
+      <div class="lim"><div class="lt">Memory rarely fires</div><div class="ld">PlayWorld episodes are short: only 12% of chunks revisit a view the model had forgotten.</div></div>
+      <div class="lim"><div class="lt">Forward motion is not undone</div><div class="ld">After walking forward and back, the view has changed, so there is nothing to match.</div></div>
+      <div class="lim"><div class="lt">Frozen scenes and missed actions</div><div class="ld">They come from the model's own dynamics and cause most of the minimum scores.</div></div>
+      <div class="lim"><div class="lt">What the audits taught us</div><div class="ld">Verified retrieval cut unneeded swaps (338 to 0) and scored −0.35 [−0.71, −0.01] on 36 real revisit tasks.</div></div>
+      <div class="lim"><div class="lt">The judge is noisy</div><div class="ld">The same video scored three times varies by 0.36; identical videos have received 1.0 and 5.0.</div></div>
+    </div>
     <p class="small foot">Full tables, per-episode scores and the two audits that explain these are in the repo.</p>
     <aside class="notes">Here is what did not work. We did not beat the record: on the full benchmark we land between 1.80 and 1.86. The reason our memory does not move the benchmark score is that PlayWorld's own episodes are short, so the camera is rarely away for longer than the model already remembers. Other failures, like frozen scenes, come from the model's own dynamics. And the judge itself is noisy, which is why we report intervals everywhere.</aside>
   </section>
