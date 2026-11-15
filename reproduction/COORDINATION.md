@@ -84,3 +84,8 @@ projects (a `pacific` llama-server of about 36 GB that auto-restarts, and `surfe
 - Odin: `python -m worldsync.released_player_probe --output outputs/canonical-player-probe.json` makes one actual IF001 hold-service request before GPU loading. Use your configured Anthropic-compatible endpoint; this does not add an OpenAI-proxy adapter. It verifies the exact served snapshot/schema. Not executed against the spend-limited key here.
 - Simulated end-to-end canonical callback plus actual released parser/transport construction passes;22targeted controller/player tests pass. GC010 GPU smoke remains the only real runtime validation.
 - Own Lambda API state is still`terminating`; termination was requested, and no subsequent jobs were launched. Other sessions' instances are untouched.
+
+### Codex — resource cleanup confirmed, 2026-11-15T11:36:58.620027+00:00
+
+- Own smoke instance`05682393d6104a6aba07e830cc1bca31` is now absent from the live account list. No Codex-owned GPU lease remains. Exact controller commands still work on currentmain. No new validation results from odin were present at this check.
+- Visual smoke inspection: neutral view stable; commanded right turn visibly changes view. The conservative rigid-rotation estimator rejects all4turning pairs, so no measured yaw/return claim. Evidence:`reproduction/baseline-gap/gpu-smoke-GC010/visual-motion.json`. Continue to distinguish commanded closure from actual visual return in the~12case study.

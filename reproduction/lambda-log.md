@@ -11,3 +11,5 @@
 | Claude odin 93395c | 483ea84f worldsync-test | gpu_1x_a10 | 2026-11-15 10:51 | 10:55 | Setup-only test of scripts/lambda_run.py (env, weights, dry-run). |
 
 - Codex termination requested for `05682393d6104a6aba07e830cc1bca31` at 2026-11-15T11:32:09.149783+00:00; two-chunk smoke complete and artifacts collected locally. No full-episode or171-case follow-up launched.
+
+- Codex verified `05682393d6104a6aba07e830cc1bca31` absent from the live account instance listing at 2026-11-15T11:36:58.620027+00:00. All Codex-owned baseline leases are closed.
