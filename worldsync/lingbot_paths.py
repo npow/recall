@@ -4,6 +4,8 @@ import numpy as np
 from worldsync.lingbot_controls import CameraPlan
 
 PATHS = {
+    "turn90_wait_return": ["WAIT"] + ["RIGHT"] * 2 + ["WAIT"] * 8 + ["LEFT"] * 2 + ["WAIT"],
+    "turn90left_wait_return": ["WAIT"] + ["LEFT"] * 2 + ["WAIT"] * 8 + ["RIGHT"] * 2 + ["WAIT"],
     "turn_return": ["WAIT"] + ["RIGHT"] * 3 + ["LEFT"] * 3 + ["WAIT"],
     "turn_long_wait_return": ["WAIT"] + ["RIGHT"] * 3 + ["WAIT"] * 24 + ["LEFT"] * 3 + ["WAIT"],
     "turn_wait_return": ["WAIT"] + ["RIGHT"] * 3 + ["WAIT"] * 8 + ["LEFT"] * 3 + ["WAIT"],
@@ -12,14 +14,14 @@ PATHS = {
 }
 
 
-def native_frame_poses(actions):
+def native_frame_poses(actions, turn_degrees_per_second=60):
     """Expand quarter-second latent poses into the native 16-FPS input format.
 
     Native inference samples poses at RGB indices 0,4,8,..., so these preserve
     the specified latent poses exactly up to interpolation rounding.
     """
     from scipy.spatial.transform import Rotation, Slerp
-    camera = CameraPlan()
+    camera = CameraPlan(turn_degrees_per_second=turn_degrees_per_second)
     for action in actions:
         camera.advance(action)
     latent = np.stack(camera.poses)

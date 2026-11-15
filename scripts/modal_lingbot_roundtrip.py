@@ -18,7 +18,7 @@ app = modal.App("worldsync-lingbot-roundtrip")
 
 @app.function(image=image, gpu="H200", cpu=8, memory=131072, timeout=1800, max_containers=3,
               volumes={"/cache": weights, "/results": results})
-def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", rephase_sink: bool = False, retrieval_positions: str = "virtual"):
+def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", rephase_sink: bool = False, retrieval_positions: str = "virtual", turn_rate: float = 60):
     import shutil
     import subprocess
     import time
@@ -34,7 +34,7 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
     output = Path("/work/outputs") / identifier
     try:
         command = [sys.executable, "-u", "-m", "worldsync.lingbot_rollout", "--split", "gc",
-            "--task-id", task_id, "--seed", str(seed), "--max-chunks", str(len(actions)),
+            "--task-id", task_id, "--seed", str(seed), "--turn-degrees-per-second", str(turn_rate), "--max-chunks", str(len(actions)),
             "--native-fixed-controls", "--fixed-actions", *actions, "--output", str(output)]
         if retrieval:
             command.extend(["--pose-retrieval", "--retrieval-positions", retrieval_positions])
@@ -55,11 +55,26 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
 
 
 @app.local_entrypoint()
-def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", validation: bool = False, memory_validation: bool = False, rephase_sink: bool = False, retrieval_positions: str = "virtual"):
+def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", validation: bool = False, memory_validation: bool = False, task_benchmark: bool = False, rephase_sink: bool = False, retrieval_positions: str = "virtual", turn_rate: float = 60):
     if retrieval_positions not in {"native", "virtual"} or (retrieval_positions != "virtual" and not retrieval):
         raise ValueError("native retrieval positions require retrieval mode")
     if cache_frames not in {18, 34} or ((retrieval or rephase_sink) and cache_frames != 18) or (retrieval and rephase_sink):
         raise ValueError("This declared pilot supports stock18, context34, or stock-budget retrieval")
+    if task_benchmark:
+        if validation or memory_validation:
+            raise ValueError("Choose one experiment plan")
+        plan = json.loads((ROOT / "reproduction/task-memory-benchmark-plan.json").read_text())
+        jobs = [(case["path"], case["seed"], retrieve, 18, case["task_id"], False, "virtual", plan["turn_degrees_per_second"])
+                for case in plan["cases"] for retrieve in (False, True)]
+        for job, result in zip(jobs, generate.starmap(jobs, return_exceptions=True)):
+            if isinstance(result, BaseException):
+                print(f"FAILED task benchmark attempt {job}: {result}", flush=True)
+                continue
+            run = result["run"]
+            output = ROOT / "outputs/lingbot-reproduction" / f"task-benchmark-{run['task_id']}-{result['mode']}-{result['path']}-seed{run['seed']}.json"
+            output.write_text(json.dumps(result, indent=2) + "\n")
+            print(json.dumps({k: v for k, v in result.items() if k != "run"}, indent=2), flush=True)
+        return
     if memory_validation:
         if validation:
             raise ValueError("Choose one frozen validation plan")
@@ -98,7 +113,7 @@ def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False,
             output.write_text(json.dumps(result, indent=2) + "\n")
             print(json.dumps({k: v for k, v in result.items() if k != "run"}, indent=2), flush=True)
         return
-    result = generate.remote(path_name, seed, retrieval, cache_frames, task_id, rephase_sink, retrieval_positions)
+    result = generate.remote(path_name, seed, retrieval, cache_frames, task_id, rephase_sink, retrieval_positions, turn_rate)
     mode = "sink-rephase" if rephase_sink else (("retrieval-native" if retrieval_positions == "native" else "retrieval") if retrieval else ("stock" if cache_frames == 18 else f"context{cache_frames}"))
     scene = "" if task_id == "GC007" else f"{task_id}-"
     output = ROOT / "outputs/lingbot-reproduction" / f"native-{scene}{mode}-{path_name}-seed{seed}.json"

@@ -30,6 +30,7 @@ def main():
     parser.add_argument("--fixed-actions", nargs="+", help="Transport/parity diagnostic; not adaptive benchmark evidence")
     parser.add_argument("--native-fixed-controls", action="store_true", help="Use native precomputed poses and audit online camera embeddings")
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--turn-degrees-per-second", type=float, default=60)
     parser.add_argument("--pose-retrieval", action="store_true", help="Experimental bounded early-view retrieval on native fixed paths")
     parser.add_argument("--retrieval-positions", choices=("virtual", "native"), default="virtual")
     parser.add_argument("--rephase-sink", action="store_true", help="Experimental pose-gated native sink key rephasing")
@@ -38,6 +39,10 @@ def main():
     lingbot_tuning.add_arguments(parser)
     args = parser.parse_args()
     knobs = lingbot_tuning.resolve(args, parser)
+    if not 0 < args.turn_degrees_per_second <= 90:
+        parser.error("turn rate must be in (0,90] degrees per second")
+    if args.turn_degrees_per_second != 60 and not args.native_fixed_controls:
+        parser.error("non-stock turn rates are confined to declared native fixed-path tests")
     if not 1 <= args.max_chunks <= 60:
         parser.error("chunk budget must be in [1,60]")
     if args.native_fixed_controls and (not args.fixed_actions or len(args.fixed_actions) != args.max_chunks):
@@ -68,7 +73,7 @@ def main():
     frames = maximum * 16 - 3
     report = {"status": "prepared", "model": "LingBot-World2 14B causal-fast stock", "protocol_id": PROTOCOL_ID,
         "source_revision": revision, "checkpoint_revision": WEIGHT_REVISION, "task_id": args.task_id,
-        "split": args.split, "seed": args.seed, "fps": 16, "max_chunks": maximum, "max_interactions": 40,
+        "split": args.split, "seed": args.seed, "turn_degrees_per_second": args.turn_degrees_per_second, "fps": 16, "max_chunks": maximum, "max_interactions": 40,
         "native_fixed_controls": args.native_fixed_controls, "camera_embedding_audit": [],
         "pose_retrieval": args.pose_retrieval, "sink_rephase": args.rephase_sink,
         "stationary_wait_only": stationary, "fixed_actions": args.fixed_actions, "quantization": "none",
@@ -82,7 +87,7 @@ def main():
         "controls_sha256": hashlib.sha256((Path(__file__).parent / "lingbot_controls.py").read_bytes()).hexdigest(),
         "player_sha256": hashlib.sha256((Path(__file__).parent / "reference_player.py").read_bytes()).hexdigest(),
         "deviations": ["Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
-            "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+            f"Reconstructed Haiku reference-guided prompt and camera mapping: {args.turn_degrees_per_second:g} deg/s turns, unit-normalized translations",
             "Official 480p demo area and KV settings; single Thor GPU, BF16 and valid-length SDPA backend",
             "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
             "Claude diagnostic scoring differs from published Gemini judgments"]}
@@ -106,6 +111,8 @@ def main():
     import numpy as np
     import torch
     import imageio.v2 as imageio
+    report["hardware"] = {"gpu": torch.cuda.get_device_name(), "torch": str(torch.__version__), "cuda": torch.version.cuda}
+    report["deviations"][2] = f"Official 480p demo area; single {report['hardware']['gpu']}, BF16 and valid-length SDPA backend"
     from PIL import Image
     from einops import rearrange
     from worldsync.lingbot_vae import NativeVaeStream
@@ -123,7 +130,7 @@ def main():
     np.save(controls / "poses.npy", np.repeat(np.eye(4, dtype=np.float32)[None], frames, axis=0))
     if args.native_fixed_controls:
         from worldsync.lingbot_paths import native_frame_poses
-        native_poses, expected_final = native_frame_poses(args.fixed_actions)
+        native_poses, expected_final = native_frame_poses(args.fixed_actions, turn_degrees_per_second=args.turn_degrees_per_second)
         np.save(controls / "poses.npy", native_poses)
         report["expected_final_commanded_state"] = expected_final
     intrinsics = np.load(source / "examples/03/intrinsics.npy")[0]
@@ -149,7 +156,7 @@ def main():
         pipeline = upstream.WanI2VCausal(WAN_CONFIGS["i2v-A14B"], str(pack),
             local_attn_size=knobs["local_attn_size"], sink_size=knobs["sink_size"], infer_mode="causal_fast", convert_model_dtype=True)
         stream = NativeVaeStream(pipeline.vae)
-        camera = CameraPlan()
+        camera = CameraPlan(turn_degrees_per_second=args.turn_degrees_per_second)
         if args.pose_retrieval:
             from worldsync.lingbot_retrieval import PoseKVMemory
             memory = PoseKVMemory(pipeline, key_positions=args.retrieval_positions)
@@ -275,7 +282,7 @@ def main():
         for handle in handles:
             handle.remove()
         report["elapsed_s"] = time.monotonic() - started
-        report["camera_diagnostics"] = summarize([a["action"] for a in report["actions"] if a.get("action")])
+        report["camera_diagnostics"] = summarize([a["action"] for a in report["actions"] if a.get("action")], turn_degrees_per_second=args.turn_degrees_per_second)
         report["peak_allocated_bytes"] = torch.cuda.max_memory_allocated()
         save()
         if report["chunks"]:

@@ -1,6 +1,6 @@
 {
   "scope": "Frozen validation of virtual-position historical-view retrieval beyond the rolling cache",
-  "complete_pairs": 1,
+  "complete_pairs": 2,
   "declared_pairs": 3,
   "settings": "Existing PoseKVMemory virtual-position method, no new parameters or training",
   "results": [
@@ -45,6 +45,49 @@
       "label_mapping": {
         "A": "stock",
         "B": "retrieval"
+      }
+    },
+    {
+      "task_id": "GC006",
+      "seed": 42,
+      "path": "turn_wait_return",
+      "partition": "held_out",
+      "purpose": "next unused held-out image in frozen split; fountain scene",
+      "stock_dino": 0.8852304220199585,
+      "candidate_dino": 0.08284441381692886,
+      "stock_psnr_db": 8.184138722373163,
+      "candidate_psnr_db": 9.206186183305329,
+      "warmed_suffix_s": {
+        "stock": 83.06340898799999,
+        "retrieval": 106.40956752500003
+      },
+      "peak_allocated_bytes": {
+        "stock": 80440231424,
+        "retrieval": 85376366080
+      },
+      "visual_preference": "retrieval",
+      "visual_assessment": {
+        "A": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "yes",
+          "discontinuity": "no",
+          "visual_evidence": "Frames 0-9 show the start view: a tiered stone fountain in the center, a wooden barrel to its left, small benches at the left and right edges, a reddish-leaf tree behind, and a building and bamboo-like trees in the background. During the RIGHT chunks (about frames 10-40) the camera pans right continuously. It passes a white bench, cypresses, snowy mountains and a planter barrel. It then passes a backlit dark fountain with a lattice bench and reaches a view of a broad-leaf tree, a barrel, red flowers and a hedge. That view holds steady through the WAIT period (about frames 40-119), with only minor shimmer. During the LEFT chunks (about frames 120-150) the pan reverses through the same intermediate landmarks in reverse order: dark fountain, then cypresses and mountains with the planter barrel, then the white bench. At about frames 140-144 the original tiered fountain returns with the same barrel on its left, white bench on its right, reddish tree behind and background structure. The rotation then continues past the start heading. The final WAIT frames (about 150-158) show a bench in tree shade with the start fountain's rim at the right edge, and the same white bench and barrel in the background.",
+          "failure_classification": "Minor camera-control error: the left turn overshoots, so the final resting heading is offset to the left of the start view rather than matching it exactly. The return pan is also not symmetric in pacing with the outbound pan. No memory failure: the landmarks seen on the way back keep their identity and layout. No sign text is present to check."
+        },
+        "B": {
+          "realized_round_trip": "no",
+          "starting_place_recovered": "no",
+          "discontinuity": "yes",
+          "visual_evidence": "Frames 0-119 are essentially identical to A: the same start fountain scene, the same rightward pan to the tree/barrel/red-flower view, and the same stable WAIT period. During the LEFT chunks the camera does pan left: the dark backlit fountain reappears around frames 120-125. After that the scene does not retrace the outbound path. Instead of cypresses with the planter barrel, white bench and the start fountain, new content appears: bare deciduous trees, a long hedge with several lattice-back benches (including a double bench), a broad mountain ridge, and a fountain lit from the front with fleur-de-lis ornamentation and a bright blue pool. The final frames (about 150-158) show this ornate fountain centered among lattice benches, cypresses and a hedge. None of the start-view landmarks are visible: no barrel left of the fountain, no reddish tree, no building or bamboo trees, no lawn layout matching the start. The fountain's form and lighting change from the dark silhouette to the new ornate design during the pan.",
+          "failure_classification": "Spatial forgetting / hallucination on return. Camera control works (a leftward yaw is visibly executed), but the revisited region is re-synthesized as a different place. The fountain's identity morphs implausibly mid-pan, and the final view is a new scene rather than the starting viewpoint."
+        },
+        "preference": "A",
+        "confidence": "high",
+        "reasoning": "Both videos share an identical outbound turn and WAIT segment, so the difference lies entirely in the return. A retraces the outbound landmarks in reverse order and clearly re-presents the original fountain, barrel, white bench and background. Its only flaw is a heading overshoot at the end, which is a camera-control imprecision, not forgetting. B rotates as commanded but invents new geometry on the way back (multiple lattice benches, bare trees, a differently ornamented fountain) and ends in a scene inconsistent with the start. That is a memory/consistency failure with an implausible identity transition. A's return comes from continuous motion, not a reset, so recognizing it is warranted."
+      },
+      "label_mapping": {
+        "A": "retrieval",
+        "B": "stock"
       }
     }
   ],

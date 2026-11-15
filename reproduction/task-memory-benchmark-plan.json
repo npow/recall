@@ -1,0 +1,34 @@
+{
+  "scope": "Three complete task-matched native-control PlayWorld GC trials; local Claude evaluator, not published-score reproduction",
+  "candidate_frozen": "Existing virtual-position PoseKVMemory; no new selection, bank or rephasing settings",
+  "turn_degrees_per_second": 45,
+  "control_rationale": "Two one-second turn chunks give the requested90 degrees. Both modes use identical native poses and rate; default60 deg/s and all prior runs remain unchanged. An eight-second away-view hold stresses recall while preserving the requested task movement.",
+  "cases": [
+    {
+      "task_id": "GC010",
+      "seed": 42,
+      "path": "turn90_wait_return",
+      "partition": "development",
+      "task": "Turn right90 degrees then left back to the start"
+    },
+    {
+      "task_id": "GC013",
+      "seed": 42,
+      "path": "turn90left_wait_return",
+      "partition": "development",
+      "task": "Turn left90 degrees then back to the start"
+    },
+    {
+      "task_id": "GC033",
+      "seed": 42,
+      "path": "turn90left_wait_return",
+      "partition": "held_out",
+      "task": "Turn left90 degrees then back to the display window"
+    }
+  ],
+  "case_selection": "Selected by literal task structure and frozen image partition, before any videos on these cases were generated. GC033 is the next compatible unused held-out pure90-degree task. All pairs retained.",
+  "policy": "Fixed scripted reference actions, not the published adaptive Agent Player. Run the released instruction gate and rubric for each complete video. A failed trajectory gets its released effective score; never silently exclude it. Report all per-case scores and failures, no171-case overall claim.",
+  "judge": "Claude Opus5.5 using pinned released PlayWorld gate and rubric; same generic world-model label for both modes; noGemini calls.",
+  "auxiliary_metrics": "Matched native camera audit; raw-pixel prefix; DINO/PSNR and complete-video blind comparison; memory/latency",
+  "failure_reporting": "Count generation and judge failures explicitly; preserve attempted videos/manifests; do not change frozen candidate based on held-out scores."
+}

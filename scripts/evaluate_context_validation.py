@@ -1,5 +1,6 @@
 """Fetch and evaluate the frozen context pilot pairs, preserving every result."""
 import argparse
+import hashlib
 from concurrent.futures import ThreadPoolExecutor
 import json
 from pathlib import Path
@@ -10,7 +11,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def evaluate(case, output, judge, memory=False):
+def evaluate(case, output, judge, memory=False, input_prefix="memory-validation"):
     path = case.get("path", "turn_return")
     name = f"{case['task_id']}-seed{case['seed']}" + (f"-{path}" if memory else "")
     candidate = "retrieval" if memory else "context34"
@@ -18,12 +19,15 @@ def evaluate(case, output, judge, memory=False):
     directory.mkdir(parents=True, exist_ok=True)
     manifests = {}
     for mode in ("stock", candidate):
-        filename = (f"memory-validation-{case['task_id']}-{mode}-{path}-seed{case['seed']}.json" if memory
+        filename = (f"{input_prefix}-{case['task_id']}-{mode}-{path}-seed{case['seed']}.json" if memory
                     else f"validation-{case['task_id']}-{mode}-seed{case['seed']}.json")
         source = ROOT / "outputs/lingbot-reproduction" / filename
         manifest = json.loads(source.read_text())
         manifests[mode] = manifest
-        shutil.copy2(source, directory / f"{mode}-run.json")
+        saved_manifest = directory / f"{mode}-run.json"
+        if saved_manifest.exists() and json.loads(saved_manifest.read_text())["result_directory"] != manifest["result_directory"]:
+            raise ValueError(f"{saved_manifest} belongs to a different generation; preserve it and choose a fresh artifact directory")
+        shutil.copy2(source, saved_manifest)
         video = directory / f"{mode}.mp4"
         if not video.exists():
             subprocess.run(["modal", "volume", "get", "--profile", "nissan-pow",
@@ -32,6 +36,9 @@ def evaluate(case, output, judge, memory=False):
                         f"fps=1,scale=416:-1,tile=4x{(manifest['run']['max_chunks'] + 3) // 4}", "-frames:v", "1", str(directory / f"{mode}-contact.jpg")], check=True)
     comparison = directory / "comparison.json"
     existing = json.loads(comparison.read_text()) if comparison.exists() else {}
+    for mode in ("stock", candidate):
+        if existing.get(mode, {}).get("video_sha256") and existing[mode]["video_sha256"] != hashlib.sha256((directory / f"{mode}.mp4").read_bytes()).hexdigest():
+            raise ValueError(f"Cached comparison refers to a different {mode} video")
     if not existing.get("feature_model") or (judge and not existing.get("visual_judge")):
         command = [sys.executable, str(ROOT / "scripts/compare_lingbot_roundtrip.py"), "--comparison", "retrieval" if memory else "context",
                    "--stock-run", str(directory / "stock-run.json"), "--candidate-run", str(directory / f"{candidate}-run.json"),

@@ -5,9 +5,9 @@ import numpy as np
 from worldsync.lingbot_controls import CameraPlan
 
 
-def summarize(actions, revisit_radius=1.5, min_excursion=4.0):
+def summarize(actions, revisit_radius=1.5, min_excursion=4.0, turn_degrees_per_second=60):
     """actions: one commanded action per native chunk. Positions are in chunk-step units."""
-    camera = CameraPlan()
+    camera = CameraPlan(turn_degrees_per_second=turn_degrees_per_second)
     chunk_end = []
     for action in actions:
         poses = camera.advance(action)

@@ -35,6 +35,8 @@ def main():
         if (not run["native_fixed_controls"] or len(run["camera_embedding_audit"]) != run["max_chunks"]
                 or not all(a["within_tolerance"] for a in run["camera_embedding_audit"])):
             raise ValueError("Native camera conditioning audit failed")
+    if stock.get("turn_degrees_per_second", 60) != candidate.get("turn_degrees_per_second", 60):
+        raise ValueError("Unmatched camera turn rate")
     memory = candidate.get("memory")
     if args.comparison != "context":
         modified = [item["chunk"] for item in memory["trace"] if item["attention_replaced"]]
@@ -106,7 +108,7 @@ def main():
         prompt = (
             "Evaluate two anonymized world-model videos independently and then compare. Each was given the same "
             "image and fixed camera path. Commands by one-second chunk: "
-            + str(stock["fixed_actions"]) + ". RIGHT and LEFT yaw 60 degrees per second; W moves forward. "
+            + str(stock["fixed_actions"]) + f". RIGHT and LEFT yaw {stock.get('turn_degrees_per_second', 60)} degrees per second; W moves forward. "
             "Commands are NOT proof that motion happened. Inspect actual frames. "
             "Assess whether each video realizes a turnaround and return to the starting viewpoint; whether persistent "
             "landmark identity, any sign text, geometry and spatial layout match on return; and whether there are sudden "
