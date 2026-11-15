@@ -35,3 +35,9 @@ The preflight validates the dataset and frozen split without a GPU launch:
 ```
 
 Run `--real` without `--preflight-only` only when the local GPU is free. The supervisor enforces the 16 GiB physical reserve and stops only its own child on a breach. Passing this experiment still requires player-driven quality confirmation and a full declared evaluation before any claim against 2.12.
+
+## Execution
+
+The local fit supervisor refused to start because another collaborator owned Thor; [that refusal is retained](local-fit-not-launched.json). The same frozen fit is queued as oneH200 job after a CPU preflight verified all24 input hashes and the exact6/2 source split. [Execution record](execution.json). No local fit was launched, and the synthetic plumbing weights are not used.
+
+The [real-data contact sheet](real-data-contact.jpg) shows the selected memory/revisit frames. Readable overlapping views do not establish that recent context lacks the target information; the correct/wrong/absent-memory controls remain necessary, and teacher-forced loss is not a generated-world result.

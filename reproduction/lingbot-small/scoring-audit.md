@@ -10,4 +10,4 @@ Consequently **3.8 does not establish long-horizon memory, task completion or a 
 
 Keep the released score for benchmark comparison. Report trajectory completion and actual revisit evidence beside it, and require an actual verified return before claiming improved revisit memory. Changing the gate to reject partial trajectories would define a different metric and cannot be compared directly with published1.82/2.12 scores.
 
-A separate wrapper edge case remains worth auditing: `effective_scores` tests the verdict string while the released aggregator checks the numeric gate. These saved episodes contain consistent partial/1 fields, so that difference does not explain their scores.
+The wrapper tests the verdict string while the released aggregator checks the numeric gate. An [audit of55 saved top-level gate reports](../completion-audit.json) found no contradictions between those fields. It also identified three reports with scores at least3 despite no judge-reported revisit. These counts refer to saved reports, not unique benchmark cases or independently verified successes. Reproduce with `scripts/audit_completion.py`.
