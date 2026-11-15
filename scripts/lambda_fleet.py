@@ -54,6 +54,8 @@ def push(ip, source=ROOT, remote="work"):
     dirty = subprocess.run(["git", "status", "--porcelain"], cwd=source, capture_output=True, text=True).stdout.strip()
     ssh(ip, f"mkdir -p ~/{remote}/reproduction ~/work/external/PlayWorld\n")
     rsync(f"{source}/worldsync", f"ubuntu@{ip}:{remote}/", "--delete", "--exclude", "__pycache__")
+    if source != ROOT:
+        rsync(f"{source}/scripts", f"ubuntu@{ip}:{remote}/", "--exclude", "__pycache__")
     rsync(f"{ROOT}/scripts", f"ubuntu@{ip}:{remote}/", "--exclude", "__pycache__")  # fleet scripts always from here
     rsync(f"{source}/reproduction/", f"ubuntu@{ip}:{remote}/reproduction/", "--include", "*.json", "--exclude", "*",
           "--max-size", "5m")  # top-level JSON only (pins, state, configs, dev texts)
@@ -148,6 +150,16 @@ def start(args):
             flags += f" --plain {args.plain} --plain-retries {args.plain_retries}"
         # A fresh tmux server inherits the exported key from this shell, so it never appears in argv or on disk.
         # The worker is restarted (fresh model) up to 5 times if it exits non-zero, e.g. after a fatal CUDA error.
+        if getattr(args, "gpus", 1) > 1:
+            # Multi-GPU box: one worker per GPU, the instance's list split by line index % gpus, logs worker-<gpu>.log.
+            script = f"cd ~/{args.remote} && (tmux kill-server 2>/dev/null || true) && sleep 1\n"
+            for gpu in range(args.gpus):
+                gpu_flags = flags.replace(f"--shard {shard} --shards {shards}", f"--shard {gpu} --shards {args.gpus}")
+                loop = (f"for n in 1 2 3 4 5; do CUDA_VISIBLE_DEVICES={gpu} {PYTHON} -u scripts/lambda_worker.py {gpu_flags} "
+                        f">> worker-{gpu}.log 2>&1 && break; echo worker-exited-nonzero >> worker-{gpu}.log; sleep 5; done")
+                script += f": > worker-{gpu}.log && tmux new-session -d -s worker{gpu} '{loop}'\n"
+            ssh(ip, script + "echo started\n", stdin_prefix=prefix)
+            continue
         loop = (f"for n in 1 2 3 4 5; do {PYTHON} -u scripts/lambda_worker.py {flags} >> worker.log 2>&1 && break; "
                 "echo worker-exited-nonzero >> worker.log; sleep 5; done")
         ssh(ip, f"cd ~/{args.remote} && (tmux kill-server 2>/dev/null || true) && sleep 1 && : > worker.log && "
@@ -224,6 +236,7 @@ if __name__ == "__main__":
     command.add_argument("--no-player", action="store_true", help="fixed-action jobs: send no player credentials")
     command.add_argument("--shards", type=int); command.add_argument("--first-shard", type=int, default=0)
     command.add_argument("--plain-retries", type=int, default=0, help="extra attempts per job (failed attempts are kept)")
+    command.add_argument("--gpus", type=int, default=1, help="multi-GPU box: one worker per GPU on each IP")
     command.add_argument("ips", nargs="+"); command.set_defaults(run=start)
     command = sub.add_parser("pull"); command.add_argument("--label", required=True)
     command.add_argument("ips", nargs="+"); command.set_defaults(run=pull)

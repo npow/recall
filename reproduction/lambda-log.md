@@ -153,3 +153,50 @@ User-authorized. Paired legacy (frozen 5b8a5b8) vs corrected controller on IF ca
 - worldsync-ifd-4x-1 terminated at 9:14 AM PST, about 12 minutes after launch: NVSwitch fabric manager failed, CUDA error 802. No work ran.
 - worldsync-ifd-1 (gpu_1x_h100_sxm5, us-south-3, $4.29/h) launched 9:14 AM PST as the single staging instance; more follow only after it passes setup.
 - worldsync-ifd-1 passed setup (9:24 AM PST). Launched three more gpu_1x_h100_sxm5 ($4.29/h each): worldsync-ifd-2 (us-south-3), worldsync-ifd-us-southeast-1, worldsync-ifd-us-south-2. All covered by the odin reaper (hard stop 1:05 PM PST).
+
+## Final spend and timeline (2026-11-15, PST)
+
+Spend is **estimated from launch and termination times at list prices**, counting from the launch call (boot time
+included); it is not taken from an invoice, so check the Lambda billing page. The `worldsync-baseline-*` and
+`worldsync-ifd-*` instances in the same account belong to other sessions and are not counted.
+
+| Instance | Type | Launched | Terminated | Hours | Cost |
+|---|---|---|---|---:|---:|
+| worldsync-optb-1 | gpu_1x_h100_pcie | 03:00 | 09:21 | 6.35 | $20.89 |
+| worldsync-optb-2 | gpu_1x_h100_pcie | 03:19 | 07:17 | 3.98 | $13.08 |
+| worldsync-optb-3 | gpu_1x_h100_pcie | 03:19 | 07:13 | 3.90 | $12.82 |
+| worldsync-optb-4 | gpu_1x_h100_pcie | 03:21 | 09:13 | 5.86 | $19.28 |
+| worldsync-optb-5 | gpu_1x_h100_pcie | 04:46 | 07:17 | 2.52 | $8.29 |
+| worldsync-optb-6 | gpu_1x_h100_pcie | 04:46 | 07:10 | 2.39 | $7.86 |
+| worldsync-optb-7 | gpu_1x_h100_pcie | 04:46 | 10:15 | 5.47 | $18.01 |
+| worldsync-optb-8 | gpu_1x_h100_pcie | 04:46 | 07:17 | 2.52 | $8.29 |
+| worldsync-optb-9 | gpu_1x_h100_pcie | 07:20 | 09:16 | 1.93 | $6.35 |
+| worldsync-optb-10 | gpu_1x_h100_pcie | 07:20 | 09:38 | 2.29 | $7.54 |
+| worldsync-optb-11 | gpu_1x_h100_pcie | 07:41 | 09:21 | 1.67 | $5.49 |
+| worldsync-optb-12 | gpu_1x_h100_pcie | 07:41 | 09:21 | 1.67 | $5.49 |
+| worldsync-optb-13 | gpu_1x_h100_pcie | 07:41 | 09:21 | 1.67 | $5.49 |
+| worldsync-optb-14 | gpu_1x_h100_pcie | 07:41 | 09:21 | 1.67 | $5.49 |
+| worldsync-optb-15 | gpu_1x_h100_pcie | 08:15 | 09:16 | 1.03 | $3.37 |
+| worldsync-optb-4x-1 | gpu_4x_h100_sxm5 | 08:15 | 09:06 | 0.86 | $14.07 |
+
+TOTAL $161.82 (44.91 single-GPU hours + 4x box)
+
+**Total about $162** (44.9 single-GPU H100 PCIe hours at $3.29 plus 0.86 h of the 4-GPU SXM5 box at $16.36/h),
+against the caps of $150, then $300 (raised at 07:20). Lambda needed no more than the cost shown above.
+
+| Time | Event |
+|---|---|
+| 03:00 | first instance launched; weights verified; fixed canary and two adaptive episodes validated through the player-proxy tunnel (03:41 to 03:48) |
+| 03:24 to 04:46 | director dev batch (113 fixed-action jobs, 68 synced before it was stopped) |
+| 04:49 to 07:23 | final run `final1`: 294 of 294 jobs generated and synced on H100 PCIe at code byte-identical to abfa73a |
+| 07:27 to 08:04 | storage-ablation canary and stage 0 (28 of 48 jobs; two `lr*` jobs failed on a bf16 QR bug, rerun and fixed in a22c2f1) |
+| 07:42 to 09:21 | revisit-horizon: 160 of 160 jobs; 16 pairs on the SXM5 box, the rest on PCIe |
+| 08:04 to 08:29 | memory-v2 step 1: canary and recompute job done, 11 of 27 jobs run; leftovers dropped |
+| 08:36 to 09:16 | memory-v2 step 2: 44 of 44 adaptive jobs (36 primary by 09:11), zero failed attempts |
+| 08:55 to 09:38 | storage reruns: 12 of 12 jobs |
+| 09:06 to 09:38 | wind-down: each instance terminated after its results were verified present locally |
+| 10:15 | last instance (optb-7, kept for reruns) terminated by timer |
+
+Failures over the whole effort: `final1` had two invalid-player-action attempts (both retried successfully);
+memory-v2 step 2 had none; the only persistent failures were the two `lr*` storage jobs, fixed and rerun.
+All teardown decisions, job lists and sync paths are in the scripts `scripts/lambda_*.py|sh`.
