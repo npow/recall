@@ -1,0 +1,49 @@
+{
+  "frozen_at": "2026-11-14 about 22:40 PST (committed a5597f3 before the 22:41 launch and before any full-run episode was generated)",
+  "purpose": "Full 171-case PlayWorld-style benchmark, stock 18/6 vs budget memory, one seed. Config is not changed after launch.",
+  "code_commit": "5b8a5b8409a97fb609e72964f90b83d871ad6675",
+  "pass_criterion": "reproduction/pass-criterion.md",
+  "model": "LingBot-World2 14B causal-fast (public checkpoint, bf16, no quantization), cache window 18 / sink 6",
+  "seed": 42,
+  "cases": "all 171 (48 GC, 50 IF, 30 insight, 43 out-of-sight); GC013 included and reported both with and without (known image/caption/rubric contradiction in reproduction/input-audit-gc013.md)",
+  "case_order": "round-robin across splits, each split in salted-hash order ('worldsync-fullrun-v1'); never by outcome",
+  "common_rollout_flags": ["--player-retries", "2", "--text-prompt", "both", "--offload-text-encoder"],
+  "max_chunks": {"gc": 40, "if": 40, "outsight": 40, "insight": 60},
+  "arms": {
+    "stock": {"extra_flags": [], "gpu_class": "H100 (80 GB, expandable_segments allocator)"},
+    "budget": {"extra_flags": ["--budget-memory", "--budget-rope", "native", "--budget-retrieved", "10"],
+               "gpu_class": "H200"}
+  },
+  "player": "claude-haiku-4-5-20251001 via worldsync/reference_player.decide (main's player; reference plan guided; no end-guard, no measured-motion feedback)",
+  "player_retries_in_rollout": 2,
+  "queue_attempt_cap": 3,
+  "amendments": [
+    {
+      "id": "insight-text-prompt",
+      "declared_by": "coordinator, 2026-11-14 about 23:25 PST, before any insight episode of this run existed (one budget insight job, OE025, had already been taken under 'both' before the queue reorder; it is kept separately as a sensitivity datum)",
+      "change": "insight_text_prompt: caption (the stock default) instead of 'both', for BOTH arms; gc/if/outsight flags unchanged",
+      "evidence": "diagnosis on 6 development cases (OE008, OE022, OE035, OE040, OE063, OE074, seed 42): 'both' appends the literal objective 'wait and observe', a stasis cue; caption 2.60 vs both 1.60, paired +1.0, 4 wins / 1 tie / 1 loss",
+      "insight_chunks": "60 for now; a caption-only 60-chunk confirmation run on the 6 development cases is in flight and may change the length (to be recorded here)",
+      "reporting": "insight overall reported with all 30 cases and with the 24 held-out cases (the 6 development cases excluded), separately",
+      "script": "scripts/rebuild_insight_tail.py"
+    }
+  ],
+  "judge": {
+    "primary": "released PlayWorld VQA rubric, gate and aggregation via worldsync/gemini_vertex_judge.py",
+    "model": "gemini-3.1-pro-preview on Vertex AI (global), gcloud login; the paper's name gemini-3.1-pro is not available to this account",
+    "samples_per_episode": 1,
+    "opus_judge": "not run on the final run"
+  },
+  "aggregation": "overall = equal mean of the four dimension means (GC, IF, insight, out-of-sight); bootstrap CIs resample cases within each dimension; paired delta vs stock over case pairs",
+  "references": {"LingBot-World2 hosted": {"gc": 2.04, "if": 2.13, "insight": 1.95, "outsight": 1.16, "overall": 1.82},
+                  "Genie 3": {"overall": 2.12}},
+  "infrastructure": "Modal workspace nissan-pow; warm-container adaptive queue (scripts/modal_lingbot_adaptive_runner.py); results volume worldsync-lingbot-results under adaptive/full1/",
+  "known_deviations": [
+    "local public checkpoint, not the hosted service",
+    "our player and rollout adapter, not the paper's",
+    "Gemini preview model name",
+    "task objective appended to the caption as the world-model text (--text-prompt both)",
+    "camera-only controls: IF tasks that need interact() actions are not attempted",
+    "single seed, single judge sample per episode"
+  ]
+}
