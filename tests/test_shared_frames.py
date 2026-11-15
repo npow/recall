@@ -182,3 +182,27 @@ def test_from_hynomas_uses_measured_heading_and_dead_reckons_walks():
     broken["chunks"][1]["first_frame_index"] = 40
     with pytest.raises(ValueError):
         sw.from_hynomas(broken)
+
+
+def test_ingest_run_can_join_an_existing_world_from_another_agents_frame(tmp_path):
+    if not shutil.which("ffmpeg"):
+        pytest.skip("ffmpeg not installed")
+    for name, image in (("a", "i" * 64), ("b", "k" * 64)):
+        (tmp_path / name).mkdir()
+        (tmp_path / name / "run.json").write_text(json.dumps({**run_json(), "initial_image_sha256": image}))
+        subprocess.run(["ffmpeg", "-v", "error", "-f", "lavfi", "-i", "testsrc=size=64x36:rate=16:duration=3",
+                        "-pix_fmt", "yuv420p", str(tmp_path / name / "rollout.mp4")], check=True)
+    db = sw.FrameDB(":memory:")
+    first = sw.ingest_run(tmp_path / "a", "a", db, thumbnails=False)
+    own = sw.world_id(sw.world_manifest(json.loads((tmp_path / "b" / "run.json").read_text())))
+    assert own != first["world_id"]  # a different start image is a different world by identity
+    joined = sw.ingest_run(tmp_path / "b", "b", db, thumbnails=False, join=(first["world_id"], "a", 1))
+    assert joined["world_id"] == first["world_id"] and len(db.sightings(first["world_id"], "b")) == 3
+    points = {point["id"]: point for point in db.pending()}
+    join = points[f"world:{first['world_id']}:join:b"]
+    source = db.sightings(first["world_id"], "a")[1]
+    assert f"frame:sha256:{source['frame_sha256']}" in join["content"] and "k" * 64 in join["content"]
+    assert join["metadata"]["source_chunk"] == 1 and db.get_frame(source["frame_sha256"])
+    assert f"world:{own}:manifest" not in points
+    with pytest.raises(LookupError):
+        sw.ingest_run(tmp_path / "b", "b", db, thumbnails=False, join=(first["world_id"], "a", 9))

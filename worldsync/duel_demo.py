@@ -49,20 +49,20 @@ def _panel(texts, label, captions, width, strip, size=15, chars=None):
     return ",".join(filters)
 
 
-def compose(panels, out, strip=110, width=640, height=352, title=None):
+def compose(panels, out, strip=110, width=640, height=352, title=None, fps=16):
     """Write ``out`` (mp4): the agents' rollouts side by side, each with a caption strip; nothing else touches disk.
 
     ``panels`` is a list of ``(video_path, label, captions)`` where captions are ``(start_s, end_s, text)`` windows.
     """
     with tempfile.TemporaryDirectory() as tmp:
-        return _compose(_Texts(tmp), panels, out, strip, width, height, title)
+        return _compose(_Texts(tmp), panels, out, strip, width, height, title, fps)
 
 
-def _compose(texts, panels, out, strip, width, height, title):
+def _compose(texts, panels, out, strip, width, height, title, fps):
     graph, names = [], []
     for slot, (_, label, captions) in enumerate(panels):
         name = f"p{slot}"
-        graph.append(f"[{slot}:v]scale={width}:{height},pad={width}:{height + strip}:0:0:color=0x1b1410,"
+        graph.append(f"[{slot}:v]setpts=N/{fps}/TB,scale={width}:{height},pad={width}:{height + strip}:0:0:color=0x1b1410,"
                      f"{_panel(texts, label, captions, width, strip)}[{name}]")
         names.append(f"[{name}]")
     last = "s"
@@ -74,7 +74,7 @@ def _compose(texts, panels, out, strip, width, height, title):
     cmd = ["ffmpeg", "-v", "error", "-y"]
     for video, _, _ in panels:
         cmd += ["-i", str(video)]
-    cmd += ["-filter_complex", ";".join(graph), "-map", f"[{last}]", "-c:v", "libx264", "-pix_fmt", "yuv420p",
+    cmd += ["-filter_complex", ";".join(graph), "-map", f"[{last}]", "-r", str(fps), "-c:v", "libx264", "-pix_fmt", "yuv420p",
             "-crf", "18", "-shortest", str(out)]
     subprocess.run(cmd, check=True)
     return out

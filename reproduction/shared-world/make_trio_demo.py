@@ -66,8 +66,11 @@ LABELS = {"viewer": "viewer  (pans 0 -> 180 -> 0)", "duel-a": "duel-a  (faces 0,
           "agent-b": "agent-b  (walks to the far side, then orbits)"}
 if T.name == "arena":
     LABELS = {"agent-a": "agent-a  (starts at (0,0), orbits)", "agent-b": "agent-b  (labelled opposite at (0,8), orbits)"}
+if T.name == "arena2":
+    LABELS = {"agent-a": "agent-a  (starts at (0,0) facing 0, orbits)",
+              "agent-b": "agent-b  (starts from a's halfway view, opposite side)"}
 panels = [(T / agent / "rollout.mp4", LABELS.get(agent, agent), captions(agent, [o for o in AGENTS if o != agent]))
           for agent in AGENTS]
 out = compose(panels, T / f"{T.name}-shared-world-demo.mp4", strip=96,
-              title=f"{len(AGENTS)} agents, one LingBot world {WID}: seed 42, GC010 - shared RECALL archive + past.dev positions")
+              title=f"{len(AGENTS)} agents, one LingBot world {WID} - shared RECALL archive + past.dev positions")
 print(out)

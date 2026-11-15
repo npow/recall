@@ -87,6 +87,19 @@ python -m worldsync.shared_frames --db outputs/shared-world/orbit.db ingest-run 
 python reproduction/shared-world/make_trio_demo.py outputs/shared-world/orbit agent-a agent-b
 ```
 
+## Coliseum: second agent started from the first agent's halfway frame (demo, 2026-11-15)
+
+`scripts/modal_lingbot_orbit.py --image arena_start_16x9.jpg --image-b arena_b_start_from_a_halfway.jpg`: agent-a
+orbits one lap from a generated coliseum image; agent-b starts from agent-a's own generated frame at the far side
+(last frame of chunk 4, pose (0, 0, 8) heading 180), with `--start-pose 0 8 180` and agent-a's archive. A first
+attempt that gave both agents the same start image and only relabelled agent-b's pose was rejected: its first four
+chunks were pixel-identical to agent-a's.
+
+Because agent-b's start image differs, its own identity hash differs; `ingest-run --join WORLD_ID agent-a 4` files it
+under agent-a's world `w-c79b5bfa7e3c025d` and records a join fact with the source frame reference. At matched poses
+the backdrop agrees (wall, red banners, dark gateways at 180-225, the columned gate at 270-0); the figures do not:
+the model draws two or three gladiators in each view. 22 data points, 40 credits.
+
 ## Not done
 
 - Captions are hand-written per chunk (no VLM key here).

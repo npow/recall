@@ -332,13 +332,38 @@ def load_run(run_dir):
     return run, video
 
 
-def ingest_run(run_dir, agent, db, audience=None, thumbnails=True, captions=None):
-    """Store every chunk's last frame in the database and queue one observation per chunk for past.dev."""
+def join_point(wid, agent, source_agent, source, start_image_sha256):
+    """Fact that ``agent`` entered world ``wid`` from ``source_agent``'s generated view (its start image)."""
+    position = ", ".join(f"{value:g}" for value in source["position"])
+    return {"id": f"world:{wid}:join:{agent}",
+            "content": (f"In world {wid}, agent {agent} joined by starting from agent {source_agent}'s generated view at "
+                        f"world time {source['world_time']:.2f} s (heading {source['heading']:.0f} degrees at position "
+                        f"({position})). Frame reference frame:sha256:{source['frame_sha256']}. Agent {agent}'s start "
+                        f"image sha256 is {start_image_sha256}."),
+            "label": f"{agent} joined from {source_agent}", "timestamp": world_timestamp(0),
+            "metadata": {"kind": "join", "world_id": wid, "agent": agent, "source_agent": source_agent,
+                         "source_chunk": source["chunk"], "frame_ref": f"frame:sha256:{source['frame_sha256']}",
+                         "start_image_sha256": start_image_sha256}}
+
+
+def ingest_run(run_dir, agent, db, audience=None, thumbnails=True, captions=None, join=None):
+    """Store every chunk's last frame in the database and queue one observation per chunk for past.dev.
+
+    ``join=(world_id, source_agent, source_chunk)`` files the run under an existing world: the run started from that
+    agent's generated frame instead of the world's own start image, so its own identity hash would differ.
+    """
     run, video = load_run(run_dir)
     manifest = world_manifest(run)
-    wid = world_id(manifest)
-    db.put_world(wid, manifest)
-    db.queue(manifest_point(wid, manifest))
+    if join:
+        wid, source_agent, source_chunk = join
+        source = [s for s in db.sightings(wid, source_agent) if s["chunk"] == int(source_chunk)]
+        if not source:
+            raise LookupError(f"no sighting of {source_agent} chunk {source_chunk} in {wid}")
+        db.queue(join_point(wid, agent, source_agent, source[0], run["initial_image_sha256"]))
+    else:
+        wid = world_id(manifest)
+        db.put_world(wid, manifest)
+        db.queue(manifest_point(wid, manifest))
     sightings = run_sightings(run)
     frames = frames_from_video(video, [s["frame_index"] for s in sightings])
     queued = 0
@@ -407,6 +432,8 @@ def main(argv=None):
     ingest.add_argument("--audience", help="past.dev audience slug for private observations")
     ingest.add_argument("--no-thumbnails", action="store_true")
     ingest.add_argument("--captions", help="JSON file mapping chunk index to a caption")
+    ingest.add_argument("--join", nargs=3, metavar=("WORLD_ID", "AGENT", "CHUNK"),
+                        help="file this run under an existing world: it started from AGENT's frame at CHUNK")
     mode = ingest.add_mutually_exclusive_group(required=True)
     mode.add_argument("--dry-run", action="store_true", help="show what would be sent; send nothing")
     mode.add_argument("--confirm-send", action="store_true", help="send the queued data points to past.dev")
@@ -435,7 +462,7 @@ def main(argv=None):
                 captions = ({int(k): v for k, v in json.loads(Path(args.captions).read_text()).items()}
                             if args.captions else None)
                 print(json.dumps(ingest_run(args.run_dir, args.agent, db, args.audience, not args.no_thumbnails,
-                                            captions)))
+                                            captions, args.join)))
             else:
                 (run_a, _), (run_b, _) = load_run(args.run_a), load_run(args.run_b)
                 wid_a, wid_b = world_id(world_manifest(run_a)), world_id(world_manifest(run_b))
