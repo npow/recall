@@ -193,3 +193,9 @@ The judge queue began lagging behind the three GPU workers. `CCV_JUDGE_WORKERS` 
 ### Codex — geometry subset complete
 
 GC022 is now fully scored: legacy4.4/2.0/2.4(mean2.9333), corrected2.4/2.4/2.4(mean2.40). All three predeclared GC pairs favor legacy; selected-case GC means are legacy2.3333 and corrected1.60. This is a three-case development subset, not the full GC benchmark. Five pairs are complete overall; the two IF pairs favor corrected, and the remaining dimensions remain incomplete. No overall estimate or baseline promotion. All three workers are progressing; old judge worker is still draining its submitted calls before concurrency increases.
+
+### Codex — sixth paired result; six-worker judge live
+
+Insight OE066 is fully scored: legacy2.0/2.0/2.6(mean2.20), corrected1.0/1.0/1.0(mean1.00). Corrected insight OE020 also scored1.0 in all three repetitions; legacy judgments are pending. Six complete pairs now span GC, IF and one in-sight case; out-of-sight remains incomplete. No overall or promotion claim.
+
+Old judge872381 completed its submitted queue and exited on the requested interrupt. Replacement1019549 is live with6workers. There were no submitted manifests missing terminal reports after drain and no failure markers, so no retries or duplicate requests were introduced. Generation continues on all three workers.

@@ -1,0 +1,638 @@
+{
+  "task_id": "OE066",
+  "request_identity": {
+    "version": 3,
+    "video_sha256": "e4f481545affbd63f51157f95e0b92fda6047d50b9c7175c2b71503694248111",
+    "reference_sha256": "4f2169f2e5012e6cb79f527d2b1f950719eaaf0dfc9f55b54825a02d6ff251c8",
+    "task_sha256": "db311ff200b5d051b1f45f7d4656a1def1a3669c8ae8a0064b00596cc43c0851",
+    "world_model": "LingBot-World2 14B causal-fast",
+    "judge_model": "gemini-3.1-pro-preview",
+    "transport": "vertex",
+    "generation_config": {
+      "response_mime_type": "application/json",
+      "temperature": 0.1
+    },
+    "released_source_sha256": {
+      "metrics/vqa/rubric.py": "717337bf48986afd3bd239e838a30d2bc75788b5a3f1c76c3ceeb67f5997c945",
+      "metrics/vqa/instruction_gate.py": "216f4abc854bbc020819a55679b873cf5472bb2d72661659ed8674cca673df5f",
+      "metrics/vqa/sampling.py": "573be715981b64ac664be85f40337e8fce9002839698673de37300845eb6e0ca",
+      "metrics/vqa/score.py": "9e7656ea7aacde92b5c52ba4b401628ac5589c227935a18a0ab95b44870038a7",
+      "metrics/aggregate.py": "a11aa8c5da9a437d00e0b2205f5e72a48f953a68d63b6b3d804567008fe7adfd"
+    },
+    "adapter_source_sha256": {
+      "judge_integrity.py": "b4d5f5b249b1c4316a1a5c712cc37d2f60a381cd0f892f1611aa936494a22497",
+      "gemini_vertex_judge.py": "e0c3211328e2ea64695c7ad016b8aa20ef2ba493916a2b518b0e555118eb3e3e"
+    },
+    "fingerprint": "a2dc94ad6b384bb05bceb6ef4a28fbbec1be41f9e370ed53543a79a245d5a73a"
+  },
+  "request_fingerprint": "a2dc94ad6b384bb05bceb6ef4a28fbbec1be41f9e370ed53543a79a245d5a73a",
+  "world_model": "LingBot-World2 14B causal-fast",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "judge_project": "seismic-fx-507702-v1",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "e4f481545affbd63f51157f95e0b92fda6047d50b9c7175c2b71503694248111",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; Controller, adapter and checkpoint also differ.",
+  "gate": {
+    "verdict": "not_applicable",
+    "instruction_following_score": null
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 2.0,
+    "final_score_1_to_5": 2,
+    "category_scores_1_to_5": {
+      "insight_evolution": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "视频展示了持续的挤压动作，但挤出的奶油并未在酥皮壳内合理地累积成堆，而是不断膨胀成一个巨大的、不符合物理规律的团块，最终吞噬了底部的酥皮壳。"
+      },
+      "prompt_evolution_alignment": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "场景的演变在物理上是不合理的，挤出的奶油在没有更换裱花袋的情况下发生了无端的颜色改变，并且其无限膨胀的体积完全脱离了正常的糕点制作过程。"
+      },
+      "subject_identity": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "挤出的奶油在视频中途（约第12秒起）从红色逐渐漂移为深紫色，裱花袋的颜色也随之变暗，发生了无支撑的颜色改变。"
+      },
+      "temporal_scene_consistency": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "奶油在挤出过程中未能保持稳定的颜色，在中途从红色变成了深紫色，且新挤出的部分未能合理地保留在酥皮壳内。"
+      },
+      "physical_causality": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "奶油的颜色变化没有可见的、有意的更换动作支持，且其堆积成巨大团块的方式违背了真实的粘度和重力规律。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail; the piping action continues until the end of the video.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 0,
+      "evidence_zh": "提示词为'wait and observe'，视频从一开始就在展示观察到的场景演变。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景中的烤盘和其他未被操作的酥皮壳在整个视频中保持相对稳定。",
+      "post_completion_phase_zh": "背景中的烤盘和其他未被操作的酥皮壳在整个视频中保持相对稳定。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "extruded cream",
+        "anchors": [
+          "piping bag nozzle",
+          "active pastry shell"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-598"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "baking tray edges",
+        "background pastry shells"
+      ],
+      "newly_revealed_regions_zh": "无明显新区域，镜头保持特写。",
+      "evidence_zh": "镜头在整个过程中保持相对固定的特写视角，仅有轻微的晃动。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "uncertain",
+      "persistent_anchor_contradiction": "uncertain",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频没有发生硬重置，动作是连续的。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "没有超出提示词要求的额外动作导致扣分。"
+    },
+    "final_state_check": {
+      "window": "575-598",
+      "visible_key_objects": [
+        "hands",
+        "piping bag",
+        "baking tray",
+        "pastry shells",
+        "cream"
+      ],
+      "reappearance_consistency_zh": "不适用，没有物体离开后重新进入视野。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "in_sight",
+      "meaningful_evolution": "partial",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 2,
+      "named_process": "cream continuously emerges from the nozzle and visibly accumulates into a growing mound inside the pale-yellow pastry shell",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "挤压动作一直持续到视频结束，没有静止的尾部。",
+      "terminal_state_reasoning_zh": "动作未停止，不适用终端静止检查。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "diagnostic explanation only; no separate final-score deduction",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "挤出的奶油从红色变成深紫色，并且体积不断膨胀成一个巨大的、不符合物理规律的团块，吞噬了底部的酥皮壳。",
+      "evidence_zh": "视频显示了持续的挤压动作，但挤出的奶油在没有更换裱花袋的情况下从红色变成了深紫色，并且堆积成一个巨大且不真实的形状，未能合理地填充酥皮壳。",
+      "final_score_cap_applied": 2
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "yes",
+      "action_type": "other",
+      "tool_and_target": "piping bag and pastry shell",
+      "persistent_result_created": "yes",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "yes",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "no",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 2,
+      "evidence_zh": "挤出的奶油产生了持续的堆积，但其颜色发生了无端的改变，且堆积的体积和形状完全不符合常理，形成了一个巨大的紫色团块。"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "partial",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "视频有持续的动作，但结果不合理。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "partial",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "主体（手和裱花袋）有持续的动作。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "uncertain",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "uncertain",
+      "target_type": "uncertain",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "uncertain",
+      "unsupported_change": "other",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "cream and piping bag",
+      "same_entity_throughout": "partial",
+      "stable_identity_attributes": [
+        "colors"
+      ],
+      "identity_failure": "color_drift",
+      "evidence_zh": "挤出的奶油在视频中途（约第12秒起）从红色逐渐变为深紫色，裱花袋的颜色也随之变暗，发生了无支撑的颜色漂移。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 2,
+      "meaningful_motion_or_evolution": "partial",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 2,
+      "evidence_zh": "演变质量被评为2级，因此最终得分上限为2。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 2,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "none",
+      "positive_evidence_zh": "none",
+      "evidence_zh": "不适用",
+      "final_score_cap_applied": 2
+    },
+    "summary_zh": "视频虽然展示了持续的挤奶油动作，但挤出的奶油在没有更换裱花袋的情况下从红色变成了深紫色，并且堆积成一个巨大且不符合物理规律的团块，未能合理地填充酥皮壳。",
+    "task_id": "OE066"
+  },
+  "calls": [
+    {
+      "mode": "score",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "7OH5auy0KeeW4_UP5pClsA8",
+      "prompt_tokens": 61788,
+      "output_tokens": 3465
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 599,
+      "sheets_count": 24,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 59.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 149,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 14.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 7,
+          "first_sample_index": 150,
+          "last_sample_index": 174,
+          "first_time_seconds": 15.0,
+          "last_time_seconds": 17.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 8,
+          "first_sample_index": 175,
+          "last_sample_index": 199,
+          "first_time_seconds": 17.5,
+          "last_time_seconds": 19.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 9,
+          "first_sample_index": 200,
+          "last_sample_index": 224,
+          "first_time_seconds": 20.0,
+          "last_time_seconds": 22.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 10,
+          "first_sample_index": 225,
+          "last_sample_index": 249,
+          "first_time_seconds": 22.5,
+          "last_time_seconds": 24.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 11,
+          "first_sample_index": 250,
+          "last_sample_index": 274,
+          "first_time_seconds": 25.0,
+          "last_time_seconds": 27.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 12,
+          "first_sample_index": 275,
+          "last_sample_index": 299,
+          "first_time_seconds": 27.5,
+          "last_time_seconds": 29.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 13,
+          "first_sample_index": 300,
+          "last_sample_index": 324,
+          "first_time_seconds": 30.0,
+          "last_time_seconds": 32.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 14,
+          "first_sample_index": 325,
+          "last_sample_index": 349,
+          "first_time_seconds": 32.5,
+          "last_time_seconds": 34.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 15,
+          "first_sample_index": 350,
+          "last_sample_index": 374,
+          "first_time_seconds": 35.0,
+          "last_time_seconds": 37.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 16,
+          "first_sample_index": 375,
+          "last_sample_index": 399,
+          "first_time_seconds": 37.5,
+          "last_time_seconds": 39.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 17,
+          "first_sample_index": 400,
+          "last_sample_index": 424,
+          "first_time_seconds": 40.0,
+          "last_time_seconds": 42.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 18,
+          "first_sample_index": 425,
+          "last_sample_index": 449,
+          "first_time_seconds": 42.5,
+          "last_time_seconds": 44.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 19,
+          "first_sample_index": 450,
+          "last_sample_index": 474,
+          "first_time_seconds": 45.0,
+          "last_time_seconds": 47.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 20,
+          "first_sample_index": 475,
+          "last_sample_index": 499,
+          "first_time_seconds": 47.5,
+          "last_time_seconds": 49.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 21,
+          "first_sample_index": 500,
+          "last_sample_index": 524,
+          "first_time_seconds": 50.0,
+          "last_time_seconds": 52.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 22,
+          "first_sample_index": 525,
+          "last_sample_index": 549,
+          "first_time_seconds": 52.5,
+          "last_time_seconds": 54.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 23,
+          "first_sample_index": 550,
+          "last_sample_index": 574,
+          "first_time_seconds": 55.0,
+          "last_time_seconds": 57.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 24,
+          "first_sample_index": 575,
+          "last_sample_index": 598,
+          "first_time_seconds": 57.5,
+          "last_time_seconds": 59.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 30,
+      "sheets_count": 8,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 58.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 7,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 14.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 8,
+          "last_sample_index": 11,
+          "first_time_seconds": 16.0,
+          "last_time_seconds": 22.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 12,
+          "last_sample_index": 15,
+          "first_time_seconds": 24.0,
+          "last_time_seconds": 30.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 16,
+          "last_sample_index": 19,
+          "first_time_seconds": 32.0,
+          "last_time_seconds": 38.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 20,
+          "last_sample_index": 23,
+          "first_time_seconds": 40.0,
+          "last_time_seconds": 46.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 7,
+          "first_sample_index": 24,
+          "last_sample_index": 27,
+          "first_time_seconds": 48.0,
+          "last_time_seconds": 54.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 8,
+          "first_sample_index": 28,
+          "last_sample_index": 29,
+          "first_time_seconds": 56.0,
+          "last_time_seconds": 58.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "score_prompt_sha256": "537cf89da840732c45b8dd6ec2fa60c61c60ceac6e24a38a9350e613f8cc78a1",
+  "scores": {
+    "official": 2.0,
+    "final_score": 2.0
+  },
+  "episode_id": "L-insight-OE066"
+}
