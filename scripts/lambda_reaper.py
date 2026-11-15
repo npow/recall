@@ -31,10 +31,16 @@ def main():
     ids = set(args.ids_file.read_text().split())
     if not args.dry_run:
         time.sleep(args.minutes * 60)
-    live = [i["id"] for i in api("GET", "instances", key)["data"] if i["id"] in ids and i["status"] not in ("terminated", "terminating")]
-    print(time.strftime("%H:%M:%S"), "would terminate" if args.dry_run else "terminating", live, flush=True)
-    if live and not args.dry_run:
-        print(api("POST", "instance-operations/terminate", key, {"instance_ids": live}), flush=True)
+    for _ in range(120):  # retry through transient DNS/API failures for up to an hour
+        try:
+            live = [i["id"] for i in api("GET", "instances", key)["data"] if i["id"] in ids and i["status"] not in ("terminated", "terminating")]
+            print(time.strftime("%H:%M:%S"), "would terminate" if args.dry_run else "terminating", live, flush=True)
+            if live and not args.dry_run:
+                print(api("POST", "instance-operations/terminate", key, {"instance_ids": live}), flush=True)
+            return
+        except Exception as failure:
+            print(time.strftime("%H:%M:%S"), "API error, retrying:", type(failure).__name__, flush=True)
+            time.sleep(30)
 
 
 if __name__ == "__main__":

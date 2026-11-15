@@ -147,3 +147,9 @@ At $3.29/h: about **$27 to $35 for one 171-episode arm**, whatever the number of
 - Codex `7287b46fd8c14c2b80abc7a681412452`: termination requested 2026-11-15T17:04:14.621528+00:00; API state `absent` at 2026-11-15T17:11:49.962428+00:00. Final assigned evidence verified and collected before cleanup.
 - Codex `daa2be26cc0c4638ac2c9ec881b45160`: termination requested 2026-11-15T16:59:09.282090+00:00; API state `absent` at 2026-11-15T17:11:49.962428+00:00. Final assigned evidence verified and collected before cleanup.
 - Codex `e84fbb24a8a943aaa731fdf855bc09ec`: termination requested 2026-11-15T17:07:29.144667+00:00; API state `absent` at 2026-11-15T17:11:49.962428+00:00. Final assigned evidence verified and collected before cleanup.
+## odin IF demo: worldsync-ifd-4x-1 (gpu_4x_h100_sxm5, us-southeast-1, $16.36/h), launched 2026-11-15 9:02 AM PST
+
+User-authorized. Paired legacy (frozen 5b8a5b8) vs corrected controller on IF cases, one case per GPU. Hard-deadline reaper: 250 min.
+- worldsync-ifd-4x-1 terminated at 9:14 AM PST, about 12 minutes after launch: NVSwitch fabric manager failed, CUDA error 802. No work ran.
+- worldsync-ifd-1 (gpu_1x_h100_sxm5, us-south-3, $4.29/h) launched 9:14 AM PST as the single staging instance; more follow only after it passes setup.
+- worldsync-ifd-1 passed setup (9:24 AM PST). Launched three more gpu_1x_h100_sxm5 ($4.29/h each): worldsync-ifd-2 (us-south-3), worldsync-ifd-us-southeast-1, worldsync-ifd-us-south-2. All covered by the odin reaper (hard stop 1:05 PM PST).
