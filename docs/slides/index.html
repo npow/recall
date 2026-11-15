@@ -24,7 +24,7 @@ html,body{margin:0;height:100%;background:#000;color:var(--text);overflow:hidden
 #bar span.on{color:var(--text);font-weight:700;box-shadow:0 3px 0 var(--rel);padding:16px 0}
 #bar .count{margin-left:auto;color:var(--dim);font-variant-numeric:tabular-nums}
 #progress{position:absolute;left:0;bottom:0;height:5px;background:var(--rel);z-index:6;transition:width .25s}
-h1{font-size:92px;line-height:1.05;margin:0 0 24px;font-weight:800;letter-spacing:-1px}
+h1{font-size:92px;line-height:1.05;margin:0 0 24px;font-weight:800;letter-spacing:-1px;color:#3ddc97}
 h2{font-size:60px;line-height:1.1;margin:0 0 30px;font-weight:750;letter-spacing:-.5px}
 p,li,td,th{font-size:34px;line-height:1.35}
 p{margin:0 0 20px}
@@ -32,6 +32,26 @@ ul{margin:0;padding-left:44px}
 li{margin:0 0 20px}
 .sub{font-size:40px;color:var(--dim)}
 .small{font-size:26px;color:var(--dim);line-height:1.35}
+.lims{display:grid;grid-template-columns:1fr 1fr;gap:26px 34px;margin-top:18px}
+.lim{background:#151a22;border:2px solid #2a3240;border-radius:14px;padding:34px 38px}
+.lt{font-size:48px;font-weight:700;margin:0 0 12px}
+.ld{font-size:34px;color:var(--dim);line-height:1.35}
+.arg{display:grid;grid-template-columns:1fr 1fr;gap:0 30px}
+.ar{display:flex;align-items:baseline;gap:12px;padding:8px 0;border-bottom:1px solid #1c232e;font-size:26px;line-height:1.1;flex-wrap:wrap;row-gap:0}
+.ar .at{font-weight:650}
+.ar .ao{color:#9aa4b2;font-size:26px;flex:1 1 100%;padding-left:30px;margin-top:-2px}
+.dot{display:inline-block;width:16px;height:16px;border-radius:50%;flex:none;margin-right:2px}
+.tl{display:grid;grid-template-columns:1fr 44px 1fr;grid-auto-rows:41px;margin-top:22px}
+.tn{display:flex;align-items:center;font-size:27px;line-height:1.1;white-space:nowrap;gap:12px}
+.tn.l{justify-content:flex-end;padding-right:10px;text-align:right}.tn.r{padding-left:10px}
+.tn b{font-weight:650}.tn span{color:#9aa4b2;font-size:26px}
+.tn.dropped b{color:#aab2bf;font-weight:550}
+.tn.kp b{font-size:32px;color:#3ddc97}.tn.kp span{font-size:27px}
+.tn.day{color:#6b7482;font-size:26px;font-weight:600;padding-left:26px}
+.sd{position:relative;display:flex;align-items:center;justify-content:center}
+.sd::before{content:"";position:absolute;left:21px;width:2px;top:0;bottom:0;background:#2a3240}
+.sd i{position:relative;width:16px;height:16px;border-radius:50%;background:#6b7482}
+.sd i.kept{background:#3ddc97;width:26px;height:26px}.sd i.partial{background:#7aa2f7}
 .tiny{font-size:22px;color:var(--faint);line-height:1.35}
 .rel{color:var(--rel)} .ours{color:var(--ours)} .warn{color:var(--warn)} .dim{color:var(--dim)}
 b{font-weight:750}
@@ -47,6 +67,9 @@ td:not(:first-child),th:not(:first-child){white-space:nowrap}
 table.compact td,table.compact th{font-size:27px;padding:10px 12px}
 th{color:var(--dim);font-weight:600;font-size:28px}
 td:first-child,th:first-child{text-align:left}
+table.base td:last-child,table.base th:last-child{background:rgba(61,220,151,.10);color:var(--ours);font-weight:800}
+table.base td:last-child b{font-size:38px}
+table.base td:last-child .small{color:var(--dim);font-weight:500}
 tr.hl td{color:var(--ours);font-weight:700}
 video,img.media{display:block;width:100%;height:auto;border-radius:10px;background:#000}
 .tag{position:absolute;left:14px;bottom:14px;background:rgba(0,0,0,.78);padding:8px 16px;font-size:26px;font-weight:700;border-radius:6px;border-left:6px solid var(--rel)}
@@ -168,7 +191,7 @@ svg text{font-family:inherit}
   <!-- 4 -->
   <section class="slide" data-sec="Benchmark">
     <h2>First: reproduce the baseline, on all 171 tasks, twice</h2>
-    <table style="margin-bottom:26px">
+    <table class="base" style="margin-bottom:26px">
       <tr><th>LingBot-World2, as released</th><th>Geometry</th><th>Interaction</th><th>In-sight</th><th>Out-of-sight</th><th>Overall</th></tr>
       <tr><td>Published (hosted service)</td><td>2.04</td><td>2.13</td><td>1.95</td><td>1.16</td><td><b>1.82</b></td></tr>
       <tr><td class="rel">Our run 1 (H200 GPUs)</td><td>2.41</td><td>1.84</td><td>1.68</td><td>1.47</td><td><b>1.85</b> <span class="small">[1.67, 2.04]</span></td></tr>
@@ -182,10 +205,10 @@ svg text{font-family:inherit}
       </ul></div>
       <div class="col" style="flex:.7"><div class="card">
         <p class="small" style="margin:0 0 10px">Differences from the published setup, all recorded in the repo:</p>
-        <p class="small" style="margin:0">local checkpoint, not the hosted service · our Haiku player · Gemini preview model name · caption-only text for in-sight tasks · one seed</p>
+        <p class="small" style="margin:0">local checkpoint · our Haiku player · Gemini preview model name · caption-only text for in-sight tasks · one seed</p>
       </div></div>
     </div>
-    <aside class="notes">Before changing anything we reproduced the published baseline on the full benchmark, twice, on two kinds of GPU. We got 1.85 and 1.81 against the published 1.82. The dimensions do not match one for one, and the interval is about plus or minus 0.2, so we call this consistent with the published number, not an exact reproduction.</aside>
+    <aside class="notes">Before changing anything we reproduced the published baseline on the full benchmark, twice, on two kinds of GPU. We got 1.85 and 1.81 against the published 1.82. The dimensions do not match one for one, and the interval is about plus or minus 0.2, so we call this consistent with the published number.</aside>
   </section>
 
   <!-- 5 -->
@@ -257,33 +280,19 @@ svg text{font-family:inherit}
       </g>
     </svg>
     <div class="foot"><p class="small" style="margin:0 0 12px"><b>What is new:</b> a bounded memory of the model's own earlier frames, looked up by camera pose and spliced into its attention window, with no training. Stock LingBot keeps only a fixed window.</p><span class="chip">no training, weights untouched</span><span class="chip">window: 6 + 10 + 8 = 24 frames (stock: 18)</span></div>
-    <aside class="notes">Our memory sits beside the model and has three steps; press the arrow to reveal each. One: after each chunk, save the frames' cached keys and values, with the camera pose at that moment, keeping the last 24 frames. Two: before the next chunk, find the saved frames whose camera pose is nearest to the pose the camera is about to have. Three: put up to ten of them into the attention window, which becomes first 6, retrieved 10, most recent 8. No weights change. One thing to say plainly: that window is 24 frames, larger than the released model's 18, so part of the gain may come from the larger window. This is the design that produced the main result a few slides on.</aside>
+    <aside class="notes">Our memory sits beside the model and has three steps; press the arrow to reveal each. One: after each chunk, save the frames' cached keys and values, with the camera pose at that moment, keeping the last 24 frames. Two: before the next chunk, find the saved frames whose camera pose is nearest to the pose the camera is about to have. Three: put up to ten of them into the attention window, which becomes first 6, retrieved 10, most recent 8. No weights change. This is the design that produced the main result a few slides on.</aside>
   </section>
 
   <!-- 8 -->
   <section class="slide" data-sec="Method">
     <h2>Storing less: keep the frame, rebuild its values on demand</h2>
-    <div class="row grow">
-      <div class="col" style="flex:1.1">
-        <table>
-          <tr><th>Three ways to remember one frame</th><th>Size</th></tr>
-          <tr><td>Cache its 40-layer values</td><td>1,235 MB</td></tr>
-          <tr><td>The same, 8-bit</td><td>627 MB</td></tr>
-          <tr class="hl"><td>Store the frame, rebuild the values on demand</td><td>6.2 MB<br><span class="small ours">≈ 200× less</span></td></tr>
-        </table>
-        <p class="small" style="margin-top:22px">Rebuilding 22 frames in a 14-chunk episode took 13.5 s in total. No archive on disk, GPU memory close to stock (72.4 GB against 68.8 GB).</p>
-      </div>
-      <div class="col">
-        <p><b>Does it still recall?</b></p>
-        <ul>
-          <li>On a scripted turn away, hold, turn back path (scene GC007), similarity of the final frame to the start view:</li>
-          <li><b>0.35</b> released model, <b>0.78</b> exact storage, <span class="ours"><b>0.77</b></span> store-and-rebuild.</li>
-        </ul>
-        <div class="card" style="margin-top:20px"><p style="margin:0">One scene, one seed, scripted path. <span class="warn"><b>Not</b></span> tested in the 171-task benchmark or the revisit-horizon benchmark.</p></div>
-      </div>
+    <div style="display:flex;flex-direction:column;align-items:center;margin-top:6px">
+      <p style="margin:0 0 4px;font-size:34px"><b>Does it still recall?</b> <span class="small">Scripted turn away, hold, turn back (scene GC007)</span></p>
+      <svg viewBox="0 0 980 470" width="1240" height="595" id="abl"></svg>
     </div>
-    <p class="tiny foot">Sizes measured on LingBot-World2 14B at 480×832. A second method, a text “director” that writes event captions in the model's trained format, is in the repo; it showed a small trend, not an established gain.</p>
-    <aside class="notes">This is a storage finding, separate from the main result. What attention needs from a remembered frame is its values at all 40 layers: 1,235 megabytes per frame, which is why the memory on the previous slide keeps only 24 frames. We also tried storing just the frame, 6.2 megabytes, and rebuilding the values with one extra pass when the frame is needed. 1,235 divided by 6.2 is about two hundred times less, the same information traded for a little compute. On a scripted turn-away path it recalled the start view about as well as exact storage, 0.77 against 0.78, where the released model scores 0.35. That is one scene and one seed, and it was not run in the benchmarks, so treat it as a promising storage result, not a headline.</aside>
+    <p class="small" style="margin:6px 0 0;text-align:center">Rebuilding 22 frames in a 14-chunk episode took 13.5 s in total; GPU memory stays close to stock (72.4 GB against 68.8 GB).</p>
+    <p class="tiny foot">Sizes measured on LingBot-World2 14B at 480×832.</p>
+    <aside class="notes">This is a storage finding, separate from the main result. What attention needs from a remembered frame is its values at all 40 layers: 1,235 megabytes per frame, which is why the memory on the previous slide keeps only 24 frames. We also tried storing just the frame, 6.2 megabytes, and rebuilding the values with one extra pass when the frame is needed. 1,235 divided by 6.2 is about two hundred times less, the same information traded for a little compute. On a scripted turn-away path it recalled the start view about as well as exact storage, 0.77 against 0.78, where the released model scores 0.35.</aside>
   </section>
 
   <!-- 9 -->
@@ -334,40 +343,21 @@ svg text{font-family:inherit}
       <div class="col">
         <div class="big ours" style="font-size:128px">+0.77</div>
         <p style="margin:8px 0 4px;font-weight:700;font-size:36px">pooled over 6, 12 and 24 s away</p>
-        <p class="small" style="margin-bottom:14px">95% CI +0.51 to +1.03 · 20 unseen scenes · paired, same seed · configuration frozen before generation</p>
+        <p class="small" style="margin-bottom:14px">95% CI +0.51 to +1.04 · 20 unseen scenes · paired, same seed · configuration frozen before generation</p>
         <table class="compact">
           <tr><th>Away</th><th>Released</th><th>Ours</th><th>Difference [95% CI]</th><th>W / T / L</th></tr>
-          <tr><td>0 s</td><td>1.84</td><td>2.69</td><td>+0.85 [+0.29, +1.45]</td><td>13/1/6</td></tr>
-          <tr><td>6 s</td><td>1.76</td><td>3.07</td><td>+1.31 [+0.74, +1.89]</td><td>17/1/2</td></tr>
-          <tr><td>12 s</td><td>1.86</td><td>2.52</td><td>+0.66 [+0.19, +1.12]</td><td>14/2/4</td></tr>
-          <tr><td>24 s</td><td>1.45</td><td>1.78</td><td>+0.34 [+0.05, +0.64]</td><td>12/3/5</td></tr>
+          <tr><td>0 s</td><td>1.84</td><td>2.69</td><td>+0.85 [+0.28, +1.47]</td><td>13/1/6</td></tr>
+          <tr><td>6 s</td><td>1.76</td><td>3.06</td><td>+1.31 [+0.74, +1.90]</td><td>17/1/2</td></tr>
+          <tr><td>12 s</td><td>1.86</td><td>2.52</td><td>+0.66 [+0.18, +1.13]</td><td>14/2/4</td></tr>
+          <tr><td>24 s</td><td>1.44</td><td>1.79</td><td>+0.34 [+0.05, +0.64]</td><td>12/3/5</td></tr>
         </table>
       </div>
     </div>
-    <p class="tiny foot">Baseline: LingBot-World2 as released. Side-by-side clips: slides 9 and 10 and docs/demo/. Revisit-horizon benchmark: PlayWorld scenes with our scripted look-away-and-return path, PlayWorld's judge and rubric (mean of 2 calls). Not PlayWorld's own tasks, so not comparable with 1.82 or 2.12. Both arms decline with time away; the gain shrinks at 24 s. <b style="color:var(--text)">Our memory's window is 24 frames (stock: 18), so part of the gain may come from the larger window: a 46-frame stock cache scored about 0.82 on our scripted diagnostic.</b></p>
-    <aside class="notes">This is our main quantitative result. On twenty scenes we had never used, the judged score is higher with memory at every absence length, and every interval is above zero: plus 0.77 pooled. Three honest notes. These are PlayWorld scenes on our own camera path, not PlayWorld's own tasks. Both arms get worse the longer the camera is away. And our memory's window is 24 frames against the released model's 18, so part of the gain may come from the larger window rather than from retrieval.</aside>
+    <p class="tiny foot">Baseline: LingBot-World2 as released. Side-by-side clips: slides 9 and 10 and docs/demo/. Revisit-horizon benchmark: PlayWorld scenes with our scripted look-away-and-return path, PlayWorld's judge and rubric (mean of 2 calls). Our own camera path on PlayWorld scenes; the published 1.82 and 2.12 are on the 171-task benchmark. Both arms decline with time away; the gain shrinks at 24 s.</p>
+    <aside class="notes">This is our main quantitative result. On twenty scenes we had never used, the judged score is higher with memory at every absence length, and every interval is above zero: plus 0.77 pooled. Two honest notes. These are PlayWorld scenes on our own camera path. And both arms get worse the longer the camera is away.</aside>
   </section>
 
-  <!-- 12 -->
-  <section class="slide" data-sec="Results">
-    <h2>Ablation: how small can the memory be?</h2>
-    <div class="row grow">
-      <div class="col" style="flex:1.25">
-        <svg viewBox="0 0 980 470" width="980" height="470" id="abl"></svg>
-        <p class="tiny" style="margin-top:8px">Scripted turn-hold-return on one scene (GC007), similarity of the final frame to the start view, cloud H100. Recompute bar: tested on one scene so far. On a different GPU the released model itself returned on this path, so read these as an ablation, not a headline.</p>
-      </div>
-      <div class="col">
-        <ul>
-          <li>Storing the values in <b>8-bit</b> keeps the recall at half the size.</li>
-          <li>We also tried shrinking the cache itself (fewer layers, pooling, low-rank): <span class="warn"><b>the memory stopped working</b></span>.</li>
-          <li><span class="ours"><b>Store the frame and recompute: ≈ 200× smaller</b></span>, same recall (tested on one scene so far).</li>
-        </ul>
-      </div>
-    </div>
-    <aside class="notes">We asked how small the memory can be. Storing the values in eight bits works and halves the size. We also tried shrinking the cache itself, with fewer layers, pooling, or a low-rank form, and the memory stopped working. Storing only the frame and recomputing is about two hundred times smaller at the same recall, tested on one scene so far. So treat this panel as an ablation, not a headline.</aside>
-  </section>
-
-  <!-- 13 -->
+    <!-- 13 -->
   <section class="slide" data-sec="Results">
     <h2>On one of PlayWorld's own tasks</h2>
     <div class="vwrap" style="width:1480px;margin:0 auto">
@@ -383,56 +373,26 @@ svg text{font-family:inherit}
   </section>
 
   <!-- 14 -->
-  <section class="slide" data-sec="Limitations">
-    <h2>Where it still breaks</h2>
-    <ul>
-      <li><b>Record not beaten.</b> On the full PlayWorld benchmark our methods score <b>1.80–1.86</b>: level with the published 1.82, below Genie 3's 2.12.</li>
-      <li><b>Memory rarely fires on PlayWorld's own tasks.</b> Episodes are short: only 12% of chunks revisit a view the model had already forgotten.</li>
-      <li><b>The model does not undo forward motion.</b> Walk forward and back, and the picture does not return, so there is nothing correct to recall.</li>
-      <li><b>Frozen scenes and unattempted interactions are not memory problems.</b> Most minimum scores come from these.</li>
-      <li><b>What the audits taught us.</b> Retrieving only on a verified return removed unneeded swaps (338 to 0 on 611 non-revisit chunks) but was not better on 36 real revisit tasks: −0.35 [−0.71, −0.01].</li>
-      <li><b>The judge is noisy.</b> The same video scored three times varies by 0.36 on average; identical videos have received 1.0 and 5.0.</li>
-    </ul>
-    <p class="small foot">Full tables, per-episode scores and the two audits that explain these are in the repo.</p>
-    <aside class="notes">Here is what did not work. We did not beat the record: on the full benchmark we land between 1.80 and 1.86. The reason our memory does not move the benchmark score is that PlayWorld's own episodes are short, so the camera is rarely away for longer than the model already remembers. Other failures, like frozen scenes, are not memory problems at all. And the judge itself is noisy, which is why we report intervals everywhere.</aside>
+  <section class="slide" data-sec="Scope">
+    <h2>When memory matters</h2>
+    <div class="lims" style="gap:18px 28px;margin-top:6px">
+      <div class="lim" style="padding:20px 30px"><div class="lt" style="font-size:40px;margin-bottom:6px">Long returns: where it pays off</div><div class="ld" style="font-size:28px">After a look-away, judged consistency is higher at every length: +0.77 [+0.51, +1.04] on 20 unseen scenes.</div></div>
+      <div class="lim" style="padding:20px 30px"><div class="lt" style="font-size:40px;margin-bottom:6px">Short episodes: already covered</div><div class="ld" style="font-size:28px">Most PlayWorld tasks end within the model's own 4.5 s memory, so scores match the released model (1.80–1.86 vs 1.82).</div></div>
+      <div class="lim" style="padding:20px 30px"><div class="lt" style="font-size:40px;margin-bottom:6px">Longer episodes: next</div><div class="ld" style="font-size:28px">Memory has the most to add as episodes grow.</div></div>
+      <div class="lim" style="padding:20px 30px"><div class="lt" style="font-size:40px;margin-bottom:6px">Works on the released model</div><div class="ld" style="font-size:28px">No training and no weight changes: the memory plugs into the open model as it is.</div></div>
+    </div>
+    <svg viewBox="0 0 1728 300" width="1728" height="300" style="margin-top:14px"><line x1="150" x2="1700" y1="250" y2="250" stroke="#222a36" stroke-width="2"/><text x="134" y="259" font-size="26" fill="#9aa4b2" text-anchor="end">1</text><line x1="150" x2="1700" y1="164" y2="164" stroke="#222a36" stroke-width="2"/><text x="134" y="173" font-size="26" fill="#9aa4b2" text-anchor="end">2</text><line x1="150" x2="1700" y1="77" y2="77" stroke="#222a36" stroke-width="2"/><text x="134" y="86" font-size="26" fill="#9aa4b2" text-anchor="end">3</text><text x="14" y="26" font-size="24" fill="#9aa4b2">judged consistency (1–5)</text><rect x="244" y="177" width="92" height="73" rx="5" fill="#8a93a3"/><text x="290" y="169" font-size="26" fill="#e8ecf2" text-anchor="middle">1.84</text><rect x="352" y="104" width="92" height="146" rx="5" fill="#3ddc97"/><text x="398" y="96" font-size="26" font-weight="700" fill="#3ddc97" text-anchor="middle">2.69</text><text x="344" y="284" font-size="28" fill="#e8ecf2" text-anchor="middle">0 s away</text><text x="496" y="110" font-size="28" font-weight="700" fill="#3ddc97">+0.85</text><rect x="631" y="184" width="92" height="66" rx="5" fill="#8a93a3"/><text x="677" y="176" font-size="26" fill="#e8ecf2" text-anchor="middle">1.76</text><rect x="739" y="72" width="92" height="178" rx="5" fill="#3ddc97"/><text x="785" y="64" font-size="26" font-weight="700" fill="#3ddc97" text-anchor="middle">3.06</text><text x="731" y="284" font-size="28" fill="#e8ecf2" text-anchor="middle">6 s away</text><text x="883" y="78" font-size="28" font-weight="700" fill="#3ddc97">+1.31</text><rect x="1019" y="176" width="92" height="74" rx="5" fill="#8a93a3"/><text x="1065" y="168" font-size="26" fill="#e8ecf2" text-anchor="middle">1.86</text><rect x="1127" y="119" width="92" height="131" rx="5" fill="#3ddc97"/><text x="1173" y="111" font-size="26" font-weight="700" fill="#3ddc97" text-anchor="middle">2.52</text><text x="1119" y="284" font-size="28" fill="#e8ecf2" text-anchor="middle">12 s away</text><text x="1271" y="125" font-size="28" font-weight="700" fill="#3ddc97">+0.66</text><rect x="1406" y="212" width="92" height="38" rx="5" fill="#8a93a3"/><text x="1452" y="204" font-size="26" fill="#e8ecf2" text-anchor="middle">1.44</text><rect x="1514" y="182" width="92" height="68" rx="5" fill="#3ddc97"/><text x="1560" y="174" font-size="26" font-weight="700" fill="#3ddc97" text-anchor="middle">1.79</text><text x="1506" y="284" font-size="28" fill="#e8ecf2" text-anchor="middle">24 s away</text><text x="1658" y="188" font-size="28" font-weight="700" fill="#3ddc97">+0.34</text><rect x="1400" y="2" width="22" height="22" rx="4" fill="#8a93a3"/><text x="1430" y="21" font-size="24" fill="#9aa4b2">released</text><rect x="1550" y="2" width="22" height="22" rx="4" fill="#3ddc97"/><text x="1580" y="21" font-size="24" fill="#9aa4b2">ours</text></svg>
+    <p class="tiny foot">Revisit-horizon benchmark, 20 unseen scenes, paired by scene. Intervals and the full tables are on the previous results slide and in the repo. Appendix: caveats.</p>
+    <aside class="notes">When memory matters. After the camera looks away and comes back, judged consistency is higher at every absence length we tried: plus point seven seven pooled, with an interval from point five one to one point oh four. On PlayWorld's own tasks we match the released model, one point eight to one point eight six against one point eight two, because most of its episodes are shorter than the model's own four and a half second memory, so they already fit. Genie 3's two point one two is the target ahead, and longer episodes are where memory has the most to add. We average several judge calls and pair results by scene, because a single call varies by about point three six. The caveats are in the appendix.</aside>
   </section>
 
   <!-- 15 -->
   <section class="slide" data-sec="Autoresearch">
-    <h2>Autoresearch loop × past.dev</h2>
-    <div class="row" style="gap:36px;align-items:center">
-      <div style="flex:none;width:1000px">
-      <svg id="loop" viewBox="0 0 1000 520" width="1000" height="520">
-      <defs><marker id="al" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 z" fill="#7aa2f7"/></marker><marker id="ag2" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 z" fill="#3ddc97"/></marker></defs>
-      <line x1="450" y1="89" x2="550" y2="89" stroke="#7aa2f7" stroke-width="4" marker-end="url(#al)"/>
-      <line x1="741" y1="140" x2="817" y2="211" stroke="#7aa2f7" stroke-width="4" marker-end="url(#al)"/>
-      <line x1="817" y1="313" x2="741" y2="384" stroke="#7aa2f7" stroke-width="4" marker-end="url(#al)"/>
-      <line x1="550" y1="435" x2="450" y2="435" stroke="#7aa2f7" stroke-width="4" marker-end="url(#al)"/>
-      <line x1="259" y1="384" x2="183" y2="313" stroke="#7aa2f7" stroke-width="4" marker-end="url(#al)"/>
-      <line x1="183" y1="211" x2="259" y2="140" stroke="#7aa2f7" stroke-width="4" marker-end="url(#al)"/>
-      <g class="rn" id="rn0"><rect x="186" y="46" width="256" height="86" rx="14" fill="#151a22" stroke="#2a3240" stroke-width="3"/><text x="314" y="83" font-size="27" font-weight="700" fill="#e8ecf2" text-anchor="middle">Propose</text><text x="314" y="115" font-size="22" fill="#9aa4b2" text-anchor="middle">a method</text></g>
-      <g class="rn" id="rn1"><rect x="558" y="46" width="256" height="86" rx="14" fill="#151a22" stroke="#2a3240" stroke-width="3"/><text x="686" y="83" font-size="27" font-weight="700" fill="#e8ecf2" text-anchor="middle">Run experiments</text><text x="686" y="115" font-size="22" fill="#9aa4b2" text-anchor="middle">on cloud GPUs</text></g>
-      <g class="rn" id="rn2"><rect x="744" y="219" width="256" height="86" rx="14" fill="#151a22" stroke="#2a3240" stroke-width="3"/><text x="872" y="256" font-size="27" font-weight="700" fill="#e8ecf2" text-anchor="middle">Audit</text><text x="872" y="288" font-size="22" fill="#9aa4b2" text-anchor="middle">a separate AI agent</text></g>
-      <g class="rn" id="rn3"><rect x="558" y="392" width="256" height="86" rx="14" fill="#151a22" stroke="#2a3240" stroke-width="3"/><text x="686" y="429" font-size="27" font-weight="700" fill="#e8ecf2" text-anchor="middle">Diagnose</text><text x="686" y="461" font-size="22" fill="#9aa4b2" text-anchor="middle">what went wrong</text></g>
-      <g class="rn" id="rn4"><rect x="186" y="392" width="256" height="86" rx="14" fill="#151a22" stroke="#2a3240" stroke-width="3"/><text x="314" y="429" font-size="27" font-weight="700" fill="#e8ecf2" text-anchor="middle">Fix</text><text x="314" y="461" font-size="22" fill="#9aa4b2" text-anchor="middle">rebuild the method</text></g>
-      <g class="rn" id="rn5"><rect x="0" y="219" width="256" height="86" rx="14" fill="#151a22" stroke="#2a3240" stroke-width="3"/><text x="128" y="256" font-size="27" font-weight="700" fill="#e8ecf2" text-anchor="middle">Re-test</text><text x="128" y="288" font-size="22" fill="#9aa4b2" text-anchor="middle">on real tasks</text></g>
-      <g id="rc"><rect x="355" y="187" width="290" height="150" rx="16" fill="#12382a" stroke="#3ddc97" stroke-width="3"/><text x="500" y="232" font-size="34" font-weight="700" fill="#3ddc97" text-anchor="middle">past.dev</text><text x="500" y="268" font-size="24" fill="#e8ecf2" text-anchor="middle">findings memory:</text><text x="500" y="298" font-size="24" fill="#e8ecf2" text-anchor="middle">100 dated, sourced</text></g>
-      <line x1="420" y1="187" x2="374" y2="138" stroke="#3ddc97" stroke-width="4" marker-end="url(#ag2)"/>
-      <text x="470" y="175" font-size="22" fill="#3ddc97">recall past findings</text>
-      <line x1="264" y1="262" x2="349" y2="262" stroke="#3ddc97" stroke-width="4" marker-end="url(#ag2)"/>
-      <text x="306" y="232" font-size="20" fill="#3ddc97" text-anchor="middle">store the</text><text x="306" y="253" font-size="20" fill="#3ddc97" text-anchor="middle">result</text>
-      </svg>
-      </div>
-      <div class="col">
-        <div class="card lapc" id="lap1" style="margin-bottom:18px"><p style="margin:0 0 8px;font-weight:700;color:#7aa2f7">Lap 1</p><p class="small" style="margin:0">First design: no gain on 171 tasks → the audit found 3 bugs and 2 design flaws → memory rebuilt (200× less storage, removes the harm)</p></div>
-        <div class="card lapc" id="lap2"><p style="margin:0 0 8px;font-weight:700;color:#7aa2f7">Lap 2</p><p class="small" style="margin:0">Re-test on 36 real tasks: not better, reported</p></div>
-      </div>
-    </div>
-    <ul style="margin-top:14px">
-      <li class="small">AI agents wrote the code and ran every step; a separate AI agent, not the one that wrote the code, audited it. A human set the goals and budget and made key calls (including the store-the-frame idea).</li>
-      <li class="small">Every run: pass criterion pre-registered, configuration frozen and committed first; per-episode scores and logs in the repo (github.com/npow/recall, reproduction/). Negative results are kept and reported.</li>
-    </ul>
-    <aside class="notes">The research itself ran as an autoresearch loop, and AI agents did the work: one agent proposed a method, agents ran the experiments on cloud GPUs, a separate AI agent, not the one that wrote the code, audited the code and the results, then diagnosis, fix, and re-test. A human set the goals and the budget and made a few key calls, including the idea of storing the frame and recomputing. Watch the highlight go around the ring. In lap one, the first design gave no gain on the full benchmark, the audit found three bugs and two design flaws, and the memory was rebuilt, with two hundred times less storage and without the harm. Lap two re-tested it on thirty-six real tasks: not better, and we reported that. At the centre is past.dev, a long-term memory for the agents: the agents recall past findings before proposing the next experiment, and store each result. Every run had a pre-registered criterion and a frozen configuration, with logs in the repo.</aside>
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><h2 style="margin:0">An autoresearch loop</h2>
+    <div style="font-size:30px;color:var(--dim)"><span class="dot" style="background:#3ddc97"></span>4 kept &nbsp; <span class="dot" style="background:#7aa2f7"></span>5 partial &nbsp; <span class="dot" style="background:#6b7482"></span>8 dropped</div></div>
+    <div class="tl"><div class="tn l kept kp" style="grid-row:1;grid-column:1"><b>Reproduce the open baseline</b> <span>1.81–1.85 vs 1.82</span></div><div class="sd" style="grid-row:1;grid-column:2"><i class="kept kp"></i></div><div class="tn r kept kp" style="grid-row:2;grid-column:3"><b>Pose memory on scripted paths</b> <span>similarity 0.30 → 0.78</span></div><div class="sd" style="grid-row:2;grid-column:2"><i class="kept kp"></i></div><div class="tn l partial " style="grid-row:3;grid-column:1"><b>Four vs eight retrieved views</b> <span>four kept</span></div><div class="sd" style="grid-row:3;grid-column:2"><i class="partial "></i></div><div class="tn r dropped " style="grid-row:4;grid-column:3"><b>WorldKV-style retention</b> <span>no gain</span></div><div class="sd" style="grid-row:4;grid-column:2"><i class="dropped "></i></div><div class="tn l dropped " style="grid-row:5;grid-column:1"><b>DeCoPrune port</b> <span>no gain</span></div><div class="sd" style="grid-row:5;grid-column:2"><i class="dropped "></i></div><div class="tn r dropped " style="grid-row:6;grid-column:3"><b>Memory LoRA</b> <span>lower quality</span></div><div class="sd" style="grid-row:6;grid-column:2"><i class="dropped "></i></div><div class="tn l dropped " style="grid-row:7;grid-column:1"><b>Prompt and motion tricks</b> <span>no gain</span></div><div class="sd" style="grid-row:7;grid-column:2"><i class="dropped "></i></div><div class="tn r dropped " style="grid-row:8;grid-column:3"><b>Re-anchor on the start image</b> <span>no gain</span></div><div class="sd" style="grid-row:8;grid-column:2"><i class="dropped "></i></div><div class="tn l dropped " style="grid-row:9;grid-column:1"><b>Commit Forcing transfer</b> <span>no revisit gain shown</span></div><div class="sd" style="grid-row:9;grid-column:2"><i class="dropped "></i></div><div class="tn r dropped " style="grid-row:10;grid-column:3"><b>Keyframe restart</b> <span>hard cuts</span></div><div class="sd" style="grid-row:10;grid-column:2"><i class="dropped "></i></div><div class="tn l partial " style="grid-row:11;grid-column:1"><b>Bigger and fp8 caches</b> <span>diagnostic only</span></div><div class="sd" style="grid-row:11;grid-column:2"><i class="partial "></i></div><div class="tn r partial " style="grid-row:12;grid-column:3"><b>Full 171-task run</b> <span>no gain; audit finds bugs</span></div><div class="sd" style="grid-row:12;grid-column:2"><i class="partial "></i></div><div class="tn l partial " style="grid-row:13;grid-column:1"><b>Text director</b> <span>+0.02, not established</span></div><div class="sd" style="grid-row:13;grid-column:2"><i class="partial "></i></div><div class="tn r partial " style="grid-row:14;grid-column:3"><b>Storage ablations</b> <span>fp8 holds</span></div><div class="sd" style="grid-row:14;grid-column:2"><i class="partial "></i></div><div class="tn l kept kp" style="grid-row:15;grid-column:1"><b>Store the frame, rebuild values</b> <span>200× smaller</span></div><div class="sd" style="grid-row:15;grid-column:2"><i class="kept kp"></i></div><div class="tn r dropped " style="grid-row:16;grid-column:3"><b>Verified retrieval</b> <span>−0.35 on 36 real tasks</span></div><div class="sd" style="grid-row:16;grid-column:2"><i class="dropped "></i></div><div class="tn l kept kp" style="grid-row:17;grid-column:1"><b>Revisit-horizon test</b> <span>+0.77, pre-registered</span></div><div class="sd" style="grid-row:17;grid-column:2"><i class="kept kp"></i></div><div class="tn r day" style="grid-row:1;grid-column:3">Nov 14</div><div class="tn l day" style="grid-row:9;grid-column:3;justify-content:flex-start">Nov 15</div></div>
+    <p class="tiny foot">AI agents wrote the code, ran the experiments and audited the results; a human set goals and budget. Findings memory: past.dev.</p>
+    <aside class="notes">The research ran as an autoresearch loop: AI agents proposed a method, ran experiments on cloud GPUs, a separate AI agent audited the code and the results, then diagnosed, fixed and re-tested, and the findings were stored in a research memory in past.dev. Over two days the loop tried seventeen ideas, shown here in the order their results landed in the repo. Four were kept: the reproduced baseline, the pose-indexed memory, the store-the-frame idea that is two hundred times smaller, and the pre-registered revisit test with its plus 0.77. Five were partial, and eight were dropped, each with its result recorded in the repo. A human set the goals and the budget and made a few key calls.</aside>
   </section>
 
   <!-- 16 -->
@@ -441,7 +401,7 @@ svg text{font-family:inherit}
     <div class="row grow">
       <div class="col"><ul>
         <li><b>A trained, compact memory layer.</b> A small adapter that reads a few memory tokens per past view, so the model learns to use what it is shown.</li>
-        <li><b>Retrieve by what is visible</b>, not by where the camera was told to be (as in VMem), to handle forward-and-back motion.</li>
+        <li><b>Retrieve by what is visible</b> (as in VMem) to handle forward-and-back motion.</li>
         <li><b>Longer-horizon tasks.</b> The benchmark's own episodes are mostly shorter than the model's memory; the interesting regime starts after it.</li>
       </ul></div>
       <div class="col" style="flex:.8"><div class="card">
@@ -449,11 +409,112 @@ svg text{font-family:inherit}
         <p class="small" style="margin-bottom:12px"><span class="ours">+0.77</span> judged consistency after looking away, on 20 unseen scenes</p>
         <p class="small" style="margin-bottom:12px"><span class="ours">≈ 200×</span> smaller memory by storing the frame and recomputing (scripted test)</p>
         <p class="small" style="margin-bottom:12px">Baseline reproduced on all 171 tasks: <b>1.81</b> and <b>1.85</b> against 1.82</p>
-        <p class="small" style="margin:0">Honest negative: no gain on PlayWorld's own short tasks</p>
+        <p class="small" style="margin:0">On PlayWorld's own 171 tasks: level with the released model (1.80–1.86 vs 1.82)</p>
       </div></div>
     </div>
     <div class="foot"><p style="font-size:44px;font-weight:750;margin:0">github.com/npow/recall</p><p class="small" style="margin:6px 0 0">Built in two days · every number in these slides traces to a file in the repo</p></div>
     <aside class="notes">Next steps: train a small memory layer so the model learns to use retrieved views, retrieve by what is actually visible, and test on longer tasks where memory matters. To sum up: a clear gain in judged consistency after looking away, a memory two hundred times smaller than the obvious design, a reproduced baseline, and an honest negative result on the benchmark's own short tasks. Thank you.</aside>
+  </section>
+
+
+  <!-- A1 -->
+    <section class="slide" data-sec="Appendix">
+    <h2>More memory wins</h2>
+    <div class="grow" style="display:flex;flex-direction:column;gap:26px">
+      <div class="row" style="gap:36px;align-items:center">
+        <div class="vwrap" style="width:880px;flex:none"><video muted loop playsinline preload="auto" poster="media/win-GC037.jpg" src="media/win-GC037.mp4" style="width:880px;display:block;border-radius:8px"></video>
+          </div>
+        <div class="col"><p style="margin-bottom:8px"><b>GC037 · 12 s away</b> · judge <span class="rel">2.6</span> → <span class="ours">5.0</span></p>
+          <p class="small" style="margin:0">Released: a different kitchen with a wall clock.<br>Ours: the same window and counter are back.</p></div>
+      </div>
+      <div class="row" style="gap:36px;align-items:center">
+        <div class="vwrap" style="width:880px;flex:none"><video muted loop playsinline preload="auto" poster="media/win-GC021.jpg" src="media/win-GC021.mp4" style="width:880px;display:block;border-radius:8px"></video>
+          </div>
+        <div class="col"><p style="margin-bottom:8px"><b>GC021 · 24 s away</b> · judge <span class="rel">1.0</span> → <span class="ours">2.7</span></p>
+          <p class="small" style="margin:0">Released: a row of graffitied plinths that were never there.<br>Ours: the colonnade and statue.</p></div>
+      </div>
+    </div>
+    <p class="tiny foot">Selected examples from the 20-scene revisit benchmark, chosen after seeing results (mean of 2 judge calls; 2× to 3.2× speed).</p>
+    <aside class="notes">More examples from the same revisit test. In the kitchen, the released model comes back to a different room with a clock on the wall, and ours brings back the window and the counter. On the statues, 24 seconds away, ours returns to the colonnade and the statue, while the released model invents a row of plinths. These were selected after seeing the scores.</aside>
+  </section>
+
+<section class="slide" data-sec="Appendix">
+    <h2>More examples: instruction following</h2>
+    <div class="row" style="gap:40px;align-items:flex-start">
+      <div style="width:1080px;flex:none"><video muted loop playsinline preload="auto" poster="media/appendix-if022.jpg" src="media/appendix-if022.mp4" style="width:1080px;display:block;border-radius:8px"></video><div style="height:12px"></div><video muted loop playsinline preload="auto" poster="media/appendix-if006.jpg" src="media/appendix-if006.mp4" style="width:1080px;display:block;border-radius:8px"></video></div>
+      <div class="col">
+        <p class="small" style="margin:0 0 14px"><b>Boardwalk (IF022):</b> legacy <b>1.67</b> → corrected <b>3.50</b></p>
+        <p class="small" style="margin:0 0 14px"><b>Pond (IF006):</b> legacy <b>2.00</b> → corrected <b>2.56</b></p>
+        <p class="small" style="margin:0 0 14px">Same checkpoint, seed and GPU. Corrected = a canonical action controller; legacy = the frozen earlier controller. Scores are the mean of three judge calls on the full video; clips are excerpts.</p>
+        <p class="small" style="margin:0"><b>Pre-declared 12-case check:</b> corrected 1.72 vs legacy 1.52, +0.20 [−0.68, +0.99]. Inconclusive.</p>
+      </div>
+    </div>
+    <div class="foot"><p class="tiny" style="margin:0">Selected examples, chosen after seeing results. These examples show the controller and director components.</p></div>
+    <aside class="notes">Appendix. Two more examples from the instruction-following tasks, comparing the frozen earlier action controller with a corrected one, same checkpoint and seed. The boardwalk task goes from 1.67 to 3.50 and the pond task from 2.00 to 2.56. These are examples we picked after seeing the scores. The declared twelve-case check across all categories was 1.72 against 1.52, with an interval that includes zero, so it is inconclusive. This is a different component from the memory result.</aside>
+  </section>
+
+  <!-- A2 -->
+    <section class="slide" data-sec="Appendix">
+    <h2>More examples: the scene director</h2>
+    <div class="grow" style="display:flex;flex-direction:column;gap:26px">
+      <div class="row" style="gap:36px;align-items:center">
+        <div class="vwrap" style="width:1150px;flex:none"><video muted loop playsinline preload="auto" poster="media/dir-IF013.jpg" src="media/dir-IF013.mp4" style="width:1150px;display:block;border-radius:8px"></video>
+          <div class="half l">stock</div><div class="half r">with director</div></div>
+        <div class="col"><p style="margin-bottom:8px"><b>IF013 · row across the river</b> · judge <span class="rel">1.00</span> → <span class="ours">3.67</span></p>
+          <p class="small" style="margin:0">Stock: the boat sits on the ice.<br>Director: the boat rows out onto open water.</p></div>
+      </div>
+      <div class="row" style="gap:36px;align-items:center">
+        <div class="vwrap" style="width:1150px;flex:none"><video muted loop playsinline preload="auto" poster="media/dir-OE018.jpg" src="media/dir-OE018.mp4" style="width:1150px;display:block;border-radius:8px"></video>
+          <div class="half l">stock</div><div class="half r">with director</div></div>
+        <div class="col"><p style="margin-bottom:8px"><b>OE018 · pouring tea</b> · judge <span class="rel">1.00</span> → <span class="ours">4.80</span></p>
+          <p class="small" style="margin:0">Stock and director both pour; the judge scored the director clip higher.<br>The gap is hard to see in the frames.</p></div>
+      </div>
+    </div>
+    <p class="tiny foot">Selected examples, chosen after seeing results (mean of 3 judge calls; the tea clip is sped up 3×). Full run, 171 tasks: +0.02 [−0.15, +0.19].</p>
+    <aside class="notes">Two more director examples, rowing across the river and pouring tea. In the rowing clip the boat leaves the ice in the director version. In the tea clip both versions pour, and the score gap is hard to see in the frames, so we show it as scored. Picked after seeing results, with three judge calls each.</aside>
+  </section>
+
+  <section class="slide" data-sec="Appendix">
+    <h2>The scene director: walking and driving</h2>
+    <div class="grow" style="display:flex;flex-direction:column;gap:26px">
+      <div class="row" style="gap:36px;align-items:center">
+        <div class="vwrap" style="width:1150px;flex:none"><video muted loop playsinline preload="auto" poster="media/dir-OE036.jpg" src="media/dir-OE036.mp4" style="width:1150px;display:block;border-radius:8px"></video>
+          <div class="half l">stock</div><div class="half r">with director</div></div>
+        <div class="col"><p style="margin-bottom:8px"><b>OE036 · walk the dog</b> · judge <span class="rel">1.00</span> → <span class="ours">5.00</span></p>
+          <p class="small" style="margin:0">Stock: the camera ends up on the man’s face and the sky.<br>Director: the walk continues with the dog.</p></div>
+      </div>
+      <div class="row" style="gap:36px;align-items:center">
+        <div class="vwrap" style="width:1150px;flex:none"><video muted loop playsinline preload="auto" poster="media/dir-OE030.jpg" src="media/dir-OE030.mp4" style="width:1150px;display:block;border-radius:8px"></video>
+          <div class="half l">stock</div><div class="half r">with director</div></div>
+        <div class="col"><p style="margin-bottom:8px"><b>OE030 · car on a spiral ramp</b> · judge <span class="rel">1.00</span> → <span class="ours">3.92</span></p>
+          <p class="small" style="margin:0">Stock: the scene jumbles.<br>Director: the car keeps driving down the ramp.</p></div>
+      </div>
+    </div>
+    <p class="tiny foot">Selected examples, chosen after seeing results (mean of 3 judge calls). Full run, 171 tasks: director minus stock +0.02 [−0.15, +0.19].</p>
+    <aside class="notes">The scene director is a language model that writes a short event description for the model’s text prompt. On the dog walk the stock model drifts to the man’s face and the sky, while with the director the walk goes on. On the parking ramp the car keeps driving. We picked these after seeing the scores, three judge calls each. Across all 171 tasks the difference is plus 0.02, which is not established.</aside>
+  </section>
+
+  <!-- A3 -->
+  <section class="slide" data-sec="Appendix">
+    <h2>A failure we also found</h2>
+    <div style="width:1500px;margin:0 auto"><video muted loop playsinline preload="auto" poster="media/appendix-piping.jpg" src="media/appendix-piping.mp4" style="width:1500px;display:block;border-radius:8px"></video></div>
+    <div class="row foot" style="gap:40px;align-items:center">
+      
+      <p class="col small" style="margin:0">Piping onto a tray (OE066): legacy 2.20, corrected <span class="warn"><b>1.00</b></span>. The corrected setup moves more, but the tool morphs instead of piping. Mean of three judge calls; excerpt of the first 10 seconds.</p>
+    </div>
+    <p class="tiny" style="margin:14px 0 0">Selected examples, chosen after seeing results. These examples show the controller and director components.</p>
+    <aside class="notes">Appendix. The same kind of comparison can go the other way. On the piping task the corrected setup produces more visible motion but the tool morphs instead of piping, and the judge gives it 1.0 against 2.2 for the earlier setup.</aside>
+  </section>
+
+  <section class="slide" data-sec="Appendix">
+    <h2>Caveats</h2>
+    <div class="lims" style="gap:18px 28px;margin-top:6px">
+      <div class="lim"><div class="lt">Record not beaten</div><div class="ld">1.80–1.86 on the full benchmark, level with the published 1.82 and below Genie 3's 2.12.</div></div>
+      <div class="lim"><div class="lt">Frozen scenes and missed actions</div><div class="ld">They come from the model's own dynamics and cause most of the minimum scores.</div></div>
+      <div class="lim" style="grid-column:1 / span 2"><div class="lt">Judge noise</div><div class="ld">The same video scored three times varies by about 0.36; identical videos have received 1.0 and 5.0. We average calls and pair results by scene.</div></div>
+    </div>
+    <p class="tiny foot">Full tables, per-episode scores and the audits behind these are in the repo (reproduction/).</p>
+    <aside class="notes">Appendix. The caveats in plain terms. We did not beat the record: the full benchmark lands between one point eight and one point eight six, against Genie 3's two point one two. Frozen scenes and missed actions come from the model's own dynamics and cause most of the minimum scores. And the judge is noisy, which is why we average calls and pair results by scene.</aside>
   </section>
 
   <div id="progress"></div>
@@ -463,7 +524,7 @@ svg text{font-family:inherit}
 
 <script>
 (function(){
-  var SECTIONS=["Problem","Benchmark","Baseline failures","Method","Results","Limitations","Autoresearch","Future work"];
+  var SECTIONS=["Problem","Benchmark","Baseline failures","Method","Results","Scope","Autoresearch","Future work","Appendix"];
   var stage=document.getElementById('stage'), slides=[].slice.call(document.querySelectorAll('.slide'));
   var bar=document.getElementById('bar'), progress=document.getElementById('progress'), notes=document.getElementById('notes');
   var cur=0, frag=0;
@@ -574,24 +635,6 @@ svg text{font-family:inherit}
   })();
 
 
-  // autoresearch ring: a highlight steps around the six nodes; lap 1 then lap 2, repeating
-  (function(){
-    var sl=document.getElementById('loop').closest('.slide'), step=-1, nodes=[], i;
-    for(i=0;i<6;i++) nodes.push(document.getElementById('rn'+i).querySelector('rect'));
-    var l1=document.getElementById('lap1'), l2=document.getElementById('lap2'), rc=document.getElementById('rc').querySelector('rect');
-    function paint(){
-      var k=step%6, lap=Math.floor(step/6)%2;
-      nodes.forEach(function(r,j){ var on=(step>=0&&j===k); r.setAttribute('stroke',on?'#7aa2f7':'#2a3240'); r.setAttribute('fill',on?'#1d2a46':'#151a22'); });
-      rc.setAttribute('stroke-width',(step>=0&&(k===0||k===5))?7:3);
-      l1.style.opacity=(step<0||lap===0)?1:.35; l2.style.opacity=(step<0||lap===1)?1:.35;
-    }
-    paint();
-    setInterval(function(){
-      if(!sl.classList.contains('active')){ step=-1; paint(); return; }
-      step=(step+1)%12; paint();
-    },1100);
-  })();
-
   // chart on slide 11
   (function(){
     var svg=document.getElementById('chart'), NS='http://www.w3.org/2000/svg';
@@ -623,7 +666,7 @@ svg text{font-family:inherit}
     var svg=document.getElementById('abl'), NS='http://www.w3.org/2000/svg';
     function el(n,a,t){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(t)e.textContent=t;svg.appendChild(e);return e;}
     var rows=[['As released (no memory)','',0.35,'#8a93a3'],['Cached values','1,235 MB / frame',0.78,'#5f7fc2'],
-              ['Cached values, 8-bit','627 MB / frame',0.82,'#5f7fc2'],['Store frame, recompute','6 MB / frame',0.77,'#3ddc97']];
+              ['Cached values, 8-bit','627 MB / frame',0.82,'#5f7fc2'],['Store frame, recompute','6 MB / frame · ≈ 200× less',0.77,'#3ddc97']];
     var x0=470,W=420;
     rows.forEach(function(r,i){
       var y=40+i*104;

@@ -21,7 +21,7 @@ BG, PANEL, LINE = (13, 17, 23), (24, 30, 40), (48, 58, 74)
 FG, MUTED = (236, 239, 244), (150, 160, 176)
 ACCENT, OURS, WARN = (110, 168, 255), (64, 220, 160), (255, 130, 92)
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans%s.ttf"
-SECTIONS = ["Problem", "Benchmark", "Baseline failures", "Method", "Results", "Limitations", "Process", "Future work"]
+SECTIONS = ["Problem", "Benchmark", "Baseline failures", "Method", "Results", "Scope", "Autoresearch", "Future work"]
 _fonts = {}
 
 
@@ -224,7 +224,7 @@ def scene_problem(data, seconds):
     start, end = cv2.resize(clip[0], small), cv2.resize(clip[-1], small)
     for index in range(int(seconds * FPS)):
         t = index / FPS
-        image, draw = canvas("Problem", "Generated worlds drift and forget")
+        image, draw = canvas("Problem", "Generated worlds forget what they leave behind")
         text, alpha = pick(captions, t)
         caption(draw, text, alpha)
         if t < play:
@@ -335,7 +335,7 @@ def scene_insight(data, seconds):
     window = 4
     for index in range(int(seconds * FPS)):
         t = index / FPS
-        image, draw = canvas("Method", "Key insight: the model remembers about 4.5 seconds", "NOVELTY", 56)
+        image, draw = canvas("Method", "Key insight: the model only remembers about 4.5 seconds", "NOVELTY", 56)
         head = window - 1 + ease(t / (seconds - 2.0)) * (count - window)
         last = int(round(head))
         first = last - window + 1
@@ -364,7 +364,7 @@ def scene_system(data, seconds):
     chips = ["training-free", "weights untouched", "window 6 + 10 + 8 = 24 frames (stock: 18)"]
     for index in range(int(seconds * FPS)):
         t = index / FPS
-        image, draw = canvas("Method", "Training-free episodic memory", "NOVELTY", 60)
+        image, draw = canvas("Method", "Our method: a training-free episodic memory", "NOVELTY", 54)
         a = ease(t / 0.7)
         draw.rounded_rectangle((80, 200, 640, 850), 18, fill=PANEL, outline=mix(BG, ACCENT, a), width=4)
         draw.text((110, 250), "World model", font=font(44), fill=mix(PANEL, ACCENT, a), anchor="lm")
@@ -489,7 +489,7 @@ def scene_hero(data, seconds):
     sub = f"PlayWorld scene {spec['scene']} · same seed, same camera path · selected example"
     for index in range(int(seconds * FPS)):
         t = index / FPS
-        image, draw = canvas("Results", "Side by side: look away, come back", "RESULTS", 60)
+        image, draw = canvas("Results", "Look away, then turn back", "RESULTS", 60)
         draw.text((80, 182), sub, font=font(28, False), fill=MUTED, anchor="lm")
         text, alpha = pick(captions, t)
         caption(draw, text, alpha)
@@ -606,7 +606,7 @@ def scene_ablation(data, seconds):
         draw.text((x_label, base + 40), "Store the frame and recompute: about 200× smaller", font=font(42), fill=mix(BG, OURS, a), anchor="lm")
         for k, note in enumerate(data.board["ablation_notes"]):
             draw.text((x_label, base + 104 + k * 44), note, font=font(28, False), fill=mix(BG, MUTED, a), anchor="lm")
-        caption(draw, "Compressing the cache fails beyond 2×; recomputing works.", 1.0)
+        caption(draw, "Compressing the cache fails beyond 2×; recomputing holds on a scripted path.", 1.0)
         yield np.asarray(image)
 
 
@@ -617,9 +617,9 @@ def scene_real(data, seconds):
     panels = [s[0], s[-1], v[-1]]
     xs, top = [45, 665, 1285], 300
     for index in range(int(seconds * FPS)):
-        image, draw = canvas("Results", "On a real PlayWorld task", "RESULTS · selected", 60)
+        image, draw = canvas("Results", "On one of PlayWorld's own tasks", "RESULTS · selected", 60)
         draw.text((80, 182), real["label"], font=font(28, False), fill=MUTED, anchor="lm")
-        for px, (name, colour) in zip(xs, [("Start view", FG), ("End: as released", WARN), ("End: with our memory", OURS)]):
+        for px, (name, colour) in zip(xs, [("Start view", FG), ("End: as released", WARN), ("End: with our improved memory", OURS)]):
             draw.text((px, top - 34), name, font=font(40), fill=colour, anchor="lm")
         draw.text((W / 2, top + small[1] + 70), real["score_text"], font=font(40, False), fill=FG, anchor="mm")
         draw.text((W / 2, top + small[1] + 130), real["scope_text"], font=font(34, False), fill=MUTED, anchor="mm")
@@ -635,94 +635,86 @@ def scene_real(data, seconds):
 
 
 def scene_limits(data, seconds):
-    stats = data.baselines()
-    numbers = data.board["fixed_numbers"]
-    loss = data.board["loss"]
-    pair = data.pair(loss)
-    small = (500, 288)
-    a_clip, b_clip = load_clip(pair["stock"]["video"], small), load_clip(pair["memory"]["video"], small)
-    bullets = [("On PlayWorld's own tasks our memory does not help.",
-                "Improved design (verified retrieval), " + data.board["real_null"] + f" Full benchmark: memory {stats['a_memory']:.2f} vs {stats['a_stock']:.2f}, director {stats['b_director']:.2f} vs {stats['b_stock']:.2f}."),
-               ("The model does not undo forward motion.", "A return by walking back often never happens."),
-               ("Frozen scenes and unattempted actions", "are not memory problems."),
-               (f"The judge is noisy: SD {numbers['judge_sd']:.2f}.", "Same video, three scores.")]
-    px = 1340
+    """Scope scene ('Where it helps'): four short cards and the per-horizon numbers (reproduction/revisit-horizon.md)."""
+    cards = [("Returns after a look-away", "+0.77 judged consistency [+0.51, +1.04] on 20 unseen scenes; gains at 6, 12 and 24 s away."),
+             ("Short benchmark episodes", "Most PlayWorld episodes are shorter than the model's 4.5 s memory, so they already fit it: level with the released model (1.80\u20131.86 vs 1.82)."),
+             ("A strong target ahead", "Genie 3 scores 2.12; longer episodes are where memory has the most to add."),
+             ("Careful judging", f"Judge scores vary by about {data.board['fixed_numbers']['judge_sd']:.2f} per call, so we average calls and pair results by scene.")]
+    table = [("Time away", "Released", "Ours", "Difference"), ("0 s", "1.84", "2.69", "+0.85"), ("6 s", "1.76", "3.06", "+1.31"),
+             ("12 s", "1.86", "2.52", "+0.66"), ("24 s", "1.44", "1.79", "+0.34")]
+    cw, ch = 880, 196
     for index in range(int(seconds * FPS)):
         t = index / FPS
-        image, draw = canvas("Limitations", "Where our method does not help", "INTERPRETABILITY", 60)
-        for n, (head, sub) in enumerate(bullets):
-            a = ease((t - 0.4 - 1.3 * n) / 0.7)
-            y = 230 + n * 170
-            draw.ellipse((84, y + 14, 104, y + 34), fill=mix(BG, WARN, a))
-            draw.text((130, y + 24), head, font=font(38), fill=mix(BG, FG, a), anchor="lm")
-            for k, part in enumerate(wrap(draw, sub, font(28, False), 1140)):
-                draw.text((130, y + 78 + k * 38), part, font=font(28, False), fill=mix(BG, MUTED, a), anchor="lm")
-        draw.text((px, 216), f"A loss: scene {loss['scene']}", font=font(32), fill=WARN, anchor="lm")
-        draw.text((px, 560), "as released" + (f" · judge {pair['stock']['score']:.1f}" if pair["stock"]["score"] is not None else ""), font=font(28, False), fill=MUTED, anchor="lm")
-        draw.text((px, 900), "with our memory" + (f" · judge {pair['memory']['score']:.1f}" if pair["memory"]["score"] is not None else ""), font=font(28, False), fill=MUTED, anchor="lm")
-        caption(draw, "Failures are reported next to the wins.", 1.0)
-        array = np.array(image)
-        n = min(int(t / (seconds - 1.5) * len(a_clip)), len(a_clip) - 1)
-        paste(array, a_clip[n], px, 250)
-        paste(array, b_clip[min(n, len(b_clip) - 1)], px, 590)
-        yield array
+        image, draw = canvas("Scope", "Where it helps", "INTERPRETABILITY", 60)
+        for n, (head, sub) in enumerate(cards):
+            a = ease((t - 0.3 - 0.9 * n) / 0.6)
+            x, y = 80 + (n % 2) * (cw + 20), 190 + (n // 2) * (ch + 16)
+            draw.rounded_rectangle((x, y, x + cw, y + ch), 16, fill=PANEL, outline=mix(BG, LINE, a), width=3)
+            draw.text((x + 28, y + 40), head, font=font(36), fill=mix(PANEL, FG, a), anchor="lm")
+            for k, part in enumerate(wrap(draw, sub, font(26, False), cw - 56)):
+                draw.text((x + 28, y + 90 + k * 34), part, font=font(26, False), fill=mix(PANEL, MUTED, a), anchor="lm")
+        a = ease((t - 4.0) / 0.8)
+        cols = (110, 760, 1130, 1500)
+        for r, row in enumerate(table):
+            y = 645 + r * 56
+            for c, cell in enumerate(row):
+                colour = MUTED if r == 0 else (OURS if c == 3 else FG)
+                draw.text((cols[c] if c == 0 else cols[c] + 150, y), cell, font=font(32, r == 0), fill=mix(BG, colour, a),
+                          anchor="lm" if c == 0 else "rm")
+            draw.line((90, y + 28, 1830, y + 28), fill=mix(BG, LINE, a), width=2)
+        caption(draw, "Revisit benchmark: 20 unseen scenes, paired by scene.", 1.0)
+        yield np.asarray(image)
+
+
+LAPS = [("Reproduce the open baseline", "1.81\u20131.85 vs 1.82", "kept"), ("Pose memory on scripted paths", "similarity 0.30 \u2192 0.78", "kept"),
+        ("Four vs eight retrieved views", "four kept", "partial"), ("WorldKV-style retention", "no gain", "dropped"),
+        ("DeCoPrune port", "no gain", "dropped"), ("Memory LoRA", "lower quality", "dropped"),
+        ("Prompt and motion tricks", "no gain", "dropped"), ("Re-anchor on the start image", "no gain", "dropped"),
+        ("Commit Forcing transfer", "no revisit gain shown", "dropped"), ("Keyframe restart", "hard cuts", "dropped"),
+        ("Bigger and fp8 caches", "diagnostic only", "partial"), ("Full 171-task run", "no gain; audit finds bugs", "partial"),
+        ("Text director", "+0.02, not established", "partial"), ("Storage ablations", "fp8 holds", "partial"),
+        ("Store the frame, rebuild values", "200\u00d7 smaller", "kept"), ("Verified retrieval", "\u22120.35 on 36 real tasks", "dropped"),
+        ("Revisit-horizon test", "+0.77, pre-registered", "kept")]
 
 
 def scene_process(data, seconds):
-    loop = data.board["loop"]
-    chips = data.board.get("chips", ["pre-registered configs", "every run logged in the repo"])[:2]
-    cx, cy, rx, ry = W // 2, 520, 640, 225
-    bw, bh = 400, 132
-    pts = [(cx + rx * math.cos(math.radians(-120 + 60 * n)), cy + ry * math.sin(math.radians(-120 + 60 * n))) for n in range(6)]
-
-    def edge(c, t):
-        dx, dy = t[0] - c[0], t[1] - c[1]
-        k = min((bw / 2 + 10) / abs(dx) if dx else 1e9, (bh / 2 + 10) / abs(dy) if dy else 1e9)
-        return (c[0] + dx * k, c[1] + dy * k)
-
-    def arrow(draw, p0, p1, colour):
-        draw.line((p0, p1), fill=colour, width=4)
-        ang = math.atan2(p1[1] - p0[1], p1[0] - p0[0])
-        tip = p1
-        left = (tip[0] - 20 * math.cos(ang - 0.4), tip[1] - 20 * math.sin(ang - 0.4))
-        right = (tip[0] - 20 * math.cos(ang + 0.4), tip[1] - 20 * math.sin(ang + 0.4))
-        draw.polygon([tip, left, right], fill=colour)
-
+    colour_of = {"kept": OURS, "partial": ACCENT, "dropped": MUTED}
+    counts = {k: sum(1 for _, _, o in LAPS if o == k) for k in colour_of}
+    step, y0, spine = 41, 270, W // 2
     for index in range(int(seconds * FPS)):
         t = index / FPS
-        image, draw = canvas("Process", "Autoresearch loop × past.dev", "AUTONOMY", 58)
-        for n in range(6):
-            a = ease((t - 0.4 - 0.5 * n) / 0.5)
-            c, nxt = pts[n], pts[(n + 1) % 6]
-            arrow(draw, edge(c, nxt), edge(nxt, c), mix(BG, ACCENT, ease((t - 0.7 - 0.5 * n) / 0.5)))
-        for n, (name, line) in enumerate(loop):
-            a = ease((t - 0.4 - 0.5 * n) / 0.5)
-            x, y = pts[n]
-            colour = OURS if n >= 4 else ACCENT
-            draw.rounded_rectangle((x - bw / 2, y - bh / 2, x + bw / 2, y + bh / 2), 18, fill=PANEL, outline=mix(BG, colour, max(a, 0.2)), width=4)
-            draw.text((x, y - 38), name, font=font(32), fill=mix(PANEL, FG, max(a, 0.3)), anchor="mm")
-            for k, part in enumerate(wrap(draw, line, font(25, False), bw - 30)):
-                draw.text((x, y + 2 + k * 32), part, font=font(25, False), fill=mix(PANEL, FG, a), anchor="mm")
-        m = ease((t - 3.6) / 0.6)
-        draw.rounded_rectangle((cx - 230, cy - 80, cx + 230, cy + 80), 18, fill=PANEL, outline=mix(BG, OURS, m), width=4)
-        draw.text((cx, cy - 36), "past.dev", font=font(40), fill=mix(PANEL, OURS, m), anchor="mm")
-        draw.text((cx, cy + 8), "findings memory:", font=font(28, False), fill=mix(PANEL, FG, m), anchor="mm")
-        draw.text((cx, cy + 44), "100 dated, sourced findings", font=font(28, False), fill=mix(PANEL, FG, m), anchor="mm")
-        r = ease((t - 4.2) / 0.6)
-        arrow(draw, (cx - 90, cy - 84), (pts[0][0] + 70, pts[0][1] + bh / 2 + 8), mix(BG, OURS, r))
-        draw.text((cx + 20, cy - 104), "recall past findings", font=font(26, False), fill=mix(BG, OURS, r), anchor="lm")
-        arrow(draw, (pts[5][0] + bw / 2 + 8, cy), (cx - 236, cy), mix(BG, OURS, r))
-        draw.text(((pts[5][0] + bw / 2 + cx - 230) / 2, cy - 44), "store the", font=font(22, False), fill=mix(BG, OURS, r), anchor="mm")
-        draw.text(((pts[5][0] + bw / 2 + cx - 230) / 2, cy - 20), "result", font=font(22, False), fill=mix(BG, OURS, r), anchor="mm")
-        total = sum(draw.textlength(c, font=font(30)) + 48 for c in chips) + 24 * (len(chips) - 1)
-        x0 = (W - total) / 2
-        for n, chip in enumerate(chips):
-            d = ease((t - 4.6 - 0.3 * n) / 0.6)
-            width = draw.textlength(chip, font=font(30)) + 48
-            draw.rounded_rectangle((x0, 850, x0 + width, 910), 30, outline=mix(BG, ACCENT, d), width=3)
-            draw.text((x0 + width / 2, 880), chip, font=font(30), fill=mix(BG, FG, d), anchor="mm")
-            x0 += width + 24
-        caption(draw, "AI agents ran the loop; a human set goals and budget.", 1.0)
+        image, draw = canvas("Autoresearch", "An autoresearch loop", "AUTONOMY", 58)
+        h = ease(t / 0.5)
+        items = [(k, f"{counts[k]} {k}") for k in ("kept", "partial", "dropped")]
+        total = sum(34 + draw.textlength(label, font=font(36, False)) for _, label in items) + 50 * (len(items) - 1)
+        x = W - 80 - total
+        for k, label in items:
+            draw.ellipse((x, 111, x + 22, 133), fill=mix(BG, colour_of[k], h))
+            draw.text((x + 34, 122), label, font=font(36, False), fill=mix(BG, FG, h), anchor="lm")
+            x += 34 + draw.textlength(label, font=font(36, False)) + 50
+        draw.text((90, 200), "Findings memory: past.dev", font=font(28, False), fill=mix(BG, MUTED, h), anchor="lm")
+        last = y0 + (len(LAPS) - 1) * step
+        draw.line((spine, y0 - 14, spine, last + 14), fill=mix(BG, LINE, ease((t - 0.2) / 0.6)), width=3)
+        for n, (title, outcome, kind) in enumerate(LAPS):
+            a = ease((t - 0.6 - 0.2 * n) / 0.35)
+            y = y0 + n * step
+            big = kind == "kept"
+            tf, of = font(32 if big else 28), font(28 if big else 26, False)
+            tcol = mix(BG, OURS if big else (FG if kind == "partial" else MUTED), a)
+            r = 12 if big else 8
+            draw.ellipse((spine - r, y - r, spine + r, y + r), fill=mix(BG, colour_of[kind], a))
+            if n % 2 == 0:
+                xo = spine - 34
+                draw.text((xo, y), outcome, font=of, fill=mix(BG, MUTED, a), anchor="rm")
+                draw.text((xo - draw.textlength(outcome, font=of) - 14, y), title, font=tf, fill=tcol, anchor="rm")
+            else:
+                xo = spine + 34
+                draw.text((xo, y), title, font=tf, fill=tcol, anchor="lm")
+                draw.text((xo + draw.textlength(title, font=tf) + 14, y), outcome, font=of, fill=mix(BG, MUTED, a), anchor="lm")
+        for n, label in ((0, "Nov 14"), (8, "Nov 15")):
+            a = ease((t - 0.6 - 0.2 * n) / 0.35)
+            draw.text((spine + 34, y0 + n * step), label, font=font(26), fill=mix(BG, MUTED, a), anchor="lm")
+        draw.text((W / 2, 1020), "AI agents wrote the code, ran the experiments and audited the results; a human set goals and budget.", font=font(26, False), fill=mix(BG, MUTED, h), anchor="mm")
         yield np.asarray(image)
 
 

@@ -1,0 +1,544 @@
+{
+ "task_id": "GC011",
+ "request_identity": {
+  "version": 3,
+  "video_sha256": "70a65fd0282a58fe6450ecca67fbce402a2af068c6931329c652ccbf16ae3e79",
+  "reference_sha256": "41949867f7f50226c9ddd70a5daee824afd06d70042ff942ae78e328ca391282",
+  "task_sha256": "779125da077f45d781d3c5db7a96ad93e41c032d4b021dc7144260b5e042e729",
+  "world_model": "LingBot-World-Infinity",
+  "judge_model": "gemini-3.1-pro-preview",
+  "transport": "vertex",
+  "generation_config": {
+   "response_mime_type": "application/json",
+   "temperature": 0.1
+  },
+  "released_source_sha256": {
+   "metrics/vqa/rubric.py": "717337bf48986afd3bd239e838a30d2bc75788b5a3f1c76c3ceeb67f5997c945",
+   "metrics/vqa/instruction_gate.py": "216f4abc854bbc020819a55679b873cf5472bb2d72661659ed8674cca673df5f",
+   "metrics/vqa/sampling.py": "573be715981b64ac664be85f40337e8fce9002839698673de37300845eb6e0ca",
+   "metrics/vqa/score.py": "9e7656ea7aacde92b5c52ba4b401628ac5589c227935a18a0ab95b44870038a7",
+   "metrics/aggregate.py": "a11aa8c5da9a437d00e0b2205f5e72a48f953a68d63b6b3d804567008fe7adfd"
+  },
+  "adapter_source_sha256": {
+   "judge_integrity.py": "b4d5f5b249b1c4316a1a5c712cc37d2f60a381cd0f892f1611aa936494a22497",
+   "gemini_vertex_judge.py": "e0c3211328e2ea64695c7ad016b8aa20ef2ba493916a2b518b0e555118eb3e3e"
+  },
+  "fingerprint": "d9325c90184da0e46833a20801696bbe542c3a903a7da4b1825483dbd37f8472"
+ },
+ "request_fingerprint": "d9325c90184da0e46833a20801696bbe542c3a903a7da4b1825483dbd37f8472",
+ "world_model": "LingBot-World-Infinity",
+ "judge_provider": "google-vertex",
+ "judge_model": "gemini-3.1-pro-preview",
+ "judge_project": "seismic-fx-507702-v1",
+ "endpoint": "vertex-ai-global",
+ "video_sha256": "70a65fd0282a58fe6450ecca67fbce402a2af068c6931329c652ccbf16ae3e79",
+ "dry_run": false,
+ "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; Controller, adapter and checkpoint also differ.",
+ "gate": {
+  "applicable": "yes",
+  "task_id": "GC011",
+  "perspective": "first-person",
+  "verdict": "pass",
+  "instruction_following_score": 1,
+  "meaningful_requested_trajectory_progress": "yes",
+  "revisit_required": "yes",
+  "revisit_observed": "yes",
+  "observed_action_zh": "\u955c\u5934\u5411\u53f3\u65cb\u8f6c\u7ea63\u79d2\uff0c\u968f\u540e\u9759\u6b62\u7b49\u5f85\u7ea624\u79d2\uff0c\u6700\u540e\u5411\u5de6\u65cb\u8f6c\u7ea63\u79d2\uff0c\u5e76\u5728\u65cb\u8f6c\u8fc7\u7a0b\u4e2d\u56de\u5230\u4e86\u521d\u59cb\u89c6\u89d2\u3002",
+  "trajectory_evidence_zh": "\u5728\u7b2c1-2\u5f20\u56fe\u96c6\uff080.0\u79d2\u81f33.0\u79d2\uff09\uff0c\u955c\u5934\u5411\u53f3\u65cb\u8f6c\uff0c\u4ece\u521d\u59cb\u7684\u8d70\u5eca\u89c6\u89d2\u8f6c\u81f3\u9762\u5411\u9633\u53f0\u95e8\uff1b\u5728\u7b2c3-11\u5f20\u56fe\u96c6\uff083.0\u79d2\u81f327.0\u79d2\uff09\uff0c\u955c\u5934\u4fdd\u6301\u9759\u6b62\uff0c\u753b\u9762\u65e0\u660e\u663e\u53d8\u5316\uff1b\u5728\u7b2c12-13\u5f20\u56fe\u96c6\uff0827.0\u79d2\u81f331.8\u79d2\uff09\uff0c\u955c\u5934\u5411\u5de6\u65cb\u8f6c\uff0c\u5e76\u5728\u7ea629.0\u79d2\u65f6\u7ecf\u8fc7\u4e86\u521d\u59cb\u7684\u8d70\u5eca\u89c6\u89d2\u3002",
+  "failure_reason_zh": "",
+  "confidence_1_to_5": 5
+ },
+ "rubric": {
+  "base_non_task_score_1_to_5": 2.6,
+  "final_score_1_to_5": 2.6,
+  "category_scores_1_to_5": {
+   "identity_id": {
+    "score": 1,
+    "weight": 2.0,
+    "answer": "no",
+    "evidence_zh": "\u6df1\u8272\u7384\u5173\u684c\u3001\u767d\u8272\u82b1\u74f6\u548c\u5706\u5f62\u955c\u5b50\u5728\u955c\u5934\u8fd4\u56de\u65f6\u4e00\u81f4\uff0c\u4f46\u5f53\u955c\u5934\u8f6c\u56de\u8be5\u951a\u5b9a\u533a\u57df\uff08\u5e27280-318\uff09\u65f6\uff0c\u539f\u672c\u7684\u767d\u8272\u6cd5\u5f0f\u95e8\u548c\u7eff\u8272\u6c99\u53d1\u5b8c\u5168\u6d88\u5931\uff0c\u88ab\u4e00\u6247\u5355\u5f00\u95e8\u53d6\u4ee3\u3002"
+   },
+   "identity_texture": {
+    "score": 5,
+    "weight": 1.0,
+    "answer": "yes",
+    "evidence_zh": "\u6df1\u8272\u7384\u5173\u684c\u3001\u767d\u8272\u82b1\u74f6\u3001\u5706\u5f62\u955c\u5b50\u548c\u9ec4\u8272\u5899\u58c1\u5728\u6574\u4e2a\u53ef\u89c1\u671f\u95f4\u4fdd\u6301\u4e86\u7a33\u5b9a\u7684\u6750\u8d28\u3001\u6728\u7eb9\u548c\u5149\u6ed1\u8868\u9762\uff0c\u6ca1\u6709\u51fa\u73b0\u7eb9\u7406\u6f02\u79fb\u6216\u751f\u6210\u7684\u566a\u70b9\u3002"
+   },
+   "color": {
+    "score": 5,
+    "weight": 1.0,
+    "answer": "yes",
+    "evidence_zh": "\u9ec4\u8272\u5899\u58c1\u3001\u6df1\u68d5\u8272\u7384\u5173\u684c\u3001\u767d\u8272\u82b1\u74f6\u548c\u955c\u5b50\u5728\u6574\u4e2a\u89c6\u9891\u4e2d\u4fdd\u6301\u4e86\u7a33\u5b9a\u7684\u56fa\u6709\u989c\u8272\uff0c\u6ca1\u6709\u51fa\u73b0\u8272\u8c03\u6f02\u79fb\u6216\u95ea\u70c1\u3002"
+   },
+   "relative_position": {
+    "score": 1,
+    "weight": 1.0,
+    "answer": "no",
+    "evidence_zh": "\u623f\u95f4\u7684\u7a7a\u95f4\u5e03\u5c40\u53d1\u751f\u4e86\u4e0d\u53ef\u80fd\u7684\u6539\u53d8\u3002\u6700\u521d\u6cd5\u5f0f\u95e8\u548c\u5ba2\u5385\u4f4d\u4e8e\u7384\u5173\u684c\u7684\u5de6\u4fa7\uff0c\u4f46\u5f53\u955c\u5934\u5411\u5de6\u8f6c\u56de\u65f6\uff08\u5e27280-318\uff09\uff0c\u8be5\u533a\u57df\u88ab\u4e00\u6247\u5355\u5f00\u95e8\u548c\u95e8\u5eca\u5b8c\u5168\u53d6\u4ee3\uff0c\u7834\u574f\u4e86\u951a\u5b9a\u7684\u7a7a\u95f4\u5173\u7cfb\u3002"
+   }
+  },
+  "excluded_categories": {
+   "task_specific": "not scored"
+  },
+  "static_tail_policy_applied": "The video ends as the requested action completes; there is no significant static tail.",
+  "action_inconsistency_penalties": [],
+  "requested_action_completion": {
+   "completed": "yes",
+   "first_completion_frame": 318,
+   "evidence_zh": "\u76f8\u673a\u5b8c\u6210\u4e86\u5411\u53f3\u65cb\u8f6c\u3001\u7b49\u5f8524\u79d2\u4ee5\u53ca\u5411\u5de6\u65cb\u8f6c\u8fd4\u56de\u7684\u5b8c\u6574\u52a8\u4f5c\u5e8f\u5217\u3002"
+  },
+  "background_consistency": {
+   "required_action_phase_zh": "\u76f8\u673a\u5411\u53f3\u65cb\u8f6c\u5e76\u4fdd\u6301\u9759\u6b62\u671f\u95f4\uff0c\u53f3\u4fa7\u65b0\u51fa\u73b0\u7684\u9633\u53f0\u95e8\u548c\u5899\u58c1\u80cc\u666f\u4fdd\u6301\u7a33\u5b9a\u3002",
+   "post_completion_phase_zh": "\u76f8\u673a\u5411\u5de6\u65cb\u8f6c\u8fd4\u56de\u521d\u59cb\u89c6\u89d2\u65f6\uff0c\u539f\u672c\u4f4d\u4e8e\u7384\u5173\u684c\u5de6\u4fa7\u7684\u6cd5\u5f0f\u95e8\u548c\u5ba2\u5385\u80cc\u666f\u88ab\u5b8c\u5168\u66ff\u6362\u4e3a\u4e00\u6247\u5355\u5f00\u95e8\u548c\u95e8\u5eca\u80cc\u666f\uff0c\u80cc\u666f\u53d1\u751f\u4e25\u91cd\u6539\u53d8\u3002"
+  },
+  "object_correspondence_checks": [
+   {
+    "comparison": "initial French doors and living room vs final single door and porch",
+    "anchors": [
+     "round wall mirror",
+     "dark console table",
+     "yellow wall patch"
+    ],
+    "same_object_or_region": "yes"
+   }
+  ],
+  "camera_motion_disambiguation": {
+   "intervals_checked": [
+    "0-30",
+    "270-318"
+   ],
+   "continuous_camera_motion": "yes",
+   "tracked_structural_anchors": [
+    "round wall mirror",
+    "dark console table",
+    "yellow wall patch"
+   ],
+   "newly_revealed_regions_zh": "\u5411\u53f3\u65cb\u8f6c\u65f6\uff08\u5e270-30\uff09\u5728\u753b\u9762\u53f3\u4fa7\u51fa\u73b0\u7684\u65b0\u9633\u53f0\u95e8\u5c5e\u4e8e\u65b0\u533a\u57df\u3002",
+   "evidence_zh": "\u89c6\u89d2\u7684\u5e73\u79fb\u548c\u7269\u4f53\u7684\u8fdb\u51fa\u753b\u9762\u5747\u7531\u76f8\u673a\u7684\u8fde\u7eed\u5411\u53f3\u548c\u5411\u5de6\u65cb\u8f6c\u5f15\u8d77\uff0c\u7b26\u5408\u7269\u7406\u900f\u89c6\u3002"
+  },
+  "hard_reset_check": {
+   "hard_reset_claimed": "no",
+   "adjacent_frame_interval": "none",
+   "no_plausible_camera_transform": "no",
+   "persistent_anchor_contradiction": "no",
+   "contradicting_anchors": [],
+   "evidence_zh": "\u89c6\u9891\u4e2d\u6ca1\u6709\u76f8\u90bb\u5e27\u4e4b\u95f4\u7684\u7a81\u53d8\uff0c\u573a\u666f\u7684\u53d8\u5316\uff08\u6cd5\u5f0f\u95e8\u88ab\u66ff\u6362\uff09\u53d1\u751f\u5728\u955c\u5934\u79fb\u5f00\u540e\u518d\u6b21\u8fd4\u56de\u7684\u8fc7\u7a0b\u4e2d\uff0c\u5c5e\u4e8e\u5bf9\u8c61\u4e00\u81f4\u6027\u5931\u8d25\uff0c\u800c\u975e\u786c\u5207\u3002"
+  },
+  "post_completion_adjustment": {
+   "value": 0.0,
+   "evidence_zh": "\u89c6\u9891\u5728\u6700\u540e\u51e0\u5e27\u624d\u5b8c\u6210\u5411\u5de6\u65cb\u8f6c\u8fd4\u56de\u7684\u52a8\u4f5c\uff0c\u6ca1\u6709\u591a\u4f59\u7684\u52a8\u4f5c\u6216\u5931\u8d25\u3002"
+  },
+  "final_state_check": {
+   "window": "300-318",
+   "visible_key_objects": [
+    "dark console table body",
+    "tall white vase body",
+    "round mirror"
+   ],
+   "reappearance_consistency_zh": "\u6df1\u8272\u7384\u5173\u684c\u3001\u767d\u8272\u82b1\u74f6\u548c\u5706\u5f62\u955c\u5b50\u5728\u955c\u5934\u8fd4\u56de\u65f6\u4e00\u81f4\u5730\u91cd\u65b0\u51fa\u73b0\uff0c\u4f46\u539f\u672c\u5728\u5b83\u4eec\u5de6\u4fa7\u7684\u767d\u8272\u6cd5\u5f0f\u95e8\u548c\u7eff\u8272\u6c99\u53d1\u6d88\u5931\uff0c\u88ab\u4e00\u6247\u5355\u5f00\u95e8\u53d6\u4ee3\u3002"
+  },
+  "oe_dynamicity_check": {
+   "mode": "not_applicable",
+   "meaningful_evolution": "not_applicable",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evolution_quality_level_1_to_5": null,
+   "named_process": "not_applicable",
+   "phase_comparison_applicable": "no",
+   "pre_occlusion_state_zh": "not_applicable",
+   "hidden_interval_zh": "not_applicable",
+   "reappeared_state_zh": "not_applicable",
+   "post_completion_static_tail": "no",
+   "static_tail_first_frame": null,
+   "terminal_static_reasonable": "not_applicable",
+   "terminal_pose_or_process_state": "not_applicable",
+   "support_and_pose_evidence_zh": "not_applicable",
+   "terminal_state_reasoning_zh": "not_applicable",
+   "static_tail_score_adjustment": 0,
+   "static_tail_penalty_zh": "not_applicable",
+   "camera_independent_subject_motion": "not_applicable",
+   "stable_world_anchors_compared": [],
+   "articulation_or_local_state_change_zh": "not_applicable",
+   "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+   "two_independent_motion_evidence_requirements_met": "not_applicable",
+   "expected_world_motion_direction_zh": "not_applicable",
+   "returned_motion_direction_consistent": "not_applicable",
+   "rigid_vehicle_local_progression_zh": "not_applicable",
+   "vehicle_front_rear_identification_zh": "not_applicable",
+   "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+   "vehicle_motion_direction": "not_applicable",
+   "unexplained_reverse_motion": "not_applicable",
+   "subject_relative_change_zh": "not_applicable",
+   "unchanged_coupled_details_zh": "not_applicable",
+   "accumulated_change_zh": "not_applicable",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": null
+  },
+  "oe_instruction_following_check": {
+   "applicable": "no",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "meaningful_requested_trajectory_progress": "not_applicable",
+   "revisit_required": "no",
+   "starting_pose_revisited": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "oe003_ink_deposition_check": {
+   "applicable": "no",
+   "persistent_new_ink": "uncertain",
+   "ink_change_type": "uncertain",
+   "same_anchored_paper_region_compared": "no",
+   "initial_ink_state_zh": "not_applicable",
+   "change_sequence_zh": "not_applicable",
+   "resulting_ink_state_zh": "not_applicable",
+   "hand_or_pen_motion_without_ink_change": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "oe_productive_action_check": {
+   "applicable": "no",
+   "action_type": "other",
+   "tool_and_target": "not_applicable",
+   "persistent_result_created": "no",
+   "result_recognizable_and_intentional": "no",
+   "tool_contact_causes_local_change": "no",
+   "action_result_temporally_coherent": "no",
+   "prompt_named_requirement": "not_specified",
+   "result_matches_named_requirement": "not_applicable",
+   "result_later_disappears_or_resets": "uncertain",
+   "visible_reversal_explanation": "not_applicable",
+   "productive_action_quality_level_1_to_5": null,
+   "evidence_zh": "not_applicable"
+  },
+  "gc_dynamicity_check": {
+   "meaningful_action_progress": "yes",
+   "static_or_near_static": "no",
+   "ineffective_repetition": "no",
+   "evidence_zh": "\u89c6\u9891\u4e2d\u76f8\u673a\u6309\u7167\u63d0\u793a\u5411\u53f3\u65cb\u8f6c\uff0c\u7b49\u5f85\u4e00\u6bb5\u65f6\u95f4\u540e\u5411\u5de6\u65cb\u8f6c\u8fd4\u56de\uff0c\u6709\u660e\u663e\u7684\u89c6\u89d2\u53d8\u5316\u548c\u52a8\u4f5c\u8fdb\u5c55\u3002",
+   "final_score_gate_applied": null
+  },
+  "gc_appearance_stability_check": {
+   "applicable": "yes",
+   "tracked_objects_or_surfaces": [
+    "dark console table body",
+    "tall white vase body",
+    "round mirror",
+    "yellow walls"
+   ],
+   "correspondence_anchors": [
+    "round wall mirror",
+    "dark console table",
+    "yellow wall patch"
+   ],
+   "visible_intervals": [
+    "0-318"
+   ],
+   "before_developing_after_checkpoints": [],
+   "intrinsic_color_drift": "none",
+   "material_or_texture_drift": "none",
+   "generated_noise_artifacts": "none",
+   "noise_type": "none",
+   "allowed_visual_explanation": "none",
+   "evidence_zh": "\u88ab\u8ffd\u8e2a\u7684\u7384\u5173\u684c\u3001\u82b1\u74f6\u3001\u955c\u5b50\u548c\u5899\u58c1\u5728\u6574\u4e2a\u89c6\u9891\u4e2d\u4fdd\u6301\u4e86\u7a33\u5b9a\u7684\u989c\u8272\u548c\u7eb9\u7406\uff0c\u6ca1\u6709\u51fa\u73b0\u6f02\u79fb\u6216\u566a\u70b9\u3002"
+  },
+  "if_subject_motion_check": {
+   "subject_expected_to_move": "no",
+   "meaningful_subject_motion": "not_applicable",
+   "static_or_near_static": "no",
+   "camera_or_background_motion_only": "yes",
+   "post_action_static_tail": "no",
+   "static_tail_first_frame": null,
+   "static_tail_fraction_of_video": 0.0,
+   "post_action_static_penalty": 0,
+   "evidence_zh": "not_applicable",
+   "final_score_gate_applied": null
+  },
+  "if_instruction_following_check": {
+   "applicable": "no",
+   "perspective": "other",
+   "verdict": "not_applicable",
+   "instruction_following_score": null,
+   "prompt_directed_forward_progress": "not_applicable",
+   "camera_or_background_motion_only": "not_applicable",
+   "observed_action_zh": "not_applicable",
+   "trajectory_evidence_zh": "not_applicable",
+   "failure_reason_zh": ""
+  },
+  "if_collision_boundary_checklist": {
+   "applicable": "no",
+   "interaction_opportunity_reached": "no",
+   "observed_outcome": "other",
+   "solid_interpenetration": "uncertain",
+   "support_after_contact": "not_applicable",
+   "boundary_response_plausible": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "if_target_boundary_stability_check": {
+   "target_boundary": "not_applicable",
+   "target_type": "not_applicable",
+   "tracked_before_contact": "uncertain",
+   "remained_present_until_trigger": "uncertain",
+   "observed_trigger": "not_applicable",
+   "unsupported_change": "none",
+   "interaction_opportunity_preserved": "uncertain",
+   "evidence_zh": "not_applicable"
+  },
+  "if_support_proxy_check": {
+   "direct_support_interface_visible": "no",
+   "proxy_evidence_observed": [],
+   "proxy_supports_expected_locomotion": "no",
+   "evidence_zh": "not_applicable"
+  },
+  "subject_identity_check": {
+   "applicable": "no",
+   "tracked_subject": "not_applicable",
+   "same_entity_throughout": "no",
+   "stable_identity_attributes": [],
+   "identity_failure": "none",
+   "evidence_zh": "not_applicable"
+  },
+  "subject_identity_eligibility_check": {
+   "core_process": "IF_interaction_quality",
+   "core_process_level": null,
+   "meaningful_motion_or_evolution": "no",
+   "contact_or_support_demonstrated": "not_applicable",
+   "identity_eligible_for_normal_weighting": "no",
+   "final_score_cap_applied": null,
+   "evidence_zh": "not_applicable"
+  },
+  "if_interaction_quality_check": {
+   "interaction_quality_level_1_to_5": null,
+   "interaction_opportunity_reached": "no",
+   "physical_response_observed": "no",
+   "core_failure_zh": "none",
+   "positive_evidence_zh": "none",
+   "evidence_zh": "not_applicable",
+   "final_score_cap_applied": null
+  },
+  "summary_zh": "\u89c6\u9891\u6210\u529f\u6267\u884c\u4e86\u76f8\u673a\u7684\u65cb\u8f6c\u548c\u7b49\u5f85\u52a8\u4f5c\uff0c\u6df1\u8272\u7384\u5173\u684c\u7b49\u7269\u4f53\u5728\u955c\u5934\u8fd4\u56de\u65f6\u4fdd\u6301\u4e86\u4e00\u81f4\uff0c\u4f46\u539f\u672c\u4f4d\u4e8e\u5de6\u4fa7\u7684\u6cd5\u5f0f\u95e8\u548c\u7eff\u8272\u6c99\u53d1\u5728\u955c\u5934\u8fd4\u56de\u65f6\u88ab\u9519\u8bef\u5730\u66ff\u6362\u4e3a\u4e00\u6247\u5355\u5f00\u95e8\uff0c\u5bfc\u81f4\u4e25\u91cd\u7684\u8eab\u4efd\u548c\u7a7a\u95f4\u4f4d\u7f6e\u4e00\u81f4\u6027\u5931\u8d25\u3002",
+  "task_id": "GC011"
+ },
+ "calls": [
+  {
+   "mode": "gate",
+   "cached": false,
+   "served_model_version": "gemini-3.1-pro-preview",
+   "response_id": "fRv6asyANuOb4_UP_InpMQ",
+   "prompt_tokens": 21608,
+   "output_tokens": 280
+  },
+  {
+   "mode": "score",
+   "cached": false,
+   "served_model_version": "gemini-3.1-pro-preview",
+   "response_id": "mRv6auKtAeOb4_UP_InpMQ",
+   "prompt_tokens": 38245,
+   "output_tokens": 3500
+  }
+ ],
+ "sampling": {
+  "strategy": "dual-scale full-video contact-sheet sampling",
+  "chronological_order": true,
+  "contact_sheet_encoding": {
+   "format": "JPEG",
+   "quality": 70,
+   "subsampling": "4:2:0"
+  },
+  "primary": {
+   "fps": 10.0,
+   "sample_interval_seconds": 0.1,
+   "cell_size": [
+    384,
+    216
+   ],
+   "grid": [
+    5,
+    5
+   ],
+   "frames_per_sheet": 25,
+   "sheet_size": [
+    1920,
+    1080
+   ],
+   "frames_count": 319,
+   "sheets_count": 13,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 31.8,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 24,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 2.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 25,
+     "last_sample_index": 49,
+     "first_time_seconds": 2.5,
+     "last_time_seconds": 4.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 50,
+     "last_sample_index": 74,
+     "first_time_seconds": 5.0,
+     "last_time_seconds": 7.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 75,
+     "last_sample_index": 99,
+     "first_time_seconds": 7.5,
+     "last_time_seconds": 9.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 5,
+     "first_sample_index": 100,
+     "last_sample_index": 124,
+     "first_time_seconds": 10.0,
+     "last_time_seconds": 12.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 6,
+     "first_sample_index": 125,
+     "last_sample_index": 149,
+     "first_time_seconds": 12.5,
+     "last_time_seconds": 14.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 7,
+     "first_sample_index": 150,
+     "last_sample_index": 174,
+     "first_time_seconds": 15.0,
+     "last_time_seconds": 17.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 8,
+     "first_sample_index": 175,
+     "last_sample_index": 199,
+     "first_time_seconds": 17.5,
+     "last_time_seconds": 19.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 9,
+     "first_sample_index": 200,
+     "last_sample_index": 224,
+     "first_time_seconds": 20.0,
+     "last_time_seconds": 22.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 10,
+     "first_sample_index": 225,
+     "last_sample_index": 249,
+     "first_time_seconds": 22.5,
+     "last_time_seconds": 24.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 11,
+     "first_sample_index": 250,
+     "last_sample_index": 274,
+     "first_time_seconds": 25.0,
+     "last_time_seconds": 27.4,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 12,
+     "first_sample_index": 275,
+     "last_sample_index": 299,
+     "first_time_seconds": 27.5,
+     "last_time_seconds": 29.9,
+     "filled_cells": 25
+    },
+    {
+     "sheet_index": 13,
+     "first_sample_index": 300,
+     "last_sample_index": 318,
+     "first_time_seconds": 30.0,
+     "last_time_seconds": 31.8,
+     "filled_cells": 19
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "detail": {
+   "fps": 0.5,
+   "sample_interval_seconds": 2.0,
+   "cell_size": [
+    800,
+    450
+   ],
+   "grid": [
+    2,
+    2
+   ],
+   "frames_per_sheet": 4,
+   "sheet_size": [
+    1600,
+    900
+   ],
+   "frames_count": 16,
+   "sheets_count": 4,
+   "first_sample_time_seconds": 0.0,
+   "last_sample_time_seconds": 30.0,
+   "sheet_ranges": [
+    {
+     "sheet_index": 1,
+     "first_sample_index": 0,
+     "last_sample_index": 3,
+     "first_time_seconds": 0.0,
+     "last_time_seconds": 6.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 2,
+     "first_sample_index": 4,
+     "last_sample_index": 7,
+     "first_time_seconds": 8.0,
+     "last_time_seconds": 14.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 3,
+     "first_sample_index": 8,
+     "last_sample_index": 11,
+     "first_time_seconds": 16.0,
+     "last_time_seconds": 22.0,
+     "filled_cells": 4
+    },
+    {
+     "sheet_index": 4,
+     "first_sample_index": 12,
+     "last_sample_index": 15,
+     "first_time_seconds": 24.0,
+     "last_time_seconds": 30.0,
+     "filled_cells": 4
+    }
+   ],
+   "ordering": "chronological row-major within each sheet"
+  },
+  "reference_image_role": "initial scene/style context only, if provided"
+ },
+ "gate_prompt_sha256": "a7b7ad2b599d0185e0bd66a94d6411f6e810ba7d7bc3ec021845e3df6980ecc0",
+ "score_prompt_sha256": "b716830976872db859c3c9194dfc619244705847e5b245bfe36c866941524ca6",
+ "scores": {
+  "official": 2.6,
+  "final_score": 2.6
+ },
+ "episode_id": "rh-unl-GC011-H24-seed42",
+ "arm": "memory_unlimited",
+ "horizon_s": 24,
+ "objective": "Turn right 180 degrees, wait for 24 seconds, then turn back to the original view."
+}

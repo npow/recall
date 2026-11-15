@@ -27,8 +27,17 @@ def main():
         for arm in ("L", "C"):
             episode = output / arm / f"if-{task}"
             status = output / f"{arm}-if-{task}-status.json"
-            if status.exists():
+            if status.exists() and json.loads(status.read_text()).get("ok"):
                 continue
+            if arm == "C":  # adopt an earlier complete run (an older check looked for the video in the wrong folder)
+                done = sorted(d for d in output.joinpath(arm).glob(f"if-{task}-failed*")
+                              if (d / "episode/rollout.mp4").exists() and json.loads((d / "episode/run.json").read_text()).get("status") == "completed")
+                if done:
+                    if episode.exists():
+                        episode.rename(episode.with_name(episode.name + f"-dup{int(time.time())}"))
+                    done[0].rename(episode)
+                    status.write_text(json.dumps({"arm": arm, "task_id": task, "ok": True, "adopted": done[0].name}, indent=2) + "\n")
+                    continue
             if arm == "C":
                 cwd, pythonpath = ROOT, ROOT
                 args = ["-m", "worldsync.lingbot_released_baseline", "--split", "if", "--task-id", task, "--seed", "42",
@@ -45,7 +54,8 @@ def main():
                 with (output / f"{arm}-if-{task}.log").open("a") as log:
                     result = subprocess.run([sys.executable, *args], cwd=cwd, env=dict(env, PYTHONPATH=str(pythonpath)),
                                             stdout=log, stderr=subprocess.STDOUT)
-                ok = result.returncode == 0 and (episode / "rollout.mp4").exists()
+                video = episode / "episode" / "rollout.mp4" if arm == "C" else episode / "rollout.mp4"
+                ok = result.returncode == 0 and video.exists()
                 if ok:
                     break
                 time.sleep(30)
