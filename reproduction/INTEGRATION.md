@@ -93,3 +93,16 @@ Left on branches (the forks' code conflicts with main's newer player and runner,
   (`reproduction/lingbot-weights.json`), so it may differ from the pinned revision the nissan-pow volume holds. Do not use it
   for scored or reproducibility runs until its files are verified against the manifest. Also: the krasnaya-zvesda and
   seraphina-ink-88 workspaces could not launch GPU functions when tried (Modal asked for a payment method).
+
+## Powered judged comparison and Gemini scripts (added later)
+
+* `reproduction/powered-comparison.md` is **blocked, no scores exist**: the krasnaya-zvesda and seraphina-ink-88 workspaces
+  refuse every GPU type (payment method required), and the nissan-pow workspace was reserved for other forks. Its analysis
+  and manifest scripts (`scripts/analyze_powered.py`, `build_powered_manifest.py`, `analyze_gemini_scores.py`,
+  `build_gemini_manifest.py`, `inspect_gemini_episode.py`) and `scripts/modal_gpu_probe.py` are on main. The episode runner
+  `scripts/modal_lingbot_powered.py` and its rollout flags stay on branch `worktree-agent-a5f22f4098cb528aa`.
+* Two Gemini judge adapters now exist on main: `worldsync/judge_gemini.py` (main's own transport shim used by `scripts/rejudge.py`)
+  and `worldsync/gemini_vertex_judge.py` (runs PlayWorld's released scorer unchanged over Vertex). They overlap; pick one for
+  scored runs and state which in the report. The Gemini rescoring report of branch `worktree-agent-a0a0580ab4da8a3e8`
+  (`reproduction/gemini-rescore.md`) was not committed when this was written, so it is not on main; its interim finding was a
+  weak per-episode agreement with the Opus judge (Spearman about 0.32 over 44 episodes) and a much more lenient Gemini score on one episode.
