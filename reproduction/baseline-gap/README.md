@@ -87,6 +87,8 @@ Evidence: `gpu-smoke-GC010/validation.json`, `protocol.json`, `episode/run.json`
 
 The validator initially rejected the current checkout because the handoff entrypoint had changed while the remote run was in flight. Validation against the archived source actually staged on Lambda passed every recorded hash. `--source-root` selects such an archive without weakening hash checks. A two-chunk output does not show the return leg, long-horizon memory, or score improvement. Odin should still validate IF001/live actor transport and the complete development cases.
 
+Visual inspection of the saved observations shows a stable neutral view followed by rightward camera motion: the sheriff building moves to the left edge and a road becomes visible. This is qualitative response evidence only. `scripts/audit_canonical_smoke_motion.py` applies the existing conservative rigid-rotation estimator to frame pairs at4-frame intervals. All3neutral pairs pass; all4turning pairs fail its rotation-fit residual threshold (about5.1–5.5px versus3px allowed). Their raw yaw estimates must not be promoted to measured camera poses. The whole-yaw estimate is withheld in `gpu-smoke-GC010/visual-motion.json`; geometry deformation or inaccurate nominal intrinsics can explain rejection. Return fidelity remains untested.
+
 ## Live actor transport preflight
 
 Before IF001 GPU validation, test the configured Anthropic Messages endpoint with one request and no GPU:
