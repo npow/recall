@@ -32,7 +32,7 @@ def main():
     def evaluate(arm):
         result = judge_episode(client, ROOT/'external/PlayWorld', task, output/arm/'rollout.mp4',
                                ROOT/'external/PlayWorld/data'/task['image_path'],
-                               world_model='world model', cache_dir=output/'judge-cache')
+                               world_model='world model', cache_dir=output/'cache/context-judge')
         (output/arm/'gemini-score.json').write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n')
         return arm, {'score':result['scores']['official'], 'gate':result['gate'],
                      'judge_model':result['judge_model'], 'video_sha256':result['video_sha256']}
