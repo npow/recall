@@ -668,42 +668,59 @@ def scene_limits(data, seconds):
 
 def scene_process(data, seconds):
     loop = data.board["loop"]
-    box_w, gap = 272, 36
-    x_start = (W - len(loop) * box_w - (len(loop) - 1) * gap) // 2
-    chips = data.board.get("chips", ["pre-registered configs", "every run logged in the repo"])
+    chips = data.board.get("chips", ["pre-registered configs", "every run logged in the repo"])[:2]
+    cx, cy, rx, ry = W // 2, 520, 640, 225
+    bw, bh = 400, 132
+    pts = [(cx + rx * math.cos(math.radians(-120 + 60 * n)), cy + ry * math.sin(math.radians(-120 + 60 * n))) for n in range(6)]
+
+    def edge(c, t):
+        dx, dy = t[0] - c[0], t[1] - c[1]
+        k = min((bw / 2 + 10) / abs(dx) if dx else 1e9, (bh / 2 + 10) / abs(dy) if dy else 1e9)
+        return (c[0] + dx * k, c[1] + dy * k)
+
+    def arrow(draw, p0, p1, colour):
+        draw.line((p0, p1), fill=colour, width=4)
+        ang = math.atan2(p1[1] - p0[1], p1[0] - p0[0])
+        tip = p1
+        left = (tip[0] - 20 * math.cos(ang - 0.4), tip[1] - 20 * math.sin(ang - 0.4))
+        right = (tip[0] - 20 * math.cos(ang + 0.4), tip[1] - 20 * math.sin(ang + 0.4))
+        draw.polygon([tip, left, right], fill=colour)
+
     for index in range(int(seconds * FPS)):
         t = index / FPS
-        image, draw = canvas("Process", "An autoresearch loop", "AUTONOMY", 58)
+        image, draw = canvas("Process", "Autoresearch loop × past.dev", "AUTONOMY", 58)
+        for n in range(6):
+            a = ease((t - 0.4 - 0.5 * n) / 0.5)
+            c, nxt = pts[n], pts[(n + 1) % 6]
+            arrow(draw, edge(c, nxt), edge(nxt, c), mix(BG, ACCENT, ease((t - 0.7 - 0.5 * n) / 0.5)))
         for n, (name, line) in enumerate(loop):
-            a = ease((t - 0.4 - 0.6 * n) / 0.6)
-            x = x_start + n * (box_w + gap)
+            a = ease((t - 0.4 - 0.5 * n) / 0.5)
+            x, y = pts[n]
             colour = OURS if n >= 4 else ACCENT
-            draw.rounded_rectangle((x, 250, x + box_w, 360), 18, fill=PANEL, outline=mix(BG, colour, max(a, 0.2)), width=4)
-            draw.text((x + box_w / 2, 305), name, font=font(31), fill=mix(PANEL, FG, max(a, 0.3)), anchor="mm")
-            if n < len(loop) - 1:
-                draw.text((x + box_w + gap / 2, 305), "→", font=font(38), fill=MUTED, anchor="mm")
-            for k, part in enumerate(wrap(draw, line, font(28, False), box_w)):
-                draw.text((x + box_w / 2, 410 + k * 40), part, font=font(28, False), fill=mix(BG, FG, a), anchor="mm")
-        back = ease((t - 4.0) / 0.6)
-        draw.line((x_start + (len(loop) - 1) * (box_w + gap) + box_w / 2, 600, x_start + (len(loop) - 1) * (box_w + gap) + box_w / 2, 640,
-                   x_start + box_w / 2, 640, x_start + box_w / 2, 600), fill=mix(BG, MUTED, back), width=4)
-        draw.text((W / 2, 676), "repeat", font=font(32, False), fill=mix(BG, MUTED, back), anchor="mm")
-        rows = [chips[:2], chips[2:]]
-        for r, row in enumerate(rows):
-            if not row:
-                continue
-            total = sum(draw.textlength(c, font=font(32)) + 48 for c in row) + 24 * (len(row) - 1)
-            cx = (W - total) / 2
-            for n, chip in enumerate(row):
-                d = ease((t - 4.3 - 0.3 * (n + 2 * r)) / 0.6)
-                width = draw.textlength(chip, font=font(32)) + 48
-                y = 750 + 80 * r
-                draw.rounded_rectangle((cx, y, cx + width, y + 62), 31, outline=mix(BG, ACCENT, d), width=3)
-                draw.text((cx + width / 2, y + 31), chip, font=font(32), fill=mix(BG, FG, d), anchor="mm")
-                cx += width + 24
-        draw.text((W / 2, 940), "The loop found its own bugs and rebuilt the memory; a human set goals and budget.",
-                  font=font(30, False), fill=mix(BG, MUTED, ease((t - 4.6) / 0.6)), anchor="mm")
-        caption(draw, "Agents ran, audited and fixed their own experiments.", 1.0)
+            draw.rounded_rectangle((x - bw / 2, y - bh / 2, x + bw / 2, y + bh / 2), 18, fill=PANEL, outline=mix(BG, colour, max(a, 0.2)), width=4)
+            draw.text((x, y - 38), name, font=font(32), fill=mix(PANEL, FG, max(a, 0.3)), anchor="mm")
+            for k, part in enumerate(wrap(draw, line, font(25, False), bw - 30)):
+                draw.text((x, y + 2 + k * 32), part, font=font(25, False), fill=mix(PANEL, FG, a), anchor="mm")
+        m = ease((t - 3.6) / 0.6)
+        draw.rounded_rectangle((cx - 230, cy - 80, cx + 230, cy + 80), 18, fill=PANEL, outline=mix(BG, OURS, m), width=4)
+        draw.text((cx, cy - 36), "past.dev", font=font(40), fill=mix(PANEL, OURS, m), anchor="mm")
+        draw.text((cx, cy + 8), "findings memory:", font=font(28, False), fill=mix(PANEL, FG, m), anchor="mm")
+        draw.text((cx, cy + 44), "100 dated, sourced findings", font=font(28, False), fill=mix(PANEL, FG, m), anchor="mm")
+        r = ease((t - 4.2) / 0.6)
+        arrow(draw, (cx - 90, cy - 84), (pts[0][0] + 70, pts[0][1] + bh / 2 + 8), mix(BG, OURS, r))
+        draw.text((cx + 20, cy - 104), "recall past findings", font=font(26, False), fill=mix(BG, OURS, r), anchor="lm")
+        arrow(draw, (pts[5][0] + bw / 2 + 8, cy), (cx - 236, cy), mix(BG, OURS, r))
+        draw.text(((pts[5][0] + bw / 2 + cx - 230) / 2, cy - 44), "store the", font=font(22, False), fill=mix(BG, OURS, r), anchor="mm")
+        draw.text(((pts[5][0] + bw / 2 + cx - 230) / 2, cy - 20), "result", font=font(22, False), fill=mix(BG, OURS, r), anchor="mm")
+        total = sum(draw.textlength(c, font=font(30)) + 48 for c in chips) + 24 * (len(chips) - 1)
+        x0 = (W - total) / 2
+        for n, chip in enumerate(chips):
+            d = ease((t - 4.6 - 0.3 * n) / 0.6)
+            width = draw.textlength(chip, font=font(30)) + 48
+            draw.rounded_rectangle((x0, 850, x0 + width, 910), 30, outline=mix(BG, ACCENT, d), width=3)
+            draw.text((x0 + width / 2, 880), chip, font=font(30), fill=mix(BG, FG, d), anchor="mm")
+            x0 += width + 24
+        caption(draw, "AI agents ran the loop; a human set goals and budget.", 1.0)
         yield np.asarray(image)
 
 
