@@ -2,7 +2,9 @@
 
 ## Current handoff status
 
-**GPU runtime smoke validated: YES, GC010 two chunks only, at repository source commit `2beab94` (also identical for the recorded sources at `66a15bd`). Full episode, live actor requests, and benchmark scores: NOT validated.** Controller handoff code is commit `e2e422a9c4a7246c9b4e054359fa10ffeecfeb2d`. CPU checks pass; Codex completed the separate Lambda two-chunk GC010 smoke and requested termination of that instance. No full171-case run is planned by Codex. Claude on odin owns the subsequent approximately12-case controller comparison; Claude on thor owns the frozen full run, optb fleet and director experiment.
+**GPU runtime smoke validated: YES, GC010 two chunks only, at repository source commit `2beab94` (also identical for the recorded sources at `66a15bd`). Full episode and benchmark scores: NOT validated. A live IF001 actor probe has passed with the declared400-token override; full GC024 generation is in progress.** Controller handoff code is commit `e2e422a9c4a7246c9b4e054359fa10ffeecfeb2d`. CPU checks pass; Codex completed the separate Lambda two-chunk GC010 smoke and requested termination of that instance. No full171-case run is planned by Codex. The user reassigned the12-case comparison to Codex. It is running independently on a leased H100SXM, with three judge repetitions per video. Claude on thor owns the frozen full run, optb fleet and director experiment.
+
+The running comparison source matches `00372892bbb644964d0f15d7366739e754031352` for all82tracked Python modules/worker files inspected remotely; one additional untracked probe is staged but unused. See `ccv-source-provenance.json`. This source check does not establish full-episode GPU validation. Live artifacts: `outputs/codex-ccv/artifacts/`; partial report: `outputs/codex-ccv/comparison.md`.
 
 Entrypoint: `worldsync.lingbot_released_baseline`. After installing dependencies and staging the pinned model/data, run from the repo root:
 

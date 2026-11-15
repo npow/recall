@@ -112,7 +112,7 @@ def main():
         f"- **Cases:** {selection['rule']}: " + ", ".join(f"{NAMES[s]} {' '.join(selection['picked'][s])}" for s in SPLITS) + ".",
         "- **Legacy arm:** frozen full-run config at `5b8a5b8` (`reproduction/full-run-config.json`): `--player-retries 2 "
         "--text-prompt both --offload-text-encoder`, 40 chunks; insight `--text-prompt caption` at 60 chunks; Haiku 4.5 player.",
-        "- **Corrected arm:** Codex's canonical controller on current `main` via `--validate-controller` (task objective as text, "
+        f"- **Corrected arm:** Codex's canonical controller at `{selection.get('corrected_source_commit', 'unrecorded: inspect source provenance')}` via `--validate-controller` (task objective as text, "
         "canonical timeline, released hold service, 60-chunk budget). Hold-service token cap raised from the released 60 to 400 "
         "(`WORLDSYNC_HOLD_MAX_TOKENS`) because a live IF001 response truncated at60tokens.",
         "- **Hardware:** both arms must use the same GPU; Codex takeover uses oneH100SXM. Inspect run.json hardware fields. Not bit-comparable to the Modal frozen run.",
