@@ -1,7 +1,7 @@
 {
   "video": "docs/demo/worldsync-academic-2min.mp4",
-  "sha256": "778a4315658c3d1ea6776748c5dd6b44f2cc41e66c43333dcd8b2270322fd9a2",
-  "bytes": 11851346,
+  "sha256": "5ff1d4bab988c0f61a0c24ffdcc240970f1f4845f6b26174673244d771a5324a",
+  "bytes": 11881293,
   "duration_seconds": 120,
   "frames": 3600,
   "width": 1280,
@@ -38,7 +38,33 @@
     }
   ],
   "playback_speed": 1,
-  "memory_edit": "source0\u20134s then23.8125\u201331.8125s, same cut on both arms",
+  "director_examples": {
+    "IF013": {
+      "stock": {
+        "video": "/home/npow/code/iteratehack/.claude/worktrees/agent-ad03b54239f02c9ae/outputs/final1/stock-if-IF013-seed42/rollout.mp4",
+        "sha256": "ed9bf7c26006e0970e1cc90ce279ca6c60981cc5f68164dd1a6a28182308ae7a",
+        "score": 1.0
+      },
+      "director": {
+        "video": "/home/npow/code/iteratehack/.claude/worktrees/agent-ad03b54239f02c9ae/outputs/final1/director-if-IF013-seed42/rollout.mp4",
+        "sha256": "376db25d4a588b4459aef541644c098e49cd11293f82f83d686ab6a0b6ba9146",
+        "score": 4.0
+      }
+    },
+    "OE018": {
+      "stock": {
+        "video": "/home/npow/code/iteratehack/.claude/worktrees/agent-ad03b54239f02c9ae/outputs/final1/stock-insight-OE018-seed42/rollout.mp4",
+        "sha256": "50cb444f84b46819a6ab20acdf21fdd1cd4cfc819eb937887b8133ede916df5f",
+        "score": 1.0
+      },
+      "director": {
+        "video": "/home/npow/code/iteratehack/.claude/worktrees/agent-ad03b54239f02c9ae/outputs/final1/director-insight-OE018-seed42/rollout.mp4",
+        "sha256": "b1f1911882fcba887315ac6038e90697372ccb898edc10a859e2d6ae126c0fae",
+        "score": 4.4
+      }
+    }
+  },
+  "director_selection": "Two illustrative positive cases from the existing held-out gallery, selected after scores; one primary call per video",
   "process_scores": {
     "L": 2.1999999999999997,
     "C": 1.0
@@ -72,8 +98,12 @@
       74,
       86
     ],
-    "memory_comparison": [
+    "rowing_comparison": [
       86,
+      92
+    ],
+    "pouring_comparison": [
+      92,
       98
     ],
     "process_failure_comparison": [

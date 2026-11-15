@@ -61,30 +61,20 @@ def quadrants():
     return target,sources
 
 
-def memory_excerpt(path, name):
-    """Keep the opening and return at native speed; omit the intervening wait."""
-    target=v.WORK/(name+'-excerpt.mp4')
-    graph='[0:v]split=2[a][b];[a]trim=start=0:end=4,setpts=PTS-STARTPTS[x];[b]trim=start=23.8125:end=31.8125,setpts=PTS-STARTPTS[y];[x][y]concat=n=2:v=1:a=0[out]'
-    subprocess.run(['ffmpeg','-v','error','-y','-i',str(path),'-filter_complex_threads','2',
-        '-filter_complex',graph,'-map','[out]','-an','-c:v','libx264','-preset','veryfast',
-        '-crf','18','-threads','2',str(target)],check=True)
-    return target
-
-
 def main():
     rows={t:{a:v.score(a,t) for a in ['L','C']} for t in ['IF012','IF006','IF022']}
     means={a:sum(r[a]['mean'] for r in rows.values())/3 for a in ['L','C']}
     im,d=slide('01 / RESEARCH QUESTION','WorldSync','Long-horizon consistency in interactive world models')
     v.wrap(d,(42,227),'How long can a generated world hold together while an agent acts inside it?',44,42,v.WHITE)
     box(d,(42,443,620,596),'THE PROBLEM','A video can look plausible yet forget a place, ignore an action, or reset a process.')
-    box(d,(644,443,1238,596),'OUR APPROACH','Persistent control state and retrieval of earlier visual features. No training from scratch.')
+    box(d,(644,443,1238,596),'OUR APPROACH','Track control, retrieve old views, and describe evolving processes. Frozen model weights.')
     intro=v.save(im,'01-problem')
     im,d=slide('02 / TASK & BENCHMARK','PlayWorld: act, wait, return, observe.','Open starting model: LingBot-World2 14B causal-fast • frozen weights')
     for x,y,h,body in [(42,205,'Geometry consistency','Does the same place survive a revisit?'),(652,205,'Instruction following','Does the requested action actually happen?'),(42,370,'In-sight evolution','Do visible processes progress coherently?'),(652,370,'Out-of-sight evolution','Does a hidden process continue while we look away?')]:box(d,(x,y,x+586,y+145),h,body)
     v.text(d,(44,554),'Our comparison: 12 selected tasks × 2 setups × 3 Gemini judge attempts.',24,v.WHITE)
     v.text(d,(44,600),'One seed; full original episodes scored. Local configuration, not the hosted leaderboard.',20,v.MUTED)
     setup=v.save(im,'02-setup')
-    im,d=slide('04 / METHOD & ARCHITECTURE','Keep control state. Retrieve visual history.','Two separately evaluated interventions on a frozen world model')
+    im,d=slide('04 / METHOD & ARCHITECTURE','Control, memory and process conditioning.','Components evaluated separately on a frozen generator')
     box(d,(40,207,281,338),'TASK + PLAN','Quarter-second action schedule')
     box(d,(335,207,637,338),'STATEFUL CONTROL','Persistent pose + visual hold checks')
     box(d,(695,207,987,338),'WORLD MODEL','Camera rays + text → next frames')
@@ -96,8 +86,9 @@ def main():
     box(d,(430,447,787,578),'RETRIEVE ON RETURN','Insert relevant history into a bounded cache',v.PURPLE)
     arrow(d,(378,512),(426,512),v.PURPLE)
     d.line([(788,512),(841,512),(841,433)],fill=v.PURPLE,width=3);arrow(d,(841,433),(841,340),v.PURPLE)
-    v.wrap(d,(903,452),'Memory evaluated separately on a scripted revisit.',24,23,v.PURPLE)
-    v.text(d,(42,615),'Control result changes controller + prompt + duration. Memory result is a separate ablation.',20,v.MUTED)
+    box(d,(903,447,1240,578),'SCENE DIRECTOR','One event description conditions generation.',v.PURPLE)
+    v.text(d,(42,605),'Separate memory test: DINO endpoint similarity 0.574 → 0.746; not a PlayWorld score.',20,v.MUTED)
+    v.text(d,(42,637),'Control comparison changes controller + prompt + duration; director examples use a separate setup.',18,v.MUTED)
     arch=v.save(im,'04-architecture')
     im,d=slide('05 / QUANTITATIVE RESULTS','Better instruction following on three tasks.','Three preselected IF tasks • three judgments per original video • seed 42')
     v.text(d,(42,207),f'{means["L"]:.2f} → {means["C"]:.2f}',76,v.GREEN,True)
@@ -117,7 +108,17 @@ def main():
     memory=v.ROOT/'reproduction/memory-validation/GC007-seed42-turn_long_wait_return'
     mr=json.loads((memory/'comparison.json').read_text())
     for a in ['stock','retrieval']:assert v.digest(memory/(a+'.mp4'))==mr[a]['video_sha256']
-    excerpts={a:memory_excerpt(memory/(a+'.mp4'),a) for a in ['stock','retrieval']}
+    director_root=v.ROOT/'.claude/worktrees/agent-ad03b54239f02c9ae/outputs/final1'
+    director_cases={}
+    for split,task in [('if','IF013'),('insight','OE018')]:
+        data={}
+        for arm in ['stock','director']:
+            identifier=f'{arm}-{split}-{task}-seed42'
+            path=director_root/identifier/'rollout.mp4'
+            report=json.loads((v.ROOT/'reproduction/final-run/gemini-call1'/(identifier+'.json')).read_text())
+            assert not report.get('error') and report['video_sha256']==v.digest(path)
+            data[arm]={'video':str(path),'sha256':v.digest(path),'score':report['scores']['official']}
+        director_cases[task]=data
     process_scores={}
     for arm in ['L','C']:
         values=[]
@@ -129,7 +130,8 @@ def main():
     jobs=[lambda:v.still_segment(intro,10,'01'),lambda:v.still_segment(setup,10,'02'),lambda:quadrants(),lambda:v.still_segment(arch,16,'04'),lambda:v.still_segment(results,10,'05'),
           lambda:v.comparison_segment('06-results-video','IF022: longer execution, higher task score','Boardwalk task / first 12 seconds at normal speed.',v.episode('L','IF022')/'rollout.mp4',v.episode('C','IF022')/'rollout.mp4',('LEGACY SETUP / 1.67','CORRECTED SETUP / 3.50'),12,1,['Excerpt only. Scores use full originals; the ended legacy panel holds its final frame.','The corrected scene continues, but instruction completion remains partial.'],[rows['IF022'][a]['video_seconds'] for a in ['L','C']]),
           lambda:v.comparison_segment('07-pond','IF006: a second instruction-following example','Walk left into the pond / first 12 seconds at normal speed.',v.episode('L','IF006')/'rollout.mp4',v.episode('C','IF006')/'rollout.mp4',('LEGACY SETUP / 2.00','CORRECTED SETUP / 2.56'),12,1,['Excerpt only. Scores use full originals; the ended legacy panel holds its final frame.','This configuration improves the task score, although later appearance artifacts remain.'],[rows['IF006'][a]['video_seconds'] for a in ['L','C']]),
-          lambda:v.comparison_segment('memory','Separate experiment: recover the earlier view','GC007 / opening + return at normal speed; waiting period omitted.',excerpts['stock'],excerpts['retrieval'],('STOCK / DINO 0.574','ARCHIVED MEMORY / DINO 0.746'),12,1,['At 4 seconds, both panels jump from source 4.0s to 23.8s; no speed-up.','Separate memory diagnostic. DINO similarity is not a PlayWorld score.'],[12,12]),
+          lambda:v.comparison_segment('08-boat','Rowing: preserve the action','IF013 / row across the river / normal speed.',Path(director_cases['IF013']['stock']['video']),Path(director_cases['IF013']['director']['video']),('STOCK / 1.00','SCENE DIRECTOR / 4.00'),6,1,['Full 5.8-second episodes; final 0.2 seconds held. Frozen model, different text conditioning.','Selected example, one primary judge call per video. Not the memory method.'],[5.8125,5.8125]),
+          lambda:v.comparison_segment('08-tea','Pouring: preserve the evolving process','OE018 / pouring tea / first 6 seconds at normal speed.',Path(director_cases['OE018']['stock']['video']),Path(director_cases['OE018']['director']['video']),('STOCK / 1.00','SCENE DIRECTOR / 4.40'),6,1,['Short excerpt; scores use full original episodes. Same separate scene-director experiment.','Selected example, one primary judge call per video; no overall benchmark win claimed.'],[59.8125,59.8125]),
           lambda:v.comparison_segment('09-process','Failure: visual change without a coherent process','OE066 / piping onto a tray / first 10 seconds at normal speed.',video('L','insight','OE066'),video('C','insight','OE066'),(f'LEGACY / {process_scores["L"]:.2f}',f'CORRECTED / {process_scores["C"]:.2f}'),10,1,['The corrected configuration regresses here: the tool morphs instead of piping.','Excerpt only; scores use full original videos. More motion does not mean more progress.'],[59.8125,59.8125]),
           lambda:v.still_segment(close,12,'10')]
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:segments=list(pool.map(lambda f:f(),jobs))
@@ -140,14 +142,14 @@ def main():
     probe=json.loads(subprocess.check_output(['ffprobe','-v','error','-count_frames','-show_streams','-of','json',str(target)],text=True))
     assert len(probe['streams'])==1
     stream=probe['streams'][0];assert stream['codec_type']=='video' and int(stream['nb_read_frames'])==3600 and float(stream['duration'])==120
-    receipt={'video':str(target.relative_to(v.ROOT)),'sha256':v.digest(target),'bytes':target.stat().st_size,'duration_seconds':120,'frames':3600,'width':1280,'height':720,'audio':'none: silent for live presenting','quadrant_sources':sources,'playback_speed':1,'memory_edit':'source0–4s then23.8125–31.8125s, same cut on both arms','process_scores':process_scores,'timeline_seconds':{'problem':[0,10],'benchmark':[10,20],'four_failure_videos':[20,36],'architecture':[36,52],'results':[52,62],'boardwalk_comparison':[62,74],'pond_comparison':[74,86],'memory_comparison':[86,98],'process_failure_comparison':[98,108],'limitations_future':[108,120]}}
+    receipt={'video':str(target.relative_to(v.ROOT)),'sha256':v.digest(target),'bytes':target.stat().st_size,'duration_seconds':120,'frames':3600,'width':1280,'height':720,'audio':'none: silent for live presenting','quadrant_sources':sources,'playback_speed':1,'director_examples':director_cases,'director_selection':'Two illustrative positive cases from the existing held-out gallery, selected after scores; one primary call per video','process_scores':process_scores,'timeline_seconds':{'problem':[0,10],'benchmark':[10,20],'four_failure_videos':[20,36],'architecture':[36,52],'results':[52,62],'boardwalk_comparison':[62,74],'pond_comparison':[74,86],'rowing_comparison':[86,92],'pouring_comparison':[92,98],'process_failure_comparison':[98,108],'limitations_future':[108,120]}}
     (OUT/'academic-verification.json').write_text(json.dumps(receipt,indent=2)+'\n')
     # Static backup uses actual rendered frames, including video panels.
     import cv2
     import shutil
     cap = cv2.VideoCapture(str(target))
     pages = []
-    for second in [5,15,28,44,56,68,80,94,103,115]:
+    for second in [5,15,28,44,56,68,80,89,95,103,115]:
         cap.set(cv2.CAP_PROP_POS_MSEC, second*1000)
         ok, frame = cap.read()
         assert ok

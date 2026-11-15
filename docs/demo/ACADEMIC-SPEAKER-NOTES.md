@@ -1,6 +1,6 @@
 # WorldSync — two-minute research presentation
 
-Silent video: **worldsync-academic-2min.mp4**. All clips play at normal speed. Four short side-by-side comparisons follow the four-quadrant overview. Approximately260spoken words; timings below follow the revised cut.
+Silent video: **worldsync-academic-2min.mp4**. All clips play at normal speed. Five short side-by-side comparisons follow the four-quadrant overview. Approximately260spoken words; timings below follow the revised cut.
 
 ## 0:00–0:10 — Problem
 
@@ -16,7 +16,7 @@ These are actual outputs at normal speed. Returning views drift, a walk stops ea
 
 ## 0:36–0:52 — Method and architecture
 
-We investigated two components: persistent camera state with precise scheduling and visual feedback; and retrieval of archived attention features when returning to a place. Both use frozen weights. We evaluated them separately, not as a combined system.
+We investigated persistent camera control, retrieval of archived visual features, and a scene director that writes an event description for the generator. The weights stay frozen. These components were evaluated separately; we are not claiming a combined improvement.
 
 ## 0:52–1:02 — Scores
 
@@ -30,9 +30,13 @@ The legacy player ends early, so its final frame is held. Our configuration cont
 
 Here is a second task: walk left into the pond. The corrected configuration improves the full-episode score, but later appearance artifacts remain. These are short excerpts.
 
-## 1:26–1:38 — Memory
+## 1:26–1:32 — Rowing
 
-This separate revisit test compares stock inference with archived memory. We cut the waiting period from both videos. Endpoint visual similarity improves; this is not a PlayWorld score.
+The separate scene director gives the generator an event description. Here, it helps preserve the rowing action.
+
+## 1:32–1:38 — Pouring
+
+Here it preserves pouring. These are selected positive examples from single primary judge calls, not an aggregate improvement.
 
 ## 1:38–1:48 — Process failure
 

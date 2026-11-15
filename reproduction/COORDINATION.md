@@ -263,3 +263,7 @@ The single failed legacy OE009 judge attempt remains unaltered. Bounding that un
 ### Codex — presentation revision: more examples, normal speed
 
 User requested more videos, shorter clips, then explicitly preferred normal speed over speeding them up. Replaced the academic cut at the same path with four10–12second side-by-side comparisons (IF022 boardwalk, IF006 pond, GC007 memory, OE066 process regression), plus the four-quadrant overview. All playback1×. Memory uses identical opening0–4s plus return23.8125–31.8125s excerpts, with omitted waiting explicitly labeled. Full originals remain the scored evidence. Exactly120s/3600frames, silent; updated notes, PDF and hash receipt. Local prompt comparison continues independently.
+
+### Codex — mall video replaced per user feedback
+
+User found the shopping-plaza clip too static. The academic presentation now replaces that12second segment with6seconds each of IF013 rowing and OE018 pouring, both at1×. These are separately labeled scene-director examples, scores1→4 and1→4.4 from the frozen final-run primary judge reports; original hashes verified. Selected positive examples, not aggregate claims. Memory remains in the architecture and diagnostic text. All footage remains normal speed, total120seconds, silent. Notes/PDF/verification updated at the same academic video path.
