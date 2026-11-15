@@ -149,6 +149,17 @@ Stock versus the static text director: clean-room Haiku-written event text in Li
 
 Paired director minus stock: all 171 **+0.02 [-0.15, +0.19] (GC +0.00, IF +0.07, in-sight -0.01, out-of-sight +0.01)**; held-out 151 +0.06 [-0.13, +0.26] (GC +0.00, IF +0.13, in-sight +0.04, out-of-sight +0.08). **The result is a null and the pass criterion for beating 2.12 is NOT met.** The pre-registered projection was about 2.05. Gate failures moved in opposite directions (IF 20 to 11, out-of-sight 7 to 13) while scores stayed the same. Hardware differs from the Modal H200 full run above (stock 1.85 there, 1.81 here), so compare arms only within a run.
 
+**Secondary: mean of 3 judge calls per video** (same videos; the single-call table above stays the primary result):
+
+| Set | Arm | Scored | Overall [95% CI] | GC | IF | In-sight | Out-of-sight |
+|---|---|---:|---|---:|---:|---:|---:|
+| all 171, mean of 3 | stock 18/6 |171|1.78 [1.64, 1.93]|2.39|1.70|1.67|1.37|
+| all 171, mean of 3 | static text director |171|1.86 [1.70, 2.02]|2.39|1.78|1.76|1.49|
+| held-out 151, mean of 3 | stock 18/6 |151|1.73 [1.59, 1.89]|2.37|1.70|1.54|1.32|
+| held-out 151, mean of 3 | static text director |151|1.84 [1.69, 2.01]|2.37|1.78|1.70|1.53|
+
+Paired director minus stock, mean of 3: all 171 +0.07 [-0.06, +0.22] (GC +0.00, IF +0.08, in-sight +0.10, out-of-sight +0.12); held-out 151 +0.11 [-0.03, +0.27] (GC +0.00, IF +0.08, in-sight +0.16, out-of-sight +0.20). Both intervals include zero, so the pass criterion is still not met. Judge noise: the three calls on one video have a mean standard deviation of 0.36, and 53% of videos received at least two different scores.
+
 Evidence: [table](reproduction/final-run/table.md), [analysis](reproduction/final-run/analysis.json), [per-episode scores](reproduction/final-run/per-episode.csv), [verifier outputs](reproduction/final-run/gemini-call1/), [frozen config](reproduction/final-run-config.json), [development experiment](reproduction/director-dev.md).
 
 ## Full171 stock versus budget run

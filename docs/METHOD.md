@@ -78,6 +78,8 @@ no reliable gain: out-of-sight +0.33 [+0.03, +0.67] (n=6), in-sight +0.43 [-0.08
 **Final run** ([final1](../reproduction/final-run/table.md), Lambda H100, 171 cases, seed 42, single Gemini call):
 stock 1.81 [1.64, 1.99], director 1.82 [1.66, 2.01], paired +0.02 [-0.15, +0.19]; held-out 151 cases 1.76 vs 1.82, +0.06 [-0.13, +0.26].
 A null; the pre-registered projection was about 2.05, and the pass criterion is not met.
+Secondary analysis, mean of 3 judge calls per video: stock 1.78 [1.64, 1.93], director 1.86 [1.70, 2.02], paired +0.07 [-0.06, +0.22]
+(held-out +0.11 [-0.03, +0.27]); still not established, and the judge is noisy (within-video SD 0.36; 53% of videos got at least two different scores).
 **Gate counts.** IF gate failures fell from 20 to 11 while out-of-sight gate failures rose from 7 to 13, and scores did not move.
 Why the two moved in opposite directions has not been investigated.
 

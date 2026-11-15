@@ -1,6 +1,6 @@
 {
  "label": "final1",
- "generated": "2026-11-15 07:26:50 PST",
+ "generated": "2026-11-15 08:48:55 PST",
  "paper": {
   "LingBot-World2 (hosted, paper)": {
    "gc": 2.04,
@@ -15,7 +15,7 @@
  },
  "status": {
   "label": "final1",
-  "updated": "2026-11-15 07:26:50 PST",
+  "updated": "2026-11-15 08:48:55 PST",
   "expected": 294,
   "arms": {
    "stock": {
@@ -38,15 +38,15 @@
      "outsight": 43
     },
     "scored_3_calls": {
-     "gc": 0,
-     "if": 0,
-     "insight": 0,
-     "outsight": 0
+     "gc": 48,
+     "if": 50,
+     "insight": 30,
+     "outsight": 43
     },
     "expected_total": 171,
     "generated_total": 171,
     "scored_call1_total": 171,
-    "scored_3_calls_total": 0
+    "scored_3_calls_total": 171
    },
    "director": {
     "expected": {
@@ -65,14 +65,14 @@
      "outsight": 43
     },
     "scored_3_calls": {
-     "if": 0,
-     "insight": 0,
-     "outsight": 0
+     "if": 50,
+     "insight": 30,
+     "outsight": 43
     },
     "expected_total": 123,
     "generated_total": 123,
     "scored_call1_total": 123,
-    "scored_3_calls_total": 0
+    "scored_3_calls_total": 123
    }
   },
   "judge_errors_call1": []
@@ -433,20 +433,356 @@
  },
  "secondary_mean_of_3": {
   "all_171": {
-   "stock": null,
-   "director": null
+   "stock": {
+    "n": {
+     "gc": 48,
+     "if": 50,
+     "insight": 30,
+     "outsight": 43
+    },
+    "dimension_means": {
+     "gc": 2.393,
+     "if": 1.696,
+     "insight": 1.669,
+     "outsight": 1.368
+    },
+    "overall": 1.781,
+    "overall_ci95": [
+     1.64,
+     1.929
+    ],
+    "floor_count": {
+     "gc": 7,
+     "if": 22,
+     "insight": 12,
+     "outsight": 30
+    }
+   },
+   "director": {
+    "n": {
+     "gc": 48,
+     "if": 50,
+     "insight": 30,
+     "outsight": 43
+    },
+    "dimension_means": {
+     "gc": 2.393,
+     "if": 1.78,
+     "insight": 1.765,
+     "outsight": 1.486
+    },
+    "overall": 1.856,
+    "overall_ci95": [
+     1.7,
+     2.02
+    ],
+    "floor_count": {
+     "gc": 7,
+     "if": 16,
+     "insight": 11,
+     "outsight": 27
+    }
+   },
+   "paired_director_minus_stock": {
+    "dimension_delta": {
+     "gc": 0.0,
+     "if": 0.084,
+     "insight": 0.096,
+     "outsight": 0.118
+    },
+    "overall_delta": 0.074,
+    "overall_delta_ci95": [
+     -0.055,
+     0.218
+    ],
+    "wins_ties_losses": {
+     "gc": [
+      0,
+      48,
+      0
+     ],
+     "if": [
+      21,
+      12,
+      17
+     ],
+     "insight": [
+      12,
+      6,
+      12
+     ],
+     "outsight": [
+      10,
+      22,
+      11
+     ]
+    },
+    "note": "GC delta is zero by construction (the director arm's GC episodes are the stock arm's)"
+   }
   },
   "held_out_151": {
-   "stock": null,
-   "director": null
+   "stock": {
+    "n": {
+     "gc": 45,
+     "if": 45,
+     "insight": 24,
+     "outsight": 37
+    },
+    "dimension_means": {
+     "gc": 2.37,
+     "if": 1.695,
+     "insight": 1.544,
+     "outsight": 1.324
+    },
+    "overall": 1.733,
+    "overall_ci95": [
+     1.591,
+     1.886
+    ],
+    "floor_count": {
+     "gc": 6,
+     "if": 20,
+     "insight": 11,
+     "outsight": 26
+    }
+   },
+   "director": {
+    "n": {
+     "gc": 45,
+     "if": 45,
+     "insight": 24,
+     "outsight": 37
+    },
+    "dimension_means": {
+     "gc": 2.37,
+     "if": 1.779,
+     "insight": 1.703,
+     "outsight": 1.529
+    },
+    "overall": 1.845,
+    "overall_ci95": [
+     1.688,
+     2.008
+    ],
+    "floor_count": {
+     "gc": 6,
+     "if": 13,
+     "insight": 8,
+     "outsight": 23
+    }
+   },
+   "paired_director_minus_stock": {
+    "dimension_delta": {
+     "gc": 0.0,
+     "if": 0.084,
+     "insight": 0.159,
+     "outsight": 0.204
+    },
+    "overall_delta": 0.112,
+    "overall_delta_ci95": [
+     -0.03,
+     0.269
+    ],
+    "wins_ties_losses": {
+     "gc": [
+      0,
+      45,
+      0
+     ],
+     "if": [
+      20,
+      10,
+      15
+     ],
+     "insight": [
+      10,
+      5,
+      9
+     ],
+     "outsight": [
+      9,
+      19,
+      9
+     ]
+    },
+    "note": "GC delta is zero by construction (the director arm's GC episodes are the stock arm's)"
+   }
   },
   "all_without_GC013": {
-   "stock": null,
-   "director": null
+   "stock": {
+    "n": {
+     "gc": 47,
+     "if": 50,
+     "insight": 30,
+     "outsight": 43
+    },
+    "dimension_means": {
+     "gc": 2.413,
+     "if": 1.696,
+     "insight": 1.669,
+     "outsight": 1.368
+    },
+    "overall": 1.786,
+    "overall_ci95": [
+     1.644,
+     1.934
+    ],
+    "floor_count": {
+     "gc": 7,
+     "if": 22,
+     "insight": 12,
+     "outsight": 30
+    }
+   },
+   "director": {
+    "n": {
+     "gc": 47,
+     "if": 50,
+     "insight": 30,
+     "outsight": 43
+    },
+    "dimension_means": {
+     "gc": 2.413,
+     "if": 1.78,
+     "insight": 1.765,
+     "outsight": 1.486
+    },
+    "overall": 1.861,
+    "overall_ci95": [
+     1.708,
+     2.021
+    ],
+    "floor_count": {
+     "gc": 7,
+     "if": 16,
+     "insight": 11,
+     "outsight": 27
+    }
+   },
+   "paired_director_minus_stock": {
+    "dimension_delta": {
+     "gc": 0.0,
+     "if": 0.084,
+     "insight": 0.096,
+     "outsight": 0.118
+    },
+    "overall_delta": 0.074,
+    "overall_delta_ci95": [
+     -0.054,
+     0.217
+    ],
+    "wins_ties_losses": {
+     "gc": [
+      0,
+      47,
+      0
+     ],
+     "if": [
+      21,
+      12,
+      17
+     ],
+     "insight": [
+      12,
+      6,
+      12
+     ],
+     "outsight": [
+      10,
+      22,
+      11
+     ]
+    },
+    "note": "GC delta is zero by construction (the director arm's GC episodes are the stock arm's)"
+   }
   },
   "held_out_without_GC013": {
-   "stock": null,
-   "director": null
+   "stock": {
+    "n": {
+     "gc": 44,
+     "if": 45,
+     "insight": 24,
+     "outsight": 37
+    },
+    "dimension_means": {
+     "gc": 2.391,
+     "if": 1.695,
+     "insight": 1.544,
+     "outsight": 1.324
+    },
+    "overall": 1.739,
+    "overall_ci95": [
+     1.596,
+     1.889
+    ],
+    "floor_count": {
+     "gc": 6,
+     "if": 20,
+     "insight": 11,
+     "outsight": 26
+    }
+   },
+   "director": {
+    "n": {
+     "gc": 44,
+     "if": 45,
+     "insight": 24,
+     "outsight": 37
+    },
+    "dimension_means": {
+     "gc": 2.391,
+     "if": 1.779,
+     "insight": 1.703,
+     "outsight": 1.529
+    },
+    "overall": 1.851,
+    "overall_ci95": [
+     1.695,
+     2.013
+    ],
+    "floor_count": {
+     "gc": 6,
+     "if": 13,
+     "insight": 8,
+     "outsight": 23
+    }
+   },
+   "paired_director_minus_stock": {
+    "dimension_delta": {
+     "gc": 0.0,
+     "if": 0.084,
+     "insight": 0.159,
+     "outsight": 0.204
+    },
+    "overall_delta": 0.112,
+    "overall_delta_ci95": [
+     -0.03,
+     0.271
+    ],
+    "wins_ties_losses": {
+     "gc": [
+      0,
+      44,
+      0
+     ],
+     "if": [
+      20,
+      10,
+      15
+     ],
+     "insight": [
+      10,
+      5,
+      9
+     ],
+     "outsight": [
+      9,
+      19,
+      9
+     ]
+    },
+    "note": "GC delta is zero by construction (the director arm's GC episodes are the stock arm's)"
+   }
   }
  }
 }

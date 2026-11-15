@@ -94,20 +94,29 @@ def final_run_section():
     primary = (data or {}).get("primary_single_call")
     if not primary:
         return []
-    def rows(key, label):
-        block, out = primary[key], []
+    secondary = data.get("secondary_mean_of_3") or {}
+    def rows(key, label, source=None):
+        block, out = (source or primary)[key], []
         for arm, name in (("stock", "stock 18/6"), ("director", "static text director")):
             stats = block[arm]
             dims, (low, high) = stats["dimension_means"], stats["overall_ci95"]
             out.append(f"| {label} | {name} |{sum(stats['n'].values())}|{stats['overall']:.2f} [{low:.2f}, {high:.2f}]"
                        f"|{dims['gc']:.2f}|{dims['if']:.2f}|{dims['insight']:.2f}|{dims['outsight']:.2f}|")
         return out
-    def paired(key):
-        delta = primary[key]["paired_director_minus_stock"]
+    def paired(key, source=None):
+        delta = (source or primary)[key]["paired_director_minus_stock"]
         low, high = delta["overall_delta_ci95"]
         dims = delta["dimension_delta"]
         return (f"{delta['overall_delta']:+.2f} [{low:+.2f}, {high:+.2f}] (GC {dims['gc']:+.2f}, IF {dims['if']:+.2f}, "
                 f"in-sight {dims['insight']:+.2f}, out-of-sight {dims['outsight']:+.2f})")
+    second = []
+    if all((secondary.get(key) or {}).get(arm) for key in ("all_171", "held_out_151") for arm in ("stock", "director")):
+        second = ["", "**Secondary: mean of 3 judge calls per video** (same videos; the single-call table above stays the primary result):", "",
+            "| Set | Arm | Scored | Overall [95% CI] | GC | IF | In-sight | Out-of-sight |", "|---|---|---:|---|---:|---:|---:|---:|",
+            *rows("all_171", "all 171, mean of 3", secondary), *rows("held_out_151", "held-out 151, mean of 3", secondary), "",
+            f"Paired director minus stock, mean of 3: all 171 {paired('all_171', secondary)}; held-out 151 {paired('held_out_151', secondary)}. "
+            "Both intervals include zero, so the pass criterion is still not met. Judge noise: the three calls on one video have a mean "
+            "standard deviation of 0.36, and 53% of videos received at least two different scores."]
     return ["", "## Final run on Lambda H100 (final1), 171 cases, seed 42, single Gemini call", "",
         "Stock versus the static text director: clean-room Haiku-written event text in LingBot's caption format, used on IF, "
         "in-sight and out-of-sight cases. GC episodes are the stock episodes, so GC is identical by construction. "
@@ -117,7 +126,8 @@ def final_run_section():
         f"Paired director minus stock: all 171 **{paired('all_171')}**; held-out 151 {paired('held_out_151')}. "
         "**The result is a null and the pass criterion for beating 2.12 is NOT met.** The pre-registered projection was about 2.05. "
         "Gate failures moved in opposite directions (IF 20 to 11, out-of-sight 7 to 13) while scores stayed the same. "
-        "Hardware differs from the Modal H200 full run above (stock 1.85 there, 1.81 here), so compare arms only within a run.", "",
+        "Hardware differs from the Modal H200 full run above (stock 1.85 there, 1.81 here), so compare arms only within a run.",
+        *second, "",
         "Evidence: [table](reproduction/final-run/table.md), [analysis](reproduction/final-run/analysis.json), "
         "[per-episode scores](reproduction/final-run/per-episode.csv), [verifier outputs](reproduction/final-run/gemini-call1/), "
         "[frozen config](reproduction/final-run-config.json), [development experiment](reproduction/director-dev.md)."]
