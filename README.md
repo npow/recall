@@ -23,7 +23,8 @@ new-seed validation is pending. The validated four-view method remains the defau
 [Temporary-buffer release](reproduction/lingbot-read-cache-lifetime/README.md)
 reduces peak GPU allocation by1.59GB with all32chunks pixel-identical.
 [FlashAttention4 measurements](reproduction/lingbot-attention-optimization.md)
-show about1.9x faster attention, with full-rollout timing still pending.
+show about1.9x faster attention and16% faster warm stock generation onH100.
+Cold startup still limits short-trial speed; pipeline-reuse checks are running.
 
 [The four/eight-view ablation](reproduction/multiview-retrieval/README.md) finds
 that eight historical views degrade continuity when they displace recent
