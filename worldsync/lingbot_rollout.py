@@ -16,6 +16,8 @@ from worldsync.lingbot_diagnostics import summarize
 from worldsync.lingbot_native import ROOT, SOURCE_REVISION, WEIGHT_REVISION, runtime_pack, configure_backend
 
 PROTOCOL_ID = "lingbot-world2-stock-reconstructed-haiku-16fps-v6"
+SCHEDULES = {"stock": {"timesteps_index": [0, 250, 500, 750], "shift": 10},
+             "cmbench": {"timesteps_index": [0, 179, 358, 679], "shift": 5.0}}
 
 
 class RolloutComplete(Exception):
@@ -39,6 +41,20 @@ def main():
                         help="Declared22-frame8-view pilot: separately normalize recent/history attention")
     parser.add_argument("--retrieval-positions", choices=("virtual", "native"), default="virtual")
     parser.add_argument("--rephase-sink", action="store_true", help="Experimental pose-gated native sink key rephasing")
+    parser.add_argument("--kv-retention", action="store_true", help="Diagnostic WorldKV-style relevance retrieval from an unbounded CPU KV archive (audited: noisy first-step query, 18/6 gate only)")
+    parser.add_argument("--kv-retained-frames", type=int, default=4)
+    parser.add_argument("--kv-rope", choices=["virtual", "native"], default="virtual")
+    parser.add_argument("--decoprune", action="store_true", help="Diagnostic DeCoPrune KV pruning port (reproduction/decoprune-spec.md)")
+    parser.add_argument("--decoprune-threshold", type=float, default=0.10)
+    parser.add_argument("--decoprune-step", type=int, default=2, help="Zero-based denoising step whose x0 is scored")
+    parser.add_argument("--decoprune-rope", choices=["all_bands", "off"], default="all_bands")
+    parser.add_argument("--denoise-schedule", choices=list(SCHEDULES), default="stock",
+        help="stock: shift 10, steps [0,250,500,750]; cmbench: DeCoPrune shift 5, steps [0,179,358,679]")
+    parser.add_argument("--reanchor", action="store_true", help="Diagnostic start-view re-anchoring (frames 0-3 re-timed as recent)")
+    parser.add_argument("--budget-memory", action="store_true", help="Bounded pose-indexed KV memory (sink + K retrieved + tail, evicting archive)")
+    parser.add_argument("--budget-retrieved", type=int, default=10)
+    parser.add_argument("--budget-archive", type=int, default=24)
+    parser.add_argument("--budget-rope", choices=["virtual", "native"], default="virtual")
     parser.add_argument("--offload-text-encoder", action="store_true", help="Release the completed GPU text encoder before denoising")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--dry-run", action="store_true")
@@ -61,9 +77,10 @@ def main():
             or knobs["local_attn_size"] != 22 or args.retrieval_selection != "nearest"
             or args.retrieval_positions != "virtual"):
         parser.error("gated attention pilot requires22 frames,8 nearest views,virtual positions and pose retrieval")
-    if args.pose_retrieval and args.rephase_sink:
+    diagnostics = [args.pose_retrieval, args.rephase_sink, args.kv_retention, args.decoprune, args.reanchor, args.budget_memory]
+    if sum(diagnostics) > 1:
         parser.error("memory ablations must be tested separately")
-    if (args.pose_retrieval or args.rephase_sink) and not args.native_fixed_controls:
+    if (any(diagnostics) or args.denoise_schedule != "stock") and not args.native_fixed_controls:
         parser.error("retrieval calibration requires native fixed controls")
     if args.rephase_sink and not lingbot_tuning.is_stock(knobs):
         parser.error("sink rephasing requires the stock 18-frame/6-sink budget")
@@ -71,6 +88,7 @@ def main():
             or knobs["sink_size"] != 6 or knobs["decision_interval"] != 1
             or (knobs["local_attn_size"] != 18 and not args.controlled_ablation)):
         parser.error("retrieval requires18/22 frames,6 sinks,decision interval1;22 requires controlled ablation")
+    schedule = SCHEDULES[args.denoise_schedule]
     output = args.output.resolve()
     if output.exists() and any(output.iterdir()):
         parser.error("output directory must be empty")
@@ -94,12 +112,14 @@ def main():
         "split": args.split, "seed": args.seed, "turn_degrees_per_second": args.turn_degrees_per_second, "fps": 16, "max_chunks": maximum, "max_interactions": 40,
         "native_fixed_controls": args.native_fixed_controls, "camera_embedding_audit": [],
         "pose_retrieval": args.pose_retrieval, "sink_rephase": args.rephase_sink,
+        "kv_retention": args.kv_retention, "decoprune": args.decoprune, "reanchor": args.reanchor,
+        "budget_memory": args.budget_memory, "denoise_schedule": args.denoise_schedule,
         "text_encoder_offloaded_after_encoding": args.offload_text_encoder,
         "stationary_wait_only": stationary, "fixed_actions": args.fixed_actions, "quantization": "none", "cuda_allocator_configuration": os.environ.get("PYTORCH_CUDA_ALLOC_CONF", "default"),
         "max_area": 480 * 832, "chunk_size": 4, "local_attn_size": knobs["local_attn_size"], "sink_size": knobs["sink_size"],
         "decision_interval": knobs["decision_interval"], "stock_knobs": lingbot_tuning.is_stock(knobs),
         "controlled_ablation": args.controlled_ablation,
-        "sampler_timesteps_index": [0, 250, 500, 750], "sample_shift": 10,
+        "sampler_timesteps_index": schedule["timesteps_index"], "sample_shift": schedule["shift"],
         "actions": [], "chunks": [], "published_score_reproduced": False,
         "agent_interactions": 0,
         "adapter_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
@@ -184,6 +204,20 @@ def main():
         elif args.rephase_sink:
             from worldsync.lingbot_sink_rephase import SinkRephaseMemory
             memory = SinkRephaseMemory(pipeline)
+        elif args.kv_retention:
+            from worldsync.lingbot_kvretention import RelevanceKVMemory
+            memory = RelevanceKVMemory(pipeline, retained_frames=args.kv_retained_frames, rope=args.kv_rope)
+        elif args.decoprune:
+            from worldsync.lingbot_decoprune import DeCoPruneMemory
+            memory = DeCoPruneMemory(pipeline, threshold=args.decoprune_threshold,
+                generation_step_index=args.decoprune_step, rope=args.decoprune_rope)
+        elif args.reanchor:
+            from worldsync.lingbot_reanchor import ReanchorMemory
+            memory = ReanchorMemory(pipeline)
+        elif args.budget_memory:
+            from worldsync.lingbot_budgetmem import BudgetPoseMemory
+            memory = BudgetPoseMemory(pipeline, sink_size=knobs["sink_size"], local_attn_size=knobs["local_attn_size"],
+                retrieved=args.budget_retrieved, archive_frames=args.budget_archive, rope=args.budget_rope)
         current_chunk = -1
         latest = initial
         def before(model, positional, kwargs):
@@ -291,7 +325,7 @@ def main():
                    pipeline.model.register_forward_hook(after, with_kwargs=True)]
         pipeline.generate(task["image_caption"], Image.open(initial).convert("RGB"),
             action_path=str(controls), chunk_size=4, max_area=480 * 832, frame_num=frames,
-            shift=10, seed=args.seed, offload_model=False)
+            shift=schedule["shift"], timesteps_index=schedule["timesteps_index"], seed=args.seed, offload_model=False)
     except RolloutComplete:
         report["status"] = "completed" if report["chunks"] else "empty_rollout"
     except BaseException as error:

@@ -70,6 +70,7 @@ class PoseKVMemory:
         self.trace = []
         self.frame_tokens = None
         self.retrieval_calls = 0
+        self.archive_range = (6, 22)  # latent frames archived; subclasses may widen it
         for layer, block in enumerate(pipeline.model.blocks):
             attention = block.self_attn
             def enter(module, args, kwargs, layer=layer):
@@ -123,7 +124,7 @@ class PoseKVMemory:
             # Keep a bounded, explicit initial history. No hidden unbounded bank.
             for offset in range(query.shape[1] // frame_tokens):
                 index = first_frame + offset
-                if 6 <= index < 22:
+                if self.archive_range[0] <= index < self.archive_range[1]:
                     lo, hi = offset * frame_tokens, (offset + 1) * frame_tokens
                     v_current = value[:, -query.shape[1]:]
                     bank[index] = (raw[:, lo:hi].detach().to("cpu", copy=True),
