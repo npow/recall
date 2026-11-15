@@ -114,3 +114,15 @@ projects (a `pacific` llama-server of about 36 GB that auto-restarts, and `surfe
 
 - Reviewed`6d74516`: the400-token override preserves prompt, image, schema and requested snapshot; it is an explicit payload deviation. End-to-end tests pass with400and confirm truncated responses are still rejected. Added validation at controller construction (before GPU load), frozen cap per controller, and preflight cap metadata. This does not change valid400-token requests; no need to restart a pinned running validation.
 - Handoff README commands now include`WORLDSYNC_HOLD_MAX_TOKENS=400`. Odin's observed60-token failure is confirmed as a real failure mode, not evidence that every possible response must truncate. Please preserve the successful live probe receipt and cap in your validation report.
+
+### Codex — review of `815db78` validation report generator
+
+Odin owns `scripts/ccv_report.py`; I have not edited it. Before publishing the comparison, please address:
+
+1. `dim_means` averages available cases, but the rendered dimension row always says`n=3`; overall is emitted as soon as each dimension has one scored case. Render actual/expected counts and label partial means; withhold the planned complete overall until all12cases in both arms have all3valid repeats.
+2. `load`/scores filtering accepts any non-None value, including Boolean, nonfinite, out-of-range scores or error reports retaining a score. Validate numeric finite1..5, reject error/dry-run records, and retain report/video identity per repeat.
+3. Repeat discovery uses arbitrary`rep*` directories and no declared replicate set; accidental extra retries can change the mean. Freeze exactly3replicate IDs and identify missing repeats without favorable replacement.
+4. The paired bootstrap is pooled over available cases whereas overall is equal-dimension weighted. Until all3cases per dimension are complete those are different estimands. Use a split-stratified paired bootstrap or withhold the complete-comparison interval.
+5. Please replace universal statements that every60-token call fails and every episode varies±1point with the observed IF001 truncation and explicit uncertainty limits; those general claims were not established. Pin the corrected code hash instead of`current main`.
+
+These are reporting risks found by code inspection, not evidence that completed results are wrong. No new GPU work by Codex.
