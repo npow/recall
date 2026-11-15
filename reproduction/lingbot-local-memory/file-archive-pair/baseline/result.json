@@ -1,0 +1,2533 @@
+{
+  "scope": "two-chunk local transport/memory smoke; no archive or quality score",
+  "status": "completed",
+  "torch": "2.15.0+cu132",
+  "forced_flash_sdpa": true,
+  "forced_flash_scope": "DiT self/cross attention only; native VAE backend defaults retained",
+  "vae_attention_shapes": [
+    {
+      "query": [
+        1,
+        1,
+        6032,
+        384
+      ],
+      "key": [
+        1,
+        1,
+        6032,
+        384
+      ],
+      "fp32_score_matrix_bytes": 145540096
+    }
+  ],
+  "model_weights_quantized": false,
+  "native_kv_quantized": false,
+  "training": false,
+  "events": [
+    {
+      "elapsed_s": 0.00024435296654701233,
+      "phase": "flash_preflight",
+      "rss_bytes": 538955776,
+      "mem_available_bytes": 109099839488,
+      "process_io": {
+        "rchar": 25397647,
+        "wchar": 167265,
+        "syscr": 2983,
+        "syscw": 42,
+        "read_bytes": 4096,
+        "write_bytes": 4096,
+        "cancelled_write_bytes": 4096
+      },
+      "cuda_allocated_bytes": 0,
+      "cuda_reserved_bytes": 0,
+      "event": "flash_preflight"
+    },
+    {
+      "elapsed_s": 0.1659719559829682,
+      "phase": "flash_preflight_passed",
+      "rss_bytes": 758857728,
+      "mem_available_bytes": 108818042880,
+      "process_io": {
+        "rchar": 25514532,
+        "wchar": 167758,
+        "syscr": 3136,
+        "syscw": 58,
+        "read_bytes": 13496320,
+        "write_bytes": 8192,
+        "cancelled_write_bytes": 4096
+      },
+      "cuda_allocated_bytes": 0,
+      "cuda_reserved_bytes": 0,
+      "event": "flash_preflight_passed"
+    },
+    {
+      "elapsed_s": 2.7562495379825123,
+      "phase": "pipeline_loading",
+      "rss_bytes": 998322176,
+      "mem_available_bytes": 108697890816,
+      "process_io": {
+        "rchar": 121272112,
+        "wchar": 223110,
+        "syscr": 10908,
+        "syscw": 81,
+        "read_bytes": 13533184,
+        "write_bytes": 77824,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 0,
+      "cuda_reserved_bytes": 0,
+      "event": "pipeline_loading"
+    },
+    {
+      "elapsed_s": 196.53041641099844,
+      "phase": "pipeline_loaded",
+      "rss_bytes": 17419939840,
+      "mem_available_bytes": 53200191488,
+      "process_io": {
+        "rchar": 12010889173,
+        "wchar": 489430,
+        "syscr": 16042,
+        "syscw": 857,
+        "read_bytes": 86087766016,
+        "write_bytes": 503808,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 37703917056,
+      "cuda_reserved_bytes": 37725667328,
+      "event": "pipeline_loaded"
+    },
+    {
+      "elapsed_s": 197.38544090196956,
+      "phase": "t5_encode_before",
+      "rss_bytes": 8087154688,
+      "mem_available_bytes": 51586981888,
+      "process_io": {
+        "rchar": 12014462703,
+        "wchar": 494288,
+        "syscr": 16132,
+        "syscw": 862,
+        "read_bytes": 86101073920,
+        "write_bytes": 512000,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 49206022656,
+      "cuda_reserved_bytes": 49222254592,
+      "event": "t5_encode_before"
+    },
+    {
+      "elapsed_s": 197.93834538100054,
+      "phase": "t5_discarded_after_encode",
+      "rss_bytes": 8790417408,
+      "mem_available_bytes": 62299607040,
+      "process_io": {
+        "rchar": 12014471017,
+        "wchar": 495408,
+        "syscr": 16150,
+        "syscw": 865,
+        "read_bytes": 86165008384,
+        "write_bytes": 512000,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 37847347712,
+      "cuda_reserved_bytes": 37880856576,
+      "event": "t5_discarded_after_encode"
+    },
+    {
+      "elapsed_s": 233.30897699098568,
+      "phase": "native_kv_before",
+      "rss_bytes": 3897274368,
+      "mem_available_bytes": 56676667392,
+      "process_io": {
+        "rchar": 12014970157,
+        "wchar": 548606,
+        "syscr": 17026,
+        "syscw": 1008,
+        "read_bytes": 86324473856,
+        "write_bytes": 589824,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 38113617920,
+      "cuda_reserved_bytes": 48154804224,
+      "event": "native_kv_before"
+    },
+    {
+      "elapsed_s": 247.295651790977,
+      "phase": "native_kv_after",
+      "rss_bytes": 3887415296,
+      "mem_available_bytes": 43281956864,
+      "process_io": {
+        "rchar": 12015042248,
+        "wchar": 558113,
+        "syscr": 17182,
+        "syscw": 1034,
+        "read_bytes": 86324473856,
+        "write_bytes": 606208,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 60397389824,
+      "cuda_reserved_bytes": 61821943808,
+      "event": "native_kv_after"
+    },
+    {
+      "elapsed_s": 247.30165969999507,
+      "phase": "denoising",
+      "rss_bytes": 3887534080,
+      "mem_available_bytes": 43281547264,
+      "process_io": {
+        "rchar": 12015045021,
+        "wchar": 558542,
+        "syscr": 17188,
+        "syscw": 1036,
+        "read_bytes": 86325006336,
+        "write_bytes": 610304,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 60817889792,
+      "cuda_reserved_bytes": 61821943808,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 273.265068756009,
+      "phase": "denoising",
+      "rss_bytes": 3957125120,
+      "mem_available_bytes": 40485892096,
+      "process_io": {
+        "rchar": 12015115777,
+        "wchar": 575519,
+        "syscr": 17340,
+        "syscw": 1063,
+        "read_bytes": 86370807808,
+        "write_bytes": 651264,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 60824103424,
+      "cuda_reserved_bytes": 64369983488,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 278.7288413619972,
+      "phase": "denoising",
+      "rss_bytes": 3957252096,
+      "mem_available_bytes": 40439087104,
+      "process_io": {
+        "rchar": 12015179601,
+        "wchar": 583757,
+        "syscr": 17478,
+        "syscw": 1086,
+        "read_bytes": 86371237888,
+        "write_bytes": 663552,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 60823898112,
+      "cuda_reserved_bytes": 64369983488,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 284.19899663096294,
+      "phase": "denoising",
+      "rss_bytes": 3957288960,
+      "mem_available_bytes": 40455122944,
+      "process_io": {
+        "rchar": 12015243424,
+        "wchar": 592002,
+        "syscr": 17616,
+        "syscw": 1109,
+        "read_bytes": 86371237888,
+        "write_bytes": 675840,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 60823884800,
+      "cuda_reserved_bytes": 64369983488,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 289.6648383020074,
+      "phase": "clean_pass",
+      "rss_bytes": 3957313536,
+      "mem_available_bytes": 40431685632,
+      "process_io": {
+        "rchar": 12015307248,
+        "wchar": 600243,
+        "syscr": 17754,
+        "syscw": 1132,
+        "read_bytes": 86371237888,
+        "write_bytes": 688128,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 60823714304,
+      "cuda_reserved_bytes": 64369983488,
+      "event": "clean_pass"
+    },
+    {
+      "elapsed_s": 295.1284457099973,
+      "phase": "vae_decode_before",
+      "rss_bytes": 3957338112,
+      "mem_available_bytes": 40459685888,
+      "process_io": {
+        "rchar": 12015368297,
+        "wchar": 608154,
+        "syscr": 17886,
+        "syscw": 1154,
+        "read_bytes": 86371237888,
+        "write_bytes": 700416,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 60825572352,
+      "cuda_reserved_bytes": 64369983488,
+      "event": "vae_decode_before"
+    },
+    {
+      "elapsed_s": 296.86955166299595,
+      "phase": "vae_decode_after",
+      "rss_bytes": 4074946560,
+      "mem_available_bytes": 33643114496,
+      "process_io": {
+        "rchar": 12015387719,
+        "wchar": 610741,
+        "syscr": 17928,
+        "syscw": 1161,
+        "read_bytes": 86406635520,
+        "write_bytes": 700416,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64539593728,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_after"
+    },
+    {
+      "elapsed_s": 299.5040550339618,
+      "phase": "denoising",
+      "rss_bytes": 3216101376,
+      "mem_available_bytes": 34299281408,
+      "process_io": {
+        "rchar": 12032077339,
+        "wchar": 17422628,
+        "syscr": 18264,
+        "syscw": 1204,
+        "read_bytes": 86440263680,
+        "write_bytes": 2469888,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64475968000,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 306.0767222449649,
+      "phase": "denoising",
+      "rss_bytes": 3218329600,
+      "mem_available_bytes": 34320781312,
+      "process_io": {
+        "rchar": 12032152344,
+        "wchar": 17443236,
+        "syscr": 18426,
+        "syscw": 1233,
+        "read_bytes": 86440263680,
+        "write_bytes": 2502656,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64479445504,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 312.6140835789847,
+      "phase": "denoising",
+      "rss_bytes": 3222474752,
+      "mem_available_bytes": 34389663744,
+      "process_io": {
+        "rchar": 12032227349,
+        "wchar": 17452978,
+        "syscr": 18588,
+        "syscw": 1260,
+        "read_bytes": 86440263680,
+        "write_bytes": 2510848,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64479500288,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 319.1483736409573,
+      "phase": "denoising",
+      "rss_bytes": 3227475968,
+      "mem_available_bytes": 34407792640,
+      "process_io": {
+        "rchar": 12032302350,
+        "wchar": 17462727,
+        "syscr": 18750,
+        "syscw": 1287,
+        "read_bytes": 86440263680,
+        "write_bytes": 2523136,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64479499264,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 325.6893634129665,
+      "phase": "clean_pass",
+      "rss_bytes": 3227512832,
+      "mem_available_bytes": 34397208576,
+      "process_io": {
+        "rchar": 12032377355,
+        "wchar": 17472480,
+        "syscr": 18912,
+        "syscw": 1314,
+        "read_bytes": 86440263680,
+        "write_bytes": 2539520,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64479424000,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "clean_pass"
+    },
+    {
+      "elapsed_s": 332.2342961449758,
+      "phase": "vae_decode_before",
+      "rss_bytes": 3233656832,
+      "mem_available_bytes": 34375122944,
+      "process_io": {
+        "rchar": 12032452360,
+        "wchar": 17482255,
+        "syscr": 19074,
+        "syscw": 1341,
+        "read_bytes": 86440263680,
+        "write_bytes": 2551808,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64481357312,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_before"
+    },
+    {
+      "elapsed_s": 334.4504508569953,
+      "phase": "vae_decode_after",
+      "rss_bytes": 3233665024,
+      "mem_available_bytes": 34360025088,
+      "process_io": {
+        "rchar": 12032480130,
+        "wchar": 17485968,
+        "syscr": 19134,
+        "syscw": 1351,
+        "read_bytes": 86440263680,
+        "write_bytes": 2560000,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64555527680,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_after"
+    },
+    {
+      "elapsed_s": 337.24627401999896,
+      "phase": "denoising",
+      "rss_bytes": 3180335104,
+      "mem_available_bytes": 34293858304,
+      "process_io": {
+        "rchar": 12053215323,
+        "wchar": 38376609,
+        "syscr": 19504,
+        "syscw": 1398,
+        "read_bytes": 86440263680,
+        "write_bytes": 4927488,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64477875200,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 344.4221789359581,
+      "phase": "denoising",
+      "rss_bytes": 3180011520,
+      "mem_available_bytes": 34245808128,
+      "process_io": {
+        "rchar": 12053295884,
+        "wchar": 38400748,
+        "syscr": 19678,
+        "syscw": 1429,
+        "read_bytes": 86440263680,
+        "write_bytes": 4960256,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64481017344,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 351.5726546960068,
+      "phase": "denoising",
+      "rss_bytes": 3180052480,
+      "mem_available_bytes": 34374774784,
+      "process_io": {
+        "rchar": 12053379223,
+        "wchar": 38411580,
+        "syscr": 19858,
+        "syscw": 1459,
+        "read_bytes": 86440263680,
+        "write_bytes": 4968448,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64481017344,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 358.72186858800706,
+      "phase": "denoising",
+      "rss_bytes": 3180093440,
+      "mem_available_bytes": 34372296704,
+      "process_io": {
+        "rchar": 12053459784,
+        "wchar": 38422047,
+        "syscr": 20032,
+        "syscw": 1488,
+        "read_bytes": 86440263680,
+        "write_bytes": 4984832,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64480963584,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 365.86875874898396,
+      "phase": "clean_pass",
+      "rss_bytes": 3180134400,
+      "mem_available_bytes": 34314219520,
+      "process_io": {
+        "rchar": 12053543122,
+        "wchar": 38432878,
+        "syscr": 20212,
+        "syscw": 1518,
+        "read_bytes": 86440263680,
+        "write_bytes": 5001216,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64481017344,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "clean_pass"
+    },
+    {
+      "elapsed_s": 373.0244012909825,
+      "phase": "vae_decode_before",
+      "rss_bytes": 3180171264,
+      "mem_available_bytes": 34363064320,
+      "process_io": {
+        "rchar": 12053623683,
+        "wchar": 38443378,
+        "syscr": 20386,
+        "syscw": 1547,
+        "read_bytes": 86440263680,
+        "write_bytes": 5013504,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64482561536,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_before"
+    },
+    {
+      "elapsed_s": 375.2356135539594,
+      "phase": "vae_decode_after",
+      "rss_bytes": 3180187648,
+      "mem_available_bytes": 34371694592,
+      "process_io": {
+        "rchar": 12053651453,
+        "wchar": 38447091,
+        "syscr": 20446,
+        "syscw": 1557,
+        "read_bytes": 86440263680,
+        "write_bytes": 5021696,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64556682752,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_after"
+    },
+    {
+      "elapsed_s": 378.0220958769787,
+      "phase": "denoising",
+      "rss_bytes": 3254648832,
+      "mem_available_bytes": 34315739136,
+      "process_io": {
+        "rchar": 12074294032,
+        "wchar": 59240140,
+        "syscr": 20816,
+        "syscw": 1603,
+        "read_bytes": 86440263680,
+        "write_bytes": 7294976,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64479473152,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 385.81763676495757,
+      "phase": "denoising",
+      "rss_bytes": 3254693888,
+      "mem_available_bytes": 34318131200,
+      "process_io": {
+        "rchar": 12074382926,
+        "wchar": 59268152,
+        "syscr": 21008,
+        "syscw": 1637,
+        "read_bytes": 86440263680,
+        "write_bytes": 7331840,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64482896896,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 393.61026678897906,
+      "phase": "denoising",
+      "rss_bytes": 3254734848,
+      "mem_available_bytes": 34249175040,
+      "process_io": {
+        "rchar": 12074471821,
+        "wchar": 59279708,
+        "syscr": 21200,
+        "syscw": 1669,
+        "read_bytes": 86440263680,
+        "write_bytes": 7348224,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64482691584,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 401.4673308839556,
+      "phase": "denoising",
+      "rss_bytes": 3254784000,
+      "mem_available_bytes": 34080948224,
+      "process_io": {
+        "rchar": 12074563493,
+        "wchar": 59291624,
+        "syscr": 21398,
+        "syscw": 1702,
+        "read_bytes": 86440263680,
+        "write_bytes": 7364608,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64483026944,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 409.2546878189896,
+      "phase": "clean_pass",
+      "rss_bytes": 3254829056,
+      "mem_available_bytes": 34078146560,
+      "process_io": {
+        "rchar": 12074652388,
+        "wchar": 59303178,
+        "syscr": 21590,
+        "syscw": 1734,
+        "read_bytes": 86440263680,
+        "write_bytes": 7376896,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64482637824,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "clean_pass"
+    },
+    {
+      "elapsed_s": 417.03510637697764,
+      "phase": "vae_decode_before",
+      "rss_bytes": 3254865920,
+      "mem_available_bytes": 34166947840,
+      "process_io": {
+        "rchar": 12074741282,
+        "wchar": 59314761,
+        "syscr": 21782,
+        "syscw": 1766,
+        "read_bytes": 86440263680,
+        "write_bytes": 7389184,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64484571136,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_before"
+    },
+    {
+      "elapsed_s": 419.24907634599367,
+      "phase": "vae_decode_after",
+      "rss_bytes": 3254878208,
+      "mem_available_bytes": 34155659264,
+      "process_io": {
+        "rchar": 12074769052,
+        "wchar": 59318473,
+        "syscr": 21842,
+        "syscw": 1776,
+        "read_bytes": 86440263680,
+        "write_bytes": 7393280,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64558692352,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_after"
+    },
+    {
+      "elapsed_s": 422.01061447896063,
+      "phase": "denoising",
+      "rss_bytes": 3180462080,
+      "mem_available_bytes": 34292555776,
+      "process_io": {
+        "rchar": 12095141140,
+        "wchar": 79826544,
+        "syscr": 22212,
+        "syscw": 1821,
+        "read_bytes": 86440263680,
+        "write_bytes": 9383936,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64480963584,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 430.32418052799767,
+      "phase": "denoising",
+      "rss_bytes": 3180507136,
+      "mem_available_bytes": 33964322816,
+      "process_io": {
+        "rchar": 12095235591,
+        "wchar": 79858046,
+        "syscr": 22416,
+        "syscw": 1857,
+        "read_bytes": 86440263680,
+        "write_bytes": 9420800,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64484235776,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 438.4382633139612,
+      "phase": "denoising",
+      "rss_bytes": 3180552192,
+      "mem_available_bytes": 34111885312,
+      "process_io": {
+        "rchar": 12095327264,
+        "wchar": 79869960,
+        "syscr": 22614,
+        "syscw": 1890,
+        "read_bytes": 86440263680,
+        "write_bytes": 9437184,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64484182016,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 446.55061872897204,
+      "phase": "denoising",
+      "rss_bytes": 3180597248,
+      "mem_available_bytes": 34203652096,
+      "process_io": {
+        "rchar": 12095418937,
+        "wchar": 79881876,
+        "syscr": 22812,
+        "syscw": 1923,
+        "read_bytes": 86440263680,
+        "write_bytes": 9449472,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64484441088,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 454.6552988020121,
+      "phase": "clean_pass",
+      "rss_bytes": 3180638208,
+      "mem_available_bytes": 34364100608,
+      "process_io": {
+        "rchar": 12095513388,
+        "wchar": 79894150,
+        "syscr": 23016,
+        "syscw": 1957,
+        "read_bytes": 86440263680,
+        "write_bytes": 9465856,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64484105728,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "clean_pass"
+    },
+    {
+      "elapsed_s": 462.7717359989765,
+      "phase": "vae_decode_before",
+      "rss_bytes": 3180683264,
+      "mem_available_bytes": 34385006592,
+      "process_io": {
+        "rchar": 12095605061,
+        "wchar": 79906098,
+        "syscr": 23214,
+        "syscw": 1990,
+        "read_bytes": 86440263680,
+        "write_bytes": 9486336,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64485779968,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_before"
+    },
+    {
+      "elapsed_s": 465.00892029196257,
+      "phase": "vae_decode_after",
+      "rss_bytes": 3180687360,
+      "mem_available_bytes": 34027081728,
+      "process_io": {
+        "rchar": 12095632831,
+        "wchar": 79909812,
+        "syscr": 23274,
+        "syscw": 2000,
+        "read_bytes": 86440263680,
+        "write_bytes": 9490432,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64558901760,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_after"
+    },
+    {
+      "elapsed_s": 467.61902735597687,
+      "phase": "denoising",
+      "rss_bytes": 3254906880,
+      "mem_available_bytes": 33900593152,
+      "process_io": {
+        "rchar": 12115911381,
+        "wchar": 100335985,
+        "syscr": 23639,
+        "syscw": 2044,
+        "read_bytes": 86440263680,
+        "write_bytes": 11399168,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64481562112,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 475.924316285993,
+      "phase": "denoising",
+      "rss_bytes": 3254976512,
+      "mem_available_bytes": 34211028992,
+      "process_io": {
+        "rchar": 12116008678,
+        "wchar": 100370712,
+        "syscr": 23849,
+        "syscw": 2081,
+        "read_bytes": 86440263680,
+        "write_bytes": 11436032,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64484650496,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 484.0370499669807,
+      "phase": "denoising",
+      "rss_bytes": 3255013376,
+      "mem_available_bytes": 34284294144,
+      "process_io": {
+        "rchar": 12116100417,
+        "wchar": 100382689,
+        "syscr": 24047,
+        "syscw": 2114,
+        "read_bytes": 86440263680,
+        "write_bytes": 11452416,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64485586944,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 492.1917407489964,
+      "phase": "denoising",
+      "rss_bytes": 3255062528,
+      "mem_available_bytes": 33966583808,
+      "process_io": {
+        "rchar": 12116192156,
+        "wchar": 100394666,
+        "syscr": 24245,
+        "syscw": 2147,
+        "read_bytes": 86440263680,
+        "write_bytes": 11464704,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64485039616,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 500.340319787967,
+      "phase": "clean_pass",
+      "rss_bytes": 3255103488,
+      "mem_available_bytes": 33730580480,
+      "process_io": {
+        "rchar": 12116286675,
+        "wchar": 100407015,
+        "syscr": 24449,
+        "syscw": 2181,
+        "read_bytes": 86440263680,
+        "write_bytes": 11485184,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64485115904,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "clean_pass"
+    },
+    {
+      "elapsed_s": 508.45204493397614,
+      "phase": "vae_decode_before",
+      "rss_bytes": 3255152640,
+      "mem_available_bytes": 33984196608,
+      "process_io": {
+        "rchar": 12116378414,
+        "wchar": 100419025,
+        "syscr": 24647,
+        "syscw": 2214,
+        "read_bytes": 86440263680,
+        "write_bytes": 11501568,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64486713856,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_before"
+    },
+    {
+      "elapsed_s": 510.6691225289833,
+      "phase": "vae_decode_after",
+      "rss_bytes": 3255156736,
+      "mem_available_bytes": 34024153088,
+      "process_io": {
+        "rchar": 12116406204,
+        "wchar": 100422762,
+        "syscr": 24707,
+        "syscw": 2224,
+        "read_bytes": 86440263680,
+        "write_bytes": 11509760,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64562276864,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_after"
+    },
+    {
+      "elapsed_s": 513.4170928099775,
+      "phase": "denoising",
+      "rss_bytes": 3181469696,
+      "mem_available_bytes": 34133901312,
+      "process_io": {
+        "rchar": 12136756430,
+        "wchar": 120920420,
+        "syscr": 25077,
+        "syscw": 2269,
+        "read_bytes": 86440263680,
+        "write_bytes": 13484032,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64484624384,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 521.7075269129709,
+      "phase": "denoising",
+      "rss_bytes": 3181522944,
+      "mem_available_bytes": 34130329600,
+      "process_io": {
+        "rchar": 12136850949,
+        "wchar": 120957527,
+        "syscr": 25281,
+        "syscw": 2305,
+        "read_bytes": 86440263680,
+        "write_bytes": 13529088,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64488626688,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 529.8273053310113,
+      "phase": "denoising",
+      "rss_bytes": 3181572096,
+      "mem_available_bytes": 34065203200,
+      "process_io": {
+        "rchar": 12136942688,
+        "wchar": 120969493,
+        "syscr": 25479,
+        "syscw": 2338,
+        "read_bytes": 86440263680,
+        "write_bytes": 13545472,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64487766528,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 538.0613735259976,
+      "phase": "denoising",
+      "rss_bytes": 3181613056,
+      "mem_available_bytes": 30277005312,
+      "process_io": {
+        "rchar": 12137037207,
+        "wchar": 120981819,
+        "syscr": 25683,
+        "syscw": 2372,
+        "read_bytes": 86440263680,
+        "write_bytes": 13561856,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64488986624,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 546.3469405460055,
+      "phase": "clean_pass",
+      "rss_bytes": 3181670400,
+      "mem_available_bytes": 29940666368,
+      "process_io": {
+        "rchar": 12137131726,
+        "wchar": 120994146,
+        "syscr": 25887,
+        "syscw": 2406,
+        "read_bytes": 86440263680,
+        "write_bytes": 13574144,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64489043968,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "clean_pass"
+    },
+    {
+      "elapsed_s": 554.6394650900038,
+      "phase": "vae_decode_before",
+      "rss_bytes": 3183443968,
+      "mem_available_bytes": 28770938880,
+      "process_io": {
+        "rchar": 12137226242,
+        "wchar": 121006509,
+        "syscr": 26091,
+        "syscw": 2440,
+        "read_bytes": 86440263680,
+        "write_bytes": 13590528,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64490731520,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_before"
+    },
+    {
+      "elapsed_s": 556.9518093040097,
+      "phase": "vae_decode_after",
+      "rss_bytes": 3183407104,
+      "mem_available_bytes": 30691745792,
+      "process_io": {
+        "rchar": 12137254032,
+        "wchar": 121010237,
+        "syscr": 26151,
+        "syscw": 2450,
+        "read_bytes": 86440263680,
+        "write_bytes": 13594624,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64563804160,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_after"
+    },
+    {
+      "elapsed_s": 559.7310188550036,
+      "phase": "denoising",
+      "rss_bytes": 3257630720,
+      "mem_available_bytes": 29839142912,
+      "process_io": {
+        "rchar": 12157697049,
+        "wchar": 141606517,
+        "syscr": 26527,
+        "syscw": 2497,
+        "read_bytes": 86440263680,
+        "write_bytes": 15667200,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64485509120,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 568.2194764069864,
+      "phase": "denoising",
+      "rss_bytes": 3259641856,
+      "mem_available_bytes": 27965382656,
+      "process_io": {
+        "rchar": 12157791567,
+        "wchar": 141646396,
+        "syscr": 26731,
+        "syscw": 2533,
+        "read_bytes": 86440263680,
+        "write_bytes": 15716352,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64488957952,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 576.517960030993,
+      "phase": "denoising",
+      "rss_bytes": 3255021568,
+      "mem_available_bytes": 27747561472,
+      "process_io": {
+        "rchar": 12157886085,
+        "wchar": 141658725,
+        "syscr": 26935,
+        "syscw": 2567,
+        "read_bytes": 86440263680,
+        "write_bytes": 15732736,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64489982464,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 584.8526914579561,
+      "phase": "denoising",
+      "rss_bytes": 3254681600,
+      "mem_available_bytes": 27127332864,
+      "process_io": {
+        "rchar": 12157983384,
+        "wchar": 141671415,
+        "syscr": 27145,
+        "syscw": 2602,
+        "read_bytes": 86440263680,
+        "write_bytes": 15749120,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64489457664,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 593.1655493649887,
+      "phase": "clean_pass",
+      "rss_bytes": 3254595584,
+      "mem_available_bytes": 27757195264,
+      "process_io": {
+        "rchar": 12158077902,
+        "wchar": 141683744,
+        "syscr": 27349,
+        "syscw": 2636,
+        "read_bytes": 86440263680,
+        "write_bytes": 15765504,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64489789440,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "clean_pass"
+    },
+    {
+      "elapsed_s": 601.5167497209623,
+      "phase": "vae_decode_before",
+      "rss_bytes": 3254480896,
+      "mem_available_bytes": 26926104576,
+      "process_io": {
+        "rchar": 12158172421,
+        "wchar": 141696108,
+        "syscr": 27553,
+        "syscw": 2670,
+        "read_bytes": 86440263680,
+        "write_bytes": 15777792,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64491722752,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_before"
+    },
+    {
+      "elapsed_s": 603.794481193996,
+      "phase": "vae_decode_after",
+      "rss_bytes": 3254403072,
+      "mem_available_bytes": 27404419072,
+      "process_io": {
+        "rchar": 12158200211,
+        "wchar": 141699835,
+        "syscr": 27613,
+        "syscw": 2680,
+        "read_bytes": 86440263680,
+        "write_bytes": 15781888,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64567007232,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_after"
+    },
+    {
+      "elapsed_s": 606.6641749269911,
+      "phase": "denoising",
+      "rss_bytes": 3180253184,
+      "mem_available_bytes": 27757862912,
+      "process_io": {
+        "rchar": 12178541341,
+        "wchar": 162184854,
+        "syscr": 27983,
+        "syscw": 2725,
+        "read_bytes": 86440284160,
+        "write_bytes": 17747968,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64488548352,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 615.1576842179638,
+      "phase": "denoising",
+      "rss_bytes": 3180257280,
+      "mem_available_bytes": 27224633344,
+      "process_io": {
+        "rchar": 12178638638,
+        "wchar": 162227906,
+        "syscr": 28193,
+        "syscw": 2762,
+        "read_bytes": 86440284160,
+        "write_bytes": 17793024,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64492025856,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 623.4889965719776,
+      "phase": "denoising",
+      "rss_bytes": 3179925504,
+      "mem_available_bytes": 27105435648,
+      "process_io": {
+        "rchar": 12178735936,
+        "wchar": 162240597,
+        "syscr": 28403,
+        "syscw": 2797,
+        "read_bytes": 86440284160,
+        "write_bytes": 17809408,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64493729792,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 631.8385147610097,
+      "phase": "denoising",
+      "rss_bytes": 3179970560,
+      "mem_available_bytes": 26933809152,
+      "process_io": {
+        "rchar": 12178830455,
+        "wchar": 162252922,
+        "syscr": 28607,
+        "syscw": 2831,
+        "read_bytes": 86440284160,
+        "write_bytes": 17825792,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64491636736,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 640.178974237002,
+      "phase": "clean_pass",
+      "rss_bytes": 3179970560,
+      "mem_available_bytes": 28144295936,
+      "process_io": {
+        "rchar": 12178924974,
+        "wchar": 162265252,
+        "syscr": 28811,
+        "syscw": 2865,
+        "read_bytes": 86440284160,
+        "write_bytes": 17838080,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64492025856,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "clean_pass"
+    },
+    {
+      "elapsed_s": 648.4838925349759,
+      "phase": "vae_decode_before",
+      "rss_bytes": 3179900928,
+      "mem_available_bytes": 27769421824,
+      "process_io": {
+        "rchar": 12179019493,
+        "wchar": 162277613,
+        "syscr": 29015,
+        "syscw": 2899,
+        "read_bytes": 86440284160,
+        "write_bytes": 17854464,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64493598720,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_before"
+    },
+    {
+      "elapsed_s": 650.7434600789566,
+      "phase": "vae_decode_after",
+      "rss_bytes": 3179724800,
+      "mem_available_bytes": 27266990080,
+      "process_io": {
+        "rchar": 12179047283,
+        "wchar": 162281343,
+        "syscr": 29075,
+        "syscw": 2909,
+        "read_bytes": 86440284160,
+        "write_bytes": 17858560,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64567605248,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_after"
+    },
+    {
+      "elapsed_s": 653.4631443179678,
+      "phase": "denoising",
+      "rss_bytes": 3253661696,
+      "mem_available_bytes": 26627489792,
+      "process_io": {
+        "rchar": 12199402105,
+        "wchar": 182789570,
+        "syscr": 29445,
+        "syscw": 2954,
+        "read_bytes": 86440284160,
+        "write_bytes": 19853312,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64490366976,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 661.8850397389615,
+      "phase": "denoising",
+      "rss_bytes": 3253686272,
+      "mem_available_bytes": 27756011520,
+      "process_io": {
+        "rchar": 12199496623,
+        "wchar": 182835061,
+        "syscr": 29649,
+        "syscw": 2990,
+        "read_bytes": 86440284160,
+        "write_bytes": 19910656,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64494508544,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 669.9894476920017,
+      "phase": "denoising",
+      "rss_bytes": 3253944320,
+      "mem_available_bytes": 34368221184,
+      "process_io": {
+        "rchar": 12199591142,
+        "wchar": 182847388,
+        "syscr": 29853,
+        "syscw": 3024,
+        "read_bytes": 86440284160,
+        "write_bytes": 19927040,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64493455360,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 678.120958755957,
+      "phase": "denoising",
+      "rss_bytes": 3259162624,
+      "mem_available_bytes": 34016452608,
+      "process_io": {
+        "rchar": 12199682881,
+        "wchar": 182859354,
+        "syscr": 30051,
+        "syscw": 3057,
+        "read_bytes": 86440284160,
+        "write_bytes": 19943424,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64494094336,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 686.2216801609611,
+      "phase": "clean_pass",
+      "rss_bytes": 3259211776,
+      "mem_available_bytes": 34204364800,
+      "process_io": {
+        "rchar": 12199774620,
+        "wchar": 182871311,
+        "syscr": 30249,
+        "syscw": 3090,
+        "read_bytes": 86440284160,
+        "write_bytes": 19955712,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64493455360,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "clean_pass"
+    },
+    {
+      "elapsed_s": 694.3274913339992,
+      "phase": "vae_decode_before",
+      "rss_bytes": 3259244544,
+      "mem_available_bytes": 34329653248,
+      "process_io": {
+        "rchar": 12199869138,
+        "wchar": 182883673,
+        "syscr": 30453,
+        "syscw": 3124,
+        "read_bytes": 86440284160,
+        "write_bytes": 19972096,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64495028224,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_before"
+    },
+    {
+      "elapsed_s": 696.5404163399944,
+      "phase": "vae_decode_after",
+      "rss_bytes": 3262783488,
+      "mem_available_bytes": 34333618176,
+      "process_io": {
+        "rchar": 12199896928,
+        "wchar": 182887402,
+        "syscr": 30513,
+        "syscw": 3134,
+        "read_bytes": 86440284160,
+        "write_bytes": 19976192,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64567707648,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_after"
+    },
+    {
+      "elapsed_s": 699.3053431799635,
+      "phase": "denoising",
+      "rss_bytes": 3188649984,
+      "mem_available_bytes": 34408792064,
+      "process_io": {
+        "rchar": 12220208287,
+        "wchar": 203344161,
+        "syscr": 30884,
+        "syscw": 3179,
+        "read_bytes": 86440284160,
+        "write_bytes": 21917696,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64490469376,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 707.6016582369921,
+      "phase": "denoising",
+      "rss_bytes": 3188690944,
+      "mem_available_bytes": 36104699904,
+      "process_io": {
+        "rchar": 12220302806,
+        "wchar": 203392408,
+        "syscr": 31088,
+        "syscw": 3215,
+        "read_bytes": 86440284160,
+        "write_bytes": 21970944,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64493557760,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 715.7161101879901,
+      "phase": "denoising",
+      "rss_bytes": 3188736000,
+      "mem_available_bytes": 36079755264,
+      "process_io": {
+        "rchar": 12220394545,
+        "wchar": 203404375,
+        "syscr": 31286,
+        "syscw": 3248,
+        "read_bytes": 86440284160,
+        "write_bytes": 21987328,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64494471680,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 723.8538026280003,
+      "phase": "denoising",
+      "rss_bytes": 3188776960,
+      "mem_available_bytes": 34682814464,
+      "process_io": {
+        "rchar": 12220486284,
+        "wchar": 203416339,
+        "syscr": 31484,
+        "syscw": 3281,
+        "read_bytes": 86440284160,
+        "write_bytes": 22003712,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64494499840,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 731.6833848189563,
+      "phase": "clean_pass",
+      "rss_bytes": 3188830208,
+      "mem_available_bytes": 35945603072,
+      "process_io": {
+        "rchar": 12220578022,
+        "wchar": 203428304,
+        "syscr": 31682,
+        "syscw": 3314,
+        "read_bytes": 86440284160,
+        "write_bytes": 22024192,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64494499840,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "clean_pass"
+    },
+    {
+      "elapsed_s": 739.4271281939582,
+      "phase": "vae_decode_before",
+      "rss_bytes": 3188862976,
+      "mem_available_bytes": 35968335872,
+      "process_io": {
+        "rchar": 12220664199,
+        "wchar": 203439580,
+        "syscr": 31868,
+        "syscw": 3345,
+        "read_bytes": 86440284160,
+        "write_bytes": 22040576,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64496044032,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_before"
+    },
+    {
+      "elapsed_s": 741.6521406769753,
+      "phase": "vae_decode_after",
+      "rss_bytes": 3188875264,
+      "mem_available_bytes": 35824685056,
+      "process_io": {
+        "rchar": 12220691989,
+        "wchar": 203443309,
+        "syscr": 31928,
+        "syscw": 3355,
+        "read_bytes": 86440284160,
+        "write_bytes": 22044672,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64572721152,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_after"
+    },
+    {
+      "elapsed_s": 744.2997667609598,
+      "phase": "denoising",
+      "rss_bytes": 3263107072,
+      "mem_available_bytes": 35420221440,
+      "process_io": {
+        "rchar": 12240976386,
+        "wchar": 223870630,
+        "syscr": 32298,
+        "syscw": 3400,
+        "read_bytes": 86440284160,
+        "write_bytes": 23949312,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64494569472,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 752.2990697739879,
+      "phase": "denoising",
+      "rss_bytes": 3263131648,
+      "mem_available_bytes": 34194513920,
+      "process_io": {
+        "rchar": 12241068125,
+        "wchar": 223921295,
+        "syscr": 32496,
+        "syscw": 3435,
+        "read_bytes": 86440284160,
+        "write_bytes": 24006656,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64499460096,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 760.0469614869799,
+      "phase": "denoising",
+      "rss_bytes": 3263152128,
+      "mem_available_bytes": 35893223424,
+      "process_io": {
+        "rchar": 12241157084,
+        "wchar": 223932896,
+        "syscr": 32688,
+        "syscw": 3467,
+        "read_bytes": 86440284160,
+        "write_bytes": 24023040,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64498599936,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 767.7910503789899,
+      "phase": "denoising",
+      "rss_bytes": 3263197184,
+      "mem_available_bytes": 35957207040,
+      "process_io": {
+        "rchar": 12241243263,
+        "wchar": 223944138,
+        "syscr": 32874,
+        "syscw": 3498,
+        "read_bytes": 86440284160,
+        "write_bytes": 24039424,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64497657856,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 775.5362216429785,
+      "phase": "clean_pass",
+      "rss_bytes": 3263238144,
+      "mem_available_bytes": 35973468160,
+      "process_io": {
+        "rchar": 12241332221,
+        "wchar": 223955739,
+        "syscr": 33066,
+        "syscw": 3530,
+        "read_bytes": 86440284160,
+        "write_bytes": 24055808,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64498296832,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "clean_pass"
+    },
+    {
+      "elapsed_s": 783.2776367510087,
+      "phase": "vae_decode_before",
+      "rss_bytes": 3263287296,
+      "mem_available_bytes": 36038217728,
+      "process_io": {
+        "rchar": 12241421179,
+        "wchar": 223967377,
+        "syscr": 33258,
+        "syscw": 3562,
+        "read_bytes": 86440284160,
+        "write_bytes": 24072192,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64499841024,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_before"
+    },
+    {
+      "elapsed_s": 785.4969422629802,
+      "phase": "vae_decode_after",
+      "rss_bytes": 3263295488,
+      "mem_available_bytes": 36017422336,
+      "process_io": {
+        "rchar": 12241448969,
+        "wchar": 223971106,
+        "syscr": 33318,
+        "syscw": 3572,
+        "read_bytes": 86440284160,
+        "write_bytes": 24076288,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64572405760,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_after"
+    },
+    {
+      "elapsed_s": 788.26159469696,
+      "phase": "denoising",
+      "rss_bytes": 3189178368,
+      "mem_available_bytes": 36082819072,
+      "process_io": {
+        "rchar": 12261640801,
+        "wchar": 244305543,
+        "syscr": 33688,
+        "syscw": 3617,
+        "read_bytes": 86440284160,
+        "write_bytes": 25894912,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64495196160,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 796.5360258480068,
+      "phase": "denoising",
+      "rss_bytes": 3189190656,
+      "mem_available_bytes": 36058148864,
+      "process_io": {
+        "rchar": 12261735319,
+        "wchar": 244359385,
+        "syscr": 33892,
+        "syscw": 3653,
+        "read_bytes": 86440284160,
+        "write_bytes": 25960448,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64498284544,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 804.6381631529657,
+      "phase": "denoising",
+      "rss_bytes": 3189239808,
+      "mem_available_bytes": 36130299904,
+      "process_io": {
+        "rchar": 12261827058,
+        "wchar": 244371345,
+        "syscr": 34090,
+        "syscw": 3686,
+        "read_bytes": 86440284160,
+        "write_bytes": 25976832,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64498338304,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 812.7326210099855,
+      "phase": "denoising",
+      "rss_bytes": 3191009280,
+      "mem_available_bytes": 36130574336,
+      "process_io": {
+        "rchar": 12261921576,
+        "wchar": 244383672,
+        "syscr": 34294,
+        "syscw": 3720,
+        "read_bytes": 86440284160,
+        "write_bytes": 25997312,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64499144704,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "denoising"
+    },
+    {
+      "elapsed_s": 820.8281540159951,
+      "phase": "clean_pass",
+      "rss_bytes": 3192782848,
+      "mem_available_bytes": 36139929600,
+      "process_io": {
+        "rchar": 12262013315,
+        "wchar": 244395632,
+        "syscr": 34492,
+        "syscw": 3753,
+        "read_bytes": 86440284160,
+        "write_bytes": 26013696,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64499144704,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "clean_pass"
+    },
+    {
+      "elapsed_s": 828.9170861530001,
+      "phase": "vae_decode_before",
+      "rss_bytes": 3192827904,
+      "mem_available_bytes": 36131651584,
+      "process_io": {
+        "rchar": 12262105054,
+        "wchar": 244407628,
+        "syscr": 34690,
+        "syscw": 3786,
+        "read_bytes": 86440284160,
+        "write_bytes": 26034176,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64501630976,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_before"
+    },
+    {
+      "elapsed_s": 831.1321785009932,
+      "phase": "vae_decode_after",
+      "rss_bytes": 3193913344,
+      "mem_available_bytes": 35992403968,
+      "process_io": {
+        "rchar": 12262132844,
+        "wchar": 244411357,
+        "syscr": 34750,
+        "syscw": 3796,
+        "read_bytes": 86440284160,
+        "write_bytes": 26038272,
+        "cancelled_write_bytes": 20480
+      },
+      "cuda_allocated_bytes": 64576260096,
+      "cuda_reserved_bytes": 71076675584,
+      "event": "vae_decode_after"
+    }
+  ],
+  "episode": "baseline",
+  "dit_parameter_bytes": 37088665728,
+  "dit_parameter_dtypes": [
+    "torch.bfloat16"
+  ],
+  "t5_parameter_bytes_discarded": 11361820672,
+  "run": {
+    "status": "completed",
+    "model": "LingBot-World2 14B causal-fast stock",
+    "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "initial_image_sha256": "cfe324c6dacbb91123a74ad7d5c80f75fe4bd5e3cfd040af201e4ee0742cd33f",
+    "text_prompt_mode": "caption",
+    "image_caption_sha256": "58e9282a2acfdc3b580ea4b33b69ea092305a35869f31226b2981a2e17cbcf65",
+    "task_id": "GC027",
+    "split": "gc",
+    "seed": 42,
+    "turn_degrees_per_second": 30.0,
+    "fps": 16,
+    "max_chunks": 13,
+    "max_interactions": 40,
+    "native_fixed_controls": true,
+    "camera_embedding_audit": [
+      {
+        "chunk": 0,
+        "audit_version": "fp32-and-native-cast-v2",
+        "max_absolute_error": 0.0,
+        "fp32_max_absolute_error": 0.0,
+        "tensor_identical": true,
+        "native_cast_identical": true,
+        "within_tolerance": true
+      },
+      {
+        "chunk": 1,
+        "audit_version": "fp32-and-native-cast-v2",
+        "max_absolute_error": 0.0,
+        "fp32_max_absolute_error": 0.0,
+        "tensor_identical": true,
+        "native_cast_identical": true,
+        "within_tolerance": true
+      },
+      {
+        "chunk": 2,
+        "audit_version": "fp32-and-native-cast-v2",
+        "max_absolute_error": 0.0,
+        "fp32_max_absolute_error": 0.0,
+        "tensor_identical": true,
+        "native_cast_identical": true,
+        "within_tolerance": true
+      },
+      {
+        "chunk": 3,
+        "audit_version": "fp32-and-native-cast-v2",
+        "max_absolute_error": 0.0,
+        "fp32_max_absolute_error": 0.0,
+        "tensor_identical": true,
+        "native_cast_identical": true,
+        "within_tolerance": true
+      },
+      {
+        "chunk": 4,
+        "audit_version": "fp32-and-native-cast-v2",
+        "max_absolute_error": 0.0,
+        "fp32_max_absolute_error": 0.0,
+        "tensor_identical": true,
+        "native_cast_identical": true,
+        "within_tolerance": true
+      },
+      {
+        "chunk": 5,
+        "audit_version": "fp32-and-native-cast-v2",
+        "max_absolute_error": 0.0,
+        "fp32_max_absolute_error": 0.0,
+        "tensor_identical": true,
+        "native_cast_identical": true,
+        "within_tolerance": true
+      },
+      {
+        "chunk": 6,
+        "audit_version": "fp32-and-native-cast-v2",
+        "max_absolute_error": 0.0,
+        "fp32_max_absolute_error": 0.0,
+        "tensor_identical": true,
+        "native_cast_identical": true,
+        "within_tolerance": true
+      },
+      {
+        "chunk": 7,
+        "audit_version": "fp32-and-native-cast-v2",
+        "max_absolute_error": 0.0,
+        "fp32_max_absolute_error": 0.0,
+        "tensor_identical": true,
+        "native_cast_identical": true,
+        "within_tolerance": true
+      },
+      {
+        "chunk": 8,
+        "audit_version": "fp32-and-native-cast-v2",
+        "max_absolute_error": 0.0,
+        "fp32_max_absolute_error": 0.0,
+        "tensor_identical": true,
+        "native_cast_identical": true,
+        "within_tolerance": true
+      },
+      {
+        "chunk": 9,
+        "audit_version": "fp32-and-native-cast-v2",
+        "max_absolute_error": 0.0,
+        "fp32_max_absolute_error": 0.0,
+        "tensor_identical": true,
+        "native_cast_identical": true,
+        "within_tolerance": true
+      },
+      {
+        "chunk": 10,
+        "audit_version": "fp32-and-native-cast-v2",
+        "max_absolute_error": 0.0,
+        "fp32_max_absolute_error": 0.0,
+        "tensor_identical": true,
+        "native_cast_identical": true,
+        "within_tolerance": true
+      },
+      {
+        "chunk": 11,
+        "audit_version": "fp32-and-native-cast-v2",
+        "max_absolute_error": 0.0,
+        "fp32_max_absolute_error": 0.0,
+        "tensor_identical": true,
+        "native_cast_identical": true,
+        "within_tolerance": true
+      },
+      {
+        "chunk": 12,
+        "audit_version": "fp32-and-native-cast-v2",
+        "max_absolute_error": 0.0,
+        "fp32_max_absolute_error": 0.0,
+        "tensor_identical": true,
+        "native_cast_identical": true,
+        "within_tolerance": true
+      }
+    ],
+    "pose_retrieval": false,
+    "sink_rephase": false,
+    "adaptive_retrieval_pilot": false,
+    "player_temperature": "provider default",
+    "initial_neutral_bootstrap": false,
+    "kv_retention": false,
+    "decoprune": false,
+    "reanchor": false,
+    "budget_memory": false,
+    "denoise_schedule": "stock",
+    "text_encoder_offloaded_after_encoding": true,
+    "stationary_wait_only": false,
+    "fixed_actions": [
+      "WAIT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT"
+    ],
+    "quantization": "none",
+    "cuda_allocator_configuration": "default",
+    "max_area": 399360,
+    "chunk_size": 4,
+    "local_attn_size": 18,
+    "sink_size": 6,
+    "decision_interval": 1,
+    "stock_knobs": true,
+    "controlled_ablation": false,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "actions": [
+      {
+        "operation": "KEEP",
+        "action": "WAIT",
+        "reason": "fixed diagnostic",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.0,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 244.5471874299692,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "fixed diagnostic",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 296.74935205996735,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 30.000000000000004,
+          "accumulated_yaw_degrees": 29.999999999999996,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "fixed diagnostic",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 30.000000000000004,
+          "accumulated_yaw_degrees": 29.999999999999996,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 334.4916300919722,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 59.999999999999986,
+          "accumulated_yaw_degrees": 59.99999999999999,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "fixed diagnostic",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 59.999999999999986,
+          "accumulated_yaw_degrees": 59.99999999999999,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 375.26742712501436,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 89.99999999999997,
+          "accumulated_yaw_degrees": 90.0,
+          "world_time_seconds": 3.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "fixed diagnostic",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 89.99999999999997,
+          "accumulated_yaw_degrees": 90.0,
+          "world_time_seconds": 3.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 419.2557840690133,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 119.99999999999999,
+          "accumulated_yaw_degrees": 119.99999999999999,
+          "world_time_seconds": 4.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "fixed diagnostic",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 119.99999999999999,
+          "accumulated_yaw_degrees": 119.99999999999999,
+          "world_time_seconds": 4.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 464.86435115896165,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 150.0,
+          "accumulated_yaw_degrees": 149.99999999999997,
+          "world_time_seconds": 5.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "fixed diagnostic",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 150.0,
+          "accumulated_yaw_degrees": 149.99999999999997,
+          "world_time_seconds": 5.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 510.662364104006,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 180.0,
+          "accumulated_yaw_degrees": 179.99999999999997,
+          "world_time_seconds": 6.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "fixed diagnostic",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 180.0,
+          "accumulated_yaw_degrees": 179.99999999999997,
+          "world_time_seconds": 6.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 556.9763451960171,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -150.00000000000003,
+          "accumulated_yaw_degrees": 209.99999999999997,
+          "world_time_seconds": 7.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "fixed diagnostic",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -150.00000000000003,
+          "accumulated_yaw_degrees": 209.99999999999997,
+          "world_time_seconds": 7.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 603.9095285639632,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -120.00000000000007,
+          "accumulated_yaw_degrees": 239.99999999999997,
+          "world_time_seconds": 8.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "fixed diagnostic",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -120.00000000000007,
+          "accumulated_yaw_degrees": 239.99999999999997,
+          "world_time_seconds": 8.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 650.7085555469966,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -90.00000000000006,
+          "accumulated_yaw_degrees": 270.0,
+          "world_time_seconds": 9.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "fixed diagnostic",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -90.00000000000006,
+          "accumulated_yaw_degrees": 270.0,
+          "world_time_seconds": 9.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 696.5505354639608,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -60.000000000000036,
+          "accumulated_yaw_degrees": 300.0,
+          "world_time_seconds": 10.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "fixed diagnostic",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -60.000000000000036,
+          "accumulated_yaw_degrees": 300.0,
+          "world_time_seconds": 10.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 741.545045656967,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -30.00000000000003,
+          "accumulated_yaw_degrees": 330.00000000000006,
+          "world_time_seconds": 11.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "fixed diagnostic",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -30.00000000000003,
+          "accumulated_yaw_degrees": 330.00000000000006,
+          "world_time_seconds": 11.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 785.5069147970062,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -4.05506770679017e-14,
+          "accumulated_yaw_degrees": 360.00000000000006,
+          "world_time_seconds": 12.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      }
+    ],
+    "chunks": [
+      {
+        "index": 0,
+        "path": "chunk-000.mp4",
+        "frames": 13,
+        "pixel_sha256": "2e21c0e5c4486089b692277ae80c49dec35eb9f78a9f1c6464c7d3f5e5c7a39e",
+        "elapsed_s": 296.7431017140043,
+        "sha256": "37a53f9822913aaaf88254440f3fbf4126116ce4622a245b0c5a3047dbf1ae17"
+      },
+      {
+        "index": 1,
+        "path": "chunk-001.mp4",
+        "frames": 16,
+        "pixel_sha256": "cbbc783c9b6118786abcceb914c406a8e65b83e773f3fc800f9574f7016cabcb",
+        "elapsed_s": 334.48495770798763,
+        "sha256": "0d65c82cad0a4a71055fbabfb9687190858d3483a200f53d9220cec9339f8f4e"
+      },
+      {
+        "index": 2,
+        "path": "chunk-002.mp4",
+        "frames": 16,
+        "pixel_sha256": "b9bf308b879b11592a1a6fad349c4bc985030b9e99bccec22afe0598f54a0206",
+        "elapsed_s": 375.2609247340006,
+        "sha256": "32e0a171a76738742e4c20bbe69bd4b896a6bc49d92a4f0640b8e6d025327e2e"
+      },
+      {
+        "index": 3,
+        "path": "chunk-003.mp4",
+        "frames": 16,
+        "pixel_sha256": "bb1e9062139705e681225c1a02fda29cd0229f0c8f76e78cb8f00c671d167cf9",
+        "elapsed_s": 419.2497648560093,
+        "sha256": "628fb818eb5450313ffa06764aedb998f113ebd8b655a73a2cba94d9df05f9dc"
+      },
+      {
+        "index": 4,
+        "path": "chunk-004.mp4",
+        "frames": 16,
+        "pixel_sha256": "58f22aeca5957e7efa81a525aa5646c8aa036eaa113d22c4c9fe5454518ffb45",
+        "elapsed_s": 464.85783252696274,
+        "sha256": "c6aae418016a052d3914d662b09a0d87d273daddafcabb4500782915016cb98c"
+      },
+      {
+        "index": 5,
+        "path": "chunk-005.mp4",
+        "frames": 16,
+        "pixel_sha256": "8dda87f022bb0b21b4454f680f96dd0d62ce442bc7baeecbb729e809ee9b698d",
+        "elapsed_s": 510.65580554597545,
+        "sha256": "5a34867c51d806201f288d75b55f20c1111f066fefb766cffd08d92b898bf2f3"
+      },
+      {
+        "index": 6,
+        "path": "chunk-006.mp4",
+        "frames": 16,
+        "pixel_sha256": "52df33e6d200aafd84843688eeacab179d4f23476aa8d1cf07b3db242947fcef",
+        "elapsed_s": 556.9696112109814,
+        "sha256": "66c00689f89908d2010912f65045e318f8c623de43710f7b441d95e4e05bb524"
+      },
+      {
+        "index": 7,
+        "path": "chunk-007.mp4",
+        "frames": 16,
+        "pixel_sha256": "42f1fde5670baa4a0828d82e69c5b53595b6ecd7edd4ffc29d9abfa05aa596b9",
+        "elapsed_s": 603.9019916029647,
+        "sha256": "626fbfdfbf8bc719ca2634e7861c6ae4f4acbd82bf775649b92e42e6baef89c4"
+      },
+      {
+        "index": 8,
+        "path": "chunk-008.mp4",
+        "frames": 16,
+        "pixel_sha256": "36499d8e21367c5ad4d775c64da26c86cbe2b6575f2a7ae06833147612d444af",
+        "elapsed_s": 650.7010536699672,
+        "sha256": "45c40341a1c44d42331eef534908d5f5357e7aedd4d18ff926556e235d17851e"
+      },
+      {
+        "index": 9,
+        "path": "chunk-009.mp4",
+        "frames": 16,
+        "pixel_sha256": "ca88267f7fad6acafa54c315c8bb0e85b7fc1b4965c16ae694d5123270a067f7",
+        "elapsed_s": 696.5437955629895,
+        "sha256": "7915d2eeae831e5c7125f86c5e3c2efe3a4521e00baf74e47448eabbc846f985"
+      },
+      {
+        "index": 10,
+        "path": "chunk-010.mp4",
+        "frames": 16,
+        "pixel_sha256": "aee7381e0b753fb2d4b6348ca7e6c645177608080ccb3260ff29ad574609a121",
+        "elapsed_s": 741.5380920330063,
+        "sha256": "39320745b421570fd7dbcf8537777a6f9a5464a0853bafb90b306c4d150adc5b"
+      },
+      {
+        "index": 11,
+        "path": "chunk-011.mp4",
+        "frames": 16,
+        "pixel_sha256": "edfa278780a2b3756bc8a6aa4d0f918a8f6606b047308f926160f5d6f1397b2c",
+        "elapsed_s": 785.4998228109907,
+        "sha256": "c8a45fe30dbf49b743b0b86105aeaa1450f3a26f76a140b20fee75095834463f"
+      },
+      {
+        "index": 12,
+        "path": "chunk-012.mp4",
+        "frames": 16,
+        "pixel_sha256": "84ea3b0b2b5c9a9de0f35db7f5066aef7918c63fbf88e70dd21dec728d3bbeec",
+        "elapsed_s": 830.9763444119599,
+        "sha256": "ff6a18f436dd8d4a00eead2b7e3b90e5c585c356781ae274d305446ae38ed630"
+      }
+    ],
+    "published_score_reproduced": false,
+    "agent_interactions": 0,
+    "adapter_sha256": "8692d410515e63ace81f5db2da3c70c2b59d9e840630fd9ff7de6ed0487b659f",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+    "deviations": [
+      "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+      "Reconstructed Haiku reference-guided prompt and camera mapping: 30 deg/s turns, unit-normalized translations",
+      "Official 480p demo area; single NVIDIA Thor, BF16 and valid-length SDPA backend",
+      "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+      "Claude diagnostic scoring differs from published Gemini judgments"
+    ],
+    "hardware": {
+      "gpu": "NVIDIA Thor",
+      "torch": "2.15.0+cu132",
+      "cuda": "13.2"
+    },
+    "expected_final_commanded_state": {
+      "position_normalized_units": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "heading_degrees": -4.05506770679017e-14,
+      "accumulated_yaw_degrees": 360.00000000000006,
+      "world_time_seconds": 12.75,
+      "scope": "Intended camera commands only; not measured visual motion or goal completion."
+    },
+    "attention_backend": "sdpa",
+    "optional_torch_dlpack_addon_disabled": false,
+    "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+    "checkpoint_loading": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "mismatched_keys": [],
+      "error_msgs": []
+    },
+    "local_memory_prototype": {
+      "one_shot_t5_discard": true,
+      "archive": "none",
+      "forced_flash_sdpa": true,
+      "not_scored": true
+    },
+    "generated_frames": 205,
+    "generated_seconds": 12.8125,
+    "termination": "chunk_budget_exhausted",
+    "elapsed_s": 830.9863137739594,
+    "camera_diagnostics": {
+      "chunks": 13,
+      "path_length": 0.0,
+      "net_yaw_degrees": 359.99999999999994,
+      "total_turn_degrees": 359.99999999999994,
+      "max_distance_from_start": 0.0,
+      "final_distance_from_start": 0.0,
+      "revisited_start_at_chunk": null,
+      "wait_chunks": 1,
+      "wait_pose_changes": 0
+    },
+    "peak_allocated_bytes": 69023825408
+  },
+  "elapsed_s": 834.0954931629822,
+  "min_mem_available_bytes": 26175725568,
+  "peak_rss_bytes": 61839007744,
+  "peak_sampled_cuda_allocated_bytes": 68058374144,
+  "peak_sampled_cuda_reserved_bytes": 71076675584
+}

@@ -1,0 +1,144 @@
+{
+  "scope": "Local Thor full13chunk lossless-file4 transport pilot; no score claim",
+  "runs": {
+    "baseline": {
+      "scope": "two-chunk local transport/memory smoke; no archive or quality score",
+      "status": "completed",
+      "torch": "2.15.0+cu132",
+      "forced_flash_sdpa": true,
+      "forced_flash_scope": "DiT self/cross attention only; native VAE backend defaults retained",
+      "vae_attention_shapes": [
+        {
+          "query": [
+            1,
+            1,
+            6032,
+            384
+          ],
+          "key": [
+            1,
+            1,
+            6032,
+            384
+          ],
+          "fp32_score_matrix_bytes": 145540096
+        }
+      ],
+      "model_weights_quantized": false,
+      "native_kv_quantized": false,
+      "training": false,
+      "episode": "baseline",
+      "dit_parameter_bytes": 37088665728,
+      "dit_parameter_dtypes": [
+        "torch.bfloat16"
+      ],
+      "t5_parameter_bytes_discarded": 11361820672,
+      "elapsed_s": 834.0954931629822,
+      "min_mem_available_bytes": 26175725568,
+      "peak_rss_bytes": 61839007744,
+      "peak_sampled_cuda_allocated_bytes": 68058374144,
+      "peak_sampled_cuda_reserved_bytes": 71076675584,
+      "supervisor": {
+        "scope": "supervised one-shot no-archive local memory smoke",
+        "available_before_bytes": 109419266048,
+        "episode": "baseline",
+        "app_estimate_bytes": 87605634048,
+        "system_reserve_bytes": 17179869184,
+        "output": "/home/npow/code/iteratehack/outputs/lingbot-reproduction/thor-baseline-1794723296384434726",
+        "status": "completed",
+        "pid": 40971,
+        "returncode": 0
+      }
+    },
+    "file4": {
+      "scope": "isolated local transport/memory experiment; no scored-quality claim",
+      "status": "completed",
+      "torch": "2.15.0+cu132",
+      "forced_flash_sdpa": true,
+      "forced_flash_scope": "DiT self/cross attention only; native VAE backend defaults retained",
+      "vae_attention_shapes": [
+        {
+          "query": [
+            1,
+            1,
+            6032,
+            384
+          ],
+          "key": [
+            1,
+            1,
+            6032,
+            384
+          ],
+          "fp32_score_matrix_bytes": 145540096
+        }
+      ],
+      "model_weights_quantized": false,
+      "native_kv_quantized": false,
+      "training": false,
+      "episode": "file4",
+      "dit_parameter_bytes": 37088665728,
+      "dit_parameter_dtypes": [
+        "torch.bfloat16"
+      ],
+      "t5_parameter_bytes_discarded": 11361820672,
+      "elapsed_s": 986.4271594359889,
+      "min_mem_available_bytes": 34368434176,
+      "peak_rss_bytes": 61468442624,
+      "peak_sampled_cuda_allocated_bytes": 72293685248,
+      "peak_sampled_cuda_reserved_bytes": 74113351680,
+      "supervisor": {
+        "scope": "supervised one-shot local memory experiment",
+        "available_before_bytes": 110979108864,
+        "episode": "file4",
+        "app_estimate_bytes": 87605634048,
+        "system_reserve_bytes": 17179869184,
+        "output": "/home/npow/code/iteratehack/outputs/lingbot-reproduction/thor-file4-1794724140480376658",
+        "status": "completed",
+        "pid": 59680,
+        "returncode": 0
+      }
+    }
+  },
+  "complete_13_chunks": true,
+  "native_camera_audits_pass": true,
+  "reserve_preserved": true,
+  "matched_settings": {
+    "source_revision": true,
+    "checkpoint_revision": true,
+    "initial_image_sha256": true,
+    "image_caption_sha256": true,
+    "task_id": true,
+    "split": true,
+    "seed": true,
+    "turn_degrees_per_second": true,
+    "fps": true,
+    "max_chunks": true,
+    "fixed_actions": true,
+    "hardware": true,
+    "attention_backend": true,
+    "sampler_timesteps_index": true,
+    "sample_shift": true,
+    "local_attn_size": true,
+    "sink_size": true
+  },
+  "first_attention_intervention_chunk": 12,
+  "all_chunk_pixel_hash_equal": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false
+  ],
+  "all_pre_intervention_hashes_exact": true,
+  "adapter_hash_equal": false,
+  "caveat": "Local Torch2.15 is a separate runtime from H200Torch2.6. Prefix audit checks transport isolation; last-chunk difference is an intervention, not evidence of improvement."
+}

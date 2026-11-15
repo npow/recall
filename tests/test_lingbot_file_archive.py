@@ -6,9 +6,10 @@ import torch
 from worldsync.lingbot_file_archive import FileArchiveBank
 
 
+@pytest.mark.parametrize("flush_on_evict", [True, False])
 @pytest.mark.parametrize("dtype", [torch.bfloat16, torch.float32])
-def test_file_bank_preserves_every_bit_after_flush_eviction_and_overwrite(tmp_path, dtype):
-    bank = FileArchiveBank(tmp_path / "archive.bin")
+def test_file_bank_preserves_every_bit_after_flush_eviction_and_overwrite(tmp_path, dtype, flush_on_evict):
+    bank = FileArchiveBank(tmp_path / "archive.bin", flush_on_evict=flush_on_evict)
     torch.manual_seed(71)
     expected = {}
     try:
@@ -23,14 +24,24 @@ def test_file_bank_preserves_every_bit_after_flush_eviction_and_overwrite(tmp_pa
             bank.flush_and_evict()
         assert bank.metadata()["page_evictions"] == 9
         assert bank.metadata()["logical_bytes_written"] > 0
+        assert bank.sync_flush_calls == (5 if flush_on_evict else 0)
+        assert bank.dirty is (not flush_on_evict)
         assert bank.path.stat().st_size == 16 * 2 * expected[6][0].numel() * expected[6][0].element_size()
         with pytest.raises(ValueError):
             bank[22] = expected[6]
     finally:
         bank.close()
+    assert bank.sync_flush_calls == (5 if flush_on_evict else 1)
+    data = bank.path.read_bytes()
+    size = expected[6][0].numel() * expected[6][0].element_size()
+    for index, pair in expected.items():
+        for which, tensor in enumerate(pair):
+            start = ((index - 6) * 2 + which) * size
+            assert data[start:start+size] == tensor.view(torch.uint8).numpy().tobytes()
 
 
-def test_native_attention_file_bank_matches_original_retrieval_exactly(monkeypatch, tmp_path):
+@pytest.mark.parametrize("flush_on_evict", [True, False])
+def test_native_attention_file_bank_matches_original_retrieval_exactly(monkeypatch, tmp_path, flush_on_evict):
     import copy
     import sys
     from types import SimpleNamespace
@@ -38,6 +49,9 @@ def test_native_attention_file_bank_matches_original_retrieval_exactly(monkeypat
     from worldsync.lingbot_paths import PATHS
     from worldsync.lingbot_retrieval import PoseKVMemory
     from worldsync.lingbot_file_archive import FileArchiveMemory
+    import worldsync.lingbot_file_archive as archive
+    from functools import partial
+    monkeypatch.setattr(archive, "FileArchiveBank", partial(FileArchiveBank, flush_on_evict=flush_on_evict))
     from worldsync.matrix_attention import sdpa_attention
     source = Path(__file__).resolve().parents[1] / "external/LingBot-World2"
     if not source.exists():
@@ -45,7 +59,7 @@ def test_native_attention_file_bank_matches_original_retrieval_exactly(monkeypat
     existing = sys.modules.get("wan")
     if existing and not Path(existing.__file__).resolve().is_relative_to(source.resolve()):
         import subprocess
-        subprocess.run([sys.executable, "-m", "pytest", "-q", f"{__file__}::{sys._getframe().f_code.co_name}"], check=True)
+        subprocess.run([sys.executable, "-m", "pytest", "-q", f"{__file__}::{sys._getframe().f_code.co_name}[{flush_on_evict}]"], check=True)
         return
     monkeypatch.syspath_prepend(str(source))
     from wan.modules import model_fast

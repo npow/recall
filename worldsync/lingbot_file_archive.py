@@ -10,12 +10,19 @@ from worldsync.lingbot_retrieval import PoseKVMemory
 
 
 class FileArchiveBank(dict):
-    def __init__(self, path, first_frame=6, stop_frame=22):
+    """Default synchronous transport; close-only flushing is CPU-proof only.
+
+    MADV_DONTNEED drops mappings, while unflushed dirty file pages still consume
+    RAM. Never infer a safe GPU residency budget from the close-only CPU tests.
+    """
+    def __init__(self, path, first_frame=6, stop_frame=22, *, flush_on_evict=True):
         super().__init__()
         self.path = Path(path)
         self.first_frame, self.stop_frame = first_frame, stop_frame
         self.mapping = None
         self.dirty = False
+        self.flush_on_evict = flush_on_evict
+        self.sync_flush_calls = 0
         self.bytes_written = 0
         self.flush_wall_s = 0.
         self.evictions = 0
@@ -53,12 +60,13 @@ class FileArchiveBank(dict):
         self.lookup_calls += 1
         return super().__getitem__(index)
 
-    def flush_and_evict(self):
+    def flush_and_evict(self, *, force_flush=False):
         if self.mapping is None:
             return
-        if self.dirty:
+        if self.dirty and (self.flush_on_evict or force_flush):
             started = time.monotonic()
             self.mapping.flush()
+            self.sync_flush_calls += 1
             self.flush_wall_s += time.monotonic() - started
             self.dirty = False
         self.mapping._mmap.madvise(mmap.MADV_DONTNEED)
@@ -66,11 +74,13 @@ class FileArchiveBank(dict):
 
     def metadata(self):
         return {"file": str(self.path), "mapped_bytes": self.mapping.nbytes if self.mapping is not None else 0,
-                "logical_bytes_written": self.bytes_written, "flush_wall_s": self.flush_wall_s,
+                "logical_bytes_written": self.bytes_written,
+                "flush_policy": "each_dirty_eviction" if self.flush_on_evict else "close_only_cpu_prototype",
+                "dirty_unflushed": self.dirty, "sync_flush_calls": self.sync_flush_calls, "flush_wall_s": self.flush_wall_s,
                 "page_evictions": self.evictions, "pair_lookups": self.lookup_calls}
 
     def close(self):
-        self.flush_and_evict()
+        self.flush_and_evict(force_flush=True)
         # Tensor views cannot be used after close; drop owned views before unmap.
         self.clear()
         if self.mapping is not None:

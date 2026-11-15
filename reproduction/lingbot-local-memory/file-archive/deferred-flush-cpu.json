@@ -1,0 +1,22 @@
+{
+  "scope": "CPU-only deferred persistence proof; no extra GPU run",
+  "command": ".venv-lingbot/bin/python -m pytest tests/test_lingbot_file_archive.py -q",
+  "result": "6 passed in3.75s",
+  "dtypes": [
+    "BF16",
+    "FP32"
+  ],
+  "checks": [
+    "Every stored byte survives eviction and overwrites before synchronous flush",
+    "Reopened file bytes match original tensors after close",
+    "All outputs and native K/V of real upstream attention match original RAM archive over16 synthetic chunks, both flush policies"
+  ],
+  "test_sync_calls_per_bank": {
+    "five_writes_immediate": 5,
+    "five_writes_deferred_in_loop": 0,
+    "five_writes_deferred_after_close": 1
+  },
+  "production_or_gpu_default_changed": false,
+  "deferred_gpu_memory_validation": false,
+  "caveat": "Dirty file pages remain physical RAM until writeback; MADV_DONTNEED does not establish that they were reclaimed. Existing16GiB physical guard must remain. No further full GPU pair was launched."
+}
