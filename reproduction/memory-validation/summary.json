@@ -1,0 +1,52 @@
+{
+  "scope": "Frozen validation of virtual-position historical-view retrieval beyond the rolling cache",
+  "complete_pairs": 1,
+  "declared_pairs": 3,
+  "settings": "Existing PoseKVMemory virtual-position method, no new parameters or training",
+  "results": [
+    {
+      "task_id": "GC007",
+      "seed": 43,
+      "path": "turn_wait_return",
+      "partition": "development",
+      "purpose": "new seed at15.8 seconds /8-second away delay",
+      "stock_dino": 0.5971358418464661,
+      "candidate_dino": 0.766268253326416,
+      "stock_psnr_db": 8.494171123271396,
+      "candidate_psnr_db": 8.348301447028408,
+      "warmed_suffix_s": {
+        "stock": 82.77013865299998,
+        "retrieval": 101.44790741500002
+      },
+      "peak_allocated_bytes": {
+        "stock": 80390301696,
+        "retrieval": 85330167808
+      },
+      "visual_preference": "retrieval",
+      "visual_assessment": {
+        "A": {
+          "realized_round_trip": "uncertain",
+          "starting_place_recovered": "no",
+          "discontinuity": "yes",
+          "visual_evidence": "Frames 0-~10 show the opening view: the Primemall facade with its large triangular dark roof, a centered 'Primemall' sign and a small umbrella at its base. During the RIGHT chunks (~10-40) the camera pans right past a second orange facade with garbled 'Primeect' lettering and a blue umbrella, then settles on a plaza. The plaza has an octagonal planter, two lamp posts and a zig-zag glass roof building. During the WAIT chunks (~40-120) this view is held nearly static, which is expected. During the LEFT chunks (~120-150) the camera does not retrace the outward path. It sweeps into a new glass entrance with a canopy under a doubled sign reading 'Primememall', which never appeared on the way out. It then moves through a patio of wicker chairs and large blue umbrellas and ends (~145-158) close to a Primemall-signed facade. That final view is a different viewpoint: the sign sits left of frame, large umbrellas and tables fill the foreground, and the triangular roof is only cropped at the top. The opening composition (centered sign, distant small umbrella, full roof silhouette) is not recovered. The apparent forward translation toward the building and the new entrance geometry are not explained by pure yaw.",
+          "failure_classification": "Forgetting / hallucinated return geometry. The leftward return synthesizes unseen structures (a new entrance, a patio and a duplicated sign text) instead of re-rendering the outward path. It also drifts in position, arriving at a similar-looking but different viewpoint of the same-branded building. Some camera-control drift (implied translation) is also present."
+        },
+        "B": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "uncertain",
+          "discontinuity": "no",
+          "visual_evidence": "Frames 0-~120 are essentially identical to A: the same opening facade, the same rightward pan, and the same held plaza view during WAIT. During the LEFT chunks (~120-150) the camera retraces the outward path in reverse order. First the planter and plaza, then the orange facade with the same garbled 'Primeect'/'Prmmgnl' lettering and the blue umbrella with seated figure. Then the triangular-roof Primemall building re-enters from the left, and the frame settles on it (~145-158). The landmark identity is preserved: same roof silhouette, a readable 'Primemall' sign, the orange diamond cladding and the right-side wing. However, the final framing is offset. The building sits in the right half of the frame rather than centered, and the view is somewhat closer. A new blue pylon sign and a storefront with 'NEHGEP'-like lettering appear at left that were not in the opening frame, and foreground umbrellas are larger. Transitions are smooth, with no hard cuts.",
+          "failure_classification": "Minor camera-control/pose drift (yaw overshoot or positional offset on return) plus small hallucinated peripheral content (pylon sign, left storefront). The core landmark and the ordering of the intermediate scenery are remembered consistently, so this is largely not a forgetting failure."
+        },
+        "preference": "B",
+        "confidence": "medium",
+        "reasoning": "Both videos share an identical outward turn and hold, so the comparison hinges on the LEFT return. B retraces the outward scenery in correct reverse order and ends on the same Primemall building with its distinctive roof and sign intact. Its imperfections are an offset final framing and some new peripheral signage. A instead invents an unseen entrance and patio with garbled duplicated sign text ('Primememall'), and it reaches a Primemall facade from a clearly different, closer viewpoint. A's similar final building should not be credited as a recovery, since it was reached through hallucinated geometry rather than a consistent return. B is not a perfect return to the exact starting view, hence medium confidence."
+      },
+      "label_mapping": {
+        "A": "stock",
+        "B": "retrieval"
+      }
+    }
+  ],
+  "caveat": "Fixed-path memory mechanism validation, not an adaptive PlayWorld score or a claim about minute-long worlds."
+}

@@ -1,0 +1,36 @@
+{
+  "scope": "Generation attempts preceding the resumed verification-only fix; retained in denominator as attempts, not quality scores",
+  "attempts": [
+    {
+      "task_id": "GC007",
+      "seed": 42,
+      "path": "turn_long_wait_return",
+      "mode": "stock",
+      "status": "failed_audit",
+      "result_directory": "stock-GC007-turn_long_wait_return-seed42-1794708960613260465",
+      "error": "BF16 online/native camera mismatch0.001953125 at chunk1",
+      "run_report": "failed-long-camera-audit-run.json"
+    },
+    {
+      "task_id": "GC006",
+      "seed": 42,
+      "path": "turn_wait_return",
+      "mode": "retrieval",
+      "status": "cancelled_by_batch_failure",
+      "error": "Original starmap raised and stopped the app while this call was running"
+    },
+    {
+      "task_id": "GC007",
+      "seed": 42,
+      "path": "turn_long_wait_return",
+      "mode": "retrieval",
+      "status": "not_started_before_batch_failure"
+    }
+  ],
+  "completed_attempts_retained": [
+    "GC007/seed43/stock",
+    "GC007/seed43/retrieval",
+    "GC006/seed42/stock"
+  ],
+  "retry_policy": "Reuse completed generations. Resume only missing calls, with FP32 audit plus exact native-cast verification. Model inputs and candidate parameters remain unchanged."
+}

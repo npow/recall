@@ -133,8 +133,19 @@ def main():
     save()
     handles = []
     memory = None
+    native_ray_builder = None
+    native_rays = {}
     try:
         upstream = configure_backend(report, save)
+        if args.native_fixed_controls:
+            # Observe the exact native FP32 ray tensor before its BF16 cast.
+            # Return the same tensor object and keep native generation untouched.
+            native_ray_builder = upstream.get_plucker_embeddings
+            def capture_native_rays(*positional, **kwargs):
+                rays = native_ray_builder(*positional, **kwargs)
+                native_rays["fp32"] = rays.detach().cpu()
+                return rays
+            upstream.get_plucker_embeddings = capture_native_rays
         pipeline = upstream.WanI2VCausal(WAN_CONFIGS["i2v-A14B"], str(pack),
             local_attn_size=knobs["local_attn_size"], sink_size=knobs["sink_size"], infer_mode="causal_fast", convert_model_dtype=True)
         stream = NativeVaeStream(pipeline.vae)
@@ -190,7 +201,8 @@ def main():
                 height_final=height, width_final=width)[0].repeat(4, 1).to(pipeline.device)
             # Native camera rays are built before the denoiser's BF16 autocast
             # scope. Hooks run inside it; preserve native FP32 ray arithmetic.
-            embedding = fp32_camera_rays(get_plucker_embeddings, relative, ks, height, width)
+            rays_fp32 = fp32_camera_rays(get_plucker_embeddings, relative, ks, height, width)
+            embedding = rays_fp32
             # Match native rearrangement and channel strides as well as values.
             embedding = rearrange(embedding, "f (h a) (w b) c -> (f h w) (c a b)", a=8, b=8)[None]
             embedding = rearrange(embedding, "b (f h w) c -> b c f h w", f=4,
@@ -198,12 +210,18 @@ def main():
             if index == 0 and decision["action"] == "WAIT" and not torch.equal(embedding, condition):
                 raise ValueError("neutral adapter controls differ from native camera embeddings")
             if args.native_fixed_controls:
-                error = float((embedding.float() - condition.float()).abs().max())
-                matched = torch.allclose(embedding.float(), condition.float(), atol=1e-5, rtol=1e-5)
-                report["camera_embedding_audit"].append({"chunk": index, "max_absolute_error": error,
-                    "tensor_identical": torch.equal(embedding, condition), "within_tolerance": matched})
-                if not matched:
-                    raise ValueError(f"online camera conditioning differs from native at chunk {index}: {error}")
+                from worldsync.lingbot_camera_audit import audit_rays
+                native_fp32 = native_rays["fp32"][index * 4:(index + 1) * 4].to(pipeline.device)
+                native_channels = rearrange(native_fp32, "f (h a) (w b) c -> (f h w) (c a b)", a=8, b=8)[None]
+                native_channels = rearrange(native_channels, "b (f h w) c -> b c f h w", f=4,
+                    h=condition.shape[-2], w=condition.shape[-1])
+                online_channels = rearrange(rays_fp32, "f (h a) (w b) c -> (f h w) (c a b)", a=8, b=8)[None]
+                online_channels = rearrange(online_channels, "b (f h w) c -> b c f h w", f=4,
+                    h=condition.shape[-2], w=condition.shape[-1])
+                audit = {"chunk": index, **audit_rays(online_channels, native_channels, condition)}
+                report["camera_embedding_audit"].append(audit)
+                if not audit["within_tolerance"]:
+                    raise ValueError(f"online camera conditioning differs from native at chunk {index}: {audit}")
             # This nested dict is shared by the native denoising and clean-cache
             # calls for this chunk. Only its external camera input is replaced.
             if not args.native_fixed_controls:
@@ -250,6 +268,8 @@ def main():
             report["player_failure"] = error.metadata
         raise
     finally:
+        if native_ray_builder is not None:
+            upstream.get_plucker_embeddings = native_ray_builder
         if memory:
             memory.close()
         for handle in handles:

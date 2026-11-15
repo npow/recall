@@ -1,0 +1,9 @@
+# Camera audit precision follow-up
+
+The first32-chunk native stock stress run stopped at chunk1: post-cast online/native BF16 camera tensors differed by0.001953125. The failed run is preserved as stock-GC007-turn_long_wait_return-seed42-1794708960613260465 on the results volume. Its failure aborted the original map and cancelled the unfinished held-out retrieval call. The first new-seed pair and held-out stock run were already complete and are retained.
+
+The revised audit captures the actual native FP32 ray tensor before its final BF16 cast, returning the same tensor object without modifying native generation. For every chunk it now requires: (1) FP32 online/native rays agree within1e-5 absolute/relative tolerance; (2) the captured native FP32 tensor casts exactly to the native BF16 conditioning actually passed to the model. BF16 online/native equality and its maximum error are recorded separately. This can distinguish a true geometry error from close FP32 values crossing a BF16 rounding boundary. It does not silently permit arbitrary quantized control drift.
+
+Tests cover a rounding-boundary example (about2e-7 FP32 difference produces a BF16 one-step difference) and reject substantive FP32 errors or changed native conditioning. The earlier CUDA-autocast regression test remains active. The root cause on H200 is still being checked by the resumed run; local Thor/Torch2.15 did not reproduce the rounding mismatch seen on H200/Torch2.6.
+
+Fixed-path experiments always keep the actual unmodified native camera conditioning. This audit change alters verification instrumentation, not model inputs, controls, memory settings, sampler or checkpoint. It does not establish bit-identical adaptive online conditioning for every horizon. Completed earlier native runs remain valid. The batch runner now reuses completed reports, aggregates per-call failures without cancelling other cases, and preserves retry failures explicitly.

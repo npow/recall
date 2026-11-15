@@ -1,0 +1,193 @@
+{
+  "status": "failed",
+  "model": "LingBot-World2 14B causal-fast stock",
+  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v5",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+  "task_id": "GC007",
+  "split": "gc",
+  "seed": 42,
+  "fps": 16,
+  "max_chunks": 32,
+  "max_interactions": 40,
+  "native_fixed_controls": true,
+  "camera_embedding_audit": [
+    {
+      "chunk": 0,
+      "max_absolute_error": 0.0,
+      "tensor_identical": true,
+      "within_tolerance": true
+    },
+    {
+      "chunk": 1,
+      "max_absolute_error": 0.001953125,
+      "tensor_identical": false,
+      "within_tolerance": false
+    }
+  ],
+  "pose_retrieval": false,
+  "sink_rephase": false,
+  "stationary_wait_only": false,
+  "fixed_actions": [
+    "WAIT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "WAIT",
+    "LEFT",
+    "LEFT",
+    "LEFT",
+    "WAIT"
+  ],
+  "quantization": "none",
+  "max_area": 399360,
+  "chunk_size": 4,
+  "local_attn_size": 18,
+  "sink_size": 6,
+  "decision_interval": 1,
+  "stock_knobs": true,
+  "controlled_ablation": false,
+  "sampler_timesteps_index": [
+    0,
+    250,
+    500,
+    750
+  ],
+  "sample_shift": 10,
+  "actions": [
+    {
+      "operation": "KEEP",
+      "action": "WAIT",
+      "reason": "fixed diagnostic",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.0,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 102.24497036499997,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "RIGHT",
+      "reason": "fixed diagnostic",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 106.35921562700003,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 59.99999999999999,
+        "accumulated_yaw_degrees": 59.99999999999999,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    }
+  ],
+  "chunks": [
+    {
+      "index": 0,
+      "path": "chunk-000.mp4",
+      "frames": 13,
+      "pixel_sha256": "bcac3aa955f78a51a277ce844a990e8cb0146d10ad23dd7251dd4ab6c7908ed8",
+      "elapsed_s": 106.35505839200005,
+      "sha256": "b0580b141cf6921d7bc3b1c5843ec2ad20c60f684cb4bd2f798318d6bf93797f"
+    }
+  ],
+  "published_score_reproduced": false,
+  "agent_interactions": 0,
+  "adapter_sha256": "32dd079f4fb055743e15c64bd6e78a5a8b1fc5cf70b5c4f5f6e98a857479c18b",
+  "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+  "player_sha256": "b34331a659836b6712f4bf5d57876cecb3ea5b9b5999314bde82735f701bd6d8",
+  "deviations": [
+    "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+    "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+    "Official 480p demo area and KV settings; single Thor GPU, BF16 and valid-length SDPA backend",
+    "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+    "Claude diagnostic scoring differs from published Gemini judgments"
+  ],
+  "expected_final_commanded_state": {
+    "position_normalized_units": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "heading_degrees": -7.951386703658789e-15,
+    "accumulated_yaw_degrees": 2.5444437451708134e-14,
+    "world_time_seconds": 31.75,
+    "scope": "Intended camera commands only; not measured visual motion or goal completion."
+  },
+  "checkpoint_loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "generated_frames": 13,
+  "generated_seconds": 0.8125,
+  "error": "ValueError: online camera conditioning differs from native at chunk 1: 0.001953125",
+  "elapsed_s": 106.36607377899998,
+  "camera_diagnostics": {
+    "chunks": 2,
+    "path_length": 0.0,
+    "net_yaw_degrees": 59.999999999999986,
+    "total_turn_degrees": 59.999999999999986,
+    "max_distance_from_start": 0.0,
+    "final_distance_from_start": 0.0,
+    "revisited_start_at_chunk": null,
+    "wait_chunks": 1,
+    "wait_pose_changes": 0
+  },
+  "peak_allocated_bytes": 80707454464
+}

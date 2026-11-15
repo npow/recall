@@ -16,7 +16,7 @@ else:
 app = modal.App("worldsync-lingbot-roundtrip")
 
 
-@app.function(image=image, gpu="H200", cpu=8, memory=131072, timeout=1800, max_containers=2,
+@app.function(image=image, gpu="H200", cpu=8, memory=131072, timeout=1800, max_containers=3,
               volumes={"/cache": weights, "/results": results})
 def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", rephase_sink: bool = False, retrieval_positions: str = "virtual"):
     import shutil
@@ -66,7 +66,23 @@ def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False,
         plan = json.loads((ROOT / "reproduction/memory-validation-plan.json").read_text())
         jobs = [(case["path"], case["seed"], retrieval, 18, case["task_id"], False, "virtual")
                 for case in plan["cases"] for retrieval in (False, True)]
-        for result in generate.starmap(jobs):
+        pending = []
+        for job in jobs:
+            path, seed, retrieve, _, task, _, _ = job
+            mode = "retrieval" if retrieve else "stock"
+            output = ROOT / "outputs/lingbot-reproduction" / f"memory-validation-{task}-{mode}-{path}-seed{seed}.json"
+            if output.exists() and json.loads(output.read_text())["run"]["status"] == "completed":
+                print(f"Reusing completed {task}/{path}/{mode}/seed{seed}", flush=True)
+            else:
+                pending.append(job)
+        failures_path = ROOT / "outputs/lingbot-reproduction/memory-validation-attempt-failures.json"
+        failures = json.loads(failures_path.read_text()) if failures_path.exists() else []
+        for job, result in zip(pending, generate.starmap(pending, return_exceptions=True)):
+            if isinstance(result, BaseException):
+                failures.append({"job": job, "error": str(result)})
+                failures_path.write_text(json.dumps(failures, indent=2) + "\n")
+                print(f"Preserved failed attempt: {job}: {result}", flush=True)
+                continue
             run = result["run"]
             output = ROOT / "outputs/lingbot-reproduction" / f"memory-validation-{run['task_id']}-{result['mode']}-{result['path']}-seed{run['seed']}.json"
             output.write_text(json.dumps(result, indent=2) + "\n")
