@@ -45,7 +45,33 @@ def generate():
         historical.extend({"cohort": "Fixed GC027 replay: seeds42/43", "method": method, "score": value,
                            "source": "reproduction/start-anchor-replay/scores-summary.json"}
                           for method, value in replay["means"].items())
-    snapshot = {"target": 2.12, "full_benchmark_score": None, "published_score_beaten": False,
+    moving = read("reproduction/gemini-rejudge-baseline-v6.json")
+    moving10 = []
+    if moving:
+        for arm, key in (("stock caption text, v5 player", "baseline"), ("v6 player (plan progress)", "v6")):
+            cases = moving[key]
+            scores = {t: c[0] for t, c in cases.items() if c[0] is not None}
+            moving10.append({"cohort": "Moving-10 subset (4 GC / 3 IF / 3 out-of-sight), seed 42", "method": arm,
+                "scored": len(scores), "expected": len(cases), "complete": len(scores) == len(cases),
+                "score": sum(scores.values()) / len(cases) if len(scores) == len(cases) else None,
+                "judgements_per_video": 3, "source": "reproduction/gemini-rejudge-baseline-v6.json"})
+        insight = moving["baseline_insight"]
+        values = [c[0] for c in insight.values() if c[0] is not None]
+        moving10.append({"cohort": "Insight-4 (60-second WAIT episodes), seed 42", "method": "stock caption text",
+            "scored": len(values), "expected": len(insight), "complete": len(values) == len(insight),
+            "score": sum(values) / len(insight) if len(values) == len(insight) else None,
+            "judgements_per_video": 3, "source": "reproduction/gemini-rejudge-baseline-v6.json"})
+    full = read("reproduction/full-baseline-gemini.json")
+    claude_subset = read("reproduction/hillclimb-v6-s42.json")
+    claude_cohort = read("reproduction/cohort-stock-v5-s42.json")
+    if claude_subset:
+        for method, key in (("stock", "baseline_mean"), ("v6 player", "v6_mean")):
+            historical.append({"cohort": "Moving-10 subset, seed 42 (Claude judge)", "method": method,
+                "score": claude_subset[key], "source": "reproduction/hillclimb-v6-s42.json"})
+    if claude_cohort:
+        historical.append({"cohort": "Declared 16-episode cohort, seed 42 (Claude judge, incl. 4 insight)", "method": "stock",
+            "score": claude_cohort["pooled_mean"], "source": "reproduction/cohort-stock-v5-s42.json"})
+    snapshot = {"target": 2.12, "full_benchmark_score": (full or {}).get("overall"), "gemini_moving_subsets": moving10, "full_171_run": full, "published_score_beaten": False,
                 "gemini_model": "gemini-3.1-pro-preview", "endpoint": "Vertex AI global",
                 "gemini_local_cohorts": cohorts, "historical_claude_cohorts": historical,
                 "comparability": "Subset scores are not comparable to published four-dimension overall. Methods only compared within the same cohort/judge. Gemini model alias, player and adapter differences remain documented."}
@@ -66,13 +92,29 @@ def generate():
         lines.append(f"| {row['cohort']} | {row['method']} |{row['scored']}/{row['expected']}|{score}|{row['visual_revisits']}/{row['scored']}|")
     lines.extend(["", "Evidence: [individual Gemini judgments](reproduction/gemini-current/episodes/). Pending/error rows never receive a partial-cohort mean.", "",
         "The earlier [Gemini cohort](reproduction/gemini-rescore.md) found a paired 46/6-cache change of +0.69 over 24 pairs, but only GC/OE coverage, one judge draw per video, generation failures and divergent player trajectories. Its unmatched arm means are not an overall leaderboard.", "",
-        "## Claude — historical experiments", "",
+        ""])
+    lines.extend(["## Gemini — mixed-split subsets (3 judgements per video)", "",
+        "Same judge and prompts, but cohorts that mix splits and include moving-camera cases. The same video varies by a standard deviation of about 0.33 across judge repeats, and a misread gate can pin a case at 1.0. Differences under about 0.5 on 10 cases are not distinguishable from noise.", "",
+        "| Cohort | Method | Scored | Score |", "|---|---|---:|---:|"])
+    for row in moving10:
+        score = f"{row['score']:.2f}" if row["complete"] else "pending"
+        lines.append(f"| {row['cohort']} | {row['method']} |{row['scored']}/{row['expected']}|{score}|")
+    lines.extend(["", "**Moving-10: v6 versus stock is +0.10, inside the noise, so not a gain.** v6 also failed 2 of 6 judge-independent [turn checks](reproduction/turn-check-baseline-v6.json) that stock passed 6 of 6. Evidence: [Gemini re-scoring](reproduction/gemini-rejudge-baseline-v6.json).", "",
+        "### Full 171-case run (our local checkpoint, current player, caption text)", ""])
+    if full and full.get("overall") is not None:
+        lines.extend(["| Overall | GC | IF | In-sight | Out-of-sight | Scored |", "|---:|---:|---:|---:|---:|---:|",
+            f"|{full['overall']:.2f}|{full['gc']:.2f}|{full['if']:.2f}|{full['insight']:.2f}|{full['outsight']:.2f}|{full['scored']}/171|", ""])
+    else:
+        lines.extend(["Not scored yet: the 171-case run is in progress. No overall is reported until all four dimensions are covered.", ""])
+    lines.extend(["## Claude — historical experiments", "",
         "Retained for audit; do not compare these numbers with Gemini or across different cohorts.", "",
         "| Cohort | Method | Score | Evidence |", "|---|---|---:|---|"])
     for row in historical:
         lines.append(f"| {row['cohort']} | {row['method']} |{row['score']:.2f}|[summary]({row['source']})|")
     lines.extend(["", "The adaptive four-view pilot changed 3.60→3.90, but neither seed visibly returned; the gain is inconclusive. The fixed start-anchor follow-up also failed all visual revisits. [Identical-video judge variability](reproduction/judge-repeatability.json) reached 2.70→3.75. GC013 is quarantined for an upstream image/caption mismatch.", "",
         "## Other measured results", "",
+        "- [Turn check](reproduction/turn-check-baseline-v6.json): judge-independent yaw-from-frames check; stock passed 6/6 turn tasks, v6 4/6. Gemini failed OE057 three times for both arms although the video turned as instructed.",
+        "- [Protocol finding](reproduction/text-prompt-finding.md): the released PlayWorld harness submits `task.prompt` as the world-model text, while our adapter sent the static image caption. `--text-prompt prompt` exists; its test is incomplete (GPU shared, one case out-of-memory), so no score is claimed.",
         "- [Long-return memory](reproduction/memory-validation/README.md): a 31.8-second episode with 24 seconds away retained the landmark; residual framing/text drift remains. Not a benchmark score.",
         "- [Local submaps](reproduction/spatial-local-submaps/summary.json): better mall localization, bridge and drifted-stock failures; not generator conditioning.",
         "- [Persistent runner](reproduction/modal-runner.md): 3.6x steady short-job throughput in the reported seven-job trial, exact outputs on the same GPU model. [Mixed-scene batch](reproduction/lingbot-batch-validation/) preserves all 42 chunk hashes.",

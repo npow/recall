@@ -24,12 +24,29 @@ Released prompts, sampling, gate and aggregation; Vertex `gemini-3.1-pro-preview
 | Adaptive GC027 | stock |2/2|3.10|0/2|
 | Adaptive GC027 | memory |2/2|1.50|1/2|
 | Start-anchor replay | stock |2/2|1.70|0/2|
-| Start-anchor replay | four-view |1/2|pending|0/1|
+| Start-anchor replay | four-view |2/2|1.80|0/2|
 | Start-anchor replay | start-anchor |1/2|pending|0/1|
 
 Evidence: [individual Gemini judgments](reproduction/gemini-current/episodes/). Pending/error rows never receive a partial-cohort mean.
 
 The earlier [Gemini cohort](reproduction/gemini-rescore.md) found a paired 46/6-cache change of +0.69 over 24 pairs, but only GC/OE coverage, one judge draw per video, generation failures and divergent player trajectories. Its unmatched arm means are not an overall leaderboard.
+
+
+## Gemini — mixed-split subsets (3 judgements per video)
+
+Same judge and prompts, but cohorts that mix splits and include moving-camera cases. The same video varies by a standard deviation of about 0.33 across judge repeats, and a misread gate can pin a case at 1.0. Differences under about 0.5 on 10 cases are not distinguishable from noise.
+
+| Cohort | Method | Scored | Score |
+|---|---|---:|---:|
+| Moving-10 subset (4 GC / 3 IF / 3 out-of-sight), seed 42 | stock caption text, v5 player |10/10|1.64|
+| Moving-10 subset (4 GC / 3 IF / 3 out-of-sight), seed 42 | v6 player (plan progress) |10/10|1.74|
+| Insight-4 (60-second WAIT episodes), seed 42 | stock caption text |4/4|1.45|
+
+**Moving-10: v6 versus stock is +0.10, inside the noise, so not a gain.** v6 also failed 2 of 6 judge-independent [turn checks](reproduction/turn-check-baseline-v6.json) that stock passed 6 of 6. Evidence: [Gemini re-scoring](reproduction/gemini-rejudge-baseline-v6.json).
+
+### Full 171-case run (our local checkpoint, current player, caption text)
+
+Not scored yet: the 171-case run is in progress. No overall is reported until all four dimensions are covered.
 
 ## Claude — historical experiments
 
@@ -44,11 +61,16 @@ Retained for audit; do not compare these numbers with Gemini or across different
 | Fixed GC027 replay: seeds42/43 | stock |3.80|[summary](reproduction/start-anchor-replay/scores-summary.json)|
 | Fixed GC027 replay: seeds42/43 | four-view |4.00|[summary](reproduction/start-anchor-replay/scores-summary.json)|
 | Fixed GC027 replay: seeds42/43 | start-anchor |3.75|[summary](reproduction/start-anchor-replay/scores-summary.json)|
+| Moving-10 subset, seed 42 (Claude judge) | stock |2.22|[summary](reproduction/hillclimb-v6-s42.json)|
+| Moving-10 subset, seed 42 (Claude judge) | v6 player |2.67|[summary](reproduction/hillclimb-v6-s42.json)|
+| Declared 16-episode cohort, seed 42 (Claude judge, incl. 4 insight) | stock |2.17|[summary](reproduction/cohort-stock-v5-s42.json)|
 
 The adaptive four-view pilot changed 3.60→3.90, but neither seed visibly returned; the gain is inconclusive. The fixed start-anchor follow-up also failed all visual revisits. [Identical-video judge variability](reproduction/judge-repeatability.json) reached 2.70→3.75. GC013 is quarantined for an upstream image/caption mismatch.
 
 ## Other measured results
 
+- [Turn check](reproduction/turn-check-baseline-v6.json): judge-independent yaw-from-frames check; stock passed 6/6 turn tasks, v6 4/6. Gemini failed OE057 three times for both arms although the video turned as instructed.
+- [Protocol finding](reproduction/text-prompt-finding.md): the released PlayWorld harness submits `task.prompt` as the world-model text, while our adapter sent the static image caption. `--text-prompt prompt` exists; its test is incomplete (GPU shared, one case out-of-memory), so no score is claimed.
 - [Long-return memory](reproduction/memory-validation/README.md): a 31.8-second episode with 24 seconds away retained the landmark; residual framing/text drift remains. Not a benchmark score.
 - [Local submaps](reproduction/spatial-local-submaps/summary.json): better mall localization, bridge and drifted-stock failures; not generator conditioning.
 - [Persistent runner](reproduction/modal-runner.md): 3.6x steady short-job throughput in the reported seven-job trial, exact outputs on the same GPU model. [Mixed-scene batch](reproduction/lingbot-batch-validation/) preserves all 42 chunk hashes.
