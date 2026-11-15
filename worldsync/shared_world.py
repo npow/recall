@@ -70,7 +70,8 @@ def world_manifest(run):
 def world_id(manifest):
     identity = {key: manifest.get(key) for key in ("source_revision", "checkpoint_revision", "initial_image_sha256",
                                                    "image_caption_sha256", "seed", "fps", "chunk_size")}
-    identity["world_text_sha256"] = manifest.get("world_text_sha256") or manifest.get("image_caption_sha256")
+    if manifest.get("world_text_sha256") not in (None, "", manifest.get("image_caption_sha256")):
+        identity["world_text_sha256"] = manifest["world_text_sha256"]  # only when the text was changed: ids stay stable
     missing = sorted(key for key, value in identity.items() if value in (None, ""))
     if missing:
         raise ValueError(f"run is missing world identity fields: {missing}")
