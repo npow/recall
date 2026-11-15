@@ -7,14 +7,14 @@
 Entrypoint: `worldsync.lingbot_released_baseline`. After installing dependencies and staging the pinned model/data, run from the repo root:
 
 ```bash
-python -m worldsync.lingbot_released_baseline --split gc --task-id GC010 --seed 42 --chunks 2 --generate --validate-runtime --output outputs/canonical-smoke-GC010
+WORLDSYNC_HOLD_MAX_TOKENS=400 python -m worldsync.lingbot_released_baseline --split gc --task-id GC010 --seed 42 --chunks 2 --generate --validate-runtime --output outputs/canonical-smoke-GC010
 python -m worldsync.baseline_runtime_validation outputs/canonical-smoke-GC010 --output outputs/canonical-smoke-GC010-validation.json
 ```
 
 For one complete controller-validation episode (explicit opt-in, default guard remains):
 
 ```bash
-python -m worldsync.lingbot_released_baseline --split gc --task-id GC010 --seed 42 --chunks 60 --generate --validate-controller --output outputs/canonical-validation-GC010-seed42
+WORLDSYNC_HOLD_MAX_TOKENS=400 python -m worldsync.lingbot_released_baseline --split gc --task-id GC010 --seed 42 --chunks 60 --generate --validate-controller --output outputs/canonical-validation-GC010-seed42
 ```
 
 Change `--split` and `--task-id` for the other development cases; each output directory must be new. IF033 remains unsupported. This flag labels the run as controller validation, not published benchmark reproduction. The artifact validator above is specific to the two-chunk GC010 smoke and must not be applied to a full episode or IF001.
@@ -94,7 +94,11 @@ Visual inspection of the saved observations shows a stable neutral view followed
 Before IF001 GPU validation, test the configured Anthropic Messages endpoint with one request and no GPU:
 
 ```bash
-python -m worldsync.released_player_probe --output outputs/canonical-player-probe.json
+WORLDSYNC_HOLD_MAX_TOKENS=400 python -m worldsync.released_player_probe --output outputs/canonical-player-probe.json
 ```
 
 This uses the initial IF001 image and the actual pinned released hold-check service, verifies the exact served Haiku snapshot and response schema, and records success/failure separately. It costs one actor request; it is not a scored episode. Configure the endpoint/credentials outside the repo. The command has not been run by Codex against the spend-limited project key. A simulated end-to-end test now joins the canonical callback to the actual released service/parser, including null corrections; the controller/player targeted suite passes22tests.
+
+## Hold-service output limit
+
+Odin reported a live IF001 truncation at the released60-token cap and a successful probe at400tokens. The commands above now explicitly use `WORLDSYNC_HOLD_MAX_TOKENS=400`; this is a deviation from the released payload, not an exact protocol reproduction. Default remains60. The controller freezes the override at construction, rejects malformed/negative values before GPU loading, includes its effective cap in preflight metadata, and records released/effective caps for each request. Truncated responses still fail even with the higher cap. A failed probe at60does not prove every task response will truncate.

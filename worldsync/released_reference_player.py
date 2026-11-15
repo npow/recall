@@ -218,6 +218,13 @@ class ReleasedReferenceController:
     """One instance per episode; its decide method matches the legacy callback."""
 
     def __init__(self, source_path=SOURCE):
+        raw_token_limit = os.environ.get("WORLDSYNC_HOLD_MAX_TOKENS", "0") or "0"
+        try:
+            self.token_limit_override = int(raw_token_limit)
+        except ValueError:
+            raise ValueError("WORLDSYNC_HOLD_MAX_TOKENS must be a nonnegative integer") from None
+        if self.token_limit_override < 0:
+            raise ValueError("WORLDSYNC_HOLD_MAX_TOKENS must be a nonnegative integer")
         self.namespace, self.function_hashes = _load_source(source_path)
         self.namespace["post_claude"] = self._post
         self.actions = []
@@ -235,6 +242,12 @@ class ReleasedReferenceController:
             "released_function_sha256": self.function_hashes,
             "exact_paper_lingbot_controller": False,
             "reference_guided": True,
+            "output_token_policy": {
+                "released_max_tokens": 60,
+                "override": self.token_limit_override,
+                "effective_max_tokens": max(60, self.token_limit_override),
+                "deviation_from_released_cap": self.token_limit_override > 60,
+            },
             "scheduler_policy": {
                 "reference_priority": "released parse_actions: action field before action_sequence_steps",
                 "action_unit_seconds": 1.5,
@@ -333,7 +346,7 @@ class ReleasedReferenceController:
             messages.append({"role": message["role"], "content": content})
         # The released payload caps output at 60 tokens, which Haiku's fenced JSON plus reason exceeds (stop_reason
         # max_tokens, unparseable). WORLDSYNC_HOLD_MAX_TOKENS raises the cap explicitly; default keeps the released value.
-        max_tokens = max(payload["max_completion_tokens"], int(os.environ.get("WORLDSYNC_HOLD_MAX_TOKENS", "0") or 0))
+        max_tokens = max(payload["max_completion_tokens"], self.token_limit_override)
         response = self.client.messages.create(
             model=payload["model"],
             max_tokens=max_tokens,

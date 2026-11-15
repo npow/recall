@@ -42,6 +42,39 @@ class FakeClient:
         )
 
 
+def test_output_cap_override_is_explicit_and_frozen_per_controller(monkeypatch, observation):
+    monkeypatch.setenv('WORLDSYNC_HOLD_MAX_TOKENS','400')
+    controller=ReleasedReferenceController()
+    monkeypatch.setenv('WORLDSYNC_HOLD_MAX_TOKENS','800')
+    client=FakeClient()
+    data=task(action_sequence_steps=['hold(W,3000ms)'])
+    _,metadata=controller.check_hold(client,data,canonical_actions(data),0,0,0,observation)
+    assert client.calls[0]['max_tokens']==400
+    assert metadata['player_transport']['released_max_tokens']==60
+    assert metadata['player_transport']['max_tokens']==400
+    policy=controller.hold_service_metadata()['output_token_policy']
+    assert policy['effective_max_tokens']==400 and policy['deviation_from_released_cap']
+
+
+@pytest.mark.parametrize('value',['-1','not-an-integer','60.5'])
+def test_invalid_output_cap_rejected_before_any_api_or_gpu(monkeypatch,value):
+    monkeypatch.setenv('WORLDSYNC_HOLD_MAX_TOKENS',value)
+    with pytest.raises(ValueError,match='nonnegative integer'):
+        ReleasedReferenceController()
+
+
+def test_raised_cap_does_not_accept_truncated_response(monkeypatch,observation):
+    monkeypatch.setenv('WORLDSYNC_HOLD_MAX_TOKENS','400')
+    class TruncatedClient(FakeClient):
+        def create(self,**kwargs):
+            result=super().create(**kwargs)
+            result.stop_reason='max_tokens'
+            return result
+    data=task(action_sequence_steps=['hold(W,3000ms)'])
+    with pytest.raises(PlayerResponseError):
+        ReleasedReferenceController().check_hold(TruncatedClient(),data,canonical_actions(data),0,0,0,observation)
+
+
 @pytest.fixture
 def observation(tmp_path):
     path = tmp_path / "frame.png"

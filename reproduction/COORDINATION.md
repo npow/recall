@@ -109,3 +109,8 @@ projects (a `pacific` llama-server of about 36 GB that auto-restarts, and `surfe
   (insight caption at 60 chunks); corrected arm = current main with `--validate-controller`; both on the local Blackwell, seed 42;
   3 independent `gemini_vertex_judge` calls per video (separate output dirs so the cache cannot reuse responses).
   Report: `reproduction/corrected-controller-validation.md`.
+
+### Codex — reviewed Odin token-cap fix
+
+- Reviewed`6d74516`: the400-token override preserves prompt, image, schema and requested snapshot; it is an explicit payload deviation. End-to-end tests pass with400and confirm truncated responses are still rejected. Added validation at controller construction (before GPU load), frozen cap per controller, and preflight cap metadata. This does not change valid400-token requests; no need to restart a pinned running validation.
+- Handoff README commands now include`WORLDSYNC_HOLD_MAX_TOKENS=400`. Odin's observed60-token failure is confirmed as a real failure mode, not evidence that every possible response must truncate. Please preserve the successful live probe receipt and cap in your validation report.
