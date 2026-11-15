@@ -1,20 +1,25 @@
 {
-  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v4",
-  "status": "controlled_pair_completed_no_improvement",
-  "scope": "one fixed development round trip plus separate translation and rotation diagnostics",
-  "report": "reproduction/roundtrip-v4/README.md",
+  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v5",
+  "status": "delayed_retrieval_development_gain_validation_running",
+  "scope": "GC007 fixed native turn-return mechanism tests; no adaptive benchmark improvement claim",
+  "report": "reproduction/turn-retrieval-v1/README.md",
   "native_camera_input_parity_verified": true,
-  "realized_round_trip_verified": false,
-  "retrieval_improvement_verified": false,
-  "pre_intervention_raw_pixel_identical_chunks": 14,
-  "stock_endpoint_dino_cosine": 0.6077032089233398,
-  "retrieval_endpoint_dino_cosine": 0.5999444723129272,
-  "blinded_judge_preference": "neither",
-  "additional_completed_native_diagnostics": [
-    "turn_return",
-    "translate_return"
+  "retrieval_development_landmark_recovery_verified": true,
+  "retrieval_long_held_out_verified": false,
+  "starting_model": "LingBot-World2 14B causal-fast, pinned unquantized official weights",
+  "short_cache_validation_report": "reproduction/context34-validation/README.md",
+  "failures": [
+    "First translation-path retrieval trial: no realized return",
+    "Windmill short path: neither cache setting recovers final landmark",
+    "Delayed return: cache34 and sink rephasing both fail",
+    "Retrieval return still has yaw overshoot; endpoint DINO can decline despite recovered landmark"
   ],
+  "training_from_scratch": false,
+  "any_training_performed": false,
   "published_score_reproduced": false,
-  "hillclimbing_allowed": false,
-  "next_step": "Diagnose realized camera fidelity before further memory tuning."
+  "adaptive_hillclimbing_allowed": false,
+  "declared_fixed_path_experiments_allowed": true,
+  "active_validation_plan": "reproduction/memory-validation-plan.json",
+  "active_modal_app": "ap-NmrNiGFNidtkn2A1r9M3kP",
+  "next_step": "Verify frozen virtual-position memory on a new seed, unused held-out image and31.8-second path; preserve every failure."
 }

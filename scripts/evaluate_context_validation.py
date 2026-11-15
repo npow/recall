@@ -10,13 +10,17 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def evaluate(case, output, judge):
-    name = f"{case['task_id']}-seed{case['seed']}"
+def evaluate(case, output, judge, memory=False):
+    path = case.get("path", "turn_return")
+    name = f"{case['task_id']}-seed{case['seed']}" + (f"-{path}" if memory else "")
+    candidate = "retrieval" if memory else "context34"
     directory = output / name
     directory.mkdir(parents=True, exist_ok=True)
     manifests = {}
-    for mode in ("stock", "context34"):
-        source = ROOT / "outputs/lingbot-reproduction" / f"validation-{case['task_id']}-{mode}-seed{case['seed']}.json"
+    for mode in ("stock", candidate):
+        filename = (f"memory-validation-{case['task_id']}-{mode}-{path}-seed{case['seed']}.json" if memory
+                    else f"validation-{case['task_id']}-{mode}-seed{case['seed']}.json")
+        source = ROOT / "outputs/lingbot-reproduction" / filename
         manifest = json.loads(source.read_text())
         manifests[mode] = manifest
         shutil.copy2(source, directory / f"{mode}-run.json")
@@ -25,13 +29,13 @@ def evaluate(case, output, judge):
             subprocess.run(["modal", "volume", "get", "--profile", "nissan-pow",
                             "worldsync-lingbot-results", manifest["result_directory"] + "/rollout.mp4", str(video)], check=True)
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(video), "-vf",
-                        "fps=1,scale=416:-1,tile=4x2", "-frames:v", "1", str(directory / f"{mode}-contact.jpg")], check=True)
+                        f"fps=1,scale=416:-1,tile=4x{(manifest['run']['max_chunks'] + 3) // 4}", "-frames:v", "1", str(directory / f"{mode}-contact.jpg")], check=True)
     comparison = directory / "comparison.json"
     existing = json.loads(comparison.read_text()) if comparison.exists() else {}
     if not existing.get("feature_model") or (judge and not existing.get("visual_judge")):
-        command = [sys.executable, str(ROOT / "scripts/compare_lingbot_roundtrip.py"), "--comparison", "context",
-                   "--stock-run", str(directory / "stock-run.json"), "--candidate-run", str(directory / "context34-run.json"),
-                   "--stock-video", str(directory / "stock.mp4"), "--candidate-video", str(directory / "context34.mp4"),
+        command = [sys.executable, str(ROOT / "scripts/compare_lingbot_roundtrip.py"), "--comparison", "retrieval" if memory else "context",
+                   "--stock-run", str(directory / "stock-run.json"), "--candidate-run", str(directory / f"{candidate}-run.json"),
+                   "--stock-video", str(directory / "stock.mp4"), "--candidate-video", str(directory / f"{candidate}.mp4"),
                    "--output", str(comparison), "--dino"]
         if judge:
             command.append("--judge")
@@ -39,12 +43,12 @@ def evaluate(case, output, judge):
             subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, check=True)
     report = json.loads(comparison.read_text())
     summary = {**case, "stock_dino": report["stock"]["endpoint_dino_cosine"],
-               "candidate_dino": report["context34"]["endpoint_dino_cosine"],
+               "candidate_dino": report[candidate]["endpoint_dino_cosine"],
                "stock_psnr_db": report["stock"]["endpoint_psnr_db"],
-               "candidate_psnr_db": report["context34"]["endpoint_psnr_db"],
+               "candidate_psnr_db": report[candidate]["endpoint_psnr_db"],
                "warmed_suffix_s": report["warmed_suffix_s"],
                "peak_allocated_bytes": {"stock": report["stock_peak_allocated_bytes"],
-                                        "context34": report["candidate_peak_allocated_bytes"]}}
+                                        candidate: report["candidate_peak_allocated_bytes"]}}
     if "visual_judge" in report:
         assessment = report["visual_judge"]
         preference = assessment["result"]["preference"]
@@ -57,19 +61,27 @@ def evaluate(case, output, judge):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--judge", action="store_true")
+    parser.add_argument("--memory", action="store_true", help="Evaluate the frozen beyond-window memory validation instead of context34")
     parser.add_argument("--available", action="store_true", help="Evaluate only fully generated pairs while GPU jobs continue")
     args = parser.parse_args()
-    plan = json.loads((ROOT / "reproduction/context-validation-plan.json").read_text())
+    plan_file = "memory-validation-plan.json" if args.memory else "context-validation-plan.json"
+    plan = json.loads((ROOT / "reproduction" / plan_file).read_text())
     cases = plan["cases"]
     if args.available:
-        cases = [case for case in cases if all((ROOT / "outputs/lingbot-reproduction" /
-                 f"validation-{case['task_id']}-{mode}-seed{case['seed']}.json").exists() for mode in ("stock", "context34"))]
-    output = ROOT / "reproduction/context34-validation"
+        def ready(case):
+            for mode in ("stock", "retrieval" if args.memory else "context34"):
+                filename = (f"memory-validation-{case['task_id']}-{mode}-{case['path']}-seed{case['seed']}.json" if args.memory
+                            else f"validation-{case['task_id']}-{mode}-seed{case['seed']}.json")
+                if not (ROOT / "outputs/lingbot-reproduction" / filename).exists():
+                    return False
+            return True
+        cases = [case for case in cases if ready(case)]
+    output = ROOT / "reproduction" / ("memory-validation" if args.memory else "context34-validation")
     output.mkdir(exist_ok=True)
     with ThreadPoolExecutor(max_workers=2) as pool:
-        results = list(pool.map(lambda case: evaluate(case, output, args.judge), cases))
+        results = list(pool.map(lambda case: evaluate(case, output, args.judge, args.memory), cases))
     summary = {"scope": plan["scope"], "complete_pairs": len(results), "declared_pairs": len(plan["cases"]),
-               "settings": plan["settings_frozen"], "results": results,
+               "settings": plan.get("settings_frozen", plan.get("candidate_frozen")), "results": results,
                "caveat": "Fixed-path memory mechanism validation, not an adaptive PlayWorld score or a claim about minute-long worlds."}
     (output / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     print(json.dumps(summary, indent=2))
