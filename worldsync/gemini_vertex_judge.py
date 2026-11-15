@@ -124,6 +124,22 @@ def generate_with_retries(client, model, contents, config, retries=5, base_delay
     raise last  # pragma: no cover
 
 
+def response_text(response):
+    """Reject blank provider responses with provenance, keeping the case unscored."""
+    value = getattr(response, "text", None)
+    if isinstance(value, str) and value.strip():
+        return value
+    candidates = getattr(response, "candidates", None) or []
+    feedback = getattr(response, "prompt_feedback", None)
+    details = {
+        "response_id": getattr(response, "response_id", None),
+        "model_version": getattr(response, "model_version", None),
+        "finish_reasons": [str(getattr(c, "finish_reason", None)) for c in candidates],
+        "block_reason": str(getattr(feedback, "block_reason", None)),
+    }
+    raise ValueError("Judge returned no text: " + json.dumps(details, sort_keys=True))
+
+
 def unwrap_json_object(parsed):
     """Gemini occasionally wraps the requested JSON object in a one-element list."""
     if isinstance(parsed, list) and len(parsed) == 1 and isinstance(parsed[0], dict):
@@ -211,7 +227,7 @@ def judge_episode(client, playworld, dataset_task, video, reference_image=None, 
                 response = generate_with_retries(
                     client, model, types.Content(role="user", parts=parts),
                     types.GenerateContentConfig(response_mime_type="application/json", temperature=0.1), retries=retries)
-                parsed = unwrap_json_object(released_score.json_from_response(response.text))
+                parsed = unwrap_json_object(released_score.json_from_response(response_text(response)))
                 usage = getattr(response, "usage_metadata", None)
                 result["calls"].append({"mode": step, "cached": False,
                                         "served_model_version": getattr(response, "model_version", None),

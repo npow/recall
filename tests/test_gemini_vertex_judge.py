@@ -134,3 +134,19 @@ def test_manifest_dry_run_records_each_episode(tmp_path, capsys):
     manifest.write_text(json.dumps({"episode_id": "e1", "split": "gc", "task_id": "GC007", "video": str(video)}) + "\n")
     summary = gvj.run_manifest(manifest, tmp_path / "out", PLAYWORLD, dry_run=True, workers=1)
     assert summary[0]["episode_id"] == "e1" and summary[0].get("error") is None
+
+
+def test_blank_judge_response_preserves_provider_provenance():
+    from types import SimpleNamespace
+    response = SimpleNamespace(text=None, response_id="provider-response", model_version="model-version",
+                               candidates=[SimpleNamespace(finish_reason="STOP")], prompt_feedback=None)
+    with pytest.raises(ValueError, match="Judge returned no text") as error:
+        gvj.response_text(response)
+    assert "provider-response" in str(error.value) and "model-version" in str(error.value)
+    assert "STOP" in str(error.value)
+
+
+def test_valid_judge_response_text_is_unchanged():
+    from types import SimpleNamespace
+    value = ' {"score": 2} \n'
+    assert gvj.response_text(SimpleNamespace(text=value)) == value
