@@ -118,8 +118,16 @@ def main():
                 manifest = base / "gemini" / f"manifest-{int(time.time())}.jsonl"
                 manifest.parent.mkdir(parents=True, exist_ok=True)
                 manifest.write_text("".join(json.dumps(r) + "\n" for r in rows))
-                gemini_vertex_judge.run_manifest(manifest, base / "gemini", playworld=ROOT / "external/PlayWorld",
-                                                 workers=args.workers, dry_run=args.dry_run)
+                try:
+                    gemini_vertex_judge.run_manifest(manifest, base / "gemini", playworld=ROOT / "external/PlayWorld",
+                                                     workers=args.workers, dry_run=args.dry_run)
+                except RuntimeError as error:
+                    if "No usable Google credentials" not in str(error):
+                        raise
+                    # gcloud session expired (reauth needs an interactive login): wait and retry, never crash
+                    print(json.dumps({"event": "waiting_for_credentials", "error": str(error)[:160]}), flush=True)
+                    time.sleep(120)
+                    continue
         finished = len(scored) + len(todo) + failed
         if not args.watch or (not todo and len(scored) + failed >= expected):
             break
