@@ -32,3 +32,11 @@ The released partial gate admits some videos with no actual revisit. High rubric
 Targeted CPU suite:72passed (`test_native_reference_timeline`, `test_judge_integrity`, `test_full1_summary`, `test_gemini_vertex_judge`, `test_released_reference_player`, `test_lingbot_controls`). No new GPU experiment or judge API generation was used for this audit. The briefly provisioned Lambda H100 finished setup/weight verification but did not run a baseline; it was terminated when the controller audit blocked generation. The account instance listing subsequently confirmed it was gone. Collaborator jobs on the local GPU were left running.
 
 Before another corrected baseline run: integrate the canonical timeline and low-level hold service, verify fixed translation normalization and actual camera embeddings, stamp correct provenance, remove the extra observation recompression, and validate representative turns/returns without inferring success from command odometry.
+
+## Fixed-scale conditioning follow-up
+
+`worldsync/camera_conditioning.py` now chooses a translation denominator once from the declared canonical plan. Native relative transforms are computed with prefix normalization disabled, then divided by that fixed denominator. Extensions retain their phase's displacement; early release does not change units already used by the model. If the largest planned movement is never executed, retaining the original denominator is intentional and differs from retrospectively normalizing the shortened trajectory.
+
+The CPU regression uses the actual native camera utilities on a5400ms-per-leg rectangle. It verifies that concatenated chunk conditioning matches native full-trajectory normalization, that the six-channel camera embeddings agree, and that composing the conditioned transforms closes the rectangle. The old prefix-normalized conditioning fails the equality check. A separate early-release/extension test establishes that later commands cannot rescale committed conditioning. All16conditioning/timeline tests pass.
+
+This validates the normalization helper, not rollout integration or visual return fidelity. The generation guard remains in place until the controller, conditioning helper, observation encoding and provenance are integrated. No GPU or judge call was used for this follow-up.
