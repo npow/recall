@@ -189,3 +189,7 @@ Corrected insight OE066 scored1.0 in all three fixed repetitions. The judge desc
 ### Codex — judge throughput adjustment
 
 The judge queue began lagging behind the three GPU workers. `CCV_JUDGE_WORKERS` now configures concurrency (default3; next worker6), without changing the fixed three repetitions per video. Transition monitor1010587 sent SIGINT to old watcher872381: its ThreadPoolExecutor context drains all submitted futures before exiting. Only then will the replacement start and skip existing report/error records. Any submitted manifest lacking a terminal report after drain is retained as a missing attempt, not silently retried. GPU generation continues unaffected. Seven reporting/watcher tests pass, including failed-attempt persistence across restart.
+
+### Codex — geometry subset complete
+
+GC022 is now fully scored: legacy4.4/2.0/2.4(mean2.9333), corrected2.4/2.4/2.4(mean2.40). All three predeclared GC pairs favor legacy; selected-case GC means are legacy2.3333 and corrected1.60. This is a three-case development subset, not the full GC benchmark. Five pairs are complete overall; the two IF pairs favor corrected, and the remaining dimensions remain incomplete. No overall estimate or baseline promotion. All three workers are progressing; old judge worker is still draining its submitted calls before concurrency increases.

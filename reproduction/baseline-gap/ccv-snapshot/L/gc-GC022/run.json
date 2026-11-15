@@ -1,0 +1,545 @@
+{
+  "status": "completed",
+  "model": "LingBot-World2 14B causal-fast stock",
+  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+  "initial_image_sha256": "17bf697913eb35e513ab59ed585a132bbd1545ffbc124b77b37dfe3dc0432f2c",
+  "text_prompt_mode": "both",
+  "image_caption_sha256": "a9ce575c8b2ec3662b5a1123c8ff7d91f06c537d25a02de8e100e4e88cd988ba",
+  "task_id": "GC022",
+  "split": "gc",
+  "seed": 42,
+  "turn_degrees_per_second": 60,
+  "fps": 16,
+  "max_chunks": 40,
+  "max_interactions": 40,
+  "native_fixed_controls": false,
+  "camera_embedding_audit": [],
+  "pose_retrieval": false,
+  "sink_rephase": false,
+  "adaptive_retrieval_pilot": false,
+  "player_temperature": "provider default",
+  "player_streaming": false,
+  "streaming_player_sha256": null,
+  "initial_neutral_bootstrap": false,
+  "kv_retention": false,
+  "decoprune": false,
+  "reanchor": false,
+  "budget_memory": false,
+  "denoise_schedule": "stock",
+  "text_encoder_offloaded_after_encoding": true,
+  "stationary_wait_only": false,
+  "fixed_actions": null,
+  "quantization": "none",
+  "cuda_allocator_configuration": "expandable_segments:True",
+  "max_area": 399360,
+  "chunk_size": 4,
+  "local_attn_size": 18,
+  "sink_size": 6,
+  "decision_interval": 1,
+  "stock_knobs": true,
+  "controlled_ablation": false,
+  "sampler_timesteps_index": [
+    0,
+    250,
+    500,
+    750
+  ],
+  "sample_shift": 10,
+  "actions": [
+    {
+      "operation": "KEEP",
+      "action": "RIGHT",
+      "reason": "Starting 360-degree clockwise camera rotation. The reference plan requires holding RIGHT for 7.2 seconds to complete a full rotation. Current images show the initial view facing the Taj Mahal directly. Beginning the rotation by turning the camera clockwise (RIGHT). No motion detected yet as this is the first frame of the action sequence.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch53XceWio9S4pakEwGnG",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3025,
+        "output_tokens": 128,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Starting 360-degree clockwise camera rotation. The reference plan requires holding RIGHT for 7.2 seconds to complete a full rotation. Current images show the initial view facing the Taj Mahal directly. Beginning the rotation by turning the camera clockwise (RIGHT). No motion detected yet as this is the first frame of the action sequence.\"}]",
+      "prompt_sha256": "37c8ce2148e52135a3b67cd212b073fc9652a0589675c5ddfbe46bc9338b27f6",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.0,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 92.41034919799995,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 44.99999999999999,
+        "accumulated_yaw_degrees": 45.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "RIGHT",
+      "reason": "Continuing 360-degree clockwise camera rotation. Intended odometry shows 45\u00b0 accumulated yaw, with 0.8125 seconds elapsed of 7.2 seconds planned for the RIGHT rotation. Latest image shows the camera has rotated approximately 45\u00b0 clockwise from initial view - the Taj Mahal now appears more to the left side of frame, and right-side structures (minaret and turquoise mosque building) are becoming visible. Visual progress confirms rotation is occurring as intended. Must continue holding RIGHT to complete remaining 315\u00b0 to return to original angle after full 360\u00b0 rotation. Approximately 6.4 seconds remain in the planned action.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch53YBNGi7jC12px3xFfU",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2854,
+        "output_tokens": 200,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Continuing 360-degree clockwise camera rotation. Intended odometry shows 45\\u00b0 accumulated yaw, with 0.8125 seconds elapsed of 7.2 seconds planned for the RIGHT rotation. Latest image shows the camera has rotated approximately 45\\u00b0 clockwise from initial view - the Taj Mahal now appears more to the left side of frame, and right-side structures (minaret and turquoise mosque building) are becoming visible. Visual progress confirms rotation is occurring as intended. Must continue holding RIGHT to complete remaining 315\\u00b0 to return to original angle after full 360\\u00b0 rotation. Approximately 6.4 seconds remain in the planned action.\"}]",
+      "prompt_sha256": "c3a6a01a4408113526adfc72cab6cad65c83e791ac3ca5b276cc5046c5905934",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 44.99999999999999,
+        "accumulated_yaw_degrees": 45.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 101.09454058899996,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 105.0,
+        "accumulated_yaw_degrees": 105.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "RIGHT",
+      "reason": "Continuing 360-degree clockwise camera rotation. Accumulated yaw is now 105\u00b0 with 1.8125 seconds elapsed of 7.2 seconds planned. Latest image shows significant rotational progress - the camera has turned approximately 90\u00b0 clockwise from the initial frontal view of the Taj Mahal. The white dome and minarets are now mostly off-screen to the left, and the blue mosque building with turquoise domes visible on the right side is now more centered in the frame. This confirms the rotation is progressing as intended at the correct angular velocity. Must continue holding RIGHT for the remaining ~5.4 seconds to complete the full 360\u00b0 rotation and return to the original forward-facing view. Approximately 255\u00b0 of rotation remain to complete the goal.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch53Ys2EexB3tMUqvr6D4",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3011,
+        "output_tokens": 227,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Continuing 360-degree clockwise camera rotation. Accumulated yaw is now 105\\u00b0 with 1.8125 seconds elapsed of 7.2 seconds planned. Latest image shows significant rotational progress - the camera has turned approximately 90\\u00b0 clockwise from the initial frontal view of the Taj Mahal. The white dome and minarets are now mostly off-screen to the left, and the blue mosque building with turquoise domes visible on the right side is now more centered in the frame. This confirms the rotation is progressing as intended at the correct angular velocity. Must continue holding RIGHT for the remaining ~5.4 seconds to complete the full 360\\u00b0 rotation and return to the original forward-facing view. Approximately 255\\u00b0 of rotation remain to complete the goal.\"}]",
+      "prompt_sha256": "7c3adb2e99f03e137de5ff61f1061e9044769db60b5aac06aeb5c88e5d1cb3b1",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 105.0,
+        "accumulated_yaw_degrees": 105.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 110.67914719399994,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 165.0,
+        "accumulated_yaw_degrees": 165.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "RIGHT",
+      "reason": "Continuing 360-degree clockwise camera rotation. Accumulated yaw is approximately 165\u00b0 with 2.8125 seconds elapsed of 7.2 seconds planned. Latest image shows the camera has rotated approximately 180\u00b0 from the initial view - the scene now displays a blue mosque building with turquoise domes centrally positioned, with cypress trees in the foreground and minarets visible. The white Taj Mahal that was prominently visible in the initial image is now completely behind the camera. This confirms the rotation is progressing correctly through the 180\u00b0 mark. Must continue holding RIGHT for the remaining ~4.4 seconds to complete the full 360\u00b0 rotation and return to the original forward-facing view of the Taj Mahal. Approximately 195\u00b0 of rotation remain.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch53ZbyPp5r5HTatwtPci",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3199,
+        "output_tokens": 228,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Continuing 360-degree clockwise camera rotation. Accumulated yaw is approximately 165\\u00b0 with 2.8125 seconds elapsed of 7.2 seconds planned. Latest image shows the camera has rotated approximately 180\\u00b0 from the initial view - the scene now displays a blue mosque building with turquoise domes centrally positioned, with cypress trees in the foreground and minarets visible. The white Taj Mahal that was prominently visible in the initial image is now completely behind the camera. This confirms the rotation is progressing correctly through the 180\\u00b0 mark. Must continue holding RIGHT for the remaining ~4.4 seconds to complete the full 360\\u00b0 rotation and return to the original forward-facing view of the Taj Mahal. Approximately 195\\u00b0 of rotation remain.\"}]",
+      "prompt_sha256": "cade5646c1dd43eb8dde071ce8c8966c7c102fef7176d4c1ca677262807e280b",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 165.0,
+        "accumulated_yaw_degrees": 165.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 120.52918976800004,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": -135.00000000000006,
+        "accumulated_yaw_degrees": 225.0,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "RIGHT",
+      "reason": "Continuing 360-degree clockwise camera rotation. Accumulated yaw is approximately 225\u00b0 with 3.8125 seconds elapsed of 7.2 seconds planned. Latest image shows the camera has rotated approximately 225\u00b0 from the initial view - the scene now displays a blue mosque building with turquoise domes on the left, cypress trees in the foreground, minarets visible, and the camera is now viewing the scene from behind the original viewing position. The white Taj Mahal that was prominently visible in the initial image remains behind the camera. This confirms the rotation is progressing correctly through the 225\u00b0 mark. Must continue holding RIGHT for the remaining ~3.4 seconds to complete the full 360\u00b0 rotation and return to the original forward-facing view of the Taj Mahal. Approximately 135\u00b0 of rotation remain to complete the goal and return to the original angle.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch53aMr7QNPJYAHRRzpog",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3392,
+        "output_tokens": 250,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Continuing 360-degree clockwise camera rotation. Accumulated yaw is approximately 225\\u00b0 with 3.8125 seconds elapsed of 7.2 seconds planned. Latest image shows the camera has rotated approximately 225\\u00b0 from the initial view - the scene now displays a blue mosque building with turquoise domes on the left, cypress trees in the foreground, minarets visible, and the camera is now viewing the scene from behind the original viewing position. The white Taj Mahal that was prominently visible in the initial image remains behind the camera. This confirms the rotation is progressing correctly through the 225\\u00b0 mark. Must continue holding RIGHT for the remaining ~3.4 seconds to complete the full 360\\u00b0 rotation and return to the original forward-facing view of the Taj Mahal. Approximately 135\\u00b0 of rotation remain to complete the goal and return to the original angle.\"}]",
+      "prompt_sha256": "9106bfb939233e57cef06cf133f5289258d042983d60ce9e8b33565ea4b53719",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": -135.00000000000006,
+        "accumulated_yaw_degrees": 225.0,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 131.09388780300003,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": -75.00000000000004,
+        "accumulated_yaw_degrees": 285.0,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "RIGHT",
+      "reason": "Continuing 360-degree clockwise camera rotation. Accumulated yaw is approximately 285\u00b0 with 4.8125 seconds elapsed of 7.2 seconds planned. Latest image shows the camera has rotated approximately 270\u00b0 from the initial frontal view of the Taj Mahal. The scene now displays the blue mosque building with turquoise dome on the left-center of the frame, cypress trees in the foreground, and white minarets visible. The camera is now viewing the scene from the side/rear position, having completed approximately three-quarters of the full rotation. Must continue holding RIGHT for the remaining ~2.4 seconds to complete the full 360\u00b0 rotation and return to the original forward-facing view of the Taj Mahal. Approximately 75\u00b0 of rotation remain to complete the goal.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch53bA6TfwS9gSBKU4fQV",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3603,
+        "output_tokens": 233,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Continuing 360-degree clockwise camera rotation. Accumulated yaw is approximately 285\\u00b0 with 4.8125 seconds elapsed of 7.2 seconds planned. Latest image shows the camera has rotated approximately 270\\u00b0 from the initial frontal view of the Taj Mahal. The scene now displays the blue mosque building with turquoise dome on the left-center of the frame, cypress trees in the foreground, and white minarets visible. The camera is now viewing the scene from the side/rear position, having completed approximately three-quarters of the full rotation. Must continue holding RIGHT for the remaining ~2.4 seconds to complete the full 360\\u00b0 rotation and return to the original forward-facing view of the Taj Mahal. Approximately 75\\u00b0 of rotation remain to complete the goal.\"}]",
+      "prompt_sha256": "d1cfbd4919cdfc64e7e8b0568ed86b81bdb98baf376b8d0f24b4cbe1f65af971",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": -75.00000000000004,
+        "accumulated_yaw_degrees": 285.0,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 141.59926211200002,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": -15.00000000000003,
+        "accumulated_yaw_degrees": 344.99999999999994,
+        "world_time_seconds": 5.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "STOP",
+      "action": "RIGHT",
+      "reason": "The accumulated yaw from intended odometry is approximately 345\u00b0 (almost a complete 360\u00b0 rotation), with 5.8125 seconds elapsed of the 7.2 seconds planned. The latest image shows the camera has nearly completed the rotation - the Taj Mahal is now visible again on the right side of the frame, with the blue mosque building on the left, indicating we are very close to returning to the original forward-facing view. However, comparing the current view to the initial image, the Taj Mahal is positioned slightly to the right in the frame rather than centered. We need to continue the rotation for just a bit longer to align perfectly with the original angle. The remaining ~1.4 seconds of planned action should complete the final ~15\u00b0 needed to return to the original angle facing the Taj Mahal directly. Stopping the current RIGHT action and will need to evaluate if a final small adjustment is needed to perfectly align with the original view.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch53bvxhGyCUkHn5go6AW",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3801,
+        "output_tokens": 261,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"STOP\", \"action\": \"RIGHT\", \"reason\": \"The accumulated yaw from intended odometry is approximately 345\\u00b0 (almost a complete 360\\u00b0 rotation), with 5.8125 seconds elapsed of the 7.2 seconds planned. The latest image shows the camera has nearly completed the rotation - the Taj Mahal is now visible again on the right side of the frame, with the blue mosque building on the left, indicating we are very close to returning to the original forward-facing view. However, comparing the current view to the initial image, the Taj Mahal is positioned slightly to the right in the frame rather than centered. We need to continue the rotation for just a bit longer to align perfectly with the original angle. The remaining ~1.4 seconds of planned action should complete the final ~15\\u00b0 needed to return to the original angle facing the Taj Mahal directly. Stopping the current RIGHT action and will need to evaluate if a final small adjustment is needed to perfectly align with the original view.\"}]",
+      "prompt_sha256": "96dc36eb1336bf8c234635f87a4f2a303e95f9ca5748560e917c6c6852d1d591",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": -15.00000000000003,
+        "accumulated_yaw_degrees": 344.99999999999994,
+        "world_time_seconds": 5.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 152.65446557799999,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 44.999999999999936,
+        "accumulated_yaw_degrees": 404.99999999999994,
+        "world_time_seconds": 6.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "END",
+      "action": null,
+      "reason": "The 360-degree clockwise camera rotation has been successfully completed and the camera has returned to the original angle. Comparing the latest image with the initial image: both show the Taj Mahal centered in the frame with the reflecting pool in the foreground, cypress trees lining both sides, and the white minarets flanking the structure. The accumulated yaw of approximately 405\u00b0 (360\u00b0 full rotation + 45\u00b0 overshoot) combined with the visual confirmation that the original forward-facing view of the Taj Mahal has been restored demonstrates the goal has been achieved. The camera is now facing the original angle showing the Taj Mahal directly ahead, matching the initial scene composition. The plan's 7.2 seconds has been nearly fully consumed (6.8125 seconds elapsed), and the goal is unambiguously complete in the images.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch53cm2vfzerAMMM9g6sv",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 4023,
+        "output_tokens": 240,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"The 360-degree clockwise camera rotation has been successfully completed and the camera has returned to the original angle. Comparing the latest image with the initial image: both show the Taj Mahal centered in the frame with the reflecting pool in the foreground, cypress trees lining both sides, and the white minarets flanking the structure. The accumulated yaw of approximately 405\\u00b0 (360\\u00b0 full rotation + 45\\u00b0 overshoot) combined with the visual confirmation that the original forward-facing view of the Taj Mahal has been restored demonstrates the goal has been achieved. The camera is now facing the original angle showing the Taj Mahal directly ahead, matching the initial scene composition. The plan's 7.2 seconds has been nearly fully consumed (6.8125 seconds elapsed), and the goal is unambiguously complete in the images.\"}]",
+      "prompt_sha256": "5a9ef8a4a3f01db3d561d2fec6aad56137c604c4e2a64e7f2035885d5eb28cfd",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 44.999999999999936,
+        "accumulated_yaw_degrees": 404.99999999999994,
+        "world_time_seconds": 6.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 163.31935814999997
+    }
+  ],
+  "chunks": [
+    {
+      "index": 0,
+      "path": "chunk-000.mp4",
+      "frames": 13,
+      "pixel_sha256": "d687eb9c97592ef1cc96b3821bee8e5d61664fb37ac5ee7e5096b94bb53ddec6",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.4909482799999978,
+        "mp4_encode": 0.5271947180000325
+      },
+      "elapsed_s": 96.93457727399993,
+      "sha256": "5c193c7b876b9a4549e133254b4f7089a27a0d22c036582405e440c19ea1b07c"
+    },
+    {
+      "index": 1,
+      "path": "chunk-001.mp4",
+      "frames": 16,
+      "pixel_sha256": "4e257468d1560129db7715a93cc474eb071f8129f4ce2d6babbd2ae34dedf249",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5834691449999809,
+        "mp4_encode": 0.4739407959999653
+      },
+      "elapsed_s": 106.05601422799998,
+      "sha256": "9caec708d61366f4a60ae199fe6315f5ae2dbf710a368a6852562be8e1b8fa05"
+    },
+    {
+      "index": 2,
+      "path": "chunk-002.mp4",
+      "frames": 16,
+      "pixel_sha256": "340454273d307e099615eac6447bb94cc57066011b05428bb99d5739896300d2",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5842994079999926,
+        "mp4_encode": 0.4645695340000202
+      },
+      "elapsed_s": 116.04392085099994,
+      "sha256": "574e928dce3544c5572facf50c925072a0d7af47ab83834a76b168f8077b994a"
+    },
+    {
+      "index": 3,
+      "path": "chunk-003.mp4",
+      "frames": 16,
+      "pixel_sha256": "ced6c1318e72b85f741f45ef9f498b6c8dbd2b8eca08077ee9c3f7f458c965ad",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.583731604000036,
+        "mp4_encode": 0.4820513659999506
+      },
+      "elapsed_s": 126.38112884999998,
+      "sha256": "c05b68296febf538791f09951d551bf455108fb4e8e92d81fd85d57347ec8cdf"
+    },
+    {
+      "index": 4,
+      "path": "chunk-004.mp4",
+      "frames": 16,
+      "pixel_sha256": "176eea4c54f5dba8c3f6e71e5fcc970b40f9ae5aff490097e5ab3ec866776a4b",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5831668280000031,
+        "mp4_encode": 0.47436155200000485
+      },
+      "elapsed_s": 137.17341628199995,
+      "sha256": "a95013a176a1162f8dcd63274ccd76c59efea523ab217ead97794e0398ee6cf8"
+    },
+    {
+      "index": 5,
+      "path": "chunk-005.mp4",
+      "frames": 16,
+      "pixel_sha256": "fcae8e6d7cf9ec624129fbc6982b840786377ed45be072e4ebaac245c9987a0e",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5834866039999724,
+        "mp4_encode": 0.4714483149999751
+      },
+      "elapsed_s": 147.68736347499998,
+      "sha256": "846be9ec08492fc4ec3a5d19fbcf4bb3328151405106ca96b54aab63628f21d9"
+    },
+    {
+      "index": 6,
+      "path": "chunk-006.mp4",
+      "frames": 16,
+      "pixel_sha256": "926db4df8e2aba78b0c06187aff9c09ea675750f7abb438c3e7eaef143677411",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5839282260000118,
+        "mp4_encode": 0.4805048910000096
+      },
+      "elapsed_s": 158.74340267000002,
+      "sha256": "71f6e05f955dd0ffe8818d9c0750d2941f4bbb2c8d4349f45ecd5bc5dfc97c21"
+    }
+  ],
+  "published_score_reproduced": false,
+  "agent_interactions": 8,
+  "adapter_sha256": "6adfe0e38f5239d61b012e9947ad4e9e2012711ba5675e423eba6173ffc6cb9a",
+  "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+  "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+  "deviations": [
+    "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+    "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+    "Official 480p demo area; single NVIDIA H100 80GB HBM3, BF16 and valid-length SDPA backend",
+    "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+    "Claude diagnostic scoring differs from published Gemini judgments"
+  ],
+  "hardware": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4"
+  },
+  "attention_backend": "sdpa",
+  "optional_torch_dlpack_addon_disabled": false,
+  "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+  "checkpoint_loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "generated_frames": 109,
+  "generated_seconds": 6.8125,
+  "termination": "agent_end",
+  "elapsed_s": 163.32150285399996,
+  "camera_diagnostics": {
+    "chunks": 7,
+    "path_length": 0.0,
+    "net_yaw_degrees": 404.99999999999994,
+    "total_turn_degrees": 404.99999999999994,
+    "max_distance_from_start": 0.0,
+    "final_distance_from_start": 0.0,
+    "revisited_start_at_chunk": null,
+    "wait_chunks": 0,
+    "wait_pose_changes": 0
+  },
+  "peak_allocated_bytes": 72558379520
+}
