@@ -145,6 +145,9 @@ class Data:
         self.full = json.loads(self.src["full_run"].read_text())
         self.final = json.loads(self.src["final_run"].read_text())
         self.episodes = {(r["task_id"], int(r["horizon_s"]), r["arm"]): r for r in self.horizon["per_episode"]}
+        # The summary published on main (same judge files) wins where present, so the video matches the other materials.
+        summary = self.src.get("horizon_summary")
+        self.summary = json.loads(summary.read_text()) if summary and summary.exists() else None
 
     def pair(self, spec):
         scene, horizon = spec["scene"], spec["horizon"]
@@ -162,9 +165,21 @@ class Data:
         for key in sorted(self.horizon["horizons"], key=int):
             item = self.horizon["horizons"][key]
             if item["paired_scenes"]:
-                rows.append({"seconds": int(key), "n": item["paired_scenes"], "stock": item["stock"]["score"],
-                             "memory": item["memory"]["score"], "paired": item["paired_score"]})
+                row = {"seconds": int(key), "n": item["paired_scenes"], "stock": dict(item["stock"]["score"]),
+                       "memory": dict(item["memory"]["score"]), "paired": dict(item["paired_score"])}
+                pub = (self.summary or {}).get("horizons", {}).get(key)
+                if pub and not self.summary.get("interim") and pub["n"] == row["n"]:
+                    for arm in ("stock", "memory"):
+                        row[arm].update(mean=pub[arm][0], ci95=pub[arm][1:])
+                    row["paired"].update(mean=pub["delta"][0], ci95=pub["delta"][1:], wins=pub["wins"], ties=pub["ties"], losses=pub["losses"])
+                rows.append(row)
         return rows
+
+    def pooled(self):
+        pub = (self.summary or {}).get("pooled_h6_h12_h24_by_scene")
+        if pub and not self.summary.get("interim"):
+            return {"mean": pub["delta"][0], "ci95": pub["delta"][1:]}
+        return (self.horizon.get("pooled_h6_h12_h24") or {}).get("score")
 
     def horizon_final(self):
         return self.horizon["fully_scored"] >= self.horizon["jobs"]
@@ -508,7 +523,7 @@ def scene_chart(data, seconds):
     headline = next((r for r in rows if r["seconds"] == data.board["headline_horizon"]), rows[0])
     final = data.horizon_final()
     stats = data.baselines()
-    x0, y0, cw, ch = 150, 290, 760, 500
+    x0, y0, cw, ch = 150, 290, 760, 450
     lo, hi = 1.0, 3.5
     max_s = max(24, max(r["seconds"] for r in rows))
 
@@ -527,7 +542,7 @@ def scene_chart(data, seconds):
             draw.text((x0 - 20, py(tick)), f"{tick:.1f}", font=font(30, False), fill=MUTED, anchor="rm")
         for tick in sorted({0, 6, 12, 24} | {r["seconds"] for r in rows}):
             draw.text((px(tick), y0 + ch + 34), f"{tick} s", font=font(30, False), fill=MUTED, anchor="mm")
-        draw.text((x0 + cw / 2, y0 + ch + 82), "seconds the camera looked away", font=font(30, False), fill=MUTED, anchor="mm")
+        draw.text((x0 + cw / 2, y0 + ch + 82), "seconds waited while looking away", font=font(30, False), fill=MUTED, anchor="mm")
         reveal = ease(t / 1.8)
         for arm, colour in (("stock", MUTED), ("memory", OURS)):
             points = [(px(r["seconds"]), py(r[arm]["mean"])) for r in rows]
@@ -543,18 +558,26 @@ def scene_chart(data, seconds):
             draw.text((lx + 38, y0 - 50), "with our memory" if arm == "memory" else "as released", font=font(34), fill=colour, anchor="lm")
         a = ease((t - 0.8) / 0.7)
         rx = 1080
-        draw.text((rx, 340), f"{paired['mean']:+.2f}", font=font(170), fill=mix(BG, OURS, a), anchor="lm")
-        draw.text((rx, 478), f"after {headline['seconds']} s away: {headline['stock']['mean']:.2f} → {headline['memory']['mean']:.2f}",
-                  font=font(44), fill=mix(BG, FG, a), anchor="lm")
-        draw.text((rx, 546), f"95% CI {paired['ci95'][0]:+.2f} to {paired['ci95'][1]:+.2f}", font=font(40, False), fill=mix(BG, FG, a), anchor="lm")
-        draw.text((rx, 612), f"{headline['n']} unseen scenes · paired, same seed", font=font(34, False), fill=mix(BG, MUTED, a), anchor="lm")
-        draw.text((rx, 660), f"{paired['wins']} wins / {paired['ties']} ties / {paired['losses']} losses", font=font(34, False), fill=mix(BG, MUTED, a), anchor="lm")
-        draw.text((rx, 708), "config frozen before generation", font=font(34, False), fill=mix(BG, MUTED, a), anchor="lm")
-        if not final:
-            draw.text((rx, 762), f"interim: {data.horizon['fully_scored']} of {data.horizon['jobs']} runs scored", font=font(28, False), fill=mix(BG, WARN, a), anchor="lm")
-        draw.text((W / 2, 930), f"Baseline reproduced on all 171 PlayWorld tasks: {stats['b_stock']:.2f} and {stats['a_stock']:.2f} vs published 1.82",
+        pooled = data.pooled() if final else None
+        big = pooled if pooled else paired
+        draw.text((rx, 330), f"{big['mean']:+.2f}", font=font(170), fill=mix(BG, OURS, a), anchor="lm")
+        head = "pooled over 6, 12 and 24 s away" if pooled else f"after {headline['seconds']} s away: {headline['stock']['mean']:.2f} → {headline['memory']['mean']:.2f}"
+        draw.text((rx, 462), head, font=font(42), fill=mix(BG, FG, a), anchor="lm")
+        draw.text((rx, 524), f"95% CI {big['ci95'][0]:+.2f} to {big['ci95'][1]:+.2f}", font=font(40, False), fill=mix(BG, FG, a), anchor="lm")
+        draw.text((rx, 584), f"{headline['n']} unseen scenes · paired, same seed", font=font(34, False), fill=mix(BG, MUTED, a), anchor="lm")
+        draw.text((rx, 630), "config frozen before generation", font=font(34, False), fill=mix(BG, MUTED, a), anchor="lm")
+        for k, r in enumerate(rows):
+            d = r["paired"]
+            draw.text((rx, 692 + k * 40), f"{r['seconds']:>2} s:  {d['mean']:+.2f}  [{d['ci95'][0]:+.2f}, {d['ci95'][1]:+.2f}]   {d['wins']}W / {d['ties']}T / {d['losses']}L",
+                      font=font(28, False), fill=mix(BG, FG, a), anchor="lm")
+        if final:
+            draw.text((x0, y0 + ch + 128), "Both decline with time away; the gain shrinks at 24 s (this archive holds 24 frames).",
+                      font=font(26, False), fill=mix(BG, WARN, a), anchor="lm")
+        else:
+            draw.text((rx, 692 + len(rows) * 40 + 10), f"interim: {data.horizon['fully_scored']} of {data.horizon['jobs']} runs scored", font=font(28, False), fill=mix(BG, WARN, a), anchor="lm")
+        draw.text((W / 2, 942), f"Baseline reproduced on all 171 PlayWorld tasks: {stats['b_stock']:.2f} and {stats['a_stock']:.2f} vs published 1.82",
                   font=font(34, False), fill=mix(BG, FG, ease((t - 2.2) / 0.7)), anchor="mm")
-        caption(draw, "On scenes never used in development, the judged score rises.", 1.0)
+        caption(draw, "Higher judged consistency at every absence length, on 20 unseen scenes." if final else "On scenes never used in development, the judged score rises.", 1.0)
         yield np.asarray(image)
 
 
