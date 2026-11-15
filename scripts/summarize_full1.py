@@ -38,7 +38,15 @@ def summarize(directory):
             dims[split] = {'expected': count, 'scored': len(records), 'missing_or_error': missing,
                            'mean': sum(r['scores']['official'] for r in records)/count if not missing else None,
                            'gate_verdicts': {v: sum(r.get('gate', {}).get('verdict') == v for r in records)
-                                             for v in ['pass', 'partial', 'fail']}}
+                                             for v in ['pass', 'partial', 'fail']},
+                           'judge_return_audit': {
+                               'required': sum(r.get('gate', {}).get('revisit_required') == 'yes' for r in records),
+                               'required_and_reported_yes': sum(r.get('gate', {}).get('revisit_required') == 'yes'
+                                   and r.get('gate', {}).get('revisit_observed') == 'yes' for r in records),
+                               'high_score_without_required_return': [r['episode_id'] for r in records
+                                   if r['scores']['official'] >= 3 and r.get('gate', {}).get('revisit_required') == 'yes'
+                                   and r.get('gate', {}).get('revisit_observed') != 'yes'],
+                               'caveat': 'Judge self-report, not independent verified return; no replacement official score.'}}
         complete = all(d['mean'] is not None for d in dims.values())
         arms[arm] = {'complete': complete, 'dimensions': dims,
                      'overall_equal_dimension_mean': sum(d['mean'] for d in dims.values())/4 if complete else None}

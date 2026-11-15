@@ -38,6 +38,14 @@
               "pass": 17,
               "partial": 7,
               "fail": 2
+            },
+            "judge_return_audit": {
+              "required": 20,
+              "required_and_reported_yes": 16,
+              "high_score_without_required_return": [
+                "stock-gc-GC002-seed42"
+              ],
+              "caveat": "Judge self-report, not independent verified return; no replacement official score."
             }
           },
           "if": {
@@ -74,6 +82,12 @@
               "pass": 11,
               "partial": 3,
               "fail": 11
+            },
+            "judge_return_audit": {
+              "required": 0,
+              "required_and_reported_yes": 0,
+              "high_score_without_required_return": [],
+              "caveat": "Judge self-report, not independent verified return; no replacement official score."
             }
           },
           "insight": {
@@ -116,6 +130,12 @@
               "pass": 0,
               "partial": 0,
               "fail": 0
+            },
+            "judge_return_audit": {
+              "required": 0,
+              "required_and_reported_yes": 0,
+              "high_score_without_required_return": [],
+              "caveat": "Judge self-report, not independent verified return; no replacement official score."
             }
           },
           "outsight": {
@@ -143,6 +163,12 @@
               "pass": 18,
               "partial": 4,
               "fail": 6
+            },
+            "judge_return_audit": {
+              "required": 25,
+              "required_and_reported_yes": 19,
+              "high_score_without_required_return": [],
+              "caveat": "Judge self-report, not independent verified return; no replacement official score."
             }
           }
         },
@@ -160,6 +186,14 @@
               "pass": 32,
               "partial": 11,
               "fail": 5
+            },
+            "judge_return_audit": {
+              "required": 38,
+              "required_and_reported_yes": 29,
+              "high_score_without_required_return": [
+                "budget-gc-GC046-seed42"
+              ],
+              "caveat": "Judge self-report, not independent verified return; no replacement official score."
             }
           },
           "if": {
@@ -171,22 +205,25 @@
               "pass": 23,
               "partial": 8,
               "fail": 16
+            },
+            "judge_return_audit": {
+              "required": 0,
+              "required_and_reported_yes": 0,
+              "high_score_without_required_return": [],
+              "caveat": "Judge self-report, not independent verified return; no replacement official score."
             }
           },
           "insight": {
             "expected": 30,
-            "scored": 8,
+            "scored": 13,
             "missing_or_error": [
               "budget-insight-OE025-seed42",
               "budget-insight-OE012-seed42",
-              "budget-insight-OE005-seed42",
               "budget-insight-OE010-seed42",
               "budget-insight-OE040-seed42",
               "budget-insight-OE013-seed42",
               "budget-insight-OE035-seed42",
               "budget-insight-OE072-seed42",
-              "budget-insight-OE004-seed42",
-              "budget-insight-OE009-seed42",
               "budget-insight-OE020-seed42",
               "budget-insight-OE065-seed42",
               "budget-insight-OE038-seed42",
@@ -194,17 +231,21 @@
               "budget-insight-OE073-seed42",
               "budget-insight-OE022-seed42",
               "budget-insight-OE071-seed42",
-              "budget-insight-OE008-seed42",
               "budget-insight-OE066-seed42",
               "budget-insight-OE064-seed42",
-              "budget-insight-OE074-seed42",
-              "budget-insight-OE006-seed42"
+              "budget-insight-OE074-seed42"
             ],
             "mean": null,
             "gate_verdicts": {
               "pass": 0,
               "partial": 0,
               "fail": 0
+            },
+            "judge_return_audit": {
+              "required": 0,
+              "required_and_reported_yes": 0,
+              "high_score_without_required_return": [],
+              "caveat": "Judge self-report, not independent verified return; no replacement official score."
             }
           },
           "outsight": {
@@ -216,6 +257,14 @@
               "pass": 29,
               "partial": 8,
               "fail": 6
+            },
+            "judge_return_audit": {
+              "required": 39,
+              "required_and_reported_yes": 32,
+              "high_score_without_required_return": [
+                "budget-outsight-OE046-seed42"
+              ],
+              "caveat": "Judge self-report, not independent verified return; no replacement official score."
             }
           }
         },
@@ -806,12 +855,13 @@
       },
       {
         "id": "text-confirm-IF024-both-seed42",
-        "task_id": "IF024",
-        "mode": "both",
-        "seed": 42,
+        "status": "evaluation_failed",
+        "score": null,
+        "error": "ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details.', 'status': 'RESOURCE_EXHAUSTED'}}",
         "partition": "new-cases",
-        "status": "evaluation_pending",
-        "score": null
+        "task_id": "IF024",
+        "seed": 42,
+        "mode": "both"
       }
     ],
     "means": null,

@@ -1,0 +1,18 @@
+{
+  "scope": "One scripted development-case capacity diagnostic, not adaptive overall or held-out selection",
+  "task_id": "GC010",
+  "seed": 42,
+  "cache_frames": 58,
+  "sink_frames": 6,
+  "max_chunks": 14,
+  "total_latent_frames": 56,
+  "method": "Native full-history cache; no retrieval, learned reader, commit forcing or training",
+  "runtime": "H200 Torch2.6 SDPA; text encoder offloaded before rendering",
+  "comparators": [
+    "reproduction/commit-forcing/GC010-seed42-h200/stock/run.json",
+    "reproduction/learned-memory-reader/video-diagnostic/retrieval-only/run.json"
+  ],
+  "jobs_sha256": "f209ce0f7f1c1ccd45541af4e71df3af55ce54ab61c8071a9286fdab9ed63a8c",
+  "hypothesis": "If retention is the bottleneck, full native history should recover initial street landmarks better than cache18. More history need not improve quality.",
+  "validation": "Match source/checkpoint/image/caption/actions/seed/sampler/backend/hardware. Require raw pixels to match stock before cache18 first evicts history; retain entire video, all failures, actual return evidence and memory peak. No predeclared score win."
+}
