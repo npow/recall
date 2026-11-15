@@ -67,8 +67,9 @@ def main():
     lingbot_adaptive_pilot.validate(args, knobs, parser)
     if not 0 < args.turn_degrees_per_second <= 90:
         parser.error("turn rate must be in (0,90] degrees per second")
-    if args.turn_degrees_per_second != 60 and not args.native_fixed_controls and not args.adaptive_retrieval_pilot:
-        parser.error("non-stock turn rates are confined to declared native fixed-path tests")
+    if (args.turn_degrees_per_second != 60 and not args.native_fixed_controls
+            and not args.adaptive_retrieval_pilot and not lingbot_tuning.hillclimb_unlocked()):
+        parser.error("non-stock turn rates require a declared native/adaptive pilot or unlocked hillclimbing")
     if not 1 <= args.max_chunks <= 60:
         parser.error("chunk budget must be in [1,60]")
     if args.native_fixed_controls and (not args.fixed_actions or len(args.fixed_actions) != args.max_chunks):
@@ -84,8 +85,10 @@ def main():
     diagnostics = [args.pose_retrieval, args.rephase_sink, args.kv_retention, args.decoprune, args.reanchor, args.budget_memory]
     if sum(diagnostics) > 1:
         parser.error("memory ablations must be tested separately")
-    if (any(diagnostics) or args.denoise_schedule != "stock") and not args.native_fixed_controls and not args.adaptive_retrieval_pilot:
-        parser.error("retrieval calibration requires native fixed controls")
+    adaptive_memory_ok = args.budget_memory and lingbot_tuning.hillclimb_unlocked()
+    if ((any(diagnostics) or args.denoise_schedule != "stock") and not args.native_fixed_controls
+            and not args.adaptive_retrieval_pilot and not adaptive_memory_ok):
+        parser.error("retrieval requires native fixed controls, the declared adaptive pilot, or unlocked budget-memory")
     if args.rephase_sink and not lingbot_tuning.is_stock(knobs):
         parser.error("sink rephasing requires the stock 18-frame/6-sink budget")
     if args.pose_retrieval and (knobs["local_attn_size"] not in {18, 22}

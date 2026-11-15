@@ -79,3 +79,17 @@ Left on branches (the forks' code conflicts with main's newer player and runner,
 * The camera does not return to the same place on the original round-trip path (translation is scene-dependent), so memory
   results use rotation-only revisit paths.
 * No secrets, tokens, weights, videos or per-frame images are committed; per-frame PNGs and results over a few MB were left out.
+
+## Corrections and warnings added after the near-field retest
+
+* **The earlier "translation barely realized" hypothesis was a distant-scene (GC007) artefact.** On 13 scenes
+  (`reproduction/near-field-motion.md`, stock checkpoint, seed 42, scripted paths, monocular odometry): forward expands in every
+  scene (median 1.78x, range 1.07 to 4.79), backward contracts in every scene (median 0.49x), and turning realizes a mean
+  176.6 degrees of 180. Camera control is not the general bottleneck. The gate-failure causes for GC017, GC015 and GC027
+  remain untested (player, judge or task objective); `reproduction/score-drivers.md` carries the same correction. The
+  "turn rate about 0.9x" and "round trip never returns" notes above are scene-specific for the same reason.
+* **WARNING, krasnaya-zvesda weights volume.** The `worldsync-lingbot-weights` volume in that Modal workspace was filled from the
+  Hugging Face repo head by `scripts/modal_seed_weights.py`. It is not hash-checked against the pinned checkpoint manifest
+  (`reproduction/lingbot-weights.json`), so it may differ from the pinned revision the nissan-pow volume holds. Do not use it
+  for scored or reproducibility runs until its files are verified against the manifest. Also: the krasnaya-zvesda and
+  seraphina-ink-88 workspaces could not launch GPU functions when tried (Modal asked for a payment method).

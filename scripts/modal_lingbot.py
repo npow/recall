@@ -51,7 +51,7 @@ def sh(command, log, **kwargs):
         return subprocess.run(command, cwd=PROJECT, stdout=handle, stderr=subprocess.STDOUT, **kwargs).returncode
 
 
-@app.function(image=image, gpu="H200", volumes={"/weights": weights, "/results": results},
+@app.function(image=image, gpu=os.environ.get("WORLDSYNC_GPU", "H200"), volumes={"/weights": weights, "/results": results},
     secrets=[modal.Secret.from_dict({"ANTHROPIC_API_KEY": _key()})], timeout=4 * 3600)
 def gate_and_one_case(run_id: str, case: str = "gc:GC007"):
     import numpy as np
@@ -112,9 +112,9 @@ def gate_and_one_case(run_id: str, case: str = "gc:GC007"):
     return report
 
 
-@app.function(image=image, gpu="H200", volumes={"/weights": weights, "/results": results},
+@app.function(image=image, gpu=os.environ.get("WORLDSYNC_GPU", "H200"), volumes={"/weights": weights, "/results": results},
     secrets=[modal.Secret.from_dict({"ANTHROPIC_API_KEY": _key()})], timeout=4 * 3600, max_containers=3)  # account GPU limit is believed to be 3
-def seed_case(run_id: str, seed: int, case: str = "gc:GC007"):
+def seed_case(run_id: str, seed: int, case: str = "gc:GC007", extra: tuple = ()):
     """One scored episode at one seed, through the suite code; gate is assumed passed."""
     out = Path("/results") / run_id / f"{case.replace(':', '-')}-seed{seed}"
     out.mkdir(parents=True, exist_ok=True)
@@ -125,9 +125,9 @@ def seed_case(run_id: str, seed: int, case: str = "gc:GC007"):
         link.symlink_to("/weights/14b-causal-fast")
     start = time.monotonic()
     code = sh([sys.executable, "-u", "-m", "worldsync.evaluate", "--model", "lingbot", "--only", case, "--judge",
-        "--seed", str(seed), "--output", str(out / "suite")], out / "suite.log")
+        "--seed", str(seed), *extra, "--output", str(out / "suite")], out / "suite.log")
     suite = json.loads((out / "suite/suite.json").read_text()) if (out / "suite/suite.json").exists() else {}
-    summary = {"seed": seed, "exit": code, "wall_s": round(time.monotonic() - start, 1), "runs": suite.get("runs")}
+    summary = {"seed": seed, "extra": list(extra), "exit": code, "wall_s": round(time.monotonic() - start, 1), "runs": suite.get("runs")}
     (out / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     results.commit()
     return summary
@@ -145,7 +145,7 @@ def seeds(seeds: str = "1,2,3,4,5", case: str = "gc:GC007"):
 
 
 @app.local_entrypoint()
-def cohort(seed: int = 42, label: str = "stock", subset: str = "cohort"):
+def cohort(seed: int = 42, label: str = "stock", subset: str = "cohort", extra: str = ""):
     """The 16-episode cohort (or subset=hillclimb, the 10 quick moving cases) at one seed, 3 GPUs at a time."""
     if not _key():
         raise SystemExit("ANTHROPIC_API_KEY missing locally")
@@ -157,7 +157,8 @@ def cohort(seed: int = 42, label: str = "stock", subset: str = "cohort"):
     cases.sort(key=lambda c: c.startswith("insight"), reverse=True)  # longest (60-chunk) cases first
     run_id = f"cohort-{label}-s{seed}-{int(time.time())}"
     print("run_id", run_id, len(cases), "cases", flush=True)
-    for summary in seed_case.starmap([(run_id, seed, c) for c in cases]):
+    flags = tuple(extra.split())
+    for summary in seed_case.starmap([(run_id, seed, c, flags) for c in cases]):
         print(json.dumps({k: summary[k] for k in ("seed", "exit", "wall_s")}), flush=True)
 
 

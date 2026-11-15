@@ -21,6 +21,11 @@ def add_arguments(parser):
         help="Chunks per player decision; the action is held between decisions (stock 1)")
 
 
+def hillclimb_unlocked(state_path=None):
+    state = json.loads((state_path or ROOT / "reproduction/state.json").read_text())
+    return state.get("phase") == "hillclimbing" and bool(state.get("baseline_reproduced") or state.get("user_authorized_local_hillclimb"))
+
+
 def resolve(args, parser, state_path=None):
     knobs = {name: getattr(args, name) for name in DEFAULTS}
     if knobs["sink_size"] < 0 or knobs["decision_interval"] < 1 or knobs["local_attn_size"] <= knobs["sink_size"]:
