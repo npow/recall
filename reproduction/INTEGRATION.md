@@ -33,7 +33,7 @@ reproduction of the published PlayWorld numbers (LingBot-World2 1.82, Genie 3 2.
 | Measured-motion feedback to the player: +0.37 over 9 pairs (not established); turn compensation hurt; more invalid-action failures | `reproduction/cohort/README-feedback.md` | `worldsync/motion_feedback.py` (module and tests only) | `a4a049746` bbbf393 |
 | Memory LoRA (rank 32, 48 Sekai pairs): no gain over pose retrieval, degrades ordinary generation (negative result) | `reproduction/lora/`, `reproduction/lora-validation/`, `reproduction/train-lora.md` | `worldsync/lingbot_lora.py`, `lingbot_memory_train.py`, `lingbot_memory_data.py`, train scripts | `aa412da33` 0a954a5, `a022e5e04` 2bc10e6 |
 | Sekai revisit-pair data pipeline (117 clean pairs) | `reproduction/train-data.md` | `worldsync/revisit_pairs.py`, `scripts/modal_build_revisit_data.py` | `afc3de966` 24c2400 |
-| Persistent Modal runner: 3.6x faster per job, bit-identical to one-shot on the same GPU model | `reproduction/modal-runner.md`, `reproduction/runner-validation/` | **not merged** | `abf23adbd` 020259a |
+| Persistent Modal runner: 3.6x faster per job, bit-identical to one-shot on the same GPU model | `reproduction/modal-runner.md`, `reproduction/runner-validation/` | `scripts/modal_lingbot_runner.py`, `lingbot_runner_client.py`, `worldsync/lingbot_runtime.py`, `lingbot_runner_core.py`; rollout `main(argv, runtime)` and `--lora` (merged later, see below) | `abf23adbd` 020259a |
 | Gemini judge via Vertex AI (gcloud login) | `worldsync/gemini_vertex_judge.py` | yes, no credentials stored | `a0a0580ab` f52cc91 |
 
 ## What is wired and what is not
@@ -53,8 +53,7 @@ Left on branches (the forks' code conflicts with main's newer player and runner,
 * `--end-guard`, measured-motion feedback and `--compensate-turn-rate` wiring into the player and rollout. Main's Player v6
   already has an END challenge and a hillclimb subset; reconcile before porting. The player-prompt test for the feedback hint
   was left out for the same reason.
-* `--motion-prompt`, `--translation-gain` and `--lora` flags in the rollout, and the LoRA evaluation scripts that need them.
-* The persistent runner (`scripts/modal_lingbot_runner.py`, `worldsync/lingbot_runtime.py`): it refactors the rollout entry point.
+* `--motion-prompt` and `--translation-gain` flags in the rollout (`--lora` is now wired, see the runner section), and the LoRA evaluation scripts that need the first two.
 * `scripts/launch_revisit_matrix.sh` and the older `modal_lingbot_roundtrip.py` option set the revisit matrix used.
 * Two forks were still running when this was written and are not integrated: the powered judged comparison on a second Modal
   workspace and the near-field motion retest on a third.
@@ -93,3 +92,33 @@ Left on branches (the forks' code conflicts with main's newer player and runner,
   (`reproduction/lingbot-weights.json`), so it may differ from the pinned revision the nissan-pow volume holds. Do not use it
   for scored or reproducibility runs until its files are verified against the manifest. Also: the krasnaya-zvesda and
   seraphina-ink-88 workspaces could not launch GPU functions when tried (Modal asked for a payment method).
+
+## Powered judged comparison and Gemini scripts (added later)
+
+* `reproduction/powered-comparison.md` is **blocked, no scores exist**: the krasnaya-zvesda and seraphina-ink-88 workspaces
+  refuse every GPU type (payment method required), and the nissan-pow workspace was reserved for other forks. Its analysis
+  and manifest scripts (`scripts/analyze_powered.py`, `build_powered_manifest.py`, `analyze_gemini_scores.py`,
+  `build_gemini_manifest.py`, `inspect_gemini_episode.py`) and `scripts/modal_gpu_probe.py` are on main. The episode runner
+  `scripts/modal_lingbot_powered.py` and its rollout flags stay on branch `worktree-agent-a5f22f4098cb528aa`.
+* Two Gemini judge adapters now exist on main: `worldsync/judge_gemini.py` (main's own transport shim used by `scripts/rejudge.py`)
+  and `worldsync/gemini_vertex_judge.py` (runs PlayWorld's released scorer unchanged over Vertex). They overlap; pick one for
+  scored runs and state which in the report. The Gemini rescoring report of branch `worktree-agent-a0a0580ab4da8a3e8`
+  (`reproduction/gemini-rescore.md`) was not committed when this was written, so it is not on main; its interim finding was a
+  weak per-episode agreement with the Opus judge (Spearman about 0.32 over 44 episodes) and a much more lenient Gemini score on one episode.
+
+## Persistent runner merge (added later)
+
+The persistent Modal runner is merged: `scripts/modal_lingbot_runner.py`, `scripts/lingbot_runner_client.py`, `worldsync/lingbot_runtime.py`,
+`worldsync/lingbot_runner_core.py` and their helper scripts and unit tests. The rollout change is small and default-neutral:
+`lingbot_rollout.main(argv=None, runtime=None)` now parses `argv`, returns the report, builds the pipeline through
+`build_pipeline` (or `runtime.pipeline_for` for a warm runtime), resets the CUDA peak-memory counter per job, avoids
+re-inserting the LingBot source on `sys.path`, and gains `--lora PATH` (only with `--controlled-ablation`, native fixed controls
+and fixed actions). One-shot `python -m worldsync.lingbot_rollout` behaves as before.
+
+Validation on the runner branch (older rollout base): 3.6x faster per job (49.6 s warm vs 180.7 s one-shot on an H200), and
+pixel hashes identical to one-shot for stock, 46/6, budget memory and the LoRA on the same GPU model, with no state leakage
+across 7 jobs (`reproduction/runner-validation/`). **Not re-run on current main:** the merged rollout has only had unit tests
+(137 pass) and a `--dry-run` through `main(argv)`. Re-run `scripts/compare_runner_results.py` on a GPU before relying on
+bit-exactness. Bit-exactness holds only within one GPU model (Modal can serve an H100 request on an H200).
+The runner needs a Modal workspace that can launch GPUs; the two newer workspaces could not when tried.
+
