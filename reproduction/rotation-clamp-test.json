@@ -57,7 +57,28 @@
     "Trajectory gate passed in every 60 deg/s rotation case despite the overshoot, so turn overshoot is not what limits these scores.",
     "50 deg/s alone: -0.02 on 4 GC cases (noise). Clamp lands realized yaw at 361-365 deg on GC029/031/044, but Gemini gates moved from pass to partial and the GC mean fell 0.25.",
     "Clamp on 3 OE turn-and-return cases: +0.64 (OE026 1.58 to 2.25, OE069 1.0 to 2.25, OE057 unchanged). Each case is one run; differences are inside noise.",
-    "Memory arm (bounded pose memory, 4 retrieved, same 18-frame budget) generated all 7 cases but is unscored: the gcloud login expired."
+    "Memory arm (bounded pose memory, 4 retrieved, same 18-frame budget): no gain (60 deg/s control 2.60 vs 2.44 on 3 GC cases; clamp-only 2.06 vs 1.96 on 6 cases)."
   ],
-  "claim": "No configuration is shown to improve the score; none of this beats the published record."
+  "claim": "No configuration is shown to improve the score; none of this beats the published record.",
+  "memory_arm": {
+    "method": "50 deg/s + plan clamp + bounded pose memory (6 sink, 4 retrieved by camera pose, 8 recent; same 18-frame budget)",
+    "case_means": {
+      "GC022": 5.0,
+      "GC029": 1.0,
+      "GC031": 1.33,
+      "GC044": null,
+      "OE026": 1.42,
+      "OE057": 1.0,
+      "OE069": 2.0
+    },
+    "vs_60_control_gc3": {
+      "60": 2.597,
+      "memory": 2.443
+    },
+    "vs_clamp_only_6cases": {
+      "clamp": 2.062,
+      "memory": 1.958
+    },
+    "note": "No gain; GC044 and one OE069 judgement errored. One run per case, inside noise."
+  }
 }
