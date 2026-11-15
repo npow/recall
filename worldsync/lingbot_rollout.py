@@ -31,6 +31,7 @@ def main():
     parser.add_argument("--native-fixed-controls", action="store_true", help="Use native precomputed poses and audit online camera embeddings")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--pose-retrieval", action="store_true", help="Experimental bounded early-view retrieval on native fixed paths")
+    parser.add_argument("--rephase-sink", action="store_true", help="Experimental pose-gated native sink key rephasing")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--dry-run", action="store_true")
     lingbot_tuning.add_arguments(parser)
@@ -40,9 +41,11 @@ def main():
         parser.error("chunk budget must be in [1,60]")
     if args.native_fixed_controls and (not args.fixed_actions or len(args.fixed_actions) != args.max_chunks):
         parser.error("native fixed controls require exactly max-chunks fixed actions")
-    if args.pose_retrieval and not args.native_fixed_controls:
+    if args.pose_retrieval and args.rephase_sink:
+        parser.error("memory ablations must be tested separately")
+    if (args.pose_retrieval or args.rephase_sink) and not args.native_fixed_controls:
         parser.error("retrieval calibration requires native fixed controls")
-    if args.pose_retrieval and not lingbot_tuning.is_stock(knobs):
+    if (args.pose_retrieval or args.rephase_sink) and not lingbot_tuning.is_stock(knobs):
         parser.error("bounded retrieval currently requires the stock 18-frame/6-sink budget")
     output = args.output.resolve()
     if output.exists() and any(output.iterdir()):
@@ -64,7 +67,7 @@ def main():
         "source_revision": revision, "checkpoint_revision": WEIGHT_REVISION, "task_id": args.task_id,
         "split": args.split, "seed": args.seed, "fps": 16, "max_chunks": maximum, "max_interactions": 40,
         "native_fixed_controls": args.native_fixed_controls, "camera_embedding_audit": [],
-        "pose_retrieval": args.pose_retrieval,
+        "pose_retrieval": args.pose_retrieval, "sink_rephase": args.rephase_sink,
         "stationary_wait_only": stationary, "fixed_actions": args.fixed_actions, "quantization": "none",
         "max_area": 480 * 832, "chunk_size": 4, "local_attn_size": knobs["local_attn_size"], "sink_size": knobs["sink_size"],
         "decision_interval": knobs["decision_interval"], "stock_knobs": lingbot_tuning.is_stock(knobs),
@@ -136,6 +139,9 @@ def main():
         if args.pose_retrieval:
             from worldsync.lingbot_retrieval import PoseKVMemory
             memory = PoseKVMemory(pipeline)
+        elif args.rephase_sink:
+            from worldsync.lingbot_sink_rephase import SinkRephaseMemory
+            memory = SinkRephaseMemory(pipeline)
         current_chunk = -1
         latest = initial
         def before(model, positional, kwargs):

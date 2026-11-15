@@ -18,7 +18,8 @@ def test_retrieval_uses_only_old_non_sink_views_and_requires_camera_overlap():
     assert select_frames(poses[:8], range(8), 4) == []  # No future or sink leakage.
 
 
-def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds_memory(monkeypatch):
+@pytest.mark.parametrize("method", ["retrieval", "sink_rephase"])
+def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds_memory(monkeypatch, method):
     import copy
     import sys
     from pathlib import Path
@@ -33,7 +34,7 @@ def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds
         # integration in a fresh interpreter rather than replacing live modules.
         import subprocess
         subprocess.run([sys.executable, "-m", "pytest", "-q",
-            f"{__file__}::test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds_memory"], check=True)
+            f"{__file__}::test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds_memory[{method}]"], check=True)
         return
     monkeypatch.syspath_prepend(str(source))
     from wan.modules import model_fast
@@ -44,7 +45,8 @@ def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds
     original = model_fast.CausalWanSelfAttention(64, 4, local_attn_size=18, sink_size=6).eval()
     candidate = copy.deepcopy(original)
     pipeline = SimpleNamespace(model=SimpleNamespace(blocks=[SimpleNamespace(self_attn=candidate)]))
-    memory = PoseKVMemory(pipeline)
+    from worldsync.lingbot_sink_rephase import SinkRephaseMemory
+    memory = (PoseKVMemory if method == "retrieval" else SinkRephaseMemory)(pipeline)
     def cache():
         return {"k": torch.zeros(1, 72, 4, 16), "v": torch.zeros(1, 72, 4, 16),
                 "global_end_index": torch.tensor([0]), "local_end_index": torch.tensor([0])}
@@ -54,7 +56,7 @@ def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds
     camera = CameraPlan()
     try:
         with torch.no_grad():
-            for chunk, action in enumerate(PATHS["round_trip"]):
+            for chunk, action in enumerate(PATHS["round_trip" if method == "retrieval" else "turn_return"]):
                 camera.advance(action)
                 memory.begin(chunk, camera.poses)
                 memory.clean = True
@@ -65,7 +67,10 @@ def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds
                 if not memory.trace[-1]["attention_replaced"]:
                     torch.testing.assert_close(actual, expected, atol=0, rtol=0)
                 assert modified_cache["k"].shape == stock_cache["k"].shape
-                assert len(memory.banks[0]) <= 16
+                assert len(memory.banks[0]) <= (16 if method == "retrieval" else 6)
+                if method == "sink_rephase":
+                    torch.testing.assert_close(modified_cache["k"], stock_cache["k"], atol=0, rtol=0)
+                    torch.testing.assert_close(modified_cache["v"], stock_cache["v"], atol=0, rtol=0)
         assert memory.retrieval_calls > 0
         assert memory.trace[-1]["attention_replaced"]
     finally:

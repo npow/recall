@@ -16,10 +16,10 @@ def main():
     for name in ("stock_run", "candidate_run", "stock_video", "candidate_video", "output"):
         parser.add_argument("--" + name.replace("_", "-"), type=Path, required=True)
     parser.add_argument("--judge", action="store_true")
-    parser.add_argument("--comparison", choices=("retrieval", "context"), default="retrieval")
+    parser.add_argument("--comparison", choices=("retrieval", "context", "sink-rephase"), default="retrieval")
     parser.add_argument("--dino", action="store_true", help="Add pinned DINOv2-small endpoint feature similarity")
     args = parser.parse_args()
-    candidate_label = "retrieval" if args.comparison == "retrieval" else "context34"
+    candidate_label = "context34" if args.comparison == "context" else args.comparison
     stock = json.loads(args.stock_run.read_text())["run"]
     candidate = json.loads(args.candidate_run.read_text())["run"]
     fields = ("source_revision", "checkpoint_revision", "protocol_id", "task_id", "split", "controls_sha256", "seed", "fps", "max_chunks",
@@ -32,10 +32,11 @@ def main():
     for run in (stock, candidate):
         if run["status"] != "completed" or len(run["chunks"]) != run["max_chunks"]:
             raise ValueError("Comparison requires two complete paths")
-        if not run["native_fixed_controls"] or not all(a["within_tolerance"] for a in run["camera_embedding_audit"]):
+        if (not run["native_fixed_controls"] or len(run["camera_embedding_audit"]) != run["max_chunks"]
+                or not all(a["within_tolerance"] for a in run["camera_embedding_audit"])):
             raise ValueError("Native camera conditioning audit failed")
     memory = candidate.get("memory")
-    if args.comparison == "retrieval":
+    if args.comparison != "context":
         modified = [item["chunk"] for item in memory["trace"] if item["attention_replaced"]]
         if not modified:
             raise ValueError("Candidate never retrieved memory; no intervention to compare")
@@ -108,7 +109,7 @@ def main():
             + str(stock["fixed_actions"]) + ". RIGHT and LEFT yaw 60 degrees per second; W moves forward. "
             "Commands are NOT proof that motion happened. Inspect actual frames. "
             "Assess whether each video realizes a turnaround and return to the starting viewpoint; whether persistent "
-            "building identity, sign text, geometry and spatial layout match on return; and whether there are sudden "
+            "landmark identity, any sign text, geometry and spatial layout match on return; and whether there are sudden "
             "jumps, frozen motion or implausible transitions. Distinguish camera-control failures from forgetting. "
             "Do not reward a similar final building if reaching it required a reset. Do not invent unseen geometry. "
             "Return English JSON with keys A and B (each with realized_round_trip: yes|no|uncertain, "
@@ -117,7 +118,12 @@ def main():
             "This is a diagnostic comparison, not a benchmark score."
         )
         content = [{"type": "text", "text": prompt}]
-        mapping = {"A": (candidate_label, args.candidate_video), "B": ("stock", args.stock_video)}
+        # Fixed assignment before judging, unrelated to image quality or model outputs.
+        reverse = hashlib.sha256(f"{stock['task_id']}/{stock['seed']}".encode()).digest()[0] % 2
+        pair = [(candidate_label, args.candidate_video), ("stock", args.stock_video)]
+        if reverse:
+            pair.reverse()
+        mapping = dict(zip(("A", "B"), pair))
         with tempfile.TemporaryDirectory(prefix="roundtrip-judge-") as directory:
             for anonymous, (_, video) in mapping.items():
                 sampled = generate_dual_sampling(video, Path(directory) / anonymous)
@@ -129,7 +135,7 @@ def main():
         raw = "\n".join(block.text for block in response.content if block.type == "text")
         report["visual_judge"] = {"model": response.model, "response_id": response.id,
             "usage": response.usage.model_dump(), "label_mapping": {k: v[0] for k, v in mapping.items()},
-            "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(), "result": parse_json(raw)}
+            "prompt": prompt, "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(), "result": parse_json(raw)}
         output.write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps({key: value for key, value in report.items() if key not in {"memory", "matched_settings"}}, indent=2))
 

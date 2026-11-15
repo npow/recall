@@ -1,0 +1,20 @@
+{
+  "scope": "Budget-matched positional staleness ablation; not a paper reproduction",
+  "task_id": "GC007",
+  "seed": 42,
+  "path": "turn_return",
+  "stock_report": "reproduction/context34-v1/stock-run.json",
+  "hypothesis": "Initial-view content is retained in native sinks but old temporal positions may reduce its influence on revisits. Rephase canonical sink keys to immediately precede rolling history only on commanded overlap.",
+  "attended_latent_frames": 18,
+  "sink_frames": 6,
+  "tail_frames": 12,
+  "archive": "Only six canonical initial keys; reuse native values; never modify persistent cache",
+  "trigger": "After18 latent frames, final chunk pose within2 movement units and45 degrees of starting pose",
+  "expected_intervention_chunks": [
+    6,
+    7
+  ],
+  "expected_identical_prefix_chunks": 6,
+  "evaluation": "Native parity; unchanged prefix; complete video motion/revisit review; DINO/PSNR; memory and warm timing",
+  "failure_policy": "Reject if apparent gains come from frozen motion, abrupt resets or lost control. Do not select based on endpoint similarity alone."
+}
