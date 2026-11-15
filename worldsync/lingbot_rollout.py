@@ -10,6 +10,8 @@ import time
 
 from worldsync.credentials import load_local_credentials
 from worldsync.lingbot_controls import CameraPlan, fp32_camera_rays
+from worldsync import lingbot_tuning
+from worldsync.lingbot_diagnostics import summarize
 from worldsync.lingbot_native import ROOT, SOURCE_REVISION, WEIGHT_REVISION, runtime_pack, configure_backend
 
 PROTOCOL_ID = "lingbot-world2-stock-reconstructed-haiku-16fps-v4"
@@ -31,7 +33,9 @@ def main():
     parser.add_argument("--pose-retrieval", action="store_true", help="Experimental bounded early-view retrieval on native fixed paths")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--dry-run", action="store_true")
+    lingbot_tuning.add_arguments(parser)
     args = parser.parse_args()
+    knobs = lingbot_tuning.resolve(args, parser)
     if not 1 <= args.max_chunks <= 60:
         parser.error("chunk budget must be in [1,60]")
     if args.native_fixed_controls and (not args.fixed_actions or len(args.fixed_actions) != args.max_chunks):
@@ -60,7 +64,8 @@ def main():
         "native_fixed_controls": args.native_fixed_controls, "camera_embedding_audit": [],
         "pose_retrieval": args.pose_retrieval,
         "stationary_wait_only": stationary, "fixed_actions": args.fixed_actions, "quantization": "none",
-        "max_area": 480 * 832, "chunk_size": 4, "local_attn_size": 18, "sink_size": 6,
+        "max_area": 480 * 832, "chunk_size": 4, "local_attn_size": knobs["local_attn_size"], "sink_size": knobs["sink_size"],
+        "decision_interval": knobs["decision_interval"], "stock_knobs": lingbot_tuning.is_stock(knobs),
         "sampler_timesteps_index": [0, 250, 500, 750], "sample_shift": 10,
         "actions": [], "chunks": [], "published_score_reproduced": False,
         "agent_interactions": 0,
@@ -122,7 +127,7 @@ def main():
     try:
         upstream = configure_backend(report, save)
         pipeline = upstream.WanI2VCausal(WAN_CONFIGS["i2v-A14B"], str(pack),
-            local_attn_size=18, sink_size=6, infer_mode="causal_fast", convert_model_dtype=True)
+            local_attn_size=knobs["local_attn_size"], sink_size=knobs["sink_size"], infer_mode="causal_fast", convert_model_dtype=True)
         stream = NativeVaeStream(pipeline.vae)
         camera = CameraPlan()
         if args.pose_retrieval:
@@ -147,6 +152,8 @@ def main():
                     report["termination"] = "fixed_diagnostic_actions_exhausted"
                     raise RolloutComplete
                 decision, metadata = {"operation": "KEEP", "action": args.fixed_actions[index], "reason": "fixed diagnostic"}, {}
+            elif (held := lingbot_tuning.held_decision(report["actions"], index, knobs["decision_interval"])):
+                decision, metadata = held, {}
             else:
                 decision, metadata = decide(client, task, initial, latest,
                     [{key: action[key] for key in ("operation", "action", "reason")} for action in report["actions"]],
@@ -236,6 +243,7 @@ def main():
         for handle in handles:
             handle.remove()
         report["elapsed_s"] = time.monotonic() - started
+        report["camera_diagnostics"] = summarize([a["action"] for a in report["actions"] if a.get("action")])
         report["peak_allocated_bytes"] = torch.cuda.max_memory_allocated()
         save()
         if report["chunks"]:

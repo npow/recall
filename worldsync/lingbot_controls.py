@@ -11,8 +11,11 @@ def fp32_camera_rays(builder, poses, intrinsics, height, width):
 
 
 class CameraPlan:
-    def __init__(self, turn_degrees_per_second=60):
+    def __init__(self, turn_degrees_per_second=60, move_speed=1.0):
+        # The native helper rescales translations to unit maximum per call, so
+        # move_speed only matters relative to rotation (and is 1 in stock).
         self.poses = []
+        self.speed = move_speed
         self.turn = math.radians(turn_degrees_per_second) / 4
         self.yaw_commanded = 0.0
 
@@ -20,7 +23,7 @@ class CameraPlan:
         step = np.eye(4)
         translations = {"W": [0, 0, 1], "S": [0, 0, -1], "A": [-1, 0, 0], "D": [1, 0, 0]}
         if action in translations:
-            step[:3, 3] = translations[action]
+            step[:3, 3] = np.array(translations[action]) * self.speed
         elif action in {"LEFT", "RIGHT"}:
             angle = self.turn if action == "RIGHT" else -self.turn
             c, s = math.cos(angle), math.sin(angle)
