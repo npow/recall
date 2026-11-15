@@ -91,12 +91,43 @@ def arm_summary(rows):
     return summary
 
 
+def category_means_by_split(rows):
+    table = {}
+    for arm in ARMS:
+        for split in ("gc", "outsight"):
+            subset = [r for r in rows if r.get("arm") == arm and r.get("split") == split and r.get("gemini") is not None]
+            names = sorted({n for r in subset for n in r["categories"]})
+            for name in names:
+                values = [r["categories"][name] for r in subset if name in r["categories"]]
+                table.setdefault(f"{arm}/{split}", {})[name] = {"mean": mean(values), "n": len(values)}
+    return table
+
+
+def bootstrap_ci(deltas, draws=4000, seed=0):
+    import random
+    rng = random.Random(seed)
+    means = sorted(mean([rng.choice(deltas) for _ in deltas]) for _ in range(draws))
+    return [means[int(0.025 * draws)], means[int(0.975 * draws)]]
+
+
+def sign_test_p(wins, losses):
+    n = wins + losses
+    if n == 0:
+        return None
+    k = max(wins, losses)
+    tail = sum(math.comb(n, i) for i in range(k, n + 1)) / 2 ** n
+    return min(1.0, 2 * tail)
+
+
 def paired(rows, arm, base="stock"):
     index = {(r["task"], r["seed"], r["arm"]): r for r in rows if r.get("gemini") is not None}
     pairs = [(index[(t, s, arm)], index[(t, s, base)]) for (t, s, a) in index if a == arm and (t, s, base) in index]
     deltas = [a["gemini"] - b["gemini"] for a, b in pairs]
-    return {"pairs": len(pairs), "mean_delta": mean(deltas), "wins": sum(d > 0 for d in deltas),
-            "ties": sum(d == 0 for d in deltas), "losses": sum(d < 0 for d in deltas),
+    wins, losses = sum(d > 0 for d in deltas), sum(d < 0 for d in deltas)
+    return {"pairs": len(pairs), "mean_delta": mean(deltas), "wins": wins,
+            "ties": sum(d == 0 for d in deltas), "losses": losses,
+            "bootstrap_95ci": bootstrap_ci(deltas) if deltas else None, "sign_test_p_two_sided": sign_test_p(wins, losses),
+            "by_split": {s: mean([a["gemini"] - b["gemini"] for a, b in pairs if a["split"] == s]) for s in ("gc", "outsight")},
             "opus_mean_delta": mean([a["opus"] - b["opus"] for a, b in pairs if a["opus"] is not None and b["opus"] is not None])}
 
 
@@ -124,15 +155,20 @@ def main():
     scored = [r for r in rows if r.get("gemini") is not None]
     report = {"episodes_scored": len(scored), "errors": [r for r in rows if r.get("error")],
               "arms": arm_summary(rows), "paired_vs_stock": {arm: paired(rows, arm) for arm in ("cache46", "fb", "fbcomp")},
-              "agreement": agreement(rows), "total_tokens": sum(r["tokens"] for r in scored)}
+              "agreement": agreement(rows), "category_means": category_means_by_split(rows), "total_tokens": sum(r["tokens"] for r in scored)}
     args.output.mkdir(parents=True, exist_ok=True)
     (args.output / "gemini-results.json").write_text(json.dumps({"report": report, "episodes": scored}, indent=2))
     lines = ["| Arm | n | GC (n) | Out-of-sight OE (n) | 2-dim mean | Gate non-fail | Opus mean (same eps) |", "| --- | ---: | ---: | ---: | ---: | ---: | ---: |"]
     for arm, s in report["arms"].items():
         lines.append(f"| {arm} | {s['n']} | {fmt(s['gc'])} ({s['n_gc']}) | {fmt(s['oe_out_of_sight'])} ({s['n_oe']}) | {fmt(s['two_dim_mean'])} | {s['gate_non_fail']}/{s['n']} | {fmt(s['opus_mean'])} |")
     (args.output / "arm-table.md").write_text("\n".join(lines) + "\n")
+    csv = ["episode,arm,seed,task,split,gemini_gate,gemini_score,gemini_final,opus_gate,opus_score"]
+    for r in sorted(scored, key=lambda r: (r["task"], r["arm"], r["seed"])):
+        csv.append(",".join(str(x) for x in (r["episode"], r["arm"], r["seed"], r["task"], r["split"],
+                                              r["gemini_gate"], r["gemini"], r["gemini_final"], r["opus_gate"], r["opus"])))
+    (args.output / "per-episode.csv").write_text("\n".join(csv) + "\n")
     print("\n".join(lines))
-    print(json.dumps({k: report[k] for k in ("paired_vs_stock", "agreement", "total_tokens", "episodes_scored")}, indent=2))
+    print(json.dumps({k: report[k] for k in ("paired_vs_stock", "agreement", "category_means", "total_tokens", "episodes_scored")}, indent=2))
 
 
 if __name__ == "__main__":
