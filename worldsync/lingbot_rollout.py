@@ -70,6 +70,8 @@ def main(argv=None, runtime=None):
     parser.add_argument("--budget-archive", type=int, default=24)
     parser.add_argument("--budget-rope", choices=["virtual", "native"], default="virtual")
     parser.add_argument("--offload-text-encoder", action="store_true", help="Release the completed GPU text encoder before denoising")
+    parser.add_argument("--player-retries", type=int, default=0,
+        help="Resample the player up to N times after an invalid response (same for every arm; each retry is logged)")
     parser.add_argument("--lora", type=Path, help="Memory LoRA adapter (scripts/train_lingbot_memory.py); non-stock weights")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--dry-run", action="store_true")
@@ -187,7 +189,7 @@ def main(argv=None, runtime=None):
     from PIL import Image
     from einops import rearrange
     from worldsync.lingbot_vae import NativeVaeStream
-    from worldsync.reference_player import decide
+    from worldsync.reference_player import decide as _decide, PlayerResponseError
     if str(source) not in sys.path:
         sys.path.insert(0, str(source))
     from wan.configs import WAN_CONFIGS
@@ -290,12 +292,20 @@ def main(argv=None, runtime=None):
                 history = [{key: action[key] for key in ("operation", "action", "reason")} for action in report["actions"]]
                 commanded = (lingbot_adaptive_pilot.player_state(camera) if args.adaptive_retrieval_pilot
                              else camera.commanded_state())
-                if args.stream_player_actions:
-                    from worldsync.streaming_player import StreamingDecision
-                    pending_player = StreamingDecision(client, task, initial, latest, history, commanded_state=commanded)
-                    decision, metadata = pending_player.action()
-                else:
-                    decision, metadata = decide(client, task, initial, latest, history, commanded_state=commanded)
+                for attempt in range(args.player_retries + 1):
+                    try:
+                        if args.stream_player_actions:
+                            from worldsync.streaming_player import StreamingDecision
+                            pending_player = StreamingDecision(client, task, initial, latest, history, commanded_state=commanded)
+                            decision, metadata = pending_player.action()
+                        else:
+                            decision, metadata = _decide(client, task, initial, latest, history, commanded_state=commanded)
+                        break
+                    except PlayerResponseError as error:
+                        report.setdefault("player_retry_events", []).append(
+                            {"chunk": index, "attempt": attempt, "error": str(error)})
+                        if attempt == args.player_retries:
+                            raise
                 report["agent_interactions"] += 1
             report["actions"].append({**decision, **metadata, "pose_before": camera.commanded_state(),
                                       "elapsed_s": time.monotonic() - started})
