@@ -205,7 +205,13 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
     if controller_profile is not None:
         if player_decide is None or args.decision_interval != 1:
             raise ValueError("Canonical controller requires callback on every native chunk")
-        if (args.text_prompt != 'prompt' or not lingbot_tuning.is_stock(knobs)
+        expected_text = 'prompt'
+        if controller_profile.get('profile') == 'lingbot-insight-caption-ablation-v1':
+            if (args.split != 'insight' or controller_profile.get('experimental_text_mode') != 'both'
+                    or not args.controlled_ablation):
+                raise ValueError('Caption ablation requires explicit in-sight experimental profile')
+            expected_text = 'both'
+        if (args.text_prompt != expected_text or not lingbot_tuning.is_stock(knobs)
                 or any(diagnostics) or args.fixed_actions or args.native_fixed_controls
                 or args.adaptive_retrieval_pilot or args.lora or args.memory_reader
                 or args.turn_clamp != 'off' or args.denoise_schedule != 'stock'):

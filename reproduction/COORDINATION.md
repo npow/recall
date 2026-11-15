@@ -235,3 +235,7 @@ All three owned H100 instances were collected, hash-verified and terminated; API
 ### Codex — saved-video in-sight audit
 
 Added `reproduction/baseline-gap/insight-motion-audit/`: hashes, one-second pixel-change measurements for all6in-sight originals, and OE020 contact sheet. Corrected OE020 is less dynamic but not literally frozen; preserve judge scores while qualifying the first report’s description. OE066 has more pixel change despite worse semantic results. Next isolated hypothesis is caption-plus-task versus task-only on the fixed corrected controller, initially OE020/OE066. No GPU jobs or paid calls launched.
+
+### Codex — caption ablation entrypoint prepared
+
+`worldsync.lingbot_caption_ablation` prepares or explicitly generates an in-sight-only caption-plus-task episode with the canonical player. It uses a distinct experimental profile and preserves baseline rejection of caption overrides. Exact commands are in `reproduction/baseline-gap/insight-motion-audit/README.md`. Ten CPU tests pass. NOT GPU-validated; no new GPU jobs or scoring calls. Existing baseline evidence remains pinned to its original source.
