@@ -27,8 +27,6 @@ if modal.is_local():
     from scripts.modal_lingbot_benchmark import runtime_image, weights, results
     from worldsync.credentials import load_local_credentials
     load_local_credentials()
-    player_secrets = ([modal.Secret.from_dict({"ANTHROPIC_API_KEY": os.environ["ANTHROPIC_API_KEY"]})]
-                      if os.environ.get("ANTHROPIC_API_KEY") else [])
     image = (runtime_image.pip_install("anthropic==2.8.0")
         .env({"PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"})
         .add_local_dir(ROOT / "worldsync", "/work/worldsync", ignore=["__pycache__"])
@@ -37,9 +35,12 @@ if modal.is_local():
         .add_local_dir(ROOT / "external/PlayWorld/data", "/work/external/PlayWorld/data"))
 else:
     image = None
-    player_secrets = []
     weights = modal.Volume.from_name("worldsync-lingbot-weights")
     results = modal.Volume.from_name("worldsync-lingbot-results")
+
+# Keep the same dependency graph locally and inside containers. Native-only
+# jobs can still run without a player key; an empty value makes no API call.
+player_secrets = [modal.Secret.from_dict({"ANTHROPIC_API_KEY": os.environ.get("ANTHROPIC_API_KEY", "")})]
 
 APP_NAME = "worldsync-lingbot-runner"
 app = modal.App(APP_NAME)
@@ -48,6 +49,19 @@ SCALEDOWN = int(os.environ.get("LINGBOT_RUNNER_SCALEDOWN", "600"))
 VOLUMES = {"/cache": weights, "/results": results}
 H100_DEFAULTS = {"offload_text_encoder": True}
 WARMUP_JOB = {"id": "warmup", "actions": ["WAIT"], "task_id": "GC007"}
+
+
+@app.function(image=image, cpu=1, memory=2048, timeout=120, volumes=VOLUMES, secrets=player_secrets)
+def preflight():
+    """Validate container hydration and all four asset splits before using GPUs."""
+    data = Path("/work/external/PlayWorld/data")
+    counts = {}
+    for split in ("gc", "if", "insight", "outsight"):
+        rows = json.loads((data / split / "data.json").read_text())
+        if any(not (data / row["image_path"]).is_file() for row in rows):
+            raise ValueError(f"Missing released input image in {split}")
+        counts[split] = len(rows)
+    return {"dataset_counts": counts, "player_key_configured": bool(os.environ.get("ANTHROPIC_API_KEY"))}
 
 
 def _prepare_container(expandable):
@@ -126,6 +140,7 @@ def main(jobs: str, gpu: str = "H200", mode: str = "warm", containers: int = 2, 
     import time
     if gpu not in {"H100", "H200"} or mode not in {"warm", "oneshot"}:
         raise ValueError("gpu is H100|H200 and mode is warm|oneshot")
+    print(json.dumps({"preflight": preflight.remote()}), flush=True)
     from scripts.lingbot_runner_client import expand
     entries = [expand(json.loads(line)) for line in Path(jobs).read_text().splitlines() if line.strip()]
     if mode == "warm":

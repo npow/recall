@@ -27,6 +27,11 @@ lets eight historical views run without the earlier resets on the development
 scene. Blinded comparisons weakly prefer this22-frame variant; fresh-image and
 new-seed checks also weakly prefer it, but task confirmation below does not. The validated four-view method remains the default.
 
+[Streamed player overlap](reproduction/player-streaming/README.md) hid27.7seconds
+of response explanations in a live run, with all10 generated chunks matching
+the previous stock prefix. The player stopped earlier, so this is not a matched
+full-episode speedup. Full-response validation and END checks are preserved.
+
 [Temporary-buffer release](reproduction/lingbot-read-cache-lifetime/README.md)
 reduces peak GPU allocation by1.59GB with all32chunks pixel-identical.
 [FlashAttention4 measurements](reproduction/lingbot-attention-optimization.md)
