@@ -1,4 +1,30 @@
 {
+  "full_history_diagnostic": {
+    "scope": "Matched three-arm scripted GC010 seed42; not adaptive overall or independent repeated judge draws",
+    "complete": true,
+    "results": {
+      "stock18": {
+        "score": 1.0,
+        "gate": "partial",
+        "judge_reports_revisit": "no",
+        "video_sha256": "a9f8b8307d03d660d9ec20fb0ddb32eaeb78602b062d5be7f3a1184109e8c464"
+      },
+      "retrieval4": {
+        "score": 5.0,
+        "gate": "pass",
+        "judge_reports_revisit": "yes",
+        "video_sha256": "59fa2dae3a25a33acfad604ccfaed7568f4375d42225d5de03844374c532e19b"
+      },
+      "native58": {
+        "score": 5.0,
+        "gate": "pass",
+        "judge_reports_revisit": "yes",
+        "video_sha256": "0647118bede47fd4d647259ae9c8cac3db8ce735507b3fae17426d288f9da078"
+      }
+    },
+    "visual_review": "Native58 and retrieval recover recognizable original street buildings; stock invents buildings. Framing, lettering and exact geometry still drift. A score5 is not a claim of perfect reconstruction.",
+    "caveat": "One development case; cannot compare this GC diagnostic with published four-dimension2.12."
+  },
   "full1_recovered": {
     "scope": "Full171 per arm, equal weighting of four dimension means; released partial-admitting rubric",
     "complete": false,
@@ -8,31 +34,17 @@
         "dimensions": {
           "gc": {
             "expected": 48,
-            "scored": 35,
-            "missing_or_error": [
-              "stock-gc-GC035-seed42",
-              "stock-gc-GC022-seed42",
-              "stock-gc-GC023-seed42",
-              "stock-gc-GC031-seed42",
-              "stock-gc-GC024-seed42",
-              "stock-gc-GC048-seed42",
-              "stock-gc-GC025-seed42",
-              "stock-gc-GC033-seed42",
-              "stock-gc-GC040-seed42",
-              "stock-gc-GC027-seed42",
-              "stock-gc-GC026-seed42",
-              "stock-gc-GC029-seed42",
-              "stock-gc-GC037-seed42"
-            ],
-            "mean": null,
+            "scored": 48,
+            "missing_or_error": [],
+            "mean": 2.2875,
             "gate_verdicts": {
-              "pass": 22,
-              "partial": 10,
-              "fail": 3
+              "pass": 30,
+              "partial": 14,
+              "fail": 4
             },
             "judge_return_audit": {
-              "required": 27,
-              "required_and_reported_yes": 20,
+              "required": 38,
+              "required_and_reported_yes": 29,
               "high_score_without_required_return": [
                 "stock-gc-GC002-seed42",
                 "stock-gc-GC013-seed42"
@@ -42,38 +54,27 @@
           },
           "if": {
             "expected": 50,
-            "scored": 26,
+            "scored": 37,
             "missing_or_error": [
-              "stock-if-IF004-seed42",
-              "stock-if-IF010-seed42",
-              "stock-if-IF025-seed42",
               "stock-if-IF030-seed42",
               "stock-if-IF046-seed42",
-              "stock-if-IF001-seed42",
               "stock-if-IF028-seed42",
-              "stock-if-IF003-seed42",
               "stock-if-IF032-seed42",
               "stock-if-IF042-seed42",
-              "stock-if-IF007-seed42",
-              "stock-if-IF011-seed42",
               "stock-if-IF031-seed42",
               "stock-if-IF048-seed42",
               "stock-if-IF034-seed42",
-              "stock-if-IF021-seed42",
-              "stock-if-IF008-seed42",
-              "stock-if-IF017-seed42",
               "stock-if-IF043-seed42",
               "stock-if-IF053-seed42",
               "stock-if-IF027-seed42",
               "stock-if-IF044-seed42",
-              "stock-if-IF024-seed42",
               "stock-if-IF037-seed42"
             ],
             "mean": null,
             "gate_verdicts": {
-              "pass": 11,
+              "pass": 16,
               "partial": 3,
-              "fail": 11
+              "fail": 15
             },
             "judge_return_audit": {
               "required": 0,

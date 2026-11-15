@@ -68,6 +68,16 @@ def main():
             '--native-fixed-controls', '--controlled-ablation', '--local-attn-size', str(capacity),
             '--sink-size', '6', '--offload-text-encoder', '--fixed-actions', *plan['actions'],
             '--output', str(args.output / 'episode')])
+        fields = ['source_revision', 'checkpoint_revision', 'initial_image_sha256',
+                  'image_caption_sha256', 'task_id', 'seed', 'turn_degrees_per_second',
+                  'sampler_timesteps_index', 'sample_shift', 'text_prompt_mode', 'hardware', 'attention_backend']
+        summary['matched_settings'] = {k: report.get(k) == plan.get(k) for k in fields}
+        if not all(summary['matched_settings'].values()) or report['local_attn_size'] != capacity or report['sink_size'] != 6:
+            raise ValueError('Diagnostic settings differ from frozen comparator')
+        if report['chunks'][0]['pixel_sha256'] != plan['native58_pixel_hashes'][0]:
+            raise ValueError('Common first chunk differs before any lossy history read')
+        summary['raw_pixel_equal_stock18'] = [r['pixel_sha256'] == expected
+            for r, expected in zip(report['chunks'], plan['stock18_pixel_hashes'])]
         summary['raw_pixel_equal_native58'] = [r['pixel_sha256'] == expected
             for r, expected in zip(report['chunks'], plan['native58_pixel_hashes'])]
         summary['base_parameter_versions_unchanged'] = all(

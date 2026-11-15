@@ -123,10 +123,22 @@ All342 generation records are verified complete. Judging resumes from preserved 
 
 | Arm | Generated | Judged | Overall |
 |---|---:|---:|---:|
-| stock |171/171|89/171|pending|
+| stock |171/171|113/171|pending|
 | budget |171/171|170/171|pending|
 
 [Generation plan, completion records and judgments](reproduction/full1-recovered-judging/README.md). Uses the integrated checkpoint, streamed Haiku player and Gemini preview alias; hosted-service equivalence is not established. The released rubric admits partial returns, so an overall score alone does not prove revisit memory.
+
+## Matched14B full-history diagnostic
+
+One scripted GC010 seed42 case, same H200/SDPA/seed/controls. Stock18, four-view retrieval and native58 match raw pixels through chunk3; the latter retains the whole56-latent trajectory.
+
+| Arm | Released GC rubric | Judge reports revisit |
+|---|---:|---|
+| stock18 |1.00|no|
+| retrieval4 |5.00|yes|
+| native58 |5.00|yes|
+
+[Videos, frame comparison and frozen inputs](reproduction/full-history-GC010/README.md). Native58 and retrieval recover recognizable initial street buildings; framing and details still drift. This is a single development diagnostic, not an overall score or proof of exact geometry. Native58 peaks at121.39GB allocated. The NanoKV identity adapter reproduces all14 native58 chunks exactly on H200; lossy compressed18/58 tests are running, with no quality gain claimed yet.
 
 ## Gemini — paired GC/OE development cohort (seeds 42 and 43)
 

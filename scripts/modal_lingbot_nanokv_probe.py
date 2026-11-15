@@ -21,6 +21,7 @@ if modal.is_local():
         .add_local_dir(ROOT / 'worldsync', '/work/worldsync', ignore=['__pycache__'])
         .add_local_file(ROOT / 'reproduction/lingbot-weights.json', '/work/reproduction/lingbot-weights.json')
         .add_local_file(ROOT / 'reproduction/full-history-GC010/run.json', '/work/reproduction/full-history-GC010/run.json')
+        .add_local_file(ROOT / 'reproduction/commit-forcing/GC010-seed42-h200/stock/run.json', '/work/reproduction/commit-forcing/GC010-seed42-h200/stock/run.json')
         .add_local_file(ROOT / 'external/PlayWorld/data/gc/data.json', '/work/external/PlayWorld/data/gc/data.json')
         .add_local_dir(ROOT / 'external/PlayWorld/data/gc/images', '/work/external/PlayWorld/data/gc/images'))
 else:
@@ -59,7 +60,13 @@ def probe(plan, arm):
     specification.write_text(json.dumps(plan, indent=2) + '\n')
     try:
         with (root / 'stdout.log').open('w') as log:
-            outcome = subprocess.run([sys.executable, '-u', '-m', 'worldsync.lingbot_nanokv_probe',
+            smoke = None
+            if arm != 'identity58':
+                smoke = subprocess.run([sys.executable, '-u', '-m', 'worldsync.lingbot_nanokv_codec_smoke',
+                    '--codec', '/cache/nanokv/lingbot-world-2.0/codec.pt',
+                    '--source-root', '/work/external/NanoKV', '--device', 'cuda',
+                    '--output', str(root / 'codec-smoke.json')], cwd='/work', stdout=log, stderr=subprocess.STDOUT)
+            outcome = smoke if smoke is not None and smoke.returncode else subprocess.run([sys.executable, '-u', '-m', 'worldsync.lingbot_nanokv_probe',
                 '--plan', str(specification), '--arm', arm, '--output', str(root / 'proof'),
                 '--codec', '/cache/nanokv/lingbot-world-2.0/codec.pt'],
                 cwd='/work', stdout=log, stderr=subprocess.STDOUT,

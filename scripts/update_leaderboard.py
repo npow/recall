@@ -59,6 +59,14 @@ def extra_sections():
             value = f"{overall:.4f}" if overall is not None else "pending"
             lines.append(f"| {arm} |171/171|{count}/171|{value}|")
         lines.extend(["", "[Generation plan, completion records and judgments](reproduction/full1-recovered-judging/README.md). Uses the integrated checkpoint, streamed Haiku player and Gemini preview alias; hosted-service equivalence is not established. The released rubric admits partial returns, so an overall score alone does not prove revisit memory."])
+    full_history = read("reproduction/full-history-GC010/gemini-summary.json")
+    if full_history:
+        lines.extend(["", "## Matched14B full-history diagnostic", "",
+            "One scripted GC010 seed42 case, same H200/SDPA/seed/controls. Stock18, four-view retrieval and native58 match raw pixels through chunk3; the latter retains the whole56-latent trajectory.", "",
+            "| Arm | Released GC rubric | Judge reports revisit |", "|---|---:|---|"])
+        for arm, result in full_history["results"].items():
+            lines.append(f"| {arm} |{result['score']:.2f}|{result['judge_reports_revisit']}|")
+        lines.extend(["", "[Videos, frame comparison and frozen inputs](reproduction/full-history-GC010/README.md). Native58 and retrieval recover recognizable initial street buildings; framing and details still drift. This is a single development diagnostic, not an overall score or proof of exact geometry. Native58 peaks at121.39GB allocated. The NanoKV identity adapter reproduces all14 native58 chunks exactly on H200; lossy compressed18/58 tests are running, with no quality gain claimed yet."])
     powered = powered_rows()
     if powered:
         lines.extend(["", "## Gemini — paired GC/OE development cohort (seeds 42 and 43)", "",
@@ -158,7 +166,7 @@ def generate():
     reader_fit = read("reproduction/learned-memory-reader/real-fit-summary.json")
     small_context = read("reproduction/lingbot-small/gemini-summary.json")
     text_pilot = read("reproduction/task-text-pilot/summary.json")
-    snapshot = {"full1_recovered": read("reproduction/full1-recovered-judging/summary.json"), "task_text_confirmation": text_confirmation, "learned_reader_surrogate": reader_fit, "small_model_context_diagnostic": small_context, "task_text_development": text_pilot, "target": 2.12, "full_benchmark_score": (full or {}).get("overall"), "gemini_moving_subsets": moving10, "full_171_run": full, "published_score_beaten": False,
+    snapshot = {"full_history_diagnostic": read("reproduction/full-history-GC010/gemini-summary.json"), "full1_recovered": read("reproduction/full1-recovered-judging/summary.json"), "task_text_confirmation": text_confirmation, "learned_reader_surrogate": reader_fit, "small_model_context_diagnostic": small_context, "task_text_development": text_pilot, "target": 2.12, "full_benchmark_score": (full or {}).get("overall"), "gemini_moving_subsets": moving10, "full_171_run": full, "published_score_beaten": False,
                 "gemini_model": "gemini-3.1-pro-preview", "endpoint": "Vertex AI global",
                 "gemini_local_cohorts": cohorts, "historical_claude_cohorts": historical,
                 "comparability": "Subset scores are not comparable to published four-dimension overall. Methods only compared within the same cohort/judge. Gemini model alias, player and adapter differences remain documented."}

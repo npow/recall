@@ -23,6 +23,7 @@ def main():
         'lingbot_rollout', 'lingbot_native', 'lingbot_controls', 'lingbot_paths', 'lingbot_vae',
         'lingbot_tuning', 'matrix_attention']]
     files += ['reproduction/lingbot-weights.json', 'reproduction/full-history-GC010/run.json',
+              'reproduction/commit-forcing/GC010-seed42-h200/stock/run.json',
               'external/PlayWorld/data/gc/data.json']
     task = next(t for t in json.loads((ROOT / files[-1]).read_text()) if t['task_id'] == 'GC010')
     files.append('external/PlayWorld/data/' + task['image_path'])
@@ -32,6 +33,9 @@ def main():
     plan = {'protocol': 'nanokv-isolated-gc010-v1', 'benchmark_eligible': False,
             'task_id': 'GC010', 'seed': 42, 'max_chunks': 14, 'actions': run['fixed_actions'],
             'turn_degrees_per_second': run['turn_degrees_per_second'],
+            'initial_image_sha256': run['initial_image_sha256'],
+            'image_caption_sha256': run['image_caption_sha256'], 'text_prompt_mode': 'caption',
+            'stock18_pixel_hashes': [r['pixel_sha256'] for r in json.loads((ROOT / 'reproduction/commit-forcing/GC010-seed42-h200/stock/run.json').read_text())['chunks']],
             'native58_pixel_hashes': [r['pixel_sha256'] for r in run['chunks']],
             'codec_sha256': 'b014909923f657b8019203bd581da77e8c6e0880bf7aa80b3eadfbf6a433f458',
             'codec_hf_revision': '4b0dac1219ed72ead539f8d063348949e6aeb045',
