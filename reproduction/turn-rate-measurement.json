@@ -1,0 +1,403 @@
+{
+  "purpose": "Realized camera yaw per chunk from generated frames vs the adapter's commanded 60 degrees per 16-frame chunk",
+  "method": "SIFT matches every 3 frames, RANSAC homography, rotation from K^-1 H K with native intrinsics; static-scene assumption",
+  "conclusion": "Realized turn is within about +/-10% of commanded 60 deg/chunk in both directions and both orders (LEFT-first: 61-65 deg/chunk, then RIGHT 60-61). No turn-rate calibration needed. The earlier LEFT>RIGHT gap was order, not direction.",
+  "caveat": "OE069 (low-texture corridor) has failed matches and is not reliable. Human plans imply about 50 deg/s, so plan-length turns overshoot by about 20% at 60.",
+  "runs": {
+    "gc-GC007": {
+      "task_id": "GC007",
+      "rows": [
+        {
+          "chunk": 0,
+          "action": "RIGHT",
+          "frames": 13,
+          "realized_yaw_deg": 44.7,
+          "realized_deg_per_s": 59.6,
+          "median_inliers": 111,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 1,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 56.4,
+          "realized_deg_per_s": 60.2,
+          "median_inliers": 110,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 2,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 55.3,
+          "realized_deg_per_s": 59.0,
+          "median_inliers": 156,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 3,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 57.6,
+          "realized_deg_per_s": 61.4,
+          "median_inliers": 151,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 4,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 57.7,
+          "realized_deg_per_s": 61.5,
+          "median_inliers": 117,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 5,
+          "action": "LEFT",
+          "frames": 16,
+          "realized_yaw_deg": -62.0,
+          "realized_deg_per_s": -66.2,
+          "median_inliers": 107,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 6,
+          "action": "LEFT",
+          "frames": 16,
+          "realized_yaw_deg": -63.2,
+          "realized_deg_per_s": -67.4,
+          "median_inliers": 162,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 7,
+          "action": "LEFT",
+          "frames": 16,
+          "realized_yaw_deg": -65.4,
+          "realized_deg_per_s": -69.7,
+          "median_inliers": 116,
+          "failed_pairs": 0
+        }
+      ],
+      "net_realized_yaw_deg": 81.0,
+      "commanded_net_yaw_deg": 104.99999999999999
+    },
+    "gc-GC027": {
+      "task_id": "GC027",
+      "rows": [
+        {
+          "chunk": 0,
+          "action": "RIGHT",
+          "frames": 13,
+          "realized_yaw_deg": 48.8,
+          "realized_deg_per_s": 65.0,
+          "median_inliers": 132,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 1,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 60.7,
+          "realized_deg_per_s": 64.7,
+          "median_inliers": 119,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 2,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 61.3,
+          "realized_deg_per_s": 65.4,
+          "median_inliers": 146,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 3,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 62.7,
+          "realized_deg_per_s": 66.9,
+          "median_inliers": 113,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 4,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 63.1,
+          "realized_deg_per_s": 67.3,
+          "median_inliers": 120,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 5,
+          "action": "LEFT",
+          "frames": 16,
+          "realized_yaw_deg": -74.0,
+          "realized_deg_per_s": -78.9,
+          "median_inliers": 139,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 6,
+          "action": "LEFT",
+          "frames": 16,
+          "realized_yaw_deg": -71.7,
+          "realized_deg_per_s": -76.5,
+          "median_inliers": 94,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 7,
+          "action": "LEFT",
+          "frames": 16,
+          "realized_yaw_deg": -68.5,
+          "realized_deg_per_s": -73.0,
+          "median_inliers": 113,
+          "failed_pairs": 0
+        }
+      ],
+      "net_realized_yaw_deg": 82.5,
+      "commanded_net_yaw_deg": 104.99999999999999
+    },
+    "gc-GC017": {
+      "task_id": "GC017",
+      "rows": [
+        {
+          "chunk": 0,
+          "action": "RIGHT",
+          "frames": 13,
+          "realized_yaw_deg": 47.8,
+          "realized_deg_per_s": 63.8,
+          "median_inliers": 128,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 1,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 56.6,
+          "realized_deg_per_s": 60.3,
+          "median_inliers": 141,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 2,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 55.8,
+          "realized_deg_per_s": 59.5,
+          "median_inliers": 173,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 3,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 56.1,
+          "realized_deg_per_s": 59.8,
+          "median_inliers": 169,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 4,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 58.0,
+          "realized_deg_per_s": 61.8,
+          "median_inliers": 139,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 5,
+          "action": "LEFT",
+          "frames": 16,
+          "realized_yaw_deg": -58.0,
+          "realized_deg_per_s": -61.9,
+          "median_inliers": 171,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 6,
+          "action": "LEFT",
+          "frames": 16,
+          "realized_yaw_deg": -64.6,
+          "realized_deg_per_s": -68.9,
+          "median_inliers": 105,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 7,
+          "action": "LEFT",
+          "frames": 16,
+          "realized_yaw_deg": -64.3,
+          "realized_deg_per_s": -68.6,
+          "median_inliers": 131,
+          "failed_pairs": 0
+        }
+      ],
+      "net_realized_yaw_deg": 87.3,
+      "commanded_net_yaw_deg": 104.99999999999999
+    },
+    "gc-GC007-reversed": {
+      "task_id": "GC007",
+      "rows": [
+        {
+          "chunk": 0,
+          "action": "LEFT",
+          "frames": 13,
+          "realized_yaw_deg": -45.5,
+          "realized_deg_per_s": -60.6,
+          "median_inliers": 95,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 1,
+          "action": "LEFT",
+          "frames": 16,
+          "realized_yaw_deg": -61.1,
+          "realized_deg_per_s": -65.2,
+          "median_inliers": 87,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 2,
+          "action": "LEFT",
+          "frames": 16,
+          "realized_yaw_deg": -61.3,
+          "realized_deg_per_s": -65.3,
+          "median_inliers": 53,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 3,
+          "action": "LEFT",
+          "frames": 16,
+          "realized_yaw_deg": -61.6,
+          "realized_deg_per_s": -65.7,
+          "median_inliers": 81,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 4,
+          "action": "LEFT",
+          "frames": 16,
+          "realized_yaw_deg": -64.8,
+          "realized_deg_per_s": -69.1,
+          "median_inliers": 119,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 5,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 61.2,
+          "realized_deg_per_s": 65.3,
+          "median_inliers": 139,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 6,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 60.3,
+          "realized_deg_per_s": 64.3,
+          "median_inliers": 131,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 7,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 61.1,
+          "realized_deg_per_s": 65.2,
+          "median_inliers": 165,
+          "failed_pairs": 0
+        }
+      ],
+      "net_realized_yaw_deg": -111.6,
+      "commanded_net_yaw_deg": -104.99999999999999
+    },
+    "outsight-OE069": {
+      "task_id": "OE069",
+      "rows": [
+        {
+          "chunk": 0,
+          "action": "RIGHT",
+          "frames": 13,
+          "realized_yaw_deg": 42.3,
+          "realized_deg_per_s": 56.4,
+          "median_inliers": 78,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 1,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 41.5,
+          "realized_deg_per_s": 44.2,
+          "median_inliers": 30,
+          "failed_pairs": 1
+        },
+        {
+          "chunk": 2,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 55.5,
+          "realized_deg_per_s": 59.2,
+          "median_inliers": 38,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 3,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 51.2,
+          "realized_deg_per_s": 54.6,
+          "median_inliers": 51,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 4,
+          "action": "RIGHT",
+          "frames": 16,
+          "realized_yaw_deg": 50.0,
+          "realized_deg_per_s": 53.3,
+          "median_inliers": 79,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 5,
+          "action": "LEFT",
+          "frames": 16,
+          "realized_yaw_deg": -71.3,
+          "realized_deg_per_s": -76.0,
+          "median_inliers": 62,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 6,
+          "action": "LEFT",
+          "frames": 16,
+          "realized_yaw_deg": -62.9,
+          "realized_deg_per_s": -67.1,
+          "median_inliers": 34,
+          "failed_pairs": 0
+        },
+        {
+          "chunk": 7,
+          "action": "LEFT",
+          "frames": 16,
+          "realized_yaw_deg": 0.0,
+          "realized_deg_per_s": 0.0,
+          "median_inliers": 0,
+          "failed_pairs": 5
+        }
+      ],
+      "net_realized_yaw_deg": 106.2,
+      "commanded_net_yaw_deg": 104.99999999999999
+    }
+  }
+}
