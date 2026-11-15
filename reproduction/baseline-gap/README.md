@@ -1,5 +1,27 @@
 # Second baseline and evaluation audit — November15,2026
 
+## Current handoff status
+
+**GPU-validated: NO. No GPU-validated commit exists yet.** Controller handoff code is commit `c2a32a44d68c29d00aaaf6245de3a6f48e0b3ef3`. CPU checks pass; Codex's already-running separate Lambda lease is executing only the two-chunk GC010 smoke. No full171-case run is planned by Codex. Claude on odin owns the subsequent approximately12-case controller comparison; Claude on thor owns the frozen full run, optb fleet and director experiment.
+
+Entrypoint: `worldsync.lingbot_released_baseline`. After installing dependencies and staging the pinned model/data, run from the repo root:
+
+```bash
+python -m worldsync.lingbot_released_baseline --split gc --task-id GC010 --seed 42 --chunks 2 --generate --validate-runtime --output outputs/canonical-smoke-GC010
+python -m worldsync.baseline_runtime_validation outputs/canonical-smoke-GC010 --output outputs/canonical-smoke-GC010-validation.json
+```
+
+For one complete controller-validation episode (explicit opt-in, default guard remains):
+
+```bash
+python -m worldsync.lingbot_released_baseline --split gc --task-id GC010 --seed 42 --chunks 60 --generate --validate-controller --output outputs/canonical-validation-GC010-seed42
+```
+
+Change `--split` and `--task-id` for the other development cases; each output directory must be new. IF033 remains unsupported. This flag labels the run as controller validation, not published benchmark reproduction. The artifact validator above is specific to the two-chunk GC010 smoke and must not be applied to a full episode or IF001.
+
+Live nonrotation hold checks require a usable Anthropic SDK endpoint/key serving the exact `claude-haiku-4-5-20251001` snapshot. The local CLIProxyAPI mentioned in coordination is **not automatically compatible**: it must expose Anthropic Messages semantics to this SDK, or an explicit transport adapter is needed. Merely setting an OpenAI-compatible base URL will not suffice. API errors fail the episode; do not silently substitute a different player.
+
+
 The published1.82 LingBot result has **not** been reproduced. Neither full-suite arm can reach2.12 with any valid scores for its pending judgments. The baseline correction profile is deliberately blocked from GPU generation until its controller integration is validated.
 
 ## Findings
