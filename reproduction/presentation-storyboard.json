@@ -60,12 +60,16 @@
   "ablation_source": "storage fork final table (worktree agent-adcb4bba63383eeb6, reproduction/memory-storage-ablation.md and memory-storage-ablation/table.md), as corrected by the coordinator: only exact and fp8 hold on both scenes; recompute 0.765 from memv2_config primary_choice_evidence; 6 MB = clean_input_bytes / stored_latent_frames in memv2-step1/v2recompute-hold-GC007-seed42/run.json",
   "loop": [
     [
-      "Experiment",
-      "memory v1: 1.80 vs 1.85 on 171 tasks, no gain"
+      "Propose",
+      "training-free memory for revisits"
+    ],
+    [
+      "Run",
+      "on cloud GPUs. v1: no gain on 171 tasks"
     ],
     [
       "Audit",
-      "independent agents found 3 real bugs"
+      "independent agents: 3 bugs, 2 design flaws"
     ],
     [
       "Diagnosis",
@@ -73,7 +77,7 @@
     ],
     [
       "Fix",
-      "memory v2: verified retrieval, 200× smaller"
+      "v2: fixes the harm, 200× less storage"
     ],
     [
       "Re-test",
@@ -192,8 +196,8 @@
     ]
   ],
   "ablation_notes": [
-    "Did not hold on a second scene: layer subsets, pooling, low-rank, int8.",
-    "Test path GC007: turn away, hold, return. Recompute bar: one scene, one seed."
+    "We also tried shrinking the cache itself (fewer layers, pooling, low-rank): the memory stopped working.",
+    "Test path GC007: turn away, hold, return. Recompute bar: tested on one scene so far."
   ],
   "loss": {
     "scene": "GC032",

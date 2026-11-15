@@ -667,23 +667,23 @@ def scene_limits(data, seconds):
 
 def scene_process(data, seconds):
     loop = data.board["loop"]
-    box_w, gap = 320, 42
+    box_w, gap = 272, 36
     x_start = (W - len(loop) * box_w - (len(loop) - 1) * gap) // 2
-    chips = ["pre-registered configs", "every run logged in the repo", "humans set goals and approved spending"]
+    chips = ["pre-registered configs", "every run logged in the repo"]
     for index in range(int(seconds * FPS)):
         t = index / FPS
-        image, draw = canvas("Process", "How the research ran: a loop of agents", "AUTONOMY", 58)
+        image, draw = canvas("Process", "An autoresearch loop", "AUTONOMY", 58)
         for n, (name, line) in enumerate(loop):
-            a = ease((t - 0.4 - 0.65 * n) / 0.6)
+            a = ease((t - 0.4 - 0.6 * n) / 0.6)
             x = x_start + n * (box_w + gap)
-            colour = OURS if n >= 3 else ACCENT
+            colour = OURS if n >= 4 else ACCENT
             draw.rounded_rectangle((x, 250, x + box_w, 360), 18, fill=PANEL, outline=mix(BG, colour, max(a, 0.2)), width=4)
             draw.text((x + box_w / 2, 305), name, font=font(31), fill=mix(PANEL, FG, max(a, 0.3)), anchor="mm")
             if n < len(loop) - 1:
                 draw.text((x + box_w + gap / 2, 305), "→", font=font(38), fill=MUTED, anchor="mm")
-            for k, part in enumerate(wrap(draw, line, font(32, False), box_w)):
-                draw.text((x + box_w / 2, 415 + k * 44), part, font=font(32, False), fill=mix(BG, FG, a), anchor="mm")
-        back = ease((t - 3.6) / 0.6)
+            for k, part in enumerate(wrap(draw, line, font(28, False), box_w)):
+                draw.text((x + box_w / 2, 410 + k * 40), part, font=font(28, False), fill=mix(BG, FG, a), anchor="mm")
+        back = ease((t - 4.0) / 0.6)
         draw.line((x_start + (len(loop) - 1) * (box_w + gap) + box_w / 2, 600, x_start + (len(loop) - 1) * (box_w + gap) + box_w / 2, 640,
                    x_start + box_w / 2, 640, x_start + box_w / 2, 600), fill=mix(BG, MUTED, back), width=4)
         draw.text((W / 2, 676), "repeat", font=font(32, False), fill=mix(BG, MUTED, back), anchor="mm")
@@ -691,11 +691,13 @@ def scene_process(data, seconds):
         total = sum(draw.textlength(c, font=font(32)) + 48 for c in chips) + 24 * (len(chips) - 1)
         cx = (W - total) / 2
         for n, chip in enumerate(chips):
-            d = ease((t - 4.0 - 0.3 * n) / 0.6)
+            d = ease((t - 4.3 - 0.3 * n) / 0.6)
             width = draw.textlength(chip, font=font(32)) + 48
             draw.rounded_rectangle((cx, 780, cx + width, 848), 34, outline=mix(BG, ACCENT, d), width=3)
             draw.text((cx + width / 2, 814), chip, font=font(32), fill=mix(BG, FG, d), anchor="mm")
             cx += width + 24
+        draw.text((W / 2, 900), "AI agents ran the loop; a human set the goals and budget and made key calls.",
+                  font=font(30, False), fill=mix(BG, MUTED, ease((t - 4.6) / 0.6)), anchor="mm")
         caption(draw, "Agents ran, audited and fixed their own experiments.", 1.0)
         yield np.asarray(image)
 
