@@ -16,10 +16,15 @@ def main():
     for name in ("stock_run", "candidate_run", "stock_video", "candidate_video", "output"):
         parser.add_argument("--" + name.replace("_", "-"), type=Path, required=True)
     parser.add_argument("--judge", action="store_true")
+    parser.add_argument("--reference-label", default="stock")
+    parser.add_argument("--candidate-label")
     parser.add_argument("--comparison", choices=("retrieval", "context", "sink-rephase", "retrieval-native"), default="retrieval")
     parser.add_argument("--dino", action="store_true", help="Add pinned DINOv2-small endpoint feature similarity")
     args = parser.parse_args()
-    candidate_label = "context34" if args.comparison == "context" else args.comparison
+    reference_label = args.reference_label
+    candidate_label = args.candidate_label or ("context34" if args.comparison == "context" else args.comparison)
+    if not reference_label.isidentifier() or not candidate_label.replace("-", "_").isidentifier() or reference_label == candidate_label:
+        raise ValueError("Comparison labels must be distinct simple identifiers")
     stock = json.loads(args.stock_run.read_text())["run"]
     candidate = json.loads(args.candidate_run.read_text())["run"]
     fields = ("source_revision", "checkpoint_revision", "protocol_id", "task_id", "split", "controls_sha256", "seed", "fps", "max_chunks",
@@ -35,14 +40,17 @@ def main():
         if (not run["native_fixed_controls"] or len(run["camera_embedding_audit"]) != run["max_chunks"]
                 or not all(a["within_tolerance"] for a in run["camera_embedding_audit"])):
             raise ValueError("Native camera conditioning audit failed")
+    if stock.get("hardware") != candidate.get("hardware") or stock.get("text_encoder_offloaded_after_encoding", False) != candidate.get("text_encoder_offloaded_after_encoding", False):
+        raise ValueError("Comparison requires matching hardware and text-encoder placement")
     if stock.get("turn_degrees_per_second", 60) != candidate.get("turn_degrees_per_second", 60):
         raise ValueError("Unmatched camera turn rate")
     memory = candidate.get("memory")
     if args.comparison != "context":
         modified = [item["chunk"] for item in memory["trace"] if item["attention_replaced"]]
-        if not modified:
-            raise ValueError("Candidate never retrieved memory; no intervention to compare")
-        first = min(modified)
+        reference_modified = [item["chunk"] for item in (stock.get("memory") or {}).get("trace", []) if item["attention_replaced"]]
+        if not modified and not reference_modified:
+            raise ValueError("Neither policy retrieved memory; no intervention to compare")
+        first = min(modified + reference_modified)
     else:
         if stock["local_attn_size"] != 18 or candidate["local_attn_size"] != 34:
             raise ValueError("Declared context pilot requires stock18 versus context34")
@@ -60,7 +68,7 @@ def main():
     from PIL import Image
     import numpy as np
     endpoints = {}
-    for label, video, run in (("stock", args.stock_video, stock), (candidate_label, args.candidate_video, candidate)):
+    for label, video, run in ((reference_label, args.stock_video, stock), (candidate_label, args.candidate_video, candidate)):
         for part, frame in (("reference", 12), ("return", run["generated_frames"] - 1)):
             image = artifacts / f"{label}-{part}.png"
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(video), "-vf", f"select=eq(n\\,{frame})",
@@ -73,14 +81,21 @@ def main():
         "stock_peak_allocated_bytes": stock["peak_allocated_bytes"],
         "candidate_peak_allocated_bytes": candidate["peak_allocated_bytes"], "memory": memory,
         "caveat": "Commanded camera closure does not prove realized closure. Endpoint image similarity cannot establish world memory if the realized route fails."}
-    for label in ("stock", candidate_label):
+    for label in (reference_label, candidate_label):
         reference = np.asarray(Image.open(endpoints[label, "reference"])).astype(np.float32)
         returned = np.asarray(Image.open(endpoints[label, "return"])).astype(np.float32)
         mse = float(np.mean((reference - returned) ** 2))
         report[label] = {"endpoint_psnr_db": float(10 * np.log10(255 ** 2 / max(mse, 1e-12))),
-                         "video_sha256": hashlib.sha256((args.stock_video if label == "stock" else args.candidate_video).read_bytes()).hexdigest()}
+                         "video_sha256": hashlib.sha256((args.stock_video if label == reference_label else args.candidate_video).read_bytes()).hexdigest()}
+    if reference_label != "stock":
+        report.pop("stock_wall_s")
+        report.pop("stock_peak_allocated_bytes")
+    report["reference_label"] = reference_label
+    report["reference_memory"] = stock.get("memory")
+    report["reference_wall_s"] = stock["elapsed_s"]
+    report["reference_peak_allocated_bytes"] = stock["peak_allocated_bytes"]
     report["candidate_label"] = candidate_label
-    report["warmed_suffix_s"] = {label: run["chunks"][-1]["elapsed_s"] - run["chunks"][0]["elapsed_s"] for label, run in (("stock", stock), (candidate_label, candidate))}
+    report["warmed_suffix_s"] = {label: run["chunks"][-1]["elapsed_s"] - run["chunks"][0]["elapsed_s"] for label, run in ((reference_label, stock), (candidate_label, candidate))}
     output.write_text(json.dumps(report, indent=2) + "\n")
     if args.dino:
         import torch
@@ -90,11 +105,11 @@ def main():
         processor = AutoImageProcessor.from_pretrained(model_name, revision=revision, use_fast=False)
         model = AutoModel.from_pretrained(model_name, revision=revision).eval()
         torch.set_num_threads(8)
-        order = [(label, part) for label in ("stock", candidate_label) for part in ("reference", "return")]
+        order = [(label, part) for label in (reference_label, candidate_label) for part in ("reference", "return")]
         inputs = processor(images=[Image.open(endpoints[key]).convert("RGB") for key in order], return_tensors="pt")
         with torch.no_grad():
             features = torch.nn.functional.normalize(model(**inputs).last_hidden_state[:, 0], dim=-1)
-        for i, label in enumerate(("stock", candidate_label)):
+        for i, label in enumerate((reference_label, candidate_label)):
             report[label]["endpoint_dino_cosine"] = float(features[i * 2] @ features[i * 2 + 1])
         report["feature_model"] = {"name": model_name, "revision": revision, "feature": "normalized CLS token"}
         output.write_text(json.dumps(report, indent=2) + "\n")
@@ -121,8 +136,9 @@ def main():
         )
         content = [{"type": "text", "text": prompt}]
         # Fixed assignment before judging, unrelated to image quality or model outputs.
-        reverse = hashlib.sha256(f"{stock['task_id']}/{stock['seed']}".encode()).digest()[0] % 2
-        pair = [(candidate_label, args.candidate_video), ("stock", args.stock_video)]
+        assignment = f"{stock['task_id']}/{stock['seed']}" + (f"/{candidate_label}" if reference_label != "stock" else "")
+        reverse = hashlib.sha256(assignment.encode()).digest()[0] % 2
+        pair = [(candidate_label, args.candidate_video), (reference_label, args.stock_video)]
         if reverse:
             pair.reverse()
         mapping = dict(zip(("A", "B"), pair))

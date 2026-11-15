@@ -32,6 +32,8 @@ def main():
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--turn-degrees-per-second", type=float, default=60)
     parser.add_argument("--pose-retrieval", action="store_true", help="Experimental bounded early-view retrieval on native fixed paths")
+    parser.add_argument("--retrieved-frames", type=int, choices=(4, 8), default=4)
+    parser.add_argument("--retrieval-selection", choices=("nearest", "diverse"), default="nearest")
     parser.add_argument("--retrieval-positions", choices=("virtual", "native"), default="virtual")
     parser.add_argument("--rephase-sink", action="store_true", help="Experimental pose-gated native sink key rephasing")
     parser.add_argument("--offload-text-encoder", action="store_true", help="Release the completed GPU text encoder before denoising")
@@ -48,6 +50,8 @@ def main():
         parser.error("chunk budget must be in [1,60]")
     if args.native_fixed_controls and (not args.fixed_actions or len(args.fixed_actions) != args.max_chunks):
         parser.error("native fixed controls require exactly max-chunks fixed actions")
+    if (args.retrieved_frames != 4 or args.retrieval_selection != "nearest") and not args.pose_retrieval:
+        parser.error("retrieval count/selection require --pose-retrieval")
     if args.retrieval_positions != "virtual" and not args.pose_retrieval:
         parser.error("retrieval positions require --pose-retrieval")
     if args.pose_retrieval and args.rephase_sink:
@@ -161,7 +165,8 @@ def main():
         camera = CameraPlan(turn_degrees_per_second=args.turn_degrees_per_second)
         if args.pose_retrieval:
             from worldsync.lingbot_retrieval import PoseKVMemory
-            memory = PoseKVMemory(pipeline, key_positions=args.retrieval_positions)
+            memory = PoseKVMemory(pipeline, key_positions=args.retrieval_positions,
+                                  retrieved_frames=args.retrieved_frames, selection=args.retrieval_selection)
         elif args.rephase_sink:
             from worldsync.lingbot_sink_rephase import SinkRephaseMemory
             memory = SinkRephaseMemory(pipeline)

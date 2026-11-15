@@ -18,7 +18,20 @@ def test_retrieval_uses_only_old_non_sink_views_and_requires_camera_overlap():
     assert select_frames(poses[:8], range(8), 4) == []  # No future or sink leakage.
 
 
-@pytest.mark.parametrize("method", ["retrieval", "retrieval_native", "sink_rephase"])
+def test_diverse_retrieval_does_not_spend_all_slots_on_duplicate_hold_views():
+    camera = CameraPlan()
+    for action in PATHS["turn_wait_return"][:12]:
+        camera.advance(action)
+    poses = np.stack(camera.poses)
+    nearest = select_frames(poses, range(6, 22), 44, count=8)
+    diverse = select_frames(poses, range(6, 22), 44, count=8, diverse=True)
+    def unique_views(indices):
+        return len({tuple(np.round(poses[index].ravel(), 7)) for index in indices})
+    assert len(nearest) == 8 and unique_views(nearest) == 2
+    assert len(diverse) == unique_views(diverse) == 5
+
+
+@pytest.mark.parametrize("method", ["retrieval", "retrieval_native", "retrieval_eight", "retrieval_diverse", "retrieval_eight_diverse", "sink_rephase"])
 def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds_memory(monkeypatch, method):
     import copy
     import sys
@@ -46,7 +59,9 @@ def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds
     candidate = copy.deepcopy(original)
     pipeline = SimpleNamespace(model=SimpleNamespace(blocks=[SimpleNamespace(self_attn=candidate)]))
     from worldsync.lingbot_sink_rephase import SinkRephaseMemory
-    memory = (PoseKVMemory(pipeline, key_positions="native" if method == "retrieval_native" else "virtual")
+    memory = (PoseKVMemory(pipeline, key_positions="native" if method == "retrieval_native" else "virtual",
+                           retrieved_frames=8 if "eight" in method else 4,
+                           selection="diverse" if "diverse" in method else "nearest")
               if method.startswith("retrieval") else SinkRephaseMemory(pipeline))
     def cache():
         return {"k": torch.zeros(1, 72, 4, 16), "v": torch.zeros(1, 72, 4, 16),
@@ -57,7 +72,8 @@ def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds
     camera = CameraPlan()
     try:
         with torch.no_grad():
-            for chunk, action in enumerate(PATHS["round_trip" if method.startswith("retrieval") else "turn_return"]):
+            name = "turn_wait_return" if method in {"retrieval_eight", "retrieval_diverse", "retrieval_eight_diverse"} else ("round_trip" if method.startswith("retrieval") else "turn_return")
+            for chunk, action in enumerate(PATHS[name]):
                 camera.advance(action)
                 memory.begin(chunk, camera.poses)
                 memory.clean = True
@@ -76,6 +92,11 @@ def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds
                     torch.testing.assert_close(modified_cache["k"], stock_cache["k"], atol=0, rtol=0)
                     torch.testing.assert_close(modified_cache["v"], stock_cache["v"], atol=0, rtol=0)
         assert memory.retrieval_calls > 0
-        assert memory.trace[-1]["attention_replaced"]
+        if method in {"retrieval", "retrieval_native", "sink_rephase"}:
+            assert memory.trace[-1]["attention_replaced"]
+        if "eight" in method:
+            assert max(len(row["retrieved_frame_ids"]) for row in memory.trace) > 4
+        if method.startswith("retrieval"):
+            assert all(row.get("retained_tail_latent_frames", 8) >= 4 for row in memory.trace)
     finally:
         memory.close()

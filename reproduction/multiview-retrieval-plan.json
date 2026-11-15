@@ -1,0 +1,34 @@
+{
+  "scope": "User-requested multi-view retrieval ablation; development only",
+  "case": {
+    "task_id": "GC007",
+    "seed": 42,
+    "path": "turn_long_wait_return",
+    "partition": "development"
+  },
+  "variants": [
+    {
+      "retrieved_frames": 4,
+      "selection": "nearest"
+    },
+    {
+      "retrieved_frames": 8,
+      "selection": "nearest"
+    },
+    {
+      "retrieved_frames": 4,
+      "selection": "diverse"
+    },
+    {
+      "retrieved_frames": 8,
+      "selection": "diverse"
+    }
+  ],
+  "frozen_settings": "Same32-chunk native trajectory, source/checkpoint, sampler, seed,18 attended latent frames,6 initial sinks,16-frame CPU archive6..21, virtual key positions",
+  "attention_tradeoff": "Four retrieved frames leave8 recent/current frames. Eight retrieved frames leave4 current frames. More historical views replace recency at constant attention tokens; GPU stored retrieval and transfer cost can still increase.",
+  "diversity_rule": "Greedy pose-overlap ranking with at least15-degree angular or2-unit positional separation between selected views. Do not pad with duplicates. Retrieval activates only with at least4 available selected frames; actual count and retained tail are recorded.",
+  "hardware": "All four runs useH100, Torch2.6/CUDA12.4, with the completed text encoder moved toCPU. Rerun the4-nearest control on this hardware rather than presuming equivalence to H200.",
+  "primary_evaluation": "Complete-video blinded comparison against the4-nearest reference, tracking return landmark identity, continuity and actual camera motion. Also report endpoint DINO/PSNR, pixel-identical prefix, actual view counts, latency and GPU/CPU memory.",
+  "selection_policy": "Report all four outcomes. No candidate selected on held-out scenes. Validate any promising read-count/selection change on a new image before recommending it.",
+  "training": "None; pretrained generator weights unchanged."
+}
