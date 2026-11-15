@@ -16,10 +16,11 @@ def main():
     for name in ("stock_run", "candidate_run", "stock_video", "candidate_video", "output"):
         parser.add_argument("--" + name.replace("_", "-"), type=Path, required=True)
     parser.add_argument("--judge", action="store_true")
+    parser.add_argument("--dino", action="store_true", help="Add pinned DINOv2-small endpoint feature similarity")
     args = parser.parse_args()
     stock = json.loads(args.stock_run.read_text())["run"]
     candidate = json.loads(args.candidate_run.read_text())["run"]
-    fields = ("source_revision", "checkpoint_revision", "protocol_id", "seed", "fps", "max_chunks",
+    fields = ("source_revision", "checkpoint_revision", "protocol_id", "task_id", "split", "controls_sha256", "seed", "fps", "max_chunks",
               "max_area", "chunk_size", "local_attn_size", "sink_size", "sampler_timesteps_index", "sample_shift", "fixed_actions")
     for field in fields:
         if stock[field] != candidate[field]:
@@ -64,6 +65,32 @@ def main():
         report[label] = {"endpoint_psnr_db": float(10 * np.log10(255 ** 2 / max(mse, 1e-12))),
                          "video_sha256": hashlib.sha256((args.stock_video if label == "stock" else args.candidate_video).read_bytes()).hexdigest()}
     output.write_text(json.dumps(report, indent=2) + "\n")
+    if args.dino:
+        import torch
+        from urllib.request import Request, urlopen
+        import requests
+        from huggingface_hub import configure_http_backend
+        from transformers import AutoImageProcessor, AutoModel
+        model_name = "facebook/dinov2-small"
+        with urlopen(Request(f"https://huggingface.co/api/models/{model_name}",
+                             headers={"Accept-Encoding": "identity"}), timeout=60) as response:
+            revision = json.load(response)["sha"]
+        def backend():
+            session = requests.Session()
+            session.headers["Accept-Encoding"] = "identity"
+            return session
+        configure_http_backend(backend_factory=backend)
+        processor = AutoImageProcessor.from_pretrained(model_name, revision=revision, use_fast=False)
+        model = AutoModel.from_pretrained(model_name, revision=revision).eval()
+        torch.set_num_threads(8)
+        order = [(label, part) for label in ("stock", "retrieval") for part in ("reference", "return")]
+        inputs = processor(images=[Image.open(endpoints[key]).convert("RGB") for key in order], return_tensors="pt")
+        with torch.no_grad():
+            features = torch.nn.functional.normalize(model(**inputs).last_hidden_state[:, 0], dim=-1)
+        for i, label in enumerate(("stock", "retrieval")):
+            report[label]["endpoint_dino_cosine"] = float(features[i * 2] @ features[i * 2 + 1])
+        report["feature_model"] = {"name": model_name, "revision": revision, "feature": "normalized CLS token"}
+        output.write_text(json.dumps(report, indent=2) + "\n")
     if args.judge:
         from worldsync.credentials import load_local_credentials
         from worldsync.judge import evidence_content, parse_json
