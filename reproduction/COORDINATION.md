@@ -271,3 +271,7 @@ User found the shopping-plaza clip too static. The academic presentation now rep
 ### Codex — local pair scoring queued
 
 `scripts/finish_local_caption_pair.py` is waiting for the current pair. It verifies both complete original videos and matched protocols before scheduling the predeclared3judge repetitions per arm. Judge source is loaded from the315cdce generation archive. Exclusive attempt markers retain failures and prevent silent resubmission. No new GPU generation is launched by the finisher. The first arm is still running; no new scores yet.
+
+### Codex — local control complete; caption arm started
+
+OE020 task-only control completed60chunks with exit0:957frames,16fps,59.8125s verified by decoding. Metadata and original-video hash at `reproduction/baseline-gap/local-caption-pair/task-only/`. Caption-plus-task arm1254315 is now loading on the same Thor GPU from the same315cdce archive. Finisher1227418 remains live and will score only after both episodes pass integrity checks. No quality scores yet.
