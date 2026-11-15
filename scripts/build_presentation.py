@@ -199,17 +199,14 @@ def scene_title(data, seconds):
         t = index / FPS
         image, draw = canvas()
         a = ease(t / 0.8)
-        draw.text((W / 2, 300 - 30 * (1 - a)), text["title"], font=font(150), fill=mix(BG, OURS, a), anchor="mm")
-        d = ease((t - 0.4) / 0.8)
-        for k, line in enumerate(text.get("definition", [])):
-            draw.text((W / 2, 408 + 58 * k), line, font=font(46), fill=mix(BG, FG, d), anchor="mm")
-        c = ease((t - 1.0) / 0.8)
+        draw.text((W / 2, 380 - 30 * (1 - a)), text["title"], font=font(150), fill=mix(BG, OURS, a), anchor="mm")
+        b = ease((t - 0.5) / 0.8)
+        draw.text((W / 2, 535), text["subtitle"], font=font(58), fill=mix(BG, FG, b), anchor="mm")
+        c = ease((t - 1.1) / 0.8)
         if text.get("expansion"):
-            draw.text((W / 2, 535), text["expansion"], font=font(32, False), fill=mix(BG, OURS, c), anchor="mm")
-        b = ease((t - 1.3) / 0.8)
-        draw.text((W / 2, 640), text["subtitle"], font=font(54), fill=mix(BG, FG, b), anchor="mm")
-        draw.text((W / 2, 735), text["track"], font=font(38, False), fill=mix(BG, MUTED, b), anchor="mm")
-        draw.text((W / 2, 790), text["base"], font=font(38, False), fill=mix(BG, MUTED, b), anchor="mm")
+            draw.text((W / 2, 612), text["expansion"], font=font(34, False), fill=mix(BG, OURS, c), anchor="mm")
+        draw.text((W / 2, 690), text["track"], font=font(40, False), fill=mix(BG, MUTED, c), anchor="mm")
+        draw.text((W / 2, 750), text["base"], font=font(40, False), fill=mix(BG, MUTED, c), anchor="mm")
         yield np.asarray(image)
 
 
@@ -693,7 +690,7 @@ def scene_process(data, seconds):
 
     for index in range(int(seconds * FPS)):
         t = index / FPS
-        image, draw = canvas("Process", "Autoresearch loop × past.dev", "AUTONOMY", 58)
+        image, draw = canvas("Process", "An autoresearch loop", "AUTONOMY", 58)
         for n in range(6):
             a = ease((t - 0.4 - 0.5 * n) / 0.5)
             c, nxt = pts[n], pts[(n + 1) % 6]
@@ -707,16 +704,15 @@ def scene_process(data, seconds):
             for k, part in enumerate(wrap(draw, line, font(25, False), bw - 30)):
                 draw.text((x, y + 2 + k * 32), part, font=font(25, False), fill=mix(PANEL, FG, a), anchor="mm")
         m = ease((t - 3.6) / 0.6)
-        draw.rounded_rectangle((cx - 230, cy - 80, cx + 230, cy + 80), 18, fill=PANEL, outline=mix(BG, OURS, m), width=4)
-        draw.text((cx, cy - 36), "past.dev", font=font(40), fill=mix(PANEL, OURS, m), anchor="mm")
-        draw.text((cx, cy + 8), "findings memory:", font=font(28, False), fill=mix(PANEL, FG, m), anchor="mm")
-        draw.text((cx, cy + 44), "100 dated, sourced findings", font=font(28, False), fill=mix(PANEL, FG, m), anchor="mm")
+        draw.rounded_rectangle((cx - 190, cy - 50, cx + 190, cy + 50), 16, fill=PANEL, outline=mix(BG, MUTED, m), width=2)
+        draw.text((cx, cy - 16), "findings memory", font=font(30), fill=mix(PANEL, FG, m), anchor="mm")
+        draw.text((cx, cy + 22), "stored in past.dev", font=font(24, False), fill=mix(PANEL, MUTED, m), anchor="mm")
         r = ease((t - 4.2) / 0.6)
-        arrow(draw, (cx - 90, cy - 84), (pts[0][0] + 70, pts[0][1] + bh / 2 + 8), mix(BG, OURS, r))
-        draw.text((cx + 20, cy - 104), "recall past findings", font=font(26, False), fill=mix(BG, OURS, r), anchor="lm")
-        arrow(draw, (pts[5][0] + bw / 2 + 8, cy), (cx - 236, cy), mix(BG, OURS, r))
-        draw.text(((pts[5][0] + bw / 2 + cx - 230) / 2, cy - 44), "store the", font=font(22, False), fill=mix(BG, OURS, r), anchor="mm")
-        draw.text(((pts[5][0] + bw / 2 + cx - 230) / 2, cy - 20), "result", font=font(22, False), fill=mix(BG, OURS, r), anchor="mm")
+        arrow(draw, (cx - 90, cy - 54), (pts[0][0] + 70, pts[0][1] + bh / 2 + 8), mix(BG, MUTED, r))
+        draw.text((cx + 20, cy - 80), "recall past findings", font=font(22, False), fill=mix(BG, MUTED, r), anchor="lm")
+        arrow(draw, (pts[5][0] + bw / 2 + 8, cy), (cx - 196, cy), mix(BG, MUTED, r))
+        draw.text(((pts[5][0] + bw / 2 + cx - 190) / 2, cy - 44), "store the", font=font(20, False), fill=mix(BG, MUTED, r), anchor="mm")
+        draw.text(((pts[5][0] + bw / 2 + cx - 190) / 2, cy - 20), "result", font=font(20, False), fill=mix(BG, MUTED, r), anchor="mm")
         total = sum(draw.textlength(c, font=font(30)) + 48 for c in chips) + 24 * (len(chips) - 1)
         x0 = (W - total) / 2
         for n, chip in enumerate(chips):
