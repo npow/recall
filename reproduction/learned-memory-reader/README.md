@@ -41,3 +41,16 @@ Run `--real` without `--preflight-only` only when the local GPU is free. The sup
 The local fit supervisor refused to start because another collaborator owned Thor; [that refusal is retained](local-fit-not-launched.json). The same frozen fit is queued as oneH200 job after a CPU preflight verified all24 input hashes and the exact6/2 source split. [Execution record](execution.json). No local fit was launched, and the synthetic plumbing weights are not used.
 
 The [real-data contact sheet](real-data-contact.jpg) shows the selected memory/revisit frames. Readable overlapping views do not establish that recent context lacks the target information; the correct/wrong/absent-memory controls remain necessary, and teacher-forced loss is not a generated-world result.
+
+## Completed real-data fit
+
+All 60 H200 updates completed at 6.28 seconds/update, with 65.97 GB CUDA allocated peak. Frozen base tensor versions stayed unchanged, and checkpoint reload reproduced the fixed-noise loss exactly. [Report](real-fit-summary.json) and [raw training record](real-fit/train.json).
+
+| Held-out source | Correct memory before | Correct memory after | Alternate-view after | No memory |
+|---|---:|---:|---:|---:|
+| Snowy street |0.137801|0.132333|0.139465|0.142305|
+| Residential street |0.089425|0.084544|0.087554|0.082889|
+
+Correct-memory loss improved on both sources, but beats omitting memory on only one. **The predeclared surrogate gate failed; this is not a promoted candidate or a world-coherence result.** The no-memory predictions remain identical before/after training. Alternate views can contain valid scene information, and these two endpoint-timestep checks do not establish behavior over a generated rollout.
+
+A [single-case fixed-path video diagnostic](video-diagnostic/plan.json) is testing retrieval-only versus the trained reader on fresh H200 runs. Its purpose is to compare real generated behavior with the surrogate, not to overturn the failed held-out gate or claim an overall score. All prefixes before actual retrieval must match exactly.

@@ -1,0 +1,400 @@
+{
+  "id": "text-confirm-IF035-both-seed42",
+  "result_directory": "text-confirm-IF035-both-seed42-1794730442860977882",
+  "argv": [
+    "--split",
+    "if",
+    "--task-id",
+    "IF035",
+    "--seed",
+    "42",
+    "--max-chunks",
+    "40",
+    "--offload-text-encoder",
+    "--stream-player-actions",
+    "--text-prompt",
+    "both"
+  ],
+  "run": {
+    "status": "completed",
+    "model": "LingBot-World2 14B causal-fast stock",
+    "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "initial_image_sha256": "dca7fcb7fd2901390cbad4befcc0fe23785d85b74eb7a5127bf3a13ccef6b2e4",
+    "text_prompt_mode": "both",
+    "image_caption_sha256": "81b0e9259d958c193408175a1fa5807415fb042afd2ee25ef76da3e6f246c1a1",
+    "task_id": "IF035",
+    "split": "if",
+    "seed": 42,
+    "turn_degrees_per_second": 60,
+    "fps": 16,
+    "max_chunks": 40,
+    "max_interactions": 40,
+    "native_fixed_controls": false,
+    "camera_embedding_audit": [],
+    "pose_retrieval": false,
+    "sink_rephase": false,
+    "adaptive_retrieval_pilot": false,
+    "player_temperature": "provider default",
+    "player_streaming": true,
+    "streaming_player_sha256": "3bc14684cc4ee859728fabab319b47dd3d810465f32495a090ea7475d19454a8",
+    "initial_neutral_bootstrap": false,
+    "kv_retention": false,
+    "decoprune": false,
+    "reanchor": false,
+    "budget_memory": false,
+    "denoise_schedule": "stock",
+    "text_encoder_offloaded_after_encoding": true,
+    "stationary_wait_only": false,
+    "fixed_actions": null,
+    "quantization": "none",
+    "cuda_allocator_configuration": "expandable_segments:True",
+    "max_area": 399360,
+    "chunk_size": 4,
+    "local_attn_size": 18,
+    "sink_size": 6,
+    "decision_interval": 1,
+    "stock_knobs": true,
+    "controlled_ablation": false,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "actions": [
+      {
+        "operation": "KEEP",
+        "action": "W",
+        "reason": "The goal is for the woman holding the umbrella to walk forward. The reference plan specifies holding W (forward) for 2700ms. The initial and current images appear nearly identical, suggesting no significant forward motion has yet occurred or the motion is very subtle. I'll continue holding W as planned to move the camera/agent forward and observe the woman's forward progression down the alley.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.0,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 25.049583611000003,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            3.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4NzEUUgW7kqNcBDTVbE",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2899,
+          "output_tokens": 137,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"The goal is for the woman holding the umbrella to walk forward. The reference plan specifies holding W (forward) for 2700ms. The initial and current images appear nearly identical, suggesting no significant forward motion has yet occurred or the motion is very subtle. I'll continue holding W as planned to move the camera/agent forward and observe the woman's forward progression down the alley.\"}]",
+        "prompt_sha256": "5eb553dc7c26b19eed9b9df9d4d922531baa349cda91a635c4c7a4c450b225db",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.9975263789999644,
+          "full_response_s": 2.4875763049999478,
+          "wait_for_completion_s": 0.00011392499993689853,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "W",
+        "reason": "The goal is for the woman holding the umbrella to walk forward. The reference plan specifies holding W (forward) for 2700ms total. So far 0.8125 seconds have been commanded. Comparing the initial and current images, the woman's position appears slightly further down the alley, with the background elements (buildings, storefronts, snow) maintaining consistent perspective. She is still actively walking forward with her red umbrella. The command has been held for only about 0.81 seconds of the planned 2.7 seconds, so I will continue holding W to allow her to continue walking forward as intended by the goal. The visual evidence shows she remains in motion down the alley.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            3.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 30.176379705000045,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            7.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4NzcVYnE5tZa1DZ6PY6",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2733,
+          "output_tokens": 207,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"The goal is for the woman holding the umbrella to walk forward. The reference plan specifies holding W (forward) for 2700ms total. So far 0.8125 seconds have been commanded. Comparing the initial and current images, the woman's position appears slightly further down the alley, with the background elements (buildings, storefronts, snow) maintaining consistent perspective. She is still actively walking forward with her red umbrella. The command has been held for only about 0.81 seconds of the planned 2.7 seconds, so I will continue holding W to allow her to continue walking forward as intended by the goal. The visual evidence shows she remains in motion down the alley.\"}]",
+        "prompt_sha256": "f064575fc481e3c317a03e48a01d5a1ef80e335f8eda16c844b67b526c04fbc7",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.901525930000048,
+          "full_response_s": 3.0682256620000317,
+          "wait_for_completion_s": 0.00016892899998310895,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "W",
+        "reason": "The goal is for the woman holding the red umbrella to walk forward. The reference plan specifies holding W (forward) for 2700ms total. Currently 1.8125 seconds have been commanded, leaving about 0.89 seconds remaining. Comparing the initial image with the current image, the woman has visibly progressed further down the snowy alley\u2014she is now positioned noticeably closer to the camera, indicating forward motion has occurred. She continues walking forward with her red umbrella. Since the plan requires 2.7 seconds total and only ~1.81 seconds have elapsed, I will continue holding W to complete the remaining ~0.89 seconds of the planned forward movement.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            7.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 35.765502739,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            11.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4P12Qxxh3JxDLwZquuC",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2901,
+          "output_tokens": 207,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"The goal is for the woman holding the red umbrella to walk forward. The reference plan specifies holding W (forward) for 2700ms total. Currently 1.8125 seconds have been commanded, leaving about 0.89 seconds remaining. Comparing the initial image with the current image, the woman has visibly progressed further down the snowy alley\\u2014she is now positioned noticeably closer to the camera, indicating forward motion has occurred. She continues walking forward with her red umbrella. Since the plan requires 2.7 seconds total and only ~1.81 seconds have elapsed, I will continue holding W to complete the remaining ~0.89 seconds of the planned forward movement.\"}]",
+        "prompt_sha256": "34e28802440cbb436c09687d22cd7cfcb26611bcbb9e6e69ddd052502f4701cd",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.8991160709999804,
+          "full_response_s": 2.9774944450000476,
+          "wait_for_completion_s": 0.00020488199993451417,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "END",
+        "action": null,
+        "reason": "The goal \"The woman holding the umbrella walks forward\" has been visually achieved. Comparing the initial image with the current image, the woman with the red umbrella has clearly progressed forward down the snowy alley\u2014she is now noticeably closer to the camera, having moved a substantial distance from her initial position. The reference plan specified holding W (forward) for 2700ms, and 2.8125 seconds have been commanded, exceeding the planned duration. The woman remains in active forward motion with her distinctive red umbrella clearly visible. The visual evidence confirms forward progress has been accomplished as required by the goal.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4P1U7o1nV9gwUx42Crt",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3069,
+          "output_tokens": 189,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"The goal \\\"The woman holding the umbrella walks forward\\\" has been visually achieved. Comparing the initial image with the current image, the woman with the red umbrella has clearly progressed forward down the snowy alley\\u2014she is now noticeably closer to the camera, having moved a substantial distance from her initial position. The reference plan specified holding W (forward) for 2700ms, and 2.8125 seconds have been commanded, exceeding the planned duration. The woman remains in active forward motion with her distinctive red umbrella clearly visible. The visual evidence confirms forward progress has been accomplished as required by the goal.\"}]",
+        "prompt_sha256": "b623fff32448a5b6d77635e7cee90eb1f56e510b07d72c7e6732d6fedab9c1e7",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 2.7792736119999972,
+          "full_response_s": 2.7792736119999972,
+          "wait_for_completion_s": 9.707999993224803e-06,
+          "generation_started_before_response_completed": false
+        },
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            11.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 43.664268592999974
+      }
+    ],
+    "chunks": [
+      {
+        "index": 0,
+        "path": "chunk-000.mp4",
+        "frames": 13,
+        "pixel_sha256": "e76be238330b7fddec70e0919d1b05a2592e11c59281f4126c4e3e247df506ef",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.45000764299993534,
+          "mp4_encode": 0.3485218700000132
+        },
+        "elapsed_s": 29.26820008300001,
+        "sha256": "5aa639b5b1edfefe34bdb2b804ab35c03400c5e0a5db97fddb9f343ec41bad79"
+      },
+      {
+        "index": 1,
+        "path": "chunk-001.mp4",
+        "frames": 16,
+        "pixel_sha256": "616723a52cf0e3b9afbc971d9075997a8ec344f1142cd1c39774a2c254233439",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5480081220000557,
+          "mp4_encode": 0.3599368829999321
+        },
+        "elapsed_s": 34.859352747,
+        "sha256": "3c5dd734f625d196f8b510d3e41e013b78240aefff5543c754203ddbcca570fa"
+      },
+      {
+        "index": 2,
+        "path": "chunk-002.mp4",
+        "frames": 16,
+        "pixel_sha256": "5066c9c9a65b55e3f5ff25e03225c83bd5879c8357faf0de1bd63b28436deed5",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5321572359999891,
+          "mp4_encode": 0.3551886330000116
+        },
+        "elapsed_s": 40.87532580799996,
+        "sha256": "d7b35bcd3634c61f375a6ae4173bb9176c0115bbe25289272308fa4014329e39"
+      }
+    ],
+    "published_score_reproduced": false,
+    "agent_interactions": 4,
+    "adapter_sha256": "eb12f1128d9e9525ed7f5b856b5b45b59723d768741f87cff6a28b765ce638a6",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+    "deviations": [
+      "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+      "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+      "Official 480p demo area; single NVIDIA H200, BF16 and valid-length SDPA backend",
+      "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+      "Claude diagnostic scoring differs from published Gemini judgments"
+    ],
+    "hardware": {
+      "gpu": "NVIDIA H200",
+      "torch": "2.6.0+cu124",
+      "cuda": "12.4"
+    },
+    "attention_backend": "sdpa",
+    "optional_torch_dlpack_addon_disabled": false,
+    "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+    "checkpoint_loading": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "mismatched_keys": [],
+      "error_msgs": []
+    },
+    "warm_runtime": {
+      "loaded_this_job": false,
+      "load_seconds": 0.0,
+      "job_index": 12
+    },
+    "generated_frames": 45,
+    "generated_seconds": 2.8125,
+    "termination": "agent_end",
+    "elapsed_s": 43.668724862999966,
+    "camera_diagnostics": {
+      "chunks": 3,
+      "path_length": 11.0,
+      "net_yaw_degrees": 0.0,
+      "total_turn_degrees": 0.0,
+      "max_distance_from_start": 11.0,
+      "final_distance_from_start": 11.0,
+      "revisited_start_at_chunk": null,
+      "wait_chunks": 0,
+      "wait_pose_changes": 0
+    },
+    "peak_allocated_bytes": 72616133632
+  },
+  "status": "completed",
+  "error": null,
+  "weights_unchanged": null,
+  "job_seconds": null,
+  "client_wall_s": null,
+  "chunk_pixel_sha256": [
+    "e76be238330b7fddec70e0919d1b05a2592e11c59281f4126c4e3e247df506ef",
+    "616723a52cf0e3b9afbc971d9075997a8ec344f1142cd1c39774a2c254233439",
+    "5066c9c9a65b55e3f5ff25e03225c83bd5879c8357faf0de1bd63b28436deed5"
+  ],
+  "warm_runtime": {
+    "loaded_this_job": false,
+    "load_seconds": 0.0,
+    "job_index": 12
+  },
+  "recovered_from_committed_volume": true
+}

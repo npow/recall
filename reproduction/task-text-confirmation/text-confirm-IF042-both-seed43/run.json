@@ -1,0 +1,366 @@
+{
+  "status": "completed",
+  "model": "LingBot-World2 14B causal-fast stock",
+  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+  "initial_image_sha256": "ca8a0e1af093be6868ab7e64d21ac583e627ff84c0f2f8ba7fc1d3256662e053",
+  "text_prompt_mode": "both",
+  "image_caption_sha256": "3542d29e779c28a95d6f84c7a30d175e0fd39f317243cc84025e9941328ba7ab",
+  "task_id": "IF042",
+  "split": "if",
+  "seed": 43,
+  "turn_degrees_per_second": 60,
+  "fps": 16,
+  "max_chunks": 40,
+  "max_interactions": 40,
+  "native_fixed_controls": false,
+  "camera_embedding_audit": [],
+  "pose_retrieval": false,
+  "sink_rephase": false,
+  "adaptive_retrieval_pilot": false,
+  "player_temperature": "provider default",
+  "player_streaming": true,
+  "streaming_player_sha256": "3bc14684cc4ee859728fabab319b47dd3d810465f32495a090ea7475d19454a8",
+  "initial_neutral_bootstrap": false,
+  "kv_retention": false,
+  "decoprune": false,
+  "reanchor": false,
+  "budget_memory": false,
+  "denoise_schedule": "stock",
+  "text_encoder_offloaded_after_encoding": true,
+  "stationary_wait_only": false,
+  "fixed_actions": null,
+  "quantization": "none",
+  "cuda_allocator_configuration": "expandable_segments:True",
+  "max_area": 399360,
+  "chunk_size": 4,
+  "local_attn_size": 18,
+  "sink_size": 6,
+  "decision_interval": 1,
+  "stock_knobs": true,
+  "controlled_ablation": false,
+  "sampler_timesteps_index": [
+    0,
+    250,
+    500,
+    750
+  ],
+  "sample_shift": 10,
+  "actions": [
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "The goal is \"The man walks forward\" and the reference plan calls for hold(W, 2700ms). The current_action_held_seconds is 0.0 and elapsed_commanded_seconds is 0.0, so I am just beginning the action sequence. The man is currently stationary in the center of the alley between two concrete walls, facing forward down the passage. I will initiate forward movement by pressing W to make the man walk forward as required by the goal. This is the first action in the plan and should continue for approximately 2.7 seconds.",
+      "player_transport": "stream",
+      "player_response_pending": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.0,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 23.837135939999996,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4NUuPx7rX59UabJyZpF",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2895,
+        "output_tokens": 181,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"The goal is \\\"The man walks forward\\\" and the reference plan calls for hold(W, 2700ms). The current_action_held_seconds is 0.0 and elapsed_commanded_seconds is 0.0, so I am just beginning the action sequence. The man is currently stationary in the center of the alley between two concrete walls, facing forward down the passage. I will initiate forward movement by pressing W to make the man walk forward as required by the goal. This is the first action in the plan and should continue for approximately 2.7 seconds.\"}]",
+      "prompt_sha256": "4e3dcaed9c50336d9ef46baae50627910e4fc079a0084ceb00d553a7b2170861",
+      "player_rate_limits": {
+        "anthropic-ratelimit-requests-limit": "10000",
+        "anthropic-ratelimit-input-tokens-limit": "10000000",
+        "anthropic-ratelimit-output-tokens-limit": "2000000"
+      },
+      "player_stream_timing": {
+        "action_ready_s": 1.142472706000035,
+        "full_response_s": 2.9694212919999927,
+        "wait_for_completion_s": 0.00013424799999484094,
+        "generation_started_before_response_completed": true
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "The goal is \"The man walks forward\" and the reference plan requires hold(W, 2700ms). Current elapsed time is 0.812 seconds out of 2.7 seconds needed. Visual evidence confirms forward progress: comparing the two images, the man's position relative to the background has changed - the buildings and walls are now visibly closer and positioned higher in the frame, indicating the camera (man's perspective) has moved forward through the alley. The man remains facing forward down the passage. I will continue pressing W to maintain forward walking momentum until the full 2.7 seconds are reached.",
+      "player_transport": "stream",
+      "player_response_pending": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 28.89368237100001,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          7.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4NVHmriJWYwJepRLLDa",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2773,
+        "output_tokens": 185,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"The goal is \\\"The man walks forward\\\" and the reference plan requires hold(W, 2700ms). Current elapsed time is 0.812 seconds out of 2.7 seconds needed. Visual evidence confirms forward progress: comparing the two images, the man's position relative to the background has changed - the buildings and walls are now visibly closer and positioned higher in the frame, indicating the camera (man's perspective) has moved forward through the alley. The man remains facing forward down the passage. I will continue pressing W to maintain forward walking momentum until the full 2.7 seconds are reached.\"}]",
+      "prompt_sha256": "9528947ef2d80cd2a3861c4d49488746d9c6bfa50218bd3c2eff318608e73fa0",
+      "player_rate_limits": {
+        "anthropic-ratelimit-requests-limit": "10000",
+        "anthropic-ratelimit-input-tokens-limit": "10000000",
+        "anthropic-ratelimit-output-tokens-limit": "2000000"
+      },
+      "player_stream_timing": {
+        "action_ready_s": 0.8602092810000386,
+        "full_response_s": 2.881311840999956,
+        "wait_for_completion_s": 0.00018615299995872192,
+        "generation_started_before_response_completed": true
+      }
+    },
+    {
+      "operation": "EXTEND",
+      "action": "W",
+      "reason": "The goal is \"The man walks forward\" and the reference plan requires hold(W, 2700ms). Current elapsed_commanded_seconds is 1.812 out of 2.7 seconds needed, with current_action_held_seconds at 1.8125. Visual evidence confirms continued forward progress: the man's position has advanced through the urban alley, with buildings and sky now positioned higher in the frame, indicating the camera has moved forward. The man is still in active motion (visible arm swing and running posture), facing forward. Approximately 0.888 seconds remain to reach the planned 2.7-second duration. I will continue pressing W to maintain forward walking motion until the full plan duration is achieved.",
+      "player_transport": "stream",
+      "player_response_pending": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          7.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 34.51043291299999,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          11.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4NVhjWAuejYHxYsdr1J",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2919,
+        "output_tokens": 212,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"W\", \"reason\": \"The goal is \\\"The man walks forward\\\" and the reference plan requires hold(W, 2700ms). Current elapsed_commanded_seconds is 1.812 out of 2.7 seconds needed, with current_action_held_seconds at 1.8125. Visual evidence confirms continued forward progress: the man's position has advanced through the urban alley, with buildings and sky now positioned higher in the frame, indicating the camera has moved forward. The man is still in active motion (visible arm swing and running posture), facing forward. Approximately 0.888 seconds remain to reach the planned 2.7-second duration. I will continue pressing W to maintain forward walking motion until the full plan duration is achieved.\"}]",
+      "prompt_sha256": "3ec3b2191ed28fcbcec480f8e6543aa8745eb73853c8b1fd0181ae5a9e8b3210",
+      "player_rate_limits": {
+        "anthropic-ratelimit-requests-limit": "10000",
+        "anthropic-ratelimit-input-tokens-limit": "10000000",
+        "anthropic-ratelimit-output-tokens-limit": "2000000"
+      },
+      "player_stream_timing": {
+        "action_ready_s": 0.887528002999943,
+        "full_response_s": 3.4291869940000197,
+        "wait_for_completion_s": 0.0001644469999746434,
+        "generation_started_before_response_completed": true
+      }
+    },
+    {
+      "operation": "END",
+      "action": null,
+      "reason": "The goal \"The man walks forward\" has been visually achieved and completed. Comparing the initial image (man stationary, facing forward in the alley) with the latest image (man actively running/walking forward with dynamic arm motion and airborne posture), there is clear visual evidence of sustained forward motion. The elapsed_commanded_seconds (2.812) has exceeded the plan_total_seconds (2.7), meeting the temporal requirement. The man is captured mid-stride in athletic forward motion with natural running form (arms extended, body in flight phase), demonstrating that the walking action has been successfully executed throughout the planned duration. The goal is unambiguously complete.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4NW9kgBFgZwpBH94Prs",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3092,
+        "output_tokens": 198,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"The goal \\\"The man walks forward\\\" has been visually achieved and completed. Comparing the initial image (man stationary, facing forward in the alley) with the latest image (man actively running/walking forward with dynamic arm motion and airborne posture), there is clear visual evidence of sustained forward motion. The elapsed_commanded_seconds (2.812) has exceeded the plan_total_seconds (2.7), meeting the temporal requirement. The man is captured mid-stride in athletic forward motion with natural running form (arms extended, body in flight phase), demonstrating that the walking action has been successfully executed throughout the planned duration. The goal is unambiguously complete.\"}]",
+      "prompt_sha256": "e94970b8277c8b006d907b77e94b98850cac492bf45ae4fe27c6f902f654439e",
+      "player_transport": "stream",
+      "player_response_pending": false,
+      "player_rate_limits": {
+        "anthropic-ratelimit-requests-limit": "10000",
+        "anthropic-ratelimit-input-tokens-limit": "10000000",
+        "anthropic-ratelimit-output-tokens-limit": "2000000"
+      },
+      "player_stream_timing": {
+        "action_ready_s": 3.328609244000063,
+        "full_response_s": 3.328609244000063,
+        "wait_for_completion_s": 1.2010000091322581e-05,
+        "generation_started_before_response_completed": false
+      },
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          11.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 43.04408552000001
+    }
+  ],
+  "chunks": [
+    {
+      "index": 0,
+      "path": "chunk-000.mp4",
+      "frames": 13,
+      "pixel_sha256": "10ff5028d58192b901401f332035f0aff4ac9900f70a2d7c46338f018e7b1542",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5116786080000111,
+        "mp4_encode": 0.35790401000008387
+      },
+      "elapsed_s": 28.026868139999976,
+      "sha256": "a76d809cb7e391a891d1e84accc3c461d0fa8ba3b980bcf5d00c4ade26fe5c36"
+    },
+    {
+      "index": 1,
+      "path": "chunk-001.mp4",
+      "frames": 16,
+      "pixel_sha256": "a6945d60fcb6df5b4f627541e1e66ac02de45fa551e730c92b0403880fe31e1d",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.577790350999976,
+        "mp4_encode": 0.37484013900007085
+      },
+      "elapsed_s": 33.61605667300006,
+      "sha256": "da94f42bd3a545b4c897da07b1185035f0dae98bff6b385c665dfdbffaba74fa"
+    },
+    {
+      "index": 2,
+      "path": "chunk-002.mp4",
+      "frames": 16,
+      "pixel_sha256": "ba5e9dc6d23b2a6c1b2c18c652415a7ec86900d89bfed3230ca4a05d00db6ba9",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5919678310000336,
+        "mp4_encode": 0.38231790800000454
+      },
+      "elapsed_s": 39.708164544,
+      "sha256": "6bf9f4504b11f90e7bf60163b4fe56cf67868e733f99954cf9d90d8c71a51673"
+    }
+  ],
+  "published_score_reproduced": false,
+  "agent_interactions": 4,
+  "adapter_sha256": "eb12f1128d9e9525ed7f5b856b5b45b59723d768741f87cff6a28b765ce638a6",
+  "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+  "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+  "deviations": [
+    "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+    "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+    "Official 480p demo area; single NVIDIA H200, BF16 and valid-length SDPA backend",
+    "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+    "Claude diagnostic scoring differs from published Gemini judgments"
+  ],
+  "hardware": {
+    "gpu": "NVIDIA H200",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4"
+  },
+  "attention_backend": "sdpa",
+  "optional_torch_dlpack_addon_disabled": false,
+  "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+  "checkpoint_loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "warm_runtime": {
+    "loaded_this_job": false,
+    "load_seconds": 0.0,
+    "job_index": 8
+  },
+  "generated_frames": 45,
+  "generated_seconds": 2.8125,
+  "termination": "agent_end",
+  "elapsed_s": 43.047966288000055,
+  "camera_diagnostics": {
+    "chunks": 3,
+    "path_length": 11.0,
+    "net_yaw_degrees": 0.0,
+    "total_turn_degrees": 0.0,
+    "max_distance_from_start": 11.0,
+    "final_distance_from_start": 11.0,
+    "revisited_start_at_chunk": null,
+    "wait_chunks": 0,
+    "wait_pose_changes": 0
+  },
+  "peak_allocated_bytes": 72600772608
+}

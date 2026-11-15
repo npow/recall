@@ -1,0 +1,409 @@
+{
+  "task_id": "IF035",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "judge_project": "servo-tpu-20260901",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "61c7398b0539b58c98b9014a4d1e72d51955e0842f764782e40cd240fb712f1e",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF035",
+    "perspective": "third-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "撑伞的女人一直向前走。",
+    "trajectory_evidence_zh": "在整个视频序列中，女人的背影逐渐变小，并且相对于两侧的建筑向巷子深处移动，清楚地显示了向前的运动轨迹。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 4.14,
+    "final_score_1_to_5": 4,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "女子的衣着（棕色外套、黑裤、棕色靴子）、黑色背包和红伞在整个行走过程中保持高度一致，无变形或身份突变。"
+      },
+      "contact_support": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "女子的双脚与湿滑的雪地街道保持了合理的接触，没有出现明显的悬空或下陷，但由于步态原因有轻微的滑步感。"
+      },
+      "causal_response": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "街道表面主要为湿滑的半融雪状态，女子走过时虽然没有留下极深的脚印，但与地面的互动符合湿滑路面的物理表现，红伞也合理地遮挡了风雪。"
+      },
+      "lighting_shadow": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "在阴天光照下，女子和红伞在湿滑街道上的倒影清晰且随着她的向前移动而自然更新。"
+      },
+      "motion_kinematics": {
+        "score": 3,
+        "weight": 2.0,
+        "answer": "partial",
+        "evidence_zh": "女子能够持续向前移动，但腿部动作略显僵硬，躯干缺乏自然的重心转移，步伐与向前位移的速度匹配不够完美，带有轻微的滑行感。"
+      },
+      "collision_boundary": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "女子始终走在小巷中间，未与两侧的建筑、招牌或雪堆发生任何穿模或不合理的碰撞。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "The subject continues to move throughout the video; no static tail penalty applied.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 28,
+      "evidence_zh": "女子在整个视频中持续执行了撑伞向前行走的动作。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "小巷两侧的建筑、招牌（如“そば鉄”）、路障等背景元素在镜头跟随移动时保持了良好的结构稳定性，无扭曲或重置。",
+      "post_completion_phase_zh": "动作持续到视频结束，背景始终保持稳定。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "woman and umbrella",
+        "anchors": [
+          "left building facade",
+          "right building facade"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-28"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "left building facade",
+        "right building facade"
+      ],
+      "newly_revealed_regions_zh": "随着镜头向前推进，小巷前方的建筑细节逐渐显露，符合透视规律。",
+      "evidence_zh": "视角的微小变化完全由摄像机跟随人物向前平移引起，背景元素的相对位置保持一致。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频画面连续，摄像机运动平滑，未发现任何硬切或场景重置的迹象。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "视频在人物持续行走中结束，没有出现超出提示词要求的额外动作导致的物理错误。"
+    },
+    "final_state_check": {
+      "window": "25-28",
+      "visible_key_objects": [
+        "woman",
+        "umbrella",
+        "alleyway"
+      ],
+      "reappearance_consistency_zh": "人物和环境在视频结尾处的外观与初始状态保持高度一致。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "not_applicable",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 5,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "人物在整个视频中持续向前行走，产生了明显的空间位移。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "yes",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "女子在整个视频中持续向前行走，产生了实质性的位移。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "prompt_directed_forward_progress": "yes",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "女子撑着红伞在雪地小巷中持续向前行走。",
+      "trajectory_evidence_zh": "从第0帧到第28帧，女子相对于两侧建筑不断向前推进，完成了提示词要求的动作。",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "avoided",
+      "solid_interpenetration": "no",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "yes",
+      "evidence_zh": "女子走在小巷中央，未接触两侧的建筑边界，成功避免了碰撞。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "alleyway path",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": "本任务为向前行走，无特定的目标边界交互要求，环境保持稳定。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "yes",
+      "proxy_evidence_observed": [
+        "weight_transfer",
+        "joint_motion"
+      ],
+      "proxy_supports_expected_locomotion": "yes",
+      "evidence_zh": "女子的双脚和靴子在画面中清晰可见，直接展示了与地面的接触和支撑。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "woman",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "clothing",
+        "body_proportions",
+        "face_or_hair",
+        "persistent_equipment",
+        "colors",
+        "materials"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "女子的棕色外套、黑色背包、黑裤、棕色靴子以及手中的红伞在整个视频中保持高度一致，无任何身份漂移或突变。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 4,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": 4,
+      "evidence_zh": "由于交互质量达到4级，身份一致性正常计入评分权重。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 4,
+      "interaction_opportunity_reached": "yes",
+      "physical_response_observed": "yes",
+      "core_failure_zh": "人物步态略显僵硬，缺乏自然的重心转移，脚部有轻微滑步。",
+      "positive_evidence_zh": "人物成功在雪地小巷中向前行走，保持了稳定的身份和物理边界，雨伞和地面的反光也较为自然。",
+      "evidence_zh": "整体而言，女子完成了一个连贯的向前行走动作，环境互动（如倒影）合理，仅在运动学细节（步态僵硬、轻微滑步）上存在瑕疵，属于带有轻微缺陷的合理交互。",
+      "final_score_cap_applied": 4
+    },
+    "summary_zh": "视频成功展示了女子撑伞在雪地小巷中向前行走，身份和环境保持稳定，但步态略显僵硬且有轻微滑步。",
+    "task_id": "IF035"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "y2v5ar6iKJSB9LsPjpiDeA",
+      "prompt_tokens": 4678,
+      "output_tokens": 180
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "2Gv5ao38L7uU9LsP2OyOyAs",
+      "prompt_tokens": 38575,
+      "output_tokens": 3642
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 29,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 28,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 2.8,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "03c3326b0a9147c0f81cf3dd430edb55b4704cb391ca7f1f61ca86c292e501b6",
+  "score_prompt_sha256": "5cc4ec4264e3ccf8c06f2c1ab22eff03bcdcbbb3457af3b5ef3c2d07aab4a86d",
+  "scores": {
+    "official": 4.0,
+    "final_score": 4.0
+  }
+}

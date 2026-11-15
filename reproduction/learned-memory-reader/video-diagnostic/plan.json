@@ -1,0 +1,17 @@
+{
+  "scope": "Single development-case fixed-path diagnostic after surrogate gatefailure; no candidate promotion or overall claim",
+  "arms": [
+    "retrieval-only",
+    "trained-reader"
+  ],
+  "task_id": "GC010",
+  "seed": 42,
+  "runtime": "fresh H200/Torch2.6/SDPA process per episode, native18/6, four-view pose retrieval",
+  "actions_source": "reproduction/task-memory-benchmark/GC010-seed42-turn90_wait_return/stock-run.json",
+  "actions_source_sha256": "b4c4f2fe227f23e226e4f2dff8b5d2a62d6251709c6a21dab4b3a998bcf0a695",
+  "task_sha256": "4130f59c8cab1253fbcfb071cd56131661497b3234ea19d303f99da568ddb672",
+  "checkpoint_sha256": "8f221ee7de698ef68648b12940d609fb81f4c3060d4ec843090873bf25aa1ec9",
+  "precondition": "Real fit completed all60steps and frozen base tensor versions unchanged; failed strict surrogate gate on1of2 held sources.",
+  "validation": "All chunks before actual retrieval must be raw-pixel identical. Same actions/seed/initialimage/caption/source/backend. Inspect entire videos and actual returned landmarks; keep failures.",
+  "decision": "Measure whether real-video behavior matches the denoising surrogate. Do not change hyperparameters using this diagnostic and call it held-out."
+}

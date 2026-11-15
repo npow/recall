@@ -78,7 +78,7 @@ def _start_core(defaults, expandable):
     _prepare_container(expandable)
     from worldsync.lingbot_runner_core import RunnerCore
     def before_job(job):
-        if "--lora" in list(job.get("extra", [])) + list(job.get("argv", [])):
+        if {"--lora", "--memory-reader"}.intersection(list(job.get("extra", [])) + list(job.get("argv", []))):
             results.reload()  # adapters written by other containers become visible
     core = RunnerCore(commit=results.commit, defaults=defaults, before_job=before_job)
     try:  # Load the model and pay CUDA's first-call tax at container start, not in the first job.
@@ -116,7 +116,7 @@ class RunnerH100:
 
 def _oneshot(job, defaults):
     weights.reload()
-    if "--lora" in list(job.get("extra", [])) + list(job.get("argv", [])):
+    if {"--lora", "--memory-reader"}.intersection(list(job.get("extra", [])) + list(job.get("argv", []))):
         results.reload()
     _prepare_container(expandable=False)
     from worldsync.lingbot_runner_core import run_oneshot

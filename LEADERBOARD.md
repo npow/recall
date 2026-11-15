@@ -100,6 +100,21 @@ Official small checkpoint, GC027, seed42, thirteen native fixed-camera chunks. O
 
 Both videos fail the requested return. [Scoring audit](reproduction/lingbot-small/scoring-audit.md): partial trajectories pass the released gate, so visual rubric scores can remain high without a revisit. [Videos, frame comparison and caveats](reproduction/lingbot-small/README.md).
 
+## Gemini — frozen task-text confirmation
+
+All16 episodes generated. Partition means appear only when every declared episode in that partition has a judgment or retained generation failure.
+
+| Partition | Judged or generation failed | Caption | Caption + objective |
+|---|---:|---:|---:|
+| new-cases |7/8|pending|pending|
+| new-seed |8/8|1.75|1.71|
+
+The development gain did not reproduce on the new seed; the frozen promotion condition failed. One held-out judgment is capacity-limited. [Protocol, videos and recovery](reproduction/task-text-confirmation/README.md).
+
+## Learned reader — denoising surrogate, not PlayWorld
+
+The60-update real-data fit passed frozen-base and checkpoint-reload checks, but correct memory beats both controls on only1/2 held-out sources. The predeclared surrogate gate failed; the adapter is not promoted. [Raw results and video diagnostic](reproduction/learned-memory-reader/README.md).
+
 
 ## Gemini — paired GC/OE development cohort (seeds 42 and 43)
 

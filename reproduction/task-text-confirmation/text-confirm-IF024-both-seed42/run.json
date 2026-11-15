@@ -1,0 +1,582 @@
+{
+  "status": "completed",
+  "model": "LingBot-World2 14B causal-fast stock",
+  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+  "initial_image_sha256": "9b9e5b18f431a96fd6c9eec60f5cbe987305b8a92b890e242d099d1da7ae9e73",
+  "text_prompt_mode": "both",
+  "image_caption_sha256": "ff7bff96d431dabb65b6d0bf3b90af9d9adcc3643a2071218ccd86a293336507",
+  "task_id": "IF024",
+  "split": "if",
+  "seed": 42,
+  "turn_degrees_per_second": 60,
+  "fps": 16,
+  "max_chunks": 40,
+  "max_interactions": 40,
+  "native_fixed_controls": false,
+  "camera_embedding_audit": [],
+  "pose_retrieval": false,
+  "sink_rephase": false,
+  "adaptive_retrieval_pilot": false,
+  "player_temperature": "provider default",
+  "player_streaming": true,
+  "streaming_player_sha256": "3bc14684cc4ee859728fabab319b47dd3d810465f32495a090ea7475d19454a8",
+  "initial_neutral_bootstrap": false,
+  "kv_retention": false,
+  "decoprune": false,
+  "reanchor": false,
+  "budget_memory": false,
+  "denoise_schedule": "stock",
+  "text_encoder_offloaded_after_encoding": true,
+  "stationary_wait_only": false,
+  "fixed_actions": null,
+  "quantization": "none",
+  "cuda_allocator_configuration": "expandable_segments:True",
+  "max_area": 399360,
+  "chunk_size": 4,
+  "local_attn_size": 18,
+  "sink_size": 6,
+  "decision_interval": 1,
+  "stock_knobs": true,
+  "controlled_ablation": false,
+  "sampler_timesteps_index": [
+    0,
+    250,
+    500,
+    750
+  ],
+  "sample_shift": 10,
+  "actions": [
+    {
+      "operation": "KEEP",
+      "action": "D",
+      "reason": "Starting the reference plan: first step is hold(D,1800ms) to move the man to the right. The man is currently on the path facing away from camera; moving right (D) with rightward camera strafe will position him toward the tall grass on the right side of the path. Current elapsed is 0.0s, plan requires 1.8s of D action.",
+      "player_transport": "stream",
+      "player_response_pending": false,
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.0,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 23.80786454600002,
+      "pose_after": {
+        "position_normalized_units": [
+          3.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4PHBdYdi4gVe8By3oy7",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2927,
+        "output_tokens": 139,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"D\", \"reason\": \"Starting the reference plan: first step is hold(D,1800ms) to move the man to the right. The man is currently on the path facing away from camera; moving right (D) with rightward camera strafe will position him toward the tall grass on the right side of the path. Current elapsed is 0.0s, plan requires 1.8s of D action.\"}]",
+      "prompt_sha256": "c975cc8c0c60b1a92e8ce96ca8e29b4c09926478a9cf79afd201d4349b162ed3",
+      "player_rate_limits": {
+        "anthropic-ratelimit-requests-limit": "10000",
+        "anthropic-ratelimit-input-tokens-limit": "10000000",
+        "anthropic-ratelimit-output-tokens-limit": "2000000"
+      },
+      "player_stream_timing": {
+        "action_ready_s": 1.1607843720000801,
+        "full_response_s": 2.535079203000123,
+        "wait_for_completion_s": 0.00017262500000470027,
+        "generation_started_before_response_completed": true
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "D",
+      "reason": "Continuing the first reference plan step (D for 1.8s total). Current elapsed is 0.8125s, so approximately 0.99s remains needed. Visual evidence shows the man has moved slightly to the right from the initial position\u2014the perspective on the path has shifted, with the man now more centered horizontally in frame. The tall grass on both sides is visible. Need to continue rightward movement to complete the 1.8s D phase before transitioning to the forward walk (W).",
+      "player_transport": "stream",
+      "player_response_pending": false,
+      "pose_before": {
+        "position_normalized_units": [
+          3.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 29.58066506399996,
+      "pose_after": {
+        "position_normalized_units": [
+          7.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4PHcNLRnjjsadozHSLU",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2763,
+        "output_tokens": 165,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"D\", \"reason\": \"Continuing the first reference plan step (D for 1.8s total). Current elapsed is 0.8125s, so approximately 0.99s remains needed. Visual evidence shows the man has moved slightly to the right from the initial position\\u2014the perspective on the path has shifted, with the man now more centered horizontally in frame. The tall grass on both sides is visible. Need to continue rightward movement to complete the 1.8s D phase before transitioning to the forward walk (W).\"}]",
+      "prompt_sha256": "df0eb42dcace3cd6c9418471e5278c72f3865bfc688cc5e647ced973fe85503d",
+      "player_rate_limits": {
+        "anthropic-ratelimit-requests-limit": "10000",
+        "anthropic-ratelimit-input-tokens-limit": "10000000",
+        "anthropic-ratelimit-output-tokens-limit": "2000000"
+      },
+      "player_stream_timing": {
+        "action_ready_s": 0.9922887430000173,
+        "full_response_s": 2.7866275250000854,
+        "wait_for_completion_s": 0.000122866000083377,
+        "generation_started_before_response_completed": true
+      }
+    },
+    {
+      "operation": "STOP",
+      "action": "W",
+      "reason": "The D action has completed its planned 1.8s duration (current_action_held_seconds shows 1.8125s). Visual evidence confirms the man has shifted rightward on the path\u2014comparing initial and latest images, he is now positioned more to the right side of the path with tall grass visible on the right. The reference plan's second step requires hold(W,3600ms) to move the man forward and away from the path into the tall grass. Transitioning to W now to execute the forward walking phase.",
+      "player_transport": "stream",
+      "player_response_pending": false,
+      "pose_before": {
+        "position_normalized_units": [
+          7.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 35.34939934499994,
+      "pose_after": {
+        "position_normalized_units": [
+          7.0,
+          0.0,
+          4.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4PJ2UQyeWcdYJsj4wwG",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2888,
+        "output_tokens": 168,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"STOP\", \"action\": \"W\", \"reason\": \"The D action has completed its planned 1.8s duration (current_action_held_seconds shows 1.8125s). Visual evidence confirms the man has shifted rightward on the path\\u2014comparing initial and latest images, he is now positioned more to the right side of the path with tall grass visible on the right. The reference plan's second step requires hold(W,3600ms) to move the man forward and away from the path into the tall grass. Transitioning to W now to execute the forward walking phase.\"}]",
+      "prompt_sha256": "94708f273d2216f375740d6127d569fc379917490e52a13f7b63114a9b2aeb63",
+      "player_rate_limits": {
+        "anthropic-ratelimit-requests-limit": "10000",
+        "anthropic-ratelimit-input-tokens-limit": "10000000",
+        "anthropic-ratelimit-output-tokens-limit": "2000000"
+      },
+      "player_stream_timing": {
+        "action_ready_s": 1.0985976459999165,
+        "full_response_s": 2.9975823699999182,
+        "wait_for_completion_s": 9.809700009100197e-05,
+        "generation_started_before_response_completed": true
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Continuing the second reference plan step hold(W,3600ms) to move forward into the tall grass. Current action_held_seconds is 1.0s, with 2.6s remaining of the 3.6s planned duration. Visual evidence confirms forward progress: comparing initial and latest images, the man has visibly moved further away from the camera along the path, and the path beneath him is more centered in frame. The tall grass surrounds him on both sides. The man is now deeper into the grassy area. Continue W action to accumulate the remaining ~2.6s needed to complete the 3.6s forward walking phase and fulfill the goal of walking into the tall grass.",
+      "player_transport": "stream",
+      "player_response_pending": false,
+      "pose_before": {
+        "position_normalized_units": [
+          7.0,
+          0.0,
+          4.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 41.406620173999954,
+      "pose_after": {
+        "position_normalized_units": [
+          7.0,
+          0.0,
+          8.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4PJUvPcLeofNfYYVnk5",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3015,
+        "output_tokens": 205,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Continuing the second reference plan step hold(W,3600ms) to move forward into the tall grass. Current action_held_seconds is 1.0s, with 2.6s remaining of the 3.6s planned duration. Visual evidence confirms forward progress: comparing initial and latest images, the man has visibly moved further away from the camera along the path, and the path beneath him is more centered in frame. The tall grass surrounds him on both sides. The man is now deeper into the grassy area. Continue W action to accumulate the remaining ~2.6s needed to complete the 3.6s forward walking phase and fulfill the goal of walking into the tall grass.\"}]",
+      "prompt_sha256": "20e0d83faafd1317942fba885ca131a03bd31c65bfc56a70fa87eb595ce96881",
+      "player_rate_limits": {
+        "anthropic-ratelimit-requests-limit": "10000",
+        "anthropic-ratelimit-input-tokens-limit": "10000000",
+        "anthropic-ratelimit-output-tokens-limit": "2000000"
+      },
+      "player_stream_timing": {
+        "action_ready_s": 0.970788506999952,
+        "full_response_s": 3.3615654039999754,
+        "wait_for_completion_s": 0.00012938899999426212,
+        "generation_started_before_response_completed": true
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Continuing the second reference plan step hold(W,3600ms) to move forward into the tall grass. Current action_held_seconds is 2.0s, with 1.6s remaining of the 3.6s planned duration. Visual evidence confirms forward progress: the man has visibly moved further away from the camera along the path compared to the initial image. The path beneath him extends into the distance, and he is surrounded by tall grass and vegetation on both sides. He is walking deeper into the grassy area away from the starting position. Continue W action to accumulate the remaining ~1.6s needed to complete the 3.6s forward walking phase and fulfill the goal of walking into the tall grass.",
+      "player_transport": "stream",
+      "player_response_pending": false,
+      "pose_before": {
+        "position_normalized_units": [
+          7.0,
+          0.0,
+          8.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 47.90292617099999,
+      "pose_after": {
+        "position_normalized_units": [
+          7.0,
+          0.0,
+          12.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4PJxgk6654RsRJbEjNH",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3181,
+        "output_tokens": 209,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Continuing the second reference plan step hold(W,3600ms) to move forward into the tall grass. Current action_held_seconds is 2.0s, with 1.6s remaining of the 3.6s planned duration. Visual evidence confirms forward progress: the man has visibly moved further away from the camera along the path compared to the initial image. The path beneath him extends into the distance, and he is surrounded by tall grass and vegetation on both sides. He is walking deeper into the grassy area away from the starting position. Continue W action to accumulate the remaining ~1.6s needed to complete the 3.6s forward walking phase and fulfill the goal of walking into the tall grass.\"}]",
+      "prompt_sha256": "710b16e7b70117c2c56f71ead46c42e400b1309994711ccc499d59ab0be98f31",
+      "player_rate_limits": {
+        "anthropic-ratelimit-requests-limit": "10000",
+        "anthropic-ratelimit-input-tokens-limit": "10000000",
+        "anthropic-ratelimit-output-tokens-limit": "2000000"
+      },
+      "player_stream_timing": {
+        "action_ready_s": 0.9781923379998716,
+        "full_response_s": 3.3905453479999323,
+        "wait_for_completion_s": 0.00010930400003417162,
+        "generation_started_before_response_completed": true
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "W",
+      "reason": "Continuing the second reference plan step hold(W,3600ms) to move forward into the tall grass. Current action_held_seconds is 3.0s, with 0.6s remaining of the 3.6s planned duration. Visual evidence confirms sustained forward progress: comparing the initial image (man closer to camera) with the latest image, the man has visibly moved further away from the camera, now deeper into the path surrounded by tall grass and vegetation on both sides. The path remains centered beneath him. He is well into the grassy area. Continue W action to accumulate the final ~0.6s needed to complete the 3.6s forward walking phase and fully achieve the goal of walking into the tall grass.",
+      "player_transport": "stream",
+      "player_response_pending": false,
+      "pose_before": {
+        "position_normalized_units": [
+          7.0,
+          0.0,
+          12.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 54.6745216029999,
+      "pose_after": {
+        "position_normalized_units": [
+          7.0,
+          0.0,
+          16.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 5.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4PKTZYxFdcttdnfxjiJ",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3351,
+        "output_tokens": 212,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Continuing the second reference plan step hold(W,3600ms) to move forward into the tall grass. Current action_held_seconds is 3.0s, with 0.6s remaining of the 3.6s planned duration. Visual evidence confirms sustained forward progress: comparing the initial image (man closer to camera) with the latest image, the man has visibly moved further away from the camera, now deeper into the path surrounded by tall grass and vegetation on both sides. The path remains centered beneath him. He is well into the grassy area. Continue W action to accumulate the final ~0.6s needed to complete the 3.6s forward walking phase and fully achieve the goal of walking into the tall grass.\"}]",
+      "prompt_sha256": "7cec3aedf380abcc42b958138e54877806d8d077f87d80e39c500827c2bdbf24",
+      "player_rate_limits": {
+        "anthropic-ratelimit-requests-limit": "10000",
+        "anthropic-ratelimit-input-tokens-limit": "10000000",
+        "anthropic-ratelimit-output-tokens-limit": "2000000"
+      },
+      "player_stream_timing": {
+        "action_ready_s": 1.001253442999996,
+        "full_response_s": 3.4956277740000132,
+        "wait_for_completion_s": 0.00012295400006223645,
+        "generation_started_before_response_completed": true
+      }
+    },
+    {
+      "operation": "END",
+      "action": null,
+      "reason": "The goal \"The man walks to the right off the path into the tall grass\" has been visually achieved. Comparing the initial image with the latest image: (1) The man has moved rightward off the path\u2014in the initial image he is more centered on the dirt path, while in the latest image he is clearly positioned to the right of the main path, standing in taller grass/vegetation. (2) The man has moved forward into the tall grass\u2014the surrounding vegetation is now closer and more densely packed around him compared to the initial position. (3) The reference plan total duration of 5.4s has been exceeded (elapsed_commanded_seconds is 5.812s, current_action_held_seconds is 4.0s on the W action), ensuring adequate time for completion. The visual evidence in the latest image confirms the man is off the main path, positioned in the tall grass to the right, fulfilling the goal objective.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch4PKxVbfmhhm5x63HASf",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3524,
+        "output_tokens": 258,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"The goal \\\"The man walks to the right off the path into the tall grass\\\" has been visually achieved. Comparing the initial image with the latest image: (1) The man has moved rightward off the path\\u2014in the initial image he is more centered on the dirt path, while in the latest image he is clearly positioned to the right of the main path, standing in taller grass/vegetation. (2) The man has moved forward into the tall grass\\u2014the surrounding vegetation is now closer and more densely packed around him compared to the initial position. (3) The reference plan total duration of 5.4s has been exceeded (elapsed_commanded_seconds is 5.812s, current_action_held_seconds is 4.0s on the W action), ensuring adequate time for completion. The visual evidence in the latest image confirms the man is off the main path, positioned in the tall grass to the right, fulfilling the goal objective.\"}]",
+      "prompt_sha256": "e65c62768352e1e18f21b1a39567474e1f7374239e5511581264fa5c50c10df8",
+      "player_transport": "stream",
+      "player_response_pending": false,
+      "player_rate_limits": {
+        "anthropic-ratelimit-requests-limit": "10000",
+        "anthropic-ratelimit-input-tokens-limit": "10000000",
+        "anthropic-ratelimit-output-tokens-limit": "2000000"
+      },
+      "player_stream_timing": {
+        "action_ready_s": 3.436690667999983,
+        "full_response_s": 3.436690667999983,
+        "wait_for_completion_s": 9.663999890108244e-06,
+        "generation_started_before_response_completed": false
+      },
+      "pose_before": {
+        "position_normalized_units": [
+          7.0,
+          0.0,
+          16.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 5.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 63.87729970300006
+    }
+  ],
+  "chunks": [
+    {
+      "index": 0,
+      "path": "chunk-000.mp4",
+      "frames": 13,
+      "pixel_sha256": "4ed5605b64f85d80d85422b5c524c671c6ad6405cd05338fd424dbbb787b3fd4",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.49562547699997594,
+        "mp4_encode": 0.42721930399989105
+      },
+      "elapsed_s": 28.575655193000102,
+      "sha256": "2a49095af6ffcaa8094b65f985b5785e0d6c70801801acd370a48979a892f29a"
+    },
+    {
+      "index": 1,
+      "path": "chunk-001.mp4",
+      "frames": 16,
+      "pixel_sha256": "a9206910c1d63f8c04a0410e6ee06389202d06ef962db04ab07cef3123d4f0df",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5271466110000347,
+        "mp4_encode": 0.35507164799992097
+      },
+      "elapsed_s": 34.24406503099999,
+      "sha256": "5230aae40c06125d9b043eafe7333ccef6f3590f2587eb1fd250641a480ec106"
+    },
+    {
+      "index": 2,
+      "path": "chunk-002.mp4",
+      "frames": 16,
+      "pixel_sha256": "6847803095be9c55faea62f9bd5439418df2142107c2e08aa05e3dd47ad53c8d",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.524322925999968,
+        "mp4_encode": 0.3414039839999532
+      },
+      "elapsed_s": 40.42779194400009,
+      "sha256": "88e090d71ae989680fda065e5dba283a95bd4299f21b4ebfe311d0a0e935d185"
+    },
+    {
+      "index": 3,
+      "path": "chunk-003.mp4",
+      "frames": 16,
+      "pixel_sha256": "c6afd1e5255050a6724fbdc8a14c49b6e2ee093da28a899a808d277b02eff9a4",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5247470389999762,
+        "mp4_encode": 0.3284488310000597
+      },
+      "elapsed_s": 46.91551485199989,
+      "sha256": "c0010bb5321e1e9a62cbea9d8e00628539e45ac7d0e0339505f5584f46338b78"
+    },
+    {
+      "index": 4,
+      "path": "chunk-004.mp4",
+      "frames": 16,
+      "pixel_sha256": "8ab26ce3e7a5678959bcb84854892a59b6023d0ebf38deeb719a6cc8792e4735",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5234744350000256,
+        "mp4_encode": 0.3404075990001729
+      },
+      "elapsed_s": 53.66654767399996,
+      "sha256": "2d34707477c748bcd2566b54bf095e325c82dea825ecd0d7f7a540285eedf1b9"
+    },
+    {
+      "index": 5,
+      "path": "chunk-005.mp4",
+      "frames": 16,
+      "pixel_sha256": "c798497c338271faa52402a1bd9cffd7d3fe94bf8cd79cc531de1c9840d5126b",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5231812319998426,
+        "mp4_encode": 0.32699129299999186
+      },
+      "elapsed_s": 60.433629725999936,
+      "sha256": "96717aa21199c2abbdfa6b28b3e05a66e5d6e7421c2b7ffccd8c4f8d6735e8ef"
+    }
+  ],
+  "published_score_reproduced": false,
+  "agent_interactions": 7,
+  "adapter_sha256": "eb12f1128d9e9525ed7f5b856b5b45b59723d768741f87cff6a28b765ce638a6",
+  "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+  "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+  "deviations": [
+    "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+    "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+    "Official 480p demo area; single NVIDIA H200, BF16 and valid-length SDPA backend",
+    "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+    "Claude diagnostic scoring differs from published Gemini judgments"
+  ],
+  "hardware": {
+    "gpu": "NVIDIA H200",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4"
+  },
+  "attention_backend": "sdpa",
+  "optional_torch_dlpack_addon_disabled": false,
+  "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+  "checkpoint_loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "warm_runtime": {
+    "loaded_this_job": false,
+    "load_seconds": 0.0,
+    "job_index": 16
+  },
+  "generated_frames": 93,
+  "generated_seconds": 5.8125,
+  "termination": "agent_end",
+  "elapsed_s": 63.88116573100001,
+  "camera_diagnostics": {
+    "chunks": 6,
+    "path_length": 23.0,
+    "net_yaw_degrees": 0.0,
+    "total_turn_degrees": 0.0,
+    "max_distance_from_start": 17.46424919657298,
+    "final_distance_from_start": 17.46424919657298,
+    "revisited_start_at_chunk": null,
+    "wait_chunks": 0,
+    "wait_pose_changes": 0
+  },
+  "peak_allocated_bytes": 72728647680
+}

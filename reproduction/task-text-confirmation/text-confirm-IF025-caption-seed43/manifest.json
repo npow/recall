@@ -1,0 +1,546 @@
+{
+  "id": "text-confirm-IF025-caption-seed43",
+  "result_directory": "text-confirm-IF025-caption-seed43-1794729879971365671",
+  "argv": [
+    "--split",
+    "if",
+    "--task-id",
+    "IF025",
+    "--seed",
+    "43",
+    "--max-chunks",
+    "40",
+    "--offload-text-encoder",
+    "--stream-player-actions",
+    "--text-prompt",
+    "caption"
+  ],
+  "run": {
+    "status": "completed",
+    "model": "LingBot-World2 14B causal-fast stock",
+    "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "initial_image_sha256": "bd6476bb88042e62003f93c5a081c6cf3e1730f4f4bea0be7a0352340fbc98cf",
+    "text_prompt_mode": "caption",
+    "image_caption_sha256": "4a9e390c347a74d7d4fea1dbead58896341583717433ea09a7cdef8f08629095",
+    "task_id": "IF025",
+    "split": "if",
+    "seed": 43,
+    "turn_degrees_per_second": 60,
+    "fps": 16,
+    "max_chunks": 40,
+    "max_interactions": 40,
+    "native_fixed_controls": false,
+    "camera_embedding_audit": [],
+    "pose_retrieval": false,
+    "sink_rephase": false,
+    "adaptive_retrieval_pilot": false,
+    "player_temperature": "provider default",
+    "player_streaming": true,
+    "streaming_player_sha256": "3bc14684cc4ee859728fabab319b47dd3d810465f32495a090ea7475d19454a8",
+    "initial_neutral_bootstrap": false,
+    "kv_retention": false,
+    "decoprune": false,
+    "reanchor": false,
+    "budget_memory": false,
+    "denoise_schedule": "stock",
+    "text_encoder_offloaded_after_encoding": true,
+    "stationary_wait_only": false,
+    "fixed_actions": null,
+    "quantization": "none",
+    "cuda_allocator_configuration": "expandable_segments:True",
+    "max_area": 399360,
+    "chunk_size": 4,
+    "local_attn_size": 18,
+    "sink_size": 6,
+    "decision_interval": 1,
+    "stock_knobs": true,
+    "controlled_ablation": false,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "actions": [
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "Starting execution of reference plan: hold RIGHT for 1.8 seconds to rotate camera rightward, initiating the diagonal forward-right walk toward the corn. Current elapsed time is 0.0s; no action held yet. The initial and current images appear identical, confirming we are at the start position with the woman facing up the corn path. Begin camera rotation to the right.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.0,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 22.84750012699999,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 44.99999999999999,
+          "accumulated_yaw_degrees": 45.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4NGaLADyKzfWWjBZeuB",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2930,
+          "output_tokens": 137,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Starting execution of reference plan: hold RIGHT for 1.8 seconds to rotate camera rightward, initiating the diagonal forward-right walk toward the corn. Current elapsed time is 0.0s; no action held yet. The initial and current images appear identical, confirming we are at the start position with the woman facing up the corn path. Begin camera rotation to the right.\"}]",
+        "prompt_sha256": "2ca272b596e329edd2600b29fc9091743ec77bb5c79827a68ec929fce5faa649",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 1.0198963420000382,
+          "full_response_s": 2.51405053000002,
+          "wait_for_completion_s": 0.00021113600001854138,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "Continuing to hold RIGHT to complete the 1.8-second camera rotation. Elapsed commanded time is 0.812s; plan requires 1.8s total for this step. The latest image shows the woman is now positioned more to the left side of the frame with corn plants very close on both sides, confirming camera rotation has occurred. Must continue RIGHT rotation to reach the target 1.8s before transitioning to forward walking.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 44.99999999999999,
+          "accumulated_yaw_degrees": 45.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 28.078909762999956,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 105.0,
+          "accumulated_yaw_degrees": 105.0,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4NGx5M7xC6gLL9paTVM",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2768,
+          "output_tokens": 150,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Continuing to hold RIGHT to complete the 1.8-second camera rotation. Elapsed commanded time is 0.812s; plan requires 1.8s total for this step. The latest image shows the woman is now positioned more to the left side of the frame with corn plants very close on both sides, confirming camera rotation has occurred. Must continue RIGHT rotation to reach the target 1.8s before transitioning to forward walking.\"}]",
+        "prompt_sha256": "bdc4ba4929ab69955a20ca91274add80b11da7a506e0f1d362ad7a5bd86a4a46",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 1.0718009839999922,
+          "full_response_s": 2.5709025180000253,
+          "wait_for_completion_s": 0.00018019199995933377,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "STOP",
+        "action": "W",
+        "reason": "The RIGHT rotation step is complete. Current action has been held for 1.8125 seconds, meeting the planned 1.8-second requirement. The latest image shows an extreme close-up of corn plants, indicating the camera rotation has been executed and we are now positioned among the corn. Transitioning to the forward walking phase (W action) as specified in the reference plan for 2.25 seconds. The woman must now walk forward through the corn to complete the diagonal forward-right entry into the corn field.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 105.0,
+          "accumulated_yaw_degrees": 105.0,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 33.74338599599997,
+        "pose_after": {
+          "position_normalized_units": [
+            3.8637033051562732,
+            0.0,
+            -1.035276180410082
+          ],
+          "heading_degrees": 105.0,
+          "accumulated_yaw_degrees": 105.0,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4NHNuqujk8WRZtTw6q1",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2875,
+          "output_tokens": 166,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"STOP\", \"action\": \"W\", \"reason\": \"The RIGHT rotation step is complete. Current action has been held for 1.8125 seconds, meeting the planned 1.8-second requirement. The latest image shows an extreme close-up of corn plants, indicating the camera rotation has been executed and we are now positioned among the corn. Transitioning to the forward walking phase (W action) as specified in the reference plan for 2.25 seconds. The woman must now walk forward through the corn to complete the diagonal forward-right entry into the corn field.\"}]",
+        "prompt_sha256": "ea346fbf8e699a0168eafbd3327c3b51a58837fbcbf09378f5f320d4f49b4f15",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.9287214779999999,
+          "full_response_s": 2.629733093000027,
+          "wait_for_completion_s": 0.0001149619999978313,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "W",
+        "reason": "Continuing the forward walk (W) as specified in the reference plan. Current action has been held for 1.0 second of the planned 2.25 seconds. The latest image confirms the woman is walking forward through the corn field\u2014the camera view shows a path with tall corn plants on both sides, matching the goal of entering the corn field. The woman is visible in the frame walking away from the camera along the path. Must continue holding W for approximately 1.25 more seconds to complete the full 2.25-second forward walk segment and achieve full entry into the corn plants.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            3.8637033051562732,
+            0.0,
+            -1.035276180410082
+          ],
+          "heading_degrees": 105.0,
+          "accumulated_yaw_degrees": 105.0,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 39.85427210499995,
+        "pose_after": {
+          "position_normalized_units": [
+            7.727406610312547,
+            0.0,
+            -2.070552360820164
+          ],
+          "heading_degrees": 105.0,
+          "accumulated_yaw_degrees": 105.0,
+          "world_time_seconds": 3.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4NHqKq7a3EUhpYdMRht",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3008,
+          "output_tokens": 182,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Continuing the forward walk (W) as specified in the reference plan. Current action has been held for 1.0 second of the planned 2.25 seconds. The latest image confirms the woman is walking forward through the corn field\\u2014the camera view shows a path with tall corn plants on both sides, matching the goal of entering the corn field. The woman is visible in the frame walking away from the camera along the path. Must continue holding W for approximately 1.25 more seconds to complete the full 2.25-second forward walk segment and achieve full entry into the corn plants.\"}]",
+        "prompt_sha256": "440c84ac77320c328f457a69afd8355877a9102d1875afb9670949edcc9da296",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.8625330660000259,
+          "full_response_s": 2.5451208019999854,
+          "wait_for_completion_s": 0.0001358110000069246,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "W",
+        "reason": "Continuing the forward walk (W) to complete the planned 2.25-second segment. Current action has been held for 2.0 seconds of the planned 2.25 seconds, leaving approximately 0.25 seconds remaining. The latest image shows the woman walking forward through the corn field on a dirt path with tall corn plants on both sides, clearly demonstrating she has entered the corn and is progressing deeper into it. Her posture and position confirm active forward motion. The visual evidence matches the goal: the woman is walking diagonally forward to the right and is clearly entering and moving within the tall corn plants. Must hold W for the final ~0.25 seconds to complete the full planned duration and ensure complete goal achievement.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            7.727406610312547,
+            0.0,
+            -2.070552360820164
+          ],
+          "heading_degrees": 105.0,
+          "accumulated_yaw_degrees": 105.0,
+          "world_time_seconds": 3.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 46.94294870699997,
+        "pose_after": {
+          "position_normalized_units": [
+            11.591109915468818,
+            0.0,
+            -3.105828541230247
+          ],
+          "heading_degrees": 105.0,
+          "accumulated_yaw_degrees": 105.0,
+          "world_time_seconds": 4.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4NJMbVWLL9Bswmp9H1r",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3150,
+          "output_tokens": 213,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Continuing the forward walk (W) to complete the planned 2.25-second segment. Current action has been held for 2.0 seconds of the planned 2.25 seconds, leaving approximately 0.25 seconds remaining. The latest image shows the woman walking forward through the corn field on a dirt path with tall corn plants on both sides, clearly demonstrating she has entered the corn and is progressing deeper into it. Her posture and position confirm active forward motion. The visual evidence matches the goal: the woman is walking diagonally forward to the right and is clearly entering and moving within the tall corn plants. Must hold W for the final ~0.25 seconds to complete the full planned duration and ensure complete goal achievement.\"}]",
+        "prompt_sha256": "e6f34a9e4f1b6065c54e6d04ec34e5410d821034a3b21ebd03410e45a208d5a9",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 1.4302993499999843,
+          "full_response_s": 3.7606433529999777,
+          "wait_for_completion_s": 0.00019485500001792389,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "END",
+        "action": null,
+        "reason": "The goal \"The woman walks diagonally forward to the right and enters the tall corn plants\" has been visually achieved. Comparing the initial image with the latest image: Initially, the woman was standing at the entrance of a dirt path with tall corn plants on both sides. In the current image, the woman has clearly walked forward through the corn field, is now deeper within the tall corn plants, and is walking along the dirt path surrounded by the tall corn on both sides. The diagonal rightward camera rotation (completed via the RIGHT action) combined with forward walking (W action) has successfully positioned the woman walking diagonally forward to the right while entering and moving within the tall corn plants. The reference plan's total duration of 4.05 seconds has been substantially consumed (4.812 seconds elapsed), and the visual evidence confirms the goal is complete: the woman is walking forward through the corn field with tall corn plants flanking her path. The task is accomplished.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4NJrPrLSsi2QF4ffdY2",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3324,
+          "output_tokens": 257,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"The goal \\\"The woman walks diagonally forward to the right and enters the tall corn plants\\\" has been visually achieved. Comparing the initial image with the latest image: Initially, the woman was standing at the entrance of a dirt path with tall corn plants on both sides. In the current image, the woman has clearly walked forward through the corn field, is now deeper within the tall corn plants, and is walking along the dirt path surrounded by the tall corn on both sides. The diagonal rightward camera rotation (completed via the RIGHT action) combined with forward walking (W action) has successfully positioned the woman walking diagonally forward to the right while entering and moving within the tall corn plants. The reference plan's total duration of 4.05 seconds has been substantially consumed (4.812 seconds elapsed), and the visual evidence confirms the goal is complete: the woman is walking forward through the corn field with tall corn plants flanking her path. The task is accomplished.\"}]",
+        "prompt_sha256": "770b3b9f421704f9669fa4f8119770b20a51a504eb26f30e72726372a49b084a",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 3.544641817000013,
+          "full_response_s": 3.544641817000013,
+          "wait_for_completion_s": 1.0187999976096762e-05,
+          "generation_started_before_response_completed": false
+        },
+        "pose_before": {
+          "position_normalized_units": [
+            11.591109915468818,
+            0.0,
+            -3.105828541230247
+          ],
+          "heading_degrees": 105.0,
+          "accumulated_yaw_degrees": 105.0,
+          "world_time_seconds": 4.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 56.35676595499996
+      }
+    ],
+    "chunks": [
+      {
+        "index": 0,
+        "path": "chunk-000.mp4",
+        "frames": 13,
+        "pixel_sha256": "05f9f67aead24514b3399c9887f865c90d6a6c6a17cef7e6d8c3b6bff3f2ba5d",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.44213900500000136,
+          "mp4_encode": 0.36018108100000745
+        },
+        "elapsed_s": 27.000445664999972,
+        "sha256": "9aa8e9aacfe4ed368288503d920aa153dfa6053a6ea64ec1483eeaa66a95b026"
+      },
+      {
+        "index": 1,
+        "path": "chunk-001.mp4",
+        "frames": 16,
+        "pixel_sha256": "3fff8483de5173151c110b902fb89dd4b92f22ba011f84495e1b4989afdfe6ad",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5533262129999912,
+          "mp4_encode": 0.383344730000033
+        },
+        "elapsed_s": 32.80787934699998,
+        "sha256": "ef93816fa3d60ed44451793d84fbcab9484a7be7d0677bad2e363e8932c0c539"
+      },
+      {
+        "index": 2,
+        "path": "chunk-002.mp4",
+        "frames": 16,
+        "pixel_sha256": "1557ca73771d8111e35c592f212ec91b099c0a7345d2aff20137429d795831e5",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5446740950000049,
+          "mp4_encode": 0.4617774710000049
+        },
+        "elapsed_s": 38.984474673999955,
+        "sha256": "c8062e25fc72cb1bdf303bd17747df6026e5fbd4a2d5cf11df9a24d1195c2d52"
+      },
+      {
+        "index": 3,
+        "path": "chunk-003.mp4",
+        "frames": 16,
+        "pixel_sha256": "966998349ce4d36ac6f50aa63e75e8e2c179493255bccd5c797d458162144510",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5445904540000015,
+          "mp4_encode": 0.39423732500000597
+        },
+        "elapsed_s": 45.501293783999984,
+        "sha256": "925266b66aebb490a9edf793d68289be36cd061baacda830eb43f28abe8ad663"
+      },
+      {
+        "index": 4,
+        "path": "chunk-004.mp4",
+        "frames": 16,
+        "pixel_sha256": "bab7a83f718e7d16e76d3fd3b0faa81533999108b3668a3809b46dd8b0ca2fe6",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.54469852699998,
+          "mp4_encode": 0.3723647319999941
+        },
+        "elapsed_s": 52.80518067099996,
+        "sha256": "90f1ec0e886081a8a2694dd56ca526b19d65b81c64ff1cb554449747ad014dc5"
+      }
+    ],
+    "published_score_reproduced": false,
+    "agent_interactions": 6,
+    "adapter_sha256": "eb12f1128d9e9525ed7f5b856b5b45b59723d768741f87cff6a28b765ce638a6",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+    "deviations": [
+      "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+      "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+      "Official 480p demo area; single NVIDIA H200, BF16 and valid-length SDPA backend",
+      "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+      "Claude diagnostic scoring differs from published Gemini judgments"
+    ],
+    "hardware": {
+      "gpu": "NVIDIA H200",
+      "torch": "2.6.0+cu124",
+      "cuda": "12.4"
+    },
+    "attention_backend": "sdpa",
+    "optional_torch_dlpack_addon_disabled": false,
+    "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+    "checkpoint_loading": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "mismatched_keys": [],
+      "error_msgs": []
+    },
+    "warm_runtime": {
+      "loaded_this_job": false,
+      "load_seconds": 0.0,
+      "job_index": 5
+    },
+    "generated_frames": 77,
+    "generated_seconds": 4.8125,
+    "termination": "agent_end",
+    "elapsed_s": 56.361051129999964,
+    "camera_diagnostics": {
+      "chunks": 5,
+      "path_length": 11.999999999999998,
+      "net_yaw_degrees": 104.99999999999999,
+      "total_turn_degrees": 104.99999999999999,
+      "max_distance_from_start": 11.999999999999998,
+      "final_distance_from_start": 11.999999999999998,
+      "revisited_start_at_chunk": null,
+      "wait_chunks": 0,
+      "wait_pose_changes": 0
+    },
+    "peak_allocated_bytes": 72594223616
+  },
+  "status": "completed",
+  "error": null,
+  "weights_unchanged": null,
+  "job_seconds": null,
+  "client_wall_s": null,
+  "chunk_pixel_sha256": [
+    "05f9f67aead24514b3399c9887f865c90d6a6c6a17cef7e6d8c3b6bff3f2ba5d",
+    "3fff8483de5173151c110b902fb89dd4b92f22ba011f84495e1b4989afdfe6ad",
+    "1557ca73771d8111e35c592f212ec91b099c0a7345d2aff20137429d795831e5",
+    "966998349ce4d36ac6f50aa63e75e8e2c179493255bccd5c797d458162144510",
+    "bab7a83f718e7d16e76d3fd3b0faa81533999108b3668a3809b46dd8b0ca2fe6"
+  ],
+  "warm_runtime": {
+    "loaded_this_job": false,
+    "load_seconds": 0.0,
+    "job_index": 5
+  },
+  "recovered_from_committed_volume": true
+}

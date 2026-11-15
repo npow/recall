@@ -177,6 +177,7 @@ def judge_episode(client, playworld, dataset_task, video, reference_image=None, 
     video = Path(video)
     video_sha = sha256_file(video)
     result = {"task_id": dataset_task["task_id"], "judge_provider": "google-vertex", "judge_model": model,
+              "judge_project": getattr(getattr(client, "_api_client", None), "project", None),
               "endpoint": "vertex-ai-global", "video_sha256": video_sha, "dry_run": dry_run,
               "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
               "gate": None, "rubric": None, "calls": []}

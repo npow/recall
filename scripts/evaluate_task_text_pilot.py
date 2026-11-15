@@ -18,6 +18,7 @@ DEFAULT_OUTPUT = ROOT / "reproduction/task-text-pilot"
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--directory", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--cached-only", action="store_true", help="Validate saved judgments and report complete frozen partitions without API calls")
     args = parser.parse_args()
     output = args.directory.resolve()
     plan = json.loads((output / "plan.json").read_text())
@@ -38,7 +39,7 @@ def main():
     outcomes = {row["id"]: row for row in bundle["results"]}
     if len(outcomes) != len(bundle["results"]) or set(outcomes) != {job["id"] for job in jobs}:
         raise ValueError("Returned jobs do not cover the exact declared pilot")
-    if not json.loads((ROOT / "reproduction/state.json").read_text())["gemini_calls_authorized"]:
+    if not args.cached_only and not json.loads((ROOT / "reproduction/state.json").read_text())["gemini_calls_authorized"]:
         raise ValueError("Gemini evaluation is not authorized")
     data = json.loads((ROOT / "external/PlayWorld/data/if/data.json").read_text())
     tasks = {task["task_id"]: task for task in data}
@@ -46,7 +47,7 @@ def main():
         task = tasks[case["task_id"]]
         if hashlib.sha256(json.dumps(task, sort_keys=True).encode()).hexdigest() != case["task_sha256"]:
             raise ValueError("Frozen task data changed")
-    client = create_vertex_client()
+    client = None if args.cached_only else create_vertex_client()
 
     def evaluate(job):
         result = outcomes[job["id"]]
@@ -67,6 +68,10 @@ def main():
                 or run["text_prompt_mode"] != mode or run["native_fixed_controls"] or run["fixed_actions"]
                 or run["initial_image_sha256"] != case["image_sha256"]
                 or run["local_attn_size"] != 18 or run["sink_size"] != 6
+                or run["sampler_timesteps_index"] != [0, 250, 500, 750] or run["sample_shift"] != 10
+                or run["attention_backend"] != "sdpa"
+                or run["hardware"] != {"gpu": "NVIDIA H200", "torch": "2.6.0+cu124", "cuda": "12.4"}
+                or run["image_caption_sha256"] != hashlib.sha256(tasks[task_id]["image_caption"].encode()).hexdigest()
                 or run["max_chunks"] != 40 or not run["player_streaming"]
                 or any(action.get("player_response_pending") for action in run["actions"])):
             raise ValueError("Episode differs from the declared text pilot")
@@ -76,6 +81,8 @@ def main():
         (directory / "manifest.json").write_text(json.dumps(result, indent=2) + "\n")
         video = directory / "rollout.mp4"
         if not video.exists():
+            if args.cached_only:
+                return {**row, "status": "evaluation_pending", "score": None, "reason": "local video required for hash verification"}
             subprocess.run(["modal", "volume", "get", "--profile", "nissan-pow", "worldsync-lingbot-results",
                             result["result_directory"] + "/rollout.mp4", str(video)], check=True)
         score_path = directory / "gemini-score.json"
@@ -83,6 +90,8 @@ def main():
         digest = hashlib.sha256(video.read_bytes()).hexdigest()
         if previous and previous["video_sha256"] != digest:
             raise ValueError("Cached score belongs to a different video")
+        if previous is None and args.cached_only:
+            return {**row, "status": "evaluation_pending", "score": None}
         score = previous or judge_episode(client, ROOT / "external/PlayWorld", tasks[task_id], video,
             ROOT / "external/PlayWorld/data" / tasks[task_id]["image_path"],
             world_model="LingBot-World2 task conditioning trial", cache_dir=output / "cache")
@@ -106,10 +115,31 @@ def main():
                     "error": f"{type(error).__name__}: {str(error)[:300]}"}
     with ThreadPoolExecutor(max_workers=3) as pool:
         results = list(pool.map(guarded, jobs))
+    # Error rows still belong to their frozen partition; never omit their denominator.
+    for result, job in zip(results, jobs):
+        argv = job["argv"]
+        task_id = argv[argv.index("--task-id") + 1]
+        seed = int(argv[argv.index("--seed") + 1])
+        case = next(case for case in plan["cases"] if case["task_id"] == task_id
+                    and case.get("seed", plan.get("seed")) == seed)
+        result.setdefault("partition", case.get("partition", "development"))
+        result.setdefault("task_id", task_id)
+        result.setdefault("seed", seed)
+        result.setdefault("mode", argv[argv.index("--text-prompt") + 1])
     complete = all(row["status"] in {"scored", "generation_failed"} for row in results)
     report = {"scope": plan["scope"], "complete": complete, "declared_episodes": len(jobs),
               "results": results, "means": None,
               "caveat": "Small declared IF cohort with Gemini preview alias; not a four-dimension overall. Development and confirmation partitions remain separate."}
+    partitions = {}
+    for partition in sorted({case.get("partition", "development") for case in plan["cases"]}):
+        rows = [row for row in results if row["partition"] == partition]
+        count = sum(case.get("partition", "development") == partition for case in plan["cases"])
+        done = len(rows) == count * len(plan["arms"]) and all(row["status"] in {"scored", "generation_failed"} for row in rows)
+        partitions[partition] = {"expected_episodes": count * len(plan["arms"]), "complete": done,
+            "scored_or_generation_failed": sum(row["status"] in {"scored", "generation_failed"} for row in rows),
+            "means": {mode: sum(row["score"] for row in rows if row["mode"] == mode) / count
+                      for mode in plan["arms"]} if done else None}
+    report["partition_reports"] = partitions
     if complete:
         report["means"] = {mode: sum(row["score"] for row in results if row["mode"] == mode) / len(plan["cases"])
                            for mode in plan["arms"]}

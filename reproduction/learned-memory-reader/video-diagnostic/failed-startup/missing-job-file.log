@@ -1,0 +1,38 @@
+✓ Initialized. View run at 
+https://modal.com/apps/nissan-pow/main/ap-MZkOw04LkF9JxINunXImOr
+✓ Created objects.
+├── ✓ Uploaded /home/npow/code/iteratehack/scripts/modal_lingbot_runner.py
+├── ✓ Uploaded /home/npow/code/iteratehack/reproduction/state.json
+├── ✓ Uploaded /home/npow/code/iteratehack/reproduction/lingbot-weights.json
+├── ✓ Uploaded /home/npow/code/iteratehack/worldsync
+├── ✓ Uploaded /home/npow/code/iteratehack/external/PlayWorld/data
+├── ✓ Created Function preflight.
+├── ✓ Created Function RunnerH200.*.
+├── ✓ Created Function RunnerH100.*.
+├── ✓ Created Function oneshot_h200.
+└── ✓ Created Function oneshot_h100.
+{"preflight": {"dataset_counts": {"gc": 48, "if": 50, "insight": 30, "outsight": 43}, "player_key_configured": true}}
+Stopping app - uncaught exception raised locally: FileNotFoundError(2, 'No such file or directory').
+╭───────────────────── Traceback (most recent call last) ──────────────────────╮
+│ /home/npow/code/iteratehack/scripts/modal_lingbot_runner.py:145 in main      │
+│                                                                              │
+│   144 │   from scripts.lingbot_runner_client import expand                   │
+│ ❱ 145 │   entries = [expand(json.loads(line)) for line in Path(jobs).read_te │
+│   146 │   if mode == "warm":                                                 │
+│                                                                              │
+│ /home/npow/.local/share/uv/python/cpython-3.12.14-linux-aarch64-gnu/lib/pyth │
+│ on3.12/pathlib.py:1027 in read_text                                          │
+│                                                                              │
+│   1026 │   │   encoding = io.text_encoding(encoding)                         │
+│ ❱ 1027 │   │   with self.open(mode='r', encoding=encoding, errors=errors) as │
+│   1028 │   │   │   return f.read()                                           │
+│                                                                              │
+│ /home/npow/.local/share/uv/python/cpython-3.12.14-linux-aarch64-gnu/lib/pyth │
+│ on3.12/pathlib.py:1013 in open                                               │
+│                                                                              │
+│   1012 │   │   │   encoding = io.text_encoding(encoding)                     │
+│ ❱ 1013 │   │   return io.open(self, mode, buffering, encoding, errors, newli │
+│   1014                                                                       │
+╰──────────────────────────────────────────────────────────────────────────────╯
+FileNotFoundError: [Errno 2] No such file or directory: 
+'reproduction/learned-memory-reader/video-diagnostic/jobs.jsonl'

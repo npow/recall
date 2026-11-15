@@ -1,0 +1,407 @@
+{
+  "task_id": "IF042",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "judge_project": "servo-tpu-20260901",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "12424058f74392bcd130ecb3024cdc0485f6b7fba3e9d15d6fa68c4da925e7c2",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF042",
+    "perspective": "third-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "男子向前跳跃，落地后继续向前跑动/走动。",
+    "trajectory_evidence_zh": "角色在整个视频中持续背对镜头向前方移动，深入场景。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 4.57,
+    "final_score_1_to_5": 4.0,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "男子在整个视频中保持相同的深灰色衣着和体型，无明显身份变化。"
+      },
+      "contact_support": {
+        "score": 4,
+        "weight": 2.0,
+        "answer": "yes",
+        "evidence_zh": "男子落地后双脚与地面接触良好，没有明显的悬浮或穿模，但落地瞬间的缓冲略显生硬。"
+      },
+      "causal_response": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "周围的建筑、楼梯和地面在男子落地和奔跑过程中保持结构稳定，无变形或扭曲。"
+      },
+      "lighting_shadow": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "男子在空中和地面上都在右侧墙壁和地面上投射了合理的动态阴影，且随动作自然变化。"
+      },
+      "motion_kinematics": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "男子的奔跑动作自然，但从空中落地到起跑的过渡缺乏足够的重心转移和缓冲。"
+      },
+      "collision_boundary": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "男子成功落到下层地面，身体及四肢未穿透地面或周围的墙壁。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail observed; the man continues running until the end of the video.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 12,
+      "evidence_zh": "男子在第10帧左右落地，随后开始向前移动，完成了要求的动作。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "落地前，周围的楼梯、墙壁和背景建筑保持稳定。",
+      "post_completion_phase_zh": "落地并向前奔跑时，随着相机跟随，背景建筑和栏杆保持一致的透视变化，无突变。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "main subject",
+        "anchors": [
+          "ground",
+          "right wall"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-28"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "right wall",
+        "staircase railing"
+      ],
+      "newly_revealed_regions_zh": "随着男子向前奔跑，相机跟随前进，展现了前方更多的建筑立面。",
+      "evidence_zh": "相机的平移与男子的前进速度匹配，背景的视差变化符合物理规律。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频连贯，相机运动平滑，未发现硬重置或场景突变。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "男子落地后的持续奔跑符合向前移动的指令，未出现需要扣分的严重物理错误。"
+    },
+    "final_state_check": {
+      "window": "25-28",
+      "visible_key_objects": [
+        "man",
+        "ground",
+        "buildings"
+      ],
+      "reappearance_consistency_zh": "男子和背景建筑在视频结尾处保持一致的外观。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "not_applicable",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": null,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": null,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "not_applicable",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "yes",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "男子从空中跳下并持续向前奔跑，有明显的位移。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "prompt_directed_forward_progress": "yes",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "男子从空中落地后，持续向前奔跑。",
+      "trajectory_evidence_zh": "男子在世界空间中产生了明显的向前位移，符合'向前走/移动'的指令。",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "yes",
+      "observed_outcome": "contacted_and_continued",
+      "solid_interpenetration": "no",
+      "support_after_contact": "plausible",
+      "boundary_response_plausible": "yes",
+      "evidence_zh": "男子落地时与地面发生接触，随后在地面上奔跑，未穿透地面。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "ground",
+      "target_type": "solid_boundary",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "yes",
+      "observed_trigger": "contact",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "yes",
+      "evidence_zh": "地面在男子落地前后保持稳定，未发生形变或消失。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "yes",
+      "proxy_evidence_observed": [
+        "weight_transfer",
+        "joint_motion"
+      ],
+      "proxy_supports_expected_locomotion": "yes",
+      "evidence_zh": "男子的双脚在落地和奔跑时清晰可见，与地面的接触关系明确。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "man",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "clothing",
+        "body_proportions",
+        "face_or_hair",
+        "colors"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "男子在整个过程中保持了相同的深灰色T恤和长裤，体型和外观特征稳定。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 4,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": 4,
+      "evidence_zh": "男子完成了实质性的落地和奔跑动作，交互质量达到4级，身份一致性正常计入评分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 4,
+      "interaction_opportunity_reached": "yes",
+      "physical_response_observed": "yes",
+      "core_failure_zh": "落地瞬间的缓冲和重心转移略显生硬。",
+      "positive_evidence_zh": "男子成功落地并流畅地过渡到向前奔跑，与地面的接触和阴影表现良好。",
+      "evidence_zh": "整体物理交互连贯，落地动作有轻微瑕疵，但随后的奔跑动作自然且符合物理规律。",
+      "final_score_cap_applied": 4
+    },
+    "summary_zh": "视频成功展示了男子从空中落地并向前奔跑的过程，物理交互基本连贯，仅落地缓冲略显生硬。",
+    "task_id": "IF042"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "f2v5av_kJfT1tALc9o3IBA",
+      "prompt_tokens": 4675,
+      "output_tokens": 168
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "iWv5avP8NrrwtALhnYWhBA",
+      "prompt_tokens": 36757,
+      "output_tokens": 3459
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 29,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 28,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 2.8,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "3ee0f33d0d188ac315c662e62437a7fb064e956ad573e20e1b97cb4c7460304d",
+  "score_prompt_sha256": "4ef4b78d0dfe9316b2df7c1ff30a5d3db988c0b7585ed91ec53e6ca55e35da60",
+  "scores": {
+    "official": 4.0,
+    "final_score": 4.0
+  }
+}

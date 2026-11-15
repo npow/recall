@@ -1,0 +1,40 @@
+{
+  "scope": "Two held-out real source videos, endpoint schedules and one fixed noise draw; denoising surrogate only",
+  "complete": true,
+  "promotion_gate_passed": false,
+  "heldout_cases_passing": 1,
+  "heldout_cases": 2,
+  "rows": [
+    {
+      "clip": "clips/tF-g7-LTqwk_0023884_0025684/video.mp4",
+      "correct_before": 0.13780134916305542,
+      "correct_after": 0.13233275339007378,
+      "alternate_view_after": 0.13946528732776642,
+      "none_after": 0.1423054151237011,
+      "no_memory_loss_unchanged": true,
+      "relative_correct_loss_change": -0.03968463158158819,
+      "beats_alternate_and_none": true
+    },
+    {
+      "clip": "clips/xXY_-YxeJZ0_0007350_0009150/video.mp4",
+      "correct_before": 0.08942542225122452,
+      "correct_after": 0.08454366400837898,
+      "alternate_view_after": 0.08755354583263397,
+      "none_after": 0.08288945257663727,
+      "no_memory_loss_unchanged": true,
+      "relative_correct_loss_change": -0.05459027332441457,
+      "beats_alternate_and_none": false
+    }
+  ],
+  "steps": 60,
+  "train": {
+    "steps": 60,
+    "mean_step_s": 6.277156020568958,
+    "steps_per_s": 0.15930781339880742,
+    "peak_allocated_gb": 65.967773184,
+    "peak_reserved_gb": 70.487375872
+  },
+  "frozen_base_parameter_versions_unchanged": true,
+  "checkpoint_sha256": "8f221ee7de698ef68648b12940d609fb81f4c3060d4ec843090873bf25aa1ec9",
+  "caveat": "Not a world-coherence or PlayWorld improvement. Do not promote on training loss. Alternate-view control can contain valid scene information."
+}

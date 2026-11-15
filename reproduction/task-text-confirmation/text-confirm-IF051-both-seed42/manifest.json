@@ -1,0 +1,473 @@
+{
+  "id": "text-confirm-IF051-both-seed42",
+  "result_directory": "text-confirm-IF051-both-seed42-1794730543937530711",
+  "argv": [
+    "--split",
+    "if",
+    "--task-id",
+    "IF051",
+    "--seed",
+    "42",
+    "--max-chunks",
+    "40",
+    "--offload-text-encoder",
+    "--stream-player-actions",
+    "--text-prompt",
+    "both"
+  ],
+  "run": {
+    "status": "completed",
+    "model": "LingBot-World2 14B causal-fast stock",
+    "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "initial_image_sha256": "59cb95380967f748936b191be21383fc7b29ae25d99a7f7d2c669a88a9030cd7",
+    "text_prompt_mode": "both",
+    "image_caption_sha256": "e9cd6def654aa2fd14b074fa903be321383ffe6f1869e7fd063aae3058ae5c37",
+    "task_id": "IF051",
+    "split": "if",
+    "seed": 42,
+    "turn_degrees_per_second": 60,
+    "fps": 16,
+    "max_chunks": 40,
+    "max_interactions": 40,
+    "native_fixed_controls": false,
+    "camera_embedding_audit": [],
+    "pose_retrieval": false,
+    "sink_rephase": false,
+    "adaptive_retrieval_pilot": false,
+    "player_temperature": "provider default",
+    "player_streaming": true,
+    "streaming_player_sha256": "3bc14684cc4ee859728fabab319b47dd3d810465f32495a090ea7475d19454a8",
+    "initial_neutral_bootstrap": false,
+    "kv_retention": false,
+    "decoprune": false,
+    "reanchor": false,
+    "budget_memory": false,
+    "denoise_schedule": "stock",
+    "text_encoder_offloaded_after_encoding": true,
+    "stationary_wait_only": false,
+    "fixed_actions": null,
+    "quantization": "none",
+    "cuda_allocator_configuration": "expandable_segments:True",
+    "max_area": 399360,
+    "chunk_size": 4,
+    "local_attn_size": 18,
+    "sink_size": 6,
+    "decision_interval": 1,
+    "stock_knobs": true,
+    "controlled_ablation": false,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "actions": [
+      {
+        "operation": "KEEP",
+        "action": "W",
+        "reason": "Initiating the reference plan to move the woman forward. The goal is \"The woman walks forward\" and the plan specifies holding W for 3600ms (3.6 seconds). The initial and current images show the woman standing still at a muddy beach with a boat. No forward motion is yet visible, so beginning the forward movement command now. Will hold W and monitor for visual evidence of the woman moving away from her current position toward the camera's forward direction.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.0,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 23.925874242000077,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            3.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4P7broMe7Jcmq7KbcaK",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2895,
+          "output_tokens": 155,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Initiating the reference plan to move the woman forward. The goal is \\\"The woman walks forward\\\" and the plan specifies holding W for 3600ms (3.6 seconds). The initial and current images show the woman standing still at a muddy beach with a boat. No forward motion is yet visible, so beginning the forward movement command now. Will hold W and monitor for visual evidence of the woman moving away from her current position toward the camera's forward direction.\"}]",
+        "prompt_sha256": "4aae084ad555d35e7ca684013b528daaf2ec90bd76f8c7275f2ee85843faa6b7",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.9647262480000336,
+          "full_response_s": 2.6329172069999913,
+          "wait_for_completion_s": 0.00017488599996795529,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "W",
+        "reason": "The reference plan requires holding W for 3600ms (3.6 seconds) total. Currently 0.8125 seconds have elapsed, leaving 2.7875 seconds to go. Comparing the initial image with the latest observation: the woman has moved noticeably closer to the camera\u2014she is now larger in frame and positioned lower in the image, indicating clear forward motion toward the camera. The boat, muddy terrain, and background elements confirm the woman has walked forward as intended. The motion is visually consistent with the W command (forward movement). Continuing W to complete the full 3.6-second duration of the reference plan.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            3.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 29.01221045400007,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            7.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4P7ygT8b825ER7Hcx8U",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2747,
+          "output_tokens": 194,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"The reference plan requires holding W for 3600ms (3.6 seconds) total. Currently 0.8125 seconds have elapsed, leaving 2.7875 seconds to go. Comparing the initial image with the latest observation: the woman has moved noticeably closer to the camera\\u2014she is now larger in frame and positioned lower in the image, indicating clear forward motion toward the camera. The boat, muddy terrain, and background elements confirm the woman has walked forward as intended. The motion is visually consistent with the W command (forward movement). Continuing W to complete the full 3.6-second duration of the reference plan.\"}]",
+        "prompt_sha256": "a7765466c0003244ea229430f61d6b22d9f57eb8ff4084081f79f4073ac59555",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.8967088189999686,
+          "full_response_s": 2.9786600319998797,
+          "wait_for_completion_s": 0.0001341530000900093,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "W",
+        "reason": "Continuing the reference plan: W must be held for 3600ms total. Currently 1.8125 seconds have elapsed, leaving approximately 1.79 seconds remaining. Visual comparison shows the woman has moved forward\u2014she is closer to the camera and now positioned more centrally in the frame compared to the initial image. The boat remains visible in the background at a similar scale, and her size relative to the boat has increased, confirming forward motion toward the camera. The muddy beach and water features are consistent across both frames. Continuing W to complete the planned 3.6-second duration and achieve the goal of the woman walking forward.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            7.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 34.56099853599994,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            11.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4P8PWvWxLwDGjrfJ4Ur",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2902,
+          "output_tokens": 192,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"Continuing the reference plan: W must be held for 3600ms total. Currently 1.8125 seconds have elapsed, leaving approximately 1.79 seconds remaining. Visual comparison shows the woman has moved forward\\u2014she is closer to the camera and now positioned more centrally in the frame compared to the initial image. The boat remains visible in the background at a similar scale, and her size relative to the boat has increased, confirming forward motion toward the camera. The muddy beach and water features are consistent across both frames. Continuing W to complete the planned 3.6-second duration and achieve the goal of the woman walking forward.\"}]",
+        "prompt_sha256": "a1864edaaa924cd58acf3ca39f3ff042db2a4add055bd9055b66549d8443ef7e",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.8643631059999279,
+          "full_response_s": 3.0325693590000355,
+          "wait_for_completion_s": 0.00013257099999464117,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "W",
+        "reason": "The reference plan requires holding W for 3600ms (3.6 seconds) total. Current elapsed time is 2.8125 seconds, leaving approximately 0.787 seconds remaining to complete the planned duration. Visual comparison between the initial image and latest observation confirms continuous forward motion: the woman has moved noticeably closer to the camera, appearing larger in frame and positioned lower, consistent with walking forward. The boat, muddy terrain, and background elements remain visually stable. The woman is actively walking toward the camera as intended. Extending W for the remaining ~0.8 seconds to complete the full 3.6-second reference plan duration and achieve the goal of \"The woman walks forward.\"",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            11.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 40.53792419299998,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            15.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 3.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4P8q9mfQUuxzELfnYzL",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3055,
+          "output_tokens": 206,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"W\", \"reason\": \"The reference plan requires holding W for 3600ms (3.6 seconds) total. Current elapsed time is 2.8125 seconds, leaving approximately 0.787 seconds remaining to complete the planned duration. Visual comparison between the initial image and latest observation confirms continuous forward motion: the woman has moved noticeably closer to the camera, appearing larger in frame and positioned lower, consistent with walking forward. The boat, muddy terrain, and background elements remain visually stable. The woman is actively walking toward the camera as intended. Extending W for the remaining ~0.8 seconds to complete the full 3.6-second reference plan duration and achieve the goal of \\\"The woman walks forward.\\\"\"}]",
+        "prompt_sha256": "1be55874cc473e651744d66295dd99c1cbea6950129ada25cfb3a585fbdf90b1",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.8435015830000339,
+          "full_response_s": 3.0946764490001897,
+          "wait_for_completion_s": 0.00015738499996587052,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "END",
+        "action": null,
+        "reason": "The goal \"The woman walks forward\" has been visually achieved. Comparing the initial image with the latest observation: the woman has clearly moved forward toward the camera. In the initial frame, she stands farther away with the boat appearing larger and filling more of the background. In the latest frame, she has moved noticeably closer to the camera\u2014she appears larger in the frame and is positioned lower in the image, which is consistent with forward motion toward the camera position. Her body posture and leg position in the latest frame show active walking motion. The reference plan required holding W for 3.6 seconds, and the current elapsed commanded time (3.812 seconds) exceeds this target. The woman has visibly walked forward as intended. The goal is complete.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4P9JYZBkGEG5gSJo7Kb",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3222,
+          "output_tokens": 217,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"The goal \\\"The woman walks forward\\\" has been visually achieved. Comparing the initial image with the latest observation: the woman has clearly moved forward toward the camera. In the initial frame, she stands farther away with the boat appearing larger and filling more of the background. In the latest frame, she has moved noticeably closer to the camera\\u2014she appears larger in the frame and is positioned lower in the image, which is consistent with forward motion toward the camera position. Her body posture and leg position in the latest frame show active walking motion. The reference plan required holding W for 3.6 seconds, and the current elapsed commanded time (3.812 seconds) exceeds this target. The woman has visibly walked forward as intended. The goal is complete.\"}]",
+        "prompt_sha256": "c7765f45eb35893d8bff077808462649ae128601d939d85693dfc3e575a537da",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 3.2035881990000235,
+          "full_response_s": 3.2035881990000235,
+          "wait_for_completion_s": 8.312000090882066e-06,
+          "generation_started_before_response_completed": false
+        },
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            15.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 3.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 49.302920905000065
+      }
+    ],
+    "chunks": [
+      {
+        "index": 0,
+        "path": "chunk-000.mp4",
+        "frames": 13,
+        "pixel_sha256": "9ee468d6ea75fd79eb81b8efac947f6374bef88cbb526414924fa517acbf42db",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.43730174799998167,
+          "mp4_encode": 0.35744294599999193
+        },
+        "elapsed_s": 28.10803097600001,
+        "sha256": "624b44388e6984e6c77573c1bc14ad20b2e7ba783fddcf34f0e3d29ad818d7d5"
+      },
+      {
+        "index": 1,
+        "path": "chunk-001.mp4",
+        "frames": 16,
+        "pixel_sha256": "4f7971441ca96de164e1e1bc08074636a634a0ea2b6c9a7f1b7715a3869c2daf",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5612964379999994,
+          "mp4_encode": 0.3363609989999077
+        },
+        "elapsed_s": 33.68579789299997,
+        "sha256": "b2cd7890539f8b92420b963e7b1a312de2b003a0075469a8de0efae79c0f89e4"
+      },
+      {
+        "index": 2,
+        "path": "chunk-002.mp4",
+        "frames": 16,
+        "pixel_sha256": "3e78c5c6c97bfca3a63f4077147dce63d5ce38783add70c95a4e8bd38af09f7f",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5377740829999311,
+          "mp4_encode": 0.36096118400018895
+        },
+        "elapsed_s": 39.687514171999965,
+        "sha256": "03ec1383f2b0c8dd30f344cbc580d5c47ff7d722833ebc239b7b12eb03ed4238"
+      },
+      {
+        "index": 3,
+        "path": "chunk-003.mp4",
+        "frames": 16,
+        "pixel_sha256": "4ed38bb55b57b42131ff926e09b49c86405e5745f6c97dd42ce3c1f39dca1d75",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.533792073000086,
+          "mp4_encode": 0.35432691500000146
+        },
+        "elapsed_s": 46.091565429999946,
+        "sha256": "64035f717b0a5f8cf1c4baee96059ebff883b4924a9ac3fc90d16f288abf0019"
+      }
+    ],
+    "published_score_reproduced": false,
+    "agent_interactions": 5,
+    "adapter_sha256": "eb12f1128d9e9525ed7f5b856b5b45b59723d768741f87cff6a28b765ce638a6",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+    "deviations": [
+      "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+      "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+      "Official 480p demo area; single NVIDIA H200, BF16 and valid-length SDPA backend",
+      "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+      "Claude diagnostic scoring differs from published Gemini judgments"
+    ],
+    "hardware": {
+      "gpu": "NVIDIA H200",
+      "torch": "2.6.0+cu124",
+      "cuda": "12.4"
+    },
+    "attention_backend": "sdpa",
+    "optional_torch_dlpack_addon_disabled": false,
+    "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+    "checkpoint_loading": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "mismatched_keys": [],
+      "error_msgs": []
+    },
+    "warm_runtime": {
+      "loaded_this_job": false,
+      "load_seconds": 0.0,
+      "job_index": 14
+    },
+    "generated_frames": 61,
+    "generated_seconds": 3.8125,
+    "termination": "agent_end",
+    "elapsed_s": 49.3078182270001,
+    "camera_diagnostics": {
+      "chunks": 4,
+      "path_length": 15.0,
+      "net_yaw_degrees": 0.0,
+      "total_turn_degrees": 0.0,
+      "max_distance_from_start": 15.0,
+      "final_distance_from_start": 15.0,
+      "revisited_start_at_chunk": null,
+      "wait_chunks": 0,
+      "wait_pose_changes": 0
+    },
+    "peak_allocated_bytes": 72623014400
+  },
+  "status": "completed",
+  "error": null,
+  "weights_unchanged": null,
+  "job_seconds": null,
+  "client_wall_s": null,
+  "chunk_pixel_sha256": [
+    "9ee468d6ea75fd79eb81b8efac947f6374bef88cbb526414924fa517acbf42db",
+    "4f7971441ca96de164e1e1bc08074636a634a0ea2b6c9a7f1b7715a3869c2daf",
+    "3e78c5c6c97bfca3a63f4077147dce63d5ce38783add70c95a4e8bd38af09f7f",
+    "4ed38bb55b57b42131ff926e09b49c86405e5745f6c97dd42ce3c1f39dca1d75"
+  ],
+  "warm_runtime": {
+    "loaded_this_job": false,
+    "load_seconds": 0.0,
+    "job_index": 14
+  },
+  "recovered_from_committed_volume": true
+}

@@ -143,9 +143,11 @@ def generate():
     if claude_cohort:
         historical.append({"cohort": "Declared 16-episode cohort, seed 42 (Claude judge, incl. 4 insight)", "method": "stock",
             "score": claude_cohort["pooled_mean"], "source": "reproduction/cohort-stock-v5-s42.json"})
+    text_confirmation = read("reproduction/task-text-confirmation/summary.json")
+    reader_fit = read("reproduction/learned-memory-reader/real-fit-summary.json")
     small_context = read("reproduction/lingbot-small/gemini-summary.json")
     text_pilot = read("reproduction/task-text-pilot/summary.json")
-    snapshot = {"small_model_context_diagnostic": small_context, "task_text_development": text_pilot, "target": 2.12, "full_benchmark_score": (full or {}).get("overall"), "gemini_moving_subsets": moving10, "full_171_run": full, "published_score_beaten": False,
+    snapshot = {"task_text_confirmation": text_confirmation, "learned_reader_surrogate": reader_fit, "small_model_context_diagnostic": small_context, "task_text_development": text_pilot, "target": 2.12, "full_benchmark_score": (full or {}).get("overall"), "gemini_moving_subsets": moving10, "full_171_run": full, "published_score_beaten": False,
                 "gemini_model": "gemini-3.1-pro-preview", "endpoint": "Vertex AI global",
                 "gemini_local_cohorts": cohorts, "historical_claude_cohorts": historical,
                 "comparability": "Subset scores are not comparable to published four-dimension overall. Methods only compared within the same cohort/judge. Gemini model alias, player and adapter differences remain documented."}
@@ -207,6 +209,19 @@ def generate():
         for arm, row in small_context["results"].items():
             lines.append(f"| {arm} |{row['score']:.2f}|{row['gate']['revisit_observed']}|")
         lines.extend(["", "Both videos fail the requested return. [Scoring audit](reproduction/lingbot-small/scoring-audit.md): partial trajectories pass the released gate, so visual rubric scores can remain high without a revisit. [Videos, frame comparison and caveats](reproduction/lingbot-small/README.md).", ""])
+    if text_confirmation:
+        lines.extend(["## Gemini — frozen task-text confirmation", "",
+            "All16 episodes generated. Partition means appear only when every declared episode in that partition has a judgment or retained generation failure.", "",
+            "| Partition | Judged or generation failed | Caption | Caption + objective |", "|---|---:|---:|---:|"])
+        for partition, row in text_confirmation.get("partition_reports", {}).items():
+            means = row.get("means")
+            caption = f"{means['caption']:.2f}" if means else "pending"
+            both = f"{means['both']:.2f}" if means else "pending"
+            lines.append(f"| {partition} |{row['scored_or_generation_failed']}/{row['expected_episodes']}|{caption}|{both}|")
+        lines.extend(["", "The development gain did not reproduce on the new seed; the frozen promotion condition failed. One held-out judgment is capacity-limited. [Protocol, videos and recovery](reproduction/task-text-confirmation/README.md).", ""])
+    if reader_fit and reader_fit.get("complete"):
+        lines.extend(["## Learned reader — denoising surrogate, not PlayWorld", "",
+            f"The60-update real-data fit passed frozen-base and checkpoint-reload checks, but correct memory beats both controls on only{reader_fit['heldout_cases_passing']}/{reader_fit['heldout_cases']} held-out sources. The predeclared surrogate gate failed; the adapter is not promoted. [Raw results and video diagnostic](reproduction/learned-memory-reader/README.md).", ""])
     lines.extend(extra_sections())
     lines.extend(["", "Regenerate: `.venv-lingbot/bin/python scripts/update_leaderboard.py`. Machine-readable snapshot: [leaderboard.json](leaderboard.json).", ""])
     (ROOT / "LEADERBOARD.md").write_text("\n".join(lines))

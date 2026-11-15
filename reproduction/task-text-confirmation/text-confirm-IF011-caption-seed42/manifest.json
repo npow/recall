@@ -1,0 +1,984 @@
+{
+  "id": "text-confirm-IF011-caption-seed42",
+  "result_directory": "text-confirm-IF011-caption-seed42-1794730092545791864",
+  "argv": [
+    "--split",
+    "if",
+    "--task-id",
+    "IF011",
+    "--seed",
+    "42",
+    "--max-chunks",
+    "40",
+    "--offload-text-encoder",
+    "--stream-player-actions",
+    "--text-prompt",
+    "caption"
+  ],
+  "run": {
+    "status": "completed",
+    "model": "LingBot-World2 14B causal-fast stock",
+    "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "initial_image_sha256": "2e0fc7cb03e02e95f3236fcea8792e2011fbafc19d589c584bb7239e82463fa2",
+    "text_prompt_mode": "caption",
+    "image_caption_sha256": "0b479190f71e865737cccfd4e955a9bd685ba65c6874f4a0c4b9edf2ba8fb254",
+    "task_id": "IF011",
+    "split": "if",
+    "seed": 42,
+    "turn_degrees_per_second": 60,
+    "fps": 16,
+    "max_chunks": 40,
+    "max_interactions": 40,
+    "native_fixed_controls": false,
+    "camera_embedding_audit": [],
+    "pose_retrieval": false,
+    "sink_rephase": false,
+    "adaptive_retrieval_pilot": false,
+    "player_temperature": "provider default",
+    "player_streaming": true,
+    "streaming_player_sha256": "3bc14684cc4ee859728fabab319b47dd3d810465f32495a090ea7475d19454a8",
+    "initial_neutral_bootstrap": false,
+    "kv_retention": false,
+    "decoprune": false,
+    "reanchor": false,
+    "budget_memory": false,
+    "denoise_schedule": "stock",
+    "text_encoder_offloaded_after_encoding": true,
+    "stationary_wait_only": false,
+    "fixed_actions": null,
+    "quantization": "none",
+    "cuda_allocator_configuration": "expandable_segments:True",
+    "max_area": 399360,
+    "chunk_size": 4,
+    "local_attn_size": 18,
+    "sink_size": 6,
+    "decision_interval": 1,
+    "stock_knobs": true,
+    "controlled_ablation": false,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "actions": [
+      {
+        "operation": "KEEP",
+        "action": "W",
+        "reason": "The woman is currently viewing the Sphinx from a distance with pyramids and the Sphinx visible in the background. The goal requires her to walk forward to the base of the Great Sphinx. The reference plan calls for holding W (forward movement) for 2.25 seconds. This is the first action and I need to continue it to progress toward the Sphinx. The current observation shows the woman's POV with the Sphinx still at distance, confirming forward movement is needed to reach the base.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.0,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 24.340166001999933,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            3.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4NYMqm2pDuNRU5EyJ7o",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2905,
+          "output_tokens": 161,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"The woman is currently viewing the Sphinx from a distance with pyramids and the Sphinx visible in the background. The goal requires her to walk forward to the base of the Great Sphinx. The reference plan calls for holding W (forward movement) for 2.25 seconds. This is the first action and I need to continue it to progress toward the Sphinx. The current observation shows the woman's POV with the Sphinx still at distance, confirming forward movement is needed to reach the base.\"}]",
+        "prompt_sha256": "ee0105d9542b482bc07e8d8bd288629e8ce1a438c2698c403e00db8976540844",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 1.002968065999994,
+          "full_response_s": 2.6048245219999444,
+          "wait_for_completion_s": 0.00017359299999952782,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "W",
+        "reason": "The woman has progressed forward and the Sphinx (Great Sphinx) is now noticeably larger and closer in the frame compared to the initial image. The camera/viewer position has moved significantly toward the monument. Current action held is 0.8125 seconds, and the reference plan requires 2.25 seconds of forward movement (W). With 1.4375 seconds remaining, continuing forward movement is necessary to reach the base of the Great Sphinx. The visual evidence shows the Sphinx filling more of the frame and appearing closer, confirming forward progress is being made. I will continue holding W.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            3.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 29.44925368600002,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            7.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4NYjVW8hm19aoe2M7JC",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2763,
+          "output_tokens": 185,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"W\", \"reason\": \"The woman has progressed forward and the Sphinx (Great Sphinx) is now noticeably larger and closer in the frame compared to the initial image. The camera/viewer position has moved significantly toward the monument. Current action held is 0.8125 seconds, and the reference plan requires 2.25 seconds of forward movement (W). With 1.4375 seconds remaining, continuing forward movement is necessary to reach the base of the Great Sphinx. The visual evidence shows the Sphinx filling more of the frame and appearing closer, confirming forward progress is being made. I will continue holding W.\"}]",
+        "prompt_sha256": "34db64b3d1e3f1f44976f74f6ff161460c7cffbaa9bec7ee1c0a71263d44f4cb",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.9659056699999837,
+          "full_response_s": 2.942553721999957,
+          "wait_for_completion_s": 0.00014944999998078856,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "W",
+        "reason": "The woman is still at a considerable distance from the base of the Great Sphinx. Comparing the initial and latest images, she has made forward progress\u2014the woman's position in the frame has shifted slightly and the Sphinx appears marginally closer. However, she is still far from reaching the base of the monument. The reference plan requires 2.25 seconds of forward movement (W), and only 1.8125 seconds have been held so far. Approximately 0.4375 seconds remain to complete the planned duration. The current action (W) should be extended to consume the remaining time in the reference plan and move the woman closer to the Sphinx's base. Visual evidence shows the Sphinx still dominates the background at a significant distance, confirming more forward progress is needed.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            7.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 35.013778060999925,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            11.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4NZ9Vt6UshLWJCE82Pi",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2909,
+          "output_tokens": 222,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"W\", \"reason\": \"The woman is still at a considerable distance from the base of the Great Sphinx. Comparing the initial and latest images, she has made forward progress\\u2014the woman's position in the frame has shifted slightly and the Sphinx appears marginally closer. However, she is still far from reaching the base of the monument. The reference plan requires 2.25 seconds of forward movement (W), and only 1.8125 seconds have been held so far. Approximately 0.4375 seconds remain to complete the planned duration. The current action (W) should be extended to consume the remaining time in the reference plan and move the woman closer to the Sphinx's base. Visual evidence shows the Sphinx still dominates the background at a significant distance, confirming more forward progress is needed.\"}]",
+        "prompt_sha256": "1e277eb101ac2d636c34bf8e50cd125ba737f40a5a51293607b1ef240722d7b0",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.9143252300000313,
+          "full_response_s": 3.2691324380000424,
+          "wait_for_completion_s": 0.00019642699999167235,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "STOP",
+        "action": "WAIT",
+        "reason": "The reference plan called for 2.25 seconds of forward movement (W), and the current_action_held_seconds shows 2.8125 seconds have already been executed\u2014exceeding the plan duration by 0.5625 seconds. Comparing the initial and latest images, the woman has made substantial forward progress toward the Great Sphinx. The Sphinx is now much larger and more prominent in the frame, and she is clearly closer to it than in the initial image. The pyramids and monument positioning confirm forward motion. While she may not yet be at the absolute base of the Sphinx, the reference plan's time allocation has been consumed. I will issue WAIT to stop the current forward action and reassess whether the goal is visually achieved or if additional movement is needed.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            11.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 41.662623188,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            11.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 3.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4NZbU5vqRZkubzsUxzS",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3092,
+          "output_tokens": 222,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"STOP\", \"action\": \"WAIT\", \"reason\": \"The reference plan called for 2.25 seconds of forward movement (W), and the current_action_held_seconds shows 2.8125 seconds have already been executed\\u2014exceeding the plan duration by 0.5625 seconds. Comparing the initial and latest images, the woman has made substantial forward progress toward the Great Sphinx. The Sphinx is now much larger and more prominent in the frame, and she is clearly closer to it than in the initial image. The pyramids and monument positioning confirm forward motion. While she may not yet be at the absolute base of the Sphinx, the reference plan's time allocation has been consumed. I will issue WAIT to stop the current forward action and reassess whether the goal is visually achieved or if additional movement is needed.\"}]",
+        "prompt_sha256": "8535af3d70c95a49955bc2ec1df54364aef974cd6e0bfeae8181bf6990b33ad0",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 1.481303587999946,
+          "full_response_s": 4.106376942999987,
+          "wait_for_completion_s": 0.00013579500000560074,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "W",
+        "reason": "The woman has not yet reached the base of the Great Sphinx. Comparing the initial and latest images, while she has moved forward (her position in the frame has shifted and she's now standing on what appears to be slightly elevated ground), she is still at considerable distance from the Sphinx's base. The reference plan consumed its 2.25 seconds, but the goal\u2014\"walks forward to the base of the Great Sphinx\"\u2014is not yet visually achieved. The Sphinx still appears as a distant monument in the background. The current WAIT action has held for 1 second. To complete the goal, forward movement (W) must be extended to close the remaining distance to the Sphinx's base. Visual evidence shows the Sphinx is still far away in the middle distance, not at the woman's current location.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            11.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 3.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 48.74793182999997,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            15.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 4.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4Na7Yqy4szeQdevuKX2",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3273,
+          "output_tokens": 229,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"W\", \"reason\": \"The woman has not yet reached the base of the Great Sphinx. Comparing the initial and latest images, while she has moved forward (her position in the frame has shifted and she's now standing on what appears to be slightly elevated ground), she is still at considerable distance from the Sphinx's base. The reference plan consumed its 2.25 seconds, but the goal\\u2014\\\"walks forward to the base of the Great Sphinx\\\"\\u2014is not yet visually achieved. The Sphinx still appears as a distant monument in the background. The current WAIT action has held for 1 second. To complete the goal, forward movement (W) must be extended to close the remaining distance to the Sphinx's base. Visual evidence shows the Sphinx is still far away in the middle distance, not at the woman's current location.\"}]",
+        "prompt_sha256": "7a680bcac2e7bcbef76cb787dd01e660a289602bc22ee17e48ebc61a4f43346a",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 1.5256558459999496,
+          "full_response_s": 3.8357692649999535,
+          "wait_for_completion_s": 0.00012432500000159052,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "W",
+        "reason": "Comparing the initial and latest images, the woman has made forward progress toward the Sphinx and pyramids complex. Her position in the frame has shifted slightly, and she appears to be standing in a slightly different location in the Giza plateau. However, she is still at considerable distance from the base of the Great Sphinx (visible in the middle distance). The goal requires her to reach \"the base of the Great Sphinx,\" not just to be in the general vicinity. The current action (W) has been held for 1 second, and the Sphinx remains far enough away that additional forward movement is necessary. The reference plan's time has been exceeded, but the goal is not yet visually achieved\u2014the Sphinx is still a distant monument, not at her current location. Continuing forward movement (W) is the appropriate action to close the remaining distance.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            15.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 4.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 55.493984172999944,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            19.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 5.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4NaezSzDxPPuV31kBQz",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3462,
+          "output_tokens": 235,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"W\", \"reason\": \"Comparing the initial and latest images, the woman has made forward progress toward the Sphinx and pyramids complex. Her position in the frame has shifted slightly, and she appears to be standing in a slightly different location in the Giza plateau. However, she is still at considerable distance from the base of the Great Sphinx (visible in the middle distance). The goal requires her to reach \\\"the base of the Great Sphinx,\\\" not just to be in the general vicinity. The current action (W) has been held for 1 second, and the Sphinx remains far enough away that additional forward movement is necessary. The reference plan's time has been exceeded, but the goal is not yet visually achieved\\u2014the Sphinx is still a distant monument, not at her current location. Continuing forward movement (W) is the appropriate action to close the remaining distance.\"}]",
+        "prompt_sha256": "df6fa8aab7191495fe7372d195ca854cf5806eac44e9cfe54f70e271bd83db4d",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.9633206919999111,
+          "full_response_s": 3.542961138999999,
+          "wait_for_completion_s": 0.00018308000005617941,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "W",
+        "reason": "Comparing the initial and latest images, the woman has moved forward on the Giza plateau, but she is still at substantial distance from the base of the Great Sphinx. The Sphinx (the large stone head visible in the middle distance) remains a distant monument\u2014she is not yet at its base. The goal is \"walks forward to the base of the Great Sphinx,\" which requires continued forward progress. Current action held is 2 seconds; the reference plan's 2.25 seconds has been exceeded, but the visual goal is not yet achieved. The Sphinx occupies the middle distance in both images, indicating she has made progress but still needs to close the remaining distance. Continuing W is necessary to achieve the goal of reaching the Sphinx's base.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            19.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 5.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 62.35763079000003,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            23.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 6.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4Nb9wF2vTMKj4QC8CBg",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3659,
+          "output_tokens": 216,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"W\", \"reason\": \"Comparing the initial and latest images, the woman has moved forward on the Giza plateau, but she is still at substantial distance from the base of the Great Sphinx. The Sphinx (the large stone head visible in the middle distance) remains a distant monument\\u2014she is not yet at its base. The goal is \\\"walks forward to the base of the Great Sphinx,\\\" which requires continued forward progress. Current action held is 2 seconds; the reference plan's 2.25 seconds has been exceeded, but the visual goal is not yet achieved. The Sphinx occupies the middle distance in both images, indicating she has made progress but still needs to close the remaining distance. Continuing W is necessary to achieve the goal of reaching the Sphinx's base.\"}]",
+        "prompt_sha256": "26a2a3c4d97a7ac498d37d648b6946411d464df054c5b0bc82e4671431305971",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 1.043015414000024,
+          "full_response_s": 3.2713182999999617,
+          "wait_for_completion_s": 8.524999998371641e-05,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "W",
+        "reason": "Comparing the initial and latest images, the woman has made forward progress on the Giza plateau. The Sphinx (visible in the center-middle distance) is now slightly larger and more prominent than in the initial image, and the camera angle/framing has shifted slightly, indicating forward movement. However, she is still at a significant distance from the base of the Great Sphinx\u2014the monument remains in the middle distance with considerable ground between her and it. The goal is to walk \"to the base of the Great Sphinx,\" which has not yet been achieved. Current action held is 3 seconds, exceeding the reference plan's 2.25 seconds, but the visual goal is incomplete. The Sphinx is still a distant monument, not at her current location. Continuing forward movement (W) is necessary to close the remaining distance and reach the Sphinx's base. Visual evidence shows progress but incomplete goal achievement.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            23.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 6.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 69.09866754500001,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            27.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 7.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4NbewzkZ2sLqZtDhsUD",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3837,
+          "output_tokens": 248,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"W\", \"reason\": \"Comparing the initial and latest images, the woman has made forward progress on the Giza plateau. The Sphinx (visible in the center-middle distance) is now slightly larger and more prominent than in the initial image, and the camera angle/framing has shifted slightly, indicating forward movement. However, she is still at a significant distance from the base of the Great Sphinx\\u2014the monument remains in the middle distance with considerable ground between her and it. The goal is to walk \\\"to the base of the Great Sphinx,\\\" which has not yet been achieved. Current action held is 3 seconds, exceeding the reference plan's 2.25 seconds, but the visual goal is incomplete. The Sphinx is still a distant monument, not at her current location. Continuing forward movement (W) is necessary to close the remaining distance and reach the Sphinx's base. Visual evidence shows progress but incomplete goal achievement.\"}]",
+        "prompt_sha256": "91c743bb8c4fbf619e5acb802bd88283da73c2d4fb869f37ae808d3d8888eeee",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.9792537649999531,
+          "full_response_s": 3.6599576579999393,
+          "wait_for_completion_s": 0.00013369099997362355,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "W",
+        "reason": "Comparing the initial and latest images, the woman has made significant forward progress toward the Giza complex. The Great Sphinx (the head with human face visible in the center-middle distance) is now noticeably larger and more detailed than in the initial image, and the overall scene shows she has moved closer to the monument complex. However, she is still at considerable distance from the base of the Great Sphinx\u2014the Sphinx remains a distant monument in the middle-ground, not at her immediate location. The goal is to walk \"to the base of the Great Sphinx,\" which requires her to reach the Sphinx's actual base level. Current action held is 4 seconds, well beyond the reference plan's 2.25 seconds, but the visual goal is not yet fully achieved. The Sphinx is more prominent now but still far enough away that continued forward movement is necessary. Extending W will continue closing the distance to the Sphinx's base to complete the goal.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            27.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 7.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 75.82441906099996,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            31.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 8.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4Nc9r4TdBdNFLxSKwtH",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 4047,
+          "output_tokens": 260,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"W\", \"reason\": \"Comparing the initial and latest images, the woman has made significant forward progress toward the Giza complex. The Great Sphinx (the head with human face visible in the center-middle distance) is now noticeably larger and more detailed than in the initial image, and the overall scene shows she has moved closer to the monument complex. However, she is still at considerable distance from the base of the Great Sphinx\\u2014the Sphinx remains a distant monument in the middle-ground, not at her immediate location. The goal is to walk \\\"to the base of the Great Sphinx,\\\" which requires her to reach the Sphinx's actual base level. Current action held is 4 seconds, well beyond the reference plan's 2.25 seconds, but the visual goal is not yet fully achieved. The Sphinx is more prominent now but still far enough away that continued forward movement is necessary. Extending W will continue closing the distance to the Sphinx's base to complete the goal.\"}]",
+        "prompt_sha256": "f80d2a6538171db137c6cd57a548cbe693500b0df1e23aa3197c8726b14d151d",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.9507813989999931,
+          "full_response_s": 4.053839242000095,
+          "wait_for_completion_s": 0.00012936099994931283,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "W",
+        "reason": "Comparing the initial and latest images, the woman has made incremental forward progress across the Giza plateau. She is now standing slightly closer to the Great Sphinx and pyramids complex. The Sphinx (the stone head in the center-middle distance) is more detailed and prominent than in the initial image, and the overall composition shows forward movement has occurred. However, she is still at substantial distance from the base of the Great Sphinx\u2014the monument remains in the middle-ground with considerable ground between her current position and the Sphinx's base. The goal requires reaching \"the base of the Great Sphinx,\" which has not yet been achieved. Current action held is 5 seconds, well beyond the reference plan's 2.25 seconds, but the visual goal remains incomplete. The Sphinx is still a distant monument, not at her immediate location. Continuing forward movement (W) is necessary to close the remaining distance and reach the Sphinx's base. The visual evidence confirms incremental progress but incomplete goal achievement.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            31.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 8.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 82.53502200799994,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            35.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 9.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4NceLKNcfvBQsW3VHio",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 4269,
+          "output_tokens": 268,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"W\", \"reason\": \"Comparing the initial and latest images, the woman has made incremental forward progress across the Giza plateau. She is now standing slightly closer to the Great Sphinx and pyramids complex. The Sphinx (the stone head in the center-middle distance) is more detailed and prominent than in the initial image, and the overall composition shows forward movement has occurred. However, she is still at substantial distance from the base of the Great Sphinx\\u2014the monument remains in the middle-ground with considerable ground between her current position and the Sphinx's base. The goal requires reaching \\\"the base of the Great Sphinx,\\\" which has not yet been achieved. Current action held is 5 seconds, well beyond the reference plan's 2.25 seconds, but the visual goal remains incomplete. The Sphinx is still a distant monument, not at her immediate location. Continuing forward movement (W) is necessary to close the remaining distance and reach the Sphinx's base. The visual evidence confirms incremental progress but incomplete goal achievement.\"}]",
+        "prompt_sha256": "c70222ce82f125f7a19c0e25d7221640fad1e1880e8bf744e04173376506f500",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.9874797570000737,
+          "full_response_s": 4.187096367000095,
+          "wait_for_completion_s": 0.00012495200007833773,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "W",
+        "reason": "Comparing the initial and latest images, the woman has made forward progress toward the Great Sphinx complex. The Sphinx (the human-headed stone figure visible in the center-middle distance) appears slightly larger and more detailed in the latest image, indicating the camera has moved closer. The woman's position in the frame shows she is now standing closer to the monument complex. However, she is still at considerable distance from the base of the Great Sphinx\u2014the monument remains in the middle ground with substantial ground between her current position and the Sphinx's base. The goal requires walking \"to the base of the Great Sphinx,\" which has not yet been visually achieved. The current action (W) has been held for 6 seconds, well beyond the reference plan's 2.25 seconds, but the visual goal is incomplete. The Sphinx is still a distant monument. Continuing forward movement (W) is necessary to close the remaining distance and reach the Sphinx's base. Visual evidence confirms incremental progress but the goal remains unachieved.",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            35.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 9.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 89.17390222899996,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            39.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 10.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4Nd8yVSyZYAkfTaBSGC",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 4499,
+          "output_tokens": 274,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"W\", \"reason\": \"Comparing the initial and latest images, the woman has made forward progress toward the Great Sphinx complex. The Sphinx (the human-headed stone figure visible in the center-middle distance) appears slightly larger and more detailed in the latest image, indicating the camera has moved closer. The woman's position in the frame shows she is now standing closer to the monument complex. However, she is still at considerable distance from the base of the Great Sphinx\\u2014the monument remains in the middle ground with substantial ground between her current position and the Sphinx's base. The goal requires walking \\\"to the base of the Great Sphinx,\\\" which has not yet been visually achieved. The current action (W) has been held for 6 seconds, well beyond the reference plan's 2.25 seconds, but the visual goal is incomplete. The Sphinx is still a distant monument. Continuing forward movement (W) is necessary to close the remaining distance and reach the Sphinx's base. Visual evidence confirms incremental progress but the goal remains unachieved.\"}]",
+        "prompt_sha256": "3225f244d71908cd8f5aa2cf6046fe1cbea91c0cae3af1513622f12b85006d47",
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 0.9016425239999535,
+          "full_response_s": 4.03166709300001,
+          "wait_for_completion_s": 0.00012124700003823818,
+          "generation_started_before_response_completed": true
+        }
+      },
+      {
+        "operation": "END",
+        "action": null,
+        "reason": "Comparing the initial and latest images, the woman has successfully reached the base of the Great Sphinx of Egypt. In the initial image, she was standing at a distance viewing the Sphinx complex with pyramids in the background. In the latest image, she is now positioned much closer to the Great Sphinx\u2014she is standing at the plateau level where the Sphinx's base is located, with the Sphinx (the human-headed stone monument) visible prominently in the middle-ground directly in front of her. The monument is no longer a distant feature but rather her immediate vicinity. The woman's position in the frame shows she has moved forward significantly across the Giza plateau and is now at the location of the Sphinx's base. The goal \"The woman walks forward to the base of the Great Sphinx of Egypt\" has been visually achieved. The reference plan's 2.25 seconds was completed long ago (current elapsed time is 10.812 seconds), and the actual visual goal is now unambiguously complete as evidenced by her proximity to the Sphinx monument at its base level.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4NddMJXo5fz4GArvGHr",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 4735,
+          "output_tokens": 286,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"Comparing the initial and latest images, the woman has successfully reached the base of the Great Sphinx of Egypt. In the initial image, she was standing at a distance viewing the Sphinx complex with pyramids in the background. In the latest image, she is now positioned much closer to the Great Sphinx\\u2014she is standing at the plateau level where the Sphinx's base is located, with the Sphinx (the human-headed stone monument) visible prominently in the middle-ground directly in front of her. The monument is no longer a distant feature but rather her immediate vicinity. The woman's position in the frame shows she has moved forward significantly across the Giza plateau and is now at the location of the Sphinx's base. The goal \\\"The woman walks forward to the base of the Great Sphinx of Egypt\\\" has been visually achieved. The reference plan's 2.25 seconds was completed long ago (current elapsed time is 10.812 seconds), and the actual visual goal is now unambiguously complete as evidenced by her proximity to the Sphinx monument at its base level.\"}]",
+        "prompt_sha256": "d80c709b83b2e0577cdd97897573ebd006c572d98d892411ab3e1801a29e9627",
+        "player_transport": "stream",
+        "player_response_pending": false,
+        "player_rate_limits": {
+          "anthropic-ratelimit-requests-limit": "10000",
+          "anthropic-ratelimit-input-tokens-limit": "10000000",
+          "anthropic-ratelimit-output-tokens-limit": "2000000"
+        },
+        "player_stream_timing": {
+          "action_ready_s": 4.013072233000003,
+          "full_response_s": 4.013072233000003,
+          "wait_for_completion_s": 1.1287000006632297e-05,
+          "generation_started_before_response_completed": false
+        },
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            39.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 10.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 98.91808330799995
+      }
+    ],
+    "chunks": [
+      {
+        "index": 0,
+        "path": "chunk-000.mp4",
+        "frames": 13,
+        "pixel_sha256": "d09573c70efd235c813576b1be0514d47cad2bc5adb0a0f604dec7e96b4e5fe3",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.43780483599994113,
+          "mp4_encode": 0.3637437400000181
+        },
+        "elapsed_s": 28.47755886699997,
+        "sha256": "bfd672521941ebda0725e28e36b2a95f986d2b18d99fd86fd71d9d433dbb7a8d"
+      },
+      {
+        "index": 1,
+        "path": "chunk-001.mp4",
+        "frames": 16,
+        "pixel_sha256": "6b8c4c5097a4d1d6870ec0d4abfd03f3b7ef282ba84a77af01bfc0d29667d6c8",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.559235823999984,
+          "mp4_encode": 0.3161822499999971
+        },
+        "elapsed_s": 34.093338613000014,
+        "sha256": "036a71b0407f0c47bce56fd34ffbabf249c917eee37a89109710d5a71996a28f"
+      },
+      {
+        "index": 2,
+        "path": "chunk-002.mp4",
+        "frames": 16,
+        "pixel_sha256": "5dc805df11080bac2001f4ae13f10ef2de4b9c5290355be6e2af96a9ede15b8d",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5779528749999372,
+          "mp4_encode": 0.35555034000003616
+        },
+        "elapsed_s": 40.17490299099995,
+        "sha256": "1674f949d9db1c45d534ba418e503e46220a52fb67497d13d12c0ce495b9d282"
+      },
+      {
+        "index": 3,
+        "path": "chunk-003.mp4",
+        "frames": 16,
+        "pixel_sha256": "27f1243d415b64597134289d422862f5756f152d48a43cb0653f256c5244f6ec",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5365913470000123,
+          "mp4_encode": 0.34164098399992326
+        },
+        "elapsed_s": 47.21505303899994,
+        "sha256": "b60354366836cc137baef233347d85f73e2522cc30423a14a1b1ebbce8ce2bcb"
+      },
+      {
+        "index": 4,
+        "path": "chunk-004.mp4",
+        "frames": 16,
+        "pixel_sha256": "f97f2b3080351354dc46231e5ffab3e64247e85394295cd3a5173774063dace2",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5401978290000216,
+          "mp4_encode": 0.33269297300000744
+        },
+        "elapsed_s": 54.524318677,
+        "sha256": "cc578c38cac4c8cdf0f8e7c277895859c6cbd89976fe39785b9cb93d26a44496"
+      },
+      {
+        "index": 5,
+        "path": "chunk-005.mp4",
+        "frames": 16,
+        "pixel_sha256": "10746ffedd1b4fe62885651e0f991947030001a5ae7499517434ae9229ae699f",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5428174470000613,
+          "mp4_encode": 0.3458098019999625
+        },
+        "elapsed_s": 61.30771555799993,
+        "sha256": "c91fa08f96b2f4d2b04a62f04c1c20821fe4afc0871741c562799d2fe21deb9c"
+      },
+      {
+        "index": 6,
+        "path": "chunk-006.mp4",
+        "frames": 16,
+        "pixel_sha256": "1f658050e72b517206bc241128f90b2d45b80aa07d743d6aa38a96d066f4eba5",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5435782370000197,
+          "mp4_encode": 0.298703180000075
+        },
+        "elapsed_s": 68.11270500900002,
+        "sha256": "9a55a7d8ab453b71f8380ad8efb93b8fda73255bedf431e911815d3a4a779b66"
+      },
+      {
+        "index": 7,
+        "path": "chunk-007.mp4",
+        "frames": 16,
+        "pixel_sha256": "f3bc7444e0d415e6e552216192705b75ab4090a85c461e0f770ece9eeecae3e5",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5370947760000035,
+          "mp4_encode": 0.3023060310000574
+        },
+        "elapsed_s": 74.86444387799997,
+        "sha256": "1f34f33517e8e7616df574d0e3fc5bb0009c70628c867921a8103831793e0fd0"
+      },
+      {
+        "index": 8,
+        "path": "chunk-008.mp4",
+        "frames": 16,
+        "pixel_sha256": "a03c3403ec9df7fcf563c99b111abf2171d4a5c81f44f5b48297897570f015f6",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5271974349999482,
+          "mp4_encode": 0.27531944400004704
+        },
+        "elapsed_s": 81.54183642600003,
+        "sha256": "876fd081052149541074155f9aced6c56052f837bf2e0e5c5e692cea39f55f11"
+      },
+      {
+        "index": 9,
+        "path": "chunk-009.mp4",
+        "frames": 16,
+        "pixel_sha256": "cf305fbfc290a3d93edc6669c4fc2df5354a2746898e16cd18cb8d7d97055828",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5263014299999895,
+          "mp4_encode": 0.2852225560000079
+        },
+        "elapsed_s": 88.26669278099996,
+        "sha256": "767e5d13ba7a248d892923e3dfc503e2cfc8bed8d0bfd2abca1ded2f8b8546c9"
+      },
+      {
+        "index": 10,
+        "path": "chunk-010.mp4",
+        "frames": 16,
+        "pixel_sha256": "082fe9e1d8f33e0e60ba3d766a3ec66821634055a3d3c2b1b7163910e69f4d5f",
+        "phase_seconds": {
+          "vae_decode_and_download": 0.5274288010000419,
+          "mp4_encode": 0.27576090299999123
+        },
+        "elapsed_s": 94.89894850299993,
+        "sha256": "58e06cb8ed59ab2934966c654683a41584fd4db38452d242a950e428a97a39f4"
+      }
+    ],
+    "published_score_reproduced": false,
+    "agent_interactions": 12,
+    "adapter_sha256": "eb12f1128d9e9525ed7f5b856b5b45b59723d768741f87cff6a28b765ce638a6",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+    "deviations": [
+      "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+      "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+      "Official 480p demo area; single NVIDIA H200, BF16 and valid-length SDPA backend",
+      "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+      "Claude diagnostic scoring differs from published Gemini judgments"
+    ],
+    "hardware": {
+      "gpu": "NVIDIA H200",
+      "torch": "2.6.0+cu124",
+      "cuda": "12.4"
+    },
+    "attention_backend": "sdpa",
+    "optional_torch_dlpack_addon_disabled": false,
+    "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+    "checkpoint_loading": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "mismatched_keys": [],
+      "error_msgs": []
+    },
+    "warm_runtime": {
+      "loaded_this_job": false,
+      "load_seconds": 0.0,
+      "job_index": 9
+    },
+    "generated_frames": 173,
+    "generated_seconds": 10.8125,
+    "termination": "agent_end",
+    "elapsed_s": 98.92245374599997,
+    "camera_diagnostics": {
+      "chunks": 11,
+      "path_length": 39.0,
+      "net_yaw_degrees": 0.0,
+      "total_turn_degrees": 0.0,
+      "max_distance_from_start": 39.0,
+      "final_distance_from_start": 39.0,
+      "revisited_start_at_chunk": null,
+      "wait_chunks": 1,
+      "wait_pose_changes": 0
+    },
+    "peak_allocated_bytes": 72699363840
+  },
+  "status": "completed",
+  "error": null,
+  "weights_unchanged": null,
+  "job_seconds": null,
+  "client_wall_s": null,
+  "chunk_pixel_sha256": [
+    "d09573c70efd235c813576b1be0514d47cad2bc5adb0a0f604dec7e96b4e5fe3",
+    "6b8c4c5097a4d1d6870ec0d4abfd03f3b7ef282ba84a77af01bfc0d29667d6c8",
+    "5dc805df11080bac2001f4ae13f10ef2de4b9c5290355be6e2af96a9ede15b8d",
+    "27f1243d415b64597134289d422862f5756f152d48a43cb0653f256c5244f6ec",
+    "f97f2b3080351354dc46231e5ffab3e64247e85394295cd3a5173774063dace2",
+    "10746ffedd1b4fe62885651e0f991947030001a5ae7499517434ae9229ae699f",
+    "1f658050e72b517206bc241128f90b2d45b80aa07d743d6aa38a96d066f4eba5",
+    "f3bc7444e0d415e6e552216192705b75ab4090a85c461e0f770ece9eeecae3e5",
+    "a03c3403ec9df7fcf563c99b111abf2171d4a5c81f44f5b48297897570f015f6",
+    "cf305fbfc290a3d93edc6669c4fc2df5354a2746898e16cd18cb8d7d97055828",
+    "082fe9e1d8f33e0e60ba3d766a3ec66821634055a3d3c2b1b7163910e69f4d5f"
+  ],
+  "warm_runtime": {
+    "loaded_this_job": false,
+    "load_seconds": 0.0,
+    "job_index": 9
+  },
+  "recovered_from_committed_volume": true
+}
