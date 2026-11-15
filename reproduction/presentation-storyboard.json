@@ -105,7 +105,7 @@
     "ours_video": "/home/npow/code/iteratehack/.claude/worktrees/agent-a9e1baed8edee1ee7/outputs/memv2-step2/memv2-gc-GC045-seed42/rollout.mp4",
     "source": "/home/npow/code/iteratehack/.claude/worktrees/agent-a9e1baed8edee1ee7/reproduction/memory-v2-step2/per-case.csv (GC045: 2.4 vs 4.0, memory fired in 5 chunks)",
     "score_text": "judge score (1–5): 2.4 as released, 4.0 with our memory",
-    "scope_text": "one selected task; across 36 such tasks ours scores lower (−0.35)"
+    "scope_text": "selected example · PlayWorld task GC045"
   },
   "benchmark": {
     "dimensions": [
@@ -180,19 +180,15 @@
   "memory_module": [
     [
       "1 · Archive",
-      "every latent frame (≈ 6 MB) + camera pose + DINO descriptor"
+      "cached keys and values of the last 24 frames + camera pose"
     ],
     [
       "2 · Retrieve",
-      "pose-verified; fires only on a true return to a seen place"
+      "up to 10 saved frames with the nearest camera pose"
     ],
     [
-      "3 · Recompute",
-      "one clean pass rebuilds the 40-layer K/V of 10 retrieved frames"
-    ],
-    [
-      "4 · Splice",
-      "attention window = sink 6 + retrieved 10 + recent 8"
+      "3 · Splice",
+      "attention window = first 6 + retrieved 10 + recent 8"
     ]
   ],
   "ablation_notes": [

@@ -99,7 +99,9 @@ quality; using only some layers, pooling patches, or low-rank compression lost t
 | Memory v2 (disk or recompute) | archives everything, pose-verified retrieval, recompute | scripted paths (works, removes v1's harm); 36 real revisit tasks (not better than stock) |
 | Director | an LLM writes event captions for the model's text prompt | full 171-task benchmark (+0.02, no reliable gain) |
 
-So the video's architecture diagram describes v2, and the headline chart (+0.77) was measured with v1 using exact
+Note on window size: the attention window with memory is sink 6 + retrieved 10 + recent 8 = 24 latent frames, larger than stock's 18, so part of the +0.77 may come from the larger window rather than from retrieval (not isolated; a 46-frame stock cache reached about 0.82 on the scripted diagnostic).
+
+The slides and video now present the first design as "our method" (it produced the +0.77) and the store-and-recompute idea as a separate storage finding (scripted path only). The earlier text: the video's architecture diagram describes v2, and the headline chart (+0.77) was measured with v1 using exact
 storage. Both are "our episodic memory"; say so if asked. v2 was not in that benchmark because it had not passed its
 tests when the benchmark was frozen.
 

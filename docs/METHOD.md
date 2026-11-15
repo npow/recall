@@ -16,7 +16,7 @@ A larger cache does fix it (46/6 window: 0.89) but costs 115 GB and 1.45x time, 
 
 ## Method 1: pose-indexed historical KV retrieval (training-free)
 
-Idea: keep the same 18-frame attention budget, but let some of those slots hold *old* frames chosen by camera pose.
+Idea: let part of the attended window hold *old* frames chosen by camera pose. Note the window is larger than stock's: sink 6 + 10 retrieved + 8 recent = 24 latent frames against 18, so part of the measured gain may come from the larger window (a 46-frame stock cache scored about 0.82 on the scripted diagnostic; we did not isolate a 24-frame window without retrieval).
 
 1. After each chunk is generated, archive the clean per-layer key/value tensors of its latent frames on CPU
    together with the commanded camera pose (from the pose tracker in `worldsync/lingbot_controls.py`).

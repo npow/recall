@@ -359,7 +359,7 @@ def scene_insight(data, seconds):
 
 def scene_system(data, seconds):
     rows = data.board["memory_module"]
-    chips = ["training-free", "bit-identical to stock when it does not fire", "~200× less storage than caching K/V"]
+    chips = ["training-free", "weights untouched", "window 6 + 10 + 8 = 24 frames (stock: 18)"]
     for index in range(int(seconds * FPS)):
         t = index / FPS
         image, draw = canvas("Method", "Training-free episodic memory", "NOVELTY", 60)
@@ -380,10 +380,10 @@ def scene_system(data, seconds):
         draw.line((640, 358, 830, 358), fill=mix(BG, MUTED, c1), width=4)
         draw.polygon([(818, 348), (832, 358), (818, 368)], fill=mix(BG, MUTED, c1))
         draw.text((735, 330), "frames", font=font(26, False), fill=mix(BG, MUTED, c1), anchor="mm")
-        c2 = ease((t - 1.2 - 1.5 * 3) / 0.7)
-        draw.line((830, 760, 640, 760), fill=mix(BG, OURS, c2), width=4)
-        draw.polygon([(654, 750), (640, 760), (654, 770)], fill=mix(BG, OURS, c2))
-        draw.text((735, 732), "K/V", font=font(26, False), fill=mix(BG, OURS, c2), anchor="mm")
+        c2 = ease((t - 1.2 - 1.5 * 2) / 0.7)
+        draw.line((830, 626, 640, 626), fill=mix(BG, OURS, c2), width=4)
+        draw.polygon([(654, 616), (640, 626), (654, 636)], fill=mix(BG, OURS, c2))
+        draw.text((735, 598), "K/V", font=font(26, False), fill=mix(BG, OURS, c2), anchor="mm")
         cx = 80
         for n, chip in enumerate(chips):
             d = ease((t - 7.5 - 0.5 * n) / 0.6)
@@ -391,7 +391,7 @@ def scene_system(data, seconds):
             draw.rounded_rectangle((cx, 880, cx + width, 944), 32, outline=mix(BG, OURS, d), width=3)
             draw.text((cx + width / 2, 912), chip, font=font(30), fill=mix(BG, FG, d), anchor="mm")
             cx += width + 20
-        caption(draw, "New: pose-verified retrieval, and K/V rebuilt from the stored frame.", 1.0)
+        caption(draw, "New: a pose-indexed memory of the model's own earlier frames.", 1.0)
         yield np.asarray(image)
 
 
@@ -402,7 +402,7 @@ def scene_timeline(data, seconds):
     tiny = [cv2.resize(p, (96, 55)) for p in picks]
     s1, s2 = seconds * 0.30, seconds * 0.55
     captions = [(0, s1, "As the camera turns away, old frames leave the cache."),
-                (s1, s2, "Each one is archived with its pose and a descriptor."),
+                (s1, s2, "Each one is archived with its camera pose."),
                 (s2, seconds - 3.2, "On the turn back, matching frames flow into attention."),
                 (seconds - 3.2, seconds, "Also tested: a text director writing event captions.")]
     gap, x0, y0, ay, fy = 150, 135, 260, 520, 730
@@ -429,16 +429,16 @@ def scene_timeline(data, seconds):
             draw.rounded_rectangle((x0 - 30, ay - 60, x0 + count * gap + 10, ay + 120), 16, outline=mix(BG, OURS, a2), width=3)
             draw.text((x0, ay - 28), "Episodic archive", font=font(36), fill=mix(BG, OURS, a2), anchor="lm")
             cx = x0 + 400
-            for chip in ["latent ≈ 6 MB", "camera pose", "DINO descriptor", "nothing evicted"]:
+            for chip in ["cached K/V", "camera pose", "last 24 frames"]:
                 width = draw.textlength(chip, font=font(28)) + 30
                 draw.rounded_rectangle((cx, ay - 50, cx + width, ay - 6), 20, outline=mix(BG, MUTED, a2), width=2)
                 draw.text((cx + width / 2, ay - 28), chip, font=font(28), fill=mix(BG, FG, a2), anchor="mm")
                 cx += width + 14
         a3 = ease((t - s2) / 0.8)
         if a3 > 0:
-            boxes = ["camera returns\nto a seen place", "pose-verified\nretrieval", "recompute 40-layer\nK/V, one clean pass",
-                     "attention window:\nsink 6 + retrieved 10 + recent 8"]
-            widths = [310, 290, 380, 600]
+            boxes = ["camera heads back\nto a seen place", "nearest-pose\nretrieval, up to 10",
+                     "attention window:\nfirst 6 + retrieved 10 + recent 8"]
+            widths = [460, 400, 640]
             bx = x0 - 30
             for n, (label2, width) in enumerate(zip(boxes, widths)):
                 reveal = ease((t - s2 - 0.3 * n) / 0.5)
@@ -566,7 +566,7 @@ def scene_chart(data, seconds):
         draw.text((rx, 524), f"95% CI {big['ci95'][0]:+.2f} to {big['ci95'][1]:+.2f}", font=font(40, False), fill=mix(BG, FG, a), anchor="lm")
         draw.text((rx, 570), f"{headline['n']} unseen scenes · paired, same seed", font=font(34, False), fill=mix(BG, MUTED, a), anchor="lm")
         draw.text((rx, 606), "config frozen before generation", font=font(34, False), fill=mix(BG, MUTED, a), anchor="lm")
-        draw.text((rx, 646), "baseline: released model · clips in docs/demo/", font=font(26, False), fill=mix(BG, MUTED, a), anchor="lm")
+        draw.text((rx, 646), "baseline: released model · our window is 24 frames, stock 18", font=font(26, False), fill=mix(BG, MUTED, a), anchor="lm")
         for k, r in enumerate(rows):
             d = r["paired"]
             draw.text((rx, 692 + k * 40), f"{r['seconds']:>2} s:  {d['mean']:+.2f}  [{d['ci95'][0]:+.2f}, {d['ci95'][1]:+.2f}]   {d['wins']}W / {d['ties']}T / {d['losses']}L",
@@ -587,7 +587,7 @@ def scene_ablation(data, seconds):
     x_label, x_bar, bar_w, top, step = 100, 1060, 620, 260, 100
     for index in range(int(seconds * FPS)):
         t = index / FPS
-        image, draw = canvas("Results", "Ablation: how small can the memory be?", "RIGOUR · ablation", 58)
+        image, draw = canvas("Results", "Storing less: how small can the memory be?", "RIGOUR · ablation", 58)
         draw.text((x_bar, top - 32), "revisit quality (return view vs start view, 0–1)", font=font(28, False), fill=MUTED, anchor="lm")
         for n, (label, size, value, kind) in enumerate(rows):
             y = top + n * step
@@ -620,7 +620,7 @@ def scene_real(data, seconds):
         for px, (name, colour) in zip(xs, [("Start view", FG), ("End: as released", WARN), ("End: with our memory", OURS)]):
             draw.text((px, top - 34), name, font=font(40), fill=colour, anchor="lm")
         draw.text((W / 2, top + small[1] + 70), real["score_text"], font=font(40, False), fill=FG, anchor="mm")
-        draw.text((W / 2, top + small[1] + 130), real["scope_text"], font=font(34, False), fill=WARN, anchor="mm")
+        draw.text((W / 2, top + small[1] + 130), real["scope_text"], font=font(34, False), fill=MUTED, anchor="mm")
         caption(draw, "As released, a traffic light appears that was never there.", 1.0)
         array = np.array(image)
         for px, panel in zip(xs, panels):
@@ -640,7 +640,7 @@ def scene_limits(data, seconds):
     small = (500, 288)
     a_clip, b_clip = load_clip(pair["stock"]["video"], small), load_clip(pair["memory"]["video"], small)
     bullets = [("On PlayWorld's own tasks our memory does not help.",
-                data.board["real_null"] + f" Full benchmark: memory {stats['a_memory']:.2f} vs {stats['a_stock']:.2f}, director {stats['b_director']:.2f} vs {stats['b_stock']:.2f}."),
+                "Improved design (verified retrieval), " + data.board["real_null"] + f" Full benchmark: memory {stats['a_memory']:.2f} vs {stats['a_stock']:.2f}, director {stats['b_director']:.2f} vs {stats['b_stock']:.2f}."),
                ("The model does not undo forward motion.", "A return by walking back often never happens."),
                ("Frozen scenes and unattempted actions", "are not memory problems."),
                (f"The judge is noisy: SD {numbers['judge_sd']:.2f}.", "Same video, three scores.")]
