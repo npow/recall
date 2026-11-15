@@ -46,6 +46,12 @@ def test_plan_steps_and_elapsed_time():
     assert elapsed_seconds([]) == 0.0 and elapsed_seconds([{}] * 3) == pytest.approx(2.8125)
 
 
+def test_plan_steps_keep_pitch_keys_u_and_j():
+    from worldsync.reference_player import plan_steps
+    steps = plan_steps({"action_sequence_steps": ["hold(W,2250ms)", "hold(U,1350ms)", "hold(J,1350ms)", "hold(x,100ms)"]})
+    assert steps == [{"action": "W", "seconds": 2.25}, {"action": "UP", "seconds": 1.35}, {"action": "DOWN", "seconds": 1.35}]
+
+
 def test_early_end_is_challenged_once(tmp_path):
     image = tmp_path / "i.jpg"
     Image.new("RGB", (16, 16)).save(image)

@@ -38,7 +38,10 @@ def held_seconds(history):
 
 
 PLAN_STEP = re.compile(r"(hold|wait)\((?:([A-Za-z]+),)?(\d+)ms\)")
-PLAN_ACTIONS = {"w": "W", "s": "S", "a": "A", "d": "D", "left": "LEFT", "right": "RIGHT", "up": "UP", "down": "DOWN"}
+# "u" / "j" are the released Agent_player's pitch-up / pitch-down keys (KEY_MAP u -> ArrowUp, j -> ArrowDown);
+# without them hold(U,...)/hold(J,...) plan steps were silently dropped (protocol-parity bug fix v2).
+PLAN_ACTIONS = {"w": "W", "s": "S", "a": "A", "d": "D", "left": "LEFT", "right": "RIGHT", "up": "UP", "down": "DOWN",
+                "u": "UP", "j": "DOWN"}
 
 
 def plan_steps(task):
