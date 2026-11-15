@@ -13,9 +13,12 @@ hosted number is not required to verify the local baseline.
 Pin checkpoint, source, input dataset, resolution, sampler, cache, anchors, seed,
 player, judge, scoring policy and action timing. Use the official unquantized 14B
 causal-fast release. Preserve videos, native controls, player decisions, actual
-call counts, terminations and errors for every case. Score all 171 cases and
-report coverage per dimension; missing generations or judge errors cannot
-silently become scores or disappear from the denominator.
+call counts, terminations and errors for every selected case. Start with one
+complete scored episode, then freeze a small declared cohort for paired stock
+and method comparisons. Full 171-case coverage is not a prerequisite for early
+method experiments. Report subset membership, per-task results and failures;
+missing generations or judge errors cannot silently become scores or disappear
+from the denominator. Reserve full benchmark overall claims for complete coverage.
 
 Claude with the released PlayWorld rubric is the authorized local evaluator.
 Numerical comparisons with the published Gemini table remain qualified. No
