@@ -23,8 +23,12 @@ else:
     results = modal.Volume.from_name("worldsync-lingbot-results")
 
 app = modal.App("worldsync-lingbot-orbit")
-TEXT = "another person stands a few meters ahead facing you, the two of you slowly circling each other"
-AGENTS = [("agent-a", "circle_a", []), ("agent-b", "circle_b", ["agent-a"])]
+TEXT = ("an opponent wrestler stands a few meters ahead facing you on the sand of a Roman coliseum arena, "
+        "the two of you slowly circling each other")
+CAPTION = ("First-person view on the sand floor of an ancient Roman coliseum arena: a gladiator in leather armor "
+           "stands a few meters ahead facing the camera in a wrestling stance, with curved stone walls, red banners "
+           "and tiered seating with spectators behind him under a clear blue sky.")
+AGENTS = [("agent-a", "arena", [], None), ("agent-b", "arena", ["agent-a"], ["0", "8", "180"])]
 EXPORTERS = {"agent-a"}
 
 
@@ -47,10 +51,11 @@ def orbit(image_bytes: bytes, seed: int = 42, task_id: str = "GC010", text: str 
     for record in tasks:
         if record["task_id"] == task_id:
             record["image_path"] = f"gc/clean/{task_id}.jpg"
+            record["image_caption"] = CAPTION
     (data_root / "gc/data.json").write_text(json.dumps(tasks))
     (data_root / f"gc/clean/{task_id}.jpg").write_bytes(image_bytes)
     done = {}
-    for name, path, sources in AGENTS:
+    for name, path, sources, start_pose in AGENTS:
         if only and name not in only.split(","):
             continue
         actions = PATHS[path]
@@ -61,6 +66,8 @@ def orbit(image_bytes: bytes, seed: int = 42, task_id: str = "GC010", text: str 
                    "--pose-retrieval", "--world-text-suffix", text, "--output", str(output),
                    "--data-root", str(data_root), "--archive-until", str(archive_until),
                    "--archive-stride", str(archive_stride), "--min-retrieved-frames", str(min_retrieved)]
+        if start_pose:
+            command += ["--start-pose", *start_pose]
         if name in EXPORTERS:
             command += ["--archive-export", str(archives / f"{name}.pt")]
         print(json.dumps({"agent": name, "command": command}), flush=True)

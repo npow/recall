@@ -13,10 +13,12 @@ def fp32_camera_rays(builder, poses, intrinsics, height, width):
 
 class CameraPlan:
     def __init__(self, turn_degrees_per_second=60, move_speed=1.0, yaw_limits_degrees=None, orbit_radius=4.0,
-                 orbit_degrees_per_second=45):
+                 orbit_degrees_per_second=45, start_pose=None):
         # The native helper rescales translations to unit maximum per call, so
         # move_speed only matters relative to rotation (and is 1 in stock).
         self.poses = []
+        # World-frame pose of the first latent frame (shared-world memory only; native controls stay relative).
+        self.start_pose = np.eye(4) if start_pose is None else np.asarray(start_pose, dtype=float)
         self.speed = move_speed
         self.turn = math.radians(turn_degrees_per_second) / 4
         # CIRCLE_LEFT/CIRCLE_RIGHT orbit the point ``orbit_radius`` ahead while staying turned toward it
@@ -54,7 +56,7 @@ class CameraPlan:
         elif action != "WAIT":
             raise ValueError(f"unsupported camera action: {action}")
         if not self.poses:
-            self.poses.append(np.eye(4))
+            self.poses.append(self.start_pose.copy())
             count = 3
         else:
             count = 4
@@ -65,7 +67,7 @@ class CameraPlan:
         return np.stack(self.poses)
 
     def commanded_state(self):
-        pose = self.poses[-1] if self.poses else np.eye(4)
+        pose = self.poses[-1] if self.poses else self.start_pose
         return {"position_normalized_units": pose[:3, 3].tolist(),
                 "heading_degrees": math.degrees(math.atan2(pose[0, 2], pose[2, 2])),
                 "accumulated_yaw_degrees": math.degrees(self.yaw_commanded),
@@ -99,3 +101,13 @@ def plan_yaw_limits(task, rate=50.0):
         angle = float(match.group(1))
         lo, hi = (0.0, angle) if 1 in signs else (-angle, 0.0)
     return (round(lo, 1), round(hi, 1))
+
+
+def start_pose_matrix(x, z, heading_degrees):
+    """World-frame camera pose at (x, z) with yaw ``heading_degrees`` (0 = +z, right positive)."""
+    angle = math.radians(heading_degrees)
+    c, s = math.cos(angle), math.sin(angle)
+    pose = np.eye(4)
+    pose[:3, :3] = [[c, 0, s], [0, 1, 0], [-s, 0, c]]
+    pose[:3, 3] = [x, 0, z]
+    return pose

@@ -17,6 +17,8 @@ PATHS = {
     # the opposite side of that circle and turns to face it, then orbits the same way, through A's earlier poses.
     "circle_a": ["WAIT"] + ["CIRCLE_LEFT"] * 8 + ["WAIT"],
     "circle_b": ["WAIT", "W", "W", "RIGHT", "RIGHT", "RIGHT"] + ["CIRCLE_LEFT"] * 4,
+    # Arena: both agents orbit the same circle (centre 4 ahead of A); B starts at (0, 0, 8) facing 180, i.e. facing A.
+    "arena": ["WAIT"] + ["CIRCLE_LEFT"] * 8 + ["WAIT"],
     "trio_duel_a": ["WAIT"] + ["S"] * 6,
     "trio_duel_b": ["WAIT"] + ["RIGHT"] * 3 + ["S"] * 4,
     "spin720": ["WAIT"] + ["RIGHT"] * 12 + ["WAIT"],

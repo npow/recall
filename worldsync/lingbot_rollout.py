@@ -73,6 +73,8 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
                         help="Also retrieve from another agent's exported archive (same seed/image/text/start pose)")
     parser.add_argument("--min-retrieved-frames", type=int, default=4,
                         help="Demo: apply retrieval when at least this many views are selected")
+    parser.add_argument("--start-pose", type=float, nargs=3, metavar=("X", "Z", "HEADING_DEG"),
+                        help="Demo: world-frame start pose for shared-world memory (native controls stay relative)")
     parser.add_argument("--archive-until", type=int, default=22, help="Demo: archive latent frames [6, N)")
     parser.add_argument("--archive-stride", type=int, default=1, help="Demo: archive every k-th latent frame")
     parser.add_argument("--world-text-suffix", default="", help="Demo: text appended to the world-model caption")
@@ -356,7 +358,10 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
         from worldsync.lingbot_controls import plan_yaw_limits
         yaw_limits = plan_yaw_limits(task) if args.turn_clamp == "plan" else None
         report["turn_clamp"] = {"mode": args.turn_clamp, "yaw_limits_degrees": yaw_limits}
-        camera = CameraPlan(turn_degrees_per_second=args.turn_degrees_per_second, yaw_limits_degrees=yaw_limits)
+        from worldsync.lingbot_controls import start_pose_matrix
+        start_pose = None if args.start_pose is None else start_pose_matrix(*args.start_pose)
+        camera = CameraPlan(turn_degrees_per_second=args.turn_degrees_per_second, yaw_limits_degrees=yaw_limits,
+                            start_pose=start_pose)
         if args.pose_retrieval:
             from worldsync.lingbot_retrieval import PoseKVMemory
             memory = PoseKVMemory(pipeline, key_positions=args.retrieval_positions,
