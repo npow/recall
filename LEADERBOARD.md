@@ -123,7 +123,7 @@ All342 generation records are verified complete. Judging resumes from preserved 
 
 | Arm | Generated | Judged | Overall |
 |---|---:|---:|---:|
-| stock |171/171|113/171|pending|
+| stock |171/171|164/171|pending|
 | budget |171/171|170/171|pending|
 
 [Generation plan, completion records and judgments](reproduction/full1-recovered-judging/README.md). Uses the integrated checkpoint, streamed Haiku player and Gemini preview alias; hosted-service equivalence is not established. The released rubric admits partial returns, so an overall score alone does not prove revisit memory.

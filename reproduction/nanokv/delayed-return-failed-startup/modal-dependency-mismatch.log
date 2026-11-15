@@ -1,0 +1,281 @@
+✓ Initialized. View run at 
+https://modal.com/apps/nissan-pow/main/ap-TqvBQTffg0iv19EHHvfV9c
+Building image im-WdurVZEohJ1P9bzBfSyPjL
+
+=> Step 0: FROM base
+
+=> Step 1: RUN git init /work/external/NanoKV
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint:   git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint:   git branch -m <name>
+Initialized empty Git repository in /work/external/NanoKV/.git/
+
+=> Step 2: RUN git -C /work/external/NanoKV remote add origin https://github.com/jiacheng-lu03/NanoKV.git
+
+=> Step 3: RUN git -C /work/external/NanoKV fetch --depth 1 origin a9baa538263e1c19acc05d10df80503c521c803c
+From https://github.com/jiacheng-lu03/NanoKV
+ * branch            a9baa538263e1c19acc05d10df80503c521c803c -> FETCH_HEAD
+
+=> Step 4: RUN git -C /work/external/NanoKV checkout FETCH_HEAD
+Note: switching to 'FETCH_HEAD'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at a9baa53 Update paper links and citations to arXiv 2611.06377
+Saving image...
+Image saved, took 1.49s
+
+Built image im-WdurVZEohJ1P9bzBfSyPjL in 7.32s
+
+
+Building image im-ncoTJowPstKRBY2fKnW9o2
+
+=> Step 0: FROM base
+
+=> Step 1: ENV PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+
+=> Step 2: ENV WORLDSYNC_LINGBOT_ATTENTION=sdpa
+Saving image...
+Image saved, took 903.88ms
+
+Built image im-ncoTJowPstKRBY2fKnW9o2 in 1.90s
+
+
+✓ Created objects.
+├── ✓ Uploaded 
+│   /home/npow/code/iteratehack/scripts/modal_lingbot_nanokv_episodes.py
+├── ✓ Uploaded /home/npow/code/iteratehack/reproduction/state.json
+├── ✓ Uploaded /home/npow/code/iteratehack/reproduction/lingbot-weights.json
+├── ✓ Uploaded /home/npow/code/iteratehack/worldsync
+├── ✓ Uploaded /home/npow/code/iteratehack/external/PlayWorld/data
+├── ✓ Created Function preflight.
+└── ✓ Created Function batch.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/pkg/modal/_container_entrypoint.py", line 484, in <module>
+    main(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 466, in main
+    run_function(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 438, in run_function
+    service: Service = hydrate_function(
+                       ^^^^^^^^^^^^^^^^^
+  File "/pkg/modal/_container_entrypoint.py", line 380, in hydrate_function
+    raise ExecutionError(
+modal.exception.ExecutionError: Function has 2 dependencies but container got 3 object ids.
+Code deps: [Image(<function _Image.debian_slim.<locals>.build_dockerfile at 0x2b85cde3e700>), modal.Volume.from_name('worldsync-lingbot-weights')]
+Object ids: ['st-p2HLkklcnJrxCndaNjxFKJ', 'im-ncoTJowPstKRBY2fKnW9o2', 'vo-kz8na4JO6aYtxLjf3gNOsG']
+
+This can happen if you are defining Modal objects under a conditional statement that evaluates differently in the local and remote environments.
+Function fu-LtFz90X3Vi0oSi5vmtLL2B failed during startup.
+Runner failed with exit code: 1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/pkg/modal/_container_entrypoint.py", line 484, in <module>
+    main(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 466, in main
+    run_function(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 438, in run_function
+    service: Service = hydrate_function(
+                       ^^^^^^^^^^^^^^^^^
+  File "/pkg/modal/_container_entrypoint.py", line 380, in hydrate_function
+    raise ExecutionError(
+modal.exception.ExecutionError: Function has 2 dependencies but container got 3 object ids.
+Code deps: [Image(<function _Image.debian_slim.<locals>.build_dockerfile at 0x2b2606eaa700>), modal.Volume.from_name('worldsync-lingbot-weights')]
+Object ids: ['st-p2HLkklcnJrxCndaNjxFKJ', 'im-ncoTJowPstKRBY2fKnW9o2', 'vo-kz8na4JO6aYtxLjf3gNOsG']
+
+This can happen if you are defining Modal objects under a conditional statement that evaluates differently in the local and remote environments.
+Function fu-LtFz90X3Vi0oSi5vmtLL2B failed during startup.
+Runner failed with exit code: 1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/pkg/modal/_container_entrypoint.py", line 484, in <module>
+    main(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 466, in main
+    run_function(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 438, in run_function
+    service: Service = hydrate_function(
+                       ^^^^^^^^^^^^^^^^^
+  File "/pkg/modal/_container_entrypoint.py", line 380, in hydrate_function
+    raise ExecutionError(
+modal.exception.ExecutionError: Function has 2 dependencies but container got 3 object ids.
+Code deps: [Image(<function _Image.debian_slim.<locals>.build_dockerfile at 0x2acd18d2a700>), modal.Volume.from_name('worldsync-lingbot-weights')]
+Object ids: ['st-p2HLkklcnJrxCndaNjxFKJ', 'im-ncoTJowPstKRBY2fKnW9o2', 'vo-kz8na4JO6aYtxLjf3gNOsG']
+
+This can happen if you are defining Modal objects under a conditional statement that evaluates differently in the local and remote environments.
+Function fu-LtFz90X3Vi0oSi5vmtLL2B failed during startup.
+Runner failed with exit code: 1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/pkg/modal/_container_entrypoint.py", line 484, in <module>
+    main(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 466, in main
+    run_function(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 438, in run_function
+    service: Service = hydrate_function(
+                       ^^^^^^^^^^^^^^^^^
+  File "/pkg/modal/_container_entrypoint.py", line 380, in hydrate_function
+    raise ExecutionError(
+modal.exception.ExecutionError: Function has 2 dependencies but container got 3 object ids.
+Code deps: [Image(<function _Image.debian_slim.<locals>.build_dockerfile at 0x2ac83f5ca700>), modal.Volume.from_name('worldsync-lingbot-weights')]
+Object ids: ['st-p2HLkklcnJrxCndaNjxFKJ', 'im-ncoTJowPstKRBY2fKnW9o2', 'vo-kz8na4JO6aYtxLjf3gNOsG']
+
+This can happen if you are defining Modal objects under a conditional statement that evaluates differently in the local and remote environments.
+Function fu-LtFz90X3Vi0oSi5vmtLL2B failed during startup.
+Runner failed with exit code: 1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/pkg/modal/_container_entrypoint.py", line 484, in <module>
+    main(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 466, in main
+    run_function(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 438, in run_function
+    service: Service = hydrate_function(
+                       ^^^^^^^^^^^^^^^^^
+  File "/pkg/modal/_container_entrypoint.py", line 380, in hydrate_function
+    raise ExecutionError(
+modal.exception.ExecutionError: Function has 2 dependencies but container got 3 object ids.
+Code deps: [Image(<function _Image.debian_slim.<locals>.build_dockerfile at 0x2b82948fe700>), modal.Volume.from_name('worldsync-lingbot-weights')]
+Object ids: ['st-p2HLkklcnJrxCndaNjxFKJ', 'im-ncoTJowPstKRBY2fKnW9o2', 'vo-kz8na4JO6aYtxLjf3gNOsG']
+
+This can happen if you are defining Modal objects under a conditional statement that evaluates differently in the local and remote environments.
+Function fu-LtFz90X3Vi0oSi5vmtLL2B failed during startup.
+Runner failed with exit code: 1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/pkg/modal/_container_entrypoint.py", line 484, in <module>
+    main(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 466, in main
+    run_function(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 438, in run_function
+    service: Service = hydrate_function(
+                       ^^^^^^^^^^^^^^^^^
+  File "/pkg/modal/_container_entrypoint.py", line 380, in hydrate_function
+    raise ExecutionError(
+modal.exception.ExecutionError: Function has 2 dependencies but container got 3 object ids.
+Code deps: [Image(<function _Image.debian_slim.<locals>.build_dockerfile at 0x2b12ec366700>), modal.Volume.from_name('worldsync-lingbot-weights')]
+Object ids: ['st-p2HLkklcnJrxCndaNjxFKJ', 'im-ncoTJowPstKRBY2fKnW9o2', 'vo-kz8na4JO6aYtxLjf3gNOsG']
+
+This can happen if you are defining Modal objects under a conditional statement that evaluates differently in the local and remote environments.
+Function fu-LtFz90X3Vi0oSi5vmtLL2B failed during startup.
+Runner failed with exit code: 1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/pkg/modal/_container_entrypoint.py", line 484, in <module>
+    main(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 466, in main
+    run_function(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 438, in run_function
+    service: Service = hydrate_function(
+                       ^^^^^^^^^^^^^^^^^
+  File "/pkg/modal/_container_entrypoint.py", line 380, in hydrate_function
+    raise ExecutionError(
+modal.exception.ExecutionError: Function has 2 dependencies but container got 3 object ids.
+Code deps: [Image(<function _Image.debian_slim.<locals>.build_dockerfile at 0x2b27bdab6700>), modal.Volume.from_name('worldsync-lingbot-weights')]
+Object ids: ['st-p2HLkklcnJrxCndaNjxFKJ', 'im-ncoTJowPstKRBY2fKnW9o2', 'vo-kz8na4JO6aYtxLjf3gNOsG']
+
+This can happen if you are defining Modal objects under a conditional statement that evaluates differently in the local and remote environments.
+Function fu-LtFz90X3Vi0oSi5vmtLL2B failed during startup.
+Runner failed with exit code: 1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/pkg/modal/_container_entrypoint.py", line 484, in <module>
+    main(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 466, in main
+    run_function(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 438, in run_function
+    service: Service = hydrate_function(
+                       ^^^^^^^^^^^^^^^^^
+  File "/pkg/modal/_container_entrypoint.py", line 380, in hydrate_function
+    raise ExecutionError(
+modal.exception.ExecutionError: Function has 2 dependencies but container got 3 object ids.
+Code deps: [Image(<function _Image.debian_slim.<locals>.build_dockerfile at 0x2ae8a7b56700>), modal.Volume.from_name('worldsync-lingbot-weights')]
+Object ids: ['st-p2HLkklcnJrxCndaNjxFKJ', 'im-ncoTJowPstKRBY2fKnW9o2', 'vo-kz8na4JO6aYtxLjf3gNOsG']
+
+This can happen if you are defining Modal objects under a conditional statement that evaluates differently in the local and remote environments.
+Function fu-LtFz90X3Vi0oSi5vmtLL2B failed during startup.
+Runner failed with exit code: 1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/pkg/modal/_container_entrypoint.py", line 484, in <module>
+    main(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 466, in main
+    run_function(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 438, in run_function
+    service: Service = hydrate_function(
+                       ^^^^^^^^^^^^^^^^^
+  File "/pkg/modal/_container_entrypoint.py", line 380, in hydrate_function
+    raise ExecutionError(
+modal.exception.ExecutionError: Function has 2 dependencies but container got 3 object ids.
+Code deps: [Image(<function _Image.debian_slim.<locals>.build_dockerfile at 0x2b628432a700>), modal.Volume.from_name('worldsync-lingbot-weights')]
+Object ids: ['st-p2HLkklcnJrxCndaNjxFKJ', 'im-ncoTJowPstKRBY2fKnW9o2', 'vo-kz8na4JO6aYtxLjf3gNOsG']
+
+This can happen if you are defining Modal objects under a conditional statement that evaluates differently in the local and remote environments.
+Function fu-LtFz90X3Vi0oSi5vmtLL2B failed during startup.
+Runner failed with exit code: 1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/pkg/modal/_container_entrypoint.py", line 484, in <module>
+    main(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 466, in main
+    run_function(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 438, in run_function
+    service: Service = hydrate_function(
+                       ^^^^^^^^^^^^^^^^^
+  File "/pkg/modal/_container_entrypoint.py", line 380, in hydrate_function
+    raise ExecutionError(
+modal.exception.ExecutionError: Function has 2 dependencies but container got 3 object ids.
+Code deps: [Image(<function _Image.debian_slim.<locals>.build_dockerfile at 0x2b9083f3a700>), modal.Volume.from_name('worldsync-lingbot-weights')]
+Object ids: ['st-p2HLkklcnJrxCndaNjxFKJ', 'im-ncoTJowPstKRBY2fKnW9o2', 'vo-kz8na4JO6aYtxLjf3gNOsG']
+
+This can happen if you are defining Modal objects under a conditional statement that evaluates differently in the local and remote environments.
+Function fu-LtFz90X3Vi0oSi5vmtLL2B failed during startup.
+Runner failed with exit code: 1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/pkg/modal/_container_entrypoint.py", line 484, in <module>
+    main(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 466, in main
+    run_function(container_args, client)
+  File "/pkg/modal/_container_entrypoint.py", line 438, in run_function
+    service: Service = hydrate_function(
+                       ^^^^^^^^^^^^^^^^^
+  File "/pkg/modal/_container_entrypoint.py", line 380, in hydrate_function
+    raise ExecutionError(
+modal.exception.ExecutionError: Function has 2 dependencies but container got 3 object ids.
+Code deps: [Image(<function _Image.debian_slim.<locals>.build_dockerfile at 0x2b403f386700>), modal.Volume.from_name('worldsync-lingbot-weights')]
+Object ids: ['st-p2HLkklcnJrxCndaNjxFKJ', 'im-ncoTJowPstKRBY2fKnW9o2', 'vo-kz8na4JO6aYtxLjf3gNOsG']
+
+This can happen if you are defining Modal objects under a conditional statement that evaluates differently in the local and remote environments.
+Function fu-LtFz90X3Vi0oSi5vmtLL2B failed during startup.
+Runner failed with exit code: 1

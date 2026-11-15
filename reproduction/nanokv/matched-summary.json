@@ -1,0 +1,59 @@
+{
+  "scope": "Single scripted development-case capacity and compression diagnostic, not full benchmark",
+  "status": "completed",
+  "identity_all14_pixels_exact": true,
+  "compressed18_58_pixel_equal": [
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "first_capacity_difference_chunk": 4,
+  "arms": {
+    "codec18": {
+      "status": "completed",
+      "base_parameter_versions_unchanged": true,
+      "all_matched_settings": true,
+      "payload_peak_bytes": 1041478400,
+      "resident_operator_bytes": 526848000,
+      "payload_plus_operators_bytes": 1568326400,
+      "gpu_peak_allocated_bytes": 56988643840,
+      "cold_elapsed_s": 200.12481218099998,
+      "bindings_closed": true
+    },
+    "codec58": {
+      "status": "completed",
+      "base_parameter_versions_unchanged": true,
+      "all_matched_settings": true,
+      "payload_peak_bytes": 2916139520,
+      "resident_operator_bytes": 526848000,
+      "payload_plus_operators_bytes": 3442987520,
+      "gpu_peak_allocated_bytes": 57330182656,
+      "cold_elapsed_s": 223.087971868,
+      "bindings_closed": true
+    }
+  },
+  "comparison_native58": {
+    "native_occupied_history_bytes": 69179801600,
+    "native_gpu_peak_allocated_bytes": 121390354944,
+    "native_cold_elapsed_s": 205.207353251,
+    "cache_storage_reduction_ratio": 20.092957409267637,
+    "gpu_allocated_reduction_fraction": 0.5277204463035992,
+    "timing_caveat": "One cold run each, no replicated latency or speedup claim"
+  },
+  "visual_review": {
+    "scope": "First, middle, final frames; full videos retained",
+    "observation": "Compressed58 recovers recognizable initial street buildings like native58. Compressed18 ends at an invented blue saloon. Proportions, framing and lettering still drift.",
+    "overall_or_longer_than14_chunks_proven": false
+  }
+}

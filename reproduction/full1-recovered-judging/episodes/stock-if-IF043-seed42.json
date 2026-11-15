@@ -1,0 +1,312 @@
+{
+  "task_id": "IF043",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "judge_project": "servo-tpu-20260901",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "73e39fc105dff782d195231b43d21908a45c6ea892eca3d78fe4bab81a11f398",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF043",
+    "perspective": "third-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "男子在滑板公园里向前滑行，跳上一个平台并继续向前滑行。",
+    "trajectory_evidence_zh": "男子从画面近处开始，背对镜头向远处（前方）滑行，中途跳上一个凸起的平台并保持向前的运动轨迹。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 2.17,
+    "final_score_1_to_5": 2,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男子的衣着和身体特征保持一致，但作为关键装备的滑板在跳跃时（第15-24帧）完全消失，随后又凭空出现。"
+      },
+      "contact_support": {
+        "score": 2,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "男子起跳后滑板消失，第25帧双脚直接落在白色障碍物上，第26帧滑板才突然出现在脚下。"
+      },
+      "causal_response": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "滑板在空中无故消失，并在接触障碍物时违背物理规律地凭空生成。"
+      },
+      "lighting_shadow": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "男子在地面和障碍物上都有阴影，但由于滑板在空中消失，相应的滑板阴影也随之缺失。"
+      },
+      "motion_kinematics": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男子做出了起跳动作，但由于滑板消失，他在空中的姿态变成了不自然的悬空漂浮，脱离了滑板运动的力学特征。"
+      },
+      "collision_boundary": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "滑板在白色障碍物上重新出现后（第26-38帧），严重穿模并陷入了障碍物的实体表面中。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail penalty applied as the subject remains in motion.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 14,
+      "evidence_zh": "男子在视频前半段成功向前滑行。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景中的建筑、树木和滑板场结构在滑行阶段保持稳定。",
+      "post_completion_phase_zh": "跳跃和落地阶段背景结构依然保持一致，未见明显形变或重置。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "skateboard before and after jump",
+        "anchors": [
+          "man's feet",
+          "skatepark ground and white box"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-38"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "skatepark ramps",
+        "background buildings"
+      ],
+      "newly_revealed_regions_zh": "随着相机跟随男子向前移动，滑板场前方的白色障碍物逐渐进入视野。",
+      "evidence_zh": "相机的平移和跟随运动连贯，背景建筑和滑板场结构的透视变化符合物理规律。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频连贯，没有发生硬切或场景重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作完成后的额外运动中出现的物理错误已在各基础类别中扣分，不作额外惩罚。"
+    },
+    "final_state_check": {
+      "window": "30-38",
+      "visible_key_objects": [
+        "man",
+        "skateboard",
+        "white box"
+      ],
+      "reappearance_consistency_zh": "滑板在重新出现后保持了原有的基本形态，但处于穿模状态。"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "yes",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "男子在整个视频中保持向前滑行和跳跃的运动状态。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "prompt_directed_forward_progress": "yes",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "男子骑着滑板向前滑行，随后跳上了一个障碍物。",
+      "trajectory_evidence_zh": "男子在世界坐标系中明显向前移动，符合'skateboards forward'的指令。",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "yes",
+      "observed_outcome": "solid_penetration",
+      "solid_interpenetration": "yes",
+      "support_after_contact": "implausible",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "男子跳上白色障碍物后，滑板严重穿透了障碍物的实体表面。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "white box obstacle",
+      "target_type": "solid_boundary",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "yes",
+      "observed_trigger": "contact",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "yes",
+      "evidence_zh": "白色障碍物在男子接近和接触过程中保持稳定，没有发生无故消失或形变。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "yes",
+      "proxy_evidence_observed": [
+        "weight_transfer",
+        "joint_motion"
+      ],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "虽然能看到脚部，但滑板在空中消失，落地时脚直接踩在障碍物上，随后滑板才出现，支撑关系严重失效。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "man and skateboard",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "clothing",
+        "body_proportions"
+      ],
+      "identity_failure": "replacement",
+      "evidence_zh": "男子的外观保持稳定，但作为关键装备的滑板在空中完全消失，随后又重新生成，属于装备的严重一致性失败。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 2,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 2,
+      "evidence_zh": "由于整体交互质量被评为2级（滑板消失及严重穿模），主体一致性得分不计入加权平均，以免掩盖严重的交互失败。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 2,
+      "interaction_opportunity_reached": "yes",
+      "physical_response_observed": "no",
+      "core_failure_zh": "滑板在跳跃时完全消失，落地后凭空出现并严重穿透障碍物表面。",
+      "positive_evidence_zh": "男子在初始阶段成功向前滑行了一段距离。",
+      "evidence_zh": "虽然男子有向前滑行的动作，但跳跃过程中滑板消失，落地时滑板凭空出现且与障碍物发生严重穿模，物理交互极度不合理。",
+      "final_score_cap_applied": 2
+    },
+    "summary_zh": "视频中男子虽然向前滑行，但在跳跃时滑板完全消失，落地后滑板凭空出现并严重穿透障碍物，物理交互存在严重缺陷。",
+    "task_id": "IF043"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "G4H5arSkKruU9LsP2OyOyAs",
+      "prompt_tokens": 4681,
+      "output_tokens": 190
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "K4H5aoitNYGX9LsPsIOMuAU",
+      "prompt_tokens": 36765,
+      "output_tokens": 2314
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "411352a20a5c4c23099ebd018ecfc5425537373f1502730baab35e880e40ea1f",
+  "score_prompt_sha256": "01da10a89e980809020eece8f12c01188cdbd01c7405fe5c434b7f7785b799e3",
+  "scores": {
+    "official": 2.0,
+    "final_score": 2.0
+  },
+  "episode_id": "stock-if-IF043-seed42"
+}

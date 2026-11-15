@@ -18,6 +18,12 @@ Sources: [scripted task judgments](reproduction/gemini-current/episodes/), [adap
 
 The clearest long-horizon example is a **31.8-second mall episode with 24 seconds away from the starting view**. Stock substitutes different buildings on return; memory recovers the original facade. Endpoint DINO similarity rises 0.574→0.746, and a blinded complete-video review prefers memory. See [the write-up and videos](reproduction/memory-validation/README.md).
 
+## Retaining full history with a compressed cache
+
+A matched14B GC010 control isolates capacity: native58 slots retain the entire56-latent trajectory and recover recognizable original street buildings where stock18 substitutes new ones. Both match raw pixels through chunk3. Gemini gives stock18 1.0 and native58 5.0; this is one scripted development case, not an overall result.
+
+An isolated integration of the released NanoKV codec reproduces all14native58 chunks exactly in identity mode before lossy compression is enabled. Compressed58 keeps recognizable landmark recovery at57.33GB peak allocated GPU memory instead of121.39GB. Its payload plus operators occupy3.44GB versus69.18GB of occupied raw history. It also introduces fidelity loss: Gemini scores it2.8 versus native58's5.0. One cold run takes223s versus205s, so this is a memory saving with a latency/quality tradeoff. [Full evidence and longer-history test plan](reproduction/nanokv/README.md). No generator training is required; the codec is a released fitted artifact, not a new model we trained.
+
 ## What changes inside the model
 
 LingBot generates short chunks and keeps a rolling key/value cache. Once older views leave that cache, it can generate a plausible new building instead of the building seen earlier. The method preserves selected old internal features beyond the rolling window.
@@ -51,6 +57,7 @@ Endpoint similarity alone can mislead. On the held-out fountain example, memory 
 
 - **Archive coverage and late activation.** The initial neutral view lies in frames 0–3, outside this archive. On adaptive GC027, retrieval occurs only in the final chunk. Start-view re-anchoring was tested separately and still did not restore the original view.
 - **Exact geometry and heading.** Recognizable landmarks can return with changed proportions, viewpoint, textures or lettering.
+- **Third-person control.**47/50IF tasks require third-person behavior, while this checkpoint exposes camera control without an explicit trained avatar-action input. Some failures precede any memory issue. [Audit](docs/control-scope.md).
 - **Dynamic state.** Old features are not a simulator of what happened while an object was hidden. Moving people, mixing liquids and other processes can freeze, reset or become inconsistent.
 - **Recent context matters.** Eight retrieved views inside the same 18-frame budget displace useful recent frames and degrade continuity. Expanding to 22 frames avoids that particular problem but did not improve the three-task confirmation. Fixed separate-history attention weights also failed.
 - **Small-sample and judge uncertainty.** The same beach video scored 2.70 and 3.75 in separate Claude calls. Gemini and Claude can rank the same methods differently. Subset means are not comparable with the published 1.82 or 2.12 overall scores.

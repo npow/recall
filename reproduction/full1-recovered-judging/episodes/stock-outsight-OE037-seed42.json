@@ -1,0 +1,398 @@
+{
+  "task_id": "OE037",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "judge_project": "servo-tpu-20260901",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "9db8da4ef0ee955179162a9c185a6c1d664a8f2047d38e13a7f26a6697eac32f",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE037",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "视角先向右转动（平移），随后向左转回初始方向，最后向后退。",
+    "trajectory_evidence_zh": "在第一张图的第10到24帧中，镜头明显向右移动/转动，画面中心移向右侧；在第二张图的第25到35帧中，镜头向左转回，恢复到与初始帧相似的视角；从第36帧到48帧，镜头向后拉远，画面中的案板和碗变小，表现出后退的动作。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1.0,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头转回后发生严重的硬重置，初始场景中的透明玻璃碗变成了白碗，完整的西红柿、大蒜和罗勒全部消失，手和刀的外观及握持姿势也发生了明显改变，未能保持主体的身份和外观一致性。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "由于镜头转回后场景发生了硬重置，原有的切菜和推西红柿的过程完全丢失，被一个全新的、不连贯的场景所取代，因此不存在有效的隐藏状态进展。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头恢复到原始视角时，展现的是一个发生硬重置后的全新场景（如碗的材质改变、背景物品消失），而不是初始状态的合理演变结果，无法体现出西红柿丁被推入碗中的状态差异。"
+      },
+      "process_accumulation": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "由于场景硬重置，初始的玻璃碗丢失，视频未能展示出西红柿丁在原玻璃碗中合理积累的过程和结果。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "无静止尾段，视频在持续发生场景变化和重置。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 48,
+      "evidence_zh": "镜头完成了向右转动、转回原方向以及向后移动的轨迹要求。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头转回时，桌面上的背景物品（完整的西红柿、大蒜、罗勒）全部消失，背景发生硬重置。",
+      "post_completion_phase_zh": "不适用，动作在视频末尾完成。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "初始场景与镜头转回后的场景",
+        "anchors": [
+          "木制桌面",
+          "镜头视角"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "14-25"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "木制桌面"
+      ],
+      "newly_revealed_regions_zh": "镜头转回后本应显示原区域，但内容完全改变。",
+      "evidence_zh": "镜头的旋转运动是连续的，但当镜头转回初始方向时，画面内容发生了无法用视角变化解释的突变（硬重置）。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "14-25",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "木制桌面",
+        "初始场景中的物品位置"
+      ],
+      "evidence_zh": "镜头向右转动后再次转回原方向（帧25左右），初始场景中的透明玻璃碗、完整的西红柿、大蒜和罗勒全部消失，碗变成了白色，手和刀的外观也发生了变化，属于严重的场景硬重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "无额外的失败或冗长的尾段。"
+    },
+    "final_state_check": {
+      "window": "45-48",
+      "visible_key_objects": [
+        "hands",
+        "wooden cutting board",
+        "kitchen knife",
+        "glass bowl",
+        "diced tomatoes"
+      ],
+      "reappearance_consistency_zh": "最终画面中虽然出现了手、菜板、刀、玻璃碗和西红柿丁，但它们的外观与初始状态不一致，且初始场景中的完整西红柿、大蒜和罗勒均未重新出现，场景一致性极差。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "将西红柿丁推入玻璃碗中",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "镜头向右转动前，双手拿着菜板和刀，将西红柿丁推入透明玻璃碗中，桌上有完整的西红柿、大蒜和罗勒。",
+      "hidden_interval_zh": "镜头向右转动，原场景移出画面。",
+      "reappeared_state_zh": "镜头转回后，原场景发生硬重置，玻璃碗变成白碗，完整的西红柿、大蒜和罗勒消失，手和刀的姿态及外观改变。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "视频末尾场景仍在不断变化和重置，未达到静止状态。",
+      "terminal_state_reasoning_zh": "视频没有达到合理的静止结束状态，而是在不断发生场景重置。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无静止尾段。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "木制桌面"
+      ],
+      "articulation_or_local_state_change_zh": "镜头转回后，手、刀、碗和西红柿的状态完全改变，属于场景重置而非合理的动作连贯。",
+      "uniquely_matched_anchor_relative_change_zh": "无法在相同的参考物下确认相对位置的变化，因为场景已重置。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "西红柿丁应落入碗中。",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "场景发生硬重置，无法评估主体的相对变化。",
+      "unchanged_coupled_details_zh": "无",
+      "accumulated_change_zh": "镜头转回后，原场景丢失，没有产生合理的积累变化。",
+      "evidence_zh": "镜头转回后发生严重的硬重置，原有的玻璃碗、完整的西红柿、大蒜和罗勒全部消失，被新的场景取代，没有展现出原过程的合理演变。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向右转动，然后转回，接着向后移动。",
+      "trajectory_evidence_zh": "画面显示镜头先向右平移/旋转，然后向左转回原方向，最后画面缩小显示镜头后退。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "hands, cutting board, knife, bowl, tomatoes, basil, garlic",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "colors",
+        "materials",
+        "surface_appearance"
+      ],
+      "identity_failure": "replacement",
+      "evidence_zh": "镜头转回后，原有的玻璃碗、完整的西红柿、大蒜和罗勒全部消失，被新的物品（如白碗）取代，手和刀的外观也发生了改变。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于场景发生硬重置，缺乏有意义的演变过程，身份一致性得分被限制在1分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "镜头转回原方向时发生了严重的场景硬重置，初始的玻璃碗、完整的西红柿、大蒜和罗勒全部消失并被新场景取代，未能展现出任何合理的隐藏状态进展或过程积累。",
+    "task_id": "OE037"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "hoX5aruMCMeM998Pqta98AM",
+      "prompt_tokens": 4744,
+      "output_tokens": 249
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "n4X5ar_aCMyb4_UPlvOG0AU",
+      "prompt_tokens": 30499,
+      "output_tokens": 3603
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 49,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 48,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "8fb8bc4f2447a4a8fa7e855812b046ef05fe1c6a4644018374a1565a16545377",
+  "score_prompt_sha256": "ef5366153ec287b1d359ee2f4ce9c6a836a0305b5200ef7d6901ae929d8ca492",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "stock-outsight-OE037-seed42"
+}

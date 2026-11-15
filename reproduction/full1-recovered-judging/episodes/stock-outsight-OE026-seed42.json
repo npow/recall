@@ -1,0 +1,400 @@
+{
+  "task_id": "OE026",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "judge_project": "servo-tpu-20260901",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "1f259ea0a862ae1e851c359aa73d24eb56aebfe16f690ea279af1759373ce41e",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE026",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头先向左转动，看到另一位抱着兔子的女士，然后向右转动回到初始视角，最后向后退。",
+    "trajectory_evidence_zh": "从第0帧到第18帧，镜头明显向左平移（转动）；第19帧到第36帧，镜头向右平移，回到了初始的红墙和人物画面；第37帧到第48帧，画面中的人物和建筑变小，视野变宽，显示镜头正在向后退。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 2.25,
+    "final_score_1_to_5": 2,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "返回后，条纹衫女子、小女孩、黑白兔子和红色建筑的身份基本保持一致，但女子和小女孩的面部出现了纹理漂移和细节丢失，红色建筑上的标志文字也发生了变化且变得模糊。"
+      },
+      "hidden_state_progression": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "尽管人物有轻微的局部动作，但当镜头返回时，女子和小女孩的整体姿势几乎与离开前完全相同，背景中的山羊也停留在完全相同的位置，表明在视线外缺乏有意义的状态进展。"
+      },
+      "revealed_state_difference": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头返回后，女子的面部表情和小女孩放在兔子上的手臂姿势与初始状态相比几乎没有明显、合理的变化，缺乏演变差异。"
+      },
+      "process_accumulation": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "场景中没有显示出合理的累积变化，背景中的山羊没有移动到新的位置，小女孩与兔子的互动姿态也没有明显的累积性改变。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "无静止尾段，视频结尾处于正常的后退运动中。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 48,
+      "evidence_zh": "镜头在第48帧完成了向后退两步的动作。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "红色建筑、绿色水管和木栅栏在镜头移动过程中保持稳定。",
+      "post_completion_phase_zh": "镜头后退时，背景建筑和栅栏的结构保持一致。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "original scene before and after camera pan",
+        "anchors": [
+          "red building wall",
+          "green hose",
+          "wooden fence"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-9",
+        "25-34",
+        "35-48"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "red building wall",
+        "wooden fence"
+      ],
+      "newly_revealed_regions_zh": "第10-24帧展示了左侧新揭示的区域，包含另一名女子和兔子。",
+      "evidence_zh": "视角的改变完全由镜头的平移和后退引起，环境锚点保持一致。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "场景转换通过连续的镜头平移实现，没有发生硬重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作完成后没有出现额外的破坏性运动或失败。"
+    },
+    "final_state_check": {
+      "window": "40-48",
+      "visible_key_objects": [
+        "woman in the striped shirt",
+        "little girl",
+        "black-and-white rabbit",
+        "roaming goats",
+        "red building"
+      ],
+      "reappearance_consistency_zh": "初始场景中的关键对象在镜头返回后均一致重新出现，尽管存在一些纹理漂移。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "partial",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 2,
+      "named_process": "petting zoo activity and background animal movement",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "镜头向左平移前（第4帧），女子微笑着低头看兔子，小女孩的手放在兔子身上，背景右侧有山羊站立和趴着。",
+      "hidden_interval_zh": "镜头向左平移并停留，原场景移出画面，预期人物和动物会继续自然的互动和移动。",
+      "reappeared_state_zh": "镜头返回后（第30帧），女子和小女孩的姿势几乎与离开前一致，背景山羊的位置也没有改变。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "视频结尾镜头向后移动，人物仍有轻微的局部动作，并未完全静止。",
+      "terminal_state_reasoning_zh": "视频结尾处于正常的后退运动中，并非静止状态。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无静止尾段。",
+      "camera_independent_subject_motion": "partial",
+      "stable_world_anchors_compared": [
+        "red building wall",
+        "wooden fence"
+      ],
+      "articulation_or_local_state_change_zh": "女子和小女孩有轻微的头部和手臂局部动作变化。",
+      "uniquely_matched_anchor_relative_change_zh": "相对于红色建筑和围栏，人物的整体位置没有明显改变。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "无特定预期方向，预期为自然的互动和动物漫步。",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "人物姿势和背景山羊的位置相对于环境锚点几乎没有变化。",
+      "unchanged_coupled_details_zh": "小女孩手部与兔子的接触几何形状、背景山羊的姿态在镜头返回后保持不变，表明状态被冻结。",
+      "accumulated_change_zh": "整个过程中，除了轻微的局部动作外，没有明显的累积性状态或位置变化。",
+      "evidence_zh": "虽然人物有轻微的局部动作，但镜头返回后人物姿势和背景动物位置几乎与离开前完全一致，缺乏有意义的累积演变。",
+      "final_score_cap_applied": 2
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向左平移约90度，停留后向右平移返回原方向，随后向后移动。",
+      "trajectory_evidence_zh": "第0-9帧镜头左移，第25-34帧镜头右移返回，第35-48帧镜头向后退，完整执行了提示词要求的轨迹。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "partial",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "镜头完成了平移和后退的动作，但场景内人物和动物的动作进展微弱。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "woman in the striped shirt and little girl",
+      "same_entity_throughout": "partial",
+      "stable_identity_attributes": [
+        "clothing",
+        "body_proportions",
+        "colors"
+      ],
+      "identity_failure": "texture_drift",
+      "evidence_zh": "人物的服装和整体比例保持一致，但在镜头返回后，面部细节出现了明显的纹理漂移和模糊。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 2,
+      "meaningful_motion_or_evolution": "partial",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 2,
+      "evidence_zh": "由于状态演变质量仅为2级（缺乏有意义的累积进展），稳定的身份无法将最终得分提升至2分以上。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频成功执行了镜头的平移和后退轨迹，但当镜头返回原场景时，人物姿势和背景动物位置几乎与离开前完全一致，缺乏有意义的状态演变，且面部和建筑标志存在纹理漂移。",
+    "task_id": "OE026"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "H4X5apCqF7qV4_UPpNu2kAQ",
+      "prompt_tokens": 4744,
+      "output_tokens": 239
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "KoX5aqvLGe2c998PpoHqwAs",
+      "prompt_tokens": 30843,
+      "output_tokens": 3571
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 49,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 48,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "70001563d136f4b2934973cb9585606e3b68708bdfb582d3ee620ff082c00082",
+  "score_prompt_sha256": "64439ca208e85e7ec345d08dba9260af4779caf2e95ea24910af1cc51348f240",
+  "scores": {
+    "official": 2.0,
+    "final_score": 2.0
+  },
+  "episode_id": "stock-outsight-OE026-seed42"
+}
