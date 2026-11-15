@@ -29,6 +29,7 @@ import datetime as dt
 import hashlib
 import io
 import json
+import math
 import re
 import sqlite3
 import subprocess
@@ -187,6 +188,36 @@ def run_sightings(run):
                           "position": pose["position_normalized_units"], "action": action.get("action"),
                           "chunk_pixel_sha256": chunk.get("pixel_sha256")})
     return sightings
+
+
+def opponent_cue(db, wid, me, other, at=None, right_axis=0, forward_axis=1):
+    """Where ``other`` stands relative to ``me`` from their latest sightings at or before ``at`` (exact, local).
+
+    Heading 0 faces +forward_axis and grows clockwise (towards +right_axis), matching RIGHT turns increasing it.
+    """
+    def latest(agent):
+        seen = [s for s in db.sightings(wid, agent) if at is None or s["world_time"] <= at]
+        if not seen:
+            raise LookupError(f"no sightings of {agent} in {wid}" + (f" by world time {at}" if at is not None else ""))
+        return max(seen, key=lambda s: s["world_time"])
+    mine, theirs = latest(me), latest(other)
+    dx = theirs["position"][right_axis] - mine["position"][right_axis]
+    dy = theirs["position"][forward_axis] - mine["position"][forward_axis]
+    distance = math.hypot(dx, dy)
+    bearing = math.degrees(math.atan2(dx, dy)) % 360
+    relative = (bearing - mine["heading"] + 180) % 360 - 180
+    return {"distance": distance, "bearing": bearing, "relative": relative, "my_heading": mine["heading"],
+            "my_time": mine["world_time"], "their_time": theirs["world_time"]}
+
+
+def cowboy_prompt(cue, unit="units"):
+    """Text-only description of the other agent as a duelling cowboy, placed from ``opponent_cue``."""
+    side = abs(cue["relative"])
+    where = ("straight ahead" if side <= 15 else
+             f"ahead to your {'right' if cue['relative'] > 0 else 'left'}" if side <= 60 else
+             f"off to your {'right' if cue['relative'] > 0 else 'left'}" if side <= 120 else "behind you")
+    return (f"a cowboy gunslinger standing in the dusty street {where}, about {cue['distance']:.1f} {unit} away, "
+            "facing you with his hand by his holster, a western duel standoff")
 
 
 def observation_point(wid, agent, sighting, audience=None, thumbnail=None):

@@ -130,3 +130,23 @@ def test_frames_from_video_decodes_in_memory(tmp_path):
     assert jpeg[:2] == b"\xff\xd8" and (width, height) == (64, 32)
     assert sorted(path.name for path in tmp_path.iterdir()) == ["v.mp4"]
     assert sw.thumbnail_b64(jpeg, width=32)
+
+
+def test_opponent_cue_places_the_other_duellist():
+    db, wid = sw.FrameDB(":memory:"), "w-duel"
+    pose = lambda agent, chunk, t, heading, x, y: db.add_sighting(wid, agent, {
+        "chunk": chunk, "frame_index": chunk, "world_time": t, "heading": heading, "position": [x, y, 0.0],
+        "frame_sha256": "f" * 64})
+    pose("a", 0, 1.0, 270, -5, 0)
+    pose("b", 0, 1.0, 90, 5, 0)
+    cue = sw.opponent_cue(db, wid, "a", "b")
+    assert cue["distance"] == pytest.approx(10) and cue["bearing"] == pytest.approx(90)
+    assert abs(cue["relative"]) == pytest.approx(180) and "behind you" in sw.cowboy_prompt(cue)
+    pose("a", 1, 2.0, 90, -5, 0)
+    cue = sw.opponent_cue(db, wid, "a", "b")
+    assert cue["relative"] == pytest.approx(0) and "straight ahead" in sw.cowboy_prompt(cue)
+    assert sw.opponent_cue(db, wid, "a", "b", at=1.5)["my_heading"] == 270
+    pose("b", 1, 2.0, 270, 5, 4)
+    assert "ahead to your left" in sw.cowboy_prompt(sw.opponent_cue(db, wid, "b", "a"))
+    with pytest.raises(LookupError):
+        sw.opponent_cue(db, wid, "a", "c")
