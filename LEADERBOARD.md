@@ -79,6 +79,19 @@ The adaptive four-view pilot changed 3.60→3.90, but neither seed visibly retur
 - [Local submaps](reproduction/spatial-local-submaps/summary.json): better mall localization, bridge and drifted-stock failures; not generator conditioning.
 - [Persistent runner](reproduction/modal-runner.md): 3.6x steady short-job throughput in the reported seven-job trial, exact outputs on the same GPU model. [Mixed-scene batch](reproduction/lingbot-batch-validation/) preserves all 42 chunk hashes.
 
+## Gemini — local caption-conditioning diagnostic
+
+One selected development case (OE020), seed 42, on the local Thor GPU. Both arms use the same frozen code, stock cache, sampler and WAIT camera schedule; only the world-model text changes. Each video is 59.8125 seconds. This is not a full benchmark result or held-out confirmation.
+
+| Text conditioning | Mean score | Individual judgments |
+|---|---:|---|
+| task-only |1.33|1.00, 2.00, 1.00|
+| caption-plus-task |1.87|1.60, 2.20, 1.80|
+
+Mean difference: **+0.53**. Three fixed judgments per original video, not three generation seeds. Judges report more sustained motion with captions, but severe cyclist/body distortion remains. No confidence interval or overall record claim.
+
+[Protocol and raw judgments](reproduction/baseline-gap/local-caption-pair/README.md) · [Normal-speed side-by-side video](reproduction/baseline-gap/local-caption-pair/side-by-side.mp4)
+
 ## Gemini — IF text-conditioning development pilot
 
 Four predeclared IF cases, seed 42; 12 completed adaptive episodes. Same H200, native 18/6 cache and player. These are development results, not an overall score.

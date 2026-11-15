@@ -310,7 +310,8 @@ def generate():
     reader_fit = read("reproduction/learned-memory-reader/real-fit-summary.json")
     small_context = read("reproduction/lingbot-small/gemini-summary.json")
     text_pilot = read("reproduction/task-text-pilot/summary.json")
-    snapshot = {"corrected_controller_validation": {"scope": "12-case configuration comparison; not a full benchmark score", "report": "reproduction/baseline-gap/ccv-snapshot/report.md", "benchmark_score": None}, "full_history_diagnostic": read("reproduction/full-history-GC010/gemini-summary.json"), "full1_recovered": read("reproduction/full1-recovered-judging/summary.json"), "task_text_confirmation": text_confirmation, "learned_reader_surrogate": reader_fit, "small_model_context_diagnostic": small_context, "task_text_development": text_pilot, "target": 2.12, "full_benchmark_score": (full or {}).get("overall"), "gemini_moving_subsets": moving10, "full_171_run": full, "published_score_beaten": False,
+    local_caption = read("reproduction/baseline-gap/local-caption-pair/comparison.json")
+    snapshot = {"local_caption_pair_diagnostic": local_caption, "corrected_controller_validation": {"scope": "12-case configuration comparison; not a full benchmark score", "report": "reproduction/baseline-gap/ccv-snapshot/report.md", "benchmark_score": None}, "full_history_diagnostic": read("reproduction/full-history-GC010/gemini-summary.json"), "full1_recovered": read("reproduction/full1-recovered-judging/summary.json"), "task_text_confirmation": text_confirmation, "learned_reader_surrogate": reader_fit, "small_model_context_diagnostic": small_context, "task_text_development": text_pilot, "target": 2.12, "full_benchmark_score": (full or {}).get("overall"), "gemini_moving_subsets": moving10, "full_171_run": full, "published_score_beaten": False,
                 "gemini_model": "gemini-3.1-pro-preview", "endpoint": "Vertex AI global",
                 "gemini_local_cohorts": cohorts, "historical_claude_cohorts": historical,
                 "comparability": "Subset scores are not comparable to published four-dimension overall. Methods only compared within the same cohort/judge. Gemini model alias, player and adapter differences remain documented."}
@@ -364,6 +365,17 @@ def generate():
         "- [Local submaps](reproduction/spatial-local-submaps/summary.json): better mall localization, bridge and drifted-stock failures; not generator conditioning.",
         "- [Persistent runner](reproduction/modal-runner.md): 3.6x steady short-job throughput in the reported seven-job trial, exact outputs on the same GPU model. [Mixed-scene batch](reproduction/lingbot-batch-validation/) preserves all 42 chunk hashes.",
         ""])
+    if local_caption:
+        lines.extend(["## Gemini — local caption-conditioning diagnostic", "",
+            "One selected development case (OE020), seed 42, on the local Thor GPU. Both arms use the same frozen code, stock cache, sampler and WAIT camera schedule; only the world-model text changes. Each video is 59.8125 seconds. This is not a full benchmark result or held-out confirmation.", "",
+            "| Text conditioning | Mean score | Individual judgments |", "|---|---:|---|"])
+        for arm in ("task-only", "caption-plus-task"):
+            result = local_caption["arms"][arm]
+            scores = ", ".join(f"{score:.2f}" for score in result["scores"])
+            lines.append(f"| {arm} |{result['mean']:.2f}|{scores}|")
+        lines.extend(["",
+            f"Mean difference: **+{local_caption['mean_difference']:.2f}**. Three fixed judgments per original video, not three generation seeds. Judges report more sustained motion with captions, but severe cyclist/body distortion remains. No confidence interval or overall record claim.", "",
+            "[Protocol and raw judgments](reproduction/baseline-gap/local-caption-pair/README.md) · [Normal-speed side-by-side video](reproduction/baseline-gap/local-caption-pair/side-by-side.mp4)", ""])
     if text_pilot and text_pilot.get("complete"):
         lines.extend(["## Gemini — IF text-conditioning development pilot", "",
             "Four predeclared IF cases, seed 42; 12 completed adaptive episodes. Same H200, native 18/6 cache and player. These are development results, not an overall score.", "",
