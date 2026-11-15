@@ -19,6 +19,7 @@ class CommitForcing:
         self.chunk_frames = chunk_latent_frames
         self.clean = False
         self.bindings = []
+        self.module_bindings = []
         self.handles = []
         self.trace = []
         self.closed = False
@@ -51,6 +52,8 @@ class CommitForcing:
         try:
             for index, block in enumerate(self.model.blocks):
                 layer = block.self_attn
+                if hasattr(layer, 'memory_reader'):
+                    raise ValueError('Learned-reader and Commit Forcing ablations must run separately')
                 if 'forward' in layer.__dict__:
                     raise ValueError('Commit Forcing needs unwrapped native self-attention; run ablations separately')
                 native = layer.forward
@@ -62,6 +65,8 @@ class CommitForcing:
                 if not inspect.isfunction(original):
                     raise ValueError('An attention-memory wrapper is already active; run isolated ablations')
                 namespace = dict(fn.__globals__)
+                if not any(values is fn.__globals__ for values, _ in self.module_bindings):
+                    self.module_bindings.append((fn.__globals__, original))
                 namespace['attention'] = functools.partial(self._attention, original, index)
                 copied = types.FunctionType(fn.__code__, namespace, fn.__name__, fn.__defaults__, fn.__closure__)
                 functools.update_wrapper(copied, fn)
@@ -77,6 +82,9 @@ class CommitForcing:
             raise
 
     def _before(self, module, positional, keywords):
+        if (any(values['attention'] is not original for values, original in self.module_bindings)
+                or any(hasattr(layer, 'memory_reader') for layer in self.bindings)):
+            raise ValueError('Attention binding changed while Commit Forcing is active; run isolated ablations')
         timestep = keywords.get('t')
         if timestep is None and len(positional) > 1:
             timestep = positional[1]
@@ -96,6 +104,7 @@ class CommitForcing:
             del layer.forward
         self.handles.clear()
         self.bindings.clear()
+        self.module_bindings.clear()
         self.clean = False
         self.active = False
         self.closed = True

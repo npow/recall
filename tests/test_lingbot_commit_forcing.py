@@ -153,3 +153,18 @@ def test_mixed_noise_levels_keep_full_context(monkeypatch,request):
         model(torch.randn(1,16,64),t=torch.tensor([0.,500.]),caches=caches,start=4*16,freqs=freqs)
         assert all(not row['clean'] and row['read_key_tokens']==72 for row in helper.trace[-2:])
     assert versions=={name:p._version for name,p in model.named_parameters()}
+
+
+@pytest.mark.parametrize('late_change',['attention','reader'])
+def test_later_memory_attachment_fails_before_forward(monkeypatch,request,late_change):
+    native=native_module(monkeypatch,request)
+    if native is None:return
+    model,freqs,make_caches=fixture_model(native,torch.float32)
+    with CommitForcing(SimpleNamespace(model=model),enabled=True)as helper:
+        with monkeypatch.context()as patch:
+            if late_change=='attention':patch.setattr(native,'attention',lambda *a,**k:None)
+            else:patch.setattr(model.blocks[0].self_attn,'memory_reader',torch.nn.Identity(),raising=False)
+            with pytest.raises(ValueError,match='isolated'):
+                model(torch.zeros(1,16,64),t=torch.tensor([0.]),caches=make_caches(),start=0,freqs=freqs)
+            assert not helper.clean
+    assert all('forward' not in b.self_attn.__dict__ for b in model.blocks)
