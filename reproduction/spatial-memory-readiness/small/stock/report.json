@@ -1,0 +1,164 @@
+{
+  "scope": "frozen past-only point map localization and rendering prerequisite; not Gaussian memory improvement",
+  "source_frames": [
+    12,
+    20,
+    28,
+    36,
+    44,
+    52
+  ],
+  "target_frames": [
+    56,
+    60,
+    460,
+    476,
+    492,
+    508
+  ],
+  "geometry_sha256": "f488a26e970a2c6769d43ce160d1847710673652e188ca0143cdbadf24f56328",
+  "video_sha256": "a2fe71505e0a20da746003dbb067c44fd6b994bc1e7020148cb49afa2c1ba108",
+  "camera_intrinsics": "median of predicted past-view intrinsics; target RGB only used to fit pose",
+  "correspondence_filter": "SIFT ratio.7, past depth-confidence above each view's median; deduplicate target features",
+  "acceptance": "at least30 fitted inliers, fit and withheld fractions>=.5, fitted coverage>=.1, withheld median<=3px",
+  "point_count": 106113,
+  "accepted_targets": 1,
+  "targets": [
+    {
+      "usable": true,
+      "correspondences": 96,
+      "reason": "accepted",
+      "fit_inliers": 52,
+      "fit_inlier_fraction": 0.8125,
+      "fit_spatial_coverage": 0.3217354064565616,
+      "withheld_matches": 32,
+      "withheld_fraction_within3px": 0.75,
+      "withheld_median_residual_px": 1.4977255912616911,
+      "withheld_p90_residual_px": 85.03420231674733,
+      "estimated_world_to_camera": [
+        [
+          0.3675388738752617,
+          0.01191470885105315,
+          -0.9299318340090844,
+          0.03553029319212173
+        ],
+        [
+          -0.004830581766972707,
+          0.9999288996789408,
+          0.010902342255479718,
+          -0.012330948908582383
+        ],
+        [
+          0.9299956137908917,
+          0.00048507716671007775,
+          0.36757029671866204,
+          0.010890594234737556
+        ]
+      ],
+      "frame": 56,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "render_coverage": 0.22978316326530612,
+      "render_rgb_mae_on_covered_pixels": 22.63895313576135
+    },
+    {
+      "usable": false,
+      "correspondences": 64,
+      "reason": "insufficient cross-validated geometry agreement",
+      "fit_inliers": 26,
+      "fit_inlier_fraction": 0.6046511627906976,
+      "fit_spatial_coverage": 0.15806230654325237,
+      "withheld_matches": 21,
+      "withheld_fraction_within3px": 0.42857142857142855,
+      "withheld_median_residual_px": 3.2344772267259705,
+      "withheld_p90_residual_px": 188.6035046145351,
+      "estimated_world_to_camera": [
+        [
+          0.15417735034970684,
+          0.03236645773382555,
+          -0.9875129148790452,
+          0.0307633247490407
+        ],
+        [
+          -0.011101235620877075,
+          0.9994569668733422,
+          0.03102473103878494,
+          -0.013888268966772721
+        ],
+        [
+          0.9879808232991335,
+          0.00617930271985924,
+          0.15445293461460297,
+          0.01743378028616389
+        ]
+      ],
+      "frame": 60,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "render_coverage": 0.16048044217687074,
+      "render_rgb_mae_on_covered_pixels": 27.253837888756422
+    },
+    {
+      "usable": false,
+      "correspondences": 11,
+      "reason": "fewer than45 map correspondences",
+      "frame": 460,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3,
+        5
+      ]
+    },
+    {
+      "usable": false,
+      "correspondences": 11,
+      "reason": "fewer than45 map correspondences",
+      "frame": 476,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "usable": false,
+      "correspondences": 14,
+      "reason": "fewer than45 map correspondences",
+      "frame": 492,
+      "matched_source_views": [
+        0,
+        1,
+        2,
+        3,
+        5
+      ]
+    },
+    {
+      "usable": false,
+      "correspondences": 8,
+      "reason": "fewer than45 map correspondences",
+      "frame": 508,
+      "matched_source_views": [
+        0,
+        1,
+        4,
+        5
+      ]
+    }
+  ],
+  "limitations": "Estimated depth, intrinsics and pose are not ground truth. Current observed RGB is used for localization. No generator conditioning or dynamic map updates tested."
+}

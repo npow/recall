@@ -1,0 +1,31 @@
+{
+  "scope": "Development attention-composition ablation insecondaryModalworkspace",
+  "case": {
+    "task_id": "GC007",
+    "seed": 42,
+    "path": "turn_long_wait_return"
+  },
+  "workspace": "krasnaya-zvesda",
+  "variants": [
+    {
+      "label": "joint",
+      "history_weight": -1.0
+    },
+    {
+      "label": "gate25",
+      "history_weight": 0.25
+    },
+    {
+      "label": "gate50",
+      "history_weight": 0.5
+    }
+  ],
+  "hypothesis": "Normalize recent/anchor and historical branches separately so additional historical views cannot obtain an uncontrolled share of the joint softmax. This is an untrained inference heuristic, not a reproduction of learned memory attention.",
+  "frozen": "22totalKVframes:6sink,up to8nearesthistorical,at least8recent/current; samecanonicalkeys/virtualRoPE andCPUarchive; originalmodel/sampler/seed/nativecamera,H100,Torch2.6SDPA,allocator,T5offload. Allthreecontrols rerun innewworkspace.",
+  "implementation": "Recentbranchcontainsnative6sink+retainedtail; memorybranchcontainsretrievedframes. Output=(1-alpha)*recent+alpha*history. Sum of keytokens acrossbranches equals joint22-frame budget; two fused attention calls can add latency.",
+  "primary": "Complete-video blinded continuity/return-landmark preference versus newlyrerunjointcontrol. EndpointDINO supplementary,reportalloutcomesandmemory/runtime.",
+  "selection": "Noheldoutselection. Keepvalidated4-viewdefault; newgatesrequirefreshheldoutvalidationbeforepromotion.",
+  "weights_requirement": "Pinned17fileSHA256verificationcompleteinsecondaryworkspacebeforeGPUdispatch.",
+  "training": false,
+  "workspace_fallback": "SecondaryH100registrationrejectedbeforeGPUallocationbecausepaymentmethodmissing. Runall3armsinnissan-powinsteadwithfreshmatchedjointcontrol; recordactualworkspace. Algorithm/settingsunchanged."
+}

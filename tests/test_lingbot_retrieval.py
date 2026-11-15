@@ -31,7 +31,7 @@ def test_diverse_retrieval_does_not_spend_all_slots_on_duplicate_hold_views():
     assert len(diverse) == unique_views(diverse) == 5
 
 
-@pytest.mark.parametrize("method", ["retrieval", "retrieval_native", "retrieval_eight", "retrieval_diverse", "retrieval_eight_diverse", "retrieval_context22", "retrieval_eight_context22", "sink_rephase"])
+@pytest.mark.parametrize("method", ["retrieval", "retrieval_native", "retrieval_eight", "retrieval_diverse", "retrieval_eight_diverse", "retrieval_context22", "retrieval_eight_context22", "retrieval_eight_context22_gated", "sink_rephase"])
 def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds_memory(monkeypatch, method):
     import copy
     import sys
@@ -63,7 +63,8 @@ def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds
     from worldsync.lingbot_sink_rephase import SinkRephaseMemory
     memory = (PoseKVMemory(pipeline, key_positions="native" if method == "retrieval_native" else "virtual",
                            retrieved_frames=8 if "eight" in method else 4,
-                           selection="diverse" if "diverse" in method else "nearest", cache_frames=capacity)
+                           selection="diverse" if "diverse" in method else "nearest", cache_frames=capacity,
+                           history_weight=.25 if "gated" in method else None)
               if method.startswith("retrieval") else SinkRephaseMemory(pipeline))
     def cache():
         return {"k": torch.zeros(1, tokens, 4, 16), "v": torch.zeros(1, tokens, 4, 16),
@@ -83,6 +84,7 @@ def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds
                 common = (x, torch.tensor([16]), torch.tensor([[4, 2, 2]]), freqs)
                 expected = original(*common, stock_cache, chunk * 16, tokens, frame_seqlen=4)
                 actual = candidate(*common, modified_cache, chunk * 16, tokens, frame_seqlen=4)
+                assert torch.isfinite(actual).all()
                 if not memory.trace[-1]["attention_replaced"]:
                     torch.testing.assert_close(actual, expected, atol=0, rtol=0)
                 assert modified_cache["k"].shape == stock_cache["k"].shape

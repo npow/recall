@@ -1,0 +1,57 @@
+{
+  "scope": "Development diagnostic prerequisites for geometry memory, not generator improvement",
+  "case": "GC007seed42 longturn-wait-return",
+  "source_frames": [
+    12,
+    20,
+    28,
+    36,
+    44,
+    52
+  ],
+  "target_frames": [
+    56,
+    60,
+    460,
+    476,
+    492,
+    508
+  ],
+  "reconstructor": "Pinned pretrainedDA3-SMALL onlocalThor",
+  "inference_s": 0.6630970260011964,
+  "peak_allocated_bytes": 566862848,
+  "findings": {
+    "stock": {
+      "accepted_targets": 1,
+      "total_targets": 6,
+      "report": "reproduction/spatial-memory-readiness/small/stock-exact-preprocessing/report.json",
+      "return_targets_accepted": 0
+    },
+    "retrieval": {
+      "accepted_targets": 2,
+      "total_targets": 6,
+      "report": "reproduction/spatial-memory-readiness/small/retrieval-exact-preprocessing/report.json",
+      "return_targets_accepted": 1
+    }
+  },
+  "decision": "Neitherreconstructorproducesareliablyconsistentglobalmaponallrevisits. Do notfeedthismapasauthoritativegeneratorconditioning. Nextgeometrytestshoulduseseparatelocalsubmaps/visibilityconfidencebeforemerging; persistentstateanddynamicsremainuntested.",
+  "limitations": "Relative depth and estimated camera intrinsics; localization observes current target RGB. Sparse point projection is not Gaussian splatting and is not wired into generation. Initial one-step target resize results retained; use exact-preprocessing results for conclusions.",
+  "training": false,
+  "stronger_reconstructor": {
+    "model": "DA3-GIANT-1.1",
+    "inference_s": 1.1681202839827165,
+    "peak_allocated_bytes": 7184420352,
+    "findings": {
+      "stock": {
+        "accepted_targets": 1,
+        "return_targets_accepted": 0,
+        "report": "reproduction/spatial-memory-readiness/giant/stock/report.json"
+      },
+      "retrieval": {
+        "accepted_targets": 1,
+        "return_targets_accepted": 0,
+        "report": "reproduction/spatial-memory-readiness/giant/retrieval/report.json"
+      }
+    }
+  }
+}

@@ -40,11 +40,14 @@ def select_frames(poses, available, current_start, count=4, diverse=False, recen
 
 
 class PoseKVMemory:
-    def __init__(self, pipeline, key_positions="virtual", retrieved_frames=4, selection="nearest", cache_frames=18):
+    def __init__(self, pipeline, key_positions="virtual", retrieved_frames=4, selection="nearest", cache_frames=18, history_weight=None):
         if retrieved_frames not in {4, 8} or selection not in {"nearest", "diverse"}:
             raise ValueError("retrieval supports4/8 frames and nearest/diverse selection")
         if cache_frames not in {18, 22}:
             raise ValueError("retrieval supports18/22 attended latent frames")
+        if history_weight is not None and not 0 <= history_weight <= 1:
+            raise ValueError("history output weight must be in[0,1]")
+        self.history_weight = history_weight
         self.cache_frames = cache_frames
         self.retrieved_frames = retrieved_frames
         self.selection = selection
@@ -146,19 +149,30 @@ class PoseKVMemory:
             self.cached[layer] = (retrieved_key, retrieved_value)
         retrieved_key, retrieved_value = self.cached[layer]
         tail = self.cache_frames - 6 - len(self.selected)
-        combined_key = torch.cat([key[:, :6 * frame_tokens], retrieved_key, key[:, -tail * frame_tokens:]], dim=1)
-        combined_value = torch.cat([value[:, :6 * frame_tokens], retrieved_value, value[:, -tail * frame_tokens:]], dim=1)
-        if combined_key.shape != key.shape:
+        if (6 + tail) * frame_tokens + retrieved_key.shape[1] != key.shape[1]:
             raise RuntimeError("retrieval changed attended token budget")
         self.trace[-1]["attention_replaced"] = True
         self.trace[-1]["retained_tail_latent_frames"] = tail
         self.retrieval_calls += 1
+        if self.history_weight is not None:
+            # Keep fused attention in both branches. An arbitrary dense logit
+            # mask would disable the current fused SDPA path and exhaust VRAM.
+            recent_key = torch.cat([key[:, :6 * frame_tokens], key[:, -tail * frame_tokens:]], dim=1)
+            recent_value = torch.cat([value[:, :6 * frame_tokens], value[:, -tail * frame_tokens:]], dim=1)
+            recent_output = self.original_attention(query, recent_key, recent_value, **kwargs)
+            history_output = self.original_attention(query, retrieved_key, retrieved_value, **kwargs)
+            return torch.lerp(recent_output, history_output, self.history_weight)
+        combined_key = torch.cat([key[:, :6 * frame_tokens], retrieved_key, key[:, -tail * frame_tokens:]], dim=1)
+        combined_value = torch.cat([value[:, :6 * frame_tokens], retrieved_value, value[:, -tail * frame_tokens:]], dim=1)
         return self.original_attention(query, combined_key, combined_value, **kwargs)
 
     def metadata(self):
         return {"method": "bounded early-view pose KV retrieval; diagnostic, not paper reproduction",
                 "archive_limit_latent_frames": 16, "retrieved_latent_frames": self.retrieved_frames,
                 "retrieved_frame_count_is_limit": True, "selection": self.selection,
+                "attention_composition": "joint softmax" if self.history_weight is None else "separately normalized recent/history outputs",
+                "history_output_weight": self.history_weight,
+                "attention_branches_per_retrieval": 1 if self.history_weight is None else 2,
                 "attended_latent_frames": self.cache_frames, "sink_latent_frames": 6,
                 "tail_latent_frames": self.cache_frames - 6 - self.retrieved_frames,
                 "excluded_recent_archive_frames": self.cache_frames - 14,

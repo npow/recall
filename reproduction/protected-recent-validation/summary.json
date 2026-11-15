@@ -1,0 +1,99 @@
+{
+  "scope": "Frozen22-frame8-read candidate validation against validated18-frame4-read memory; fixed-path mechanism study",
+  "complete": true,
+  "declared_pairs": 2,
+  "results": [
+    {
+      "task_id": "GC009",
+      "seed": 42,
+      "path": "turn_long_wait_return",
+      "image_sha256": "7c0ab2cccbbae6d9d9845eff8caf2e18fa76923b669ccc855ff7cd58e49b88c0",
+      "caption_sha256": "9c2dfb38f68732f77cd3578359013319be00735378ff085cd46291270ad81b7b",
+      "source_semantic_audit": "Image visually inspected and agrees with released caption; medieval bridge/town forGC009, mall forGC007.",
+      "held_out_axis": "fresh image",
+      "reference": "reference18_read4",
+      "candidate": "candidate22_read8",
+      "status": "completed",
+      "reference_dino": 0.6351109743118286,
+      "candidate_dino": 0.5564984083175659,
+      "reference_peak_bytes": 72752052736,
+      "candidate_peak_bytes": 83015331840,
+      "warm_suffix_s": {
+        "reference18_read4": 211.108099281,
+        "candidate22_read8": 298.178873605
+      },
+      "pixel_identical_prefix_chunks": 4,
+      "preference": "candidate22_read8",
+      "assessment": {
+        "A": {
+          "realized_round_trip": "no",
+          "starting_place_recovered": "uncertain",
+          "discontinuity": "yes",
+          "visual_evidence": "The opening view runs from frames 0 to about 11: a wooden footbridge with carved posts, a gate in the town wall, a clock tower and cathedral, a red-sail boat at left and a blue-sail boat at right, in warm hazy light. The RIGHT segment yaws visibly from about frame 12 to 45. The view passes the river, an arched bridge and a large carved post, then settles on a different walkway facing a half-timbered house and a stone gate tower under a hard blue sky. The lighting change from haze to blue sky is abrupt. The long WAIT holds this heading. Two pedestrians walk toward and past the camera. A white splash wave appears and grows in the water with no cause. A large green-and-white sailing boat then slides into the left foreground and grows until it dominates the frame (about frames 190 to 280). The LEFT segment starts around frame 285 and sweeps back through the river and town. Through about frame 294, the red hull and green tarp of the hallucinated boat stay in the foreground of the returning town view. By frames 296 to 299 a start-like view appears: posts, gate, clock tower, a red-sail boat and hazy light. However, a stone arch bridge and an extra spire now sit on the left where the original showed open river and hillside. The rotation then continues left through frames 300 to 318. It ends on a dark carved post with a gatehouse and stone tower at left. This framing is not the opening view.",
+          "failure_classification": "Camera-control failure: the LEFT rotation overshoots, so the final heading is past the start rather than at it. There is also partial forgetting and contamination. The new foreground boat persists into the return view, and the start view is only approximately recovered, with altered left-side geometry (an added bridge and tower). Implausible events include the spontaneous water surge and the boat sliding into frame."
+        },
+        "B": {
+          "realized_round_trip": "no",
+          "starting_place_recovered": "uncertain",
+          "discontinuity": "yes",
+          "visual_evidence": "The opening frames are identical to A's, and the RIGHT turn (about frames 12 to 45) is essentially the same. It passes the arched bridge and carved post and settles on the half-timbered house and gate tower walkway, with the same abrupt haze-to-blue-sky lighting shift. The long WAIT is stable in camera pose. Two women walk toward and past the camera, one in a white hat that briefly fills the lower left. After they leave, a wooden boat implausibly appears on and along the bridge deck, and a blue flag on a mast grows in size (about frames 215 to 280). The LEFT segment starts around frame 279 and sweeps back cleanly: the longboat, the arched bridge, the carved post, the green-spired town building, then the walkway with posts. Around frames 299 to 300 a start-like view appears. It shows the gate, clock tower, cathedral spires and a single sailboat at left. It matches the original layout better than A's version, though the boat differs and there are fewer people. The rotation then continues left through frames 301 to 318. It ends on a dark carved post with a half-timbered gatehouse and round stone tower at left, which is not the starting heading.",
+          "failure_classification": "Camera-control failure: the same LEFT overshoot as A, ending past the starting heading. Memory of the start scene is reasonably good when it passes by. The landmarks and layout (gate, clock tower, cathedral, posts) are consistent, with only minor boat and crowd differences. The implausible transition is the boat materializing on the bridge walkway during WAIT."
+        },
+        "preference": "B",
+        "confidence": "low",
+        "reasoning": "Neither video ends at the starting viewpoint. Both continue rotating left after briefly passing a start-like view, which is a control/overshoot failure rather than a successful round trip. A similar-looking frame mid-rotation is not rewarded as a full recovery. On the return pass, B's transient start view keeps the original landmark layout more faithfully: gate, clock tower, cathedral, open left side. A's version has an added stone bridge and tower on the left, and A's hallucinated green-sail boat lingers in the foreground during the return. A also shows more implausible scene events during WAIT, such as the water surge and the boat intrusion. B's boat on the bridge deck is also implausible but did not contaminate the return. Overall the differences are modest and both share the same core failure, so the preference for B is low-confidence."
+      },
+      "label_mapping": {
+        "A": "reference18_read4",
+        "B": "candidate22_read8"
+      }
+    },
+    {
+      "task_id": "GC007",
+      "seed": 43,
+      "path": "turn_long_wait_return",
+      "image_sha256": "1b2cbe83fe7c49d0df1ca0d423a581cead1ab2144f38695fe953e0161ee67eea",
+      "caption_sha256": "dab923a881c58ec6e7a47f3f55e19e8026015b484575e5eb8643950fa1b8ed30",
+      "source_semantic_audit": "Image visually inspected and agrees with released caption; medieval bridge/town forGC009, mall forGC007.",
+      "held_out_axis": "new seed for32-second path",
+      "reference": "reference18_read4",
+      "candidate": "candidate22_read8",
+      "status": "completed",
+      "reference_dino": 0.5180835723876953,
+      "candidate_dino": 0.823271632194519,
+      "reference_peak_bytes": 72758273536,
+      "candidate_peak_bytes": 83021552640,
+      "warm_suffix_s": {
+        "reference18_read4": 216.302627825,
+        "candidate22_read8": 248.20768118200004
+      },
+      "pixel_identical_prefix_chunks": 4,
+      "preference": "candidate22_read8",
+      "assessment": {
+        "A": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "uncertain",
+          "discontinuity": "no",
+          "visual_evidence": "Frames 0-9 hold the opening Primemall view: angular dark roof, 'Primemall' sign, small blue umbrella and red kiosk. From about frame 10 to 40 the camera pans right, past the 'Piemall' facade with its blue umbrella, to a dark canopy building with an 'rgman' sign. The pan is smooth, though it is not clearly a full 180 degrees. From about frame 40 to 275 the view holds with live motion: cars cross the background, so the picture is not frozen. From about frame 276 to 300 the camera pans left back past the 'Rgannan'/'Piemall' facades. Around frames 299-301 the Primemall view reappears with the same roof shape, 'Primemall' sign, kiosk and small umbrella, closely matching the start. During the final WAIT second, however, the leftward yaw continues. A glass storefront slides in from the left and grows to fill about half the frame (frames 302-318), and the Primemall sign is cut to 'Pr...' at the right edge. The final framing does not match the opening one. Sign text and landmark identity stay consistent ('Primemall' and 'Piemall' are preserved, with only the expected garbling on the dark sign). No hard cuts were observed.",
+          "failure_classification": "Camera-control failure (overshoot / continued yaw during WAIT) after an essentially correct return. This is not forgetting: the start landmark was briefly reproduced faithfully before the camera drifted past it. The newly revealed glass storefront is unseen geometry to the left of the start and cannot be verified against it."
+        },
+        "B": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "uncertain",
+          "discontinuity": "no",
+          "visual_evidence": "Frames 0-40 are essentially the same as A: Primemall, a right pan past Piemall, then the dark 'rgman' building. The long hold (about frames 40-275) is live, with pedestrians walking across the steps, so it is not frozen. The left pan from about frame 276 to 300 retraces Piemall and the 'Rgannan' facade in a consistent order. Primemall returns around frames 302-318 and the camera settles stably, with no overshoot. The building identity matches the start: same roof wedges, 'Primemall' sign text and red kiosk. The framing is only slightly offset, with the sign a bit right of its original position. The foreground layout differs from the opening frame, though. A large blue umbrella with a paved plaza and planters occupies the lower-left foreground, and a dark building edge appears at the far left. In the start view the foreground was lawn and trees with only a small distant umbrella. The landmark is retained, but the near-field spatial layout has changed.",
+          "failure_classification": "Partial memory drift in foreground layout. A foreground umbrella and plaza appear that were not in the opening view, while the main landmark and sign are retained. Camera control on the return is good, with a stable settle near the start heading. No reset-like jump: the return is a continuous pan."
+        },
+        "preference": "B",
+        "confidence": "low",
+        "reasoning": "Both videos realize a continuous right pan, a long live hold and a continuous left pan back. Neither shows hard cuts or frozen frames, and both preserve 'Primemall' and 'Piemall' identities. The commanded 180-degree yaw looks visually smaller than that in both, which is a shared ambiguity. A momentarily reproduces the start view more faithfully, but then keeps yawing left during the final WAIT. It ends on a glass storefront with Primemall pushed to the edge, so its final state fails to hold the starting viewpoint (a control error). B settles stably on Primemall near the original heading, but with an altered foreground: a large umbrella and plaza that were not present at the start (a layout memory error). Because B's final viewpoint is closer to the start and correctly stops on WAIT, it is weakly preferred. Confidence is low because A's transient match is arguably more accurate than B's settled view."
+      },
+      "label_mapping": {
+        "A": "reference18_read4",
+        "B": "candidate22_read8"
+      }
+    }
+  ],
+  "acceptance": "Do not promote based onlow-confidence development preference. Require consistent full-video improvement on newimage andnewseed; reporttiesandfailures.",
+  "caveat": "Fixed-path mechanism study, not agent-driven task scores or leaderboard reproduction."
+}

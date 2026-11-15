@@ -1,0 +1,180 @@
+{
+  "scope": "Development ablation of historical reads with protected recent context; no task-score or SOTA claim",
+  "declared_variants": 4,
+  "completed_variants": 4,
+  "declared_comparisons": 4,
+  "complete": true,
+  "comparisons": [
+    {
+      "reference": "reference18_read4",
+      "candidate": "context22",
+      "status": "completed",
+      "reference_dino": 0.7450172305107117,
+      "candidate_dino": 0.5057867765426636,
+      "reference_peak_bytes": 72758273536,
+      "candidate_peak_bytes": 77326885888,
+      "warm_suffix_s": {
+        "reference18_read4": 227.48351786599994,
+        "context22": 192.35302216099996
+      },
+      "pixel_identical_prefix_chunks": 4,
+      "preference": "reference18_read4",
+      "assessment": {
+        "A": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "yes",
+          "discontinuity": "no",
+          "visual_evidence": "Frames 0-9 show the opening view: the Primemall building with its triangular dark roof, diamond-patterned orange facade and 'Primemall' sign. Frames ~10-30 pan right smoothly. The pan passes the orange pyramid-roofed 'Dhrumall' building and reaches a blue-glass building, then settles on a planter with a blue umbrella and round tables. That planter view holds for the long WAIT period (~frames 30-275) with only small drift. Pedestrians move and a sign flickers slightly, but the geometry is stable. From ~frame 276 the camera pans left. It retraces the same sequence in reverse: glass building, then the Dhrumall pyramid with its umbrellas, then the Primemall facade. By ~frames 300-304 the framing closely matches the start: same roof silhouette, 'Primemall' sign, entrance kiosk and small umbrella. The camera then continues slightly further left. In the final second it shows a dark blue building, a tall pole and a white car on the left, with Primemall shifted to the right of frame. This is a modest yaw overshoot, not a scene change. The landmark identity, sign text and layout are preserved.",
+          "failure_classification": "Minor camera-control overshoot at the end of the left turn. No forgetting: the original building and sign are recovered through continuous motion, not a reset."
+        },
+        "B": {
+          "realized_round_trip": "no",
+          "starting_place_recovered": "no",
+          "discontinuity": "yes",
+          "visual_evidence": "The first ~275 frames are essentially the same as A. The camera turns right past Dhrumall to the umbrella planter and holds there. During the hold, the colors drift progressively toward heavily saturated blue/cyan. On the left turn (~frames 280+), the glass building is followed not by Dhrumall but by a newly invented brown faceted facade with a slanted 'PRADDE'-like sign. White and blue umbrellas appear behind glass railings. The sequence ends on a long flat brown geometric facade with garbled 'FIREDTIME' lettering above storefronts labeled 'Pritemall'. The Primemall building, its triangular roof and the Dhrumall pyramid never reappear. The final view contradicts the starting geometry and sign text.",
+          "failure_classification": "Spatial forgetting / scene hallucination on the return path. The camera rotation appears executed, but the revisited content was regenerated as a different building with corrupted signage. Progressive color drift during the static hold adds to this."
+        },
+        "preference": "A",
+        "confidence": "high",
+        "reasoning": "Both videos follow the commanded right turn, long hold and left turn with visible continuous motion, so camera control is broadly comparable. A retraces the identical landmark sequence in reverse and recovers the Primemall facade, roof and sign. Its only flaw is a slight leftward overshoot in the final second. B forgets the scene it already observed. On return it shows a different brown building with garbled text instead of Dhrumall and Primemall, and its color saturation drifts strongly during the hold. A preserves world memory; B does not."
+      },
+      "label_mapping": {
+        "A": "reference18_read4",
+        "B": "context22"
+      }
+    },
+    {
+      "reference": "reference18_read4",
+      "candidate": "retrieval_context22",
+      "status": "completed",
+      "reference_dino": 0.7450172305107117,
+      "candidate_dino": 0.6578651666641235,
+      "reference_peak_bytes": 72758273536,
+      "candidate_peak_bytes": 77823223296,
+      "warm_suffix_s": {
+        "reference18_read4": 227.48351786599994,
+        "retrieval_context22": 234.380441317
+      },
+      "pixel_identical_prefix_chunks": 4,
+      "preference": "tie",
+      "assessment": {
+        "A": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "uncertain",
+          "discontinuity": "no",
+          "visual_evidence": "Frames 0-9 show the 'Primemall' facade, centred and static. During RIGHT (about frames 10-35) the view pans smoothly past the pyramid 'Dhrmall' building, then the glass office block, and settles on the blue umbrella over a planter with four round tables. From about frame 40 to 280 the umbrella, planter and glass building stay fixed during WAIT. Pedestrians move and the small storefront sign text morphs between garbled strings, but the layout is stable. During LEFT (about frames 280-305) the pan reverses in the correct order: glass block, Dhrmall pyramid with umbrella tables, then the Primemall facade. Around frames 301-303 Primemall is roughly centred again, with the same 'Primemall' lettering, diamond-patterned orange cladding, twin sawtooth roof and pyramid at right. The camera keeps drifting left after that. The final frames (about 305-318) show Primemall pushed to the right third. Content never seen at the start enters on the left: a dark blue building, a tall pole, a white car (which pops in around frame 304) and a foreground umbrella. A slight Dutch tilt is also present.",
+          "failure_classification": "Camera-control error (overshoot of the return yaw by roughly 30-40 degrees), not forgetting. Landmark identity, sign text and relative layout are retained on return, and the newly revealed left-side content is consistent with simply over-rotating. Minor generative drift appears in the small storefront signage during the long hold. There is no reset."
+        },
+        "B": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "uncertain",
+          "discontinuity": "no",
+          "visual_evidence": "The outbound pan matches A: Primemall, then Dhrmall pyramid, then glass block, then umbrella planter, reached by about frame 40. The hold until about frame 280 is very stable; the storefront signs change only slightly and there are fewer moving pedestrians. The LEFT pan returns through the glass block, the Dhrmall pyramid and the outdoor tables, then Primemall around frames 299-303. Primemall reappears with consistent 'Primemall' lettering, cladding and roof geometry, and the pyramid sits to its right. As in A, rotation continues past the start. In the final frames Primemall sits in the right portion of the frame, and a large blue umbrella grows into the left foreground over frames 304-318, in front of a row of shops. The resulting final composition differs from frame 0. There are no hard cuts.",
+          "failure_classification": "Camera-control error (leftward overshoot past the starting yaw, of similar magnitude to A), not forgetting. The return path and landmarks are consistent. The foreground umbrella appearing on the left is new, unverified geometry beyond the original field of view rather than a contradiction. There is no reset."
+        },
+        "preference": "tie",
+        "confidence": "medium",
+        "reasoning": "Both videos actually rotate out roughly 180 degrees and back. Both preserve landmark identity on return: the Primemall sign, cladding and roof, the Dhrmall pyramid, the glass block and the umbrella planter all reappear in the correct order. Both briefly pass through a view close to the starting framing around frames 300-303. Both then over-rotate left, so the final frames show Primemall off-centre with previously unseen content on the left (a dark building, pole and car in A; a foreground umbrella and shop row in B). This is a camera-control/overshoot failure in both, not memory loss, and neither involves a reset or a hard cut. Differences are minor: A shows more storefront sign morphing and pedestrian activity during the hold, while B is slightly steadier. B's final overshoot adds a large foreground umbrella, which is a somewhat bigger compositional change. These differences roughly cancel out, so neither video is clearly better."
+      },
+      "label_mapping": {
+        "A": "reference18_read4",
+        "B": "retrieval_context22"
+      }
+    },
+    {
+      "reference": "reference18_read4",
+      "candidate": "retrieval8_context22",
+      "status": "completed",
+      "reference_dino": 0.7450172305107117,
+      "candidate_dino": 0.6923725605010986,
+      "reference_peak_bytes": 72758273536,
+      "candidate_peak_bytes": 83021552640,
+      "warm_suffix_s": {
+        "reference18_read4": 227.48351786599994,
+        "retrieval8_context22": 252.90672232300003
+      },
+      "pixel_identical_prefix_chunks": 4,
+      "preference": "retrieval8_context22",
+      "assessment": {
+        "A": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "yes",
+          "discontinuity": "no",
+          "visual_evidence": "Frames 0-9 show the opening view: the Primemall facade with its angular black roof, diamond-patterned orange cladding and the 'Primemall' sign. From about frame 10 the camera yaws right continuously. Primemall slides left, the second orange pyramid building ('Dhrmall', garbled text) comes into view, then a glass/blue office block, and the view settles on a planter with a blue umbrella and round tables around frame 40. That view is held through about frame 278, which matches the WAIT chunks. During the hold, scene content drifts: pedestrians in white appear and multiply from about frame 230, storefront signage text morphs ('FANG'-like, then 'GMBH', then other glyphs), and parked cars come and go. From about frame 279 the camera yaws left back through the same sequence in reverse (glass block, then Dhrmall with umbrellas, then Primemall). Around frames 302-304 the framing closely matches the start: same roofline, sign text 'Primemall', red/white kiosk, small blue umbrella. The rotation then continues past the start. By frames 305-318, Primemall has shifted right with its sign clipped at the frame edge. A dark blue building, a tall pole and a white car appear on the left; these were never shown at the start, but they are plausible off-frame content rather than a contradiction. Transitions are smooth with only motion blur, and there is no cut or reset.",
+          "failure_classification": "Camera-control error: the return yaw overshoots the start heading in the final second, so the final framing is offset left of the original. Landmark identity, sign text and layout are retained on return, so this is not forgetting. Minor temporal drift of dynamic and textual content (pedestrians, store signs) during the long hold."
+        },
+        "B": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "yes",
+          "discontinuity": "no",
+          "visual_evidence": "The outbound turn is essentially identical to A: Primemall, then Dhrmall, then the glass block, then the umbrella/planter view, reached around frame 40. The hold (about frames 40-278) is very stable. Storefront signage stays consistent ('FANG'-like glyphs), only small cars and pedestrians change, and there is no large content drift. From about frame 279 the camera smoothly yaws left back past the glass block and Dhrmall to Primemall. Frames 304-305 approximately match the opening framing, with the same roofline, 'Primemall' sign and red kiosk at lower right. Motion continues slightly beyond the start: in frames 306-318 Primemall sits right of center with its sign fully visible, and large blue umbrellas appear in the left foreground with a slight roll/tilt. The umbrellas were not visible in the start frame, but they plausibly lie just left of it. There are no cuts or resets, and transitions are continuous with motion blur.",
+          "failure_classification": "Camera-control error: a smaller overshoot past the start heading plus some camera roll at the end. Landmark identity and sign text are preserved on return, and there is no evidence of forgetting or reset. Good temporal stability during the hold."
+        },
+        "preference": "B",
+        "confidence": "low",
+        "reasoning": "Both videos actually execute the right turn, the long hold and the left return, and both pass through a view closely matching the start without any reset. Both recover Primemall with its correct roof geometry, sign text and nearby kiosk, so neither shows forgetting of the starting landmark. Both end with an overshoot of the starting heading, which is a camera-control issue. B is slightly preferable for two reasons. First, its final framing is closer to the start: the Primemall sign stays fully in frame, whereas in A it is clipped at the edge. Second, its scene is more stable during the 25-second hold, while A shows noticeable drift in pedestrians and storefront signage. The differences are small, so confidence is low."
+      },
+      "label_mapping": {
+        "A": "reference18_read4",
+        "B": "retrieval8_context22"
+      }
+    },
+    {
+      "reference": "retrieval_context22",
+      "candidate": "retrieval8_context22",
+      "status": "completed",
+      "reference_dino": 0.6578651666641235,
+      "candidate_dino": 0.6923725605010986,
+      "reference_peak_bytes": 77823223296,
+      "candidate_peak_bytes": 83021552640,
+      "warm_suffix_s": {
+        "retrieval_context22": 234.380441317,
+        "retrieval8_context22": 252.90672232300003
+      },
+      "pixel_identical_prefix_chunks": 6,
+      "preference": "retrieval8_context22",
+      "assessment": {
+        "A": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "uncertain",
+          "discontinuity": "no",
+          "visual_evidence": "Frames 0-9 hold the opening view: the Primemall facade, centered, with its sawtooth black roof, rust diamond-panel cladding, legible 'Primemall' sign and an open sky. From about frame 10 to 40 the view pans right continuously. It passes the rust pyramid building with a garbled 'Dhrmall' sign and the blue-glass building, then settles on the blue umbrella over a planter with four round tables. That pass covers roughly the commanded 180 degrees. The umbrella view then holds through about frame 283, with only minor shop-window and pedestrian changes, which fits the WAIT commands rather than a freeze. From about frame 284 to 305 the view pans left back through the same sequence: glass building, then the Dhrmall pyramid with the same garbled sign, then Primemall. Intermediate landmarks reappear in the same order and keep their identity. In the final frames (about 309-318), Primemall's roof shape and sign are preserved. However, the building sits well right of its starting position, with the sign cut off at the frame edge as 'Primemal'. The camera is also tilted, and a large blue umbrella, railings and planters fill the left foreground. None of that foreground was visible in the opening view. This points to leftward overshoot or a pose offset, not an exact return to the starting viewpoint.",
+          "failure_classification": "Camera-control or pose drift: the camera overshoots left and the final framing is tilted and offset, while landmark memory holds. The persistent garbled 'Dhrmall' text is a rendering-fidelity issue that stays consistent across both passes, so it is not forgetting. There is no reset and no hard cut."
+        },
+        "B": {
+          "realized_round_trip": "yes",
+          "starting_place_recovered": "uncertain",
+          "discontinuity": "no",
+          "visual_evidence": "B is nearly identical to A for the opening hold, the right pan from about frame 10 to 40 (Primemall, then the Dhrmall pyramid, the glass building and the umbrella planter), and the long static umbrella hold. Minor variations, such as a white van in the background, read as scene dynamics, not breaks. The return pan from about frame 284 to 305 retraces the glass building, the Dhrmall pyramid with consistent garbled text, and Primemall, all smoothly. In the final frames (about 305-318), Primemall's roof, cladding and fully legible 'Primemall' sign return. The building sits closer to its starting position than in A: the sign is around the center-right of the frame and fully visible. Even so, B shares A's tilt and its added foreground of blue umbrellas and railings on the left, so the end pose still does not match the opening frame exactly.",
+          "failure_classification": "Mild camera-control or pose drift: some overshoot and tilt on return, less pronounced than in A. Landmark identity and sign text are retained. There is no reset and no discontinuity."
+        },
+        "preference": "B",
+        "confidence": "low",
+        "reasoning": "Both videos carry out the full turnaround, a smooth right yaw and later a smooth left yaw, with no cuts or resets. Both also keep consistent landmark identities across the outbound and return passes: Primemall, the Dhrmall pyramid, the glass building and the umbrella planter. Neither returns exactly to the opening viewpoint. Each ends rotated past the start, with tilted framing and foreground umbrellas and railings that were not in frame at the beginning. That pattern points to camera-control drift, not scene forgetting, since the landmarks themselves are preserved. B's final framing is somewhat closer to the start, with Primemall more centered and its sign fully legible, while A ends with Primemall pushed further right and the sign clipped. The differences are small, so the preference for B is low-confidence."
+      },
+      "label_mapping": {
+        "A": "retrieval_context22",
+        "B": "retrieval8_context22"
+      }
+    }
+  ],
+  "artifacts": {
+    "reference18_read4": {
+      "result_directory": "retrieval-GC007-turn_long_wait_return-seed42-1794715090016006049",
+      "video_sha256": "ce278f0f360c9f8b391bf9cba4a2fbce958359eee6088e8f78af554c385b1db4"
+    },
+    "context22": {
+      "result_directory": "context22-GC007-turn_long_wait_return-seed42-1794715229646324432",
+      "video_sha256": "ce1df2177ae65a4c1ea370595b709bd634a3bdb2f4c2b132a1a77b828002bd8a"
+    },
+    "retrieval_context22": {
+      "result_directory": "retrieval-context22-GC007-turn_long_wait_return-seed42-1794715365572031035",
+      "video_sha256": "88a4e18ca7ec845773f67bc033646c67b5a6568f375309b77a42b605c78837e9"
+    },
+    "retrieval8_context22": {
+      "result_directory": "retrieval-8-nearest-context22-GC007-turn_long_wait_return-seed42-1794715366338418227",
+      "video_sha256": "48e8bcfac9776846aebf93a5ee7c7fba3311b3ce79057abb5e52c41e7b7b24bd"
+    }
+  },
+  "caveat": "Development-only fixed trajectory. Larger attention capacity and retrieval eligibility differ from18-frame reference. No held-out gain or leaderboard claim."
+}

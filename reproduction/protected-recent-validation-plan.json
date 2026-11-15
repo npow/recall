@@ -1,0 +1,41 @@
+{
+  "scope": "Frozen22-frame8-read candidate validation against validated18-frame4-read memory; fixed-path mechanism study",
+  "cases": [
+    {
+      "task_id": "GC009",
+      "seed": 42,
+      "path": "turn_long_wait_return",
+      "image_sha256": "7c0ab2cccbbae6d9d9845eff8caf2e18fa76923b669ccc855ff7cd58e49b88c0",
+      "caption_sha256": "9c2dfb38f68732f77cd3578359013319be00735378ff085cd46291270ad81b7b",
+      "source_semantic_audit": "Image visually inspected and agrees with released caption; medieval bridge/town forGC009, mall forGC007.",
+      "held_out_axis": "fresh image"
+    },
+    {
+      "task_id": "GC007",
+      "seed": 43,
+      "path": "turn_long_wait_return",
+      "image_sha256": "1b2cbe83fe7c49d0df1ca0d423a581cead1ab2144f38695fe953e0161ee67eea",
+      "caption_sha256": "dab923a881c58ec6e7a47f3f55e19e8026015b484575e5eb8643950fa1b8ed30",
+      "source_semantic_audit": "Image visually inspected and agrees with released caption; medieval bridge/town forGC009, mall forGC007.",
+      "held_out_axis": "new seed for32-second path"
+    }
+  ],
+  "variants": [
+    {
+      "label": "reference18_read4",
+      "cache_frames": 18,
+      "retrieved_frames": 4
+    },
+    {
+      "label": "candidate22_read8",
+      "cache_frames": 22,
+      "retrieved_frames": 8
+    }
+  ],
+  "frozen": "Native32chunks,60deg/s,seed percase,H100,Torch2.6cu124,BF16SDPA,6sink,16earlyCPUarchive6..21,nearestpose,virtualRoPE,expandableallocator,T5offload,temporaryreadsreleasedbeforedecode",
+  "preregistered_after": "DevelopmentGC007seed42 weaklypreferred22/8over18/4 and22/4; allfourdevelopmentcomparisonscomplete. No tuning permitted on these validation outputs.",
+  "primary": "Full-video blinded landmarkreturn and continuity, includingactualcamera motion andresets. EndpointDINO supplementary only.",
+  "acceptance": "Do not promote based onlow-confidence development preference. Require consistent full-video improvement on newimage andnewseed; reporttiesandfailures.",
+  "published_score_reproduction": false,
+  "training": "None"
+}

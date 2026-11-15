@@ -18,19 +18,20 @@ else:
 app = modal.App("worldsync-lingbot-roundtrip")
 
 
-def mode_name(retrieval, cache_frames, rephase_sink, positions, retrieved_frames=4, selection="nearest"):
+def mode_name(retrieval, cache_frames, rephase_sink, positions, retrieved_frames=4, selection="nearest", history_weight=-1.0):
     if rephase_sink:
         return "sink-rephase"
     if not retrieval:
         return "stock" if cache_frames == 18 else f"context{cache_frames}"
     base = "retrieval-native" if positions == "native" else "retrieval"
     mode = base if retrieved_frames == 4 and selection == "nearest" else f"{base}-{retrieved_frames}-{selection}"
-    return mode if cache_frames == 18 else f"{mode}-context{cache_frames}"
+    mode = mode if cache_frames == 18 else f"{mode}-context{cache_frames}"
+    return mode if history_weight < 0 else f"{mode}-gate{round(history_weight * 100)}"
 
 
-@app.function(image=image, gpu="H200", cpu=8, memory=131072, timeout=1800, max_containers=3,
+@app.function(image=image, gpu=os.environ.get("WORLDSYNC_ROUNDTRIP_PRIMARY_GPU", "H200"), cpu=8, memory=131072, timeout=1800, max_containers=3,
               volumes={"/cache": weights, "/results": results})
-def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", rephase_sink: bool = False, retrieval_positions: str = "virtual", turn_rate: float = 60, offload_text_encoder: bool = False, retrieved_frames: int = 4, retrieval_selection: str = "nearest", allocator_expandable: bool = False):
+def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", rephase_sink: bool = False, retrieval_positions: str = "virtual", turn_rate: float = 60, offload_text_encoder: bool = False, retrieved_frames: int = 4, retrieval_selection: str = "nearest", allocator_expandable: bool = False, history_weight: float = -1.0):
     import shutil
     import subprocess
     import time
@@ -41,7 +42,7 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
     target.parent.mkdir(exist_ok=True)
     if not target.exists():
         target.symlink_to("/cache/14b-causal-fast")
-    mode = mode_name(retrieval, cache_frames, rephase_sink, retrieval_positions, retrieved_frames, retrieval_selection)
+    mode = mode_name(retrieval, cache_frames, rephase_sink, retrieval_positions, retrieved_frames, retrieval_selection, history_weight)
     identifier = f"{mode}-{task_id}-{path_name}-seed{seed}-{time.time_ns()}"
     output = Path("/work/outputs") / identifier
     try:
@@ -53,6 +54,8 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
         if retrieval:
             command.extend(["--pose-retrieval", "--retrieval-positions", retrieval_positions,
                             "--retrieved-frames", str(retrieved_frames), "--retrieval-selection", retrieval_selection])
+        if history_weight >= 0:
+            command.extend(["--history-output-weight", str(history_weight)])
         if rephase_sink:
             command.append("--rephase-sink")
         if cache_frames != 18:
@@ -76,11 +79,11 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
               volumes={"/cache": weights, "/results": results})
 def generate_h100(path_name: str, seed: int, retrieval: bool, cache_frames: int, task_id: str,
                   rephase_sink: bool, retrieval_positions: str, turn_rate: float,
-                  retrieved_frames: int = 4, retrieval_selection: str = "nearest", allocator_expandable: bool = False):
+                  retrieved_frames: int = 4, retrieval_selection: str = "nearest", allocator_expandable: bool = False, history_weight: float = -1.0):
     # Same GPU encoding and denoising arithmetic; only inactive encoder weights
     # move to CPU after the prompt context is computed.
     return generate.local(path_name, seed, retrieval, cache_frames, task_id,
-                          rephase_sink, retrieval_positions, turn_rate, True, retrieved_frames, retrieval_selection, allocator_expandable)
+                          rephase_sink, retrieval_positions, turn_rate, True, retrieved_frames, retrieval_selection, allocator_expandable, history_weight)
 
 
 @app.local_entrypoint()

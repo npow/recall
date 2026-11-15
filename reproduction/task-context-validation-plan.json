@@ -1,0 +1,53 @@
+{
+  "scope": "Paired confirmation of frozen22/8 method against18/4 on previouslyaudited3-taskcohort; not untouched held-out selection",
+  "output_prefix": "task-context-validation",
+  "turn_degrees_per_second": 45,
+  "cases": [
+    {
+      "task_id": "GC010",
+      "seed": 42,
+      "path": "turn90_wait_return",
+      "partition": "development",
+      "task": "Turn right90 degrees then left back to the start",
+      "image_sha256": "a7d4b95aa0e55ac027be6abc98b432e9d655f07c269be9939d0efe3f88724475",
+      "caption_sha256": "67c5053486967e79bacfd79632fcd5105c70be6abb68fd3c6ec59c192f4024fd"
+    },
+    {
+      "task_id": "GC033",
+      "seed": 42,
+      "path": "turn90left_wait_return",
+      "partition": "held_out",
+      "task": "Turn left90 degrees then back to the display window",
+      "image_sha256": "5d57773cd6dbd2e73d3edadd91b026f333df95951b3fd31fe19865b58a72d3c3",
+      "caption_sha256": "28fd9133f29ac92089c5449871ed6fc9ea3f6d1443efd28b5adbc8589118b3db"
+    },
+    {
+      "task_id": "GC040",
+      "seed": 42,
+      "path": "turn90_wait_return",
+      "partition": "development_replacement",
+      "task": "Turn right90 degrees then return to the starting view",
+      "replacement_for": "GC013",
+      "image_sha256": "78fc9d7154806042255323039205840e02e2b670cf2e93434c079a8445fec2be",
+      "caption_sha256": "844603e32d7a25bc6cf08a1b5d674ec382bb0b4d64e4db38635fc94c19842d97"
+    }
+  ],
+  "variants": [
+    {
+      "label": "reference18_read4",
+      "cache_frames": 18,
+      "retrieved_frames": 4
+    },
+    {
+      "label": "candidate22_read8",
+      "cache_frames": 22,
+      "retrieved_frames": 8
+    }
+  ],
+  "workspace": "seraphina-ink-88",
+  "primary": "Released task-specific trajectory gate and rubrics using sameClaudeOpus5.5 diagnostic protocol. Includeall3validpairs,retainfailure/quarantinehistory.",
+  "quarantined_task": "GC013 sourceimage/caption mismatch; do notregenerateorcount.",
+  "source_audit": "reproduction/task-input-audit.json",
+  "training": "None",
+  "caveat": "Native fixed task-matched paths, not adaptiveAgentPlayer; no publicleaderboardscore claim."
+}

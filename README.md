@@ -15,6 +15,16 @@ improves the same Claude rubric from **2.47 to 3.57** across three valid
 scripted tasks. One released image/caption mismatch is quarantined and retained
 explicitly. This is a local subset result, not a published PlayWorld score.
 
+[Preserving recent context](reproduction/protected-recent-memory/summary.json)
+lets eight historical views run without the earlier resets on the development
+scene. Blinded comparisons weakly prefer this22-frame variant; fresh-image and
+new-seed validation is pending. The validated four-view method remains the default.
+
+[Temporary-buffer release](reproduction/lingbot-read-cache-lifetime/README.md)
+reduces peak GPU allocation by1.59GB with all32chunks pixel-identical.
+[FlashAttention4 measurements](reproduction/lingbot-attention-optimization.md)
+show about1.9x faster attention, with full-rollout timing still pending.
+
 [The four/eight-view ablation](reproduction/multiview-retrieval/README.md) finds
 that eight historical views degrade continuity when they displace recent
 context. Four diverse views tie the four-nearest reference.

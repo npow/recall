@@ -35,6 +35,8 @@ def main():
     parser.add_argument("--pose-retrieval", action="store_true", help="Experimental bounded early-view retrieval on native fixed paths")
     parser.add_argument("--retrieved-frames", type=int, choices=(4, 8), default=4)
     parser.add_argument("--retrieval-selection", choices=("nearest", "diverse"), default="nearest")
+    parser.add_argument("--history-output-weight", type=float, choices=(.25, .5), default=None,
+                        help="Declared22-frame8-view pilot: separately normalize recent/history attention")
     parser.add_argument("--retrieval-positions", choices=("virtual", "native"), default="virtual")
     parser.add_argument("--rephase-sink", action="store_true", help="Experimental pose-gated native sink key rephasing")
     parser.add_argument("--offload-text-encoder", action="store_true", help="Release the completed GPU text encoder before denoising")
@@ -55,6 +57,10 @@ def main():
         parser.error("retrieval count/selection require --pose-retrieval")
     if args.retrieval_positions != "virtual" and not args.pose_retrieval:
         parser.error("retrieval positions require --pose-retrieval")
+    if args.history_output_weight is not None and (not args.pose_retrieval or args.retrieved_frames != 8
+            or knobs["local_attn_size"] != 22 or args.retrieval_selection != "nearest"
+            or args.retrieval_positions != "virtual"):
+        parser.error("gated attention pilot requires22 frames,8 nearest views,virtual positions and pose retrieval")
     if args.pose_retrieval and args.rephase_sink:
         parser.error("memory ablations must be tested separately")
     if (args.pose_retrieval or args.rephase_sink) and not args.native_fixed_controls:
@@ -174,7 +180,7 @@ def main():
             from worldsync.lingbot_retrieval import PoseKVMemory
             memory = PoseKVMemory(pipeline, key_positions=args.retrieval_positions,
                                   retrieved_frames=args.retrieved_frames, selection=args.retrieval_selection,
-                                  cache_frames=knobs["local_attn_size"])
+                                  cache_frames=knobs["local_attn_size"], history_weight=args.history_output_weight)
         elif args.rephase_sink:
             from worldsync.lingbot_sink_rephase import SinkRephaseMemory
             memory = SinkRephaseMemory(pipeline)
