@@ -1,0 +1,63 @@
+{
+  "source_commit": "315cdce3136ef7e6fe4223b7d43b00819d43b031",
+  "task": "OE020",
+  "split": "insight",
+  "seed": 42,
+  "chunks": 60,
+  "arms": [
+    "task-only",
+    "caption-plus-task"
+  ],
+  "status": "completed",
+  "gpu": "local NVIDIA Thor",
+  "purpose": "one paired prompt ablation; not benchmark reproduction",
+  "launched_at": 1794763698.0642712,
+  "jobs": [
+    {
+      "arm": "task-only",
+      "command": [
+        "/home/npow/code/iteratehack/.venv-lingbot/bin/python",
+        "-m",
+        "worldsync.lingbot_released_baseline",
+        "--task-id",
+        "OE020",
+        "--seed",
+        "42",
+        "--chunks",
+        "60",
+        "--generate",
+        "--output",
+        "/home/npow/code/iteratehack/outputs/local-caption-pair-OE020/task-only",
+        "--split",
+        "insight",
+        "--validate-controller"
+      ],
+      "started_at": 1794763698.06447,
+      "pid": 1163120,
+      "returncode": 0,
+      "finished_at": 1794766738.5156765
+    },
+    {
+      "arm": "caption-plus-task",
+      "command": [
+        "/home/npow/code/iteratehack/.venv-lingbot/bin/python",
+        "-m",
+        "worldsync.lingbot_caption_ablation",
+        "--task-id",
+        "OE020",
+        "--seed",
+        "42",
+        "--chunks",
+        "60",
+        "--generate",
+        "--output",
+        "/home/npow/code/iteratehack/outputs/local-caption-pair-OE020/caption-plus-task"
+      ],
+      "started_at": 1794766738.5162258,
+      "pid": 1254315,
+      "returncode": 0,
+      "finished_at": 1794769818.684635
+    }
+  ],
+  "finished_at": 1794769818.686108
+}

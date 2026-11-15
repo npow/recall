@@ -1,13 +1,24 @@
-# Local OE020 prompt ablation
+# Local OE020 prompt ablation — complete
 
-One matched pair on local Thor:60chunks, seed42, canonical controller, same stock checkpoint/cache/sampler. Only generation text changes: task-only versus caption-plus-task. Source archived at315cdce before launch so collaborator edits do not change the second arm.
+**Task-only1.33 → caption-plus-task1.87 (+0.53) on one selected development case.** This is a partial improvement, not a benchmark result.
 
-[Declared plan](plan.json). Live outputs: `outputs/local-caption-pair-OE020/manifest.json`, with per-arm logs and original videos. The task was selected after observing earlier H100 failures, so this is a development experiment. No result is available yet. No cloud GPU allocated.
+| Generation text | Three fixed judge scores | Mean |
+|---|---|---:|
+| Task only |1.0,2.0,1.0|1.3333|
+| Scene caption + task |1.6,2.2,1.8|1.8667|
 
-## Reproduction
+[Full side-by-side at normal speed](side-by-side.mp4) · [Contact sheet](contact.jpg) · [Exact results and original hashes](comparison.json) · [Pair verification](pair-verification.json)
 
-Run `python scripts/run_local_caption_pair.py` from a checkout with the local LingBot environment and weights. It refuses an existing `outputs/local-caption-pair-OE020` directory, archives tracked `worldsync` source at the launch commit, and runs the two arms sequentially with terminal return codes recorded. Shared model weights and benchmark data are referenced locally. It does not start cloud GPUs or submit judge calls. The currently active run was started with the equivalent temporary launcher before this script was added.
+Same local NVIDIA Thor, Torch2.15.0+cu132, frozen LingBot-World2 checkpoint, seed42, canonical controller, camera command schedule,18/6cache and sampler. Both original videos contain957frames at16fps (59.8125seconds); neither makes a player call. The only inference-setting change is task-only text versus image caption followed by the task. Source was archived at315cdce before either arm started. Both runs exited0 and passed source/settings/chunk/video checks. The preview is resized and re-encoded for viewing; judgments used original full videos.
 
-Before any judging, run `.venv-lingbot/bin/python scripts/verify_local_caption_pair.py --output outputs/local-caption-pair-OE020/pair-verification.json`. It rejects incomplete episodes, mismatched settings/hardware/source/camera traces, altered chunks and incorrect encoded duration/frame counts. It does not judge quality. Three CPU tests exercise real encoded frame counts, changed-source rejection, mismatched hardware and pending-run rejection.
+The judges describe frozen actors and abrupt appearances in the task-only video. Caption conditioning produces more sustained traffic/cyclist motion, but cyclist bodies deform and merge. More visible activity does not mean a coherent world. The mean gain is descriptive: three judgments of the same video are not three independent generation trials. There is no population confidence interval or full-suite improvement claim.
 
-`python scripts/finish_local_caption_pair.py` waits for generation, requires the integrity check to pass, validates the three predeclared two-video manifests against the verified originals, then submits three fixed judge repetitions per video. It loads the judge adapter from the frozen source archive. Exclusive attempt markers prevent automatic re-submission after interruption; judge errors are retained. This command submits paid Gemini judge requests only after both episodes are complete. It never launches generation or cloud GPUs.
+OE020 was selected after observing failures in the earlier H100 study. This tests a hypothesis on a development case, not held-out generalization. It does not explain all differences from the older legacy controller or reproduce hosted LingBot/Genie performance. A caption-only arm and more cases/seeds would be needed to distinguish additional effects; neither has been launched.
+
+## Evidence and reproduction
+
+[Declared plan](plan.json). Full originals, logs and generation manifest are retained under `outputs/local-caption-pair-OE020/`. The two original run/protocol manifests and all six judge reports are included here. Judge source was loaded from the same315cdce archive; there were no failed reports or replacement repetitions.
+
+Run `python scripts/run_local_caption_pair.py` with the local environment and weights to create a new pair. It refuses an existing output directory, archives tracked source, and runs both arms sequentially on one GPU. It does not allocate cloud GPUs or submit judging requests.
+
+Before scoring, `.venv-lingbot/bin/python scripts/verify_local_caption_pair.py --output outputs/local-caption-pair-OE020/pair-verification.json` checks full duration/frame counts, shared source/settings/hardware, camera commands, and chunk hashes. `scripts/finish_local_caption_pair.py` waits for completion and verification before submitting the three predeclared repetitions per video. Exclusive attempt markers prevent silent resubmission. All local generation and judging for this pair have now finished; no follow-on GPU jobs were launched.

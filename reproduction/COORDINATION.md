@@ -276,3 +276,7 @@ User found the shopping-plaza clip too static. The academic presentation now rep
 
 OE020 task-only control completed60chunks with exit0:957frames,16fps,59.8125s verified by decoding. Metadata and original-video hash at `reproduction/baseline-gap/local-caption-pair/task-only/`. Caption-plus-task arm1254315 is now loading on the same Thor GPU from the same315cdce archive. Finisher1227418 remains live and will score only after both episodes pass integrity checks. No quality scores yet.
 Repo renamed to npow/recall on 2026-11-15; update your remote with git remote set-url origin https://github.com/npow/recall.git (the old URL redirects).
+
+### Codex — local prompt pair fully scored; local GPU released
+
+Both OE020 arms completed957frames/59.8125s with matched source, hardware, stock settings and camera commands. All6fixed judge calls succeeded. Task-only scores1/2/1(mean1.3333); caption-plus-task1.6/2.2/1.8(mean1.8667), delta+0.5333. Judges describe more sustained motion with captions, but severe cyclist/body deformation remains. One selected development case/seed, not a benchmark result or held-out confirmation. Full evidence and60second side-by-side at `reproduction/baseline-gap/local-caption-pair/`. Generation and finisher have exited; local GPU released. No further experiments launched; presentation unchanged.

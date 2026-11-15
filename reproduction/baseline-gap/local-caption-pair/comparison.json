@@ -1,0 +1,34 @@
+{
+  "scope": "One development case, one generated video per arm, seed42; not a benchmark result",
+  "task": "OE020",
+  "source_commit": "315cdce3136ef7e6fe4223b7d43b00819d43b031",
+  "arms": {
+    "task-only": {
+      "scores": [
+        1.0,
+        2.0,
+        1.0
+      ],
+      "mean": 1.3333333333333333,
+      "original_video_sha256": "78e7ee64837ddf15502845e376ef02e0be9880cfd617d2b137552ee19b1fd14e"
+    },
+    "caption-plus-task": {
+      "scores": [
+        1.6,
+        2.2,
+        1.8
+      ],
+      "mean": 1.8666666666666667,
+      "original_video_sha256": "64da1e8f30b463343dfb071a441b9bcebe2bb0fb8728bd588ee3434cec43436d"
+    }
+  },
+  "judging": "Three fixed Gemini3.1-pro-preview/Vertex calls per original full video; not three independent generation seeds",
+  "selection": "Selected after earlier H100 failure audit; not held-out confirmation",
+  "limitations": [
+    "One case and seed; no population confidence interval",
+    "Both videos still show substantial process/identity failures",
+    "Local checkpoint, integration and judge transport are not the hosted published benchmark setup"
+  ],
+  "mean_difference": 0.5333333333333334,
+  "preview_sha256": "29d44d5a687fd7b4e91d9751a6483c7155b78336c9c022d24e7cbaa57c79097a"
+}
