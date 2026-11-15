@@ -4,6 +4,8 @@ Not a reproduction of either paper: archive 16 early non-sink latent frames,
 retrieve four by commanded pose, and place canonical keys at recent virtual
 times. Native sink/recent/current slots retain their original keys and values.
 """
+import json
+import time
 import math
 import numpy as np
 import torch
@@ -53,7 +55,8 @@ def select_frames(poses, available, current_start, count=4, diverse=False, recen
 
 class PoseKVMemory:
     def __init__(self, pipeline, key_positions="virtual", retrieved_frames=4, selection="nearest", cache_frames=18, history_weight=None,
-                 foreign_archives=None, export_path=None):
+                 foreign_archives=None, export_path=None, min_retrieved=4,
+                 archive_until=22, archive_stride=1):
         if retrieved_frames not in {4, 8} or selection not in {"nearest", "diverse"}:
             raise ValueError("retrieval supports4/8 frames and nearest/diverse selection")
         if cache_frames not in {18, 22}:
@@ -87,8 +90,10 @@ class PoseKVMemory:
         self.trace = []
         self.frame_tokens = None
         self.retrieval_calls = 0
-        self.archive_range = (6, 22)  # latent frames archived; subclasses may widen it
+        self.archive_range = (6, archive_until)  # latent frames archived; subclasses may widen it
+        self.archive_stride = archive_stride
         self.export_path = export_path
+        self.min_retrieved = min_retrieved
         self.foreign = {}
         for name, path in (foreign_archives or {}).items():
             # Another agent's archive from the same seed, image, text and identity start pose.
@@ -147,7 +152,8 @@ class PoseKVMemory:
             # Keep a bounded, explicit initial history. No hidden unbounded bank.
             for offset in range(query.shape[1] // frame_tokens):
                 index = first_frame + offset
-                if self.archive_range[0] <= index < self.archive_range[1]:
+                if (self.archive_range[0] <= index < self.archive_range[1]
+                        and (index - self.archive_range[0]) % self.archive_stride == 0):
                     lo, hi = offset * frame_tokens, (offset + 1) * frame_tokens
                     v_current = value[:, -query.shape[1]:]
                     bank[index] = (raw[:, lo:hi].detach().to("cpu", copy=True),
@@ -155,7 +161,7 @@ class PoseKVMemory:
                     if layer == 0:
                         self.available.add(index)
         # Preserve the declared attention budget; keep at least four current frames.
-        if len(self.selected) < 4 or key.shape[1] != self.cache_frames * frame_tokens:
+        if len(self.selected) < self.min_retrieved or key.shape[1] != self.cache_frames * frame_tokens:
             return self.original_attention(query, key, value, **kwargs)
         if layer not in self.cached:
             pairs = [self.pair(layer, bank, index) for index in self.selected]
@@ -203,8 +209,11 @@ class PoseKVMemory:
     def export(self):
         if self.export_path is None:
             return
+        started = time.monotonic()
         torch.save({"poses": np.asarray(self.poses), "available": sorted(self.available),
                     "banks": {layer: dict(bank) for layer, bank in self.banks.items()}}, self.export_path)
+        print(json.dumps({"event": "archive_exported", "frames": len(self.available),
+                          "seconds": round(time.monotonic() - started, 1)}), flush=True)
 
     def metadata(self):
         return {"foreign_archives": {name: archive["available"] for name, archive in self.foreign.items()},

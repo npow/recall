@@ -20,6 +20,8 @@ PATHS = {
     "trio_duel_a": ["WAIT"] + ["S"] * 6,
     "trio_duel_b": ["WAIT"] + ["RIGHT"] * 3 + ["S"] * 4,
     "spin720": ["WAIT"] + ["RIGHT"] * 12 + ["WAIT"],
+    "trio2_duel_a": ["WAIT", "S", "WAIT", "S", "WAIT", "S", "WAIT", "WAIT"],
+    "trio2_duel_b": ["WAIT"] + ["RIGHT"] * 3 + ["S", "WAIT", "S", "WAIT"],
     "round_trip": ["WAIT"] + ["W"] * 4 + ["RIGHT"] * 3 + ["W"] * 4 + ["RIGHT"] * 3 + ["WAIT"],
 }
 

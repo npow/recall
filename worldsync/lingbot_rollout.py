@@ -71,6 +71,10 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
     parser.add_argument("--archive-export", type=Path, help="Save this agent's retrieval archive and poses at close")
     parser.add_argument("--foreign-archive", action="append", default=[], metavar="NAME=PATH",
                         help="Also retrieve from another agent's exported archive (same seed/image/text/start pose)")
+    parser.add_argument("--min-retrieved-frames", type=int, default=4,
+                        help="Demo: apply retrieval when at least this many views are selected")
+    parser.add_argument("--archive-until", type=int, default=22, help="Demo: archive latent frames [6, N)")
+    parser.add_argument("--archive-stride", type=int, default=1, help="Demo: archive every k-th latent frame")
     parser.add_argument("--world-text-suffix", default="", help="Demo: text appended to the world-model caption")
     parser.add_argument("--retrieval-positions", choices=("virtual", "native"), default="virtual")
     parser.add_argument("--rephase-sink", action="store_true", help="Experimental pose-gated native sink key rephasing")
@@ -359,7 +363,8 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
                                   retrieved_frames=args.retrieved_frames, selection=args.retrieval_selection,
                                   cache_frames=knobs["local_attn_size"], history_weight=args.history_output_weight,
                                   foreign_archives=dict(item.split("=", 1) for item in args.foreign_archive),
-                                  export_path=args.archive_export)
+                                  export_path=args.archive_export, min_retrieved=args.min_retrieved_frames,
+                                  archive_until=args.archive_until, archive_stride=args.archive_stride)
         elif args.rephase_sink:
             from worldsync.lingbot_sink_rephase import SinkRephaseMemory
             memory = SinkRephaseMemory(pipeline)
