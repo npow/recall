@@ -164,8 +164,13 @@ def canonical_actions(task, source_path=SHARED_SOURCE):
     result = []
     for index, step in enumerate(steps):
         parsed = namespace["parse_action_step"](step)
+        # These pitch aliases are explicit in the pinned HY native key map;
+        # the shared generic parser intentionally leaves them uninterpreted.
+        pitch_aliases = {"U": "ArrowUp", "J": "ArrowDown"}
         keys = [
-            "Key" + key.upper() if key.upper() in {"W", "A", "S", "D"} else key
+            "Key" + key.upper()
+            if key.upper() in {"W", "A", "S", "D"}
+            else pitch_aliases.get(key.upper(), key)
             for key in parsed.keys
         ]
         if parsed.kind != "wait" and (len(keys) != 1 or keys[0] not in KEYS):
@@ -186,6 +191,11 @@ def canonical_actions(task, source_path=SHARED_SOURCE):
                 "index": index,
                 "rotation_extra_ms": 0,
                 "source": "released shared action DSL; no HY timing conversion",
+                "native_pitch_aliases": [
+                    {"source": key, "target": pitch_aliases[key.upper()]}
+                    for key in parsed.keys
+                    if key.upper() in pitch_aliases
+                ],
             }
         )
     return result

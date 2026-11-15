@@ -227,6 +227,11 @@ def test_canonical_shared_dsl_exact_duration_without_hy_fallback(tmp_path):
     assert canonical_actions(task(action_sequence_steps=["hold(w,450ms)"]))[0][
         "keys"
     ] == ["KeyW"]
+    pitch = canonical_actions(
+        task(action_sequence_steps=["hold(U,450ms)", "hold(J,900ms)"])
+    )
+    assert [step["keys"] for step in pitch] == [["ArrowUp"], ["ArrowDown"]]
+    assert pitch[0]["native_pitch_aliases"] == [{"source": "U", "target": "ArrowUp"}]
     with pytest.raises(PlayerResponseError, match="raw action fallback"):
         canonical_actions(task(action_sequence_steps=[]))
     with pytest.raises(PlayerResponseError, match="unsupported native controls"):
