@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WorldSync slides</title>
+<style>
+:root{
+  --bg:#0b0e13; --panel:#151a22; --line:#2a3240; --text:#e8ecf2; --dim:#9aa4b2; --faint:#6b7585;
+  --rel:#7aa2f7;   /* as released */
+  --ours:#3ddc97;  /* ours */
+  --warn:#ff8a65;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#000;color:var(--text);overflow:hidden;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","DejaVu Sans",Arial,sans-serif}
+#viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000}
+#stage{width:1920px;height:1080px;position:relative;transform-origin:center center;background:var(--bg);flex:none;overflow:hidden}
+.slide{position:absolute;inset:0;padding:112px 96px 84px;display:none;flex-direction:column}
+.slide.active{display:flex}
+/* section bar */
+#bar{position:absolute;left:0;right:0;top:0;height:60px;background:#10141b;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;padding:0 96px;gap:44px;z-index:5;font-size:24px;color:var(--faint)}
+#bar span.on{color:var(--text);font-weight:700;box-shadow:0 3px 0 var(--rel);padding:16px 0}
+#bar .count{margin-left:auto;color:var(--dim);font-variant-numeric:tabular-nums}
+#progress{position:absolute;left:0;bottom:0;height:5px;background:var(--rel);z-index:6;transition:width .25s}
+h1{font-size:92px;line-height:1.05;margin:0 0 24px;font-weight:800;letter-spacing:-1px}
+h2{font-size:60px;line-height:1.1;margin:0 0 30px;font-weight:750;letter-spacing:-.5px}
+p,li,td,th{font-size:34px;line-height:1.35}
+p{margin:0 0 20px}
+ul{margin:0;padding-left:44px}
+li{margin:0 0 20px}
+.sub{font-size:40px;color:var(--dim)}
+.small{font-size:26px;color:var(--dim);line-height:1.35}
+.tiny{font-size:22px;color:var(--faint);line-height:1.35}
+.rel{color:var(--rel)} .ours{color:var(--ours)} .warn{color:var(--warn)} .dim{color:var(--dim)}
+b{font-weight:750}
+.row{display:flex;gap:48px;align-items:stretch}
+.col{flex:1;min-width:0}
+.grow{flex:1;min-height:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px 30px}
+.chip{display:inline-block;border:2px solid var(--ours);color:var(--ours);border-radius:999px;padding:10px 26px;font-size:30px;font-weight:650;margin-right:18px}
+.big{font-size:150px;font-weight:800;line-height:1;letter-spacing:-3px}
+table{border-collapse:collapse;width:100%}
+th,td{padding:13px 18px;text-align:right;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+td:not(:first-child),th:not(:first-child){white-space:nowrap}
+table.compact td,table.compact th{font-size:27px;padding:10px 12px}
+th{color:var(--dim);font-weight:600;font-size:28px}
+td:first-child,th:first-child{text-align:left}
+tr.hl td{color:var(--ours);font-weight:700}
+video,img.media{display:block;width:100%;height:auto;border-radius:10px;background:#000}
+.tag{position:absolute;left:14px;bottom:14px;background:rgba(0,0,0,.78);padding:8px 16px;font-size:26px;font-weight:700;border-radius:6px;border-left:6px solid var(--rel)}
+.tag.o{border-left-color:var(--ours)}
+.tag.r{left:auto;right:50%;margin-right:-0px}
+.vwrap{position:relative}
+.vwrap .half{position:absolute;bottom:14px;background:rgba(0,0,0,.78);padding:8px 16px;font-size:26px;font-weight:700;border-radius:6px}
+.vwrap .half.l{left:14px;border-left:6px solid var(--rel)}
+.vwrap .half.r{left:calc(50% + 14px);border-left:6px solid var(--ours)}
+.selected{position:absolute;right:14px;top:14px;background:rgba(0,0,0,.7);padding:6px 14px;border-radius:6px;font-size:22px;color:var(--dim)}
+.quad{display:grid;grid-template-columns:1fr 1fr;gap:26px 44px}
+.q{display:flex;gap:24px;align-items:flex-start}
+.q .v{width:570px;flex:none}
+.q h3{margin:0 0 6px;font-size:34px;color:var(--rel)}
+.q .t{font-size:25px;color:var(--dim);line-height:1.3;margin:0 0 10px}
+.q .f{font-size:31px;color:var(--warn);font-weight:700;line-height:1.25;margin:0}
+.frag{opacity:.14;transition:opacity .3s}
+.frag.shown{opacity:1}
+.foot{margin-top:auto;padding-top:18px}
+.slide aside.notes{display:none}
+/* notes */
+#notes{position:fixed;left:0;right:0;bottom:0;background:rgba(16,20,27,.96);border-top:2px solid var(--rel);
+  color:var(--text);font-size:22px;line-height:1.45;padding:14px 28px;display:none;z-index:20;max-height:32vh;overflow:auto}
+#notes.on{display:block}
+#notes b{color:var(--rel)}
+#help{position:fixed;right:14px;bottom:10px;color:#566;font-size:13px;z-index:21;opacity:.0;transition:opacity .4s}
+#help.on{opacity:1}
+.edge{position:absolute;top:60px;bottom:0;width:13%;z-index:4;cursor:pointer}
+.edge.l{left:0}.edge.r{right:0}
+svg text{font-family:inherit}
+</style>
+</head>
+<body>
+<div id="viewport"><div id="stage">
+  <div id="bar"></div>
+  <div class="edge l" id="edgeL" title="previous"></div>
+  <div class="edge r" id="edgeR" title="next"></div>
+
+  <!-- 1 -->
+  <section class="slide" data-sec="">
+    <div style="margin-top:150px">
+      <h1>WorldSync</h1>
+      <p style="font-size:56px;font-weight:650;margin-bottom:36px">Training-free episodic memory for an open world model</p>
+      <p class="sub">How long can a generated world hold together while an agent plays in it?</p>
+    </div>
+    <div class="foot">
+      <p class="small">Track 4 · World Models &nbsp;·&nbsp; base model: LingBot-World2 14B (open weights) &nbsp;·&nbsp; benchmark: PlayWorld</p>
+      <p class="tiny">github.com/npow/worldsync</p>
+    </div>
+    <aside class="notes">We took an open world model and asked the track's question: how long does the generated world hold together. We added a memory that needs no training, measured it on PlayWorld, and we report both what worked and what did not.</aside>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide" data-sec="Problem">
+    <h2>Generated worlds forget what they leave behind</h2>
+    <div class="row grow">
+      <div class="col" style="flex:1.05">
+        <ul>
+          <li>A world model generates video chunk by chunk as an agent acts.</li>
+          <li>Look away, come back: the scene has often <span class="warn"><b>changed</b></span>.</li>
+          <li>Objects are replaced, rooms are rebuilt, signs are re-lettered.</li>
+        </ul>
+        <div class="card" style="margin-top:34px">
+          <p style="margin:0"><b>Question.</b> Can an open model hold its world together for longer, <span class="ours">without retraining it</span>?</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="vwrap"><video muted loop playsinline preload="auto" poster="media/fail-OE036.jpg" src="media/fail-OE036.mp4"></video>
+          <div class="tag">LingBot-World2 as released</div></div>
+        <p class="small" style="margin-top:14px">PlayWorld task OE036: tilt the camera up 90°, then return. The man and the dog are replaced by someone else.</p>
+      </div>
+    </div>
+    <aside class="notes">This clip is the released model on a real benchmark task. The camera tilts up and comes back, and the people it left are gone. That is the failure we went after: the world does not survive being out of view.</aside>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide" data-sec="Benchmark">
+    <h2>PlayWorld: an agent plays inside the generated world</h2>
+    <svg viewBox="0 0 1728 150" width="1728" height="150" style="margin-bottom:26px">
+      <defs><marker id="ah" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 z" fill="#9aa4b2"/></marker></defs>
+      <g font-size="30" font-weight="650" fill="#e8ecf2" text-anchor="middle">
+        <rect x="2" y="20" width="300" height="110" rx="12" fill="#151a22" stroke="#2a3240" stroke-width="2"/><text x="152" y="68">start image</text><text x="152" y="106">+ objective</text>
+        <rect x="362" y="20" width="270" height="110" rx="12" fill="#151a22" stroke="#7aa2f7" stroke-width="2"/><text x="497" y="68">LLM agent</text><text x="497" y="106">player</text>
+        <rect x="712" y="20" width="250" height="110" rx="12" fill="#151a22" stroke="#7aa2f7" stroke-width="2"/><text x="837" y="68">world</text><text x="837" y="106">model</text>
+        <rect x="1022" y="20" width="190" height="110" rx="12" fill="#151a22" stroke="#2a3240" stroke-width="2"/><text x="1117" y="86">video</text>
+        <rect x="1272" y="20" width="270" height="110" rx="12" fill="#151a22" stroke="#2a3240" stroke-width="2"/><text x="1407" y="68">Gemini judge</text><text x="1407" y="106">rubric, 1–5</text>
+        <rect x="1602" y="20" width="124" height="110" rx="12" fill="#151a22" stroke="#2a3240" stroke-width="2"/><text x="1664" y="86">score</text>
+      </g>
+      <g stroke="#9aa4b2" stroke-width="3" fill="none">
+        <line x1="304" y1="75" x2="356" y2="75" marker-end="url(#ah)"/>
+        <line x1="634" y1="60" x2="706" y2="60" marker-end="url(#ah)"/>
+        <line x1="710" y1="92" x2="638" y2="92" marker-end="url(#ah)"/>
+        <line x1="964" y1="75" x2="1016" y2="75" marker-end="url(#ah)"/>
+        <line x1="1214" y1="75" x2="1266" y2="75" marker-end="url(#ah)"/>
+        <line x1="1544" y1="75" x2="1596" y2="75" marker-end="url(#ah)"/>
+      </g>
+    </svg>
+    <div class="row" style="gap:24px;margin-bottom:26px">
+      <div class="card col"><p style="margin:0;font-weight:700">Geometry consistency</p><p class="small" style="margin:6px 0 0">48 tasks</p></div>
+      <div class="card col"><p style="margin:0;font-weight:700">Interaction fidelity</p><p class="small" style="margin:6px 0 0">50 tasks</p></div>
+      <div class="card col"><p style="margin:0;font-weight:700">In-sight evolution</p><p class="small" style="margin:6px 0 0">30 tasks</p></div>
+      <div class="card col"><p style="margin:0;font-weight:700">Out-of-sight evolution</p><p class="small" style="margin:6px 0 0">43 tasks</p></div>
+    </div>
+    <p class="small">171 tasks · overall score = mean of the four dimension means · published scores:</p>
+    <svg viewBox="0 0 1728 210" width="1728" height="210">
+      <g font-size="32" fill="#e8ecf2">
+        <text x="0" y="46" font-weight="700">Genie 3</text><text x="330" y="46" fill="#9aa4b2" font-size="26">closed</text>
+        <rect x="520" y="18" width="1000" height="38" rx="6" fill="#1b212b"/><rect x="520" y="18" width="848" height="38" rx="6" fill="#7aa2f7"/><text x="1550" y="48" font-weight="700">2.12</text>
+        <text x="0" y="116" font-weight="700">LingBot-World2</text><text x="330" y="116" fill="#9aa4b2" font-size="26">open weights</text>
+        <rect x="520" y="88" width="1000" height="38" rx="6" fill="#1b212b"/><rect x="520" y="88" width="728" height="38" rx="6" fill="#8a93a3"/><text x="1550" y="118" font-weight="700">1.82</text>
+        <text x="0" y="186" font-weight="700">Matrix-Game 3.0</text><text x="330" y="186" fill="#9aa4b2" font-size="26">open weights</text>
+        <rect x="520" y="158" width="1000" height="38" rx="6" fill="#1b212b"/><rect x="520" y="158" width="456" height="38" rx="6" fill="#8a93a3"/><text x="1550" y="188" font-weight="700">1.14</text>
+      </g>
+    </svg>
+    <aside class="notes">PlayWorld puts an LLM player in a closed loop with the world model: it gets a start image and an objective and chooses actions. A Gemini judge scores each finished video from 1 to 5 against a rubric. There are 171 tasks in four dimensions, and the overall score is the mean of the four dimension means. The record is Genie 3 at 2.12; the best open model, LingBot-World2, is at 1.82.</aside>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide" data-sec="Benchmark">
+    <h2>First: reproduce the baseline, on all 171 tasks, twice</h2>
+    <table style="margin-bottom:26px">
+      <tr><th>LingBot-World2, as released</th><th>Geometry</th><th>Interaction</th><th>In-sight</th><th>Out-of-sight</th><th>Overall</th></tr>
+      <tr><td>Published (hosted service)</td><td>2.04</td><td>2.13</td><td>1.95</td><td>1.16</td><td><b>1.82</b></td></tr>
+      <tr><td class="rel">Our run 1 (H200 GPUs)</td><td>2.41</td><td>1.84</td><td>1.68</td><td>1.47</td><td><b>1.85</b> <span class="small">[1.67, 2.04]</span></td></tr>
+      <tr><td class="rel">Our run 2 (H100 GPUs)</td><td>2.36</td><td>1.62</td><td>1.81</td><td>1.44</td><td><b>1.81</b> <span class="small">[1.64, 1.99]</span></td></tr>
+    </table>
+    <div class="row">
+      <div class="col"><ul>
+        <li>Open local checkpoint, the released judge prompts, rubric and aggregation.</li>
+        <li>Overall matches the published <b>1.82</b>; individual dimensions differ.</li>
+        <li>Every later comparison is <b>paired</b>: same task, seed, hardware, player and judge.</li>
+      </ul></div>
+      <div class="col" style="flex:.7"><div class="card">
+        <p class="small" style="margin:0 0 10px">Differences from the published setup, all recorded in the repo:</p>
+        <p class="small" style="margin:0">local checkpoint, not the hosted service · our Haiku player · Gemini preview model name · caption-only text for in-sight tasks · one seed</p>
+      </div></div>
+    </div>
+    <aside class="notes">Before changing anything we reproduced the published baseline on the full benchmark, twice, on two kinds of GPU. We got 1.85 and 1.81 against the published 1.82. The dimensions do not match one for one, and the interval is about plus or minus 0.2, so we call this consistent with the published number, not an exact reproduction.</aside>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide" data-sec="Baseline failures">
+    <h2>Where the released model breaks: one task per dimension</h2>
+    <div class="quad grow">
+      <div class="q"><div class="v"><video muted loop playsinline preload="auto" poster="media/fail-GC038.jpg" src="media/fail-GC038.mp4"></video></div>
+        <div><h3>Geometry</h3><p class="t">GC038 · walk to the fireplace, walk back</p><p class="f">The room is rebuilt: a different fireplace</p></div></div>
+      <div class="q"><div class="v"><video muted loop playsinline preload="auto" poster="media/fail-IF013.jpg" src="media/fail-IF013.mp4"></video></div>
+        <div><h3>Interaction</h3><p class="t">IF013 · row to the opposite shore</p><p class="f">The boat never leaves the bank</p></div></div>
+      <div class="q"><div class="v"><video muted loop playsinline preload="auto" poster="media/fail-OE007.jpg" src="media/fail-OE007.mp4"></video></div>
+        <div><h3>In-sight</h3><p class="t">OE007 · wait and observe (shown at 4× speed)</p><p class="f">Wagons appear from nowhere</p></div></div>
+      <div class="q"><div class="v"><video muted loop playsinline preload="auto" poster="media/fail-OE036.jpg" src="media/fail-OE036.mp4"></video></div>
+        <div><h3>Out-of-sight</h3><p class="t">OE036 · tilt up 90°, then return</p><p class="f">Man and dog replaced by someone else</p></div></div>
+    </div>
+    <p class="small foot">Stock model, frozen final run. Each of these scored 1.0 on all three judge calls. Chosen by eye as clear examples.</p>
+    <aside class="notes">Four videos from the released model, one for each dimension, all scoring the minimum. Geometry: the fireplace is a different one after walking back. Interaction: the boat is told to row and never leaves. In-sight: wagons appear from nowhere. Out-of-sight: the man and the dog are replaced after the camera looks away. Most out-of-sight tasks score the minimum for the released model.</aside>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide" data-sec="Method">
+    <h2>Key insight: the model only remembers about 4.5 seconds</h2>
+    <svg viewBox="-6 0 1736 330" width="1728" height="328" style="margin:6px 0 20px">
+      <g id="tl"></g>
+      <text x="0" y="40" font-size="28" fill="#9aa4b2">generated latent frames, oldest to newest →</text>
+      <rect x="-4" y="62" width="196" height="126" rx="12" fill="none" stroke="#7aa2f7" stroke-width="4"/>
+      <rect x="1338" y="62" width="388" height="126" rx="12" fill="none" stroke="#7aa2f7" stroke-width="4"/>
+      <text x="0" y="232" font-size="30" fill="#7aa2f7" font-weight="700">first 6: kept forever</text>
+      <text x="765" y="232" font-size="30" fill="#ff8a65" font-weight="700" text-anchor="middle">evicted: the model can no longer see these</text>
+      <text x="1724" y="232" font-size="30" fill="#7aa2f7" text-anchor="end" font-weight="700">most recent 12: sliding window</text>
+      <text x="0" y="300" font-size="28" fill="#9aa4b2">The cache holds 18 latent frames ≈ 4.5 s. For each one it keeps the keys and values attention reads, at all 40 layers.</text>
+    </svg>
+    <ul>
+      <li>LingBot-World2 generates video a chunk at a time and looks back only at this cache.</li>
+      <li>Turn away for longer than the window and the view you left is gone: the model <span class="warn"><b>invents a new one</b></span> on the way back.</li>
+    </ul>
+    <aside class="notes">Here is why it forgets. To make the next piece of video the model looks back at earlier frames, but it only keeps 18 of them: the first 6 of the episode, kept forever, and the 12 most recent, a sliding window. That is about four and a half seconds. Anything in between is thrown away, so when the camera turns back to a place it left a few seconds ago, the model has nothing to look at and makes up a new scene.</aside>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide" data-sec="Method" data-frags="4">
+    <h2>Our method: a training-free episodic memory</h2>
+    <svg viewBox="0 0 1728 520" width="1728" height="520">
+      <defs><marker id="ag" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 z" fill="#3ddc97"/></marker></defs>
+      <!-- world model -->
+      <rect x="2" y="10" width="1724" height="150" rx="14" fill="#151a22" stroke="#7aa2f7" stroke-width="3"/>
+      <text x="30" y="58" font-size="32" font-weight="700" fill="#7aa2f7">World model · causal video DiT, 40 layers</text>
+      <text x="30" y="112" font-size="30" fill="#e8ecf2">attention window:</text>
+      <rect x="300" y="78" width="210" height="56" rx="8" fill="#232b38"/><text x="405" y="116" font-size="28" fill="#e8ecf2" text-anchor="middle">first 6</text>
+      <rect x="530" y="78" width="470" height="56" rx="8" fill="#12382a" stroke="#3ddc97" stroke-width="3"/><text x="765" y="116" font-size="28" fill="#3ddc97" text-anchor="middle" font-weight="700">retrieved · up to 10 (ours)</text>
+      <rect x="1020" y="78" width="330" height="56" rx="8" fill="#232b38"/><text x="1185" y="116" font-size="28" fill="#e8ecf2" text-anchor="middle">most recent · 8</text>
+      <text x="1380" y="116" font-size="26" fill="#9aa4b2">→ next video chunk</text>
+      <!-- memory module -->
+      <g font-size="28" fill="#e8ecf2">
+        <g class="frag" data-f="1"><rect x="2" y="250" width="392" height="250" rx="14" fill="#151a22" stroke="#3ddc97" stroke-width="3"/>
+          <text x="26" y="298" font-size="32" font-weight="700" fill="#3ddc97">1 · Archive</text>
+          <text x="26" y="346">every latent frame</text><text x="26" y="384">(≈ 6 MB each)</text><text x="26" y="432" fill="#9aa4b2">+ camera pose</text><text x="26" y="468" fill="#9aa4b2">+ visual descriptor</text></g>
+        <g class="frag" data-f="2"><rect x="446" y="250" width="392" height="250" rx="14" fill="#151a22" stroke="#3ddc97" stroke-width="3"/>
+          <text x="470" y="298" font-size="32" font-weight="700" fill="#3ddc97">2 · Retrieve</text>
+          <text x="470" y="346">only on a true return:</text><text x="470" y="384">turns or waits only,</text><text x="470" y="422">or the picture matches</text><text x="470" y="468" fill="#9aa4b2">otherwise: do nothing</text></g>
+        <g class="frag" data-f="3"><rect x="890" y="250" width="392" height="250" rx="14" fill="#151a22" stroke="#3ddc97" stroke-width="3"/>
+          <text x="914" y="298" font-size="32" font-weight="700" fill="#3ddc97">3 · Recompute</text>
+          <text x="914" y="346">run the stored frame</text><text x="914" y="384">through the model to</text><text x="914" y="422">rebuild its 40-layer values</text><text x="914" y="468" fill="#9aa4b2">nothing else is stored</text></g>
+        <g class="frag" data-f="4"><rect x="1334" y="250" width="392" height="250" rx="14" fill="#151a22" stroke="#3ddc97" stroke-width="3"/>
+          <text x="1358" y="298" font-size="32" font-weight="700" fill="#3ddc97">4 · Splice</text>
+          <text x="1358" y="346">insert them into the</text><text x="1358" y="384">attention window for</text><text x="1358" y="422">this chunk</text>
+          <path d="M1530,250 C1530,200 900,215 780,142" fill="none" stroke="#3ddc97" stroke-width="4" marker-end="url(#ag)"/></g>
+      </g>
+      <g stroke="#3ddc97" stroke-width="4" fill="none">
+        <line class="frag" data-f="2" x1="396" y1="375" x2="440" y2="375" marker-end="url(#ag)"/>
+        <line class="frag" data-f="3" x1="840" y1="375" x2="884" y2="375" marker-end="url(#ag)"/>
+        <line class="frag" data-f="4" x1="1284" y1="375" x2="1328" y2="375" marker-end="url(#ag)"/>
+      </g>
+    </svg>
+    <div class="foot"><span class="chip">no training, weights untouched</span><span class="chip">bit-identical to stock when it does not fire</span><span class="chip">≈ 200× less storage</span><p class="tiny" style="margin:14px 0 0">This diagram is memory v2. The headline chart later was measured with v1 (cached values, nearest-pose retrieval).</p></div>
+    <aside class="notes">Our memory sits beside the model and has four steps; press the arrow to reveal each. One: after each chunk, save its frames with the camera pose and a small fingerprint of the picture. Two: retrieve only on a true return, meaning only turns or waits happened since the frame was saved, or the current picture matches it. Three: run the stored frame through the model once to rebuild the 40 layers of values attention needs. Four: insert them into the attention window, which becomes first 6, retrieved 10, most recent 8. No weights change, and when nothing qualifies the output is exactly the released model's. This diagram is version 2 of the memory.</aside>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide" data-sec="Method">
+    <h2>Store the frame, recompute the rest</h2>
+    <div class="row grow">
+      <div class="col" style="flex:1.1">
+        <table>
+          <tr><th>Two ways to remember one frame</th><th>Size</th></tr>
+          <tr><td>Cache its 40-layer values <span class="small">(memory v1)</span></td><td>1,235 MB</td></tr>
+          <tr><td>The same, 8-bit</td><td>627 MB</td></tr>
+          <tr class="hl"><td>Store the frame, rebuild the values on demand <span class="small ours">(memory v2)</span></td><td>6.2 MB</td></tr>
+        </table>
+        <p class="small" style="margin-top:22px">Recomputing 22 frames in a 14-chunk episode took 13.5 s in total. No archive on disk, GPU memory close to stock (72.4 GB against 68.8 GB).</p>
+      </div>
+      <div class="col">
+        <p><b>When it fires</b></p>
+        <ul>
+          <li>A saved frame's camera pose is close to where the camera is heading, and</li>
+          <li>only turns or waits since it was saved, <i>or</i> the current picture matches the saved one.</li>
+        </ul>
+        <div class="card" style="margin-top:20px"><p style="margin:0">On 611 chunks with no revisit, the first version swapped old frames in on <span class="warn"><b>338</b></span>. This version: <span class="ours"><b>0</b></span>.</p></div>
+      </div>
+    </div>
+    <p class="tiny foot">Sizes measured on LingBot-World2 14B at 480×832. A second method, a text “director” that writes event captions in the model's trained format, is in the repo; it showed a small trend, not an established gain.</p>
+    <aside class="notes">What attention needs from a remembered frame is its values at all 40 layers: 1,235 megabytes per frame. Our first version stored that, so it could afford only 24 frames. Version two stores just the frame, 6.2 megabytes, and rebuilds the values with one extra pass when the frame is needed. 1,235 divided by 6.2 is about two hundred times less. It is the same information, traded for a little compute. Retrieval is also strict: the first version swapped old frames in on 338 of 611 chunks where nothing was being revisited; this one, on none.</aside>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide" data-sec="Results">
+    <h2>Look away for 12 seconds, then turn back</h2>
+    <div class="vwrap" style="width:1500px;margin:0 auto">
+      <video muted loop playsinline preload="auto" poster="media/pair-GC011.jpg" src="media/pair-GC011.mp4"></video>
+      <div class="half l">LingBot-World2 as released</div><div class="half r">with our memory</div>
+      <div class="selected">selected example · PlayWorld scene GC011 · memory v1 · 1.5× speed</div>
+    </div>
+    <div class="row foot" style="gap:26px;align-items:center">
+      <div style="width:290px;flex:none"><img class="media" src="media/GC011-start.jpg" alt=""><p class="tiny" style="margin:6px 0 0">start view</p></div>
+      <div style="width:290px;flex:none"><img class="media" src="media/GC011-return-stock.jpg" alt="" style="outline:4px solid var(--warn)"><p class="tiny" style="margin:6px 0 0">return: as released</p></div>
+      <div style="width:290px;flex:none"><img class="media" src="media/GC011-return-ours.jpg" alt="" style="outline:4px solid var(--ours)"><p class="tiny" style="margin:6px 0 0;white-space:nowrap">return: with our memory</p></div>
+      <p class="col" style="margin:0">Same scene, seed and camera path. Judge score <span class="rel"><b>1.2</b></span> as released, <span class="ours"><b>3.0</b></span> with memory.</p>
+    </div>
+    <aside class="notes">Both videos start from the same image and follow the same camera path: turn away, wait twelve seconds, turn back. On the left the released model comes back to a different wall and a porch. On the right, with our memory, it comes back to the front door and the console table it started from. This is a selected example; the next slides give the numbers across all scenes.</aside>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide" data-sec="Results">
+    <h2>Two more scenes, same test</h2>
+    <div class="grow" style="display:flex;flex-direction:column;gap:26px">
+      <div class="row" style="gap:36px;align-items:center">
+        <div class="vwrap" style="width:1150px;flex:none"><video muted loop playsinline preload="auto" poster="media/pair-GC034.jpg" src="media/pair-GC034.mp4"></video>
+          <div class="half l">as released</div><div class="half r">with our memory</div></div>
+        <div class="col"><p style="margin-bottom:8px"><b>GC034</b> · judge <span class="rel">2.0</span> → <span class="ours">4.2</span></p>
+          <p class="small" style="margin:0">Released: returns to a fence close-up.<br>Ours: the stone gate and hut are back.</p></div>
+      </div>
+      <div class="row" style="gap:36px;align-items:center">
+        <div class="vwrap" style="width:1150px;flex:none"><video muted loop playsinline preload="auto" poster="media/pair-GC026.jpg" src="media/pair-GC026.mp4"></video>
+          <div class="half l">as released</div><div class="half r">with our memory</div></div>
+        <div class="col"><p style="margin-bottom:8px"><b>GC026</b> · judge <span class="rel">2.4</span> → <span class="ours">4.6</span></p>
+          <p class="small" style="margin:0">Released: a different shop door.<br>Ours: the red awning and arched entrance are back.</p></div>
+      </div>
+    </div>
+    <p class="tiny foot">Selected examples from the 20-scene benchmark on the next slide (memory v1, 12 s away, 1.5× speed). Losses exist too: 4 of 20 scenes at 12 s; they are in the repo's appendix.</p>
+    <aside class="notes">Two more scenes from the same test. On the left of each pair the released model returns somewhere else; on the right ours brings back the place it started from. These are among the larger wins. Four of the twenty scenes go the other way at this absence length, and those clips are in the appendix.</aside>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide" data-sec="Results">
+    <h2>Higher judged consistency at every absence length</h2>
+    <div class="row grow">
+      <div style="width:820px;flex:none">
+        <svg viewBox="0 0 900 600" width="820" height="547" id="chart"></svg>
+      </div>
+      <div class="col">
+        <div class="big ours" style="font-size:128px">+0.77</div>
+        <p style="margin:8px 0 4px;font-weight:700;font-size:36px">pooled over 6, 12 and 24 s away</p>
+        <p class="small" style="margin-bottom:14px">95% CI +0.51 to +1.03 · 20 unseen scenes · paired, same seed · configuration frozen before generation</p>
+        <table class="compact">
+          <tr><th>Away</th><th>Released</th><th>Ours</th><th>Difference [95% CI]</th><th>W / T / L</th></tr>
+          <tr><td>0 s</td><td>1.84</td><td>2.69</td><td>+0.85 [+0.29, +1.45]</td><td>13/1/6</td></tr>
+          <tr><td>6 s</td><td>1.76</td><td>3.07</td><td>+1.31 [+0.74, +1.89]</td><td>17/1/2</td></tr>
+          <tr><td>12 s</td><td>1.86</td><td>2.52</td><td>+0.66 [+0.19, +1.12]</td><td>14/2/4</td></tr>
+          <tr><td>24 s</td><td>1.45</td><td>1.78</td><td>+0.34 [+0.05, +0.64]</td><td>12/3/5</td></tr>
+        </table>
+      </div>
+    </div>
+    <p class="tiny foot">Revisit-horizon benchmark: PlayWorld scenes with our scripted look-away-and-return path, PlayWorld's judge and rubric (mean of 2 calls). Not PlayWorld's own tasks, so not comparable with 1.82 or 2.12. Both arms decline with time away; the gain shrinks at 24 s. <b style="color:var(--text)">Which version: this chart and the clips were measured with memory v1 (stores the values for up to 24 frames, nearest-pose retrieval). The method diagram shows v2 (pose-verified, recompute), which was not ready when this benchmark was frozen.</b></p>
+    <aside class="notes">This is our main quantitative result. On twenty scenes we had never used, the judged score is higher with memory at every absence length, and every interval is above zero: plus 0.77 pooled. Three honest notes. These are PlayWorld scenes on our own camera path, not PlayWorld's own tasks. Both arms get worse the longer the camera is away. And this was measured with version one of the memory, which stores the values and retrieves by nearest pose; the diagram you saw is version two, which had not passed its tests when this benchmark was frozen.</aside>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide" data-sec="Results">
+    <h2>Ablation: how small can the memory be?</h2>
+    <div class="row grow">
+      <div class="col" style="flex:1.25">
+        <svg viewBox="0 0 980 470" width="980" height="470" id="abl"></svg>
+        <p class="tiny" style="margin-top:8px">Scripted turn-hold-return on one scene (GC007), similarity of the final frame to the start view, cloud H100. Recompute bar: tested on one scene so far. On a different GPU the released model itself returned on this path, so read these as an ablation, not a headline.</p>
+      </div>
+      <div class="col">
+        <ul>
+          <li>Storing the values in <b>8-bit</b> keeps the recall at half the size.</li>
+          <li>We also tried shrinking the cache itself (fewer layers, pooling, low-rank): <span class="warn"><b>the memory stopped working</b></span>.</li>
+          <li><span class="ours"><b>Store the frame and recompute: ≈ 200× smaller</b></span>, same recall (tested on one scene so far).</li>
+        </ul>
+      </div>
+    </div>
+    <aside class="notes">We asked how small the memory can be. Storing the values in eight bits works and halves the size. We also tried shrinking the cache itself, with fewer layers, pooling, or a low-rank form, and the memory stopped working. Storing only the frame and recomputing is about two hundred times smaller at the same recall, tested on one scene so far. So treat this panel as an ablation, not a headline.</aside>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide" data-sec="Results">
+    <h2>On one of PlayWorld's own tasks</h2>
+    <div class="vwrap" style="width:1480px;margin:0 auto">
+      <video muted loop playsinline preload="auto" poster="media/real-GC045.jpg" src="media/real-GC045.mp4"></video>
+      <div class="half l">LingBot-World2 as released</div><div class="half r">with our memory (v2)</div>
+      <div class="selected">selected example · PlayWorld task GC045: move left 10 steps, then right 10 steps</div>
+    </div>
+    <div class="foot">
+      <p style="margin-bottom:10px">Same nine player actions in both. Released: a traffic light and a changed sign are pushed into the returning view. Ours: the arch is framed as at the start.</p>
+      <p class="warn" style="margin:0;font-weight:700">Across all 36 PlayWorld tasks that contain a revisit, ours scores lower: −0.35 [−0.71, −0.01]. This clip is the exception, not the rule.</p>
+    </div>
+    <aside class="notes">This is one of PlayWorld's real tasks, with the agent player in the loop. The player took the same nine actions in both runs. The released model returns with a traffic light pushed into the frame; ours keeps the arch framed as at the start. I want to be straight about this one: across all 36 PlayWorld tasks that contain a revisit, our memory scored slightly lower than the released model. This is a selected example of what it looks like when it helps.</aside>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide" data-sec="Limitations">
+    <h2>Where it still breaks</h2>
+    <ul>
+      <li><b>Record not beaten.</b> On the full PlayWorld benchmark our methods score <b>1.80–1.86</b>: level with the published 1.82, below Genie 3's 2.12.</li>
+      <li><b>Memory rarely fires on PlayWorld's own tasks.</b> Episodes are short: only 12% of chunks revisit a view the model had already forgotten.</li>
+      <li><b>The model does not undo forward motion.</b> Walk forward and back, and the picture does not return, so there is nothing correct to recall.</li>
+      <li><b>Frozen scenes and unattempted interactions are not memory problems.</b> Most minimum scores come from these.</li>
+      <li><b>The judge is noisy.</b> The same video scored three times varies by 0.36 on average; identical videos have received 1.0 and 5.0.</li>
+    </ul>
+    <p class="small foot">Full tables, per-episode scores and the two audits that explain these are in the repo.</p>
+    <aside class="notes">Here is what did not work. We did not beat the record: on the full benchmark we land between 1.80 and 1.86. The reason our memory does not move the benchmark score is that PlayWorld's own episodes are short, so the camera is rarely away for longer than the model already remembers. Other failures, like frozen scenes, are not memory problems at all. And the judge itself is noisy, which is why we report intervals everywhere.</aside>
+  </section>
+
+  <!-- 15 -->
+  <section class="slide" data-sec="Autoresearch">
+    <h2>An autoresearch loop</h2>
+    <p style="margin-bottom:22px">AI agents ran the loop: <b>propose → run experiments on cloud GPUs → independent agent audit → diagnosis → fix → re-test</b></p>
+    <p class="small" style="margin-bottom:8px">A real example, two turns of the loop:</p>
+    <svg viewBox="0 0 1728 250" width="1728" height="250" style="margin-bottom:22px">
+      <defs><marker id="ab" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 z" fill="#7aa2f7"/></marker></defs>
+      <g font-size="27" fill="#e8ecf2">
+        <rect x="2" y="20" width="388" height="210" rx="14" fill="#151a22" stroke="#2a3240" stroke-width="2"/><text x="24" y="66" font-size="31" font-weight="700" fill="#7aa2f7">Run: memory v1</text><text x="24" y="112">all 171 tasks</text><text x="24" y="150">1.80 against 1.85</text><text x="24" y="198" fill="#ff8a65" font-weight="700">no gain</text>
+        <rect x="448" y="20" width="388" height="210" rx="14" fill="#151a22" stroke="#2a3240" stroke-width="2"/><text x="470" y="66" font-size="31" font-weight="700" fill="#7aa2f7">Independent audit</text><text x="470" y="112">agents that did not</text><text x="470" y="150">write the code found</text><text x="470" y="198" fill="#ff8a65" font-weight="700">3 bugs, 2 design flaws</text>
+        <rect x="894" y="20" width="388" height="210" rx="14" fill="#151a22" stroke="#3ddc97" stroke-width="3"/><text x="916" y="66" font-size="31" font-weight="700" fill="#3ddc97">Fix: memory v2</text><text x="916" y="112">removes v1's harm</text><text x="916" y="150">(scripted: 0.49 → 0.63)</text><text x="916" y="198" fill="#3ddc97" font-weight="700">stores 200× less</text>
+        <rect x="1340" y="20" width="386" height="210" rx="14" fill="#151a22" stroke="#2a3240" stroke-width="2"/><text x="1362" y="66" font-size="31" font-weight="700" fill="#7aa2f7">Re-test on real tasks</text><text x="1362" y="112">36 PlayWorld tasks</text><text x="1362" y="150">with a revisit</text><text x="1362" y="198" fill="#ff8a65" font-weight="700">not better, reported</text>
+      </g>
+      <g stroke="#7aa2f7" stroke-width="4"><line x1="392" y1="125" x2="442" y2="125" marker-end="url(#ab)"/><line x1="838" y1="125" x2="888" y2="125" marker-end="url(#ab)"/><line x1="1284" y1="125" x2="1334" y2="125" marker-end="url(#ab)"/></g>
+    </svg>
+    <ul>
+      <li>Every run: configuration frozen and committed first; per-episode scores, judge outputs and logs in the repo; the leaderboard is generated by a script.</li>
+      <li>Negative results are kept and reported, not dropped.</li>
+    </ul>
+    <p class="small foot">A human set the goals and budget and made key calls (including the store-the-frame idea).</p>
+    <aside class="notes">The research itself ran as an autoresearch loop: AI agents proposed a method, ran the experiments on cloud GPUs, a separate set of agents audited the code and the results, then diagnosis, fix, and re-test. Here is a real example. Memory version one showed no gain on all 171 tasks. The audit found three bugs and two design flaws. Version two fixed the harm and stores two hundred times less. Then it was tested on real tasks, where it was not better, and that was reported. A human set the goals and the budget and made key calls, including the store-the-frame idea.</aside>
+  </section>
+
+  <!-- 16 -->
+  <section class="slide" data-sec="Future work">
+    <h2>What we would do next</h2>
+    <div class="row grow">
+      <div class="col"><ul>
+        <li><b>A trained, compact memory layer.</b> A small adapter that reads a few memory tokens per past view, so the model learns to use what it is shown.</li>
+        <li><b>Retrieve by what is visible</b>, not by where the camera was told to be (as in VMem), to handle forward-and-back motion.</li>
+        <li><b>Longer-horizon tasks.</b> The benchmark's own episodes are mostly shorter than the model's memory; the interesting regime starts after it.</li>
+      </ul></div>
+      <div class="col" style="flex:.8"><div class="card">
+        <p style="font-weight:700;margin-bottom:14px">Take-aways</p>
+        <p class="small" style="margin-bottom:12px"><span class="ours">+0.77</span> judged consistency after looking away, on 20 unseen scenes</p>
+        <p class="small" style="margin-bottom:12px"><span class="ours">≈ 200×</span> smaller memory by storing the frame and recomputing</p>
+        <p class="small" style="margin-bottom:12px">Baseline reproduced on all 171 tasks: <b>1.81</b> and <b>1.85</b> against 1.82</p>
+        <p class="small" style="margin:0">Honest negative: no gain on PlayWorld's own short tasks</p>
+      </div></div>
+    </div>
+    <div class="foot"><p style="font-size:44px;font-weight:750;margin:0">github.com/npow/worldsync</p><p class="small" style="margin:6px 0 0">Built in two days · every number in these slides traces to a file in the repo</p></div>
+    <aside class="notes">Next steps: train a small memory layer so the model learns to use retrieved views, retrieve by what is actually visible, and test on longer tasks where memory matters. To sum up: a clear gain in judged consistency after looking away, a memory two hundred times smaller than the obvious design, a reproduced baseline, and an honest negative result on the benchmark's own short tasks. Thank you.</aside>
+  </section>
+
+  <div id="progress"></div>
+</div></div>
+<div id="notes"></div>
+<div id="help">← → space · F fullscreen · N notes</div>
+
+<script>
+(function(){
+  var SECTIONS=["Problem","Benchmark","Baseline failures","Method","Results","Limitations","Autoresearch","Future work"];
+  var stage=document.getElementById('stage'), slides=[].slice.call(document.querySelectorAll('.slide'));
+  var bar=document.getElementById('bar'), progress=document.getElementById('progress'), notes=document.getElementById('notes');
+  var cur=0, frag=0;
+
+  function fit(){
+    var s=Math.min(window.innerWidth/1920, window.innerHeight/1080);
+    stage.style.transform='scale('+s+')';
+  }
+  window.addEventListener('resize',fit); fit();
+
+  function fragCount(sl){ return parseInt(sl.getAttribute('data-frags')||'0',10); }
+  function applyFrags(sl){
+    [].forEach.call(sl.querySelectorAll('.frag'),function(el){
+      var n=parseInt(el.getAttribute('data-f'),10);
+      if(n<=frag) el.classList.add('shown'); else el.classList.remove('shown');
+    });
+  }
+  function playVideos(sl,on){
+    [].forEach.call(sl.querySelectorAll('video'),function(v){
+      if(on){
+        v.muted=true; v.loop=true;
+        try{ v.currentTime=0; }catch(e){}
+        var p=v.play();
+        if(p&&p.catch) p.catch(function(){ v.controls=true; });
+      }else{
+        v.pause();
+        try{ v.currentTime=0; }catch(e){}
+      }
+    });
+  }
+  function render(){
+    slides.forEach(function(sl,i){
+      var on=(i===cur);
+      if(on && !sl.classList.contains('active')){ sl.classList.add('active'); playVideos(sl,true); }
+      else if(!on && sl.classList.contains('active')){ sl.classList.remove('active'); playVideos(sl,false); }
+    });
+    var sl=slides[cur]; applyFrags(sl);
+    var sec=sl.getAttribute('data-sec')||'';
+    bar.innerHTML=SECTIONS.map(function(s){return '<span'+(s===sec?' class="on"':'')+'>'+s+'</span>';}).join('')+
+      '<span class="count">'+(cur+1)+' / '+slides.length+'</span>';
+    progress.style.width=((cur+1)/slides.length*100)+'%';
+    var n=sl.querySelector('aside.notes');
+    notes.innerHTML='<b>'+(cur+1)+'/'+slides.length+'</b> &nbsp; '+(n?n.innerHTML:'');
+    if(location.hash!=='#'+(cur+1)){ try{ history.replaceState(null,'','#'+(cur+1)); }catch(e){ location.hash='#'+(cur+1); } }
+  }
+  function go(i,atEnd){
+    i=Math.max(0,Math.min(slides.length-1,i));
+    if(i!==cur){ cur=i; frag=atEnd?fragCount(slides[cur]):0; }
+    render();
+  }
+  function next(){ if(frag<fragCount(slides[cur])){ frag++; applyFrags(slides[cur]); } else go(cur+1,false); }
+  function prev(){ if(frag>0){ frag--; applyFrags(slides[cur]); } else go(cur-1,true); }
+
+  document.addEventListener('keydown',function(e){
+    if(e.metaKey||e.ctrlKey||e.altKey) return;
+    var k=e.key;
+    if(k==='ArrowRight'||k===' '||k==='PageDown'||k==='Enter'){ e.preventDefault(); next(); }
+    else if(k==='ArrowLeft'||k==='PageUp'||k==='Backspace'){ e.preventDefault(); prev(); }
+    else if(k==='Home'){ e.preventDefault(); go(0,false); }
+    else if(k==='End'){ e.preventDefault(); go(slides.length-1,false); }
+    else if(k==='f'||k==='F'){
+      if(document.fullscreenElement){ document.exitFullscreen(); }
+      else if(document.documentElement.requestFullscreen){ document.documentElement.requestFullscreen(); }
+    }
+    else if(k==='n'||k==='N'){ notes.classList.toggle('on'); }
+  });
+  document.getElementById('edgeR').addEventListener('click',next);
+  document.getElementById('edgeL').addEventListener('click',prev);
+  window.addEventListener('hashchange',function(){
+    var n=parseInt(location.hash.replace('#',''),10);
+    if(n>=1&&n<=slides.length&&n-1!==cur){ go(n-1,false); }
+  });
+
+  // timeline on slide 6
+  (function(){
+    var g=document.getElementById('tl'), NS='http://www.w3.org/2000/svg', n=54, w=32;
+    for(var i=0;i<n;i++){
+      var r=document.createElementNS(NS,'rect'); var inWin=(i>=n-12)||(i<6);
+      r.setAttribute('x',i*w); r.setAttribute('y',74); r.setAttribute('width',w-6); r.setAttribute('height',102); r.setAttribute('rx',5);
+      r.setAttribute('fill',inWin?'#2b4a86':'#232a35'); r.setAttribute('opacity',inWin?1:0.55+0.0*i);
+      g.appendChild(r);
+    }
+  })();
+
+  // chart on slide 11
+  (function(){
+    var svg=document.getElementById('chart'), NS='http://www.w3.org/2000/svg';
+    var X=[0,6,12,24], rel=[[1.84,1.46,2.25],[1.76,1.46,2.10],[1.86,1.57,2.18],[1.45,1.27,1.64]],
+        ours=[[2.69,2.22,3.17],[3.07,2.59,3.56],[2.52,2.02,3.05],[1.78,1.53,2.07]];
+    var L=120,R=860,T=70,B=500;
+    function x(v){return L+(R-L)*v/24;} function y(v){return B-(B-T)*(v-1)/2.75;}
+    function el(n,a,t){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(t)e.textContent=t;svg.appendChild(e);return e;}
+    [1,1.5,2,2.5,3,3.5].forEach(function(v){
+      el('line',{x1:L,x2:R,y1:y(v),y2:y(v),stroke:'#222a36','stroke-width':2});
+      el('text',{x:L-16,y:y(v)+10,'font-size':28,fill:'#9aa4b2','text-anchor':'end'},v.toFixed(1));
+    });
+    X.forEach(function(v){ el('text',{x:x(v),y:B+44,'font-size':28,fill:'#9aa4b2','text-anchor':'middle'},v+' s'); });
+    el('text',{x:(L+R)/2,y:B+90,'font-size':28,fill:'#9aa4b2','text-anchor':'middle'},'seconds waited while looking away');
+    function series(d,c,dx){
+      var pts=d.map(function(p,i){return (x(X[i])+dx)+','+y(p[0]);}).join(' ');
+      d.forEach(function(p,i){ el('line',{x1:x(X[i])+dx,x2:x(X[i])+dx,y1:y(p[1]),y2:y(p[2]),stroke:c,'stroke-width':5,opacity:.55}); });
+      el('polyline',{points:pts,fill:'none',stroke:c,'stroke-width':6});
+      d.forEach(function(p,i){ el('circle',{cx:x(X[i])+dx,cy:y(p[0]),r:12,fill:c}); });
+    }
+    series(rel,'#8a93a3',-6); series(ours,'#3ddc97',6);
+    el('circle',{cx:L+14,cy:30,r:11,fill:'#8a93a3'}); el('text',{x:L+38,y:40,'font-size':30,fill:'#c3cad5','font-weight':700},'as released');
+    el('circle',{cx:L+280,cy:30,r:11,fill:'#3ddc97'}); el('text',{x:L+304,y:40,'font-size':30,fill:'#3ddc97','font-weight':700},'with our memory');
+    el('text',{x:L-94,y:(T+B)/2,'font-size':26,fill:'#9aa4b2','text-anchor':'middle',transform:'rotate(-90 '+(L-94)+' '+((T+B)/2)+')'},'judged score (1–5)');
+  })();
+
+  // ablation bars on slide 12
+  (function(){
+    var svg=document.getElementById('abl'), NS='http://www.w3.org/2000/svg';
+    function el(n,a,t){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(t)e.textContent=t;svg.appendChild(e);return e;}
+    var rows=[['As released (no memory)','',0.35,'#8a93a3'],['Cached values (v1)','1,235 MB / frame',0.78,'#5f7fc2'],
+              ['Cached values, 8-bit','627 MB / frame',0.82,'#5f7fc2'],['Store frame, recompute (v2)','6 MB / frame',0.77,'#3ddc97']];
+    var x0=470,W=420;
+    rows.forEach(function(r,i){
+      var y=40+i*104;
+      el('text',{x:0,y:y+30,'font-size':30,fill:i===3?'#3ddc97':'#e8ecf2','font-weight':i===3?700:600},r[0]);
+      el('text',{x:0,y:y+66,'font-size':24,fill:'#9aa4b2'},r[1]);
+      el('rect',{x:x0,y:y+6,width:W,height:54,rx:8,fill:'#1b212b'});
+      el('rect',{x:x0,y:y+6,width:W*r[2],height:54,rx:8,fill:r[3]});
+      el('text',{x:x0+W+18,y:y+46,'font-size':32,fill:'#e8ecf2','font-weight':700},r[2].toFixed(2));
+    });
+    el('text',{x:x0,y:452,'font-size':24,fill:'#9aa4b2'},'revisit quality: similarity to start view');
+  })();
+
+  var h=parseInt(location.hash.replace('#',''),10);
+  if(h>=1&&h<=slides.length) cur=h-1;
+  if(/[?&]notes=1/.test(location.search)) notes.classList.add('on');
+  if(/[?&]allfrags=1/.test(location.search)) frag=fragCount(slides[cur]);
+  // first render: mark active and start its videos
+  slides[cur].classList.add('active'); playVideos(slides[cur],true); render();
+  var help=document.getElementById('help'); help.classList.add('on'); setTimeout(function(){help.classList.remove('on');},4000);
+  // Self-test (open index.html?selftest=1#5): checks video start/stop and navigation, writes the result into <pre id="selftest">.
+  if(/[?&]selftest=1/.test(location.search)){
+    var out={}, pre=document.createElement('pre'); pre.id='selftest'; pre.style.display='none'; document.body.appendChild(pre);
+    function vids(i){ return [].map.call(slides[i].querySelectorAll('video'),function(v){return {paused:v.paused,t:+v.currentTime.toFixed(2),ready:v.readyState};}); }
+    setTimeout(function(){
+      out.start={slide:cur+1,videos:vids(cur)};
+      var was=cur; go(8,false);
+      setTimeout(function(){
+        out.afterLeave={slide:was+1,videos:vids(was)}; out.afterEnter={slide:cur+1,videos:vids(cur),hash:location.hash};
+        go(6,false); next(); next(); out.frag2={slide:cur+1,frag:frag,shown:slides[cur].querySelectorAll('.frag.shown').length};
+        prev(); out.fragBack={slide:cur+1,frag:frag};
+        next(); next(); next(); next(); out.afterFrags={slide:cur+1,frag:frag};
+        prev(); out.backInto={slide:cur+1,frag:frag};
+        go(0,false); prev(); out.first={slide:cur+1}; go(99,false); next(); out.last={slide:cur+1,count:bar.querySelector('.count').textContent};
+        pre.textContent=JSON.stringify(out); document.title='selftest-done';
+      },1800);
+    },2200);
+  }
+})();
+</script>
+</body>
+</html>
