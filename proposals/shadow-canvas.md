@@ -37,8 +37,8 @@ Sources: [PlayWorld paper](https://arxiv.org/abs/2608.13552), [repository](https
 
 ### 2.2 Why worlds fall apart
 
-- **Forgetting.** LingBot-World2's causal-fast model attends to a 6-frame sink plus an 18-frame
-  local window. Anything older is evicted. A revisited region is regenerated, not recalled; the
+- **Forgetting.** LingBot-World2's causal-fast model attends to an 18-latent-frame cache: 6
+  attention-sink frames plus the 12 most recent frames (4.5 s of video). Anything older is evicted. A revisited region is regenerated, not recalled; the
   LingBot-World2 report itself names this as its most fundamental limitation.
 - **Memory and evolution conflict.** Training-free memory methods such as WorldKV retrieve evicted
   frames when the camera returns. That fixes "same place" but returns a *stale* snapshot, which the
@@ -67,7 +67,7 @@ the model's in-sight capability.
 
 - Highest-scoring open model on PlayWorld; strongest IE on the board.
 - Wan2.2-based causal DiT, generating chunk by chunk with a self-attention KV cache
-  (`sink_size=6`, `local_attn_size=18` in the reference command).
+  (`local_attn_size=18` cached frames, of which `sink_size=6` are sink frames).
 - Camera control through per-frame camera-to-world poses encoded as Plücker embeddings, so camera
   pose is an exact, continuous input rather than a learned keyboard mapping.
 - Keys are cached after RoPE at absolute frame positions.
@@ -274,8 +274,8 @@ SHADOWED tile. Latency is not scored by PlayWorld.
 
 - Approximate tile counts: 2-3 for a 90° turn-and-return, 5-8 for a full 360°, more for paths that
   move through the scene.
-- Approximate K/V cache per branch at 480×832 (24 cached frames × 1,560 tokens/frame): about 7 GB
-  for 1.3B (30 layers × 1,536 dim), about 31 GB for 14B (40 layers × 5,120 dim), sharded across
+- Approximate K/V cache per branch at 480×832 (18 cached frames × 1,560 tokens/frame): about 5 GB
+  for 1.3B (30 layers × 1,536 dim), about 23 GB for 14B (40 layers × 5,120 dim), sharded across
   GPUs under sequence parallelism. To be measured.
 - Development on 1.3B (single H100, shadows batched); final runs on 14B (`H100:8` on Modal).
 
