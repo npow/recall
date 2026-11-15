@@ -1,0 +1,254 @@
+{
+  "comparison": "sink-rephase",
+  "cache_frames": {
+    "stock": 18,
+    "candidate": 18
+  },
+  "scope": "single controlled fixed path; no PlayWorld score or SOTA claim",
+  "matched_settings": {
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v5",
+    "task_id": "GC007",
+    "split": "gc",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "seed": 42,
+    "fps": 16,
+    "max_chunks": 16,
+    "max_area": 399360,
+    "chunk_size": 4,
+    "local_attn_size": 18,
+    "sink_size": 6,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "fixed_actions": [
+      "WAIT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "LEFT",
+      "LEFT",
+      "LEFT",
+      "WAIT"
+    ]
+  },
+  "native_camera_inputs_verified": true,
+  "pre_intervention_pixel_identical_chunks": 14,
+  "modified_chunks": [
+    14,
+    15
+  ],
+  "stock_wall_s": 195.704110137,
+  "candidate_wall_s": 226.55091073100002,
+  "stock_peak_allocated_bytes": 80390998016,
+  "candidate_peak_allocated_bytes": 84096862208,
+  "memory": {
+    "method": "pose-gated canonical sink key temporal rephasing v1; not paper reproduction",
+    "attended_latent_frames": 18,
+    "sink_latent_frames": 6,
+    "tail_latent_frames": 12,
+    "archive_limit_latent_frames": 6,
+    "value_storage": "native sink values, unchanged",
+    "persistent_cache_edited": false,
+    "pose_source": "commanded poses, not reconstructed realized poses",
+    "trigger": "within2 movement units and45 degrees of initial pose, after eviction begins",
+    "archive_bytes": 3706060800,
+    "retrieval_attention_calls": 400,
+    "trace": [
+      {
+        "chunk": 0,
+        "distance_from_initial": 0.0,
+        "angle_from_initial_degrees": 0.0,
+        "pose_overlap": false,
+        "attention_replaced": false
+      },
+      {
+        "chunk": 1,
+        "distance_from_initial": 0.0,
+        "angle_from_initial_degrees": 60.00000000000001,
+        "pose_overlap": false,
+        "attention_replaced": false
+      },
+      {
+        "chunk": 2,
+        "distance_from_initial": 0.0,
+        "angle_from_initial_degrees": 119.99999999999999,
+        "pose_overlap": false,
+        "attention_replaced": false
+      },
+      {
+        "chunk": 3,
+        "distance_from_initial": 0.0,
+        "angle_from_initial_degrees": 180.0,
+        "pose_overlap": false,
+        "attention_replaced": false
+      },
+      {
+        "chunk": 4,
+        "distance_from_initial": 0.0,
+        "angle_from_initial_degrees": 180.0,
+        "pose_overlap": false,
+        "attention_replaced": false
+      },
+      {
+        "chunk": 5,
+        "distance_from_initial": 0.0,
+        "angle_from_initial_degrees": 180.0,
+        "pose_overlap": false,
+        "attention_replaced": false
+      },
+      {
+        "chunk": 6,
+        "distance_from_initial": 0.0,
+        "angle_from_initial_degrees": 180.0,
+        "pose_overlap": false,
+        "attention_replaced": false
+      },
+      {
+        "chunk": 7,
+        "distance_from_initial": 0.0,
+        "angle_from_initial_degrees": 180.0,
+        "pose_overlap": false,
+        "attention_replaced": false
+      },
+      {
+        "chunk": 8,
+        "distance_from_initial": 0.0,
+        "angle_from_initial_degrees": 180.0,
+        "pose_overlap": false,
+        "attention_replaced": false
+      },
+      {
+        "chunk": 9,
+        "distance_from_initial": 0.0,
+        "angle_from_initial_degrees": 180.0,
+        "pose_overlap": false,
+        "attention_replaced": false
+      },
+      {
+        "chunk": 10,
+        "distance_from_initial": 0.0,
+        "angle_from_initial_degrees": 180.0,
+        "pose_overlap": false,
+        "attention_replaced": false
+      },
+      {
+        "chunk": 11,
+        "distance_from_initial": 0.0,
+        "angle_from_initial_degrees": 180.0,
+        "pose_overlap": false,
+        "attention_replaced": false
+      },
+      {
+        "chunk": 12,
+        "distance_from_initial": 0.0,
+        "angle_from_initial_degrees": 119.99999999999999,
+        "pose_overlap": false,
+        "attention_replaced": false
+      },
+      {
+        "chunk": 13,
+        "distance_from_initial": 0.0,
+        "angle_from_initial_degrees": 59.99999999999997,
+        "pose_overlap": false,
+        "attention_replaced": false
+      },
+      {
+        "chunk": 14,
+        "distance_from_initial": 0.0,
+        "angle_from_initial_degrees": 0.0,
+        "pose_overlap": true,
+        "attention_replaced": true,
+        "virtual_sink_start": 42
+      },
+      {
+        "chunk": 15,
+        "distance_from_initial": 0.0,
+        "angle_from_initial_degrees": 0.0,
+        "pose_overlap": true,
+        "attention_replaced": true,
+        "virtual_sink_start": 46
+      }
+    ]
+  },
+  "caveat": "Commanded camera closure does not prove realized closure. Endpoint image similarity cannot establish world memory if the realized route fails.",
+  "stock": {
+    "endpoint_psnr_db": 7.56492111949677,
+    "video_sha256": "49a5e5c516d8a7861c115e1f0e45c1b135aabf4df9e46d818aa86a9ce5c1efb5",
+    "endpoint_dino_cosine": 0.6133944988250732
+  },
+  "sink-rephase": {
+    "endpoint_psnr_db": 7.722488733306996,
+    "video_sha256": "9677f1c7272f744b680d26a97bd30a17901564020dc5ff0b4c49fb84a9ddba9b",
+    "endpoint_dino_cosine": 0.564427375793457
+  },
+  "candidate_label": "sink-rephase",
+  "warmed_suffix_s": {
+    "stock": 82.459922535,
+    "sink-rephase": 86.302150633
+  },
+  "feature_model": {
+    "name": "facebook/dinov2-small",
+    "revision": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+    "feature": "normalized CLS token"
+  },
+  "visual_judge": {
+    "model": "claude-opus-5-5",
+    "response_id": "msg_011Ch3tQch18UQWA78YoGnmd",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 46727,
+      "output_tokens": 2121,
+      "output_tokens_details": {
+        "thinking_tokens": 745
+      },
+      "server_tool_use": null,
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "label_mapping": {
+      "A": "sink-rephase",
+      "B": "stock"
+    },
+    "prompt": "Evaluate two anonymized world-model videos independently and then compare. Each was given the same image and fixed camera path. Commands by one-second chunk: ['WAIT', 'RIGHT', 'RIGHT', 'RIGHT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'LEFT', 'LEFT', 'LEFT', 'WAIT']. RIGHT and LEFT yaw 60 degrees per second; W moves forward. Commands are NOT proof that motion happened. Inspect actual frames. Assess whether each video realizes a turnaround and return to the starting viewpoint; whether persistent landmark identity, any sign text, geometry and spatial layout match on return; and whether there are sudden jumps, frozen motion or implausible transitions. Distinguish camera-control failures from forgetting. Do not reward a similar final building if reaching it required a reset. Do not invent unseen geometry. Return English JSON with keys A and B (each with realized_round_trip: yes|no|uncertain, starting_place_recovered: yes|no|uncertain, discontinuity: yes|no|uncertain, visual_evidence, failure_classification), preference: A|B|tie|neither, confidence: low|medium|high, and reasoning. This is a diagnostic comparison, not a benchmark score.",
+    "prompt_sha256": "6d0274a7bdf6e9a35285d4cbf5e917254ec2198c3d479d2a9783b131867db530",
+    "result": {
+      "A": {
+        "realized_round_trip": "no",
+        "starting_place_recovered": "no",
+        "discontinuity": "yes",
+        "visual_evidence": "Frames 0-9 hold the start view: an orange diamond-clad 'Primemall' building with a sharp black angular roof, a small umbrella, a lamp post and trees, with open sky on the right. During RIGHT (about frames 10-40) the camera does pan right. A second orange zig-zag-roofed building with a garbled sign ('Drtenmaell', 'Primeseon') and a blue pool and umbrellas comes into view. Through the long WAIT (about frames 40-120) the view stays nearly static on a sunken courtyard with a large blue umbrella, with only slight drift. Around frames 123-126 there is a heavy blur smear and an abrupt re-rendering as LEFT begins. In frames 125-135 the angular black roof and the '...emall' facade briefly reappear on the right side. They now have large blue umbrellas, a pool and patio furniture in front, which were not in the start view, and the main sign text corrupts to 'Pinemall'/'Pinemall'. The camera then continues past that building and appears to translate rather than only rotate. A new blue-clad glass building with a 'Prim...' logo dominates, which was never present in the start view. The final WAIT frames (about 145-158) show a paved corridor with a planter strip. A new 'DIRGRING' signed building is on the left, the blue building is on the right, and a zig-zag orange roofline is in the distance. None of this matches the opening composition.",
+        "failure_classification": "Mixed camera-control and memory failure. Yaw in both directions is realized. On the return, the original landmark passes through frame but is not settled on: the view overshoots or drifts with apparent translation. The scene is re-hallucinated with new geometry (pool and umbrellas in front of the original building, a new blue building, a new 'DIRGRING' sign) and degraded sign text. The start viewpoint is not recovered."
+      },
+      "B": {
+        "realized_round_trip": "no",
+        "starting_place_recovered": "no",
+        "discontinuity": "yes",
+        "visual_evidence": "Frames 0-about 140 are essentially identical to A. The same rightward pan reveals the 'Drtenmaell'/'Primeseon' building and pool. The WAIT on the sunken courtyard with the large blue umbrella shows slight drift. The same blur transition occurs around frames 123-126. The original angular roof briefly reappears with newly added umbrellas and pool, and the sign is corrupted to 'Pinemall'. The camera then moves on to the new blue 'Prim...' glass building. The ending differs from A only in detail. The final corridor (about frames 145-158) has a glass and orange-brick building on the left with no 'DIRGRING' text, plus the blue building, a planter strip and a zig-zag orange roofline. The original 'Primemall' facade and the open-sky start composition are not recovered.",
+        "failure_classification": "Same as A: yaw is executed, but the return overshoots or drifts with apparent translation. Geometry is invented (blue building, pool and umbrellas in front of the original building). Sign text and landmark identity are corrupted. The starting viewpoint is not recovered."
+      },
+      "preference": "neither",
+      "confidence": "medium",
+      "reasoning": "Both videos are nearly frame-identical for most of their length. Both make real right and left yaw motions, so the camera is not frozen. Both fail the turnaround test in the same way. The original Primemall building flashes by mid-LEFT with altered surroundings and corrupted text. The camera then ends on a newly invented blue-facade corridor instead of the opening view. Both also show an abrupt blur and re-render discontinuity at the start of the LEFT turn. The only difference is the final left-side building (a 'DIRGRING'-signed facade in A, an unsigned glass facade in B), and neither matches the start. Neither earns credit for recovering the starting place, so no preference is warranted."
+    }
+  }
+}

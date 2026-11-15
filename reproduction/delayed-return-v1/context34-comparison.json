@@ -1,0 +1,135 @@
+{
+  "comparison": "context",
+  "cache_frames": {
+    "stock": 18,
+    "candidate": 34
+  },
+  "scope": "single controlled fixed path; no PlayWorld score or SOTA claim",
+  "matched_settings": {
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v5",
+    "task_id": "GC007",
+    "split": "gc",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "seed": 42,
+    "fps": 16,
+    "max_chunks": 16,
+    "max_area": 399360,
+    "chunk_size": 4,
+    "sink_size": 6,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "fixed_actions": [
+      "WAIT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "LEFT",
+      "LEFT",
+      "LEFT",
+      "WAIT"
+    ]
+  },
+  "native_camera_inputs_verified": true,
+  "pre_intervention_pixel_identical_chunks": 4,
+  "modified_chunks": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "stock_wall_s": 195.704110137,
+  "candidate_wall_s": 198.27804193699998,
+  "stock_peak_allocated_bytes": 80390998016,
+  "candidate_peak_allocated_bytes": 100108818432,
+  "memory": null,
+  "caveat": "Commanded camera closure does not prove realized closure. Endpoint image similarity cannot establish world memory if the realized route fails.",
+  "stock": {
+    "endpoint_psnr_db": 7.56492111949677,
+    "video_sha256": "49a5e5c516d8a7861c115e1f0e45c1b135aabf4df9e46d818aa86a9ce5c1efb5",
+    "endpoint_dino_cosine": 0.6133944988250732
+  },
+  "context34": {
+    "endpoint_psnr_db": 8.364208474266876,
+    "video_sha256": "85213c7cbf569b39edc0a26fc3e3c1e057861ecdaee22535d81897afa376baf2",
+    "endpoint_dino_cosine": 0.36561721563339233
+  },
+  "candidate_label": "context34",
+  "warmed_suffix_s": {
+    "stock": 82.459922535,
+    "context34": 99.08430856
+  },
+  "feature_model": {
+    "name": "facebook/dinov2-small",
+    "revision": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+    "feature": "normalized CLS token"
+  },
+  "visual_judge": {
+    "model": "claude-opus-5-5",
+    "response_id": "msg_011Ch3tQdLhGDDKSqg7rLD9A",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 46727,
+      "output_tokens": 2265,
+      "output_tokens_details": {
+        "thinking_tokens": 990
+      },
+      "server_tool_use": null,
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "label_mapping": {
+      "A": "context34",
+      "B": "stock"
+    },
+    "prompt": "Evaluate two anonymized world-model videos independently and then compare. Each was given the same image and fixed camera path. Commands by one-second chunk: ['WAIT', 'RIGHT', 'RIGHT', 'RIGHT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'LEFT', 'LEFT', 'LEFT', 'WAIT']. RIGHT and LEFT yaw 60 degrees per second; W moves forward. Commands are NOT proof that motion happened. Inspect actual frames. Assess whether each video realizes a turnaround and return to the starting viewpoint; whether persistent landmark identity, any sign text, geometry and spatial layout match on return; and whether there are sudden jumps, frozen motion or implausible transitions. Distinguish camera-control failures from forgetting. Do not reward a similar final building if reaching it required a reset. Do not invent unseen geometry. Return English JSON with keys A and B (each with realized_round_trip: yes|no|uncertain, starting_place_recovered: yes|no|uncertain, discontinuity: yes|no|uncertain, visual_evidence, failure_classification), preference: A|B|tie|neither, confidence: low|medium|high, and reasoning. This is a diagnostic comparison, not a benchmark score.",
+    "prompt_sha256": "6d0274a7bdf6e9a35285d4cbf5e917254ec2198c3d479d2a9783b131867db530",
+    "result": {
+      "A": {
+        "realized_round_trip": "no",
+        "starting_place_recovered": "no",
+        "discontinuity": "yes",
+        "visual_evidence": "Frames 0-9 hold the start view: an orange diamond-clad 'Primemall' building with a triangular dark roof canopy, centered and seen from a distance. Frames ~10-45 show a smooth rightward pan to a plaza with fountains, blue umbrellas and a zigzag-roofed building signed 'Driennaell'/'Prinennall'. Frames ~45-118 are essentially static, which is consistent with the long WAIT. Around frames ~119-124 a very fast, blurred leftward swing begins, and the foreground changes abruptly: a large blue umbrella and ramp now sit close to the camera. Frames ~125-132 briefly show a triangular-roof orange building resembling the start landmark, but from a closer, different position with new foreground objects. The camera then keeps going left past it to a close-up of an orange facade signed 'Prinennall' (garbled, unlike the crisp 'Primemall'). It ends (frames ~145-158) looking down a paved walkway between two orange buildings, with lamp posts and distant gabled roofs. The return sweep is far larger and faster than the outbound pan, and the final view does not match the start framing, distance or composition.",
+        "failure_classification": "Mainly a camera-control failure: the return rotation overshoots, with a translation-like drift and no settle at the start pose. Memory is partially kept: orange material and triangular roof are reused, but sign text is corrupted and the start building is only glimpsed transiently. There is also an abrupt transition at the start of the LEFT segment."
+      },
+      "B": {
+        "realized_round_trip": "no",
+        "starting_place_recovered": "no",
+        "discontinuity": "yes",
+        "visual_evidence": "Frames 0-~120 are near-identical to A: the same start view, the same rightward pan to the fountain plaza, and the same long static hold. The LEFT segment begins with a similar fast, blurred swing (~119-125). Frames ~125-131 glimpse the triangular-roof orange building with umbrellas, but the sign now reads 'Pinemall'/'Pinemeall'. From frame ~131 onward a new building with a bright blue faceted facade, a circular emblem and a 'Primxxx' sign enters from the left. It soon dominates the frame and replaces the orange-and-triangular-roof landmark. The video ends (frames ~145-158) looking down a paved walkway with a planter strip, the blue building on the right and a zigzag orange roofline in the distance. Neither the start building nor the start viewpoint is recovered.",
+        "failure_classification": "Both a camera-control failure (an overshooting, translating return sweep that never settles at the start pose) and forgetting/hallucination. A prominent blue-clad building with a new emblem is invented that never appeared in the outbound trajectory, and the start landmark's identity is replaced rather than recalled."
+      },
+      "preference": "A",
+      "confidence": "low",
+      "reasoning": "Both videos share an identical first ~12 seconds: a plausible right pan followed by a long static hold. Both fail the return in the same way: an abrupt, overly large leftward swing that passes the start landmark only briefly and ends at an unrelated walkway view, so neither recovers the starting place. A is slightly preferable because its return stays within the observed scene vocabulary: orange diamond cladding, the triangular roof, and a garbled but similar 'Prinennall' sign. B introduces a large, novel blue-facade building that contradicts the established scene and is a clear memory/hallucination failure. The difference is modest, since neither achieves the round trip, so confidence is low."
+    }
+  }
+}
