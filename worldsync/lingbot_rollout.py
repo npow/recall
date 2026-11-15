@@ -59,8 +59,12 @@ def main():
         parser.error("memory ablations must be tested separately")
     if (args.pose_retrieval or args.rephase_sink) and not args.native_fixed_controls:
         parser.error("retrieval calibration requires native fixed controls")
-    if (args.pose_retrieval or args.rephase_sink) and not lingbot_tuning.is_stock(knobs):
-        parser.error("bounded retrieval currently requires the stock 18-frame/6-sink budget")
+    if args.rephase_sink and not lingbot_tuning.is_stock(knobs):
+        parser.error("sink rephasing requires the stock 18-frame/6-sink budget")
+    if args.pose_retrieval and (knobs["local_attn_size"] not in {18, 22}
+            or knobs["sink_size"] != 6 or knobs["decision_interval"] != 1
+            or (knobs["local_attn_size"] != 18 and not args.controlled_ablation)):
+        parser.error("retrieval requires18/22 frames,6 sinks,decision interval1;22 requires controlled ablation")
     output = args.output.resolve()
     if output.exists() and any(output.iterdir()):
         parser.error("output directory must be empty")
@@ -169,7 +173,8 @@ def main():
         if args.pose_retrieval:
             from worldsync.lingbot_retrieval import PoseKVMemory
             memory = PoseKVMemory(pipeline, key_positions=args.retrieval_positions,
-                                  retrieved_frames=args.retrieved_frames, selection=args.retrieval_selection)
+                                  retrieved_frames=args.retrieved_frames, selection=args.retrieval_selection,
+                                  cache_frames=knobs["local_attn_size"])
         elif args.rephase_sink:
             from worldsync.lingbot_sink_rephase import SinkRephaseMemory
             memory = SinkRephaseMemory(pipeline)
@@ -251,6 +256,8 @@ def main():
             nonlocal latest
             if float(kwargs["t"].flatten()[0]) != 0:
                 return
+            if args.pose_retrieval:
+                memory.release_read_cache()
             video = stream.decode(kwargs["x"][0])
             if not torch.isfinite(video).all():
                 raise ValueError("non-finite decoded observation")

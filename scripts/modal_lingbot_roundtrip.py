@@ -24,7 +24,8 @@ def mode_name(retrieval, cache_frames, rephase_sink, positions, retrieved_frames
     if not retrieval:
         return "stock" if cache_frames == 18 else f"context{cache_frames}"
     base = "retrieval-native" if positions == "native" else "retrieval"
-    return base if retrieved_frames == 4 and selection == "nearest" else f"{base}-{retrieved_frames}-{selection}"
+    mode = base if retrieved_frames == 4 and selection == "nearest" else f"{base}-{retrieved_frames}-{selection}"
+    return mode if cache_frames == 18 else f"{mode}-context{cache_frames}"
 
 
 @app.function(image=image, gpu="H200", cpu=8, memory=131072, timeout=1800, max_containers=3,
@@ -83,8 +84,8 @@ def generate_h100(path_name: str, seed: int, retrieval: bool, cache_frames: int,
 
 
 @app.local_entrypoint()
-def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", validation: bool = False, memory_validation: bool = False, task_benchmark: bool = False, rephase_sink: bool = False, retrieval_positions: str = "virtual", turn_rate: float = 60, retrieved_frames: int = 4, retrieval_selection: str = "nearest", multi_view_ablation: bool = False):
-    if sum([validation, memory_validation, task_benchmark, multi_view_ablation]) > 1:
+def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", validation: bool = False, memory_validation: bool = False, task_benchmark: bool = False, rephase_sink: bool = False, retrieval_positions: str = "virtual", turn_rate: float = 60, retrieved_frames: int = 4, retrieval_selection: str = "nearest", multi_view_ablation: bool = False, protected_recent_ablation: bool = False):
+    if sum([validation, memory_validation, task_benchmark, multi_view_ablation, protected_recent_ablation]) > 1:
         raise ValueError("Choose one frozen experiment plan")
     if retrieved_frames not in {4, 8} or retrieval_selection not in {"nearest", "diverse"}:
         raise ValueError("retrieval supports4/8 frames and nearest/diverse selection")
@@ -92,8 +93,32 @@ def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False,
         raise ValueError("non-default memory settings require retrieval mode")
     if retrieval_positions not in {"native", "virtual"} or (retrieval_positions != "virtual" and not retrieval):
         raise ValueError("native retrieval positions require retrieval mode")
-    if cache_frames not in {18, 34} or ((retrieval or rephase_sink) and cache_frames != 18) or (retrieval and rephase_sink):
-        raise ValueError("This declared pilot supports stock18, context34, or stock-budget retrieval")
+    if cache_frames not in {18, 22, 34} or (retrieval and cache_frames not in {18, 22}) or (rephase_sink and cache_frames != 18) or (retrieval and rephase_sink):
+        raise ValueError("This declared pilot supports stock18, context22/34, or18/22-frame retrieval")
+    if protected_recent_ablation:
+        plan = json.loads((ROOT / "reproduction/protected-recent-memory-plan.json").read_text())
+        case = plan["case"]
+        pending = []
+        for variant in plan["variants"]:
+            mode = mode_name(variant["retrieval"], variant["cache_frames"], False, "virtual",
+                             variant["retrieved_frames"], variant["selection"])
+            output = ROOT / "outputs/lingbot-reproduction" / f"protected-recent-{mode}.json"
+            if output.exists() and json.loads(output.read_text())["run"]["status"] == "completed":
+                print(f"Reusing completed protected-recent variant {mode}", flush=True)
+                continue
+            pending.append((case["path"], case["seed"], variant["retrieval"], variant["cache_frames"],
+                            case["task_id"], False, "virtual", 60, variant["retrieved_frames"], variant["selection"], True))
+        failure_file = ROOT / "outputs/lingbot-reproduction/protected-recent-failures.json"
+        failures = json.loads(failure_file.read_text()) if failure_file.exists() else []
+        for index, result in enumerate(generate_h100.starmap(pending, return_exceptions=True)):
+            if isinstance(result, BaseException):
+                failures.append({"job": pending[index], "error": str(result)})
+                failure_file.write_text(json.dumps(failures, indent=2) + "\n")
+                continue
+            output = ROOT / "outputs/lingbot-reproduction" / f"protected-recent-{result['mode']}.json"
+            output.write_text(json.dumps(result, indent=2) + "\n")
+            print(json.dumps({k: v for k, v in result.items() if k != "run"}, indent=2), flush=True)
+        return
     if multi_view_ablation:
         plan = json.loads((ROOT / "reproduction/multiview-retrieval-plan.json").read_text())
         case = plan["case"]

@@ -9,11 +9,11 @@ import numpy as np
 import torch
 
 
-def select_frames(poses, available, current_start, count=4, diverse=False):
+def select_frames(poses, available, current_start, count=4, diverse=False, recent_frames=4):
     target = poses[-1]
     ranked = []
     for index in available:
-        if index < 6 or index >= current_start - 4:
+        if index < 6 or index >= current_start - recent_frames:
             continue  # Never duplicate sink, recent, current or future frames.
         pose = poses[index]
         distance = float(np.linalg.norm(target[:3, 3] - pose[:3, 3]))
@@ -40,9 +40,12 @@ def select_frames(poses, available, current_start, count=4, diverse=False):
 
 
 class PoseKVMemory:
-    def __init__(self, pipeline, key_positions="virtual", retrieved_frames=4, selection="nearest"):
+    def __init__(self, pipeline, key_positions="virtual", retrieved_frames=4, selection="nearest", cache_frames=18):
         if retrieved_frames not in {4, 8} or selection not in {"nearest", "diverse"}:
             raise ValueError("retrieval supports4/8 frames and nearest/diverse selection")
+        if cache_frames not in {18, 22}:
+            raise ValueError("retrieval supports18/22 attended latent frames")
+        self.cache_frames = cache_frames
         self.retrieved_frames = retrieved_frames
         self.selection = selection
         if key_positions not in {"virtual", "native"}:
@@ -83,9 +86,25 @@ class PoseKVMemory:
         self.chunk = chunk
         self.poses = np.asarray(poses)
         self.cached.clear()
-        self.selected = select_frames(self.poses, self.available, chunk * 4, count=self.retrieved_frames, diverse=self.selection == "diverse")
+        self.selected = select_frames(self.poses, self.available, chunk * 4, count=self.retrieved_frames, diverse=self.selection == "diverse",
+                                      recent_frames=self.cache_frames - 14)
         self.trace.append({"chunk": chunk, "retrieved_frame_ids": self.selected,
                            "archive_frame_ids": sorted(self.available), "attention_replaced": False})
+
+    def release_read_cache(self):
+        """Drop temporary GPU reads after the clean pass, before VAE decoding.
+
+        The CPU archive and the model's persistent native KV cache are untouched.
+        Reads are already rebuilt in begin() for the next chunk.
+        """
+        if self.active is not None:
+            raise RuntimeError("cannot release retrieval reads during attention")
+        released = sum(tensor.numel() * tensor.element_size()
+                       for pair in self.cached.values() for tensor in pair)
+        self.cached.clear()
+        if self.trace:
+            self.trace[-1]["temporary_read_bytes_released_before_decode"] = released
+        return released
 
     def attend(self, query, key, value, **kwargs):
         if self.active is None:
@@ -108,8 +127,8 @@ class PoseKVMemory:
                                    v_current[:, lo:hi].detach().to("cpu", copy=True))
                     if layer == 0:
                         self.available.add(index)
-        # Keep18 attended frames; more historical views replace recent history.
-        if len(self.selected) < 4 or key.shape[1] != 18 * frame_tokens:
+        # Preserve the declared attention budget; keep at least four current frames.
+        if len(self.selected) < 4 or key.shape[1] != self.cache_frames * frame_tokens:
             return self.original_attention(query, key, value, **kwargs)
         if layer not in self.cached:
             if any(index not in bank for index in self.selected):
@@ -123,10 +142,10 @@ class PoseKVMemory:
             else:
                 with torch.amp.autocast("cuda", enabled=False):
                     retrieved_key = self.module.causal_rope_apply(canonical, virtual_grid, freqs,
-                        start_frame=first_frame - 8).to(key.dtype)
+                        start_frame=first_frame + 10 - self.cache_frames).to(key.dtype)
             self.cached[layer] = (retrieved_key, retrieved_value)
         retrieved_key, retrieved_value = self.cached[layer]
-        tail = 12 - len(self.selected)
+        tail = self.cache_frames - 6 - len(self.selected)
         combined_key = torch.cat([key[:, :6 * frame_tokens], retrieved_key, key[:, -tail * frame_tokens:]], dim=1)
         combined_value = torch.cat([value[:, :6 * frame_tokens], retrieved_value, value[:, -tail * frame_tokens:]], dim=1)
         if combined_key.shape != key.shape:
@@ -140,8 +159,11 @@ class PoseKVMemory:
         return {"method": "bounded early-view pose KV retrieval; diagnostic, not paper reproduction",
                 "archive_limit_latent_frames": 16, "retrieved_latent_frames": self.retrieved_frames,
                 "retrieved_frame_count_is_limit": True, "selection": self.selection,
-                "attended_latent_frames": 18, "sink_latent_frames": 6, "tail_latent_frames": 12 - self.retrieved_frames,
+                "attended_latent_frames": self.cache_frames, "sink_latent_frames": 6,
+                "tail_latent_frames": self.cache_frames - 6 - self.retrieved_frames,
+                "excluded_recent_archive_frames": self.cache_frames - 14,
                 "tail_frame_count_is_minimum": True,
+                "temporary_gpu_read_lifetime": "denoising and clean pass only; released before VAE decode",
                 "pose_source": "commanded poses, not reconstructed realized poses",
                 "key_positions": self.key_positions,
                 "key_storage": ("exact native post-RoPE keys; original temporal/spatial positions retained" if self.key_positions == "native"

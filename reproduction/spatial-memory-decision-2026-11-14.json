@@ -1,0 +1,84 @@
+{
+  "date": "2026-11-14",
+  "scope": "Decision record following user questions about base model, attention efficiency and Gaussian scene memory; proposals are untested unless marked measured.",
+  "baseline_choice": {
+    "decision": "Retain LingBot2 14B causal-fast as current generator while testing memory integration.",
+    "evidence": "Current PlayWorld table reports LingBot2 1.82, LingBot1 1.78, HY-World2 1.61 and Matrix3 1.14. Hosted score does not establish local checkpoint parity.",
+    "source": "https://github.com/hku-sail/PlayWorld#leaderboard",
+    "alternative": "Released LingBot2 1.3B could accelerate algorithm screening, but needs its own baseline and transfer validation; its quality cannot be assumed equal.",
+    "alternative_source": "https://github.com/Robbyant/lingbot-world-v2"
+  },
+  "runtime": {
+    "measured": "Existing H200 profile already executes aten::_flash_attention_forward: 37.63% exclusive GPU operator time. SDPA is not unfused quadratic-matrix attention.",
+    "evidence": "reproduction/lingbot-profile-summary.json",
+    "pending": "Dedicated runtime subagent is testing temporary memory lifetimes and a newer fused kernel on an isolated image.",
+    "claim_limit": "A faster attention kernel does not change the semantics of geometric memory."
+  },
+  "observed_memory_failure": {
+    "evidence": "reproduction/multiview-retrieval/summary.json",
+    "measured": "Eight-view variants at an18-frame attention budget produced discontinuities and were not preferred over four nearest views.",
+    "interpretation": "This confounds number of historical views with loss of recent context. It does not establish that eight historical views are inherently harmful.",
+    "next_control": "Compare22-frame4-view and22-frame8-view memory, preserving at least8 recent/current frames, with same pose selection and denoising. Rerun18-frame4-view control after lifetime optimization."
+  },
+  "gaussian_design": {
+    "hypothesis": "A persistent spatial map can stabilize static layout and provide visibility-aware conditioning, while recent video supplies dynamic evolution.",
+    "not_sufficient": "A Gaussian renderer alone supplies appearance and geometry, not dynamics, action transitions or reliable unseen surfaces. Fusing inconsistent generated frames can preserve contradictions.",
+    "proposed_pipeline": [
+      "Estimate depth and realized camera poses from a small past-only keyframe set; compare pose/depth reprojection rather than treating commanded poses as measurements.",
+      "Keep separate local submaps with confidence, source timestamps and update provenance; mask moving or inconsistent regions.",
+      "Render visible geometry or latent features plus coverage/confidence at the requested camera.",
+      "Condition the pretrained generator through a trained adapter or use the map only to route existing historical KV; keep recent video context available.",
+      "Fine-tune only adapter parameters on separately sourced camera-consistent clips, with corrupted-history examples; retain the frozen generator baseline."
+    ],
+    "decision_gate": "Before training a geometric adapter, show that reconstruction from early generated keyframes explains held-out adjacent frames and a revisit better than a view-only retrieval baseline. Reject low-confidence map writes and report rejected coverage.",
+    "evaluation": "Complete agent-driven leave/return episodes plus dynamic visible/hidden events. Show landmark identity, route continuity, map confidence and held-out failures. A static splat-only tour cannot validate dynamic evolution."
+  },
+  "research_references": [
+    {
+      "name": "L3G-World",
+      "paper": "https://arxiv.org/html/2610.40614v1",
+      "code": "https://github.com/cvlab-kaist/L3G-World",
+      "verified_status": "Inference code and checkpoints remain on pending release checklist.",
+      "relevance": "Latent Gaussian memory and generator conditioning; mostly static scenes. A direct reproduction is currently unavailable."
+    },
+    {
+      "name": "Robust Dreamer",
+      "paper": "https://arxiv.org/html/2605.30855v2",
+      "code_status_source": "https://hlinchen.github.io/projects/Robust_Dreamer/",
+      "verified_status": "Code Coming Soon.",
+      "relevance": "Latent Gaussian memory plus corrupted-memory training with LoRA; not a released plug-in."
+    },
+    {
+      "name": "VMem",
+      "paper": "https://arxiv.org/abs/2506.18903",
+      "code": "https://github.com/runjiali-rl/vmem",
+      "verified_status": "Code and model link released.",
+      "relevance": "Surfels index historical views by visible surface overlap; useful lower-cost geometry routing baseline."
+    },
+    {
+      "name": "LSM-World",
+      "paper": "https://arxiv.org/html/2606.09828v2",
+      "code": "https://github.com/microsoft/LatentSpatialMemory",
+      "verified_status": "Code released; README inference expects trained VACE and LoRA checkpoints.",
+      "relevance": "Persistent latent spatial cache and adapter recipe; not the same backbone or checkpoint as our LingBot2."
+    },
+    {
+      "name": "WorldTrace",
+      "source": "https://research.nvidia.com/labs/sil/projects/WorldTrace/",
+      "relevance": "Keep recent verbatim frames and bounded addressable history; preserve positional meaning."
+    },
+    {
+      "name": "WorldKV",
+      "source": "https://cvlab-kaist.github.io/WorldKV/",
+      "relevance": "Pose/action-indexed native KV retrieval and redundancy compression."
+    }
+  ],
+  "attention_options_not_yet_tested": [
+    "Maintain a protected recent window while expanding historical context.",
+    "Spatially select historical tokens by visibility, rather than loading complete near-duplicate frames.",
+    "Separate recent/history attention with an explicit confidence gate; requires validation or adapter training, not assumed compatible zero-shot.",
+    "Compress redundant history while preserving positional addressability."
+  ],
+  "coverage_limit": "Targeted review of35 papers with selected method/result/limitation checks. Not every paper read in full and no claim of exhausting all tricks.",
+  "training_performed_by_this_memory_study": false
+}

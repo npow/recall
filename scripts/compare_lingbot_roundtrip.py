@@ -18,7 +18,7 @@ def main():
     parser.add_argument("--judge", action="store_true")
     parser.add_argument("--reference-label", default="stock")
     parser.add_argument("--candidate-label")
-    parser.add_argument("--comparison", choices=("retrieval", "context", "sink-rephase", "retrieval-native"), default="retrieval")
+    parser.add_argument("--comparison", choices=("retrieval", "context", "sink-rephase", "retrieval-native", "memory-context"), default="retrieval")
     parser.add_argument("--dino", action="store_true", help="Add pinned DINOv2-small endpoint feature similarity")
     args = parser.parse_args()
     reference_label = args.reference_label
@@ -29,7 +29,7 @@ def main():
     candidate = json.loads(args.candidate_run.read_text())["run"]
     fields = ("source_revision", "checkpoint_revision", "protocol_id", "task_id", "split", "controls_sha256", "seed", "fps", "max_chunks",
               "max_area", "chunk_size", "local_attn_size", "sink_size", "sampler_timesteps_index", "sample_shift", "fixed_actions")
-    if args.comparison == "context":
+    if args.comparison in {"context", "memory-context"}:
         fields = tuple(field for field in fields if field != "local_attn_size")
     for field in fields:
         if stock[field] != candidate[field]:
@@ -46,11 +46,20 @@ def main():
         raise ValueError("Unmatched camera turn rate")
     memory = candidate.get("memory")
     if args.comparison != "context":
-        modified = [item["chunk"] for item in memory["trace"] if item["attention_replaced"]]
+        modified = [item["chunk"] for item in (memory or {}).get("trace", []) if item["attention_replaced"]]
         reference_modified = [item["chunk"] for item in (stock.get("memory") or {}).get("trace", []) if item["attention_replaced"]]
         if not modified and not reference_modified:
             raise ValueError("Neither policy retrieved memory; no intervention to compare")
         first = min(modified + reference_modified)
+        if args.comparison == "memory-context":
+            capacities = (stock["local_attn_size"], candidate["local_attn_size"])
+            if capacities not in {(18, 22), (22, 22)}:
+                raise ValueError("Protected-recent pilot requires18-to22 or matched22-frame budgets")
+            for run in (stock, candidate):
+                if run["local_attn_size"] == 22 and not run["controlled_ablation"]:
+                    raise ValueError("Capacity22 requires declared controlled ablation")
+            if capacities[0] != capacities[1]:
+                first = min(first, min(capacities) // stock["chunk_size"])
     else:
         if stock["local_attn_size"] != 18 or candidate["local_attn_size"] != 34:
             raise ValueError("Declared context pilot requires stock18 versus context34")

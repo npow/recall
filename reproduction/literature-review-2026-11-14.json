@@ -1,7 +1,7 @@
 {
   "cutoff": "2026-11-14",
   "scope": "Targeted review of major interactive video world memory, control, geometry and evaluation papers; not a claim of exhaustive bibliometric coverage. Abstracts and selected methods/results/limitations were checked; not every paper read line by line.",
-  "paper_count": 34,
+  "paper_count": 35,
   "ranking_caveat": "Different datasets, controllers, camera trajectories, resolutions, speeds and evaluation definitions prevent a universal model ranking. Paper-reported numbers are not reproduced by us.",
   "recommended_order": [
     "Verify control on fixed round trips with realized camera motion.",
@@ -125,12 +125,12 @@
       "applicability": "Lightweight memory-module direction; requires learned integration."
     },
     {
-      "name": "Mirage: Latent Spatial Memory",
+      "name": "Latent Spatial Memory for Video World Models (LSM-World; earlier Mirage title)",
       "arxiv_id": "2606.09828",
       "paper_url": "https://arxiv.org/abs/2606.09828",
       "family": "latent_3d",
       "mechanism": "Lift VAE features into a persistent 3D cache and query through latent warping.",
-      "applicability": "Avoid repeated RGB rendering and VAE encoding; requires suitable conditioning."
+      "applicability": "Official Microsoft code now available. Wan2.2 TI2V5B with VACE conditioning and LoRA; inference expects separately trained adapter checkpoints. Not a zero-shot LingBot plugin."
     },
     {
       "name": "Mem-World",
@@ -283,6 +283,14 @@
       "family": "benchmark",
       "mechanism": "Use closed-loop agent exploration and realized reconstructed poses over long rollouts.",
       "applicability": "Useful diagnostics up to 180 seconds; local visual stability does not establish long-range memory."
+    },
+    {
+      "name": "Robust Dreamer: Deviation-Aware Latent Gaussian Memory",
+      "arxiv_id": "2605.30855",
+      "paper_url": "https://arxiv.org/html/2605.30855v2",
+      "family": "latent_gaussian_and_exposure_bias",
+      "mechanism": "Store inherited diffusion latents on Gaussian primitives and train against rollout-like memory corruption.",
+      "applicability": "Uses LoRA, so compatible in principle with no-from-scratch constraint. Authors report substantial multi-GPU training; project code still Coming Soon. Not reproduced or integrated."
     }
   ],
   "checked_release_sources": {
@@ -294,6 +302,8 @@
     "AgiWorld": "https://bshfang.github.io/agiworld/",
     "World-T3": "https://adreamwu.github.io/World-T3/",
     "Hy-Nomas": "https://github.com/tencent-hunyuan/hy-nomas",
-    "WorldTrace": "https://research.nvidia.com/labs/sil/projects/WorldTrace/"
+    "WorldTrace": "https://research.nvidia.com/labs/sil/projects/WorldTrace/",
+    "Robust-Dreamer": "https://hlinchen.github.io/projects/Robust_Dreamer/",
+    "LSM-World": "https://github.com/microsoft/LatentSpatialMemory"
   }
 }

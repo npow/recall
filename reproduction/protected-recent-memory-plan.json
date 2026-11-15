@@ -1,0 +1,55 @@
+{
+  "scope": "Development ablation of historical reads with protected recent context; no task-score or SOTA claim",
+  "case": {
+    "task_id": "GC007",
+    "seed": 42,
+    "path": "turn_long_wait_return",
+    "partition": "development"
+  },
+  "reference": "reproduction/lingbot-read-cache-lifetime/run.json",
+  "reference_requirement": "Complete32chunks onH100; verify every raw-pixel chunk against frozen nearest4 reference before reuse. Protocolv6 remains separate from legacyv5 reports.",
+  "variants": [
+    {
+      "cache_frames": 22,
+      "retrieval": false,
+      "retrieved_frames": 4,
+      "selection": "nearest"
+    },
+    {
+      "cache_frames": 22,
+      "retrieval": true,
+      "retrieved_frames": 4,
+      "selection": "nearest"
+    },
+    {
+      "cache_frames": 22,
+      "retrieval": true,
+      "retrieved_frames": 8,
+      "selection": "nearest"
+    }
+  ],
+  "frozen_settings": "Pinned original checkpoint and source, BF16, same4-step sampler,6sink,virtualRoPE,archive6..21,32nativefixedchunks,60deg/s,seed42,H100,offloadedinactiveT5,expandableallocator,release temporary reads beforedecode",
+  "budget": "22-frame4-read keeps12 recent/current frames;22-frame8-read keeps8. Same22attentionbudget for both. Reference18-frame4-read keeps8. Extra-capacitystock22control tests whether history retrieval remains necessary.",
+  "selection": "Exclude archive entries in retained recent window; use conservative8-latent exclusion for22capacity to protect the largest permitted recent tail. This changes eligibility from18-capacity4-latent exclusion and is explicitly part of capacity variant. No future access.",
+  "primary_evaluation": "Blinded complete-video continuity and landmark-return comparison. EndpointDINO supplementary; report latency,allocatedmemory,actualread/tailcount and everyfailure.",
+  "comparisons": [
+    [
+      "reference18_read4",
+      "context22"
+    ],
+    [
+      "reference18_read4",
+      "retrieval_context22"
+    ],
+    [
+      "reference18_read4",
+      "retrieval8_context22"
+    ],
+    [
+      "retrieval_context22",
+      "retrieval8_context22"
+    ]
+  ],
+  "selection_policy": "Report all variants. Keep existing four-view default unless full-video improvement is confirmed on a fresh source-audited held-out scene.",
+  "training": "None"
+}
