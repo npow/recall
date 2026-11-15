@@ -30,6 +30,7 @@ def main():
     parser.add_argument("--only", nargs="+", metavar="SPLIT:TASK",
         help="Run only these cases (e.g. gc:GC007) to verify the pipeline; no overall score")
     parser.add_argument("--seed", type=int, default=42, help="LingBot generation seed (default 42)")
+    parser.add_argument("--turn-degrees-per-second", type=float, default=60, help="Commanded turn rate (stock 60)")
     parser.add_argument("--publish-status", action="store_true")
     parser.add_argument("--judge", action="store_true", help="Claude diagnostics with released rubric; never official Gemini reproduction")
     parser.add_argument("--dry-run", action="store_true")
@@ -46,6 +47,10 @@ def main():
         if args.model != "lingbot":
             parser.error("--seed applies to LingBot only")
         knob_args += ["--seed", str(args.seed)]
+    if args.turn_degrees_per_second != 60:
+        if args.model != "lingbot":
+            parser.error("--turn-degrees-per-second applies to LingBot only")
+        knob_args += ["--turn-degrees-per-second", f"{args.turn_degrees_per_second:g}"]
     if args.max_chunks is None:
         args.max_chunks = 40 if args.model == "lingbot" else 25
     if args.model == "lingbot":

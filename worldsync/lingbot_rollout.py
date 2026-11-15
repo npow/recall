@@ -63,8 +63,8 @@ def main():
     knobs = lingbot_tuning.resolve(args, parser)
     if not 0 < args.turn_degrees_per_second <= 90:
         parser.error("turn rate must be in (0,90] degrees per second")
-    if args.turn_degrees_per_second != 60 and not args.native_fixed_controls:
-        parser.error("non-stock turn rates are confined to declared native fixed-path tests")
+    if args.turn_degrees_per_second != 60 and not args.native_fixed_controls and not lingbot_tuning.hillclimb_unlocked():
+        parser.error("non-stock turn rates are confined to declared native fixed-path tests until hillclimbing is unlocked")
     if not 1 <= args.max_chunks <= 60:
         parser.error("chunk budget must be in [1,60]")
     if args.native_fixed_controls and (not args.fixed_actions or len(args.fixed_actions) != args.max_chunks):
