@@ -44,3 +44,23 @@ def test_pose_trace_distinguishes_backward_translation_turns_and_wait():
     assert held["position_normalized_units"] == turned["position_normalized_units"]
     assert held["heading_degrees"] == turned["heading_degrees"]
     assert held["world_time_seconds"] == turned["world_time_seconds"] + 1
+
+
+def test_yaw_clamp_lands_exactly_on_the_limit_and_holds():
+    import math
+    camera = CameraPlan(50, yaw_limits_degrees=(0, 360))
+    for _ in range(12):
+        camera.advance("RIGHT")
+    assert math.degrees(camera.yaw_commanded) == pytest.approx(360)
+    assert camera.commanded_state()["heading_degrees"] == pytest.approx(0, abs=1e-6)
+    back = CameraPlan(50, yaw_limits_degrees=(-90, 0))
+    for action in ["LEFT"] * 3 + ["RIGHT"] * 4:
+        back.advance(action)
+    assert math.degrees(back.yaw_commanded) == pytest.approx(0, abs=1e-9)
+
+
+def test_plan_yaw_limits_from_reference_plan():
+    from worldsync.lingbot_controls import plan_yaw_limits
+    assert plan_yaw_limits({"prompt": "Rotate the camera 360 degrees", "action_sequence_steps": ["hold(Right,7200ms)"]}) == (0.0, 360.0)
+    assert plan_yaw_limits({"prompt": "Turn left 90 degrees then back", "action_sequence_steps": ["hold(Left,1800ms)", "hold(Right,1800ms)"]}) == (-90.0, 0.0)
+    assert plan_yaw_limits({"prompt": "Walk then turn around", "action_sequence_steps": ["hold(W,7200ms)", "hold(S,7200ms)"]}) is None

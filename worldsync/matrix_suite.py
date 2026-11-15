@@ -34,6 +34,7 @@ def main():
     parser.add_argument("--budget-retrieved", type=int, default=10)
     parser.add_argument("--budget-archive", type=int, default=24)
     parser.add_argument("--text-prompt", choices=["caption", "prompt", "both"], default="caption", help="World-model text (LingBot only)")
+    parser.add_argument("--turn-clamp", choices=["off", "plan"], default="off", help="LingBot only")
     parser.add_argument("--turn-degrees-per-second", type=float, default=60, help="Commanded turn rate (stock 60)")
     parser.add_argument("--publish-status", action="store_true")
     parser.add_argument("--judge", action="store_true", help="Claude diagnostics with released rubric; never official Gemini reproduction")
@@ -55,6 +56,10 @@ def main():
         if args.model != "lingbot":
             parser.error("--budget-memory applies to LingBot only")
         knob_args += ["--budget-memory", "--budget-retrieved", str(args.budget_retrieved), "--budget-archive", str(args.budget_archive)]
+    if args.turn_clamp != "off":
+        if args.model != "lingbot":
+            parser.error("--turn-clamp applies to LingBot only")
+        knob_args += ["--turn-clamp", args.turn_clamp]
     if args.text_prompt != "caption":
         if args.model != "lingbot":
             parser.error("--text-prompt applies to LingBot only")

@@ -43,6 +43,9 @@ def main(argv=None, runtime=None):
     parser.add_argument("--text-prompt", choices=["caption", "prompt", "both"], default="caption",
         help="World-model text: caption = static image description (current baseline), prompt = task objective "
              "(what the released PlayWorld harness submits), both = caption then objective")
+    parser.add_argument("--turn-clamp", choices=["off", "plan"], default="off",
+        help="plan: limit commanded yaw to the range implied by the reference plan's Left/Right holds (50 deg/s pacing); "
+             "the last turning chunk is shortened to land exactly on the limit")
     parser.add_argument("--turn-degrees-per-second", type=float, default=60)
     parser.add_argument("--adaptive-retrieval-pilot", action="store_true",
                         help="Separate GC027 adaptive protocol:30deg/s, initial neutral chunk, optional frozen four-view memory")
@@ -90,6 +93,8 @@ def main(argv=None, runtime=None):
             parser.error("memory reader requires standalone native fixed diagnostics, an existing checkpoint and virtual18/6 four-view retrieval")
     from worldsync import lingbot_adaptive_pilot
     lingbot_adaptive_pilot.validate(args, knobs, parser)
+    if args.turn_clamp != "off" and not lingbot_tuning.hillclimb_unlocked():
+        parser.error("turn clamping is locked until hillclimbing is unlocked")
     if args.text_prompt != "caption" and not lingbot_tuning.hillclimb_unlocked():
         parser.error("non-default world-model text is locked until hillclimbing is unlocked")
     if not 0 < args.turn_degrees_per_second <= 90:
@@ -250,7 +255,10 @@ def main(argv=None, runtime=None):
             report["model"] = "LingBot-World2 14B causal-fast + learned memory reader (non-stock)"
             save()
         stream = NativeVaeStream(pipeline.vae)
-        camera = CameraPlan(turn_degrees_per_second=args.turn_degrees_per_second)
+        from worldsync.lingbot_controls import plan_yaw_limits
+        yaw_limits = plan_yaw_limits(task) if args.turn_clamp == "plan" else None
+        report["turn_clamp"] = {"mode": args.turn_clamp, "yaw_limits_degrees": yaw_limits}
+        camera = CameraPlan(turn_degrees_per_second=args.turn_degrees_per_second, yaw_limits_degrees=yaw_limits)
         if args.pose_retrieval:
             from worldsync.lingbot_retrieval import PoseKVMemory
             memory = PoseKVMemory(pipeline, key_positions=args.retrieval_positions,
@@ -419,7 +427,9 @@ def main(argv=None, runtime=None):
         for handle in handles:
             handle.remove()
         report["elapsed_s"] = time.monotonic() - started
-        report["camera_diagnostics"] = summarize([a["action"] for a in report["actions"] if a.get("action")], turn_degrees_per_second=args.turn_degrees_per_second)
+        report["camera_diagnostics"] = summarize([a["action"] for a in report["actions"] if a.get("action")],
+                                                  turn_degrees_per_second=args.turn_degrees_per_second,
+                                                  yaw_limits_degrees=(report.get("turn_clamp") or {}).get("yaw_limits_degrees"))
         report["peak_allocated_bytes"] = torch.cuda.max_memory_allocated()
         save()
         if report["chunks"]:

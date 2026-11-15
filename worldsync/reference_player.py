@@ -70,7 +70,8 @@ def decide(client, task, initial, latest, history, maximum=40, model="claude-hai
         "the goal needs. Do not END before the plan's total time is consumed unless the goal is already "
         "unambiguously complete in the images; for revisit goals compare the latest image with the "
         "initial image before END. A subject and background that scale together mean camera motion, "
-        "not the subject walking. "
+        "not the subject walking. If intended_odometry.yaw_limits_degrees is set, commanded turns cannot go past that range: "
+        "reaching a limit means that turn is complete and the view is at that angle (a limit of 360 means back at the original view). "
     )
 
     def ask(note=None):
