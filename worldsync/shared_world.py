@@ -1,7 +1,8 @@
 """Shared world memory for several agents, backed by a local frame database and past.dev.
 
-Two agents inhabit the same generated world when they start from the same initial image, caption, seed and model
-revision (the world id hashes these). Each agent writes what it saw as one dated observation per chunk:
+Two agents inhabit the same generated world when they start from the same initial image, caption, seed, model
+revision, frame rate and chunk size (the world id hashes these). Each agent writes what it saw as one dated
+observation per chunk:
 
 * the generated frame itself goes into a local SQLite database (JPEG blob, addressed by its sha256); no frame is
   written to the filesystem as a file;
@@ -64,7 +65,7 @@ def world_manifest(run):
 
 def world_id(manifest):
     identity = {key: manifest.get(key) for key in ("source_revision", "checkpoint_revision", "initial_image_sha256",
-                                                   "image_caption_sha256", "seed")}
+                                                   "image_caption_sha256", "seed", "fps", "chunk_size")}
     missing = sorted(key for key, value in identity.items() if value in (None, ""))
     if missing:
         raise ValueError(f"run is missing world identity fields: {missing}")
@@ -191,10 +192,10 @@ def run_sightings(run):
 def observation_point(wid, agent, sighting, audience=None, thumbnail=None):
     """The exact past.dev ingest body for one observation. Text only; the frame is a reference."""
     position = ", ".join(f"{value:g}" for value in sighting["position"])
-    seen = sighting.get("caption") or "a generated frame (no caption)"
+    seen = f" and saw {sighting['caption']}" if sighting.get("caption") else ""
     content = (f"In world {wid}, agent {agent} at world time {sighting['world_time']:.2f} s, after action "
                f"{sighting.get('action') or 'unknown'}, faced heading {sighting['heading']:.0f} degrees at position "
-               f"({position}) and saw {seen}. Frame reference frame:sha256:{sighting['frame_sha256']} "
+               f"({position}){seen}. Frame reference frame:sha256:{sighting['frame_sha256']} "
                f"(chunk {sighting['chunk']}, frame {sighting['frame_index']}).")
     metadata = {"kind": "observation", "world_id": wid, "agent": agent, "chunk": sighting["chunk"],
                 "heading_degrees": sighting["heading"], "position": sighting["position"],
@@ -213,26 +214,33 @@ def observation_point(wid, agent, sighting, audience=None, thumbnail=None):
 def manifest_point(wid, manifest):
     fields = "; ".join(f"{key} {value}" for key, value in sorted(manifest.items()) if value is not None)
     return {"id": f"world:{wid}:manifest", "content": f"World {wid} is defined by: {fields}. Agents that start "
-            "from this initial image, caption, seed and model revision start in the same world.",
+            "from this initial image, caption, seed, model revision, frame rate and chunk size start in the same "
+            "world.",
             "label": f"World {wid} definition", "timestamp": world_timestamp(0),
             "metadata": {"kind": "world", "world_id": wid, **manifest}}
 
 
 def divergence(run_a, run_b):
-    """Index of the first chunk whose raw pixels differ (None if all compared chunks match)."""
-    for a, b in zip(run_a["chunks"], run_b["chunks"]):
-        if a.get("pixel_sha256") != b.get("pixel_sha256"):
-            return a["index"]
+    """Position of the first chunk whose raw pixels differ or are not recorded (None if all compared chunks match)."""
+    for position, (a, b) in enumerate(zip(run_a["chunks"], run_b["chunks"])):
+        if not a.get("pixel_sha256") or a.get("pixel_sha256") != b.get("pixel_sha256"):
+            return position
     return None
 
 
 def divergence_point(wid, agents, run_a, run_b):
     first = divergence(run_a, run_b)
-    sighting = run_sightings(run_a)
-    shared = sighting[first - 1]["world_time"] if first else sighting[-1]["world_time"]
+    compared = min(len(run_a["chunks"]), len(run_b["chunks"]))
+    sightings = run_sightings(run_a)
     if first is None:
-        text = f"identical pixels in all {min(len(run_a['chunks']), len(run_b['chunks']))} compared chunks"
+        shared = sightings[compared - 1]["world_time"]
+        text = f"identical pixels in all {compared} compared chunks (through world time {shared:.2f} s)"
+    elif first == 0:
+        shared = 0
+        text = ("their views differ from the first chunk, so observations by one agent are not guaranteed to hold "
+                "for the other")
     else:
+        shared = sightings[first - 1]["world_time"]
         text = (f"identical pixels through chunk {first - 1} (world time {shared:.2f} s); their views first differ at "
                 f"chunk {first}, so observations by one agent after that are not guaranteed to hold for the other")
     return {"id": f"world:{wid}:sync:{agents[0]}:{agents[1]}",
@@ -270,12 +278,17 @@ def ingest_run(run_dir, agent, db, audience=None, thumbnails=True, captions=None
     return {"world_id": wid, "agent": agent, "sightings": len(sightings), "queued": queued}
 
 
+def ingest_credits(point):
+    """1 credit per 350 bytes of content, at least 1; metadata (thumbnails) was not billed in the live run."""
+    return max(1, -(-len(point["content"].encode()) // 350))
+
+
 def send_pending(db, client=None, dry_run=True, log=print):
     points = db.pending()
-    size = sum(len(json.dumps(point).encode()) for point in points)
-    credits = sum(max(1, -(-len(json.dumps(point).encode()) // 350)) for point in points)
+    size = sum(len(point["content"].encode()) for point in points)
+    credits = sum(ingest_credits(point) for point in points)
     if dry_run:
-        log(f"dry run: {len(points)} data points, {size} bytes, about {credits} ingest credits; nothing sent")
+        log(f"dry run: {len(points)} data points, {size} content bytes, about {credits} ingest credits; nothing sent")
         return {"pending": len(points), "bytes": size, "credits": credits, "sent": 0}
     client = client or PastClient()
     for point in points:
@@ -295,6 +308,9 @@ def recall_view(wid, heading, identity, db=None, client=None, at=None, limit=8):
     page = client._call("POST", "/recall", body)
     results = []
     for item in page.get("results", []):
+        worlds = {(source.get("metadata") or {}).get("world_id") for source in item.get("sources", [])} - {None}
+        if wid not in item.get("content", "") and wid not in worlds:
+            continue
         refs = set(FRAME_REF.findall(item.get("content", "")))
         for source in item.get("sources", []):
             meta = source.get("metadata") or {}
@@ -317,14 +333,16 @@ def main(argv=None):
     ingest.add_argument("--audience", help="past.dev audience slug for private observations")
     ingest.add_argument("--no-thumbnails", action="store_true")
     ingest.add_argument("--captions", help="JSON file mapping chunk index to a caption")
-    ingest.add_argument("--dry-run", action="store_true")
-    ingest.add_argument("--confirm-send", action="store_true")
+    mode = ingest.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--dry-run", action="store_true", help="show what would be sent; send nothing")
+    mode.add_argument("--confirm-send", action="store_true", help="send the queued data points to past.dev")
     compare = commands.add_parser("compare", help="record where two agents' worlds stop matching")
     compare.add_argument("run_a")
     compare.add_argument("run_b")
     compare.add_argument("--agents", nargs=2, required=True)
-    compare.add_argument("--dry-run", action="store_true")
-    compare.add_argument("--confirm-send", action="store_true")
+    mode = compare.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--dry-run", action="store_true", help="show what would be sent; send nothing")
+    mode.add_argument("--confirm-send", action="store_true", help="send the queued data points to past.dev")
     ask = commands.add_parser("recall", help="recall a heading from past.dev as one agent")
     ask.add_argument("world_id")
     ask.add_argument("--heading", type=float, required=True)
@@ -339,8 +357,6 @@ def main(argv=None):
     db = FrameDB(args.db)
     try:
         if args.command in ("ingest-run", "compare"):
-            if not args.dry_run and not args.confirm_send:
-                parser.error("pass --dry-run to inspect what would be sent, or --confirm-send to send it")
             if args.command == "ingest-run":
                 captions = ({int(k): v for k, v in json.loads(Path(args.captions).read_text()).items()}
                             if args.captions else None)
