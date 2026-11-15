@@ -1,0 +1,71 @@
+"""Side-by-side demo video of two agents in one shared world, with a caption strip per agent showing its memory."""
+from __future__ import annotations
+
+import subprocess
+import tempfile
+from pathlib import Path
+
+FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+
+
+class _Texts:
+    """Caption text goes to drawtext via small text files in a temp dir (avoids filtergraph escaping)."""
+
+    def __init__(self, root):
+        self.root, self.count = Path(root), 0
+
+    def __call__(self, text):
+        self.count += 1
+        path = self.root / f"t{self.count}.txt"
+        path.write_text(text)
+        return f"textfile='{path}':expansion=none"
+
+
+def _wrap(text, width):
+    lines, line = [], ""
+    for word in text.split():
+        if line and len(line) + 1 + len(word) > width:
+            lines.append(line)
+            line = word
+        else:
+            line = f"{line} {word}".strip()
+    return lines + ([line] if line else [])
+
+
+def _panel(texts, label, captions, width, strip, size=15, chars=None):
+    """drawtext filters for one agent: a fixed title plus time-windowed caption lines in the strip below."""
+    chars = chars or max(20, int(width / (size * 0.56)))
+    filters = [f"drawtext=fontfile={BOLD}:{texts(label)}:fontcolor=white:fontsize=20:x=12:y=10:"
+               "box=1:boxcolor=black@0.55:boxborderw=6"]
+    for start, end, text in captions:
+        for row, line in enumerate(_wrap(text, chars)[:4]):
+            filters.append(f"drawtext=fontfile={FONT}:{texts(line)}:fontcolor=white:fontsize={size}:x=12:"
+                           f"y=h-{strip}+10+{row * (size + 6)}:enable='between(t,{start:.3f},{end:.3f})'")
+    return ",".join(filters)
+
+
+def compose(left, right, out, left_label, right_label, left_captions, right_captions, strip=110, width=640, height=352,
+            title=None):
+    """Write ``out`` (mp4): both rollouts side by side, each with a caption strip; nothing else touches disk."""
+    with tempfile.TemporaryDirectory() as tmp:
+        return _compose(_Texts(tmp), left, right, out, left_label, right_label, left_captions, right_captions, strip,
+                        width, height, title)
+
+
+def _compose(texts, left, right, out, left_label, right_label, left_captions, right_captions, strip, width, height,
+             title):
+    graph = []
+    for tag, label, captions, name in (("0:v", left_label, left_captions, "l"), ("1:v", right_label, right_captions, "r")):
+        graph.append(f"[{tag}]scale={width}:{height},pad={width}:{height + strip}:0:0:color=0x1b1410,"
+                     f"{_panel(texts, label, captions, width, strip)}[{name}]")
+    graph.append("[l][r]hstack=inputs=2,pad=iw+0:ih:0:0[s]")
+    last = "s"
+    if title:
+        graph.append(f"[s]drawtext=fontfile={BOLD}:{texts(title)}:fontcolor=0xffd27a:fontsize=18:"
+                     f"x=(w-text_w)/2:y=h-28[t]")
+        last = "t"
+    cmd = ["ffmpeg", "-v", "error", "-y", "-i", str(left), "-i", str(right), "-filter_complex", ";".join(graph),
+           "-map", f"[{last}]", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18", "-shortest", str(out)]
+    subprocess.run(cmd, check=True)
+    return out
