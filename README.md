@@ -1,5 +1,7 @@
 # WorldSync
 
+[Experiment leaderboard](LEADERBOARD.md) · [Machine-readable results](leaderboard.json)
+
 **Current milestone: validate archived-view memory beyond the rolling cache.**
 
 [Historical-view retrieval](reproduction/memory-validation/README.md) now

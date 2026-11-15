@@ -1,0 +1,433 @@
+{
+  "task_id": "GC027",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "8317a502f30b726a198f28e784d168d3e010cf6c0538d0b64bf0b9063177bc21",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "GC027",
+    "perspective": "first-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "partial",
+    "revisit_required": "yes",
+    "revisit_observed": "no",
+    "observed_action_zh": "镜头持续向右水平旋转，但未完成360度旋转，也未回到初始视角。",
+    "trajectory_evidence_zh": "视频从面向带有文字的粉色建筑开始，随后镜头持续向右旋转，依次经过黄色的游乐设施、滑梯等，最后停在面向另一个游乐设施和粉色建筑的视角，没有回到初始画面。",
+    "failure_reason_zh": "镜头向右旋转了一定角度，但未能完成完整的360度旋转，也没有回到初始的视角。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 2.6,
+    "final_score_1_to_5": 2.6,
+    "category_scores_1_to_5": {
+      "identity_id": {
+        "score": 1,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "视频执行了向右的连续环视，在结尾处（帧110-128）回到了包含粉色建筑和蓝黄橡胶地面的初始区域。然而，初始视图中要求的'SHILHAI STREET SPORTS CENTER'标志牌、白色游乐设施和黄色秋千架完全消失。此外，粉色建筑的结构发生了严重变形，原本的大型深色窗户和黑色条纹变成了带有绿色边框的小窗户。在环视过程中（如帧50-100），新出现的游乐设施也在视野中不断变形和融合。"
+      },
+      "identity_texture": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "在初始帧（0-24）中，标志牌上的文字'SHILHAI STREET SPORTS CENTER'在移出画面前保持稳定且清晰。橡胶地面和游乐设施的表面纹理在连续可见期间保持一致，没有出现明显的纹理漂移或生成的噪点。"
+      },
+      "color": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "被追踪物体的固有颜色（如黄色的游乐设施、蓝色的屋顶、粉色的建筑以及蓝黄相间的地面）在整个视频中保持稳定，没有观察到颜色闪烁或无端的色调漂移。"
+      },
+      "relative_position": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "当镜头在视频结尾回到初始区域时，该区域的空间布局被完全重置。由于前景中的标志牌和白色游乐设施消失，且背景建筑发生改变，初始视图中各物体之间的空间关系被彻底破坏。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail observed; the camera motion continues until the end of the video.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 128,
+      "evidence_zh": "镜头持续向右旋转，并在视频结尾处展示了带有粉色建筑的场景，完成了提示词要求的360度环视动作。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景中的粉色建筑在镜头环视一圈后重新出现时，其建筑结构和窗户样式发生了彻底改变。",
+      "post_completion_phase_zh": "不适用，视频在动作完成时结束。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "Initial anchored region vs Final revisited region",
+        "anchors": [
+          "pink-building facade",
+          "rubber-floor color boundaries"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-128"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "rubber-floor color boundaries",
+        "play structures"
+      ],
+      "newly_revealed_regions_zh": "帧25-100期间出现的游乐设施和背景属于新揭示的区域。",
+      "evidence_zh": "镜头在整个视频中保持连续向右平移（环视），视角的改变完全由镜头的连贯运动解释。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频中没有出现硬切，视角的转换是连续的镜头平移，初始区域的改变是由于模型在环视过程中的遗忘和幻觉，而非突然的硬重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "视频在完成环视动作后结束，没有多余的动作或静止尾部。"
+    },
+    "final_state_check": {
+      "window": "110-128",
+      "visible_key_objects": [
+        "pink building"
+      ],
+      "reappearance_consistency_zh": "初始视图中的标志牌、白色游乐设施和黄色秋千架在最终视图中完全消失，且重新出现的粉色建筑在结构和细节上与初始状态完全不一致。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "not_applicable",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": null,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": null,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "镜头在整个视频中持续向右旋转，展示了游乐场的不同区域，动作进展明显。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "SHILHAI STREET SPORTS CENTER sign",
+        "yellow play structures",
+        "blue roofs",
+        "pink building"
+      ],
+      "correspondence_anchors": [
+        "rubber-floor color boundaries",
+        "play structures"
+      ],
+      "visible_intervals": [
+        "0-24",
+        "50-100",
+        "110-128"
+      ],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "被追踪物体的颜色和纹理在连续可见期间保持稳定，没有观察到无端的颜色漂移或生成的噪点。"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "not_applicable",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "yes",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "这是一个第一人称视角的环视视频，没有预期的主体运动。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "first-person",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": "not_applicable"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "subject_identity_check": {
+      "applicable": "no",
+      "tracked_subject": "not_applicable",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [],
+      "identity_failure": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": null,
+      "evidence_zh": "not_applicable"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "not_applicable",
+      "positive_evidence_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "summary_zh": "镜头执行了连续的环视动作，但在回到初始区域时，标志牌和游乐设施完全消失，背景建筑发生严重变形，导致空间布局和物体身份的彻底失败。",
+    "task_id": "GC027"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 10699,
+      "output_tokens": 231
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 24520,
+      "output_tokens": 3520
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 129,
+      "sheets_count": 6,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 12.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 128,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 12.8,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 7,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 12.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 6,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 12.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "89bf7b8642028ebe247ae4b399f99cf7094e6bcbc8114332cd1516c2841bb9f3",
+  "score_prompt_sha256": "c2714c8e413b3242ad8b93e07d05c4ddb18d2820a2ac292d3cead360cddbd948",
+  "scores": {
+    "official": 2.6,
+    "final_score": 2.6
+  },
+  "episode_id": "start-anchor-GC027-seed43-four-view"
+}

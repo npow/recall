@@ -1,0 +1,288 @@
+{
+  "task_id": "GC040",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "0f7627425caf7aecc53b652d1977f3b96309630134106cab9611eef1839fc26d",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "GC040",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头向右平移，随后向左平移回到了初始视角的画面。",
+    "trajectory_evidence_zh": "视频开始时镜头正对两个帐篷，随后向右转动，画面中出现坐在帐篷里的人；接着镜头向左转动，直到最初的两个帐篷重新回到画面中央，完成了返回起点的动作。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 5.0,
+    "final_score_1_to_5": 5,
+    "category_scores_1_to_5": {
+      "identity_id": {
+        "score": 5,
+        "weight": 2.0,
+        "answer": "yes",
+        "evidence_zh": "镜头向右平移后向左平移回到初始位置，原场景中的两顶帐篷、戴红帽的人、黄色浮条和蓝色折叠椅完美重现，形状、数量和结构保持一致。"
+      },
+      "identity_texture": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "帐篷的布料纹理、沙滩的颗粒感和海水的波纹在整个视频及重现时保持高度一致，无噪点或纹理漂移。"
+      },
+      "color": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "帐篷的黄绿色、白色和灰色面板，人的红帽，黄色浮条和蓝色折叠椅的颜色在重现时保持稳定，无颜色漂移或闪烁。"
+      },
+      "relative_position": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "镜头向左平移回到初始位置时，原场景中的物体按正确的空间顺序（从右到左）重新进入画面，相对位置关系完美保持。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "无明显的静态尾部，视频在回到初始位置后自然结束。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 138,
+      "evidence_zh": "摄像机成功向右平移，随后向左平移并回到了初始视角的场景。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "摄像机平移期间，海岸线和海平面的背景保持稳定连贯。",
+      "post_completion_phase_zh": "回到初始位置后，原有的海平面和天空背景完美重现。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial scene and reappeared scene",
+        "anchors": [
+          "shoreline",
+          "ocean horizon"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-24",
+        "115-138"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "shoreline",
+        "ocean horizon"
+      ],
+      "newly_revealed_regions_zh": "镜头向右平移后出现的新场景（包含两顶黄绿色帐篷和右侧树木）属于新揭示的区域。",
+      "evidence_zh": "镜头连续向右平移揭示新区域，随后向左平移，原场景按正确的空间顺序从左侧重新进入画面，符合正常的摄像机运动逻辑。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "场景转换由连续的摄像机平移引起，不存在硬切或重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "视频在完成回到初始位置的动作后结束，无多余的错误运动。"
+    },
+    "final_state_check": {
+      "window": "132-138",
+      "visible_key_objects": [
+        "two lime-green beach tents",
+        "person with red cap",
+        "yellow pool noodle",
+        "blue folding chair"
+      ],
+      "reappearance_consistency_zh": "镜头向左平移回到初始视角，原场景中的所有关键物体完美重现，外观、颜色和相对位置与初始帧完全一致。"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "摄像机成功执行了向右平移并保持，随后向左平移回到初始位置的动作，画面有明显的视角变化。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "two lime-green beach tents",
+        "person with red cap",
+        "yellow pool noodle",
+        "blue folding chair"
+      ],
+      "correspondence_anchors": [
+        "shoreline",
+        "ocean horizon"
+      ],
+      "visible_intervals": [
+        "0-24",
+        "132-138"
+      ],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "原场景在重新进入画面时，所有关键物体的颜色、纹理和材质均保持完美一致，无任何漂移或噪点。"
+    },
+    "summary_zh": "视频完美执行了向右平移后向左平移回到起点的指令，原场景在重现时所有关键物体的身份、颜色、纹理和相对位置均保持了极高的一致性。",
+    "task_id": "GC040"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 10719,
+      "output_tokens": 202
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 24452,
+      "output_tokens": 1490
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 139,
+      "sheets_count": 6,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 13.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 138,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 13.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 7,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 12.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 6,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 12.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "50dbb9278ced8de546dd0317c9622d28ed81c157af367e14deb89f87d96c26f7",
+  "score_prompt_sha256": "a5074925b11471089995d15e542e58b50fbdad27430d62e45fbcda1a2e27d01d",
+  "scores": {
+    "official": 5.0,
+    "final_score": 5.0
+  },
+  "episode_id": "task-pilot-GC040-seed42-four-view"
+}

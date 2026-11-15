@@ -1,0 +1,488 @@
+{
+  "task_id": "GC027",
+  "judge_provider": "anthropic",
+  "judge_model": "claude-opus-5-5",
+  "playworld_revision": "eeaea12e050a90b815d11d030e943e7b3181da21",
+  "dry_run": false,
+  "mode": "both",
+  "video_sha256": "affdc939f974186875c982f543284f243413e1f49b72f327676eddfaa4430d3c",
+  "protocol_warning": "Claude judge and custom controller differ from the published PlayWorld protocol; do not compare directly with its leaderboard.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "GC027",
+    "perspective": "first-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "partial",
+    "revisit_required": "yes",
+    "revisit_observed": "no",
+    "observed_action_zh": "\u76f8\u673a\u5728\u539f\u5730\u6301\u7eed\u5411\u53f3\u5e73\u6ed1\u8f6c\u52a8\uff08\u504f\u822a\uff09\uff0c\u753b\u9762\u4ece\u4f53\u80b2\u4e2d\u5fc3\u5efa\u7b51\u4e00\u8def\u6a2a\u79fb\u5230\u5404\u4e2a\u6e38\u4e50\u8bbe\u65bd\uff0c\u5e76\u6301\u7eed\u5230\u89c6\u9891\u7ed3\u675f\uff0c\u671f\u95f4\u6ca1\u6709\u660e\u663e\u7684\u5e73\u79fb\u6216\u524d\u8fdb\u3002",
+    "trajectory_evidence_zh": "0-1.0\u79d2\uff1a\u57fa\u672c\u9759\u6b62\uff0c\u6b63\u5bf9\u4f53\u80b2\u4e2d\u5fc3\u3002\u7ea61.0-2.4\u79d2\uff1a\u5f00\u59cb\u5411\u53f3\u8f6c\uff0c\u7ea2\u9876\u548c\u9ec4\u9876\u6ed1\u68af\u4ece\u53f3\u4fa7\u8fdb\u5165\u753b\u9762\u30022.5-7.4\u79d2\uff1a\u6301\u7eed\u53f3\u8f6c\uff0c\u7ecf\u8fc7\u591a\u7ec4\u9ec4\u8272\u6e38\u4e50\u8bbe\u65bd\uff0c\u5efa\u7b51\u9010\u6e10\u79fb\u51fa\u5de6\u4fa7\u30027.5-12.8\u79d2\uff1a\u4ecd\u5728\u5300\u901f\u53f3\u8f6c\uff0c\u4f9d\u6b21\u7ecf\u8fc7\u7ea2\u9876\u7ed3\u6784\u3001\u767d\u8272\u9762\u677f\u548c\u7eff\u6811\u533a\u57df\uff0c\u76f4\u5230\u7ed3\u675f\u3002\u6574\u4e2a\u8fc7\u7a0b\u53ea\u6709\u5355\u4e00\u65b9\u5411\u7684\u8fde\u7eed\u65cb\u8f6c\uff0c\u672b\u6bb5\u6ca1\u6709\u51fa\u73b0\u53ef\u8bc6\u522b\u4e3a\u56de\u5230\u521d\u59cb\u671d\u5411\u7684\u89c6\u89d2\u3002",
+    "failure_reason_zh": "\u53ef\u89c1\u6301\u7eed\u3001\u660e\u786e\u7684\u539f\u5730\u53f3\u8f6c\uff0c\u65b9\u5411\u4e0e\u6307\u4ee4\u4e00\u81f4\u3002\u4f46\u65e0\u6cd5\u786e\u8ba4\u5df2\u5b8c\u6210360\u5ea6\uff0c\u4e5f\u6ca1\u6709\u89c2\u5bdf\u5230\u56de\u5230\u521d\u59cb\u671d\u5411\u7684\u89c6\u89d2\uff0c\u56e0\u6b64\u56de\u8bbf\u539f\u59cb\u89c6\u89d2\u7684\u8981\u6c42\u672a\u89c1\u5b8c\u6210\u3002",
+    "confidence_1_to_5": 3
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 3.8,
+    "final_score_1_to_5": 3.8,
+    "category_scores_1_to_5": {
+      "identity_id": {
+        "score": 4,
+        "weight": 2.0,
+        "answer": "partial",
+        "evidence_zh": "In frames 0-25, the sign frame, white play structure, yellow swing frame, pink building and bare trees move left together with continuous camera motion and leave through the left edge. No duplication, disappearance or structural replacement is seen. The yellow and red-roof play structures that appear later belong to a newly revealed region. The initial region is not revisited, so there is no reappearance evidence."
+      },
+      "identity_texture": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "Lettering on the same sign surface flickers. In frames 8 and 10 it reads close to 'SHILHAI STREET SPORTS CENTER'. In frames 9, 11, 13 and 14 the letters become garbled into strings like 'STREET SPORTS' variants, and in frames 15-21 the visible part 'STREET SPORTS CENTER' keeps deforming. Rubber flooring and play structures show no clear texture drift."
+      },
+      "color": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "The pink building, yellow frames and blue/yellow flooring keep stable colors while visible. The sky later turns slightly pinkish, which fits exposure or lighting change. No color swapping is verified on the same surface."
+      },
+      "relative_position": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "The sign stays mounted on the yellow frame in front of the pink building. The swings stay under the right side of the sign, and the trees and pole keep plausible parallax. No teleportation or layout reset is seen. The initial region is not observed again."
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored",
+      "other_excluded_if_any": "none"
+    },
+    "static_tail_policy_applied": "There is no static tail; the camera keeps rotating/moving right until the end.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "Within 12.8 s the camera keeps turning right but never returns to the initial sign/pink-building view."
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "Frames 0-25 track the initial region continuously, with the sign frame, pink-building facade and floor-color boundaries moving coherently. Later frames are newly revealed play areas and tree rows with continuous transitions.",
+      "post_completion_phase_zh": "No completion point."
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "Sign region from frame 0 to frame 21",
+        "anchors": [
+          "yellow sign frame",
+          "pink-building facade",
+          "yellow swing frame"
+        ],
+        "same_object_or_region": "yes"
+      },
+      {
+        "comparison": "Initial region vs final window",
+        "anchors": [
+          "floor-color boundaries",
+          "play-structure layout"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-25",
+        "25-50",
+        "50-75",
+        "75-100",
+        "100-128"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "sign frame",
+        "pink-building facade",
+        "trunk/pole",
+        "play-structure roof canopies"
+      ],
+      "newly_revealed_regions_zh": "Everything from about frame 11 onward entering from the right (the multiple play structures, red/pink-roof towers, trees and lawn) is newly revealed.",
+      "evidence_zh": "In adjacent frames all anchors shift left in sync and objects exit through the left edge, consistent with a continuous right turn/orbit."
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "All changes are explained by continuous camera motion."
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "Not completed, so no overrun."
+    },
+    "final_state_check": {
+      "window": "120-128",
+      "visible_key_objects": [],
+      "reappearance_consistency_zh": "The final window shows a new play-structure region; the sign and pink building do not reappear, so no reappearance comparison is possible."
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 4,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": "0",
+      "static_tail_penalty_zh": "none",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "Camera turns continuously",
+      "evidence_zh": "Continuous camera motion",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "Camera turns right",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "no",
+      "ink_change_type": "none",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "The camera turns right continuously throughout, and the view changes steadily.",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "SHILHAI STREET SPORTS CENTER sign",
+        "pink building",
+        "yellow swing frame",
+        "floor"
+      ],
+      "correspondence_anchors": [
+        "sign frame",
+        "pink-building facade"
+      ],
+      "visible_intervals": [
+        "0-25"
+      ],
+      "before_developing_after_checkpoints": [
+        {
+          "surface": "Sign lettering",
+          "before_frame": "8",
+          "developing_frame": "9",
+          "after_frame": "13",
+          "observed_change_zh": "The letters change from legible to garbled, recover at frame 10, and garble again at frames 11 and 13-14, showing repeated text flicker."
+        }
+      ],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "verified",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "The sign text deforms repeatedly on the same surface; colors stay stable."
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "yes",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": "0",
+      "evidence_zh": "not_applicable",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "first-person",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "Camera turns right",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "no",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "yes",
+      "evidence_zh": "not_applicable"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": "not_applicable"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "playground scene and sign",
+      "same_entity_throughout": "partial",
+      "stable_identity_attributes": [
+        "colors",
+        "materials"
+      ],
+      "identity_failure": "texture_drift",
+      "evidence_zh": "The scene structure is continuous; only the sign lettering flickers and deforms."
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 4,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": null,
+      "evidence_zh": "The camera moves effectively, so identity can be weighted normally."
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 3,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "none",
+      "positive_evidence_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": 3
+    },
+    "summary_zh": "The camera turns right continuously and the scene stays coherent with no reset, but the sign lettering clearly flickers and deforms across several frames, and the initial region is never revisited."
+  },
+  "reported_score": 3.8,
+  "calls": [
+    {
+      "mode": "gate",
+      "model": "claude-opus-5-5",
+      "response_id": "msg_011Ch4Cb6rH96e6vCk49KfBm",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 22480,
+        "output_tokens": 723,
+        "output_tokens_details": {
+          "thinking_tokens": 276
+        },
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      }
+    },
+    {
+      "mode": "score",
+      "model": "claude-opus-5-5",
+      "response_id": "msg_011Ch4CcSQJVnGGyuCQsLDvh",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 44863,
+        "output_tokens": 4675,
+        "output_tokens_details": {
+          "thinking_tokens": 650
+        },
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      }
+    }
+  ],
+  "input_normalization": {
+    "original_perspective": "first person",
+    "metric_perspective": "first-person"
+  },
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 129,
+      "sheets_count": 6,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 12.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 128,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 12.8,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 7,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 12.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 6,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 12.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "49c124429c59701f032fe8d2a33fb73bd04defa30e3eedc15fe15ec8330e57ff",
+  "score_prompt_sha256": "026bd3ff666030448836d86f7d337b58ee44e711da454c525beb292fca419dce"
+}

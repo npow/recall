@@ -1,0 +1,131 @@
+{
+  "target": 2.12,
+  "full_benchmark_score": null,
+  "published_score_beaten": false,
+  "gemini_model": "gemini-3.1-pro-preview",
+  "endpoint": "Vertex AI global",
+  "gemini_local_cohorts": [
+    {
+      "cohort": "Scripted task pilot",
+      "method": "stock",
+      "expected": 3,
+      "scored": 3,
+      "errors": 0,
+      "complete": true,
+      "score": 1.0,
+      "visual_revisits": 3,
+      "source": "reproduction/gemini-current/episodes/"
+    },
+    {
+      "cohort": "Scripted task pilot",
+      "method": "four-view",
+      "expected": 3,
+      "scored": 3,
+      "errors": 0,
+      "complete": true,
+      "score": 3.533333333333333,
+      "visual_revisits": 3,
+      "source": "reproduction/gemini-current/episodes/"
+    },
+    {
+      "cohort": "Adaptive GC027",
+      "method": "stock",
+      "expected": 2,
+      "scored": 2,
+      "errors": 0,
+      "complete": true,
+      "score": 3.1,
+      "visual_revisits": 0,
+      "source": "reproduction/gemini-current/episodes/"
+    },
+    {
+      "cohort": "Adaptive GC027",
+      "method": "memory",
+      "expected": 2,
+      "scored": 2,
+      "errors": 0,
+      "complete": true,
+      "score": 1.5,
+      "visual_revisits": 1,
+      "source": "reproduction/gemini-current/episodes/"
+    },
+    {
+      "cohort": "Start-anchor replay",
+      "method": "stock",
+      "expected": 2,
+      "scored": 2,
+      "errors": 0,
+      "complete": true,
+      "score": 1.7000000000000002,
+      "visual_revisits": 0,
+      "source": "reproduction/gemini-current/episodes/"
+    },
+    {
+      "cohort": "Start-anchor replay",
+      "method": "four-view",
+      "expected": 2,
+      "scored": 1,
+      "errors": 0,
+      "complete": false,
+      "score": null,
+      "visual_revisits": 0,
+      "source": "reproduction/gemini-current/episodes/"
+    },
+    {
+      "cohort": "Start-anchor replay",
+      "method": "start-anchor",
+      "expected": 2,
+      "scored": 1,
+      "errors": 0,
+      "complete": false,
+      "score": null,
+      "visual_revisits": 0,
+      "source": "reproduction/gemini-current/episodes/"
+    }
+  ],
+  "historical_claude_cohorts": [
+    {
+      "cohort": "Scripted tasks: 3 cases, seed42",
+      "method": "stock",
+      "score": 2.466666666666667,
+      "source": "reproduction/task-memory-benchmark/summary.json"
+    },
+    {
+      "cohort": "Scripted tasks: 3 cases, seed42",
+      "method": "retrieval",
+      "score": 3.5666666666666664,
+      "source": "reproduction/task-memory-benchmark/summary.json"
+    },
+    {
+      "cohort": "Adaptive GC027: seeds42/43",
+      "method": "stock",
+      "score": 3.5999999999999996,
+      "source": "reproduction/adaptive-four-view/paired-summary.json"
+    },
+    {
+      "cohort": "Adaptive GC027: seeds42/43",
+      "method": "memory",
+      "score": 3.9,
+      "source": "reproduction/adaptive-four-view/paired-summary.json"
+    },
+    {
+      "cohort": "Fixed GC027 replay: seeds42/43",
+      "method": "stock",
+      "score": 3.8,
+      "source": "reproduction/start-anchor-replay/scores-summary.json"
+    },
+    {
+      "cohort": "Fixed GC027 replay: seeds42/43",
+      "method": "four-view",
+      "score": 4.0,
+      "source": "reproduction/start-anchor-replay/scores-summary.json"
+    },
+    {
+      "cohort": "Fixed GC027 replay: seeds42/43",
+      "method": "start-anchor",
+      "score": 3.75,
+      "source": "reproduction/start-anchor-replay/scores-summary.json"
+    }
+  ],
+  "comparability": "Subset scores are not comparable to published four-dimension overall. Methods only compared within the same cohort/judge. Gemini model alias, player and adapter differences remain documented."
+}

@@ -17,7 +17,10 @@
   },
   "published_reference_scope": "Hosted LingBot service; local checkpoint and Claude judgments are not presumed to reproduce 1.82.",
   "policy": "Verify controls and measure a declared small subset of complete scored stock episodes before hillclimbing. Full 171-case coverage is not required for initial paired method experiments. Report subset scores and failures without a leaderboard overall claim.",
-  "gemini_calls_authorized": false,
+  "gemini_calls_authorized": true,
   "user_authorized_local_hillclimb": true,
-  "hillclimb_scope": "User-directed hillclimbing on the Claude-judged local cohort (reproduction/hillclimb-subset.json). baseline_reproduced stays false: the published 1.82 is NOT reproduced; scores are not comparable to the paper."
+  "hillclimb_scope": "User-directed hillclimbing on the Claude-judged local cohort (reproduction/hillclimb-subset.json). baseline_reproduced stays false: the published 1.82 is NOT reproduced; scores are not comparable to the paper.",
+  "gemini_authorization": "User requested Gemini judging for comparison to published scores on2026-11-14; previous no-Gemini preference superseded.",
+  "active_goal": "Beat Genie3 published overall2.12 with an open pretrained model, no training from scratch",
+  "completion_requirement": "Full GC/IF/IE/OE coverage with released aggregation, matched documented player/adapter/scorer settings, preserved failures. A subset score or Gemini switch alone is not success."
 }

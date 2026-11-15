@@ -1,0 +1,302 @@
+{
+  "task_id": "GC027",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "52317c194c14addb0879bdc03bf8a64ee00432201fd6649a4841e180ccd7dca4",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "GC027",
+    "perspective": "first-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "no",
+    "observed_action_zh": "镜头持续向右旋转，但未完成360度旋转，也没有回到初始视角。",
+    "trajectory_evidence_zh": "视频开始时镜头正对带有文字的粉色建筑，随后镜头持续向右旋转，依次经过游乐场的不同设施。直到视频结束，镜头一直保持向右旋转的趋势，但并未再次出现初始的粉色建筑画面，说明旋转角度未达到360度。",
+    "failure_reason_zh": "镜头虽然进行了向右旋转，但旋转角度不足360度，未能完成环视并回到初始视角的任务要求。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 2.2,
+    "final_score_1_to_5": 2.2,
+    "category_scores_1_to_5": {
+      "identity_id": {
+        "score": 2,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "视频中发生多次硬重置（如2.4秒至2.5秒，7.4秒至7.5秒），游乐设施的结构和粉色建筑的窗户排列在连续平移中发生突变和替换，未能保持同一物体的身份一致性。"
+      },
+      "identity_texture": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "虽然标志牌上的'SHILHAI STREET SPORTS CENTER'文本在可见期间（前2秒）保持完美一致，但由于多次硬重置，游乐设施和粉色建筑表面的材质和纹理在后续平移中发生了瞬间改变。"
+      },
+      "color": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "同一位置的游乐设施颜色发生多次无端突变，例如在2.4秒至2.5秒间白色平台瞬间变为紫色，在7.4秒至7.5秒间绿色屋顶和紫色平台瞬间变为深蓝色。"
+      },
+      "relative_position": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "相机平移过程中，画面整体的相对空间布局（如滑梯与主体的相对位置、前景与背景的关系）大致保持，但由于硬重置，部分建筑结构和游乐设施出现了不合理的刷新。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail; the camera pans continuously until the end.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "相机持续向右全景平移，但未完成360度旋转，也未返回并重新显示初始视角的原始场景。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景中的粉色建筑在相机平移过程中持续可见，但其窗户排列和立面结构发生了多次无端改变（如从大落地窗变为小方窗）。",
+      "post_completion_phase_zh": "动作未完成，无此阶段。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "play structure at center-left",
+        "anchors": [
+          "yellow slide",
+          "pink building facade"
+        ],
+        "same_object_or_region": "yes"
+      },
+      {
+        "comparison": "pink building in background",
+        "anchors": [
+          "rubber-floor color boundaries",
+          "leafless trees"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "Primary Sheet 1, cell 25 to Primary Sheet 2, cell 1",
+        "Primary Sheet 3, cell 25 to Primary Sheet 4, cell 1"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "yellow slide",
+        "pink building facade"
+      ],
+      "newly_revealed_regions_zh": "随着相机向右平移，画面右侧不断出现新的游乐设施和建筑部分。",
+      "evidence_zh": "相机保持连续向右平移，但在此过程中，已在画面中的同一物体（如游乐设施和背景建筑）发生了瞬间的颜色和结构突变，这无法用相机运动或视角变化来解释。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "Primary Sheet 3, cell 25 to Primary Sheet 4, cell 1",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "yellow slide",
+        "pink building facade"
+      ],
+      "evidence_zh": "在7.4秒至7.5秒（Primary Sheet 3, cell 25至Sheet 4, cell 1）之间，画面发生硬重置。在黄色滑梯和粉色建筑背景等锚点位置保持不变的情况下，游乐设施的绿色屋顶和紫色平台瞬间变为深蓝色，粉色建筑的窗户排列和天空纹理也发生突变。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作未完成，无完成后的额外扣分。"
+    },
+    "final_state_check": {
+      "window": "Primary Sheet 6, cells 1-4",
+      "visible_key_objects": [
+        "pink building",
+        "leafless trees"
+      ],
+      "reappearance_consistency_zh": "相机未返回初始视角，初始的黄色标志牌、白色游乐设施和黄色秋千架未在最终画面中重新出现；最终画面中的粉色建筑与初始状态的窗户结构完全不同。"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "相机在整个视频中保持连续向右平移，展示了有意义的动作进展。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "play structure",
+        "pink building facade"
+      ],
+      "correspondence_anchors": [
+        "yellow slide",
+        "leafless trees"
+      ],
+      "visible_intervals": [
+        "Primary Sheet 1, cell 1 to Primary Sheet 6, cell 4"
+      ],
+      "before_developing_after_checkpoints": [
+        {
+          "surface": "play structure roof and platform",
+          "before_frame": 74,
+          "developing_frame": 75,
+          "after_frame": 76,
+          "observed_change_zh": "绿色屋顶和紫色平台瞬间变为深蓝色。"
+        }
+      ],
+      "intrinsic_color_drift": "verified",
+      "material_or_texture_drift": "verified",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "游乐设施的颜色和材质在相邻帧之间发生多次瞬间突变（如白色变紫色，绿色变深蓝色），属于严重的颜色和材质漂移。"
+    },
+    "summary_zh": "视频展示了连续的相机平移，标志牌文本保持良好，但画面发生了多次硬重置，导致游乐设施的颜色、材质以及背景粉色建筑的结构发生瞬间突变，未能保持世界的一致性。",
+    "task_id": "GC027"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 10699,
+      "output_tokens": 245
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 24520,
+      "output_tokens": 1802
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 129,
+      "sheets_count": 6,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 12.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 128,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 12.8,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 7,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 12.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 6,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 12.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "89bf7b8642028ebe247ae4b399f99cf7094e6bcbc8114332cd1516c2841bb9f3",
+  "score_prompt_sha256": "c2714c8e413b3242ad8b93e07d05c4ddb18d2820a2ac292d3cead360cddbd948",
+  "scores": {
+    "official": 2.2,
+    "final_score": 2.2
+  },
+  "episode_id": "start-anchor-GC027-seed43-stock"
+}

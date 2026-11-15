@@ -1,0 +1,175 @@
+{
+  "result_directory": "native-batch-1794721788175949353",
+  "summary": {
+    "scope": "serial persistent research batch; no training",
+    "status": "completed",
+    "configuration": {
+      "backend": "sdpa",
+      "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+      "dtype": "bfloat16",
+      "local_attn_size": 18,
+      "sink_size": 6,
+      "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+      "text_encoder_offloaded_after_encoding": true,
+      "torch": "2.6.0+cu124"
+    },
+    "declared_jobs": 3,
+    "jobs": [
+      {
+        "id": "GC027-seed42-stock",
+        "status": "completed",
+        "cleanup": {
+          "pipeline_loaded": true,
+          "remaining_model_hooks": 0,
+          "dit_parameter_versions_unchanged": true,
+          "encoder_device_after_request": "cpu",
+          "text_cache_entries_after_request": 1
+        },
+        "parity": {
+          "reference_supplied": false
+        },
+        "first_chunk_elapsed_s": 130.37135984699998,
+        "persistent_worker": {
+          "pipeline_reused": false,
+          "constructor_or_reuse_wall_s": 113.20525737700001,
+          "text_cache_entries_before_generation": 0,
+          "encoder_device_before_generation": "cpu"
+        },
+        "hardware": {
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4"
+        },
+        "generated_chunks": 13,
+        "peak_allocated_bytes": 72056007168,
+        "pixel_hashes": [
+          "f277059b20ea7ed4bfff705fdb0408c4fc7faad4ff848b4a7a05db0ae5db71e0",
+          "b7feedd2178fae1d7fe4c3a345274354d7135451dd3c0783e9d44ee21ab16f82",
+          "46720018a6aa746aa68945e518e53dd524ba4f5d1379a7321a2f54e0cdd1dec1",
+          "05503ba70243a7715632e34ccf1f950efec73010f2b5629e5fbb7e58d3b6dab4",
+          "8687b61632e46522a8c7ead4e43d61b933374afcb273158a76bd4c5791c27680",
+          "0c7323a7f6aa864bcf9fa106be683c3d11710cabcca7c0567a6d9681a0c4fd7f",
+          "c3e9b9707e3aeaacce40fa7fc4f9a80c25a277c7e6d889f47633b9ef32a2c78a",
+          "b301e341c6bed68821e2c56f27aa10c342dd30610f6d344a4f2e11e55dcd6934",
+          "47ef6255f9881fd1d6eb145d51ba194212b3bdb44fb7b4fb2826223e28874868",
+          "64ece9ec6c6870c931ece474176a14637f20c035364221f8704af1625027fc09",
+          "8179a77da24e83fa0db8e7007cca93d4aced70af603ee2100f22ad3e370cd734",
+          "b613aeb855376363fafbebab9b7c0411b9c66fcdce6cc38f491ab3e2946f5d0f",
+          "f959105a0cad5932d82563dac65e623f3b6a3ac9025111dbfdd171ba218f8031"
+        ],
+        "request_wall_s": 206.715011689
+      },
+      {
+        "id": "GC027-seed42-four-view",
+        "status": "completed",
+        "cleanup": {
+          "pipeline_loaded": true,
+          "remaining_model_hooks": 0,
+          "dit_parameter_versions_unchanged": true,
+          "encoder_device_after_request": "cpu",
+          "text_cache_entries_after_request": 1
+        },
+        "parity": {
+          "reference_supplied": false
+        },
+        "first_chunk_elapsed_s": 15.248279537000002,
+        "persistent_worker": {
+          "pipeline_reused": true,
+          "constructor_or_reuse_wall_s": 0.006123045999999022,
+          "text_cache_entries_before_generation": 0,
+          "encoder_device_before_generation": "cpu"
+        },
+        "hardware": {
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4"
+        },
+        "generated_chunks": 13,
+        "peak_allocated_bytes": 72402557952,
+        "pixel_hashes": [
+          "f277059b20ea7ed4bfff705fdb0408c4fc7faad4ff848b4a7a05db0ae5db71e0",
+          "b7feedd2178fae1d7fe4c3a345274354d7135451dd3c0783e9d44ee21ab16f82",
+          "46720018a6aa746aa68945e518e53dd524ba4f5d1379a7321a2f54e0cdd1dec1",
+          "05503ba70243a7715632e34ccf1f950efec73010f2b5629e5fbb7e58d3b6dab4",
+          "8687b61632e46522a8c7ead4e43d61b933374afcb273158a76bd4c5791c27680",
+          "0c7323a7f6aa864bcf9fa106be683c3d11710cabcca7c0567a6d9681a0c4fd7f",
+          "c3e9b9707e3aeaacce40fa7fc4f9a80c25a277c7e6d889f47633b9ef32a2c78a",
+          "b301e341c6bed68821e2c56f27aa10c342dd30610f6d344a4f2e11e55dcd6934",
+          "47ef6255f9881fd1d6eb145d51ba194212b3bdb44fb7b4fb2826223e28874868",
+          "64ece9ec6c6870c931ece474176a14637f20c035364221f8704af1625027fc09",
+          "8179a77da24e83fa0db8e7007cca93d4aced70af603ee2100f22ad3e370cd734",
+          "b613aeb855376363fafbebab9b7c0411b9c66fcdce6cc38f491ab3e2946f5d0f",
+          "149fe6d024b5879407e537b49d271da454e693a002218e845df506c41ef1944a"
+        ],
+        "request_wall_s": 96.134595243
+      },
+      {
+        "id": "GC027-seed42-start-anchor",
+        "status": "completed",
+        "cleanup": {
+          "pipeline_loaded": true,
+          "remaining_model_hooks": 0,
+          "dit_parameter_versions_unchanged": true,
+          "encoder_device_after_request": "cpu",
+          "text_cache_entries_after_request": 1
+        },
+        "parity": {
+          "reference_supplied": false
+        },
+        "first_chunk_elapsed_s": 14.374134838000032,
+        "persistent_worker": {
+          "pipeline_reused": true,
+          "constructor_or_reuse_wall_s": 0.007760898999947585,
+          "text_cache_entries_before_generation": 0,
+          "encoder_device_before_generation": "cpu"
+        },
+        "hardware": {
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4"
+        },
+        "generated_chunks": 13,
+        "peak_allocated_bytes": 73831508992,
+        "pixel_hashes": [
+          "f277059b20ea7ed4bfff705fdb0408c4fc7faad4ff848b4a7a05db0ae5db71e0",
+          "b7feedd2178fae1d7fe4c3a345274354d7135451dd3c0783e9d44ee21ab16f82",
+          "46720018a6aa746aa68945e518e53dd524ba4f5d1379a7321a2f54e0cdd1dec1",
+          "05503ba70243a7715632e34ccf1f950efec73010f2b5629e5fbb7e58d3b6dab4",
+          "8687b61632e46522a8c7ead4e43d61b933374afcb273158a76bd4c5791c27680",
+          "0c7323a7f6aa864bcf9fa106be683c3d11710cabcca7c0567a6d9681a0c4fd7f",
+          "c3e9b9707e3aeaacce40fa7fc4f9a80c25a277c7e6d889f47633b9ef32a2c78a",
+          "b301e341c6bed68821e2c56f27aa10c342dd30610f6d344a4f2e11e55dcd6934",
+          "47ef6255f9881fd1d6eb145d51ba194212b3bdb44fb7b4fb2826223e28874868",
+          "64ece9ec6c6870c931ece474176a14637f20c035364221f8704af1625027fc09",
+          "8179a77da24e83fa0db8e7007cca93d4aced70af603ee2100f22ad3e370cd734",
+          "ae3d94481cd641fb5a1417500b609488fdacbdb80a372504a8b02c160a236fcd",
+          "7eb8ad340764650993c359c5731218a3a6a1e7ee0b7a574f2b097175853bf7f2"
+        ],
+        "request_wall_s": 88.01865427900003
+      }
+    ],
+    "constructor_calls": 1,
+    "worker_wall_s": 390.87013335999995
+  },
+  "declared_job_ids": [
+    "GC027-seed42-stock",
+    "GC027-seed42-four-view",
+    "GC027-seed42-start-anchor"
+  ],
+  "configuration": {
+    "backend": "sdpa",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "dtype": "bfloat16",
+    "local_attn_size": 18,
+    "sink_size": 6,
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "text_encoder_offloaded_after_encoding": true,
+    "torch": "2.6.0+cu124"
+  },
+  "returncode": 0,
+  "completed_jobs_published": [
+    "GC027-seed42-four-view",
+    "GC027-seed42-start-anchor",
+    "GC027-seed42-stock"
+  ]
+}
