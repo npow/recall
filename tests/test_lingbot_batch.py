@@ -6,7 +6,7 @@ from types import SimpleNamespace
 import pytest
 import torch
 
-from worldsync.lingbot_batch_rollout import groups, run_batch
+from worldsync.lingbot_batch_rollout import groups, run_batch, verify_run
 from worldsync.lingbot_pipeline_reuse import PipelineReuse
 
 
@@ -105,3 +105,14 @@ def test_batch_retains_failed_job_and_reloads_before_next_request(monkeypatch, t
     assert summary["status"] == "failed"
     assert (tmp_path / "good/run.json").exists()
     assert json.loads((tmp_path / "summary.json").read_text())["declared_jobs"] == 3
+
+
+def test_identical_pixels_do_not_hide_a_different_reference_memory_policy():
+    import copy
+    source = Path(__file__).resolve().parents[1] / "reproduction/lingbot-runtime-benchmark/sdpa26.json"
+    reference = json.loads(source.read_text())["run"]
+    candidate = copy.deepcopy(reference)
+    assert verify_run(candidate, reference)["matched_raw_pixel_chunks"] == 10
+    candidate["pose_retrieval"] = True
+    with pytest.raises(ValueError, match="different generation settings"):
+        verify_run(candidate, reference)

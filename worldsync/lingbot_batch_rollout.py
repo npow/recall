@@ -59,11 +59,15 @@ def verify_run(run, reference=None):
     fields = ("source_revision", "checkpoint_revision", "task_id", "seed", "split", "fps", "max_chunks",
               "max_area", "chunk_size", "local_attn_size", "sink_size", "fixed_actions", "sampler_timesteps_index",
               "sample_shift", "turn_degrees_per_second", "text_encoder_offloaded_after_encoding", "hardware",
-              "initial_image_sha256", "image_caption_sha256")
+              "initial_image_sha256", "image_caption_sha256", "pose_retrieval")
     if any(run[field] != reference[field] for field in fields):
         raise ValueError("Fresh reference has different generation settings")
     if reference["status"] != "completed" or len(reference["chunks"]) != run["max_chunks"]:
         raise ValueError("Fresh reference is incomplete")
+    for field in ("retrieved_latent_frames", "selection", "key_positions", "attended_latent_frames",
+                  "sink_latent_frames", "tail_latent_frames", "history_output_weight"):
+        if (run.get("memory") or {}).get(field) != (reference.get("memory") or {}).get(field):
+            raise ValueError(f"Fresh reference has different memory policy: {field}")
     matches = [a["pixel_sha256"] == b["pixel_sha256"] for a, b in zip(run["chunks"], reference["chunks"])]
     if not all(matches):
         raise ValueError(f"Reused request differs from fresh raw pixels: {matches}")

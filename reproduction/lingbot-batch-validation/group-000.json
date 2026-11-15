@@ -1,0 +1,169 @@
+{
+  "result_directory": "native-batch-1794719060861018436",
+  "summary": {
+    "scope": "serial persistent research batch; no training",
+    "status": "completed",
+    "configuration": {
+      "backend": "sdpa",
+      "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+      "dtype": "bfloat16",
+      "local_attn_size": 18,
+      "sink_size": 6,
+      "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+      "text_encoder_offloaded_after_encoding": true,
+      "torch": "2.6.0+cu124"
+    },
+    "declared_jobs": 3,
+    "jobs": [
+      {
+        "id": "GC010-moving-reuse",
+        "status": "completed",
+        "cleanup": {
+          "pipeline_loaded": true,
+          "remaining_model_hooks": 0,
+          "dit_parameter_versions_unchanged": true,
+          "encoder_device_after_request": "cpu",
+          "text_cache_entries_after_request": 1
+        },
+        "parity": {
+          "reference_supplied": true,
+          "matched_raw_pixel_chunks": 14,
+          "all_raw_pixels_identical": true
+        },
+        "first_chunk_elapsed_s": 150.292196988,
+        "persistent_worker": {
+          "pipeline_reused": false,
+          "constructor_or_reuse_wall_s": 132.597112616,
+          "text_cache_entries_before_generation": 0,
+          "encoder_device_before_generation": "cpu"
+        },
+        "hardware": {
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4"
+        },
+        "generated_chunks": 14,
+        "peak_allocated_bytes": 72321217536,
+        "pixel_hashes": [
+          "25f0ae5aa846d23d9b2d762de09ed68d03e0b35533e897ae6dd3c7295879b188",
+          "b44e19302b8d0390eaf33de4911f68abf6549764fbc15b65a6b3f0ae56581959",
+          "69a95b5cab96306fbd9a35dbe2c53acf0f7b728b6c4edfc170923ef589afdb82",
+          "548207bf43e1721023a9147e72b9eaedf268a0eca5eaf4c53a7e924c0a81ae19",
+          "41ae1aa862d1aab4be355d8f2da2d1f65201968f2219cdbf23385e85ca3c036f",
+          "ac3e619eee0508a513c1de1786278107e9e33e793329b3af5dfbcc2e0f2186df",
+          "5390137c101c06dea50ed59318364f6f470d54897171adf67ae1b03b35818c58",
+          "748e980c64281028ef2b37efb99b7f319d1034a48cca4f72684db716d0ca55bd",
+          "c1a66082ffd74e49808e1826824c66442b520932188473b9225158f958d66933",
+          "5987ff8a3101491c654b2edfdd01470bc1a75aea9774b139e9ffd58270a85321",
+          "14f34f0d77dc1cda4ecaf15af6756c45410f292c98a8efda1e4c5e9efeb8663f",
+          "2b7b3cedfc45e0f00528f9021acc104861f32e2af1b319968810d0c86848e8e8",
+          "f44495093359080a001a903f967ef128636252e8fd13f1cce7d9461b9e78e394",
+          "c34459fa5dcee400df3a8e19f72e0fb0f11cd670609493dfbf07e9884f24c3a9"
+        ],
+        "request_wall_s": 253.042466294
+      },
+      {
+        "id": "GC033-moving-reuse",
+        "status": "completed",
+        "cleanup": {
+          "pipeline_loaded": true,
+          "remaining_model_hooks": 0,
+          "dit_parameter_versions_unchanged": true,
+          "encoder_device_after_request": "cpu",
+          "text_cache_entries_after_request": 1
+        },
+        "parity": {
+          "reference_supplied": true,
+          "matched_raw_pixel_chunks": 14,
+          "all_raw_pixels_identical": true
+        },
+        "first_chunk_elapsed_s": 13.091573237000034,
+        "persistent_worker": {
+          "pipeline_reused": true,
+          "constructor_or_reuse_wall_s": 0.004650871000023926,
+          "text_cache_entries_before_generation": 0,
+          "encoder_device_before_generation": "cpu"
+        },
+        "hardware": {
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4"
+        },
+        "generated_chunks": 14,
+        "peak_allocated_bytes": 72321217536,
+        "pixel_hashes": [
+          "64161cafaf01670eb9b457a58c3f603ae092bea1dac44c39558aea6337db2588",
+          "8fc63117ed51036d793f5303ea84e55b2ab34b4f0f33cebb489666edbd44af7a",
+          "24526389fa54783591981d006fb19ac8c52a7ca6e2fe0a120439194a6b1e0fa4",
+          "609b8227494263225d21f51c2061ccb7c67cf1cf3dcece09d4397bf104d41c2c",
+          "fd59e61ca42912561b48128f024be8342dd96707d6e73b5eedd84c24899ad35b",
+          "9a1251eac2751c53892eba8c48dd2e6e1de41a6fbf611f5fdfe332e1823b4000",
+          "7b6fa0f06aec5008814ee0501229d4a69dfce85cef1adf3d1061b5f48c8342ef",
+          "3493f6a1b045d0ad7b1beb0012eb39efcad4db44504c6cb56dbf6a28e422b09e",
+          "f7fe7813c6ae52306877862b8e3f440fa96e65b594ab3b084b5f3bbfd5ac1111",
+          "6a66269828a77292b090373e7b25e1287c06703b98b0998f9c6ba14a45876406",
+          "db8a754c3bfe0ae3ecf55a606882f035b9350569345ac092b2c4364e2d322ad0",
+          "fb8cfaae10bfebe03585d4559c11833874c0be1df5b84301ea861eb45b245d4b",
+          "d8407480726eea8f9b7f4a83b0b5af226fb5bb274f9b24a54ceb67ceb9d1d7f5",
+          "28d7aedf05ee39665be3888f5a0eeac13c7928b884837d9acfb73b94b04b74f6"
+        ],
+        "request_wall_s": 105.82878675400002
+      },
+      {
+        "id": "GC040-moving-reuse",
+        "status": "completed",
+        "cleanup": {
+          "pipeline_loaded": true,
+          "remaining_model_hooks": 0,
+          "dit_parameter_versions_unchanged": true,
+          "encoder_device_after_request": "cpu",
+          "text_cache_entries_after_request": 1
+        },
+        "parity": {
+          "reference_supplied": true,
+          "matched_raw_pixel_chunks": 14,
+          "all_raw_pixels_identical": true
+        },
+        "first_chunk_elapsed_s": 14.164512346000038,
+        "persistent_worker": {
+          "pipeline_reused": true,
+          "constructor_or_reuse_wall_s": 0.005247177000001102,
+          "text_cache_entries_before_generation": 0,
+          "encoder_device_before_generation": "cpu"
+        },
+        "hardware": {
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4"
+        },
+        "generated_chunks": 14,
+        "peak_allocated_bytes": 72423404544,
+        "pixel_hashes": [
+          "82073ee9e1d8d895d457d261761241ef1a4fa162536dc29d9d292fbf0ba0a201",
+          "4ec7b4192a3877fdb0af54f1622310642073d1de911af7baff2c612d877281b5",
+          "595e30d0f30015a9375bc1173dc67abb9829496e1310789e6251518f419eff15",
+          "93a5d8af179ddf0077c76a208161f00b0ae7cdaaba0fbeb5cd2b7946d37f1c91",
+          "018c8abf6ef299e7dc0ac1dd2e6b0a307302bf8278086fe5bb0d9b01c435437e",
+          "e88543a10574d89f3aa10991a3ed3f654779541dec1fe1f0e37396e3a8e6521a",
+          "43955952ab3d8422538e23e8eb292aa19f74f3a84803d913da7265ac78c0f517",
+          "a0688c1f5b10b6141b334c1fd1e8dbfdd858108186102ddb3fd3b1173de66d53",
+          "2e236415ccb17278fe74918ee54d83dd372040f9b94baf4aaa37136c10a3de75",
+          "a38470b8e4a3820cf8310e9da6744a38232800ba521a9aa3fd50dc4a3288cc8e",
+          "b5e608491d1b66c02002e6207ae92e85daa0ebd4840d513ab7f28be18073a3eb",
+          "3eb282d591b1a084e27c6ba145be2d7078e9ec503713e30f04af9ae301044d19",
+          "d3dca0c60b95ef5cf42acccfe54deea6d9cd9e7afe17e7237d260a0f8534786d",
+          "cff34ad6d208bf2c492e7f7207331bfafaa542d2e2a8abeea21bf4b2030b45db"
+        ],
+        "request_wall_s": 108.77489033199998
+      }
+    ],
+    "constructor_calls": 1,
+    "worker_wall_s": 467.64812279
+  },
+  "returncode": 0,
+  "completed_jobs_published": [
+    "GC010-moving-reuse",
+    "GC033-moving-reuse",
+    "GC040-moving-reuse"
+  ]
+}
