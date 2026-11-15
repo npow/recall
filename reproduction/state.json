@@ -1,13 +1,23 @@
 {
-  "phase": "baseline",
+  "phase": "hillclimbing",
   "baseline_verified": false,
   "baseline_report": null,
   "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v4",
   "first_generation_target": "LingBot-World2 14B causal-fast frozen local stock baseline",
   "published_reference_overall": 1.82,
-  "published_reference_dimensions": {"gc": 2.04, "if": 2.13, "insight": 1.95, "outsight": 1.16},
-  "sota_reference": {"model": "Genie 3", "overall": 2.12},
+  "published_reference_dimensions": {
+    "gc": 2.04,
+    "if": 2.13,
+    "insight": 1.95,
+    "outsight": 1.16
+  },
+  "sota_reference": {
+    "model": "Genie 3",
+    "overall": 2.12
+  },
   "published_reference_scope": "Hosted LingBot service; local checkpoint and Claude judgments are not presumed to reproduce 1.82.",
   "policy": "Verify controls and measure a declared small subset of complete scored stock episodes before hillclimbing. Full 171-case coverage is not required for initial paired method experiments. Report subset scores and failures without a leaderboard overall claim.",
-  "gemini_calls_authorized": false
+  "gemini_calls_authorized": false,
+  "user_authorized_local_hillclimb": true,
+  "hillclimb_scope": "User-directed hillclimbing on the Claude-judged local cohort (reproduction/hillclimb-subset.json). baseline_reproduced stays false: the published 1.82 is NOT reproduced; scores are not comparable to the paper."
 }

@@ -145,12 +145,15 @@ def seeds(seeds: str = "1,2,3,4,5", case: str = "gc:GC007"):
 
 
 @app.local_entrypoint()
-def cohort(seed: int = 42, label: str = "stock"):
-    """The predeclared 16-episode tuning cohort at one seed, 3 GPUs at a time."""
+def cohort(seed: int = 42, label: str = "stock", subset: str = "cohort"):
+    """The 16-episode cohort (or subset=hillclimb, the 10 quick moving cases) at one seed, 3 GPUs at a time."""
     if not _key():
         raise SystemExit("ANTHROPIC_API_KEY missing locally")
-    split = json.loads((ROOT / "reproduction/episode-split.json").read_text())
-    cases = [f"{c['split']}:{c['task_id']}" for c in split["predeclared_tuning_cohort_complete_episodes"]]
+    if subset == "hillclimb":
+        listing = json.loads((ROOT / "reproduction/hillclimb-subset.json").read_text())["cases"]
+    else:
+        listing = json.loads((ROOT / "reproduction/episode-split.json").read_text())["predeclared_tuning_cohort_complete_episodes"]
+    cases = [f"{c['split']}:{c['task_id']}" for c in listing]
     cases.sort(key=lambda c: c.startswith("insight"), reverse=True)  # longest (60-chunk) cases first
     run_id = f"cohort-{label}-s{seed}-{int(time.time())}"
     print("run_id", run_id, len(cases), "cases", flush=True)

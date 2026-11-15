@@ -33,7 +33,8 @@ def resolve(args, parser, state_path=None):
                 parser.error("controlled ablations require fixed actions and native camera controls")
             return knobs
         state = json.loads((state_path or ROOT / "reproduction/state.json").read_text())
-        if state.get("phase") != "hillclimbing" or not state.get("baseline_reproduced"):
+        unlocked = state.get("phase") == "hillclimbing" and (state.get("baseline_reproduced") or state.get("user_authorized_local_hillclimb"))
+        if not unlocked:
             parser.error("non-stock inference knobs are locked until a baseline report opens hillclimbing")
     return knobs
 
