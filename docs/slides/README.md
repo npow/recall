@@ -16,12 +16,14 @@ Videos loop for as long as their slide is shown and rewind when you leave it. Th
 (`index.html#7`), so a reload returns to the same slide. `index.html?notes=1` opens with notes on.
 
 The main story runs from the single-camera memory problem through the method,
-results and research loop. Slides 15–19 show the actual cross-agent extension:
+results and research loop. Slides 15–16 show the first, text-conditioned multi-agent
+prototype: shared plan and weights with separate visual KV, then three scripted
+scenarios (handoff, greeting, joint attention). Slides 17–21 show the actual cross-agent extension:
 archive/splice/runtime reuse, the shared visual-KV architecture, and three
 pose-matched revisit videos with FOV radar. The radar's green readouts come from
 actual 40-layer injection traces. These are common-origin static-scene, serial
 visits; they are functional diagnostics rather than benchmark scores.
-The earlier text-conditioned character demonstrations are in the appendix.
+Slide 22 is future work; the remaining slides are the appendix.
 
 
 Plain-language definitions of every term are in [../EXPLAINER.md](../EXPLAINER.md).

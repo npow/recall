@@ -90,6 +90,9 @@ video,img.media{display:block;width:100%;height:auto;border-radius:10px;backgrou
 .frag.shown{opacity:1}
 .foot{margin-top:auto;padding-top:18px}
 .ctx-bg{position:absolute;top:180px;width:800px;height:412px;border-radius:12px;background-size:cover;background-position:center;opacity:.85}
+.proto-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px 40px;margin-top:4px}
+.proto-grid video{border-radius:8px}
+.proto-grid .cap{font-size:26px;color:var(--dim);line-height:1.3;margin:8px 0 0}
 .slide aside.notes{display:none}
 /* notes */
 #notes{position:fixed;left:0;right:0;bottom:0;background:rgba(16,20,27,.96);border-top:2px solid var(--rel);
@@ -396,6 +399,30 @@ svg text{font-family:inherit}
     <aside class="notes">The research ran as an autoresearch loop: AI agents proposed a method, ran experiments on cloud GPUs, a separate AI agent audited the code and the results, then diagnosed, fixed and re-tested, and the findings were stored in a research memory. Over two days the loop tried seventeen ideas, shown here in the order their results landed in the repo. Four were kept: the reproduced baseline, the pose-indexed memory, the store-the-frame idea that is two hundred times smaller, and the pre-registered revisit test with its plus 0.77. Five were partial, and eight were dropped, each with its result recorded in the repo. A human set the goals and the budget and made a few key calls.</aside>
   </section>
 
+  <section class="slide" data-sec="Multi-agent" id="shared-context-text">
+    <h2>First prototype: shared plan + weights, separate visual KV</h2>
+    <div style="position:relative;width:1728px;height:740px">
+      <!-- each agent's own generated view (frame at 4.0 s of multi-agent-pov.mp4), faded behind its column of the diagram -->
+      <div class="ctx-bg" style="left:10px;background-image:linear-gradient(rgba(11,14,19,.1),rgba(11,14,19,.5)),url(media/ctx-agent-a.jpg)"></div>
+      <div class="ctx-bg" style="left:918px;background-image:linear-gradient(rgba(11,14,19,.1),rgba(11,14,19,.5)),url(media/ctx-agent-b.jpg)"></div>
+      <img class="media" style="position:relative;width:1728px;height:740px;background:transparent" src="media/multi-agent-architecture-shared-text.svg" alt="Shared event plan and frozen DiT weights; per-agent text conditioning and private visual KV caches">
+    </div>
+    <p class="tiny foot">Shared-text prototype · no visual KV exchanged between agents · behind each column, that agent's own generated view.</p>
+    <aside class="notes">Green is shared event information. The scene description and scripted timeline specify when the basket changes holder. Orange and Purple receive viewpoint-specific descriptions through the text encoder. Those form separate cross-attention keys and values. Blue is the causal video DiT used throughout this project. Each rollout keeps its own self-attention cache: the first six latent frames and most recent twelve. The dashed blue arrows mean that both rollouts reuse the same frozen forty-layer checkpoint, loaded once and served serially. They do not mean shared activations or exchanged visual KV. No RECALL retrieval splice is enabled across agents in these demonstration clips. The cross-agent RECALL slides that follow add that shared visual retrieval.</aside>
+  </section>
+
+  <section class="slide" data-sec="Multi-agent" id="multi-agent-demo">
+    <h2>First prototype: three scripted scenarios</h2>
+    <div class="proto-grid">
+      <div><video muted loop playsinline preload="auto" poster="media/multi-agent-pov.jpg" src="media/multi-agent-pov-2x.mp4"></video><p class="cap"><b style="color:var(--text)">Basket handoff</b> · both reach for the basket; release and ownership unresolved</p></div>
+      <div><video muted loop playsinline preload="auto" poster="media/multi-agent-wave.jpg" src="media/multi-agent-wave.mp4"></video><p class="cap"><b style="color:var(--text)">Greeting</b> · both companions wave; event order differs across views</p></div>
+      <div><video muted loop playsinline preload="auto" poster="media/multi-agent-point.jpg" src="media/multi-agent-point.mp4"></video><p class="cap"><b style="color:var(--text)">Joint attention</b> · pointing is clearer in Agent B’s view; reciprocal action remains imperfect</p></div>
+      <div class="card"><p style="font-size:30px;margin:0 0 8px"><b>What is working</b></p><p class="small" style="margin:0 0 18px">Actual LingBot POV renders, one scripted plan per scenario, matching frame times and persistent agent labels.</p><p style="font-size:30px;margin:0 0 8px"><b>What remains open</b></p><p class="small" style="margin:0">Separate visual histories can disagree: who holds the basket, the order of the greeting, where the gesture points.</p></div>
+    </div>
+    <p class="tiny foot">Selected qualitative examples from six paired attempts, chosen by eye · scripted · independent visual histories · handoff at 2× speed · no multi-agent benchmark score.</p>
+    <aside class="notes">Each tile is a genuine first-person LingBot render, not a crop of the observer video. Orange sees Purple; Purple sees Orange. Both use the same event boundaries and their own visual histories. The agents are scripted, and the reference viewpoints were generated from the same scene reference. The basket handoff makes the remaining challenge visible: both characters reach for the basket, but the final release is not consistent enough to claim shared object ownership. In the greeting, both visible companions wave, and their clothing and identities are stable. It is a readable interaction, but the intended turn-taking is not consistent across the two histories. We selected this basket-reference attempt over a later object-free attempt that duplicated the purple character. In joint attention, the shared plan says Orange points at the river and Purple follows the gesture. Orange's pointing is clear in Purple's view, and Purple turns toward the river in Orange's view. The originating hand movement and exact target do not match perfectly across views. We selected the object-free reference attempt over the earlier basket attempt because the gesture is easier to read. Across the demo collection we generated six paired attempts and selected three scenarios by eye. The full attempts are retained. No scores or success rate are claimed. The next step is shared visual evidence, which the following slides add.</aside>
+  </section>
+
   <section class="slide" data-sec="Multi-agent" id="multi-agent-bridge">
 <h2>The same RECALL memory now serves two agents</h2><svg viewBox="0 0 1728 720" width="1728" height="720"><defs><marker id="multi-agent-bridge-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10" fill="#9aa4b2"/></marker></defs><rect x="24" y="30" width="480" height="120" rx="16" fill="#151a22" stroke="#7aa2f7" stroke-width="3"/><text x="264.0" y="82.0" text-anchor="middle" font-size="38" fill="#7aa2f7" font-weight="700">Camera pose tags</text><text x="264.0" y="130.0" text-anchor="middle" font-size="28" fill="#e8ecf2">common camera coordinates</text><rect x="624" y="30" width="480" height="120" rx="16" fill="#151a22" stroke="#7aa2f7" stroke-width="3"/><text x="864.0" y="82.0" text-anchor="middle" font-size="38" fill="#7aa2f7" font-weight="700">KV retrieval + splice</text><text x="864.0" y="130.0" text-anchor="middle" font-size="28" fill="#e8ecf2">reuse the attention hooks</text><rect x="1224" y="30" width="480" height="120" rx="16" fill="#151a22" stroke="#7aa2f7" stroke-width="3"/><text x="1464.0" y="82.0" text-anchor="middle" font-size="38" fill="#7aa2f7" font-weight="700">Warm runtime</text><text x="1464.0" y="130.0" text-anchor="middle" font-size="28" fill="#e8ecf2">one pretrained model</text><path d="M264,153 V210 H864 V250" fill="none" stroke="#9aa4b2" stroke-width="4" marker-end="url(#multi-agent-bridge-arrow)"/><path d="M864,153 V250" fill="none" stroke="#9aa4b2" stroke-width="4" marker-end="url(#multi-agent-bridge-arrow)"/><path d="M1464,153 V210 H864 V250" fill="none" stroke="#9aa4b2" stroke-width="4" marker-end="url(#multi-agent-bridge-arrow)"/><rect x="470" y="260" width="788" height="120" rx="16" fill="#151a22" stroke="#3ddc97" stroke-width="3"/><text x="864.0" y="312.0" text-anchor="middle" font-size="38" fill="#3ddc97" font-weight="700">Cross-agent RECALL</text><text x="864.0" y="360.0" text-anchor="middle" font-size="28" fill="#e8ecf2">one shared pose-indexed archive</text><path d="M864,383 V420 H410 V455" fill="none" stroke="#9aa4b2" stroke-width="4" marker-end="url(#multi-agent-bridge-arrow)"/><path d="M864,420 H1318 V455" fill="none" stroke="#9aa4b2" stroke-width="4" marker-end="url(#multi-agent-bridge-arrow)"/><rect x="70" y="465" width="680" height="110" rx="16" fill="#151a22" stroke="#ffca65" stroke-width="3"/><text x="410.0" y="534.0" text-anchor="middle" font-size="38" fill="#ffca65" font-weight="700">A reads B’s earlier view</text><rect x="978" y="465" width="680" height="110" rx="16" fill="#151a22" stroke="#c5a3ff" stroke-width="3"/><text x="1318.0" y="534.0" text-anchor="middle" font-size="38" fill="#c5a3ff" font-weight="700">B reads A’s earlier view</text><rect x="40" y="630" width="700" height="80" rx="16" fill="#151a22" stroke="#6b7585" stroke-width="3"/><text x="390.0" y="684.0" text-anchor="middle" font-size="38" fill="#6b7585" font-weight="700">Frame recomputation</text><path d="M745,670 H985" fill="none" stroke="#9aa4b2" stroke-width="4" stroke-dasharray="12 10" marker-end="url(#multi-agent-bridge-arrow)"/><rect x="1000" y="630" width="680" height="80" rx="16" fill="#151a22" stroke="#6b7585" stroke-width="3"/><text x="1340.0" y="684.0" text-anchor="middle" font-size="38" fill="#6b7585" font-weight="700">Next: compact shared storage</text></svg><p class="tiny foot">Reused components above. Pose archive and attention splice now feed both agents.</p>
 <aside class="notes">The next question follows directly from the memory work. If one agent can return to a place, can two agents agree about that place? We reused the real LingBot rollout, its camera conditioning, the event-caption director and the warm runtime. One event plan is projected into two first-person descriptions and rendered with separate histories. The pose archive and compact recomputation motivate the next shared visual memory, but that cross-agent archive is not implemented in this prototype. The earlier benchmark numbers remain single-camera results.</aside>
@@ -456,38 +483,6 @@ svg text{font-family:inherit}
 
 
   <!-- A1 -->
-  <section class="slide" data-sec="Appendix" id="shared-context-text">
-    <h2>Earlier prototype: shared plan + weights, separate visual KV</h2>
-    <div style="position:relative;width:1728px;height:740px">
-      <!-- each agent's own generated view (frame at 4.0 s of multi-agent-pov.mp4), faded behind its column of the diagram -->
-      <div class="ctx-bg" style="left:10px;background-image:linear-gradient(rgba(11,14,19,.1),rgba(11,14,19,.5)),url(media/ctx-agent-a.jpg)"></div>
-      <div class="ctx-bg" style="left:918px;background-image:linear-gradient(rgba(11,14,19,.1),rgba(11,14,19,.5)),url(media/ctx-agent-b.jpg)"></div>
-      <img class="media" style="position:relative;width:1728px;height:740px;background:transparent" src="media/multi-agent-architecture-shared-text.svg" alt="Shared event plan and frozen DiT weights; per-agent text conditioning and private visual KV caches">
-    </div>
-    <p class="tiny foot">Shared-text prototype · no visual KV exchanged between agents · behind each column, that agent's own generated view.</p>
-    <aside class="notes">Green is shared event information. The scene description and scripted timeline specify when the basket changes holder. Orange and Purple receive viewpoint-specific descriptions through the text encoder. Those form separate cross-attention keys and values. Blue is the causal video DiT used throughout this project. Each rollout keeps its own self-attention cache: the first six latent frames and most recent twelve. The dashed blue arrows mean that both rollouts reuse the same frozen forty-layer checkpoint, loaded once and served serially. They do not mean shared activations or exchanged visual KV. No RECALL retrieval splice is enabled across agents in these demonstration clips. The cross-agent RECALL slides earlier in the deck add that shared visual retrieval.</aside>
-  </section>
-    <section class="slide" data-sec="Appendix" id="multi-agent-demo">
-<h2>Earlier prototype: shared text only</h2>
-<div class="vwrap" style="margin-top:30px"><video muted loop playsinline preload="auto" poster="media/multi-agent-pov.jpg" src="media/multi-agent-pov-2x.mp4"></video></div>
-<div style="display:flex;gap:24px;margin-top:34px"><span class="chip">Shared scripted plan</span><span class="chip">Two POVs</span></div>
-<p class="tiny foot">Exploratory prototype · shown at 2× speed · independent visual histories · no multi-agent benchmark score.</p>
-<aside class="notes">Each tile is a genuine first-person LingBot render, not a crop of the observer video. Orange sees Purple; Purple sees Orange. Both use the same event boundaries and their own visual histories. The agents are scripted, and the reference viewpoints were generated from the same scene reference. The clip makes the remaining challenge visible: both characters reach for the basket, but the final release is not consistent enough to claim shared object ownership. The next step is shared, revision-aware visual evidence.</aside>
-  </section>
-<section class="slide" data-sec="Appendix" id="multi-agent-wave">
-    <h2>Earlier prototype: greeting</h2>
-    <div class="vwrap" style="margin-top:35px"><video muted loop playsinline preload="auto" poster="media/multi-agent-wave.jpg" src="media/multi-agent-wave.mp4"></video></div>
-    <div style="display:flex;gap:24px;margin-top:34px"><span class="chip">Two viewpoints</span><span class="chip">Shared greeting plan</span></div>
-    <p class="tiny foot">Selected qualitative example · scripted · both companions wave; event order differs across views.</p>
-    <aside class="notes">This is the selected greeting attempt. Both visible companions wave, and their clothing and identities are stable. It is a readable interaction, but the intended turn-taking is not consistent across the two histories. We selected this basket-reference attempt over a later object-free attempt that duplicated the purple character. The full attempts are retained. This is qualitative demonstration footage, not a multi-agent consistency result.</aside>
-  </section>
-<section class="slide" data-sec="Appendix" id="multi-agent-point">
-    <h2>Earlier prototype: joint attention</h2>
-    <div class="vwrap" style="margin-top:35px"><video muted loop playsinline preload="auto" poster="media/multi-agent-point.jpg" src="media/multi-agent-point.mp4"></video></div>
-    <div style="display:flex;gap:24px;margin-top:34px"><span class="chip">One intended target</span><span class="chip">Two visual histories</span></div>
-    <p class="tiny foot">Selected qualitative example · scripted · pointing is clearer in Agent B’s view; reciprocal action remains imperfect.</p>
-    <aside class="notes">The shared plan says Orange points at the river and Purple follows the gesture. Orange's pointing is clear in Purple's view, and Purple turns toward the river in Orange's view. The originating hand movement and exact target do not match perfectly across views. We selected the object-free reference attempt over the earlier basket attempt because the gesture is easier to read. Across the demo collection we generated six paired attempts and selected three scenarios by eye. No scores or success rate are claimed.</aside>
-  </section>
 <section class="slide" data-sec="Appendix">
     <h2>One more memory win</h2>
     <div class="grow" style="display:flex;flex-direction:column;gap:26px">
