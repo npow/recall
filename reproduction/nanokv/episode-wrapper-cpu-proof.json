@@ -1,0 +1,40 @@
+{
+  "scope": "CPU only; generic wrapper and long identity lifecycle, not compressed130 GPU/quality validation",
+  "command": ".venv-lingbot/bin/python -m pytest -q tests/test_lingbot_nanokv_episode.py tests/test_lingbot_nanokv_long.py tests/test_lingbot_nanokv.py",
+  "passed": 19,
+  "elapsed_s": 8.84,
+  "wrapper_tests": 9,
+  "long_identity_tests": 2,
+  "existing_nanokv_tests": 8,
+  "long_identity": {
+    "capacity_frames": 130,
+    "sink_frames": 6,
+    "latent_frames": 140,
+    "chunks": 35,
+    "dtypes": [
+      "float32",
+      "bfloat16"
+    ],
+    "layers": 2,
+    "noisy_evaluations_per_chunk": 2,
+    "clean_commits_per_chunk": 1,
+    "actual_native_layer_forwards_total": 420,
+    "outputs_exact_every_phase": true,
+    "cache_indices_exact_every_phase": true
+  },
+  "wrapper_checks": [
+    "fixed versus adaptive argument routing",
+    "all fixed native camera audits required",
+    "base parameter mutation detected",
+    "generation failure retained and adapter closed",
+    "one constructor under actual PipelineReuse across two serial requests",
+    "source input and plan checksum validation before run",
+    "CLI exact job selection",
+    "cleanup restores build hook and model hooks"
+  ],
+  "files": {
+    "worldsync/lingbot_nanokv_episode.py": "8e7d54153ede9f72c3c9a7fbbbfff27bd2575adf0ac39442f40fe47dfa473920",
+    "tests/test_lingbot_nanokv_episode.py": "576d9a85fdcb75f022e3b72c41da2b3be6e5c236df7e1e07dc893fd76b9ac648",
+    "tests/test_lingbot_nanokv_long.py": "a8ed58545c221afc9ce298387429fa740d07d65a298f18a3098e4145186eb5df"
+  }
+}
