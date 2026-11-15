@@ -199,14 +199,17 @@ def scene_title(data, seconds):
         t = index / FPS
         image, draw = canvas()
         a = ease(t / 0.8)
-        draw.text((W / 2, 380 - 30 * (1 - a)), text["title"], font=font(150), fill=mix(BG, OURS, a), anchor="mm")
-        b = ease((t - 0.5) / 0.8)
-        draw.text((W / 2, 535), text["subtitle"], font=font(58), fill=mix(BG, FG, b), anchor="mm")
-        c = ease((t - 1.1) / 0.8)
+        draw.text((W / 2, 300 - 30 * (1 - a)), text["title"], font=font(150), fill=mix(BG, OURS, a), anchor="mm")
+        d = ease((t - 0.4) / 0.8)
+        for k, line in enumerate(text.get("definition", [])):
+            draw.text((W / 2, 408 + 58 * k), line, font=font(46), fill=mix(BG, FG, d), anchor="mm")
+        c = ease((t - 1.0) / 0.8)
         if text.get("expansion"):
-            draw.text((W / 2, 612), text["expansion"], font=font(34, False), fill=mix(BG, OURS, c), anchor="mm")
-        draw.text((W / 2, 690), text["track"], font=font(40, False), fill=mix(BG, MUTED, c), anchor="mm")
-        draw.text((W / 2, 750), text["base"], font=font(40, False), fill=mix(BG, MUTED, c), anchor="mm")
+            draw.text((W / 2, 535), text["expansion"], font=font(32, False), fill=mix(BG, OURS, c), anchor="mm")
+        b = ease((t - 1.3) / 0.8)
+        draw.text((W / 2, 640), text["subtitle"], font=font(54), fill=mix(BG, FG, b), anchor="mm")
+        draw.text((W / 2, 735), text["track"], font=font(38, False), fill=mix(BG, MUTED, b), anchor="mm")
+        draw.text((W / 2, 790), text["base"], font=font(38, False), fill=mix(BG, MUTED, b), anchor="mm")
         yield np.asarray(image)
 
 
