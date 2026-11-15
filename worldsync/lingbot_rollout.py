@@ -68,6 +68,10 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
     parser.add_argument("--retrieval-selection", choices=("nearest", "diverse"), default="nearest")
     parser.add_argument("--history-output-weight", type=float, choices=(.25, .5), default=None,
                         help="Declared22-frame8-view pilot: separately normalize recent/history attention")
+    parser.add_argument("--archive-export", type=Path, help="Save this agent's retrieval archive and poses at close")
+    parser.add_argument("--foreign-archive", action="append", default=[], metavar="NAME=PATH",
+                        help="Also retrieve from another agent's exported archive (same seed/image/text/start pose)")
+    parser.add_argument("--world-text-suffix", default="", help="Demo: text appended to the world-model caption")
     parser.add_argument("--retrieval-positions", choices=("virtual", "native"), default="virtual")
     parser.add_argument("--rephase-sink", action="store_true", help="Experimental pose-gated native sink key rephasing")
     parser.add_argument("--kv-retention", action="store_true", help="Diagnostic WorldKV-style relevance retrieval from an unbounded CPU KV archive (audited: noisy first-step query, 18/6 gate only)")
@@ -353,7 +357,9 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
             from worldsync.lingbot_retrieval import PoseKVMemory
             memory = PoseKVMemory(pipeline, key_positions=args.retrieval_positions,
                                   retrieved_frames=args.retrieved_frames, selection=args.retrieval_selection,
-                                  cache_frames=knobs["local_attn_size"], history_weight=args.history_output_weight)
+                                  cache_frames=knobs["local_attn_size"], history_weight=args.history_output_weight,
+                                  foreign_archives=dict(item.split("=", 1) for item in args.foreign_archive),
+                                  export_path=args.archive_export)
         elif args.rephase_sink:
             from worldsync.lingbot_sink_rephase import SinkRephaseMemory
             memory = SinkRephaseMemory(pipeline)
@@ -580,6 +586,11 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
                    pipeline.model.register_forward_hook(after, with_kwargs=True)]
         world_text = {"caption": task["image_caption"], "prompt": task["prompt"],
                       "both": f"{task['image_caption']} {task['prompt']}"}[args.text_prompt]
+        if args.world_text_suffix:
+            world_text = f"{world_text} {args.world_text_suffix}"
+            report["world_text"] = world_text
+            report["world_text_sha256"] = hashlib.sha256(world_text.encode()).hexdigest()
+            report["deviations"].append("demo world-text suffix appended to caption")
         if director is not None:
             world_text = director.initial()  # replaces the static text; later chunks may refresh it
             report["director"] = director.metadata()

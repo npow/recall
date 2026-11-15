@@ -9,9 +9,20 @@ import numpy as np
 import torch
 
 
-def select_frames(poses, available, current_start, count=4, diverse=False, recent_frames=4):
+def select_frames(poses, available, current_start, count=4, diverse=False, recent_frames=4, foreign=()):
+    """foreign: (name, poses, indices) archives of other agents in the same world frame."""
     target = poses[-1]
     ranked = []
+    lookup = {}
+    for name, other, indices in foreign:
+        for index in indices:
+            pose = other[index]
+            key = f"{name}:{index}"
+            lookup[key] = pose
+            distance = float(np.linalg.norm(target[:3, 3] - pose[:3, 3]))
+            angle = math.acos(float(np.clip((np.trace(target[:3, :3].T @ pose[:3, :3]) - 1) / 2, -1, 1)))
+            if distance <= 8 and angle <= math.pi / 3:
+                ranked.append((distance / 4 + angle / (math.pi / 3), key))
     for index in available:
         if index < 6 or index >= current_start - recent_frames:
             continue  # Never duplicate sink, recent, current or future frames.
@@ -20,15 +31,16 @@ def select_frames(poses, available, current_start, count=4, diverse=False, recen
         angle = math.acos(float(np.clip((np.trace(target[:3, :3].T @ pose[:3, :3]) - 1) / 2, -1, 1)))
         if distance <= 8 and angle <= math.pi / 3:
             ranked.append((distance / 4 + angle / (math.pi / 3), index))
-    ordered = [index for _, index in sorted(ranked)]
+    ordered = [index for _, index in sorted(ranked, key=lambda item: item[0])]
     if not diverse:
         return ordered[:count]
     selected = []
     for index in ordered:
         independent = True
         for old in selected:
-            distance = float(np.linalg.norm(poses[index][:3, 3] - poses[old][:3, 3]))
-            angle = math.acos(float(np.clip((np.trace(poses[index][:3, :3].T @ poses[old][:3, :3]) - 1) / 2, -1, 1)))
+            a, b = lookup.get(index, poses[index] if isinstance(index, int) else None), lookup.get(old, poses[old] if isinstance(old, int) else None)
+            distance = float(np.linalg.norm(a[:3, 3] - b[:3, 3]))
+            angle = math.acos(float(np.clip((np.trace(a[:3, :3].T @ b[:3, :3]) - 1) / 2, -1, 1)))
             if distance < 2 and angle < math.pi / 12 - 1e-6:
                 independent = False
                 break
@@ -40,7 +52,8 @@ def select_frames(poses, available, current_start, count=4, diverse=False, recen
 
 
 class PoseKVMemory:
-    def __init__(self, pipeline, key_positions="virtual", retrieved_frames=4, selection="nearest", cache_frames=18, history_weight=None):
+    def __init__(self, pipeline, key_positions="virtual", retrieved_frames=4, selection="nearest", cache_frames=18, history_weight=None,
+                 foreign_archives=None, export_path=None):
         if retrieved_frames not in {4, 8} or selection not in {"nearest", "diverse"}:
             raise ValueError("retrieval supports4/8 frames and nearest/diverse selection")
         if cache_frames not in {18, 22}:
@@ -75,6 +88,11 @@ class PoseKVMemory:
         self.frame_tokens = None
         self.retrieval_calls = 0
         self.archive_range = (6, 22)  # latent frames archived; subclasses may widen it
+        self.export_path = export_path
+        self.foreign = {}
+        for name, path in (foreign_archives or {}).items():
+            # Another agent's archive from the same seed, image, text and identity start pose.
+            self.foreign[name] = torch.load(path, mmap=True, weights_only=False)
         for layer, block in enumerate(pipeline.model.blocks):
             attention = block.self_attn
             def enter(module, args, kwargs, layer=layer):
@@ -94,8 +112,9 @@ class PoseKVMemory:
         self.chunk = chunk
         self.poses = np.asarray(poses)
         self.cached.clear()
+        foreign = [(name, np.asarray(archive["poses"]), archive["available"]) for name, archive in self.foreign.items()]
         self.selected = select_frames(self.poses, self.available, chunk * 4, count=self.retrieved_frames, diverse=self.selection == "diverse",
-                                      recent_frames=self.cache_frames - 14)
+                                      recent_frames=self.cache_frames - 14, foreign=foreign)
         self.trace.append({"chunk": chunk, "retrieved_frame_ids": self.selected,
                            "archive_frame_ids": sorted(self.available), "attention_replaced": False})
 
@@ -139,10 +158,9 @@ class PoseKVMemory:
         if len(self.selected) < 4 or key.shape[1] != self.cache_frames * frame_tokens:
             return self.original_attention(query, key, value, **kwargs)
         if layer not in self.cached:
-            if any(index not in bank for index in self.selected):
-                raise RuntimeError("selected memory not populated in every layer")
-            canonical = torch.cat([bank[index][0] for index in self.selected], dim=1).to(key.device)
-            retrieved_value = torch.cat([bank[index][1] for index in self.selected], dim=1).to(value.device)
+            pairs = [self.pair(layer, bank, index) for index in self.selected]
+            canonical = torch.cat([pair[0] for pair in pairs], dim=1).to(key.device)
+            retrieved_value = torch.cat([pair[1] for pair in pairs], dim=1).to(value.device)
             virtual_grid = grid.clone()
             virtual_grid[:, 0] = len(self.selected)
             if self.key_positions == "native":
@@ -174,8 +192,23 @@ class PoseKVMemory:
             output = output + self.readers[layer](query, retrieved_key, retrieved_value).to(output.dtype)
         return output
 
+    def pair(self, layer, bank, index):
+        if isinstance(index, str):
+            name, frame = index.rsplit(":", 1)
+            return self.foreign[name]["banks"][layer][int(frame)]
+        if index not in bank:
+            raise RuntimeError("selected memory not populated in every layer")
+        return bank[index]
+
+    def export(self):
+        if self.export_path is None:
+            return
+        torch.save({"poses": np.asarray(self.poses), "available": sorted(self.available),
+                    "banks": {layer: dict(bank) for layer, bank in self.banks.items()}}, self.export_path)
+
     def metadata(self):
-        return {"method": "bounded early-view pose KV retrieval; diagnostic, not paper reproduction",
+        return {"foreign_archives": {name: archive["available"] for name, archive in self.foreign.items()},
+                "method": "bounded early-view pose KV retrieval; diagnostic, not paper reproduction",
                 "learned_reader_layers": sorted(self.readers),
                 "archive_limit_latent_frames": 16, "retrieved_latent_frames": self.retrieved_frames,
                 "retrieved_frame_count_is_limit": True, "selection": self.selection,
@@ -196,6 +229,7 @@ class PoseKVMemory:
                 "retrieval_attention_calls": self.retrieval_calls, "trace": self.trace}
 
     def close(self):
+        self.export()
         self.module.attention = self.original_attention
         for handle in self.handles:
             handle.remove()

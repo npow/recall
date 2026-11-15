@@ -11,6 +11,11 @@ PATHS = {
     "turn_long_wait_return": ["WAIT"] + ["RIGHT"] * 3 + ["WAIT"] * 24 + ["LEFT"] * 3 + ["WAIT"],
     "turn_wait_return": ["WAIT"] + ["RIGHT"] * 3 + ["WAIT"] * 8 + ["LEFT"] * 3 + ["WAIT"],
     "translate_return": ["WAIT"] + ["W"] * 4 + ["S"] * 4 + ["WAIT"],
+    "spin360": ["WAIT"] + ["RIGHT"] * 6 + ["WAIT"] * 2,
+    "trio_viewer": ["WAIT"] + ["RIGHT"] * 3 + ["LEFT"] * 3 + ["WAIT"],
+    "trio_duel_a": ["WAIT"] + ["S"] * 6,
+    "trio_duel_b": ["WAIT"] + ["RIGHT"] * 3 + ["S"] * 4,
+    "spin720": ["WAIT"] + ["RIGHT"] * 12 + ["WAIT"],
     "round_trip": ["WAIT"] + ["W"] * 4 + ["RIGHT"] * 3 + ["W"] * 4 + ["RIGHT"] * 3 + ["WAIT"],
 }
 

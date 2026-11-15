@@ -128,3 +128,64 @@ def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds
             assert all(row.get("retained_tail_latent_frames", 8) >= 4 for row in memory.trace)
     finally:
         memory.close()
+
+
+def test_foreign_archive_frames_compete_with_own_views_and_round_trip(tmp_path):
+    import sys
+    import types
+    import torch
+    viewer = CameraPlan()
+    for action in PATHS["trio_viewer"]:
+        viewer.advance(action)
+    viewer_poses = np.stack(viewer.poses)
+    dueler = CameraPlan()
+    for action in PATHS["trio_duel_b"][:4]:
+        dueler.advance(action)
+    foreign = [("viewer", viewer_poses, list(range(6, 22)))]
+    # Facing 180 degrees, the dueler has no own views there; the viewer saw it mid-pan.
+    chosen = select_frames(dueler.poses, range(6, 8), 16, foreign=foreign)
+    assert len(chosen) == 4 and all(isinstance(index, str) and index.startswith("viewer:") for index in chosen)
+    headings = [np.degrees(np.arctan2(viewer_poses[int(i.split(":")[1])][0, 2], viewer_poses[int(i.split(":")[1])][2, 2])) % 360
+                for i in chosen]
+    assert all(120 <= heading <= 240 for heading in headings), headings
+    # Own frames still win when they are closest, and the exclusion still applies to them only.
+    walker = CameraPlan()
+    for action in PATHS["trio_duel_a"][:3]:
+        walker.advance(action)
+    mixed = select_frames(walker.poses, range(6, 12), 12, foreign=foreign)
+    assert mixed[0] == 7 and any(isinstance(index, str) for index in mixed), mixed
+    assert select_frames(dueler.poses, range(6, 8), 16, foreign=foreign, diverse=True)
+    # Export/import through PoseKVMemory without the native model present.
+    saved = {key: sys.modules.get(key) for key in ("wan", "wan.modules", "wan.modules.model_fast")}
+    fake = types.ModuleType("wan.modules.model_fast")
+    fake.attention = fake.causal_rope_apply = lambda *a, **k: None
+    sys.modules["wan"], sys.modules["wan.modules"] = types.ModuleType("wan"), types.ModuleType("wan.modules")
+    sys.modules["wan.modules"].model_fast = sys.modules["wan.modules.model_fast"] = fake
+    try:
+        from worldsync.lingbot_retrieval import PoseKVMemory
+        pipeline = types.SimpleNamespace(model=types.SimpleNamespace(blocks=[]))
+        exporter = PoseKVMemory(pipeline, export_path=tmp_path / "viewer.pt")
+        exporter.begin(7, viewer_poses)
+        for layer in range(2):
+            exporter.banks[layer] = {index: (torch.full((1, 4, 2, 8), float(index)), torch.full((1, 4, 2, 8), -float(index)))
+                                     for index in range(6, 22)}
+        exporter.available.update(range(6, 22))
+        exporter.close()
+        memory = PoseKVMemory(pipeline, foreign_archives={"viewer": str(tmp_path / "viewer.pt")})
+        try:
+            memory.begin(3, dueler.poses)
+            assert memory.selected == chosen
+            key, value = memory.pair(1, {}, chosen[0])
+            frame = int(chosen[0].split(":")[1])
+            assert float(key[0, 0, 0, 0]) == frame and float(value[0, 0, 0, 0]) == -frame
+            assert memory.metadata()["foreign_archives"] == {"viewer": list(range(6, 22))}
+            with pytest.raises(RuntimeError):
+                memory.pair(0, {}, 6)
+        finally:
+            memory.close()
+    finally:
+        for key, module in saved.items():
+            if module is None:
+                sys.modules.pop(key, None)
+            else:
+                sys.modules[key] = module
