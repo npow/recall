@@ -73,6 +73,9 @@ def main(argv=None, runtime=None):
     parser.add_argument("--budget-archive", type=int, default=24)
     parser.add_argument("--budget-rope", choices=["virtual", "native"], default="virtual")
     parser.add_argument("--offload-text-encoder", action="store_true", help="Release the completed GPU text encoder before denoising")
+    parser.add_argument("--fp8-kv", action="store_true", help="Experimental fp8 (e4m3) self-attention KV cache; weights stay bf16 (native fixed paths)")
+    parser.add_argument("--fp8-kv-quantize-current", action="store_true", help="Also attend to the fp8-rounded K/V of the chunk being generated (v1 behaviour; worse)")
+    parser.add_argument("--fp8-kv-audit-layers", default="", help="Comma-separated layer indices that keep a bf16 shadow cache to measure attention error")
     parser.add_argument("--player-retries", type=int, default=0,
         help="Resample the player up to N times after an invalid response (same for every arm; each retry is logged)")
     parser.add_argument("--lora", type=Path, help="Memory LoRA adapter (scripts/train_lingbot_memory.py); non-stock weights")
@@ -116,7 +119,7 @@ def main(argv=None, runtime=None):
             or knobs["local_attn_size"] != 22 or args.retrieval_selection != "nearest"
             or args.retrieval_positions != "virtual"):
         parser.error("gated attention pilot requires22 frames,8 nearest views,virtual positions and pose retrieval")
-    diagnostics = [args.pose_retrieval, args.rephase_sink, args.kv_retention, args.decoprune, args.reanchor, args.budget_memory]
+    diagnostics = [args.pose_retrieval, args.rephase_sink, args.kv_retention, args.decoprune, args.reanchor, args.budget_memory, args.fp8_kv]
     if sum(diagnostics) > 1:
         parser.error("memory ablations must be tested separately")
     adaptive_memory_ok = args.budget_memory and lingbot_tuning.hillclimb_unlocked()
@@ -160,9 +163,9 @@ def main(argv=None, runtime=None):
                                     if args.stream_player_actions else None),
         "initial_neutral_bootstrap": args.adaptive_retrieval_pilot,
         "kv_retention": args.kv_retention, "decoprune": args.decoprune, "reanchor": args.reanchor,
-        "budget_memory": args.budget_memory, "denoise_schedule": args.denoise_schedule,
+        "budget_memory": args.budget_memory, "fp8_kv": args.fp8_kv, "denoise_schedule": args.denoise_schedule,
         "text_encoder_offloaded_after_encoding": args.offload_text_encoder,
-        "stationary_wait_only": stationary, "fixed_actions": args.fixed_actions, "quantization": "none", "cuda_allocator_configuration": os.environ.get("PYTORCH_CUDA_ALLOC_CONF", "default"),
+        "stationary_wait_only": stationary, "fixed_actions": args.fixed_actions, "quantization": ("none (weights bf16); KV cache fp8 e4m3 [diagnostic, non-stock]" if args.fp8_kv else "none"), "cuda_allocator_configuration": os.environ.get("PYTORCH_CUDA_ALLOC_CONF", "default"),
         "max_area": 480 * 832, "chunk_size": 4, "local_attn_size": knobs["local_attn_size"], "sink_size": knobs["sink_size"],
         "decision_interval": knobs["decision_interval"], "stock_knobs": lingbot_tuning.is_stock(knobs),
         "controlled_ablation": args.controlled_ablation,
@@ -283,6 +286,10 @@ def main(argv=None, runtime=None):
             from worldsync.lingbot_budgetmem import BudgetPoseMemory
             memory = BudgetPoseMemory(pipeline, sink_size=knobs["sink_size"], local_attn_size=knobs["local_attn_size"],
                 retrieved=args.budget_retrieved, archive_frames=args.budget_archive, rope=args.budget_rope)
+        elif args.fp8_kv:
+            from worldsync.lingbot_fp8kv import Fp8KVCache
+            audit = [int(item) for item in args.fp8_kv_audit_layers.split(",") if item.strip()]
+            memory = Fp8KVCache(pipeline, audit_layers=audit, quantize_current=args.fp8_kv_quantize_current)
         current_chunk = -1
         latest = initial
         def before(model, positional, kwargs):
