@@ -49,11 +49,17 @@ Fixed revisit paths (GC007, DINO of final frame vs start view; crude, single see
 | long hold (24 chunks away) | 0.30-0.40 | 0.77 | 0.88-0.90 |
 
 Judged episodes, Gemini (released PlayWorld prompts, rubric, gate, aggregation; Vertex `gemini-3.1-pro-preview`),
-14 hash-selected GC and out-of-sight cases, two seeds, paired against stock
+14 GC and out-of-sight development cases (not hash-selected: 7 from the first development cohort, 7 chosen for long reference-plan duration),
+run with `--end-guard`, two seeds, paired against stock
 ([powered comparison](../reproduction/powered-comparison/pooled/README.md)):
 stock 1.81, budget memory 2.13 (+0.32, 95% CI -0.08 to +0.75), 46/6 cache 2.26 (+0.46, CI -0.22 to +1.15).
 **No arm is established better than stock overall**; budget memory is positive in both seeds and halves instruction-gate failures (3 vs 7 of 28).
 These cover two of the four dimensions and are not comparable with Genie 3's 2.12.
+
+**Full benchmark.** A full 171-case run is complete; preliminary tally stock about 1.84, budget memory about 1.80 (no gain); official table pending.
+The pre-registered pass criterion for beating 2.12 is **not met**. Memory did fire in 136 of 171 budget episodes, the +0.32 above does not
+replicate on its own 14 cases inside the full run (+0.04), and the judge scored 5 of 28 identical-pixel video pairs differently (by up to 4.0 points),
+so single-call differences under about 0.3 are noise ([exploratory analysis](../reproduction/full-run-memory-fired.md)).
 
 ## Things we tried that did not help (kept in the repo)
 

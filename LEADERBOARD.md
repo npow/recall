@@ -142,7 +142,7 @@ One scripted GC010 seed42 case, same H200/SDPA/seed/controls. Stock18, four-view
 
 ## Gemini — paired GC/OE development cohort (seeds 42 and 43)
 
-14 hash-selected GC and out-of-sight cases (7 GC, 7 out-of-sight), three arms, two seeds, same cases, `--end-guard` and player retries on every arm. Scores are the Gemini mean over GC and out-of-sight episodes only, **not** the four-dimension overall, so they are **not comparable with 2.12 or 1.82**. Paired delta is against stock over (case, seed) pairs; wins/ties/losses in brackets (28 pairs). No arm is established better than stock overall. The one interval that clears zero, 46/6 on out-of-sight (+0.84 [+0.20, +1.62]), is one of eight uncorrected contrasts, comes mostly from seed 43, and Opus sees nothing (+0.05), so it is a lead, not a result.
+14 GC and out-of-sight development cases (7 GC, 7 out-of-sight), three arms, two seeds, same cases. The cases were not hash-selected: 7 come from the first development cohort and 7 (GC005, OE044, GC015, OE056, OE055, GC025, GC019) were chosen for long reference-plan duration, before outcomes. Every arm ran with `--end-guard` and player retries, which the full run does not use. Scores are the Gemini mean over GC and out-of-sight episodes only, **not** the four-dimension overall, so they are **not comparable with 2.12 or 1.82**. Paired delta is against stock over (case, seed) pairs; wins/ties/losses in brackets (28 pairs). No arm is established better than stock overall. The one interval that clears zero, 46/6 on out-of-sight (+0.84 [+0.20, +1.62]), is one of eight uncorrected contrasts, comes mostly from seed 43, and Opus sees nothing (+0.05), so it is a lead, not a result.
 
 | Arm | n | Gemini mean [95% CI] | GC | Out-of-sight | Gate non-fail | Paired Δ vs stock [95% CI] (W/T/L) |
 |---|---:|---|---:|---:|---:|---|
@@ -171,6 +171,8 @@ Scripted camera paths with a guaranteed return to the start view; metric is DINO
 
 ## What would change the headline
 
-Nothing here is a full-benchmark score. The pass criterion for beating 2.12 was fixed in advance in [pass-criterion.md](reproduction/pass-criterion.md): equal mean of four dimension means, released Gemini scorer, identical-harness stock baseline, full 171 cases, lower CI bound above 2.12.
+The pass criterion for beating 2.12 was fixed in advance in [pass-criterion.md](reproduction/pass-criterion.md): equal mean of four dimension means, released Gemini scorer, identical-harness stock baseline, full 171 cases, lower CI bound above 2.12.
+
+A full 171-case run is complete; preliminary tally stock about 1.84, budget memory about 1.80 (no gain); official table pending. **The pass criterion is not met.** An exploratory check finds memory did fire in 136 of 171 budget episodes, the earlier +0.32 does not replicate on its own 14 cases inside the full run (+0.04), and the judge scored 5 of 28 identical-pixel video pairs differently (by up to 4.0 points), so single-call differences under about 0.3 are noise: [did memory act?](reproduction/full-run-memory-fired.md).
 
 Regenerate: `.venv-lingbot/bin/python scripts/update_leaderboard.py`. Machine-readable snapshot: [leaderboard.json](leaderboard.json).
