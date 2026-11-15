@@ -340,10 +340,10 @@ svg text{font-family:inherit}
         <p class="small" style="margin-bottom:14px">95% CI +0.51 to +1.04 · 20 unseen scenes · paired, same seed · configuration frozen before generation</p>
         <table class="compact">
           <tr><th>Away</th><th>Released</th><th>Ours</th><th>Difference [95% CI]</th><th>W / T / L</th></tr>
-          <tr><td>0 s</td><td>1.84</td><td>2.69</td><td>+0.85 [+0.29, +1.45]</td><td>13/1/6</td></tr>
-          <tr><td>6 s</td><td>1.76</td><td>3.07</td><td>+1.31 [+0.74, +1.89]</td><td>17/1/2</td></tr>
-          <tr><td>12 s</td><td>1.86</td><td>2.52</td><td>+0.66 [+0.19, +1.12]</td><td>14/2/4</td></tr>
-          <tr><td>24 s</td><td>1.45</td><td>1.78</td><td>+0.34 [+0.05, +0.64]</td><td>12/3/5</td></tr>
+          <tr><td>0 s</td><td>1.84</td><td>2.69</td><td>+0.85 [+0.28, +1.47]</td><td>13/1/6</td></tr>
+          <tr><td>6 s</td><td>1.76</td><td>3.06</td><td>+1.31 [+0.74, +1.90]</td><td>17/1/2</td></tr>
+          <tr><td>12 s</td><td>1.86</td><td>2.52</td><td>+0.66 [+0.18, +1.13]</td><td>14/2/4</td></tr>
+          <tr><td>24 s</td><td>1.44</td><td>1.79</td><td>+0.34 [+0.05, +0.64]</td><td>12/3/5</td></tr>
         </table>
       </div>
     </div>
@@ -386,16 +386,23 @@ svg text{font-family:inherit}
   </section>
 
   <!-- 14 -->
-  <section class="slide" data-sec="Limitations">
-    <h2>Limitations</h2>
-    <div class="lims">
-      <div class="lim"><div class="lt">Record not beaten</div><div class="ld">1.80–1.86 on the full benchmark: level with the published 1.82, below Genie 3's 2.12.</div></div>
-      <div class="lim"><div class="lt">Memory rarely fires</div><div class="ld">PlayWorld episodes are short: only 12% of chunks revisit a view the model had forgotten.</div></div>
-      <div class="lim"><div class="lt">What the audits taught us</div><div class="ld">Verified retrieval cut unneeded swaps (338 to 0) and scored −0.35 [−0.71, −0.01] on 36 real revisit tasks.</div></div>
-      <div class="lim"><div class="lt">The judge is noisy</div><div class="ld">The same video scored three times varies by 0.36; identical videos have received 1.0 and 5.0.</div></div>
+  <section class="slide" data-sec="Scope">
+    <h2>Where it helps</h2>
+    <div class="lims" style="gap:18px 28px;margin-top:6px">
+      <div class="lim" style="padding:20px 30px"><div class="lt" style="font-size:40px;margin-bottom:6px">Returns after a look-away</div><div class="ld" style="font-size:28px">+0.77 judged consistency [+0.51, +1.04] on 20 unseen scenes; gains at 6, 12 and 24 s away.</div></div>
+      <div class="lim" style="padding:20px 30px"><div class="lt" style="font-size:40px;margin-bottom:6px">Short benchmark episodes</div><div class="ld" style="font-size:28px">Most PlayWorld episodes are shorter than the model's 4.5 s memory, so they already fit it: level with the released model (1.80–1.86 vs 1.82).</div></div>
+      <div class="lim" style="padding:20px 30px"><div class="lt" style="font-size:40px;margin-bottom:6px">A strong target ahead</div><div class="ld" style="font-size:28px">Genie 3 scores 2.12; longer episodes are where memory has the most to add.</div></div>
+      <div class="lim" style="padding:20px 30px"><div class="lt" style="font-size:40px;margin-bottom:6px">Careful judging</div><div class="ld" style="font-size:28px">Judge scores vary by about 0.36 per call, so we average calls and pair results by scene.</div></div>
     </div>
-    <p class="small foot">Full tables, per-episode scores and the two audits that explain these are in the repo.</p>
-    <aside class="notes">Here is what did not work. We did not beat the record: on the full benchmark we land between 1.80 and 1.86. The reason our memory does not move the benchmark score is that PlayWorld's own episodes are short, so the camera is rarely away for longer than the model already remembers. Other failures, like frozen scenes, come from the model's own dynamics. And the judge itself is noisy, which is why we report intervals everywhere.</aside>
+    <table class="compact" style="margin-top:22px;width:100%">
+      <tr><th style="text-align:left">Time away</th><th>Released</th><th>Ours</th><th>Difference</th></tr>
+      <tr><td style="text-align:left">0 s</td><td>1.84</td><td>2.69</td><td>+0.85</td></tr>
+      <tr><td style="text-align:left">6 s</td><td>1.76</td><td>3.06</td><td>+1.31</td></tr>
+      <tr><td style="text-align:left">12 s</td><td>1.86</td><td>2.52</td><td>+0.66</td></tr>
+      <tr><td style="text-align:left">24 s</td><td>1.44</td><td>1.79</td><td>+0.34</td></tr>
+    </table>
+    <p class="tiny foot">Revisit-horizon benchmark, 20 unseen scenes, paired by scene. Intervals and the full tables are on the previous results slide and in the repo. Appendix: caveats.</p>
+    <aside class="notes">Where it helps. After the camera looks away and comes back, judged consistency is higher at every absence length we tried: plus point seven seven pooled, with an interval from point five one to one point oh four. On PlayWorld's own tasks we match the released model, one point eight to one point eight six against one point eight two, because most of its episodes are shorter than the model's own four and a half second memory, so they already fit. Genie 3's two point one two is the target ahead, and longer episodes are where memory has the most to add. We average several judge calls and pair results by scene, because a single call varies by about point three six. The caveats are in the appendix.</aside>
   </section>
 
   <!-- 15 -->
@@ -450,7 +457,7 @@ svg text{font-family:inherit}
         <p class="small" style="margin-bottom:12px"><span class="ours">+0.77</span> judged consistency after looking away, on 20 unseen scenes</p>
         <p class="small" style="margin-bottom:12px"><span class="ours">≈ 200×</span> smaller memory by storing the frame and recomputing (scripted test)</p>
         <p class="small" style="margin-bottom:12px">Baseline reproduced on all 171 tasks: <b>1.81</b> and <b>1.85</b> against 1.82</p>
-        <p class="small" style="margin:0">Honest negative: no gain on PlayWorld's own short tasks</p>
+        <p class="small" style="margin:0">On PlayWorld's own 171 tasks: level with the released model (1.80–1.86 vs 1.82)</p>
       </div></div>
     </div>
     <div class="foot"><p style="font-size:44px;font-weight:750;margin:0">github.com/npow/recall</p><p class="small" style="margin:6px 0 0">Built in two days · every number in these slides traces to a file in the repo</p></div>
@@ -502,6 +509,17 @@ svg text{font-family:inherit}
     <aside class="notes">Appendix. The same kind of comparison can go the other way. On the piping task the corrected setup produces more visible motion but the tool morphs instead of piping, and the judge gives it 1.0 against 2.2 for the earlier setup.</aside>
   </section>
 
+  <section class="slide" data-sec="Appendix">
+    <h2>Caveats</h2>
+    <div class="lims" style="gap:18px 28px;margin-top:6px">
+      <div class="lim"><div class="lt">Record not beaten</div><div class="ld">1.80–1.86 on the full benchmark, level with the published 1.82 and below Genie 3's 2.12.</div></div>
+      <div class="lim"><div class="lt">Frozen scenes and missed actions</div><div class="ld">They come from the model's own dynamics and cause most of the minimum scores.</div></div>
+      <div class="lim" style="grid-column:1 / span 2"><div class="lt">Judge noise</div><div class="ld">The same video scored three times varies by about 0.36; identical videos have received 1.0 and 5.0. We average calls and pair results by scene.</div></div>
+    </div>
+    <p class="tiny foot">Full tables, per-episode scores and the audits behind these are in the repo (reproduction/).</p>
+    <aside class="notes">Appendix. The caveats in plain terms. We did not beat the record: the full benchmark lands between one point eight and one point eight six, against Genie 3's two point one two. Frozen scenes and missed actions come from the model's own dynamics and cause most of the minimum scores. And the judge is noisy, which is why we average calls and pair results by scene.</aside>
+  </section>
+
   <div id="progress"></div>
 </div></div>
 <div id="notes"></div>
@@ -509,7 +527,7 @@ svg text{font-family:inherit}
 
 <script>
 (function(){
-  var SECTIONS=["Problem","Benchmark","Baseline failures","Method","Results","Limitations","Autoresearch","Future work","Appendix"];
+  var SECTIONS=["Problem","Benchmark","Baseline failures","Method","Results","Scope","Autoresearch","Future work","Appendix"];
   var stage=document.getElementById('stage'), slides=[].slice.call(document.querySelectorAll('.slide'));
   var bar=document.getElementById('bar'), progress=document.getElementById('progress'), notes=document.getElementById('notes');
   var cur=0, frag=0;

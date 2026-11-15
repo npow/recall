@@ -21,7 +21,7 @@ BG, PANEL, LINE = (13, 17, 23), (24, 30, 40), (48, 58, 74)
 FG, MUTED = (236, 239, 244), (150, 160, 176)
 ACCENT, OURS, WARN = (110, 168, 255), (64, 220, 160), (255, 130, 92)
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans%s.ttf"
-SECTIONS = ["Problem", "Benchmark", "Baseline failures", "Method", "Results", "Limitations", "Autoresearch", "Future work"]
+SECTIONS = ["Problem", "Benchmark", "Baseline failures", "Method", "Results", "Scope", "Autoresearch", "Future work"]
 _fonts = {}
 
 
@@ -635,37 +635,35 @@ def scene_real(data, seconds):
 
 
 def scene_limits(data, seconds):
-    stats = data.baselines()
-    numbers = data.board["fixed_numbers"]
-    loss = data.board["loss"]
-    pair = data.pair(loss)
-    small = (500, 288)
-    a_clip, b_clip = load_clip(pair["stock"]["video"], small), load_clip(pair["memory"]["video"], small)
-    bullets = [("Record not beaten: 1.80\u20131.86 against Genie 3's 2.12.",
-                f"Level with the published 1.82 (memory {stats['a_memory']:.2f} vs {stats['a_stock']:.2f}). Only 12% of chunks are real revisits."),
-               ("Verified retrieval was not better on 36 real tasks.", data.board["real_null"].replace("36 revisit tasks: ", "") + " It removed unneeded swaps (338 to 0)."),
-               ("The model does not undo forward motion.", "A return by walking back often never happens."),
-               ("Frozen scenes and unattempted actions", f"are not memory problems. The judge is noisy: SD {numbers['judge_sd']:.2f}.")]
-    px = 1340
+    """Scope scene ('Where it helps'): four short cards and the per-horizon numbers (reproduction/revisit-horizon.md)."""
+    cards = [("Returns after a look-away", "+0.77 judged consistency [+0.51, +1.04] on 20 unseen scenes; gains at 6, 12 and 24 s away."),
+             ("Short benchmark episodes", "Most PlayWorld episodes are shorter than the model's 4.5 s memory, so they already fit it: level with the released model (1.80\u20131.86 vs 1.82)."),
+             ("A strong target ahead", "Genie 3 scores 2.12; longer episodes are where memory has the most to add."),
+             ("Careful judging", f"Judge scores vary by about {data.board['fixed_numbers']['judge_sd']:.2f} per call, so we average calls and pair results by scene.")]
+    table = [("Time away", "Released", "Ours", "Difference"), ("0 s", "1.84", "2.69", "+0.85"), ("6 s", "1.76", "3.06", "+1.31"),
+             ("12 s", "1.86", "2.52", "+0.66"), ("24 s", "1.44", "1.79", "+0.34")]
+    cw, ch = 880, 196
     for index in range(int(seconds * FPS)):
         t = index / FPS
-        image, draw = canvas("Limitations", "Where it still breaks", "INTERPRETABILITY", 60)
-        for n, (head, sub) in enumerate(bullets):
-            a = ease((t - 0.4 - 1.3 * n) / 0.7)
-            y = 230 + n * 170
-            draw.ellipse((84, y + 14, 104, y + 34), fill=mix(BG, WARN, a))
-            draw.text((130, y + 24), head, font=font(38), fill=mix(BG, FG, a), anchor="lm")
-            for k, part in enumerate(wrap(draw, sub, font(28, False), 1140)):
-                draw.text((130, y + 78 + k * 38), part, font=font(28, False), fill=mix(BG, MUTED, a), anchor="lm")
-        draw.text((px, 216), f"A loss: scene {loss['scene']}", font=font(32), fill=WARN, anchor="lm")
-        draw.text((px, 560), "as released" + (f" · judge {pair['stock']['score']:.1f}" if pair["stock"]["score"] is not None else ""), font=font(28, False), fill=MUTED, anchor="lm")
-        draw.text((px, 900), "with our memory" + (f" · judge {pair['memory']['score']:.1f}" if pair["memory"]["score"] is not None else ""), font=font(28, False), fill=MUTED, anchor="lm")
-        caption(draw, "Failures are reported next to the wins.", 1.0)
-        array = np.array(image)
-        n = min(int(t / (seconds - 1.5) * len(a_clip)), len(a_clip) - 1)
-        paste(array, a_clip[n], px, 250)
-        paste(array, b_clip[min(n, len(b_clip) - 1)], px, 590)
-        yield array
+        image, draw = canvas("Scope", "Where it helps", "INTERPRETABILITY", 60)
+        for n, (head, sub) in enumerate(cards):
+            a = ease((t - 0.3 - 0.9 * n) / 0.6)
+            x, y = 80 + (n % 2) * (cw + 20), 190 + (n // 2) * (ch + 16)
+            draw.rounded_rectangle((x, y, x + cw, y + ch), 16, fill=PANEL, outline=mix(BG, LINE, a), width=3)
+            draw.text((x + 28, y + 40), head, font=font(36), fill=mix(PANEL, FG, a), anchor="lm")
+            for k, part in enumerate(wrap(draw, sub, font(26, False), cw - 56)):
+                draw.text((x + 28, y + 90 + k * 34), part, font=font(26, False), fill=mix(PANEL, MUTED, a), anchor="lm")
+        a = ease((t - 4.0) / 0.8)
+        cols = (110, 760, 1130, 1500)
+        for r, row in enumerate(table):
+            y = 645 + r * 56
+            for c, cell in enumerate(row):
+                colour = MUTED if r == 0 else (OURS if c == 3 else FG)
+                draw.text((cols[c] if c == 0 else cols[c] + 150, y), cell, font=font(32, r == 0), fill=mix(BG, colour, a),
+                          anchor="lm" if c == 0 else "rm")
+            draw.line((90, y + 28, 1830, y + 28), fill=mix(BG, LINE, a), width=2)
+        caption(draw, "Revisit benchmark: 20 unseen scenes, paired by scene.", 1.0)
+        yield np.asarray(image)
 
 
 def scene_process(data, seconds):

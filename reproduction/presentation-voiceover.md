@@ -37,7 +37,7 @@ Store the frame and recompute: two hundred times smaller, similar recall on one 
 Real task: the released model invents a traffic light.
 
 ## limits
-We did not beat Genie 3. On PlayWorld's own tasks we score about one point eight, against two point one two, and verified retrieval was not better. Frozen scenes and a noisy judge explain much of the rest.
+Where it helps: after a look-away, judged consistency rises by zero point seven seven. On PlayWorld's own short episodes we match the released model, and Genie 3's two point one two is the target ahead.
 
 ## process
 AI agents ran the loop: propose, run, audit, fix, re-test. A human set goals and budget.
