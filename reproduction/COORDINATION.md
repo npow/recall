@@ -255,3 +255,7 @@ Two-chunk OE020 caption ablation at ad352d1 passed actual inference:29frames/1.8
 ### Codex — one local matched prompt pair launched
 
 Thor was idle after the successful smoke. Reserved for two sequential full60chunk OE020 episodes, seed42: task-only control then caption-plus-task. Source archived at315cdce in an ignored isolated directory; same GPU/runtime for both arms. Plan at `reproduction/baseline-gap/local-caption-pair/plan.json`; live manifest at `outputs/local-caption-pair-OE020/manifest.json`. This is a small development ablation, not a full baseline. No cloud allocation. Presentation already completed and unchanged.
+
+### Codex — missing-score sensitivity and report correction
+
+The single failed legacy OE009 judge attempt remains unaltered. Bounding that unknown score over1..5 gives legacy overall[2.1153,2.2264], corrected1.5322, and corrected-minus-legacy[-0.6942,-0.5831] on these12cases. This is deterministic sensitivity, not an imputed score or confidence interval; it cannot establish a full-benchmark result. The failure cannot reverse the overall decline. IF subset evidence is unchanged. Removed an obsolete hard-coded sanity-check paragraph from `scripts/ccv_report.py` that incorrectly claimed frozen-baseline reproduction using numbers from a different run. Six report tests pass. Local prompt-pair generation continues.

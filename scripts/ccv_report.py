@@ -55,6 +55,26 @@ def generation(run, arm, split, task):
         return {"status": "missing"}
 
 
+def completion_bounds(judged, picked):
+    """Sensitivity bounds, not estimated scores or confidence intervals."""
+    bounds = {}
+    for arm in ('L', 'C'):
+        dimensions = []
+        for split in SPLITS:
+            cases = []
+            for task in picked[split]:
+                scores = [c['score'] for c in judged.get(f'{arm}-{split}-{task}', [])
+                          if c['score'] is not None]
+                missing = 3-len(scores)
+                if missing < 0:
+                    raise ValueError('More than three declared judge scores')
+                cases.append(((sum(scores)+missing)/3, (sum(scores)+5*missing)/3))
+            dimensions.append(tuple(st.mean(c[i] for c in cases) for i in (0, 1)))
+        bounds[arm] = tuple(st.mean(d[i] for d in dimensions) for i in (0, 1))
+    bounds['difference'] = (bounds['C'][0]-bounds['L'][1], bounds['C'][1]-bounds['L'][0])
+    return bounds
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run", type=Path, default=ROOT / "outputs/ccv")
@@ -100,6 +120,7 @@ def main():
     boot = sorted(st.mean(st.mean(rng.choice(by_split[s]) for _ in range(3)) for s in SPLITS)
                   for _ in range(10000)) if all(len(v)==3 for v in by_split.values()) else []
     ci = (boot[249], boot[9749]) if boot else (None, None)
+    bounds = completion_bounds(judged, selection['picked'])
 
     def gates(arm):
         verdicts = [v for r in rows for v in r[arm + "_verdicts"]]
@@ -136,6 +157,14 @@ def main():
         counts, total = gates(arm)
         lines.append(f"- **Gate verdicts, {name}:** pass {counts['pass']}, partial {counts['partial']}, fail {counts['fail']}, "
                      f"not applicable {counts['not_applicable']} (of {total} judge calls).")
+    if missing:
+        lines += ['', '## Missing-score sensitivity', '',
+            'Allow each missing declared judgment to take any legal score from1to5. '
+            'These are deterministic completion bounds, not imputed results or confidence intervals. '
+            'They hold the observed scores fixed and do not capture generation or judge uncertainty.', '',
+            f"- Legacy overall would lie in [{bounds['L'][0]:.4f}, {bounds['L'][1]:.4f}].",
+            f"- Corrected overall would lie in [{bounds['C'][0]:.4f}, {bounds['C'][1]:.4f}].",
+            f"- Corrected minus legacy would lie in [{bounds['difference'][0]:.4f}, {bounds['difference'][1]:.4f}]."]
     lines += ["", "## Per case", "",
         "| Case | Legacy | Corrected | Δ | Legacy gates | Corrected gates | Frozen stock (Modal H200, 1 call) |",
         "|---|---:|---:|---:|---|---|---:|"]
@@ -156,9 +185,8 @@ def main():
         "- Episode length differs sharply: the legacy player sends END once the reference plan's legs are done, so its "
         "moving-case videos are 5-10 s long; every corrected-arm video runs the full 60 s budget. Short videos leave no time "
         "for a revisit, which bears on the out-of-sight gate; long ones give the judge more to fault.",
-        "- Sanity check: the legacy arm's scores equal the frozen Modal stock run's on 7 of 9 moving cases (GC024 4.60 vs "
-        "1.00 and GC022 1.80 vs 2.40 differ), so the local legacy arm broadly reproduces the frozen configuration. Insight "
-        "OE009 and OE020 score lower locally (1.00 vs 3.00, 1.33 vs 2.00).",
+        "- The frozen-stock column is a separate hardware/runtime run with one judgment per video, versus three here. "
+        "Matching individual scores does not establish reproduction or isolate the cause of cross-run differences.",
         "- Missing judgements: " + ("none." if not missing else "; ".join(missing) + ". Not imputed."), ""]
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text("\n".join(lines))

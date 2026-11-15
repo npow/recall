@@ -4,7 +4,26 @@ import subprocess
 import sys
 
 import pytest
-from scripts.ccv_report import load
+from scripts.ccv_report import load, completion_bounds, SPLITS
+
+
+def test_missing_score_bounds_preserve_fixed_results_and_bound_unknown():
+    picked = {s: [s+'1', s+'2', s+'3'] for s in SPLITS}
+    judged = {f'{a}-{s}-{t}': [{'score': 2} for _ in range(3)]
+              for a in ['L', 'C'] for s in SPLITS for t in picked[s]}
+    assert completion_bounds(judged, picked)['difference'] == (0, 0)
+    judged['L-gc-gc1'][1]['score'] = None
+    bounds = completion_bounds(judged, picked)
+    assert bounds['L'] == pytest.approx((2-1/36, 2+3/36))
+    assert bounds['C'] == (2, 2)
+    assert bounds['difference'] == pytest.approx((-3/36, 1/36))
+    assert judged['L-gc-gc1'][1]['score'] is None
+
+
+def test_no_observations_give_full_legal_range():
+    picked = {s: [s+'1', s+'2', s+'3'] for s in SPLITS}
+    bounds = completion_bounds({}, picked)
+    assert bounds == {'L': (1, 5), 'C': (1, 5), 'difference': (-4, 4)}
 
 
 def write(root,rep,score,**extra):

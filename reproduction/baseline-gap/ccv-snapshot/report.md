@@ -28,6 +28,14 @@ Paired per-case difference (corrected − legacy): mean -0.46 over 11 pairs, spl
 - **Gate verdicts, Legacy:** pass 13, partial 9, fail 5, not applicable 8 (of 36 judge calls).
 - **Gate verdicts, Corrected:** pass 11, partial 14, fail 2, not applicable 9 (of 36 judge calls).
 
+## Missing-score sensitivity
+
+Allow each missing declared judgment to take any legal score from1to5. These are deterministic completion bounds, not imputed results or confidence intervals. They hold the observed scores fixed and do not capture generation or judge uncertainty.
+
+- Legacy overall would lie in [2.1153, 2.2264].
+- Corrected overall would lie in [1.5322, 1.5322].
+- Corrected minus legacy would lie in [-0.6942, -0.5831].
+
 ## Per case
 
 | Case | Legacy | Corrected | Δ | Legacy gates | Corrected gates | Frozen stock (Modal H200, 1 call) |
@@ -68,5 +76,5 @@ Paired per-case difference (corrected − legacy): mean -0.46 over 11 pairs, spl
 - The arms differ in more than the controller: text (caption+objective vs objective only; insight caption vs "wait and observe") and chunk budget (40 vs 60 for moving cases). This compares the two complete configurations as specified.
 - Hold-service token cap raised (above). Proxy transport for the player.
 - Episode length differs sharply: the legacy player sends END once the reference plan's legs are done, so its moving-case videos are 5-10 s long; every corrected-arm video runs the full 60 s budget. Short videos leave no time for a revisit, which bears on the out-of-sight gate; long ones give the judge more to fault.
-- Sanity check: the legacy arm's scores equal the frozen Modal stock run's on 7 of 9 moving cases (GC024 4.60 vs 1.00 and GC022 1.80 vs 2.40 differ), so the local legacy arm broadly reproduces the frozen configuration. Insight OE009 and OE020 score lower locally (1.00 vs 3.00, 1.33 vs 2.00).
+- The frozen-stock column is a separate hardware/runtime run with one judgment per video, versus three here. Matching individual scores does not establish reproduction or isolate the cause of cross-run differences.
 - Missing judgements: L-insight-OE009: 2 scored of 3 calls. Not imputed.
