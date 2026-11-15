@@ -76,17 +76,17 @@ The adaptive four-view pilot changed 3.60→3.90, but neither seed visibly retur
 - [Persistent runner](reproduction/modal-runner.md): 3.6x steady short-job throughput in the reported seven-job trial, exact outputs on the same GPU model. [Mixed-scene batch](reproduction/lingbot-batch-validation/) preserves all 42 chunk hashes.
 
 
-## Gemini — paired GC/OE development cohort (seed 42)
+## Gemini — paired GC/OE development cohort (seeds 42 and 43)
 
-14 hash-selected GC and out-of-sight cases, three arms, same cases and seed, `--end-guard` and player retries on every arm. Scores are the Gemini mean over GC and out-of-sight episodes only, **not** the four-dimension overall, so they are **not comparable with 2.12 or 1.82**. Paired delta is against stock over (case, seed) pairs; wins/ties/losses in brackets. Every interval includes zero: no arm is established better than stock. Opus scores the same episodes without seeing the budget-memory effect (+0.02), so judge-specific noise is not ruled out.
+14 hash-selected GC and out-of-sight cases (7 GC, 7 out-of-sight), three arms, two seeds, same cases, `--end-guard` and player retries on every arm. Scores are the Gemini mean over GC and out-of-sight episodes only, **not** the four-dimension overall, so they are **not comparable with 2.12 or 1.82**. Paired delta is against stock over (case, seed) pairs; wins/ties/losses in brackets (28 pairs). No arm is established better than stock overall. The one interval that clears zero, 46/6 on out-of-sight (+0.84 [+0.20, +1.62]), is one of eight uncorrected contrasts, comes mostly from seed 43, and Opus sees nothing (+0.05), so it is a lead, not a result.
 
 | Arm | n | Gemini mean [95% CI] | GC | Out-of-sight | Gate non-fail | Paired Δ vs stock [95% CI] (W/T/L) |
 |---|---:|---|---:|---:|---:|---|
-| stock 18/6 |14|1.89 [1.29, 2.68]|2.57|1.21|10/14|baseline|
-| budget memory (K10 native) |14|2.29 [1.60, 3.07]|2.83|1.75|13/14|+0.40 [-0.03, +0.88] (4/7/3)|
-| 46/6 cache |14|1.94 [1.37, 2.67]|2.31|1.57|10/14|+0.05 [-0.79, +0.81] (5/5/4)|
+| stock 18/6 |28|1.81 [1.35, 2.35]|2.46|1.16|21/28|baseline|
+| budget memory (K10 native) |28|2.13 [1.66, 2.67]|2.81|1.45|25/28|+0.32 [-0.08, +0.75] (9/14/5)|
+| 46/6 cache |28|2.26 [1.76, 2.83]|2.53|2.00|21/28|+0.46 [-0.22, +1.15] (12/10/6)|
 
-Evidence: [analysis](reproduction/powered-comparison/seed42/powered-analysis.json), [table](reproduction/powered-comparison/seed42/powered-table.md), [protocol](reproduction/powered-comparison.md). A second seed was generated and is being scored; it is added here only when complete.
+Evidence: [analysis](reproduction/powered-comparison/pooled/powered-analysis.json), [case-clustered CIs](reproduction/powered-comparison/pooled/case-cluster-ci.json), [full tables and limits](reproduction/powered-comparison/pooled/README.md), [protocol](reproduction/powered-comparison.md).
 
 ## Gemini — earlier rescoring of the first cohorts
 
