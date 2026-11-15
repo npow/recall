@@ -19,14 +19,14 @@ Arm means use completed cases only. Differences use matched case pairs; unequal 
 |---|---:|---:|---:|
 | GC (L=3/3, C=3/3, pairs=3/3) | 2.33 | 1.60 | -0.73 |
 | IF (L=3/3, C=3/3, pairs=3/3) | 1.56 | 2.42 | 0.86 |
-| In-sight (L=2/3, C=2/3, pairs=2/3) | 3.27 | 1.00 | -2.27 |
-| Out-of-sight (L=1/3, C=1/3, pairs=1/3) | 1.00 | 1.00 | 0.00 |
-| **Overall (equal mean of dimensions)** | **—** | **—** | **—** |
+| In-sight (L=2/3, C=3/3, pairs=2/3) | 3.27 | 1.11 | -2.27 |
+| Out-of-sight (L=3/3, C=3/3, pairs=3/3) | 1.31 | 1.00 | -0.31 |
+| **Overall (equal mean of dimensions)** | **—** | **1.53** | **—** |
 
-Paired per-case difference (corrected − legacy): mean -0.46 over 9 pairs, split-stratified paired-bootstrap 95% interval (withheld until complete) [—, —]; 3 better / 1 equal / 5 worse.
+Paired per-case difference (corrected − legacy): mean -0.46 over 11 pairs, split-stratified paired-bootstrap 95% interval (withheld until complete) [—, —]; 3 better / 2 equal / 6 worse.
 
-- **Gate verdicts, Legacy:** pass 9, partial 7, fail 5, not applicable 6 (of 27 judge calls).
-- **Gate verdicts, Corrected:** pass 10, partial 10, fail 1, not applicable 6 (of 27 judge calls).
+- **Gate verdicts, Legacy:** pass 13, partial 9, fail 5, not applicable 8 (of 36 judge calls).
+- **Gate verdicts, Corrected:** pass 11, partial 14, fail 2, not applicable 9 (of 36 judge calls).
 
 ## Per case
 
@@ -39,11 +39,11 @@ Paired per-case difference (corrected − legacy): mean -0.46 over 9 pairs, spli
 | if:IF006 | 2.00 (3/3) | 2.56 (3/3) | 0.56 | partial, partial, partial | pass, pass, pass | 2.00 |
 | if:IF022 | 1.67 (3/3) | 3.50 (3/3) | 1.83 | partial, pass, pass | partial, partial, partial | 1.00 |
 | insight:OE066 | 2.20 (3/3) | 1.00 (3/3) | -1.20 | not_applicable, not_applicable, not_applicable | not_applicable, not_applicable, not_applicable | 1.40 |
-| insight:OE009 | — (0/0) | — (0/0) | — |  |  | 3.00 |
+| insight:OE009 | — (2/3) | 1.33 (3/3) | — | not_applicable, None, not_applicable | not_applicable, not_applicable, not_applicable | 3.00 |
 | insight:OE020 | 4.33 (3/3) | 1.00 (3/3) | -3.33 | not_applicable, not_applicable, not_applicable | not_applicable, not_applicable, not_applicable | 2.00 |
 | outsight:OE055 | 1.00 (3/3) | 1.00 (3/3) | 0.00 | fail, fail, fail | partial, pass, pass | 1.00 |
-| outsight:OE028 | — (0/0) | — (0/0) | — |  |  | 1.00 |
-| outsight:OE062 | — (0/0) | — (0/0) | — |  |  | 1.00 |
+| outsight:OE028 | 1.00 (3/3) | 1.00 (3/3) | 0.00 | pass, pass, partial | fail, pass, partial | 1.00 |
+| outsight:OE062 | 1.92 (3/3) | 1.00 (3/3) | -0.92 | pass, pass, partial | partial, partial, partial | 1.00 |
 
 ## Generation
 
@@ -56,11 +56,11 @@ Paired per-case difference (corrected − legacy): mean -0.46 over 9 pairs, spli
 | if:IF006 | 4.8125, agent_end, 6 | 59.8125, chunk_budget_exhausted, 3 |
 | if:IF022 | 7.8125, agent_end, 9 | 59.8125, chunk_budget_exhausted, 3 |
 | insight:OE066 | 59.8125, chunk_budget_exhausted, 0 | 59.8125, chunk_budget_exhausted, 0 |
-| insight:OE009 | None, None, None | None, None, None |
+| insight:OE009 | 59.8125, chunk_budget_exhausted, 0 | 59.8125, chunk_budget_exhausted, 0 |
 | insight:OE020 | 59.8125, chunk_budget_exhausted, 0 | 59.8125, chunk_budget_exhausted, 0 |
 | outsight:OE055 | 9.8125, agent_end, 11 | 59.8125, chunk_budget_exhausted, 6 |
-| outsight:OE028 | None, None, None | None, None, None |
-| outsight:OE062 | None, None, None | 59.8125, chunk_budget_exhausted, 0 |
+| outsight:OE028 | 4.8125, agent_end, 6 | 59.8125, chunk_budget_exhausted, 2 |
+| outsight:OE062 | 7.8125, agent_end, 9 | 59.8125, chunk_budget_exhausted, 0 |
 
 ## Caveats
 
@@ -69,4 +69,4 @@ Paired per-case difference (corrected − legacy): mean -0.46 over 9 pairs, spli
 - Hold-service token cap raised (above). Proxy transport for the player.
 - Episode length differs sharply: the legacy player sends END once the reference plan's legs are done, so its moving-case videos are 5-10 s long; every corrected-arm video runs the full 60 s budget. Short videos leave no time for a revisit, which bears on the out-of-sight gate; long ones give the judge more to fault.
 - Sanity check: the legacy arm's scores equal the frozen Modal stock run's on 7 of 9 moving cases (GC024 4.60 vs 1.00 and GC022 1.80 vs 2.40 differ), so the local legacy arm broadly reproduces the frozen configuration. Insight OE009 and OE020 score lower locally (1.00 vs 3.00, 1.33 vs 2.00).
-- Missing judgements: L-insight-OE009: 0 scored of 0 calls; C-insight-OE009: 0 scored of 0 calls; L-outsight-OE028: 0 scored of 0 calls; C-outsight-OE028: 0 scored of 0 calls; L-outsight-OE062: 0 scored of 0 calls; C-outsight-OE062: 0 scored of 0 calls. Not imputed.
+- Missing judgements: L-insight-OE009: 2 scored of 3 calls. Not imputed.

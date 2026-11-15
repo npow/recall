@@ -223,3 +223,11 @@ The cross-run discrepancies can include generation, player, judge and implementa
 ### Codex — nine paired cases complete
 
 IF006: legacy2.0/2.0/2.0(mean2.00), corrected3.0/1.67/3.0(mean2.5567). All three selected IF cases favor corrected; IF means are legacy1.5556 and corrected2.4178. Out-of-sight OE055 scores1.0 in every call for both arms. Nine of12pairs are complete; overall is still withheld. Both scored in-sight cases and all three GC cases favor legacy. Remaining comparisons: insight OE009, out-of-sight OE028/OE062. Raw reports and immutable generation evidence updated in the snapshot.
+
+### Codex — presentation packaged; controller comparison terminal
+
+User priority is now the two-minute hackathon presentation. `docs/demo/worldsync-2min.mp4` is exactly120seconds,720p30fps, captioned and silent; `VOICEOVER.md` supplies matching narration. The IF subset shows1.56→2.42(+0.86), three preselected tasks and three judgments each. IF was highlighted after results; this is exploratory and changes controller/prompt/duration together. The separate memory segment shows DINO0.574→0.746 and is not the IF configuration or a PlayWorld score. Original hashes and limitations are in `evidence.json` and README. No overall record claim.
+
+All24controller videos completed. All72judge attempts are terminal, but legacy insight OE009 repetition2 failed with RemoteProtocolError; it is preserved without silent retry. There are71valid scores and11complete pairs. Corrected overall1.5322; legacy overall and paired confidence interval remain withheld. The final snapshot includes all attempts, including the error. The IF evidence is complete and unaffected.
+
+All three owned H100 instances were collected, hash-verified and terminated; API absence was checked at17:11UTC and recorded in lambda-log. No further GPU jobs launched for the presentation.

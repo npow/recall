@@ -1,0 +1,134 @@
+{
+  "scope": "Exploratory PlayWorld IF subset, not full benchmark; same open weights, no training",
+  "selection": "Tasks preselected by hash before scoring; IF highlighted after seeing results",
+  "tasks": {
+    "IF012": {
+      "L": {
+        "scores": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "video_seconds": 4.8125,
+        "video_sha256": "7c995f09a18f12afbac39659225ce6222d777e039b78949a6d50091d0d7c2cc0",
+        "hardware": {
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4"
+        },
+        "video": "outputs/codex-ccv/artifacts/codex-ccv/L/if-IF012/rollout.mp4"
+      },
+      "C": {
+        "scores": [
+          1.6,
+          1.0,
+          1.0
+        ],
+        "mean": 1.2,
+        "video_seconds": 59.8125,
+        "video_sha256": "7ce17a3eb9496718d3c9a8be0cbeca8baa0425f356fe77e2843e5c14c9f6bdc7",
+        "hardware": {
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4"
+        },
+        "video": "outputs/codex-ccv/artifacts/codex-ccv/C/if-IF012/episode/rollout.mp4"
+      }
+    },
+    "IF006": {
+      "L": {
+        "scores": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "mean": 2.0,
+        "video_seconds": 4.8125,
+        "video_sha256": "00c9522c54101f9b51e0a96bcb88639290c1c5de0f344b950c740b40579a4dd3",
+        "hardware": {
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4"
+        },
+        "video": "outputs/codex-ccv/artifacts/codex-ccv/L/if-IF006/rollout.mp4"
+      },
+      "C": {
+        "scores": [
+          3.0,
+          1.67,
+          3.0
+        ],
+        "mean": 2.5566666666666666,
+        "video_seconds": 59.8125,
+        "video_sha256": "6605faa9d65369cb2615a73d042f107bb9577c266bc17f456e82dea03f45acb0",
+        "hardware": {
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4"
+        },
+        "video": "outputs/codex-ccv/artifacts/codex-ccv/C/if-IF006/episode/rollout.mp4"
+      }
+    },
+    "IF022": {
+      "L": {
+        "scores": [
+          1.0,
+          3.0,
+          1.0
+        ],
+        "mean": 1.6666666666666667,
+        "video_seconds": 7.8125,
+        "video_sha256": "2164ea8335cf62d6f55ada2ef634d2fda9de9d26654dd5f87ba491fbc5534bda",
+        "hardware": {
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4"
+        },
+        "video": "outputs/codex-ccv/artifacts/codex-ccv/L/if-IF022/rollout.mp4"
+      },
+      "C": {
+        "scores": [
+          3.83,
+          3.83,
+          2.83
+        ],
+        "mean": 3.4966666666666666,
+        "video_seconds": 59.8125,
+        "video_sha256": "0ab9852c3ca12e0dab413e56d85d5efe65f3f345cc5176e4fd44d46317fcb4fc",
+        "hardware": {
+          "gpu": "NVIDIA H100 80GB HBM3",
+          "torch": "2.6.0+cu124",
+          "cuda": "12.4"
+        },
+        "video": "outputs/codex-ccv/artifacts/codex-ccv/C/if-IF022/episode/rollout.mp4"
+      }
+    }
+  },
+  "means": {
+    "L": 1.5555555555555556,
+    "C": 2.417777777777778
+  },
+  "gain": 0.8622222222222222,
+  "replicates_per_video": 3,
+  "seed": 42,
+  "configuration_differences": [
+    "reference-guided controller",
+    "task-only prompt instead of caption+task",
+    "60-chunk duration instead of early END"
+  ],
+  "preview_policy": "Boardwalk full videos at2x; pond first16seconds at1x; shorter panels explicitly marked when held; scores from original full videos",
+  "memory_example": "Separate scripted GC007 long-return test; not the method used for the IF scores",
+  "memory_evidence": {
+    "stock": {
+      "endpoint_psnr_db": 8.093157332096066,
+      "video_sha256": "a2fe71505e0a20da746003dbb067c44fd6b994bc1e7020148cb49afa2c1ba108",
+      "endpoint_dino_cosine": 0.5741156339645386
+    },
+    "retrieval": {
+      "endpoint_psnr_db": 8.344114713302755,
+      "video_sha256": "be8baaab36be920de01eb673a351186e483f25c46c4b8ddbee0288b808ce6ee4",
+      "endpoint_dino_cosine": 0.7463608980178833
+    }
+  }
+}

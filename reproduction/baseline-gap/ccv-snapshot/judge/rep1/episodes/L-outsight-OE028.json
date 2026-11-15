@@ -1,0 +1,432 @@
+{
+  "task_id": "OE028",
+  "request_identity": {
+    "version": 3,
+    "video_sha256": "b9215a3de0f1bfd17632619ce0dc5d14e554b4810f5ab54335f28f9e051b6bd9",
+    "reference_sha256": "ec386887c124ed53b37fe9e14145b4ed40b453dee7c23968f55e1a24b9bada95",
+    "task_sha256": "27821adf5ef58a60c9c1a54515e94eebfd836dda351b5fbe5bbcfde1f5597208",
+    "world_model": "LingBot-World2 14B causal-fast",
+    "judge_model": "gemini-3.1-pro-preview",
+    "transport": "vertex",
+    "generation_config": {
+      "response_mime_type": "application/json",
+      "temperature": 0.1
+    },
+    "released_source_sha256": {
+      "metrics/vqa/rubric.py": "717337bf48986afd3bd239e838a30d2bc75788b5a3f1c76c3ceeb67f5997c945",
+      "metrics/vqa/instruction_gate.py": "216f4abc854bbc020819a55679b873cf5472bb2d72661659ed8674cca673df5f",
+      "metrics/vqa/sampling.py": "573be715981b64ac664be85f40337e8fce9002839698673de37300845eb6e0ca",
+      "metrics/vqa/score.py": "9e7656ea7aacde92b5c52ba4b401628ac5589c227935a18a0ab95b44870038a7",
+      "metrics/aggregate.py": "a11aa8c5da9a437d00e0b2205f5e72a48f953a68d63b6b3d804567008fe7adfd"
+    },
+    "adapter_source_sha256": {
+      "judge_integrity.py": "b4d5f5b249b1c4316a1a5c712cc37d2f60a381cd0f892f1611aa936494a22497",
+      "gemini_vertex_judge.py": "e0c3211328e2ea64695c7ad016b8aa20ef2ba493916a2b518b0e555118eb3e3e"
+    },
+    "fingerprint": "27843dee287d45f7441567e047bda9cae87f1a1c3d5c081d4c72454ecf58faad"
+  },
+  "request_fingerprint": "27843dee287d45f7441567e047bda9cae87f1a1c3d5c081d4c72454ecf58faad",
+  "world_model": "LingBot-World2 14B causal-fast",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "judge_project": "seismic-fx-507702-v1",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "b9215a3de0f1bfd17632619ce0dc5d14e554b4810f5ab54335f28f9e051b6bd9",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; Controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE028",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "镜头首先向上方仰起，随后画面呈现出持续向后退的平移运动。",
+    "trajectory_evidence_zh": "在第一张接触图的前三行中，镜头明显向上旋转（仰视）；从第一张图的第四行开始直到第二张图结束，画面中心的物体和两侧的结构不断缩小并远离镜头，清晰地展示了向后移动的轨迹。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1.0,
+    "category_scores_1_to_5": {
+      "out_of_sight_evolution": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头仰视并后退后，航天飞机和烟雾完全消失，没有表现出任何合理的演进。"
+      },
+      "prompt_evolution_alignment": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "场景延续极不合理，航天飞机发射场突变为带有绿色霓虹灯的科幻走廊，完全偏离了初始语境。"
+      },
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "白色的轨道飞行器、橙色燃料箱、助推器和发射塔在镜头运动后完全消失，被无关的科幻物体取代。"
+      },
+      "temporal_scene_consistency": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "背景发生了严重的硬重置，从开阔的夜空发射场变成了封闭的科幻走廊结构。"
+      },
+      "physical_causality": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "随着镜头后退，航天飞机并没有变小或变远，而是直接消失并被替换。"
+      },
+      "trajectory_continuity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "航天飞机没有在天空中升高的轨迹，而是直接从场景中消失。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail penalty applied; the video fails due to a catastrophic hard reset and lack of meaningful evolution.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 48,
+      "evidence_zh": "镜头完成了向上仰视约90度并向后移动的动作。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "初始背景为黑夜和发射塔，但在镜头仰视过程中（帧10-15）背景突变为封闭的科幻走廊。",
+      "post_completion_phase_zh": "背景持续为科幻走廊，与初始场景完全脱节。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial Space Shuttle vs object in frame 15",
+        "anchors": [
+          "camera trajectory",
+          "screen center"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "10-15"
+      ],
+      "continuous_camera_motion": "no",
+      "tracked_structural_anchors": [
+        "launch tower",
+        "night sky"
+      ],
+      "newly_revealed_regions_zh": "帧15之后出现的科幻走廊和橙色飞行器是全新且与原场景矛盾的区域。",
+      "evidence_zh": "镜头仰视并后退无法解释为何开阔的夜空发射场会变成一个封闭的科幻走廊，这是场景的硬重置。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "10-15",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "night sky",
+        "launch tower"
+      ],
+      "evidence_zh": "镜头仰视后，原本的夜空和发射塔消失，取而代之的是一个封闭的、带有绿色霓虹灯的科幻走廊结构，这无法用单纯的相机运动来解释。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "无额外扣分，基础分数已为最低分1.0。"
+    },
+    "final_state_check": {
+      "window": "40-48",
+      "visible_key_objects": [],
+      "reappearance_consistency_zh": "初始的航天飞机和发射塔在最终画面中完全消失，被科幻场景取代。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "Space Shuttle launch and smoke plume expansion",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "航天飞机在发射台上喷出火焰和烟雾",
+      "hidden_interval_zh": "镜头向上仰视90度，航天飞机移出视野",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "none"
+      ],
+      "articulation_or_local_state_change_zh": "无，目标完全消失",
+      "uniquely_matched_anchor_relative_change_zh": "无，场景完全改变",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "向上升空",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "无",
+      "vehicle_front_rear_identification_zh": "航天飞机机头向上",
+      "vehicle_world_displacement_vs_heading_zh": "目标消失，无法比较",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "目标消失",
+      "unchanged_coupled_details_zh": "无",
+      "accumulated_change_zh": "场景发生硬重置，航天飞机被科幻走廊取代",
+      "evidence_zh": "镜头仰视并后退后，原有的航天飞机和发射塔完全消失，场景突变为带有绿色霓虹灯的科幻结构。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "镜头向上仰视约90度，然后向后移动。",
+      "trajectory_evidence_zh": "帧0-10镜头向上旋转，帧15-48镜头持续向后平移。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "Space Shuttle and launch tower",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "colors",
+        "materials",
+        "surface_appearance"
+      ],
+      "identity_failure": "replacement",
+      "evidence_zh": "航天飞机、外部燃料箱、助推器和发射塔在镜头运动后完全消失，被科幻飞行器和走廊取代。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "场景发生硬重置，没有任何有意义的演进，最终得分被限制为1。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "镜头仰视并后退后，航天飞机发射场景发生严重的硬重置，完全突变为一个无关的科幻走廊，目标主体消失。",
+    "task_id": "OE028"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "Jub5ar2_HaCn4_UP0OqMmAk",
+      "prompt_tokens": 4716,
+      "output_tokens": 213
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "NOb5ari5LueW4_UP5pClsA8",
+      "prompt_tokens": 34606,
+      "output_tokens": 3423
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 49,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 48,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "65955eb048d5713f9e86830c54f37dab4dedae771470aebde3649b786337b9b5",
+  "score_prompt_sha256": "805eec20be8e7198d60cf0ea7bb48adf42664ae89d32a0d42675a6fd5600ffde",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "L-outsight-OE028"
+}

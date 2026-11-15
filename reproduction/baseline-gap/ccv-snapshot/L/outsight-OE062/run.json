@@ -1,0 +1,604 @@
+{
+  "status": "completed",
+  "model": "LingBot-World2 14B causal-fast stock",
+  "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v6",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+  "initial_image_sha256": "565c2c4d7e807c1c21bbaa76163567d5e21b2ccbd17434a661e19ca9b2861a48",
+  "text_prompt_mode": "both",
+  "image_caption_sha256": "817f2279afae0c26b8459051758a4a922876be97b344690e1cba6d40bec61f69",
+  "task_id": "OE062",
+  "split": "outsight",
+  "seed": 42,
+  "turn_degrees_per_second": 60,
+  "fps": 16,
+  "max_chunks": 40,
+  "max_interactions": 40,
+  "native_fixed_controls": false,
+  "camera_embedding_audit": [],
+  "pose_retrieval": false,
+  "sink_rephase": false,
+  "adaptive_retrieval_pilot": false,
+  "player_temperature": "provider default",
+  "player_streaming": false,
+  "streaming_player_sha256": null,
+  "initial_neutral_bootstrap": false,
+  "kv_retention": false,
+  "decoprune": false,
+  "reanchor": false,
+  "budget_memory": false,
+  "denoise_schedule": "stock",
+  "text_encoder_offloaded_after_encoding": true,
+  "stationary_wait_only": false,
+  "fixed_actions": null,
+  "quantization": "none",
+  "cuda_allocator_configuration": "expandable_segments:True",
+  "max_area": 399360,
+  "chunk_size": 4,
+  "local_attn_size": 18,
+  "sink_size": 6,
+  "decision_interval": 1,
+  "stock_knobs": true,
+  "controlled_ablation": false,
+  "sampler_timesteps_index": [
+    0,
+    250,
+    500,
+    750
+  ],
+  "sample_shift": 10,
+  "actions": [
+    {
+      "operation": "KEEP",
+      "action": "RIGHT",
+      "reason": "Starting the first action of the plan: turning the camera right 180 degrees. The reference plan requires holding Right for 3600ms (3.6 seconds). Both images appear identical, confirming this is the initial state before any rotation. No visual rotation is evident yet, so continuing to hold RIGHT to accumulate the 180-degree turn.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54ta5Bc5UyL464TVVFv",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3070,
+        "output_tokens": 130,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Starting the first action of the plan: turning the camera right 180 degrees. The reference plan requires holding Right for 3600ms (3.6 seconds). Both images appear identical, confirming this is the initial state before any rotation. No visual rotation is evident yet, so continuing to hold RIGHT to accumulate the 180-degree turn.\"}]",
+      "prompt_sha256": "ae6804ba9d7697193720a502ccb41f17644bf4e7e6b701531272c443cc37fa72",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 0.0,
+        "accumulated_yaw_degrees": 0.0,
+        "world_time_seconds": 0.0,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 85.40131031500005,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 44.99999999999999,
+        "accumulated_yaw_degrees": 45.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "RIGHT",
+      "reason": "Continuing the first plan step: holding RIGHT to accumulate the 180-degree camera rotation. Current accumulated yaw is 45 degrees (0.8125 seconds elapsed of 3.6 seconds planned). The visual comparison shows the camera has rotated rightward\u2014the pitcher in the current image is now closer to the left side of the frame and the background table extends to the right, confirming rightward rotation. More rotation is needed to reach 180 degrees, so continuing RIGHT is appropriate.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54u9kUgPmCaEGyZYy3c",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 2901,
+        "output_tokens": 163,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Continuing the first plan step: holding RIGHT to accumulate the 180-degree camera rotation. Current accumulated yaw is 45 degrees (0.8125 seconds elapsed of 3.6 seconds planned). The visual comparison shows the camera has rotated rightward\\u2014the pitcher in the current image is now closer to the left side of the frame and the background table extends to the right, confirming rightward rotation. More rotation is needed to reach 180 degrees, so continuing RIGHT is appropriate.\"}]",
+      "prompt_sha256": "cdfe5d5eeed9361dd5ba7302dea159e0cd2054b96cfc4484545dadd188c1edb4",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 44.99999999999999,
+        "accumulated_yaw_degrees": 45.0,
+        "world_time_seconds": 0.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 92.90249011800006,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 105.0,
+        "accumulated_yaw_degrees": 105.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "RIGHT",
+      "reason": "Continuing the first plan step: holding RIGHT to complete the 180-degree camera rotation. Current accumulated yaw is 105 degrees (1.8125 seconds elapsed of 3.6 seconds planned). The latest image shows significant rightward rotation\u2014the scene has rotated substantially from the initial view. The glass pitcher is now positioned toward the left side of the frame, and background kitchen elements (cabinets, faucet) are now visible on the left, confirming continued rightward camera rotation. Approximately 1.8 seconds remain to reach the 180-degree target, so continuing RIGHT is appropriate.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54ujraDsKiYo1Kvj8NU",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3021,
+        "output_tokens": 188,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Continuing the first plan step: holding RIGHT to complete the 180-degree camera rotation. Current accumulated yaw is 105 degrees (1.8125 seconds elapsed of 3.6 seconds planned). The latest image shows significant rightward rotation\\u2014the scene has rotated substantially from the initial view. The glass pitcher is now positioned toward the left side of the frame, and background kitchen elements (cabinets, faucet) are now visible on the left, confirming continued rightward camera rotation. Approximately 1.8 seconds remain to reach the 180-degree target, so continuing RIGHT is appropriate.\"}]",
+      "prompt_sha256": "835c207c9cd4184cddf67c2fdd31a7fbbdc91f92bfc52e2c5bf3948888321b3b",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 105.0,
+        "accumulated_yaw_degrees": 105.0,
+        "world_time_seconds": 1.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 101.97336674300004,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 165.0,
+        "accumulated_yaw_degrees": 165.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "RIGHT",
+      "reason": "Continuing the first plan step: holding RIGHT to complete the 180-degree camera rotation. Current accumulated yaw is 165 degrees (2.8125 seconds elapsed of 3.6 seconds planned). The latest image shows the camera has rotated significantly rightward\u2014the glass pitcher is now prominent on the left side of the frame, and the steel kettle/pitcher has moved to center-left. Kitchen cabinets, microwave, and stovetop are now visible on the right side of the frame, confirming substantial rightward rotation. Approximately 0.8 seconds remain to reach the 180-degree target, so continuing RIGHT is appropriate to complete the first action before transitioning to the WAIT phase.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54vTFitVtxf1vGxuFAi",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3170,
+        "output_tokens": 210,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Continuing the first plan step: holding RIGHT to complete the 180-degree camera rotation. Current accumulated yaw is 165 degrees (2.8125 seconds elapsed of 3.6 seconds planned). The latest image shows the camera has rotated significantly rightward\\u2014the glass pitcher is now prominent on the left side of the frame, and the steel kettle/pitcher has moved to center-left. Kitchen cabinets, microwave, and stovetop are now visible on the right side of the frame, confirming substantial rightward rotation. Approximately 0.8 seconds remain to reach the 180-degree target, so continuing RIGHT is appropriate to complete the first action before transitioning to the WAIT phase.\"}]",
+      "prompt_sha256": "623d310f42672ea0db70a3a1bc7e806d98c5ad62e1cbac2c412f6416ab7b8ec2",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 165.0,
+        "accumulated_yaw_degrees": 165.0,
+        "world_time_seconds": 2.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 111.28207040100006,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": -135.00000000000006,
+        "accumulated_yaw_degrees": 225.0,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "STOP",
+      "action": "WAIT",
+      "reason": "The first plan step of holding RIGHT for 3.6 seconds has been completed\u2014accumulated intended yaw is 225 degrees (exceeding the 180-degree target). The current image shows the camera has rotated well past 180 degrees: kitchen appliances (microwave, stovetop, cabinets) are now visible on the left side of the frame, and the glass pitcher is visible on the lower left. The scene is roughly opposite the initial view. Transitioning now to the second plan step: WAIT for 1 second (1000ms) before proceeding to the LEFT rotation to return to the starting position.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54wAbPUkrHxB4thueDN",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3345,
+        "output_tokens": 193,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"STOP\", \"action\": \"WAIT\", \"reason\": \"The first plan step of holding RIGHT for 3.6 seconds has been completed\\u2014accumulated intended yaw is 225 degrees (exceeding the 180-degree target). The current image shows the camera has rotated well past 180 degrees: kitchen appliances (microwave, stovetop, cabinets) are now visible on the left side of the frame, and the glass pitcher is visible on the lower left. The scene is roughly opposite the initial view. Transitioning now to the second plan step: WAIT for 1 second (1000ms) before proceeding to the LEFT rotation to return to the starting position.\"}]",
+      "prompt_sha256": "60be8d607233534d693116bdbd53abf9f3e0565a4170e75afcb40b03ba770adc",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": -135.00000000000006,
+        "accumulated_yaw_degrees": 225.0,
+        "world_time_seconds": 3.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 120.54749222999999,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": -135.00000000000006,
+        "accumulated_yaw_degrees": 225.0,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "STOP",
+      "action": "LEFT",
+      "reason": "The WAIT action has completed for 1 second as required by the plan. The current_action_held_seconds shows 1 second has elapsed. Now transitioning to the third and final plan step: holding LEFT for 3.6 seconds to rotate the camera back 180 degrees to the starting position. The current image shows the camera is at approximately 225 degrees yaw (well past the 180-degree midpoint based on kitchen appliances visible on the left and glass pitcher on lower left). Holding LEFT will rotate the camera counterclockwise to return to the initial orientation. Starting LEFT rotation now.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54ws8BxzsbnaWvzYLyW",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3497,
+        "output_tokens": 188,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"STOP\", \"action\": \"LEFT\", \"reason\": \"The WAIT action has completed for 1 second as required by the plan. The current_action_held_seconds shows 1 second has elapsed. Now transitioning to the third and final plan step: holding LEFT for 3.6 seconds to rotate the camera back 180 degrees to the starting position. The current image shows the camera is at approximately 225 degrees yaw (well past the 180-degree midpoint based on kitchen appliances visible on the left and glass pitcher on lower left). Holding LEFT will rotate the camera counterclockwise to return to the initial orientation. Starting LEFT rotation now.\"}]",
+      "prompt_sha256": "4b21a9df91e2aedc02aaddd16d70638b8079f2ad6b74a9429c4c3acff07892ae",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": -135.00000000000006,
+        "accumulated_yaw_degrees": 225.0,
+        "world_time_seconds": 4.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 130.2124925559997,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 165.0,
+        "accumulated_yaw_degrees": 165.00000000000003,
+        "world_time_seconds": 5.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "LEFT",
+      "reason": "Continuing the final plan step: holding LEFT to rotate the camera back toward the starting position. Current_action_held_seconds shows 1 second has elapsed on the LEFT rotation. The accumulated intended yaw is 165 degrees (need to rotate back approximately 165 degrees leftward to return to 0). Current image shows the camera is rotated significantly from initial state\u2014steel kettle is now prominent in center frame with kitchen cabinets visible on the right. The initial image showed the glass pitcher prominent in center-left. Continuing LEFT rotation to complete the return to starting orientation. Approximately 2.6 seconds of LEFT rotation remain to complete the full 3.6-second plan step.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54xanhhNJ4yfmGX99hS",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3645,
+        "output_tokens": 205,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"LEFT\", \"reason\": \"Continuing the final plan step: holding LEFT to rotate the camera back toward the starting position. Current_action_held_seconds shows 1 second has elapsed on the LEFT rotation. The accumulated intended yaw is 165 degrees (need to rotate back approximately 165 degrees leftward to return to 0). Current image shows the camera is rotated significantly from initial state\\u2014steel kettle is now prominent in center frame with kitchen cabinets visible on the right. The initial image showed the glass pitcher prominent in center-left. Continuing LEFT rotation to complete the return to starting orientation. Approximately 2.6 seconds of LEFT rotation remain to complete the full 3.6-second plan step.\"}]",
+      "prompt_sha256": "723d7315b91c61172bcf54d26c8872dac7b70c7e86140a8de6f70dda3ae643bf",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 165.0,
+        "accumulated_yaw_degrees": 165.00000000000003,
+        "world_time_seconds": 5.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 140.39241451999987,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 104.99999999999999,
+        "accumulated_yaw_degrees": 105.00000000000001,
+        "world_time_seconds": 6.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "KEEP",
+      "action": "LEFT",
+      "reason": "Continuing the final plan step: holding LEFT to rotate the camera back toward the starting position. Current_action_held_seconds shows 2 seconds have elapsed on the LEFT rotation (out of 3.6 seconds planned). The initial image showed a glass pitcher with dark liquid prominent in the center-left frame with a white pitcher visible in the background. The current image shows the camera has rotated back substantially\u2014kitchen cabinets and stovetop are now visible in the upper portion, and the glass pitcher with amber liquid is now positioned more centrally in the lower frame. The scene is progressively returning toward the initial orientation. Approximately 1.6 seconds of LEFT rotation remain to complete the full 3.6-second plan step and achieve the target 180-degree return to starting position. Continuing LEFT is appropriate.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54yKu3SicVY8bGdJ1i6",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 3815,
+        "output_tokens": 231,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"LEFT\", \"reason\": \"Continuing the final plan step: holding LEFT to rotate the camera back toward the starting position. Current_action_held_seconds shows 2 seconds have elapsed on the LEFT rotation (out of 3.6 seconds planned). The initial image showed a glass pitcher with dark liquid prominent in the center-left frame with a white pitcher visible in the background. The current image shows the camera has rotated back substantially\\u2014kitchen cabinets and stovetop are now visible in the upper portion, and the glass pitcher with amber liquid is now positioned more centrally in the lower frame. The scene is progressively returning toward the initial orientation. Approximately 1.6 seconds of LEFT rotation remain to complete the full 3.6-second plan step and achieve the target 180-degree return to starting position. Continuing LEFT is appropriate.\"}]",
+      "prompt_sha256": "51b6292afeaedee9cb8a2451b2453fc624aeb66bf24d00ff1618cf44d1971b94",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 104.99999999999999,
+        "accumulated_yaw_degrees": 105.00000000000001,
+        "world_time_seconds": 6.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 151.06721741,
+      "pose_after": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 44.99999999999998,
+        "accumulated_yaw_degrees": 45.00000000000003,
+        "world_time_seconds": 7.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      }
+    },
+    {
+      "operation": "END",
+      "action": null,
+      "reason": "The goal has been successfully completed. The current image shows the camera has returned to approximately the starting position: the glass pitcher with amber liquid is now prominently displayed in the center-foreground of the frame, matching the initial image composition. The kitchen counter, white pitcher in the background, and overall scene layout match the starting orientation. The plan required turning right 180 degrees (3.6 seconds), waiting 1 second, then turning left 180 degrees (3.6 seconds) to return to the starting position. Current elapsed time is 7.812 seconds, which accounts for all planned steps including the full 3.6-second LEFT rotation (currently at 3 seconds held). Visual verification confirms the camera orientation has returned to match the initial state, with the glass pitcher and kitchen scene restored to their starting positions and orientations. The goal is achieved.",
+      "model": "claude-haiku-4-5-20251001",
+      "response_id": "msg_011Ch54z7zDDPZvywrPSpbD7",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 4007,
+        "output_tokens": 239,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"The goal has been successfully completed. The current image shows the camera has returned to approximately the starting position: the glass pitcher with amber liquid is now prominently displayed in the center-foreground of the frame, matching the initial image composition. The kitchen counter, white pitcher in the background, and overall scene layout match the starting orientation. The plan required turning right 180 degrees (3.6 seconds), waiting 1 second, then turning left 180 degrees (3.6 seconds) to return to the starting position. Current elapsed time is 7.812 seconds, which accounts for all planned steps including the full 3.6-second LEFT rotation (currently at 3 seconds held). Visual verification confirms the camera orientation has returned to match the initial state, with the glass pitcher and kitchen scene restored to their starting positions and orientations. The goal is achieved.\"}]",
+      "prompt_sha256": "e42c7ef3c2986d2c3eaeba35ce517266bc4baf0f203079cab62e5887f8286017",
+      "pose_before": {
+        "position_normalized_units": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "heading_degrees": 44.99999999999998,
+        "accumulated_yaw_degrees": 45.00000000000003,
+        "world_time_seconds": 7.75,
+        "scope": "Intended camera commands only; not measured visual motion or goal completion."
+      },
+      "elapsed_s": 161.23316307699997
+    }
+  ],
+  "chunks": [
+    {
+      "index": 0,
+      "path": "chunk-000.mp4",
+      "frames": 13,
+      "pixel_sha256": "13e47e5cf8000824af7029aae70bcb814a1cf8a396463f4b7286f4da77a95e12",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.48722031599982074,
+        "mp4_encode": 0.4283577639998839
+      },
+      "elapsed_s": 89.79474986700006,
+      "sha256": "3542488ef01c20450f980f2fbb55745c325f2051ce9b64178f2578ca61f408ea"
+    },
+    {
+      "index": 1,
+      "path": "chunk-001.mp4",
+      "frames": 16,
+      "pixel_sha256": "93c8b0f14e56b2488efe43e548c08710b8177fc7ab2cdbd975341621195ab7e1",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5899401110000326,
+        "mp4_encode": 0.45796340100014277
+      },
+      "elapsed_s": 97.80639761299972,
+      "sha256": "36fe5ff7df1c7e4bda80bcbfda064ceadfbab180ec6b5c28d38d2d0c8c694cc8"
+    },
+    {
+      "index": 2,
+      "path": "chunk-002.mp4",
+      "frames": 16,
+      "pixel_sha256": "c34d7e3637f04fcd18d7c26e138953939922614be622f46821654f4dfd711406",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5914816730000894,
+        "mp4_encode": 0.462898111999948
+      },
+      "elapsed_s": 107.3093694209997,
+      "sha256": "54a05eafc90ebd060aced29e3812710166976b45d87c586fa7b3c48a8b236034"
+    },
+    {
+      "index": 3,
+      "path": "chunk-003.mp4",
+      "frames": 16,
+      "pixel_sha256": "107563ab6b792822653bec2d4053acdd904d1149f3194542f64a20e1e19e5d3b",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5914550679999593,
+        "mp4_encode": 0.45250802200007456
+      },
+      "elapsed_s": 117.06994086199984,
+      "sha256": "2cced531212d4084e3b6758704afd6e422b59fc72985d255ed150cbb9002edab"
+    },
+    {
+      "index": 4,
+      "path": "chunk-004.mp4",
+      "frames": 16,
+      "pixel_sha256": "9405715d0b56eb968bd7381fcfd188218dd7419b2c3994a8184c27eacfff25a9",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5788160950000929,
+        "mp4_encode": 0.40450385700023617
+      },
+      "elapsed_s": 126.50962506699989,
+      "sha256": "26ca8707f87a5c1f4bd48e8cdeedbc4ebd10d39ab768ae19a577a4b1d42a9b99"
+    },
+    {
+      "index": 5,
+      "path": "chunk-005.mp4",
+      "frames": 16,
+      "pixel_sha256": "b945e984c49fd3a4e93511b6b6f2e0d2331a6bb14fb66281063bed1a17e70ecd",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5821594119997826,
+        "mp4_encode": 0.4294572829999197
+      },
+      "elapsed_s": 136.21126863599966,
+      "sha256": "9b627d157240eb429a161a952b88147e83da26878a83dd4272014f69965807e5"
+    },
+    {
+      "index": 6,
+      "path": "chunk-006.mp4",
+      "frames": 16,
+      "pixel_sha256": "afb0e43d61e2b3dff0e043ebb6eec4fbec04bfcc427bd3c3dd9017d74da06bf5",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5801501280002412,
+        "mp4_encode": 0.42200296500004697
+      },
+      "elapsed_s": 146.37413730499975,
+      "sha256": "a4ab703bcce729299e947289807d62d7d146e9108ce9aba01ecc93f50220b660"
+    },
+    {
+      "index": 7,
+      "path": "chunk-007.mp4",
+      "frames": 16,
+      "pixel_sha256": "9e6fb26527ae739a268e9425e39e073d7e96bf3780c684dbe885bca76651ee21",
+      "phase_seconds": {
+        "vae_decode_and_download": 0.5841470509999453,
+        "mp4_encode": 0.4381806219998907
+      },
+      "elapsed_s": 157.0626298289999,
+      "sha256": "621155844b10216e8e22549da68b41167f6075a0adda93c3b4b6ebe968620116"
+    }
+  ],
+  "published_score_reproduced": false,
+  "agent_interactions": 9,
+  "adapter_sha256": "6adfe0e38f5239d61b012e9947ad4e9e2012711ba5675e423eba6173ffc6cb9a",
+  "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+  "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+  "deviations": [
+    "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+    "Reconstructed Haiku reference-guided prompt and camera mapping: 60 deg/s turns, unit-normalized translations",
+    "Official 480p demo area; single NVIDIA H100 80GB HBM3, BF16 and valid-length SDPA backend",
+    "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+    "Claude diagnostic scoring differs from published Gemini judgments"
+  ],
+  "hardware": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4"
+  },
+  "attention_backend": "sdpa",
+  "optional_torch_dlpack_addon_disabled": false,
+  "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+  "checkpoint_loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "generated_frames": 125,
+  "generated_seconds": 7.8125,
+  "termination": "agent_end",
+  "elapsed_s": 161.23531265699967,
+  "camera_diagnostics": {
+    "chunks": 8,
+    "path_length": 0.0,
+    "net_yaw_degrees": 44.99999999999997,
+    "total_turn_degrees": 404.99999999999994,
+    "max_distance_from_start": 0.0,
+    "final_distance_from_start": 0.0,
+    "revisited_start_at_chunk": null,
+    "wait_chunks": 1,
+    "wait_pose_changes": 0
+  },
+  "peak_allocated_bytes": 72572203520
+}

@@ -143,3 +143,7 @@ At $3.29/h: about **$27 to $35 for one 171-episode arm**, whatever the number of
 - Codex `daa2be26cc0c4638ac2c9ec881b45160`: gpu_1x_h100_sxm5, us-southeast-1, launched2026-11-15T16:07:53.918165+00:00, $4.29/hour, hard90minute cap(max$6.435). Purpose:parallelize four complete controller-comparison pairs. Watchdog912389. Provisioning; no generation yet.
 
 - Codex `e84fbb24a8a943aaa731fdf855bc09ec`: gpu_1x_h100_sxm5, us-south-2, launched 2026-11-15T16:23:48.168142+00:00, $4.29/hour, hard75minute cap(max$5.3625). Purpose: parallelize GC022, IF006, insight OE009 complete pairs. Watchdog953485; provisioning.
+
+- Codex `7287b46fd8c14c2b80abc7a681412452`: termination requested 2026-11-15T17:04:14.621528+00:00; API state `absent` at 2026-11-15T17:11:49.962428+00:00. Final assigned evidence verified and collected before cleanup.
+- Codex `daa2be26cc0c4638ac2c9ec881b45160`: termination requested 2026-11-15T16:59:09.282090+00:00; API state `absent` at 2026-11-15T17:11:49.962428+00:00. Final assigned evidence verified and collected before cleanup.
+- Codex `e84fbb24a8a943aaa731fdf855bc09ec`: termination requested 2026-11-15T17:07:29.144667+00:00; API state `absent` at 2026-11-15T17:11:49.962428+00:00. Final assigned evidence verified and collected before cleanup.
