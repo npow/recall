@@ -4,11 +4,12 @@
 
 Per video: mean of the three independent Gemini calls (released `scores.official`; a judge call without a score is
 reported, never imputed). Per arm: dimension means over cases and the equal-weight overall. Paired difference
-(canonical minus legacy) per case, with a case-bootstrap 95% interval. Gate pass counts over all judge calls.
+(canonical minus legacy) per case, with a split-stratified paired-bootstrap 95% interval (withheld until complete). Gate pass counts over all judge calls.
 """
 import argparse
 import csv
 import json
+import math
 from pathlib import Path
 import random
 import statistics as st
@@ -20,18 +21,30 @@ NAMES = {"gc": "GC", "if": "IF", "insight": "In-sight", "outsight": "Out-of-sigh
 
 def load(run):
     data = {}
-    for rep in sorted((run / "judge").glob("rep*")):
+    for name in ("rep1", "rep2", "rep3"):
+        rep = run / "judge" / name
         for path in (rep / "episodes").glob("*.json"):
             judged = json.loads(path.read_text())
             score = (judged.get("scores") or {}).get("official")
+            if (judged.get('error') or judged.get('dry_run') or isinstance(score,bool)
+                    or not isinstance(score,(int,float)) or not math.isfinite(score) or not 1 <= score <= 5):
+                score = None
+            if judged.get('episode_id') not in (None,path.stem):
+                raise ValueError('Judge episode identity mismatch: '+str(path))
             verdict = (judged.get("gate") or {}).get("verdict")
-            data.setdefault(path.stem, []).append({"score": score, "verdict": verdict})
+            data.setdefault(path.stem, []).append({"score": score, "verdict": verdict, "replicate":name, "video_sha256":judged.get("video_sha256")})
+    for identifier,calls in data.items():
+        hashes={c['video_sha256'] for c in calls if c['score'] is not None}
+        if len(hashes)>1 or (calls and any(c['score'] is not None and not c['video_sha256'] for c in calls)):
+            raise ValueError('Missing or inconsistent judged video hashes: '+identifier)
     return data
 
 
 def generation(run, arm, split, task):
     if arm == "L":
-        path = run / "L" / f"{split}-{task}-attempt1" / "run.json"
+        path = run / "L" / f"{split}-{task}" / "run.json"
+        if not path.exists():
+            path = run / "L" / f"{split}-{task}-attempt1" / "run.json"
     else:
         path = run / "C" / f"{split}-{task}" / "episode" / "run.json"
     try:
@@ -49,6 +62,8 @@ def main():
     parser.add_argument("--output", type=Path, default=ROOT / "reproduction/corrected-controller-validation.md")
     args = parser.parse_args()
     selection = json.loads(args.selection.read_text())
+    if any(len(selection['picked'][s])!=3 or len(set(selection['picked'][s]))!=3 for s in SPLITS):
+        raise ValueError('Expected exactly3unique cases per split')
     judged = load(args.run)
     frozen = {}
     with open(ROOT / "reproduction/full-run/per-episode.csv") as handle:
@@ -62,7 +77,7 @@ def main():
             for arm in ("L", "C"):
                 calls = judged.get(f"{arm}-{split}-{task}", [])
                 scores = [c["score"] for c in calls if c["score"] is not None]
-                entry[arm] = round(st.mean(scores), 3) if scores else None
+                entry[arm] = st.mean(scores) if len(scores)==3 else None
                 entry[arm + "_calls"] = f"{len(scores)}/{len(calls)}"
                 entry[arm + "_verdicts"] = [c["verdict"] for c in calls]
                 entry[arm + "_gen"] = generation(args.run, arm, split, task)
@@ -77,11 +92,13 @@ def main():
                     if any(r["split"] == s and r[arm] is not None for r in rows) else None) for s in SPLITS}
 
     means = {arm: dim_means(arm) for arm in ("L", "C")}
-    overall = {arm: (st.mean(means[arm].values()) if all(v is not None for v in means[arm].values()) else None) for arm in means}
+    overall = {arm: (st.mean(means[arm].values()) if all(r[arm] is not None for r in rows) else None) for arm in means}
     pairs = [r for r in rows if r["L"] is not None and r["C"] is not None]
     deltas = [r["C"] - r["L"] for r in pairs]
     rng = random.Random(42)
-    boot = sorted(st.mean(rng.choice(deltas) for _ in deltas) for _ in range(10000)) if deltas else []
+    by_split={s:[r['C']-r['L'] for r in pairs if r['split']==s] for s in SPLITS}
+    boot = sorted(st.mean(st.mean(rng.choice(by_split[s]) for _ in range(3)) for s in SPLITS)
+                  for _ in range(10000)) if all(len(v)==3 for v in by_split.values()) else []
     ci = (boot[249], boot[9749]) if boot else (None, None)
 
     def gates(arm):
@@ -97,8 +114,8 @@ def main():
         "--text-prompt both --offload-text-encoder`, 40 chunks; insight `--text-prompt caption` at 60 chunks; Haiku 4.5 player.",
         "- **Corrected arm:** Codex's canonical controller on current `main` via `--validate-controller` (task objective as text, "
         "canonical timeline, released hold service, 60-chunk budget). Hold-service token cap raised from the released 60 to 400 "
-        "(`WORLDSYNC_HOLD_MAX_TOKENS`) because Haiku's replies exceed 60 tokens and every hold check otherwise fails.",
-        "- **Hardware:** both arms on the same local RTX PRO 6000 Blackwell (shared with other projects). Not bit-comparable to the Modal frozen run.",
+        "(`WORLDSYNC_HOLD_MAX_TOKENS`) because a live IF001 response truncated at60tokens.",
+        "- **Hardware:** both arms must use the same GPU; Codex takeover uses oneH100SXM. Inspect run.json hardware fields. Not bit-comparable to the Modal frozen run.",
         "- **Player transport:** Haiku 4.5 (`claude-haiku-4-5-20251001`) through the local CLIProxyAPI; the project API key is spend-capped.",
         "- **Judge:** `worldsync/gemini_vertex_judge.py` (released rubric, gate and aggregation), `gemini-3.1-pro-preview` on Vertex, "
         "three independent calls per video (separate caches).", "",
@@ -106,11 +123,11 @@ def main():
         "| Dimension | Legacy | Corrected | Corrected − legacy |", "|---|---:|---:|---:|"]
     for s in SPLITS:
         a, b = means["L"][s], means["C"][s]
-        lines.append(f"| {NAMES[s]} (n=3) | {fmt(a)} | {fmt(b)} | {fmt(None if a is None or b is None else b - a)} |")
+        lines.append(f"| {NAMES[s]} (L={sum(r['L'] is not None for r in rows if r['split']==s)}/3, C={sum(r['C'] is not None for r in rows if r['split']==s)}/3) | {fmt(a)} | {fmt(b)} | {fmt(None if a is None or b is None else b - a)} |")
     lines.append(f"| **Overall (equal mean of dimensions)** | **{fmt(overall['L'])}** | **{fmt(overall['C'])}** | "
                  f"**{fmt(None if overall['L'] is None or overall['C'] is None else overall['C'] - overall['L'])}** |")
     lines += ["", f"Paired per-case difference (corrected − legacy): mean {fmt(st.mean(deltas) if deltas else None)} over {len(deltas)} pairs, "
-              f"case-bootstrap 95% interval [{fmt(ci[0])}, {fmt(ci[1])}]; "
+              f"split-stratified paired-bootstrap 95% interval (withheld until complete) [{fmt(ci[0])}, {fmt(ci[1])}]; "
               f"{sum(d > 0 for d in deltas)} better / {sum(d == 0 for d in deltas)} equal / {sum(d < 0 for d in deltas)} worse.", ""]
     for arm, name in (("L", "Legacy"), ("C", "Corrected")):
         counts, total = gates(arm)
@@ -129,11 +146,12 @@ def main():
         lines.append(f"| {r['split']}:{r['task']} | {g.get('seconds')}, {g.get('termination')}, {g.get('player_calls')} | "
                      f"{h.get('seconds')}, {h.get('termination')}, {h.get('player_calls')} |")
     lines += ["", "## Caveats", "",
-        "- Twelve cases and one seed: a single episode varies by about ±1 point between seeds, so only large differences are informative.",
+        "- Twelve cases and one seed; this cannot establish the full benchmark result or seed robustness.",
         "- The arms differ in more than the controller: text (caption+objective vs objective only; insight caption vs \"wait and observe\") "
         "and chunk budget (40 vs 60 for moving cases). This compares the two complete configurations as specified.",
         "- Hold-service token cap raised (above). Proxy transport for the player.",
         "- Missing judgements: " + ("none." if not missing else "; ".join(missing) + ". Not imputed."), ""]
+    args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text("\n".join(lines))
     print(json.dumps({"overall": overall, "dims": means, "paired_mean": st.mean(deltas) if deltas else None, "ci": ci, "missing": missing}))
 
