@@ -153,6 +153,7 @@ def generate():
             "score": sum(values) / len(insight) if len(values) == len(insight) else None,
             "judgements_per_video": 3, "source": "reproduction/gemini-rejudge-baseline-v6.json"})
     full = read("reproduction/full-baseline-gemini.json")
+    full_claude = read("reproduction/full-baseline-claude.json")
     claude_subset = read("reproduction/hillclimb-v6-s42.json")
     claude_cohort = read("reproduction/cohort-stock-v5-s42.json")
     if claude_subset:
@@ -201,6 +202,10 @@ def generate():
             f"|{full['overall']:.2f}|{full['gc']:.2f}|{full['if']:.2f}|{full['insight']:.2f}|{full['outsight']:.2f}|{full['scored']}/171|", ""])
     else:
         lines.extend(["No completed 171-case result is available here. Partial runs do not establish an overall; all declared cases and all four dimensions are required.", ""])
+    if full_claude and full_claude.get("overall") is not None:
+        lines.extend(["Claude-judged version of the same 171 videos (different judge, not comparable to the published table):", "",
+            "| Overall | GC | IF | In-sight | Out-of-sight | Scored |", "|---:|---:|---:|---:|---:|---:|",
+            f"|{full_claude['overall']:.2f}|{full_claude['gc']:.2f}|{full_claude['if']:.2f}|{full_claude['insight']:.2f}|{full_claude['outsight']:.2f}|{full_claude['scored']}/171|", ""])
     lines.extend(["## Claude — historical experiments", "",
         "Retained for audit; do not compare these numbers with Gemini or across different cohorts.", "",
         "| Cohort | Method | Score | Evidence |", "|---|---|---:|---|"])
