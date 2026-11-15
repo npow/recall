@@ -1,0 +1,842 @@
+{
+  "mode": "stock",
+  "seed": 43,
+  "workspace": "nissan-pow",
+  "result_directory": "adaptive-four-view-stock-GC027-seed43-1794720687117496708",
+  "returncode": 0,
+  "run": {
+    "status": "completed",
+    "model": "LingBot-World2 14B causal-fast stock",
+    "protocol_id": "lingbot-world2-adaptive-four-view-pilot-v1",
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "initial_image_sha256": "cfe324c6dacbb91123a74ad7d5c80f75fe4bd5e3cfd040af201e4ee0742cd33f",
+    "image_caption_sha256": "58e9282a2acfdc3b580ea4b33b69ea092305a35869f31226b2981a2e17cbcf65",
+    "task_id": "GC027",
+    "split": "gc",
+    "seed": 43,
+    "turn_degrees_per_second": 30.0,
+    "fps": 16,
+    "max_chunks": 40,
+    "max_interactions": 40,
+    "native_fixed_controls": false,
+    "camera_embedding_audit": [],
+    "pose_retrieval": false,
+    "sink_rephase": false,
+    "adaptive_retrieval_pilot": true,
+    "player_temperature": "provider default",
+    "initial_neutral_bootstrap": true,
+    "kv_retention": false,
+    "decoprune": false,
+    "reanchor": false,
+    "budget_memory": false,
+    "denoise_schedule": "stock",
+    "text_encoder_offloaded_after_encoding": true,
+    "stationary_wait_only": false,
+    "fixed_actions": null,
+    "quantization": "none",
+    "cuda_allocator_configuration": "expandable_segments:True",
+    "max_area": 399360,
+    "chunk_size": 4,
+    "local_attn_size": 18,
+    "sink_size": 6,
+    "decision_interval": 1,
+    "stock_knobs": true,
+    "controlled_ablation": false,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "actions": [
+      {
+        "operation": "KEEP",
+        "action": "WAIT",
+        "reason": "declared neutral bootstrap",
+        "bootstrap": true,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.0,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 125.025253155,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "Initial WAIT completed. Now executing the reference plan's main step: hold RIGHT for 9.45 seconds to rotate the camera 360 degrees. Current elapsed commanded seconds (0.812s) is well below the planned 9.45s. The initial image and latest observation show the same sports center view with minor framing differences, indicating minimal rotation so far. Continuing RIGHT to accumulate the full 360-degree rotation needed to return to the original angle.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4Ak1sfHPB5BnXn11f1S",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2753,
+          "output_tokens": 155,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Initial WAIT completed. Now executing the reference plan's main step: hold RIGHT for 9.45 seconds to rotate the camera 360 degrees. Current elapsed commanded seconds (0.812s) is well below the planned 9.45s. The initial image and latest observation show the same sports center view with minor framing differences, indicating minimal rotation so far. Continuing RIGHT to accumulate the full 360-degree rotation needed to return to the original angle.\"}]",
+        "prompt_sha256": "5c450a61b58c3f38ca1c559e619a4a4be3debbb4bf1a1cd9f32733ad388a9451",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 132.362915383,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 30.000000000000004,
+          "accumulated_yaw_degrees": 29.999999999999996,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "Continuing RIGHT rotation. Initial image shows the sports center sign centered and broad view of the facility. Latest observation (after ~1.8s of commanding) shows the camera has rotated right\u2014the playground equipment (yellow canopy structure with red slide) is now more prominent on the right side, and the building/sports center is shifting leftward in frame, consistent with rightward camera rotation. Current elapsed commanded seconds (1.812s) is still well below the planned 9.45s. At 30 degrees per second, approximately 6 more seconds of RIGHT input are needed to complete the full 360-degree rotation and return to original angle. Holding RIGHT to continue the rotation.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4AkYyS17JcJKgUTWoQS",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2874,
+          "output_tokens": 202,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Continuing RIGHT rotation. Initial image shows the sports center sign centered and broad view of the facility. Latest observation (after ~1.8s of commanding) shows the camera has rotated right\\u2014the playground equipment (yellow canopy structure with red slide) is now more prominent on the right side, and the building/sports center is shifting leftward in frame, consistent with rightward camera rotation. Current elapsed commanded seconds (1.812s) is still well below the planned 9.45s. At 30 degrees per second, approximately 6 more seconds of RIGHT input are needed to complete the full 360-degree rotation and return to original angle. Holding RIGHT to continue the rotation.\"}]",
+        "prompt_sha256": "c7ab1363e3cb79dfa7780d0968013a5e390570a692b1ee6fb5f23f5e43b55eae",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 30.000000000000004,
+          "accumulated_yaw_degrees": 29.999999999999996,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 140.343257654,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 59.999999999999986,
+          "accumulated_yaw_degrees": 59.99999999999999,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "Continuing RIGHT camera rotation. Initial image shows the Shihai Street Sports Center sign centered with the facility and buildings in the background. Current image shows significant rightward rotation\u2014the camera has pivoted to now show the playground equipment (yellow/red canopy structures with slides) prominently in the center-right, with building elements visible on the left, indicating substantial rightward rotation has occurred. Elapsed commanded seconds (2.812s) is well below the planned 9.45s. At 30\u00b0/second rotation, the intended odometry shows ~60\u00b0 accumulated yaw. Additional ~300\u00b0 of rotation is needed to complete the full 360\u00b0 return to original angle. Maintaining RIGHT to continue the camera rotation.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4AmBAYNHnVJx47bca9T",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3037,
+          "output_tokens": 207,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Continuing RIGHT camera rotation. Initial image shows the Shihai Street Sports Center sign centered with the facility and buildings in the background. Current image shows significant rightward rotation\\u2014the camera has pivoted to now show the playground equipment (yellow/red canopy structures with slides) prominently in the center-right, with building elements visible on the left, indicating substantial rightward rotation has occurred. Elapsed commanded seconds (2.812s) is well below the planned 9.45s. At 30\\u00b0/second rotation, the intended odometry shows ~60\\u00b0 accumulated yaw. Additional ~300\\u00b0 of rotation is needed to complete the full 360\\u00b0 return to original angle. Maintaining RIGHT to continue the camera rotation.\"}]",
+        "prompt_sha256": "f4b95c6c99429ba8a8164ddfefc16a6fff92ac9b3786e3626fe71c894cd0fe0e",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 59.999999999999986,
+          "accumulated_yaw_degrees": 59.99999999999999,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 149.66489720200002,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 89.99999999999997,
+          "accumulated_yaw_degrees": 90.0,
+          "world_time_seconds": 3.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "Continuing RIGHT camera rotation toward the 360-degree goal. Initial image shows the Shihai Street Sports Center sign centered with the building and facility in full view. Current image shows significant rightward rotation\u2014the camera now captures the playground equipment (yellow/red structures with slides, canopies) prominently filling the frame, indicating approximately 90-120 degrees of rotation has been completed. The sports center building is no longer visible in the center, confirming substantial rightward yaw. Elapsed commanded seconds (3.812s) with current_action_held_seconds at 3s means we're still well below the planned 9.45s total needed for a full 360-degree rotation. At 30\u00b0/second, approximately 6-7 more seconds of RIGHT input are required to complete the rotation back to the original angle. Maintaining RIGHT to continue.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4AmtSz9u1J8qCmw8Yom",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3201,
+          "output_tokens": 240,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Continuing RIGHT camera rotation toward the 360-degree goal. Initial image shows the Shihai Street Sports Center sign centered with the building and facility in full view. Current image shows significant rightward rotation\\u2014the camera now captures the playground equipment (yellow/red structures with slides, canopies) prominently filling the frame, indicating approximately 90-120 degrees of rotation has been completed. The sports center building is no longer visible in the center, confirming substantial rightward yaw. Elapsed commanded seconds (3.812s) with current_action_held_seconds at 3s means we're still well below the planned 9.45s total needed for a full 360-degree rotation. At 30\\u00b0/second, approximately 6-7 more seconds of RIGHT input are required to complete the rotation back to the original angle. Maintaining RIGHT to continue.\"}]",
+        "prompt_sha256": "20b74bb0e07b12da34a3ebb6b2bb037cedc160f91faacc3fb98e0648dd47c638",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 89.99999999999997,
+          "accumulated_yaw_degrees": 90.0,
+          "world_time_seconds": 3.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 159.23347073600002,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 119.99999999999999,
+          "accumulated_yaw_degrees": 119.99999999999999,
+          "world_time_seconds": 4.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "Continuing RIGHT camera rotation toward the 360-degree goal. Initial image shows the Shihai Street Sports Center sign centered with the full sports facility, buildings, and playground equipment in broad view. Current image shows substantial rightward rotation (approximately 120-150 degrees)\u2014the camera now shows a close-up view of the yellow playground equipment (climbing structure with canopy, slides, and railings), with the sports center and building structures visible in the background but significantly rotated out of center position. Elapsed commanded seconds (4.812s) with current_action_held_seconds at 4 seconds means approximately 210-240 degrees of rotation remains to complete the full 360-degree return to original angle. At 30\u00b0/second rotation rate, approximately 7-8 more seconds of RIGHT input are required. Maintaining RIGHT to continue accumulating the rotational motion needed to return to the original centered view of the sports center.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4AncpQjLVVBKfMhJMbS",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3406,
+          "output_tokens": 255,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"Continuing RIGHT camera rotation toward the 360-degree goal. Initial image shows the Shihai Street Sports Center sign centered with the full sports facility, buildings, and playground equipment in broad view. Current image shows substantial rightward rotation (approximately 120-150 degrees)\\u2014the camera now shows a close-up view of the yellow playground equipment (climbing structure with canopy, slides, and railings), with the sports center and building structures visible in the background but significantly rotated out of center position. Elapsed commanded seconds (4.812s) with current_action_held_seconds at 4 seconds means approximately 210-240 degrees of rotation remains to complete the full 360-degree return to original angle. At 30\\u00b0/second rotation rate, approximately 7-8 more seconds of RIGHT input are required. Maintaining RIGHT to continue accumulating the rotational motion needed to return to the original centered view of the sports center.\"}]",
+        "prompt_sha256": "b2492ead8eb303115a926a359ae3acf01e6bdf8c3915ef27fef35331413c6328",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 119.99999999999999,
+          "accumulated_yaw_degrees": 119.99999999999999,
+          "world_time_seconds": 4.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 169.285012074,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 150.0,
+          "accumulated_yaw_degrees": 149.99999999999997,
+          "world_time_seconds": 5.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "Continuing RIGHT camera rotation. Initial image shows the Shihai Street Sports Center sign centered in the frame with the full sports facility, buildings, and playground equipment in full view. Current image (after ~5 seconds of RIGHT input) shows substantial rightward rotation (approximately 150-180 degrees)\u2014the camera now shows a close-up view of the playground equipment with the large magenta/purple slide dominating the frame, yellow playground structures visible, the pink sports center building in the background, and the overall composition indicates approximately half of the 360-degree rotation has been completed. Elapsed commanded seconds is now 5.812s with current_action_held_seconds at 5 seconds. At 30\u00b0/second rotation rate, approximately 180 more degrees remain to complete the full 360-degree return to the original centered view. This requires approximately 6 more seconds of RIGHT input. The reference plan shows 9.45 seconds total, so continuing RIGHT is within plan bounds and necessary to complete the full rotation back to the original angle.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4AoMZAePfqYDUPAGyb1",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3618,
+          "output_tokens": 278,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"Continuing RIGHT camera rotation. Initial image shows the Shihai Street Sports Center sign centered in the frame with the full sports facility, buildings, and playground equipment in full view. Current image (after ~5 seconds of RIGHT input) shows substantial rightward rotation (approximately 150-180 degrees)\\u2014the camera now shows a close-up view of the playground equipment with the large magenta/purple slide dominating the frame, yellow playground structures visible, the pink sports center building in the background, and the overall composition indicates approximately half of the 360-degree rotation has been completed. Elapsed commanded seconds is now 5.812s with current_action_held_seconds at 5 seconds. At 30\\u00b0/second rotation rate, approximately 180 more degrees remain to complete the full 360-degree return to the original centered view. This requires approximately 6 more seconds of RIGHT input. The reference plan shows 9.45 seconds total, so continuing RIGHT is within plan bounds and necessary to complete the full rotation back to the original angle.\"}]",
+        "prompt_sha256": "c411413f701e3004880c59369ee14c72057812c7ca138c3b326620c89d987d7c",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 150.0,
+          "accumulated_yaw_degrees": 149.99999999999997,
+          "world_time_seconds": 5.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 179.850728643,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 180.0,
+          "accumulated_yaw_degrees": 179.99999999999997,
+          "world_time_seconds": 6.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "Continuing RIGHT camera rotation toward completing the full 360-degree return to original angle. Initial image shows the Shihai Street Sports Center sign centered with the full sports facility and building complex in clear view. Current image after ~6 seconds of RIGHT rotation shows substantial progress\u2014the camera has rotated approximately 180-210 degrees, now displaying a close-up view of the playground equipment with the magenta/purple slide dominating the lower portion of the frame, yellow canopy structures, and the pink sports center building visible in the background-left area. The composition shows we're past the halfway point of the 360-degree rotation. Elapsed commanded seconds is 6.812s with current_action_held_seconds at 6 seconds. At 30\u00b0/second rotation, approximately 150-180 degrees of rotation remain. This requires approximately 5-6 more seconds of RIGHT input to complete the full rotation back to the original centered view. The reference plan allocates 9.45 seconds total, and we're at 6.812s, leaving adequate time to complete the rotation. Continuing RIGHT is necessary to achieve the goal of returning to the original angle and centered view of the sports center sign.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4Ap8uwXm2JdXnJmEisw",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3857,
+          "output_tokens": 312,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"Continuing RIGHT camera rotation toward completing the full 360-degree return to original angle. Initial image shows the Shihai Street Sports Center sign centered with the full sports facility and building complex in clear view. Current image after ~6 seconds of RIGHT rotation shows substantial progress\\u2014the camera has rotated approximately 180-210 degrees, now displaying a close-up view of the playground equipment with the magenta/purple slide dominating the lower portion of the frame, yellow canopy structures, and the pink sports center building visible in the background-left area. The composition shows we're past the halfway point of the 360-degree rotation. Elapsed commanded seconds is 6.812s with current_action_held_seconds at 6 seconds. At 30\\u00b0/second rotation, approximately 150-180 degrees of rotation remain. This requires approximately 5-6 more seconds of RIGHT input to complete the full rotation back to the original centered view. The reference plan allocates 9.45 seconds total, and we're at 6.812s, leaving adequate time to complete the rotation. Continuing RIGHT is necessary to achieve the goal of returning to the original angle and centered view of the sports center sign.\"}]",
+        "prompt_sha256": "6235a603447942deab3afcd6f3920a249f98696bc6bd1701ceda609ac94e1a34",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 180.0,
+          "accumulated_yaw_degrees": 179.99999999999997,
+          "world_time_seconds": 6.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 190.74081466200002,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -150.00000000000003,
+          "accumulated_yaw_degrees": 209.99999999999997,
+          "world_time_seconds": 7.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "Continuing RIGHT camera rotation toward completing the full 360-degree return to original angle. Initial image shows the Shihai Street Sports Center sign centered with the full sports facility and building complex. Current image (after ~7 seconds of RIGHT rotation) shows the camera has rotated approximately 210 degrees\u2014we now see the playground equipment from a different angle with the magenta/purple slides prominent on the right side, yellow canopy structures visible, and playground equipment dominating the frame. The sports center building and sign are no longer visible in the center, indicating substantial rotation progress. Intended odometry shows accumulated_yaw_degrees of ~210 degrees. Approximately 150 degrees of rotation remain to complete the full 360-degree cycle and return to the original centered view of the sports center sign. At 30\u00b0/second rotation rate, approximately 5 more seconds of RIGHT input are needed. Elapsed commanded seconds is 7.812s with current_action_held_seconds at 7 seconds, and the reference plan allocates 9.45 seconds total, leaving sufficient time to complete the remaining rotation. Continuing RIGHT to accumulate the necessary rotational motion to return to the original angle.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4ApwQudp1CDbs6S1jQg",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 4134,
+          "output_tokens": 310,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"Continuing RIGHT camera rotation toward completing the full 360-degree return to original angle. Initial image shows the Shihai Street Sports Center sign centered with the full sports facility and building complex. Current image (after ~7 seconds of RIGHT rotation) shows the camera has rotated approximately 210 degrees\\u2014we now see the playground equipment from a different angle with the magenta/purple slides prominent on the right side, yellow canopy structures visible, and playground equipment dominating the frame. The sports center building and sign are no longer visible in the center, indicating substantial rotation progress. Intended odometry shows accumulated_yaw_degrees of ~210 degrees. Approximately 150 degrees of rotation remain to complete the full 360-degree cycle and return to the original centered view of the sports center sign. At 30\\u00b0/second rotation rate, approximately 5 more seconds of RIGHT input are needed. Elapsed commanded seconds is 7.812s with current_action_held_seconds at 7 seconds, and the reference plan allocates 9.45 seconds total, leaving sufficient time to complete the remaining rotation. Continuing RIGHT to accumulate the necessary rotational motion to return to the original angle.\"}]",
+        "prompt_sha256": "f2aa0e02a9f87694b30204dd55da1e88580cb4893ec09525b384392e853604db",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -150.00000000000003,
+          "accumulated_yaw_degrees": 209.99999999999997,
+          "world_time_seconds": 7.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 201.453436901,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -120.00000000000007,
+          "accumulated_yaw_degrees": 239.99999999999997,
+          "world_time_seconds": 8.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "Continuing RIGHT camera rotation toward completing the full 360-degree return to original angle. Initial image shows the Shihai Street Sports Center sign centered with the full sports facility and building complex in clear view. Current image (after ~8 seconds of RIGHT rotation) shows the camera has rotated approximately 240 degrees\u2014we now see the playground equipment structures with magenta/purple canopies and slides visible, railings and climbing structures prominent, indicating we're nearing the three-quarter completion point of the full rotation. The sports center sign and primary facility are still not yet visible in center view. Approximately 120 degrees of rotation remain to complete the full 360-degree return to the original centered view of the sports center sign and facility. At 30\u00b0/second rotation rate, approximately 4 more seconds of RIGHT input are needed. Elapsed commanded seconds is 8.812s with current_action_held_seconds at 8 seconds, and the reference plan allocates 9.45 seconds total, leaving sufficient time (0.638s remaining in plan) to complete most of the remaining rotation. Continuing RIGHT to complete the goal of returning to the original angle and view.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4AqjFh9x7yRsY5LS2p4",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 4405,
+          "output_tokens": 307,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"Continuing RIGHT camera rotation toward completing the full 360-degree return to original angle. Initial image shows the Shihai Street Sports Center sign centered with the full sports facility and building complex in clear view. Current image (after ~8 seconds of RIGHT rotation) shows the camera has rotated approximately 240 degrees\\u2014we now see the playground equipment structures with magenta/purple canopies and slides visible, railings and climbing structures prominent, indicating we're nearing the three-quarter completion point of the full rotation. The sports center sign and primary facility are still not yet visible in center view. Approximately 120 degrees of rotation remain to complete the full 360-degree return to the original centered view of the sports center sign and facility. At 30\\u00b0/second rotation rate, approximately 4 more seconds of RIGHT input are needed. Elapsed commanded seconds is 8.812s with current_action_held_seconds at 8 seconds, and the reference plan allocates 9.45 seconds total, leaving sufficient time (0.638s remaining in plan) to complete most of the remaining rotation. Continuing RIGHT to complete the goal of returning to the original angle and view.\"}]",
+        "prompt_sha256": "4ada9bb03da43d878c7328b97c6ac88de089c34229252dccfc5b22d842e76bac",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -120.00000000000007,
+          "accumulated_yaw_degrees": 239.99999999999997,
+          "world_time_seconds": 8.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 212.038970737,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -90.00000000000006,
+          "accumulated_yaw_degrees": 270.0,
+          "world_time_seconds": 9.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "Continuing RIGHT camera rotation to complete the full 360-degree return to original angle. Initial image shows the Shihai Street Sports Center sign centered with the pink sports center building and full facility in clear view. Current image (after ~9 seconds of RIGHT rotation) shows the camera has rotated approximately 270 degrees\u2014we now see the playground equipment from yet another angle with blue canopy structures, purple/magenta slides, and yellow railings dominating the frame, indicating we're nearing the three-quarter to nine-tenths completion point of the full rotation. The sports center sign and primary facility are still not visible in center view. Approximately 90 degrees of rotation remain to complete the full 360-degree return to the original centered view of the sports center sign. At 30\u00b0/second rotation rate, approximately 3 more seconds of RIGHT input are needed. Elapsed commanded seconds is 9.812s with current_action_held_seconds at 9 seconds, and the reference plan allocates 9.45 seconds total. Although we have slightly exceeded the reference plan duration by 0.362s, visual inspection confirms we have not yet returned to the original centered view of the Shihai Street Sports Center sign\u2014the playground equipment still dominates the frame rather than the sports center building. We need to continue RIGHT to complete the 360-degree rotation back to the original angle as the goal requires.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4ArWF8h5fq3nKXFcTkZ",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 4669,
+          "output_tokens": 356,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"Continuing RIGHT camera rotation to complete the full 360-degree return to original angle. Initial image shows the Shihai Street Sports Center sign centered with the pink sports center building and full facility in clear view. Current image (after ~9 seconds of RIGHT rotation) shows the camera has rotated approximately 270 degrees\\u2014we now see the playground equipment from yet another angle with blue canopy structures, purple/magenta slides, and yellow railings dominating the frame, indicating we're nearing the three-quarter to nine-tenths completion point of the full rotation. The sports center sign and primary facility are still not visible in center view. Approximately 90 degrees of rotation remain to complete the full 360-degree return to the original centered view of the sports center sign. At 30\\u00b0/second rotation rate, approximately 3 more seconds of RIGHT input are needed. Elapsed commanded seconds is 9.812s with current_action_held_seconds at 9 seconds, and the reference plan allocates 9.45 seconds total. Although we have slightly exceeded the reference plan duration by 0.362s, visual inspection confirms we have not yet returned to the original centered view of the Shihai Street Sports Center sign\\u2014the playground equipment still dominates the frame rather than the sports center building. We need to continue RIGHT to complete the 360-degree rotation back to the original angle as the goal requires.\"}]",
+        "prompt_sha256": "093fc74f39d1541afb6e78ed76f09251a9e334acc430357089ba11d14222d0e8",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -90.00000000000006,
+          "accumulated_yaw_degrees": 270.0,
+          "world_time_seconds": 9.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 223.441925607,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -60.000000000000036,
+          "accumulated_yaw_degrees": 300.0,
+          "world_time_seconds": 10.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "Continuing RIGHT camera rotation to complete the full 360-degree return to original angle. Initial image shows the Shihai Street Sports Center sign centered with the pink sports center building and full facility in clear view. Current image (after ~10 seconds of RIGHT rotation) shows the camera has rotated approximately 300 degrees\u2014we now see the playground equipment with yellow climbing structures, blue canopy tops, purple/magenta slides, and white railings dominating the frame. The sports center sign and primary facility entrance are still not visible in the centered view, confirming we have not yet returned to the original angle. Approximately 60 degrees of rotation remain to complete the full 360-degree return to the original centered view of the Shihai Street Sports Center sign. At 30\u00b0/second rotation rate, approximately 2 more seconds of RIGHT input are needed. Current_action_held_seconds is now 10 seconds, and elapsed_commanded_seconds is 10.812s. Although this exceeds the original reference plan's 9.45 seconds, the goal requires a complete 360-degree rotation visually returning to the original view, which has not yet been achieved. Continuing RIGHT to complete the remaining ~60 degrees of rotation needed to return to the original centered view of the sports center sign.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4AsMFBPk5r6i91bFhYj",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 4986,
+          "output_tokens": 333,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"Continuing RIGHT camera rotation to complete the full 360-degree return to original angle. Initial image shows the Shihai Street Sports Center sign centered with the pink sports center building and full facility in clear view. Current image (after ~10 seconds of RIGHT rotation) shows the camera has rotated approximately 300 degrees\\u2014we now see the playground equipment with yellow climbing structures, blue canopy tops, purple/magenta slides, and white railings dominating the frame. The sports center sign and primary facility entrance are still not visible in the centered view, confirming we have not yet returned to the original angle. Approximately 60 degrees of rotation remain to complete the full 360-degree return to the original centered view of the Shihai Street Sports Center sign. At 30\\u00b0/second rotation rate, approximately 2 more seconds of RIGHT input are needed. Current_action_held_seconds is now 10 seconds, and elapsed_commanded_seconds is 10.812s. Although this exceeds the original reference plan's 9.45 seconds, the goal requires a complete 360-degree rotation visually returning to the original view, which has not yet been achieved. Continuing RIGHT to complete the remaining ~60 degrees of rotation needed to return to the original centered view of the sports center sign.\"}]",
+        "prompt_sha256": "0f515eae21f0a7cf5837a934313772e3a55533a6d988bfe94738bf05d88b8481",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -60.000000000000036,
+          "accumulated_yaw_degrees": 300.0,
+          "world_time_seconds": 10.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 235.204727834,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -30.00000000000003,
+          "accumulated_yaw_degrees": 330.00000000000006,
+          "world_time_seconds": 11.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "Continuing RIGHT camera rotation to complete the full 360-degree return to original angle. Initial image shows the Shihai Street Sports Center sign clearly centered with the pink sports center building, yellow playground structures, and full facility in clear view. Current image (after ~11 seconds of RIGHT rotation) shows the camera has rotated approximately 330 degrees\u2014we now see playground equipment from close proximity with yellow slides, white railings, blue ground surfaces, black climbing structures, and the pink sports center building visible in the upper portion of the frame. The sports center sign and centered facility view are still not fully restored to the original orientation. Approximately 30 degrees of rotation remain to complete the full 360-degree return to the original centered view of the Shihai Street Sports Center sign. At 30\u00b0/second rotation rate, approximately 1 more second of RIGHT input is needed. Current_action_held_seconds is 11 seconds, and the intended odometry shows accumulated_yaw_degrees of 330 degrees, confirming we are very close to completing the full rotation. One final continued RIGHT command should restore the camera to the original angle facing the original view as required by the goal.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4AtDQfPTXiUM7Gu3qUn",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 5284,
+          "output_tokens": 307,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"Continuing RIGHT camera rotation to complete the full 360-degree return to original angle. Initial image shows the Shihai Street Sports Center sign clearly centered with the pink sports center building, yellow playground structures, and full facility in clear view. Current image (after ~11 seconds of RIGHT rotation) shows the camera has rotated approximately 330 degrees\\u2014we now see playground equipment from close proximity with yellow slides, white railings, blue ground surfaces, black climbing structures, and the pink sports center building visible in the upper portion of the frame. The sports center sign and centered facility view are still not fully restored to the original orientation. Approximately 30 degrees of rotation remain to complete the full 360-degree return to the original centered view of the Shihai Street Sports Center sign. At 30\\u00b0/second rotation rate, approximately 1 more second of RIGHT input is needed. Current_action_held_seconds is 11 seconds, and the intended odometry shows accumulated_yaw_degrees of 330 degrees, confirming we are very close to completing the full rotation. One final continued RIGHT command should restore the camera to the original angle facing the original view as required by the goal.\"}]",
+        "prompt_sha256": "a691207e1ca72406b33a936401b090677868570a4270a19efbd57993ae11c62e",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -30.00000000000003,
+          "accumulated_yaw_degrees": 330.00000000000006,
+          "world_time_seconds": 11.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 245.80698152,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -4.05506770679017e-14,
+          "accumulated_yaw_degrees": 360.00000000000006,
+          "world_time_seconds": 12.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "END",
+        "action": null,
+        "reason": "Visual comparison confirms the goal is achieved. The initial image shows the Shihai Street Sports Center sign centered and clearly visible with the pink sports center building, yellow playground equipment frame, and full facility in comprehensive view. The current image (after 12 seconds of sustained RIGHT rotation totaling approximately 360 degrees of accumulated yaw) shows the camera has returned to nearly the original angle\u2014the sports center building is now visible in the center-background with its pink and tan architecture, the yellow playground structures are prominent in the frame center, and the overall composition matches the initial view with the facility, sign area, and playground equipment restored to the original centered perspective. The intended odometry confirms 360 degrees of accumulated yaw rotation, and visual inspection of the current frame shows the camera has returned to face the original direction with the Shihai Street Sports Center facility, sign, and playground area restored to the original centered view. The 360-degree rotation goal has been visually completed.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4AtzfEu5osaT2mUbG8A",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 5555,
+          "output_tokens": 258,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"Visual comparison confirms the goal is achieved. The initial image shows the Shihai Street Sports Center sign centered and clearly visible with the pink sports center building, yellow playground equipment frame, and full facility in comprehensive view. The current image (after 12 seconds of sustained RIGHT rotation totaling approximately 360 degrees of accumulated yaw) shows the camera has returned to nearly the original angle\\u2014the sports center building is now visible in the center-background with its pink and tan architecture, the yellow playground structures are prominent in the frame center, and the overall composition matches the initial view with the facility, sign area, and playground equipment restored to the original centered perspective. The intended odometry confirms 360 degrees of accumulated yaw rotation, and visual inspection of the current frame shows the camera has returned to face the original direction with the Shihai Street Sports Center facility, sign, and playground area restored to the original centered view. The 360-degree rotation goal has been visually completed.\"}]",
+        "prompt_sha256": "fbc110505a2a5b42fde3752d80194ba64b240661b0b2ea8c38dfcab66bb54918",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -4.05506770679017e-14,
+          "accumulated_yaw_degrees": 360.00000000000006,
+          "world_time_seconds": 12.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 255.40891828300002
+      }
+    ],
+    "chunks": [
+      {
+        "index": 0,
+        "path": "chunk-000.mp4",
+        "frames": 13,
+        "pixel_sha256": "8629502edd277cf185987349031b6998e5f9c612046fef0adf2a973ba27a8d9a",
+        "elapsed_s": 129.71581100100002,
+        "sha256": "b060f8e75ac2a116d125f4cc6ce311b2b5d3abea5aa27c9c2a72142a658f3266"
+      },
+      {
+        "index": 1,
+        "path": "chunk-001.mp4",
+        "frames": 16,
+        "pixel_sha256": "bceba81063a6fbb4915591e28c205987a1775826b44b6cb495c5e36c2e76a730",
+        "elapsed_s": 137.076635864,
+        "sha256": "09987b2075476b7bb39cf52712b3a2536c075a13523f763f3113a9a833068533"
+      },
+      {
+        "index": 2,
+        "path": "chunk-002.mp4",
+        "frames": 16,
+        "pixel_sha256": "265c3de5dd139699935bd8aac0e34edcfd43a772848c9c54cc85f6b1f8fa4e7a",
+        "elapsed_s": 145.531499296,
+        "sha256": "ba82ec45c3570d2169b5ae9308f667fe74bb192b06066e4bd0069e04986979d9"
+      },
+      {
+        "index": 3,
+        "path": "chunk-003.mp4",
+        "frames": 16,
+        "pixel_sha256": "ff24d04337111660fb86b0fe78166b54c5247df32c0ad8f9cf07b75f2e811d5d",
+        "elapsed_s": 155.197302767,
+        "sha256": "e2d0f8f5c0c7b8f757924509506767f129fb6349434d81938c3be463f1c7be3c"
+      },
+      {
+        "index": 4,
+        "path": "chunk-004.mp4",
+        "frames": 16,
+        "pixel_sha256": "0283ff59375d2a95fdab0e8a71a7e5e4ee597d7fba598a7145cd6a1baacbb8ff",
+        "elapsed_s": 165.062958444,
+        "sha256": "4abb2b2f56ab99c10f995fe35ee6ee1f2307fb788fd039d9c2c60bdc3ae083ce"
+      },
+      {
+        "index": 5,
+        "path": "chunk-005.mp4",
+        "frames": 16,
+        "pixel_sha256": "810feb2295bd237fbb8150325389c0af08a88bbd89a3f546046c5a1841b0dc28",
+        "elapsed_s": 175.094523305,
+        "sha256": "77a7a7856834a01f6e772acab74cf456e02835ea06848ef7374b5f64d805433a"
+      },
+      {
+        "index": 6,
+        "path": "chunk-006.mp4",
+        "frames": 16,
+        "pixel_sha256": "155b0b0b664f03eac49d4ae89abd05c26d3b2eb976a8e0ab6db8a16d233a8bca",
+        "elapsed_s": 185.67278259100001,
+        "sha256": "a8c7bbd46a0bec74bbcbc6e997e1fbc483c37c7dad7341b10a87dee27e4fca46"
+      },
+      {
+        "index": 7,
+        "path": "chunk-007.mp4",
+        "frames": 16,
+        "pixel_sha256": "7149c391c725b3754811030632c099bf62f23fd92f9add77fd9ea55a942a3b26",
+        "elapsed_s": 196.506478554,
+        "sha256": "9be349cdd100e222e8a52cdca3ce6d80cb639b69c98bdfbeeb4735186858d989"
+      },
+      {
+        "index": 8,
+        "path": "chunk-008.mp4",
+        "frames": 16,
+        "pixel_sha256": "b440734be16ef52d5373be9f988f3fcb9432fb56b263d3c34aa5a8abd88153e6",
+        "elapsed_s": 207.28088404800002,
+        "sha256": "1db7646fcf803b7547c618ad5427892761669e52bd001aee3404908665ee5fa3"
+      },
+      {
+        "index": 9,
+        "path": "chunk-009.mp4",
+        "frames": 16,
+        "pixel_sha256": "524d59a0edccc6248fc6b2598b15612c490a32580f30483755f80e32a9cdf849",
+        "elapsed_s": 217.82068023,
+        "sha256": "8b71ce25cd465206f19ff12d87fe87471c38831a49bed65945055a2f0fe07982"
+      },
+      {
+        "index": 10,
+        "path": "chunk-010.mp4",
+        "frames": 16,
+        "pixel_sha256": "ba84a9cd02776f4711f636e94ac282703c6b8392c2ff9d0afc3bb45179f5f4f7",
+        "elapsed_s": 229.26568187700002,
+        "sha256": "904e0a03cb3d5900f93dbe008f7dd7dc7c1219a073caf47bfc548caea9ca4734"
+      },
+      {
+        "index": 11,
+        "path": "chunk-011.mp4",
+        "frames": 16,
+        "pixel_sha256": "fb77a27fb1cfa24672be3070e4deb5516b22659a173e9a037f5c173f958aff2b",
+        "elapsed_s": 241.02202934599998,
+        "sha256": "2c06d67cd437b704522c7d565fa709bcca0955bf6376abf1b40552c302db60e3"
+      },
+      {
+        "index": 12,
+        "path": "chunk-012.mp4",
+        "frames": 16,
+        "pixel_sha256": "820d2b57096daf4007837e2c053806047a97aac9b5e7fecacf2b9c442f772890",
+        "elapsed_s": 251.596350241,
+        "sha256": "2b3c750e401d9845b5b58653f12c1f043d5b65c1329dbbf9b3552d18ad248fbe"
+      }
+    ],
+    "published_score_reproduced": false,
+    "agent_interactions": 13,
+    "adapter_sha256": "35c49341324e32df21f428b7413921183eb429a88376f67317c1897e20aa591a",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+    "deviations": [
+      "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+      "Reconstructed Haiku reference-guided prompt and camera mapping: 30 deg/s turns, unit-normalized translations",
+      "Official 480p demo area; single NVIDIA H200, BF16 and valid-length SDPA backend",
+      "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+      "Claude diagnostic scoring differs from published Gemini judgments"
+    ],
+    "hardware": {
+      "gpu": "NVIDIA H200",
+      "torch": "2.6.0+cu124",
+      "cuda": "12.4"
+    },
+    "attention_backend": "sdpa",
+    "optional_torch_dlpack_addon_disabled": false,
+    "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+    "checkpoint_loading": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "mismatched_keys": [],
+      "error_msgs": []
+    },
+    "generated_frames": 205,
+    "generated_seconds": 12.8125,
+    "termination": "agent_end",
+    "elapsed_s": 255.414237949,
+    "camera_diagnostics": {
+      "chunks": 13,
+      "path_length": 0.0,
+      "net_yaw_degrees": 359.99999999999994,
+      "total_turn_degrees": 359.99999999999994,
+      "max_distance_from_start": 0.0,
+      "final_distance_from_start": 0.0,
+      "revisited_start_at_chunk": null,
+      "wait_chunks": 1,
+      "wait_pose_changes": 0
+    },
+    "peak_allocated_bytes": 72660566528
+  },
+  "frozen_plan_sha256": "aec651782d515e623b492b6a5fbe31e1c060937e2dea022a81bb1d9492eb39c5",
+  "source_revision": "660fa4e93e0b70f4a2df6b7488785d11634ff17e",
+  "scope": "Local adaptive pilot, not published AgentPlayer score reproduction",
+  "recovery": {
+    "app_id": "ap-yY53XWk9vVv06TFqpIElH0",
+    "local_entrypoint_exit_code": 143,
+    "source_hashes_verified": true,
+    "raw_run_sha256": "85a2a0ed581a6b14e28acbfb01fd013d5277aaecbbeb48458423036db3b52a88"
+  }
+}

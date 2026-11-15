@@ -1,0 +1,842 @@
+{
+  "mode": "stock",
+  "seed": 42,
+  "workspace": "nissan-pow",
+  "result_directory": "adaptive-four-view-stock-GC027-seed42-1794720685569774863",
+  "returncode": 0,
+  "run": {
+    "status": "completed",
+    "model": "LingBot-World2 14B causal-fast stock",
+    "protocol_id": "lingbot-world2-adaptive-four-view-pilot-v1",
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "initial_image_sha256": "cfe324c6dacbb91123a74ad7d5c80f75fe4bd5e3cfd040af201e4ee0742cd33f",
+    "image_caption_sha256": "58e9282a2acfdc3b580ea4b33b69ea092305a35869f31226b2981a2e17cbcf65",
+    "task_id": "GC027",
+    "split": "gc",
+    "seed": 42,
+    "turn_degrees_per_second": 30.0,
+    "fps": 16,
+    "max_chunks": 40,
+    "max_interactions": 40,
+    "native_fixed_controls": false,
+    "camera_embedding_audit": [],
+    "pose_retrieval": false,
+    "sink_rephase": false,
+    "adaptive_retrieval_pilot": true,
+    "player_temperature": "provider default",
+    "initial_neutral_bootstrap": true,
+    "kv_retention": false,
+    "decoprune": false,
+    "reanchor": false,
+    "budget_memory": false,
+    "denoise_schedule": "stock",
+    "text_encoder_offloaded_after_encoding": true,
+    "stationary_wait_only": false,
+    "fixed_actions": null,
+    "quantization": "none",
+    "cuda_allocator_configuration": "expandable_segments:True",
+    "max_area": 399360,
+    "chunk_size": 4,
+    "local_attn_size": 18,
+    "sink_size": 6,
+    "decision_interval": 1,
+    "stock_knobs": true,
+    "controlled_ablation": false,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "actions": [
+      {
+        "operation": "KEEP",
+        "action": "WAIT",
+        "reason": "declared neutral bootstrap",
+        "bootstrap": true,
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.0,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 111.437895078,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "The goal requires a 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9450ms (9.45 seconds). At 30 degrees per second, this should provide approximately 283.5 degrees of rotation. After the initial WAIT bootstrap (0.8125s elapsed), I must continue with the RIGHT action to accumulate the full 360-degree rotation. The images show nearly identical framing of the Shilhai Street Sports Center, consistent with very early-stage rotation where visual changes are minimal. Continuing RIGHT will progress the camera rotation as planned.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4AiXngHNX4aKg3c8vJj",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2753,
+          "output_tokens": 186,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"The goal requires a 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9450ms (9.45 seconds). At 30 degrees per second, this should provide approximately 283.5 degrees of rotation. After the initial WAIT bootstrap (0.8125s elapsed), I must continue with the RIGHT action to accumulate the full 360-degree rotation. The images show nearly identical framing of the Shilhai Street Sports Center, consistent with very early-stage rotation where visual changes are minimal. Continuing RIGHT will progress the camera rotation as planned.\"}]",
+        "prompt_sha256": "5c450a61b58c3f38ca1c559e619a4a4be3debbb4bf1a1cd9f32733ad388a9451",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 0.0,
+          "accumulated_yaw_degrees": 0.0,
+          "world_time_seconds": 0.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 119.772861741,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 30.000000000000004,
+          "accumulated_yaw_degrees": 29.999999999999996,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "The goal requires rotating the camera 360 degrees and returning to the original view. The reference plan calls for holding RIGHT for 9.45 seconds total. With elapsed_commanded_seconds at 1.812s and current_action_held_seconds at 1s, I have completed approximately 1.8s of rotation (about 54 degrees from the initial position). The latest image shows the camera has rotated rightward\u2014the view now shows the sports center from a different angle with the sign partially visible on the left, the yellow railing prominent on the right side, and a red umbrella visible in the upper right. This confirms active rightward rotation is progressing. To complete the full 360-degree rotation, I must continue holding RIGHT. Approximately 7.65 seconds remain to accumulate the full 360 degrees (at ~30 degrees/second rotation rate). KEEP the current RIGHT action.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4AjAFRMQERsVapQzMLC",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 2905,
+          "output_tokens": 252,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"The goal requires rotating the camera 360 degrees and returning to the original view. The reference plan calls for holding RIGHT for 9.45 seconds total. With elapsed_commanded_seconds at 1.812s and current_action_held_seconds at 1s, I have completed approximately 1.8s of rotation (about 54 degrees from the initial position). The latest image shows the camera has rotated rightward\\u2014the view now shows the sports center from a different angle with the sign partially visible on the left, the yellow railing prominent on the right side, and a red umbrella visible in the upper right. This confirms active rightward rotation is progressing. To complete the full 360-degree rotation, I must continue holding RIGHT. Approximately 7.65 seconds remain to accumulate the full 360 degrees (at ~30 degrees/second rotation rate). KEEP the current RIGHT action.\"}]",
+        "prompt_sha256": "0041eb9daaa90a5be19df0d78c3a1ec8ab68a38e329cb6839b2337cc7aa694d4",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 30.000000000000004,
+          "accumulated_yaw_degrees": 29.999999999999996,
+          "world_time_seconds": 1.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 128.81611293499998,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 59.999999999999986,
+          "accumulated_yaw_degrees": 59.99999999999999,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "The goal requires a complete 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9.45 seconds total. With elapsed_commanded_seconds at 2.812s and current_action_held_seconds at 2s, approximately 2.8s of rotation has been completed (roughly 84 degrees at 30\u00b0/second). The latest image confirms significant rightward rotation: the camera now shows a close-up view of playground equipment (the red umbrella structure and yellow railings) whereas the initial image showed the full Shilhai Street Sports Center sign and building frontage. This visual progression confirms active camera rotation. To achieve the full 360-degree rotation, I must continue holding RIGHT for approximately 6.65 more seconds (to reach 9.45 total). The current motion trajectory and visual evidence support continuing the RIGHT action to complete the rotation cycle.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4Ajs74kHD4iHsVJivbj",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3118,
+          "output_tokens": 251,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"The goal requires a complete 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9.45 seconds total. With elapsed_commanded_seconds at 2.812s and current_action_held_seconds at 2s, approximately 2.8s of rotation has been completed (roughly 84 degrees at 30\\u00b0/second). The latest image confirms significant rightward rotation: the camera now shows a close-up view of playground equipment (the red umbrella structure and yellow railings) whereas the initial image showed the full Shilhai Street Sports Center sign and building frontage. This visual progression confirms active camera rotation. To achieve the full 360-degree rotation, I must continue holding RIGHT for approximately 6.65 more seconds (to reach 9.45 total). The current motion trajectory and visual evidence support continuing the RIGHT action to complete the rotation cycle.\"}]",
+        "prompt_sha256": "4cf96b9c633d5c342d6236104d35344868a29f710baba9e5b7621466c1f3b9f0",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 59.999999999999986,
+          "accumulated_yaw_degrees": 59.99999999999999,
+          "world_time_seconds": 2.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 137.786151408,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 89.99999999999997,
+          "accumulated_yaw_degrees": 90.0,
+          "world_time_seconds": 3.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "The goal requires a complete 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9450ms (9.45 seconds). Current elapsed_commanded_seconds is 3.812s, and current_action_held_seconds is 3s. At 30 degrees per second rotation rate, approximately 90 degrees of rotation has been accumulated so far. The initial image showed the Shilhai Street Sports Center frontage with the sign clearly visible and the building in the background. The latest image shows a close-up of playground equipment (structures with \"BARBECUE\" sign, pink umbrella roof, yellow and white railings), confirming significant rightward camera rotation. To complete the full 360-degree cycle, approximately 5.65 more seconds of RIGHT rotation remain needed (9.45s - 3.812s \u2248 5.64s). This will total approximately 270 degrees of rotation, approaching the 360-degree return. KEEP the RIGHT action to continue the rotation toward returning to the original view.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4AkZ6N9mwVhxB3TLL4Z",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3326,
+          "output_tokens": 288,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"The goal requires a complete 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9450ms (9.45 seconds). Current elapsed_commanded_seconds is 3.812s, and current_action_held_seconds is 3s. At 30 degrees per second rotation rate, approximately 90 degrees of rotation has been accumulated so far. The initial image showed the Shilhai Street Sports Center frontage with the sign clearly visible and the building in the background. The latest image shows a close-up of playground equipment (structures with \\\"BARBECUE\\\" sign, pink umbrella roof, yellow and white railings), confirming significant rightward camera rotation. To complete the full 360-degree cycle, approximately 5.65 more seconds of RIGHT rotation remain needed (9.45s - 3.812s \\u2248 5.64s). This will total approximately 270 degrees of rotation, approaching the 360-degree return. KEEP the RIGHT action to continue the rotation toward returning to the original view.\"}]",
+        "prompt_sha256": "bcec40db8bf021e071ae0c3b554465dbea7c638744279102094bd49ab339986e",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 89.99999999999997,
+          "accumulated_yaw_degrees": 90.0,
+          "world_time_seconds": 3.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 147.25736897299998,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 119.99999999999999,
+          "accumulated_yaw_degrees": 119.99999999999999,
+          "world_time_seconds": 4.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "The goal requires a complete 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9.45 seconds total. Current elapsed_commanded_seconds is 4.812s with current_action_held_seconds at 4s. At 30 degrees per second, approximately 120 degrees of rotation has been completed. The latest image shows playground equipment with yellow railings, white railings, and dark buildings in the background, confirming continued rightward rotation from the initial sports center frontage view. Approximately 4.64 seconds remain (9.45 - 4.812 \u2248 4.64s) to complete the full 360-degree rotation. The visual progression confirms active rightward camera rotation is ongoing and progressing correctly. KEEP the RIGHT action to continue accumulating the remaining ~240 degrees needed to return to the original view.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4AmGehGsqFnZ5BeY6pq",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3579,
+          "output_tokens": 250,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"The goal requires a complete 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9.45 seconds total. Current elapsed_commanded_seconds is 4.812s with current_action_held_seconds at 4s. At 30 degrees per second, approximately 120 degrees of rotation has been completed. The latest image shows playground equipment with yellow railings, white railings, and dark buildings in the background, confirming continued rightward rotation from the initial sports center frontage view. Approximately 4.64 seconds remain (9.45 - 4.812 \\u2248 4.64s) to complete the full 360-degree rotation. The visual progression confirms active rightward camera rotation is ongoing and progressing correctly. KEEP the RIGHT action to continue accumulating the remaining ~240 degrees needed to return to the original view.\"}]",
+        "prompt_sha256": "84cf4d0d7d380cc6f3166156b7bc2457084a5b3c7110e2913b5d2e911e7b6944",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 119.99999999999999,
+          "accumulated_yaw_degrees": 119.99999999999999,
+          "world_time_seconds": 4.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 156.60545418799998,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 150.0,
+          "accumulated_yaw_degrees": 149.99999999999997,
+          "world_time_seconds": 5.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "The goal requires a complete 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9.45 seconds total. Current elapsed_commanded_seconds is 5.812s with current_action_held_seconds at 5s. At 30 degrees per second, approximately 150 degrees of rotation has been completed (5 seconds \u00d7 30\u00b0/s = 150\u00b0). The initial image showed the Shilhai Street Sports Center frontage with the sign clearly visible, yellow railings, and building background. The latest image shows playground equipment (slides, climbing structures, yellow railings, platforms) from a different angle\u2014confirming significant rightward camera rotation has occurred. Approximately 3.64 seconds remain (9.45 - 5.812 \u2248 3.64s) to complete the full 360-degree rotation and return to the original view. The visual progression confirms active rightward rotation is progressing correctly. KEEP the RIGHT action to continue accumulating the remaining ~210 degrees needed to complete the 360-degree cycle.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4AmxhipB811A7gGkMMR",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 3786,
+          "output_tokens": 293,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"The goal requires a complete 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9.45 seconds total. Current elapsed_commanded_seconds is 5.812s with current_action_held_seconds at 5s. At 30 degrees per second, approximately 150 degrees of rotation has been completed (5 seconds \\u00d7 30\\u00b0/s = 150\\u00b0). The initial image showed the Shilhai Street Sports Center frontage with the sign clearly visible, yellow railings, and building background. The latest image shows playground equipment (slides, climbing structures, yellow railings, platforms) from a different angle\\u2014confirming significant rightward camera rotation has occurred. Approximately 3.64 seconds remain (9.45 - 5.812 \\u2248 3.64s) to complete the full 360-degree rotation and return to the original view. The visual progression confirms active rightward rotation is progressing correctly. KEEP the RIGHT action to continue accumulating the remaining ~210 degrees needed to complete the 360-degree cycle.\"}]",
+        "prompt_sha256": "2250b1fc04e767c784a21c8d3c2d27ce5b3898366e7b6630be00e700ced2dc06",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 150.0,
+          "accumulated_yaw_degrees": 149.99999999999997,
+          "world_time_seconds": 5.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 167.286819614,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 180.0,
+          "accumulated_yaw_degrees": 179.99999999999997,
+          "world_time_seconds": 6.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "The goal requires a complete 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9.45 seconds total. Current elapsed_commanded_seconds is 6.812s with current_action_held_seconds at 6s. At 30 degrees per second, approximately 180 degrees of rotation has been completed (6 seconds \u00d7 30\u00b0/s = 180\u00b0). The initial image showed the Shilhai Street Sports Center frontage with the sign clearly visible, yellow and white railings, and pink roof structure. The latest image shows playground equipment from the rear/side angle (climbing structures with red, yellow, and white railings, pink building visible in background, bare trees, yellow signage). This confirms significant rightward rotation\u2014approximately halfway through the 360-degree cycle. Approximately 2.64 seconds remain (9.45 - 6.812 \u2248 2.64s) to complete the full 360-degree rotation and return to the original view. Visual progression confirms active rightward rotation is progressing correctly toward the return to the original frontage view. KEEP the RIGHT action to continue accumulating the remaining ~180 degrees needed to complete the 360-degree cycle and return to the original angle facing the original view.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4AnkLMEvPN1Ztg1BstU",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 4040,
+          "output_tokens": 336,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"The goal requires a complete 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9.45 seconds total. Current elapsed_commanded_seconds is 6.812s with current_action_held_seconds at 6s. At 30 degrees per second, approximately 180 degrees of rotation has been completed (6 seconds \\u00d7 30\\u00b0/s = 180\\u00b0). The initial image showed the Shilhai Street Sports Center frontage with the sign clearly visible, yellow and white railings, and pink roof structure. The latest image shows playground equipment from the rear/side angle (climbing structures with red, yellow, and white railings, pink building visible in background, bare trees, yellow signage). This confirms significant rightward rotation\\u2014approximately halfway through the 360-degree cycle. Approximately 2.64 seconds remain (9.45 - 6.812 \\u2248 2.64s) to complete the full 360-degree rotation and return to the original view. Visual progression confirms active rightward rotation is progressing correctly toward the return to the original frontage view. KEEP the RIGHT action to continue accumulating the remaining ~180 degrees needed to complete the 360-degree cycle and return to the original angle facing the original view.\"}]",
+        "prompt_sha256": "df7c464fd556763837369b98d73789c25164b143728b2bcb101c34a5ec084094",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": 180.0,
+          "accumulated_yaw_degrees": 179.99999999999997,
+          "world_time_seconds": 6.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 177.76068998,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -150.00000000000003,
+          "accumulated_yaw_degrees": 209.99999999999997,
+          "world_time_seconds": 7.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "KEEP",
+        "action": "RIGHT",
+        "reason": "The goal requires a complete 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9.45 seconds total. Current elapsed_commanded_seconds is 7.812s with current_action_held_seconds at 7s. At 30 degrees per second, approximately 210 degrees of rotation has been completed (7 seconds \u00d7 30\u00b0/s = 210\u00b0). The initial image showed the Shilhai Street Sports Center frontage with the sign clearly visible, yellow railings, pink roof, and buildings in background. The latest image shows playground equipment from a different angle (slide structures, yellow and white railings, pink building, bare trees), confirming substantial rightward rotation is progressing. Approximately 1.64 seconds remain (9.45 - 7.812 \u2248 1.64s) to complete the full 360-degree rotation and return to the original view. At 30\u00b0/s, this remaining time will add approximately 49 degrees of rotation, totaling ~259 degrees\u2014approaching the 360-degree return point. The visual progression confirms active rightward rotation is progressing correctly toward completion. KEEP the RIGHT action to accumulate the remaining ~150 degrees needed to complete the 360-degree cycle and return to the original angle facing the original view.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4AoXDbnCffX8uVHB8PY",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 4341,
+          "output_tokens": 347,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"KEEP\", \"action\": \"RIGHT\", \"reason\": \"The goal requires a complete 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9.45 seconds total. Current elapsed_commanded_seconds is 7.812s with current_action_held_seconds at 7s. At 30 degrees per second, approximately 210 degrees of rotation has been completed (7 seconds \\u00d7 30\\u00b0/s = 210\\u00b0). The initial image showed the Shilhai Street Sports Center frontage with the sign clearly visible, yellow railings, pink roof, and buildings in background. The latest image shows playground equipment from a different angle (slide structures, yellow and white railings, pink building, bare trees), confirming substantial rightward rotation is progressing. Approximately 1.64 seconds remain (9.45 - 7.812 \\u2248 1.64s) to complete the full 360-degree rotation and return to the original view. At 30\\u00b0/s, this remaining time will add approximately 49 degrees of rotation, totaling ~259 degrees\\u2014approaching the 360-degree return point. The visual progression confirms active rightward rotation is progressing correctly toward completion. KEEP the RIGHT action to accumulate the remaining ~150 degrees needed to complete the 360-degree cycle and return to the original angle facing the original view.\"}]",
+        "prompt_sha256": "570fd3a0c5c8794f9e96ee3cf3391d7be81beaed7a1501771149075c8551da6e",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -150.00000000000003,
+          "accumulated_yaw_degrees": 209.99999999999997,
+          "world_time_seconds": 7.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 189.081216365,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -120.00000000000007,
+          "accumulated_yaw_degrees": 239.99999999999997,
+          "world_time_seconds": 8.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "The goal requires a complete 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9.45 seconds total. Current elapsed_commanded_seconds is 8.812s with current_action_held_seconds at 8s. At 30 degrees per second, approximately 240 degrees of rotation has been completed (8 seconds \u00d7 30\u00b0/s = 240\u00b0). The intended odometry shows accumulated_yaw_degrees at 240 degrees, confirming this calculation. The initial image showed the full Shilhai Street Sports Center frontage with the sign clearly visible, yellow railings, pink roof structure, and buildings in background. The latest image shows the playground equipment from a close-up angle (slide structures, blue and yellow railings, covered platform structures), confirming substantial rightward rotation. Approximately 0.64 seconds remain (9.45 - 8.812 \u2248 0.64s) to complete the full 360-degree rotation. At 30\u00b0/s, this will add approximately 19 degrees of rotation, totaling ~259 degrees. However, to achieve the full 360-degree cycle and return to the original view, approximately 120 degrees more of rotation are still needed. The reference plan duration (9.45s) should provide ~283.5 degrees, but visual completion requires returning to the original frontage view. EXTEND the RIGHT action to continue accumulating the remaining ~120 degrees needed to complete the 360-degree cycle and visually return to the original angle facing the original view.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4ApMSzSr6sodpUKUUoh",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 4649,
+          "output_tokens": 401,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"The goal requires a complete 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9.45 seconds total. Current elapsed_commanded_seconds is 8.812s with current_action_held_seconds at 8s. At 30 degrees per second, approximately 240 degrees of rotation has been completed (8 seconds \\u00d7 30\\u00b0/s = 240\\u00b0). The intended odometry shows accumulated_yaw_degrees at 240 degrees, confirming this calculation. The initial image showed the full Shilhai Street Sports Center frontage with the sign clearly visible, yellow railings, pink roof structure, and buildings in background. The latest image shows the playground equipment from a close-up angle (slide structures, blue and yellow railings, covered platform structures), confirming substantial rightward rotation. Approximately 0.64 seconds remain (9.45 - 8.812 \\u2248 0.64s) to complete the full 360-degree rotation. At 30\\u00b0/s, this will add approximately 19 degrees of rotation, totaling ~259 degrees. However, to achieve the full 360-degree cycle and return to the original view, approximately 120 degrees more of rotation are still needed. The reference plan duration (9.45s) should provide ~283.5 degrees, but visual completion requires returning to the original frontage view. EXTEND the RIGHT action to continue accumulating the remaining ~120 degrees needed to complete the 360-degree cycle and visually return to the original angle facing the original view.\"}]",
+        "prompt_sha256": "8280ca4c7184b4c180668a72ba4a05451ecac0c360839eb7a0d797026c820486",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -120.00000000000007,
+          "accumulated_yaw_degrees": 239.99999999999997,
+          "world_time_seconds": 8.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 200.96702288699998,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -90.00000000000006,
+          "accumulated_yaw_degrees": 270.0,
+          "world_time_seconds": 9.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "The goal requires a complete 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9.45 seconds total. Current elapsed_commanded_seconds is 9.75s with current_action_held_seconds at 9s. At 30 degrees per second, approximately 270 degrees of rotation has been completed (9 seconds \u00d7 30\u00b0/s = 270\u00b0), as confirmed by intended_odometry showing accumulated_yaw_degrees at 270.0. The initial image showed the full Shilhai Street Sports Center frontage with the sign clearly visible, yellow railings, pink roof structure, and buildings in background. The latest image shows the playground equipment from a different perspective (elevated platform structures, blue/yellow/white railings, equipment closer up), confirming substantial rightward rotation. However, 270 degrees means we are 90 degrees short of the full 360-degree return to the original frontage view. The reference plan specified 9.45 seconds, but at 30\u00b0/s that provides only ~283.5 degrees of rotation. We need approximately 3 more seconds (~90 degrees) to complete the full 360-degree cycle and return to the original angle facing the original view. EXTEND the RIGHT action to accumulate the remaining ~90 degrees needed to visually return to the original Sports Center frontage view.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4AqECDfY2NtqjV42oYK",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 5007,
+          "output_tokens": 357,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"The goal requires a complete 360-degree camera rotation returning to the original view. The reference plan calls for holding RIGHT for 9.45 seconds total. Current elapsed_commanded_seconds is 9.75s with current_action_held_seconds at 9s. At 30 degrees per second, approximately 270 degrees of rotation has been completed (9 seconds \\u00d7 30\\u00b0/s = 270\\u00b0), as confirmed by intended_odometry showing accumulated_yaw_degrees at 270.0. The initial image showed the full Shilhai Street Sports Center frontage with the sign clearly visible, yellow railings, pink roof structure, and buildings in background. The latest image shows the playground equipment from a different perspective (elevated platform structures, blue/yellow/white railings, equipment closer up), confirming substantial rightward rotation. However, 270 degrees means we are 90 degrees short of the full 360-degree return to the original frontage view. The reference plan specified 9.45 seconds, but at 30\\u00b0/s that provides only ~283.5 degrees of rotation. We need approximately 3 more seconds (~90 degrees) to complete the full 360-degree cycle and return to the original angle facing the original view. EXTEND the RIGHT action to accumulate the remaining ~90 degrees needed to visually return to the original Sports Center frontage view.\"}]",
+        "prompt_sha256": "7e0c04046d76a1589d02e34b1e02345beb2aa063e21c07941e6a3c1dc6a3d5d7",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -90.00000000000006,
+          "accumulated_yaw_degrees": 270.0,
+          "world_time_seconds": 9.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 211.679522792,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -60.000000000000036,
+          "accumulated_yaw_degrees": 300.0,
+          "world_time_seconds": 10.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "The goal requires a complete 360-degree camera rotation returning to the original view. Current elapsed_commanded_seconds is 10.75s with current_action_held_seconds at 10s. At 30 degrees per second, approximately 300 degrees of rotation has been completed (10 seconds \u00d7 30\u00b0/s = 300\u00b0), as confirmed by intended_odometry showing accumulated_yaw_degrees at 300.0 and heading_degrees at -60 degrees. The initial image showed the full Shilhai Street Sports Center frontage with the yellow sign clearly visible, pink roof, white railings, and buildings in background. The latest image shows the playground equipment from an elevated perspective (white and yellow railings, blue slide, yellow swing bar, dark stairs), confirming significant rightward rotation. However, 300 degrees means we are 60 degrees short of the full 360-degree return to the original frontage view. We need approximately 2 more seconds (~60 degrees) to complete the full 360-degree cycle and return to the original angle facing the original Sports Center sign. EXTEND the RIGHT action to accumulate the remaining ~60 degrees needed to visually return to the original frontage view.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4Ar21WR3DpATNBQBzPS",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 5325,
+          "output_tokens": 321,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"The goal requires a complete 360-degree camera rotation returning to the original view. Current elapsed_commanded_seconds is 10.75s with current_action_held_seconds at 10s. At 30 degrees per second, approximately 300 degrees of rotation has been completed (10 seconds \\u00d7 30\\u00b0/s = 300\\u00b0), as confirmed by intended_odometry showing accumulated_yaw_degrees at 300.0 and heading_degrees at -60 degrees. The initial image showed the full Shilhai Street Sports Center frontage with the yellow sign clearly visible, pink roof, white railings, and buildings in background. The latest image shows the playground equipment from an elevated perspective (white and yellow railings, blue slide, yellow swing bar, dark stairs), confirming significant rightward rotation. However, 300 degrees means we are 60 degrees short of the full 360-degree return to the original frontage view. We need approximately 2 more seconds (~60 degrees) to complete the full 360-degree cycle and return to the original angle facing the original Sports Center sign. EXTEND the RIGHT action to accumulate the remaining ~60 degrees needed to visually return to the original frontage view.\"}]",
+        "prompt_sha256": "5d262364e0e86905d5f60129d4f087a580db210c3bfbb19d2bf8e93ca72d2ad6",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -60.000000000000036,
+          "accumulated_yaw_degrees": 300.0,
+          "world_time_seconds": 10.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 222.04759210199998,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -30.00000000000003,
+          "accumulated_yaw_degrees": 330.00000000000006,
+          "world_time_seconds": 11.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "EXTEND",
+        "action": "RIGHT",
+        "reason": "The goal requires a complete 360-degree camera rotation returning to the original view. Current elapsed_commanded_seconds is 11.812s with current_action_held_seconds at 11s. At 30 degrees per second, approximately 330 degrees of rotation has been completed (11 seconds \u00d7 30\u00b0/s = 330\u00b0), as confirmed by intended_odometry showing accumulated_yaw_degrees at 330.0 and heading_degrees at -30 degrees.\n\nComparing images:\n- Initial image (first reference): Shows the full Shilhai Street Sports Center frontage with the yellow sign clearly visible, pink roof structure, white railings, yellow playground equipment, and buildings in background\n- Current latest image: Shows a close-up of playground equipment with a blue slide, yellow and white railings, and red flags\u2014a significantly different perspective\n\nAt 330 degrees, we are only 30 degrees short of the full 360-degree return to the original frontage view. Approximately 1 more second (~30 degrees) is needed to complete the full 360-degree cycle and return to the original angle facing the Shilhai Street Sports Center sign. The visual evidence confirms we are approaching the completion point but have not yet returned to the original frontage view.\n\nEXTEND the RIGHT action to accumulate the final ~30 degrees needed to visually return to the original Sports Center frontage view and complete the 360-degree rotation goal.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4ArnUCj923YCgMxYF86",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 5611,
+          "output_tokens": 373,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"EXTEND\", \"action\": \"RIGHT\", \"reason\": \"The goal requires a complete 360-degree camera rotation returning to the original view. Current elapsed_commanded_seconds is 11.812s with current_action_held_seconds at 11s. At 30 degrees per second, approximately 330 degrees of rotation has been completed (11 seconds \\u00d7 30\\u00b0/s = 330\\u00b0), as confirmed by intended_odometry showing accumulated_yaw_degrees at 330.0 and heading_degrees at -30 degrees.\\n\\nComparing images:\\n- Initial image (first reference): Shows the full Shilhai Street Sports Center frontage with the yellow sign clearly visible, pink roof structure, white railings, yellow playground equipment, and buildings in background\\n- Current latest image: Shows a close-up of playground equipment with a blue slide, yellow and white railings, and red flags\\u2014a significantly different perspective\\n\\nAt 330 degrees, we are only 30 degrees short of the full 360-degree return to the original frontage view. Approximately 1 more second (~30 degrees) is needed to complete the full 360-degree cycle and return to the original angle facing the Shilhai Street Sports Center sign. The visual evidence confirms we are approaching the completion point but have not yet returned to the original frontage view.\\n\\nEXTEND the RIGHT action to accumulate the final ~30 degrees needed to visually return to the original Sports Center frontage view and complete the 360-degree rotation goal.\"}]",
+        "prompt_sha256": "8fd08555c68ca21dbe77237c1ff2aed19dd500da557b55ffbeeb397e7f3c7b80",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -30.00000000000003,
+          "accumulated_yaw_degrees": 330.00000000000006,
+          "world_time_seconds": 11.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 233.59025688,
+        "pose_after": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -4.05506770679017e-14,
+          "accumulated_yaw_degrees": 360.00000000000006,
+          "world_time_seconds": 12.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        }
+      },
+      {
+        "operation": "END",
+        "action": null,
+        "reason": "The goal requires rotating the camera 360 degrees in place and returning to the original angle facing the original view. Visual comparison confirms success:\n\nINITIAL IMAGE: Shows the full Shilhai Street Sports Center frontage with the yellow sign clearly visible reading \"SHILHAI STREET SPORTS CENTER\", pink roof structure, white railings, yellow playground equipment, bare trees, and residential buildings in the background.\n\nLATEST IMAGE: Shows the same Shilhai Street Sports Center sign prominently displayed with identical framing, the pink roof structure, white railings, yellow playground equipment (slide visible on right), and the same building backgrounds. The playground equipment, signage position, and environmental context match the initial image.\n\nINTENDED ODOMETRY CONFIRMATION: The accumulated_yaw_degrees shows 360.0 degrees (within floating-point precision of 360.00000000000006), with heading_degrees at -4.055e-14 (essentially 0 degrees), confirming a complete 360-degree rotation returning to the original heading.\n\nVISUAL EVIDENCE: The latest image displays the identical scene composition, signage, structures, and spatial relationships as the initial reference image. The camera has rotated a full circle and returned to face the original direction, with the Sports Center frontage now clearly visible again after touring the full 360-degree rotation around the facility.\n\nThe goal is visually and odometrically complete. All 360 degrees of rotation have been executed, and the camera has returned to the original angle facing the original view of the Shilhai Street Sports Center.",
+        "model": "claude-haiku-4-5-20251001",
+        "response_id": "msg_011Ch4Asdg998ZyjH3BEJySd",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 5959,
+          "output_tokens": 395,
+          "output_tokens_details": null,
+          "server_tool_use": null,
+          "service_tier": "standard",
+          "speed": "standard"
+        },
+        "raw_response": "[{\"operation\": \"END\", \"action\": \"NONE\", \"reason\": \"The goal requires rotating the camera 360 degrees in place and returning to the original angle facing the original view. Visual comparison confirms success:\\n\\nINITIAL IMAGE: Shows the full Shilhai Street Sports Center frontage with the yellow sign clearly visible reading \\\"SHILHAI STREET SPORTS CENTER\\\", pink roof structure, white railings, yellow playground equipment, bare trees, and residential buildings in the background.\\n\\nLATEST IMAGE: Shows the same Shilhai Street Sports Center sign prominently displayed with identical framing, the pink roof structure, white railings, yellow playground equipment (slide visible on right), and the same building backgrounds. The playground equipment, signage position, and environmental context match the initial image.\\n\\nINTENDED ODOMETRY CONFIRMATION: The accumulated_yaw_degrees shows 360.0 degrees (within floating-point precision of 360.00000000000006), with heading_degrees at -4.055e-14 (essentially 0 degrees), confirming a complete 360-degree rotation returning to the original heading.\\n\\nVISUAL EVIDENCE: The latest image displays the identical scene composition, signage, structures, and spatial relationships as the initial reference image. The camera has rotated a full circle and returned to face the original direction, with the Sports Center frontage now clearly visible again after touring the full 360-degree rotation around the facility.\\n\\nThe goal is visually and odometrically complete. All 360 degrees of rotation have been executed, and the camera has returned to the original angle facing the original view of the Shilhai Street Sports Center.\"}]",
+        "prompt_sha256": "9fa0b481b4c0936fc365a761ae1b5b94fd31f7c997f509e648e2e8f049b76022",
+        "pose_before": {
+          "position_normalized_units": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "heading_degrees": -4.05506770679017e-14,
+          "accumulated_yaw_degrees": 360.00000000000006,
+          "world_time_seconds": 12.75,
+          "scope": "Intended camera commands only; not measured visual motion or goal completion."
+        },
+        "elapsed_s": 244.360162649
+      }
+    ],
+    "chunks": [
+      {
+        "index": 0,
+        "path": "chunk-000.mp4",
+        "frames": 13,
+        "pixel_sha256": "805d2cf820bb2eeed49d3bfe922e750cafaca4b7301d6741ba877cef2a811e58",
+        "elapsed_s": 115.72646608000001,
+        "sha256": "5115b8a328ab14d6a39c346378833c72ff7b7b26b5c13bc0bc6525d14beb5f5b"
+      },
+      {
+        "index": 1,
+        "path": "chunk-001.mp4",
+        "frames": 16,
+        "pixel_sha256": "26f86e1b3f72ced97826f2d8061279b8653c98ed98682389d65cc0a0f5f6a170",
+        "elapsed_s": 124.30731785100001,
+        "sha256": "a4c16391b4b7cf4f54793009d582c3c9015b4c5cd892b20750e554c84f380f0a"
+      },
+      {
+        "index": 2,
+        "path": "chunk-002.mp4",
+        "frames": 16,
+        "pixel_sha256": "7fbd64c2b20f86ad06bee776d789bc32dc9f3e15ea779b69c1081590e416cf38",
+        "elapsed_s": 133.84040652899998,
+        "sha256": "6f5df3454dc786339cd650bdee9a786b55160981826aacc067e37ef3d8753866"
+      },
+      {
+        "index": 3,
+        "path": "chunk-003.mp4",
+        "frames": 16,
+        "pixel_sha256": "713733fb490c722b3326bd88950e0d6c6577ccfe11c514ff42380d8b7f45d2fa",
+        "elapsed_s": 143.21097266299998,
+        "sha256": "4df3ca7985387fd86d6e5b3b1336be0982c9bb7af17669b0716f3060a0852730"
+      },
+      {
+        "index": 4,
+        "path": "chunk-004.mp4",
+        "frames": 16,
+        "pixel_sha256": "019f0ab9dc764b77922f7929aa212c6244e7f5a2c5b050f499fe2110d783d1f3",
+        "elapsed_s": 152.91395705399998,
+        "sha256": "e381e4805efb0a87b43153b82104cbc56b09c68d93d0ca20c79389cef8ab7e31"
+      },
+      {
+        "index": 5,
+        "path": "chunk-005.mp4",
+        "frames": 16,
+        "pixel_sha256": "9ea21a733e03f214e1d09163c698809cd35a5d0154de5b315333a313b0a5f930",
+        "elapsed_s": 162.277714199,
+        "sha256": "b2cf3efe616b440a265d115e299b8390d5d91b2218a9153a925ef6037380a567"
+      },
+      {
+        "index": 6,
+        "path": "chunk-006.mp4",
+        "frames": 16,
+        "pixel_sha256": "be8e62f458450eefe099e6f93952cf766168f20f96faf8d3ecf5b0fe52018e8c",
+        "elapsed_s": 172.956934405,
+        "sha256": "62a61545189ac57ebbb5c911a9d8b71d60a64293240106b435043b2389bae70b"
+      },
+      {
+        "index": 7,
+        "path": "chunk-007.mp4",
+        "frames": 16,
+        "pixel_sha256": "0286bc1d3cbcbb7f913527f538852f9984e3fe025fd12ef56b69aca7100a3587",
+        "elapsed_s": 183.43066602399998,
+        "sha256": "4e9b8832386f22649de5bdce56c3527292ef24d75c6cccdfa5abfcd2e2f54cdf"
+      },
+      {
+        "index": 8,
+        "path": "chunk-008.mp4",
+        "frames": 16,
+        "pixel_sha256": "2e84dcae2c1a62f86dc4e04396a0318086a38befbbef0e7d258c366de7f91796",
+        "elapsed_s": 194.744687755,
+        "sha256": "ba8b2496091d738ee0c36232e77a22104a736a47cefaa6fd00f39a037cbbc6ba"
+      },
+      {
+        "index": 9,
+        "path": "chunk-009.mp4",
+        "frames": 16,
+        "pixel_sha256": "e6e74ba7debe22f51705d2838e2f214ef85dd475fca2f6e04e9f7e32e9e64656",
+        "elapsed_s": 206.626624949,
+        "sha256": "a1522655e169e6da34e616c74375135542652c032c99050c0a866c67ba8d331f"
+      },
+      {
+        "index": 10,
+        "path": "chunk-010.mp4",
+        "frames": 16,
+        "pixel_sha256": "0f3ff137940ccb0faee486bc9876111b18466038c84f31b097c7cc6d8005e166",
+        "elapsed_s": 217.333453408,
+        "sha256": "facb277e8464c749dc3994d70846a7e053feaf3cc35883fac9000dc0a0342a49"
+      },
+      {
+        "index": 11,
+        "path": "chunk-011.mp4",
+        "frames": 16,
+        "pixel_sha256": "aab63bb6324df14979f43c298e61c72e0d6cc03f0a3c5054f61b14281c349100",
+        "elapsed_s": 227.73118054999998,
+        "sha256": "4ffde1df7b88da4dbb2b986b780f80b8decc1c58306c4b1615fd718fe1312250"
+      },
+      {
+        "index": 12,
+        "path": "chunk-012.mp4",
+        "frames": 16,
+        "pixel_sha256": "e86357639f3dcfb85fc8c2aedac3b8ce858f4616561fdfa72e527639a4e57428",
+        "elapsed_s": 239.23696097099997,
+        "sha256": "4dcf2a25df018e8d9b4294a6d79b6b91020ad700d04f3ac8b7236317fa51c675"
+      }
+    ],
+    "published_score_reproduced": false,
+    "agent_interactions": 13,
+    "adapter_sha256": "35c49341324e32df21f428b7413921183eb429a88376f67317c1897e20aa591a",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "player_sha256": "54fa480004b27333c662698e49122b969d6803a6c35240b1e6f9f103f9663875",
+    "deviations": [
+      "Hosted PlayWorld variant/settings not verified; official local 14B causal-fast checkpoint",
+      "Reconstructed Haiku reference-guided prompt and camera mapping: 30 deg/s turns, unit-normalized translations",
+      "Official 480p demo area; single NVIDIA H200, BF16 and valid-length SDPA backend",
+      "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
+      "Claude diagnostic scoring differs from published Gemini judgments"
+    ],
+    "hardware": {
+      "gpu": "NVIDIA H200",
+      "torch": "2.6.0+cu124",
+      "cuda": "12.4"
+    },
+    "attention_backend": "sdpa",
+    "optional_torch_dlpack_addon_disabled": false,
+    "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+    "checkpoint_loading": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "mismatched_keys": [],
+      "error_msgs": []
+    },
+    "generated_frames": 205,
+    "generated_seconds": 12.8125,
+    "termination": "agent_end",
+    "elapsed_s": 244.364090404,
+    "camera_diagnostics": {
+      "chunks": 13,
+      "path_length": 0.0,
+      "net_yaw_degrees": 359.99999999999994,
+      "total_turn_degrees": 359.99999999999994,
+      "max_distance_from_start": 0.0,
+      "final_distance_from_start": 0.0,
+      "revisited_start_at_chunk": null,
+      "wait_chunks": 1,
+      "wait_pose_changes": 0
+    },
+    "peak_allocated_bytes": 72660566528
+  },
+  "frozen_plan_sha256": "aec651782d515e623b492b6a5fbe31e1c060937e2dea022a81bb1d9492eb39c5",
+  "source_revision": "660fa4e93e0b70f4a2df6b7488785d11634ff17e",
+  "scope": "Local adaptive pilot, not published AgentPlayer score reproduction",
+  "recovery": {
+    "app_id": "ap-yY53XWk9vVv06TFqpIElH0",
+    "local_entrypoint_exit_code": 143,
+    "source_hashes_verified": true,
+    "raw_run_sha256": "234f7c1fa53b8f518ac7b01ad0797e5d72191955d8b0b96c93113b47011f13af"
+  }
+}

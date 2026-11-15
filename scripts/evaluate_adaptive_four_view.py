@@ -69,6 +69,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--memory", action="store_true")
     args = parser.parse_args()
+    judge_source = ROOT / "reproduction/adaptive-four-view/judge-source.json"
+    if judge_source.exists():
+        expected = json.loads(judge_source.read_text())
+        for name, digest in expected["files"].items():
+            if hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != digest:
+                raise ValueError(f"Judge source changed between paired arms: {name}")
     path = ROOT / "reproduction/adaptive-four-view-plan.json"
     plan = json.loads(path.read_text())
     plan_hash = hashlib.sha256(path.read_bytes()).hexdigest()
