@@ -1,6 +1,6 @@
 # WorldSync — two-minute research presentation
 
-Silent video: **worldsync-academic-2min.mp4**. All clips play at normal speed. Five short side-by-side comparisons follow the four-quadrant overview. Approximately260spoken words; timings below follow the revised cut.
+Silent video: **worldsync-academic-2min.mp4**. All clips play at normal speed. Five short side-by-side comparisons follow the four-quadrant overview. Approximately 275 spoken words; timings below follow the revised cut.
 
 ## 0:00–0:10 — Problem
 
@@ -32,11 +32,11 @@ Here is a second task: walk left into the pond. The corrected configuration impr
 
 ## 1:26–1:32 — Rowing
 
-The separate scene director gives the generator an event description. Here, it helps preserve the rowing action.
+A separate scene director describes expected events. Here, rowing stays coherent.
 
 ## 1:32–1:38 — Pouring
 
-Here it preserves pouring. These are selected positive examples from single primary judge calls, not an aggregate improvement.
+Pouring improves too. These selected examples use one primary judgment per video.
 
 ## 1:38–1:48 — Process failure
 
