@@ -24,7 +24,10 @@ def select_frames(poses, available, current_start, count=4):
 
 
 class PoseKVMemory:
-    def __init__(self, pipeline):
+    def __init__(self, pipeline, key_positions="virtual"):
+        if key_positions not in {"virtual", "native"}:
+            raise ValueError("key_positions must be virtual or native")
+        self.key_positions = key_positions
         from wan.modules import model_fast
         self.module = model_fast
         self.original_attention = model_fast.attention
@@ -74,7 +77,7 @@ class PoseKVMemory:
         if self.clean:
             if self.raw_key is None:
                 raise RuntimeError("canonical key capture missing")
-            raw = self.raw_key.view_as(query)
+            raw = self.raw_key.view_as(query) if self.key_positions == "virtual" else key[:, -query.shape[1]:]
             # Keep a bounded, explicit initial history. No hidden unbounded bank.
             for offset in range(query.shape[1] // frame_tokens):
                 index = first_frame + offset
@@ -95,9 +98,12 @@ class PoseKVMemory:
             retrieved_value = torch.cat([bank[index][1] for index in self.selected], dim=1).to(value.device)
             virtual_grid = grid.clone()
             virtual_grid[:, 0] = 4
-            with torch.amp.autocast("cuda", enabled=False):
-                retrieved_key = self.module.causal_rope_apply(canonical, virtual_grid, freqs,
-                    start_frame=first_frame - 8).to(key.dtype)
+            if self.key_positions == "native":
+                retrieved_key = canonical  # Exact original post-RoPE keys, no positional reassignment.
+            else:
+                with torch.amp.autocast("cuda", enabled=False):
+                    retrieved_key = self.module.causal_rope_apply(canonical, virtual_grid, freqs,
+                        start_frame=first_frame - 8).to(key.dtype)
             self.cached[layer] = (retrieved_key, retrieved_value)
         retrieved_key, retrieved_value = self.cached[layer]
         combined_key = torch.cat([key[:, :6 * frame_tokens], retrieved_key, key[:, -8 * frame_tokens:]], dim=1)
@@ -113,7 +119,9 @@ class PoseKVMemory:
                 "archive_limit_latent_frames": 16, "retrieved_latent_frames": 4,
                 "attended_latent_frames": 18, "sink_latent_frames": 6, "tail_latent_frames": 8,
                 "pose_source": "commanded poses, not reconstructed realized poses",
-                "key_storage": "canonical pre-RoPE BF16 keys; reapply spatial and virtual temporal RoPE on read",
+                "key_positions": self.key_positions,
+                "key_storage": ("exact native post-RoPE keys; original temporal/spatial positions retained" if self.key_positions == "native"
+                                else "canonical pre-RoPE BF16 keys; reapply spatial and virtual temporal RoPE on read"),
                 "archive_bytes": sum(k.numel() * k.element_size() + v.numel() * v.element_size()
                                      for bank in self.banks.values() for k, v in bank.values()),
                 "retrieval_attention_calls": self.retrieval_calls, "trace": self.trace}

@@ -16,7 +16,7 @@ def main():
     for name in ("stock_run", "candidate_run", "stock_video", "candidate_video", "output"):
         parser.add_argument("--" + name.replace("_", "-"), type=Path, required=True)
     parser.add_argument("--judge", action="store_true")
-    parser.add_argument("--comparison", choices=("retrieval", "context", "sink-rephase"), default="retrieval")
+    parser.add_argument("--comparison", choices=("retrieval", "context", "sink-rephase", "retrieval-native"), default="retrieval")
     parser.add_argument("--dino", action="store_true", help="Add pinned DINOv2-small endpoint feature similarity")
     args = parser.parse_args()
     candidate_label = "context34" if args.comparison == "context" else args.comparison

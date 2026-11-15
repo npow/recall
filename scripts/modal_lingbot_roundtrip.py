@@ -18,7 +18,7 @@ app = modal.App("worldsync-lingbot-roundtrip")
 
 @app.function(image=image, gpu="H200", cpu=8, memory=131072, timeout=1800, max_containers=2,
               volumes={"/cache": weights, "/results": results})
-def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", rephase_sink: bool = False):
+def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", rephase_sink: bool = False, retrieval_positions: str = "virtual"):
     import shutil
     import subprocess
     import time
@@ -29,7 +29,7 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
     target.parent.mkdir(exist_ok=True)
     if not target.exists():
         target.symlink_to("/cache/14b-causal-fast")
-    mode = "sink-rephase" if rephase_sink else ("retrieval" if retrieval else ("stock" if cache_frames == 18 else f"context{cache_frames}"))
+    mode = "sink-rephase" if rephase_sink else (("retrieval-native" if retrieval_positions == "native" else "retrieval") if retrieval else ("stock" if cache_frames == 18 else f"context{cache_frames}"))
     identifier = f"{mode}-{task_id}-{path_name}-seed{seed}-{time.time_ns()}"
     output = Path("/work/outputs") / identifier
     try:
@@ -37,7 +37,7 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
             "--task-id", task_id, "--seed", str(seed), "--max-chunks", str(len(actions)),
             "--native-fixed-controls", "--fixed-actions", *actions, "--output", str(output)]
         if retrieval:
-            command.append("--pose-retrieval")
+            command.extend(["--pose-retrieval", "--retrieval-positions", retrieval_positions])
         if rephase_sink:
             command.append("--rephase-sink")
         if cache_frames != 18:
@@ -55,7 +55,9 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
 
 
 @app.local_entrypoint()
-def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", validation: bool = False, rephase_sink: bool = False):
+def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", validation: bool = False, rephase_sink: bool = False, retrieval_positions: str = "virtual"):
+    if retrieval_positions not in {"native", "virtual"} or (retrieval_positions != "virtual" and not retrieval):
+        raise ValueError("native retrieval positions require retrieval mode")
     if cache_frames not in {18, 34} or ((retrieval or rephase_sink) and cache_frames != 18) or (retrieval and rephase_sink):
         raise ValueError("This declared pilot supports stock18, context34, or stock-budget retrieval")
     if validation:
@@ -68,8 +70,8 @@ def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False,
             output.write_text(json.dumps(result, indent=2) + "\n")
             print(json.dumps({k: v for k, v in result.items() if k != "run"}, indent=2), flush=True)
         return
-    result = generate.remote(path_name, seed, retrieval, cache_frames, task_id, rephase_sink)
-    mode = "sink-rephase" if rephase_sink else ("retrieval" if retrieval else ("stock" if cache_frames == 18 else f"context{cache_frames}"))
+    result = generate.remote(path_name, seed, retrieval, cache_frames, task_id, rephase_sink, retrieval_positions)
+    mode = "sink-rephase" if rephase_sink else (("retrieval-native" if retrieval_positions == "native" else "retrieval") if retrieval else ("stock" if cache_frames == 18 else f"context{cache_frames}"))
     scene = "" if task_id == "GC007" else f"{task_id}-"
     output = ROOT / "outputs/lingbot-reproduction" / f"native-{scene}{mode}-{path_name}-seed{seed}.json"
     output.write_text(json.dumps(result, indent=2) + "\n")

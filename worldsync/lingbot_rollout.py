@@ -31,6 +31,7 @@ def main():
     parser.add_argument("--native-fixed-controls", action="store_true", help="Use native precomputed poses and audit online camera embeddings")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--pose-retrieval", action="store_true", help="Experimental bounded early-view retrieval on native fixed paths")
+    parser.add_argument("--retrieval-positions", choices=("virtual", "native"), default="virtual")
     parser.add_argument("--rephase-sink", action="store_true", help="Experimental pose-gated native sink key rephasing")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--dry-run", action="store_true")
@@ -41,6 +42,8 @@ def main():
         parser.error("chunk budget must be in [1,60]")
     if args.native_fixed_controls and (not args.fixed_actions or len(args.fixed_actions) != args.max_chunks):
         parser.error("native fixed controls require exactly max-chunks fixed actions")
+    if args.retrieval_positions != "virtual" and not args.pose_retrieval:
+        parser.error("retrieval positions require --pose-retrieval")
     if args.pose_retrieval and args.rephase_sink:
         parser.error("memory ablations must be tested separately")
     if (args.pose_retrieval or args.rephase_sink) and not args.native_fixed_controls:
@@ -138,7 +141,7 @@ def main():
         camera = CameraPlan()
         if args.pose_retrieval:
             from worldsync.lingbot_retrieval import PoseKVMemory
-            memory = PoseKVMemory(pipeline)
+            memory = PoseKVMemory(pipeline, key_positions=args.retrieval_positions)
         elif args.rephase_sink:
             from worldsync.lingbot_sink_rephase import SinkRephaseMemory
             memory = SinkRephaseMemory(pipeline)

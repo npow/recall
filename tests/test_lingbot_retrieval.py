@@ -18,7 +18,7 @@ def test_retrieval_uses_only_old_non_sink_views_and_requires_camera_overlap():
     assert select_frames(poses[:8], range(8), 4) == []  # No future or sink leakage.
 
 
-@pytest.mark.parametrize("method", ["retrieval", "sink_rephase"])
+@pytest.mark.parametrize("method", ["retrieval", "retrieval_native", "sink_rephase"])
 def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds_memory(monkeypatch, method):
     import copy
     import sys
@@ -46,7 +46,8 @@ def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds
     candidate = copy.deepcopy(original)
     pipeline = SimpleNamespace(model=SimpleNamespace(blocks=[SimpleNamespace(self_attn=candidate)]))
     from worldsync.lingbot_sink_rephase import SinkRephaseMemory
-    memory = (PoseKVMemory if method == "retrieval" else SinkRephaseMemory)(pipeline)
+    memory = (PoseKVMemory(pipeline, key_positions="native" if method == "retrieval_native" else "virtual")
+              if method.startswith("retrieval") else SinkRephaseMemory(pipeline))
     def cache():
         return {"k": torch.zeros(1, 72, 4, 16), "v": torch.zeros(1, 72, 4, 16),
                 "global_end_index": torch.tensor([0]), "local_end_index": torch.tensor([0])}
@@ -56,7 +57,7 @@ def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds
     camera = CameraPlan()
     try:
         with torch.no_grad():
-            for chunk, action in enumerate(PATHS["round_trip" if method == "retrieval" else "turn_return"]):
+            for chunk, action in enumerate(PATHS["round_trip" if method.startswith("retrieval") else "turn_return"]):
                 camera.advance(action)
                 memory.begin(chunk, camera.poses)
                 memory.clean = True
@@ -67,7 +68,10 @@ def test_actual_native_attention_retains_stock_output_until_retrieval_and_bounds
                 if not memory.trace[-1]["attention_replaced"]:
                     torch.testing.assert_close(actual, expected, atol=0, rtol=0)
                 assert modified_cache["k"].shape == stock_cache["k"].shape
-                assert len(memory.banks[0]) <= (16 if method == "retrieval" else 6)
+                assert len(memory.banks[0]) <= (16 if method.startswith("retrieval") else 6)
+                if method == "retrieval_native" and chunk == 1:
+                    torch.testing.assert_close(memory.banks[0][6][0], stock_cache["k"][:, 24:28], atol=0, rtol=0)
+                    torch.testing.assert_close(memory.banks[0][7][0], stock_cache["k"][:, 28:32], atol=0, rtol=0)
                 if method == "sink_rephase":
                     torch.testing.assert_close(modified_cache["k"], stock_cache["k"], atol=0, rtol=0)
                     torch.testing.assert_close(modified_cache["v"], stock_cache["v"], atol=0, rtol=0)
