@@ -35,7 +35,9 @@ def evidence_content(prompt, artifacts, reference_image=None):
         from PIL import Image
         from io import BytesIO
         buffer = BytesIO()
-        Image.open(reference_image).convert("RGB").save(buffer, format="JPEG", quality=95)
+        reference = Image.open(reference_image).convert("RGB")
+        reference.thumbnail((2000, 2000))  # API rejects >3000 px in many-image requests; smaller images unchanged
+        reference.save(buffer, format="JPEG", quality=95)
         content.append({"type": "image", "source": {"type": "base64", "media_type": "image/jpeg", "data": base64.b64encode(buffer.getvalue()).decode()}})
     for stream in (artifacts.primary, artifacts.detail):
         spec = stream.spec
