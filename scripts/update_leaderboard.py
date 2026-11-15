@@ -178,7 +178,7 @@ def generate():
         lines.extend(["| Overall | GC | IF | In-sight | Out-of-sight | Scored |", "|---:|---:|---:|---:|---:|---:|",
             f"|{full['overall']:.2f}|{full['gc']:.2f}|{full['if']:.2f}|{full['insight']:.2f}|{full['outsight']:.2f}|{full['scored']}/171|", ""])
     else:
-        lines.extend(["Not scored yet: the 171-case run is in progress. No overall is reported until all four dimensions are covered.", ""])
+        lines.extend(["No completed 171-case result is available here. Partial runs do not establish an overall; all declared cases and all four dimensions are required.", ""])
     lines.extend(["## Claude — historical experiments", "",
         "Retained for audit; do not compare these numbers with Gemini or across different cohorts.", "",
         "| Cohort | Method | Score | Evidence |", "|---|---|---:|---|"])

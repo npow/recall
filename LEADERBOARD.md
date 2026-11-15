@@ -48,7 +48,7 @@ Same judge and prompts, but cohorts that mix splits and include moving-camera ca
 
 ### Full 171-case run (our local checkpoint, current player, caption text)
 
-Not scored yet: the 171-case run is in progress. No overall is reported until all four dimensions are covered.
+No completed 171-case result is available here. Partial runs do not establish an overall; all declared cases and all four dimensions are required.
 
 ## Claude — historical experiments
 
