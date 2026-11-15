@@ -114,7 +114,7 @@ def gate_and_one_case(run_id: str, case: str = "gc:GC007"):
 
 @app.function(image=image, gpu=os.environ.get("WORLDSYNC_GPU", "H200"), volumes={"/weights": weights, "/results": results},
     secrets=[modal.Secret.from_dict({"ANTHROPIC_API_KEY": _key()})], timeout=4 * 3600, max_containers=3)  # account GPU limit is believed to be 3
-def seed_case(run_id: str, seed: int, case: str = "gc:GC007", extra: tuple = ()):
+def seed_case(run_id: str, seed: int, case: str = "gc:GC007", extra: tuple = (), judge: bool = False):
     """One scored episode at one seed, through the suite code; gate is assumed passed."""
     out = Path("/results") / run_id / f"{case.replace(':', '-')}-seed{seed}"
     out.mkdir(parents=True, exist_ok=True)
@@ -124,7 +124,7 @@ def seed_case(run_id: str, seed: int, case: str = "gc:GC007", extra: tuple = ())
     if not link.exists():
         link.symlink_to("/weights/14b-causal-fast")
     start = time.monotonic()
-    code = sh([sys.executable, "-u", "-m", "worldsync.evaluate", "--model", "lingbot", "--only", case, "--judge",
+    code = sh([sys.executable, "-u", "-m", "worldsync.evaluate", "--model", "lingbot", "--only", case, *(["--judge"] if judge else []),
         "--seed", str(seed), *extra, "--output", str(out / "suite")], out / "suite.log")
     suite = json.loads((out / "suite/suite.json").read_text()) if (out / "suite/suite.json").exists() else {}
     summary = {"seed": seed, "extra": list(extra), "exit": code, "wall_s": round(time.monotonic() - start, 1), "runs": suite.get("runs")}
@@ -145,7 +145,7 @@ def seeds(seeds: str = "1,2,3,4,5", case: str = "gc:GC007"):
 
 
 @app.local_entrypoint()
-def cohort(seed: int = 42, label: str = "stock", subset: str = "cohort", extra: str = ""):
+def cohort(seed: int = 42, label: str = "stock", subset: str = "cohort", extra: str = "", cases: str = ""):
     """The 16-episode cohort (or subset=hillclimb, the 10 quick moving cases) at one seed, 3 GPUs at a time."""
     if not _key():
         raise SystemExit("ANTHROPIC_API_KEY missing locally")
@@ -153,7 +153,8 @@ def cohort(seed: int = 42, label: str = "stock", subset: str = "cohort", extra: 
         listing = json.loads((ROOT / "reproduction/hillclimb-subset.json").read_text())["cases"]
     else:
         listing = json.loads((ROOT / "reproduction/episode-split.json").read_text())["predeclared_tuning_cohort_complete_episodes"]
-    cases = [f"{c['split']}:{c['task_id']}" for c in listing]
+    cases_list = cases.split() if cases else [f"{c['split']}:{c['task_id']}" for c in listing]
+    cases = cases_list
     cases.sort(key=lambda c: c.startswith("insight"), reverse=True)  # longest (60-chunk) cases first
     run_id = f"cohort-{label}-s{seed}-{int(time.time())}"
     print("run_id", run_id, len(cases), "cases", flush=True)
@@ -169,3 +170,60 @@ def main(case: str = "gc:GC007"):
     run_id = f"gate-{int(time.time())}"
     print("run_id", run_id)
     print(json.dumps(gate_and_one_case.remote(run_id, case), indent=2))
+
+
+# ---- Warm adaptive worker: load the 14B pipeline once per container, run many adaptive cases ----
+WARM_ENV = {"PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"}
+
+
+@app.cls(image=image, gpu=os.environ.get("WORLDSYNC_GPU", "H200"), volumes={"/weights": weights, "/results": results},
+    secrets=[modal.Secret.from_dict({"ANTHROPIC_API_KEY": _key()})], timeout=4 * 3600, max_containers=3,
+    scaledown_window=300)
+class WarmWorker:
+    @modal.enter()
+    def load(self):
+        os.environ.update(WARM_ENV)
+        from worldsync.lingbot_runtime import WarmRuntime
+        self.runtime = WarmRuntime()
+        raw = Path(f"{PROJECT}/external/LingBot-World2/checkpoints")
+        raw.mkdir(parents=True, exist_ok=True)
+        link = raw / "lingbot-world-v2-14b-causal-fast"
+        if not link.exists():
+            link.symlink_to("/weights/14b-causal-fast")
+
+    @modal.method()
+    def run(self, run_id: str, case: str, seed: int = 42, extra: tuple = ()):
+        from worldsync import lingbot_rollout
+        split, task = case.split(":")
+        out = Path("/results") / run_id / f"{split}-{task}-attempt1"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        argv = ["--data-root", f"{PROJECT}/external/PlayWorld/data", "--split", split, "--task-id", task,
+                "--max-chunks", str(60 if split == "insight" else 40), "--seed", str(seed), "--output", str(out), *extra]
+        started, error, report = time.monotonic(), None, None
+        try:
+            report = lingbot_rollout.main(argv, runtime=self.runtime)
+        except SystemExit as request:
+            error = f"rollout rejected the job (exit {request.code})"
+        except BaseException as failure:  # keep the container alive for the next case
+            error = f"{type(failure).__name__}: {failure}"
+        summary = {"case": case, "seed": seed, "extra": list(extra), "error": error, "seconds": round(time.monotonic() - started, 1),
+                   "status": (report or {}).get("status"), "chunks": len((report or {}).get("chunks", [])),
+                   "termination": (report or {}).get("termination")}
+        (out.parent / f"{split}-{task}-summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+        results.commit()
+        return summary
+
+
+@app.local_entrypoint()
+def warm(cases: str, label: str = "warm", seed: int = 42, extra: str = ""):
+    """Run adaptive cases on warm workers (3 containers). cases = 'gc:GC007 if:IF001 ...'; extra = rollout flags."""
+    if not _key():
+        raise SystemExit("ANTHROPIC_API_KEY missing locally")
+    flags = tuple(extra.split())
+    if os.environ.get("WORLDSYNC_GPU", "H200") == "H100":
+        flags += ("--offload-text-encoder",)
+    case_list = sorted(cases.split(), key=lambda c: not c.startswith("insight"))
+    run_id = f"warm-{label}-s{seed}-{int(time.time())}"
+    print("run_id", run_id, len(case_list), "cases", flush=True)
+    for summary in WarmWorker().run.starmap([(run_id, c, seed, flags) for c in case_list]):
+        print(json.dumps(summary), flush=True)
