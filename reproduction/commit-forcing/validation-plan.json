@@ -1,0 +1,45 @@
+{
+  "status": "prepared_only_no_GPU_launch",
+  "arms": [
+    "stock18_sink6",
+    "commit_forcing18_sink6"
+  ],
+  "source": "1895d300",
+  "checkpoint": "5c33dd40",
+  "task": "GC027",
+  "seed": 42,
+  "chunks": 13,
+  "actions": [
+    "WAIT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT",
+    "RIGHT"
+  ],
+  "turn_degrees_per_second": 30,
+  "read_policy_only_difference": true,
+  "native_context_latents": 18,
+  "sink_latents": 6,
+  "expected_earliest_clean_cache_change_chunk": 2,
+  "expected_earliest_video_change_chunk": 3,
+  "checks": [
+    "First three raw output chunks match exactly on fixed controls",
+    "Native KV capacity/indices and stored sink remain unchanged",
+    "Noisy reads retain full native context; clean reads include predecessor and current",
+    "No extra forward passes or parameter updates",
+    "Record camera response, motion/progress failures and task score, not appearance consistency alone"
+  ],
+  "limits": [
+    "LingBot transfer and four-latent window not tested in the paper",
+    "No combination with retrieval/reader until separate controlled tests",
+    "A fixedGC027 pilot cannot establish overall PlayWorld performance"
+  ]
+}
