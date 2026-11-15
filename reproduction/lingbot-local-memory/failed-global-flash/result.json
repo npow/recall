@@ -1,0 +1,76 @@
+{
+  "scope": "two-chunk local transport/memory smoke; no archive or quality score",
+  "status": "failed",
+  "torch": "2.15.0+cu132",
+  "forced_flash_sdpa": true,
+  "model_weights_quantized": false,
+  "native_kv_quantized": false,
+  "training": false,
+  "events": [
+    {
+      "elapsed_s": 0.00022893701680004597,
+      "phase": "flash_preflight",
+      "rss_bytes": 542396416,
+      "mem_available_bytes": 108785897472,
+      "cuda_allocated_bytes": 0,
+      "cuda_reserved_bytes": 0,
+      "event": "flash_preflight"
+    },
+    {
+      "elapsed_s": 0.16303077898919582,
+      "phase": "flash_preflight_passed",
+      "rss_bytes": 791924736,
+      "mem_available_bytes": 108520714240,
+      "cuda_allocated_bytes": 0,
+      "cuda_reserved_bytes": 0,
+      "event": "flash_preflight_passed"
+    },
+    {
+      "elapsed_s": 2.605808712018188,
+      "phase": "pipeline_loading",
+      "rss_bytes": 1044439040,
+      "mem_available_bytes": 108320260096,
+      "cuda_allocated_bytes": 0,
+      "cuda_reserved_bytes": 0,
+      "event": "pipeline_loading"
+    },
+    {
+      "elapsed_s": 183.57882178202271,
+      "phase": "pipeline_loaded",
+      "rss_bytes": 17679532032,
+      "mem_available_bytes": 52660207616,
+      "cuda_allocated_bytes": 37703917056,
+      "cuda_reserved_bytes": 37725667328,
+      "event": "pipeline_loaded"
+    },
+    {
+      "elapsed_s": 184.08050502702827,
+      "phase": "t5_encode_before",
+      "rss_bytes": 11196678144,
+      "mem_available_bytes": 47043055616,
+      "cuda_allocated_bytes": 49087926784,
+      "cuda_reserved_bytes": 49111105536,
+      "event": "t5_encode_before"
+    },
+    {
+      "elapsed_s": 184.56099200900644,
+      "phase": "t5_discarded_after_encode",
+      "rss_bytes": 11897401344,
+      "mem_available_bytes": 58812493824,
+      "cuda_allocated_bytes": 37729251840,
+      "cuda_reserved_bytes": 37748736000,
+      "event": "t5_discarded_after_encode"
+    }
+  ],
+  "dit_parameter_bytes": 37088665728,
+  "dit_parameter_dtypes": [
+    "torch.bfloat16"
+  ],
+  "t5_parameter_bytes_discarded": 11361820672,
+  "error": "Traceback (most recent call last):\n  File \"/home/npow/code/iteratehack/worldsync/lingbot_thor_smoke.py\", line 131, in main\n    rollout.main()\n  File \"/home/npow/code/iteratehack/worldsync/lingbot_rollout.py\", line 367, in main\n    pipeline.generate(world_text, Image.open(initial).convert(\"RGB\"),\n  File \"/home/npow/code/iteratehack/external/LingBot-World2/wan/image2video.py\", line 540, in generate\n    return gen_fn(\n           ^^^^^^^\n  File \"/home/npow/code/iteratehack/external/LingBot-World2/wan/image2video.py\", line 729, in _generate_causal_fast\n    y = self.vae.encode([\n        ^^^^^^^^^^^^^^^^^\n  File \"/home/npow/code/iteratehack/external/LingBot-World2/wan/modules/vae2_1.py\", line 651, in encode\n    self.model.encode(u.unsqueeze(0), self.scale).float().squeeze(0)\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/npow/code/iteratehack/external/LingBot-World2/wan/modules/vae2_1.py\", line 523, in encode\n    out = self.encoder(\n          ^^^^^^^^^^^^^\n  File \"/home/npow/code/icl/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/npow/code/icl/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/npow/code/iteratehack/external/LingBot-World2/wan/modules/vae2_1.py\", line 346, in forward\n    x = layer(x)\n        ^^^^^^^^\n  File \"/home/npow/code/icl/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/npow/code/icl/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/npow/code/iteratehack/external/LingBot-World2/wan/modules/vae2_1.py\", line 251, in forward\n    x = F.scaled_dot_product_attention(\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: No available kernel. Aborting execution.\n",
+  "elapsed_s": 185.22440021502553,
+  "min_mem_available_bytes": 46687002624,
+  "peak_rss_bytes": 60402765824,
+  "peak_sampled_cuda_allocated_bytes": 49243124736,
+  "peak_sampled_cuda_reserved_bytes": 49415192576
+}

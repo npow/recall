@@ -1,0 +1,57 @@
+2026-11-14 21:37:23,998 loading /home/npow/code/iteratehack/external/LingBot-World2/checkpoints/runtime-14b-causal-fast/models_t5_umt5-xxl-enc-bf16.pth
+2026-11-14 21:37:29,679 loading /home/npow/code/iteratehack/external/LingBot-World2/checkpoints/runtime-14b-causal-fast/Wan2.1_VAE.pth
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]Loading checkpoint shards:  12%|█▎        | 1/8 [00:02<00:19,  2.75s/it]Loading checkpoint shards:  25%|██▌       | 2/8 [00:05<00:15,  2.66s/it]Loading checkpoint shards:  38%|███▊      | 3/8 [00:08<00:13,  2.71s/it]Loading checkpoint shards:  50%|█████     | 4/8 [00:14<00:16,  4.07s/it]Loading checkpoint shards:  62%|██████▎   | 5/8 [00:25<00:20,  6.83s/it]Loading checkpoint shards:  75%|███████▌  | 6/8 [00:38<00:17,  8.70s/it]Loading checkpoint shards:  88%|████████▊ | 7/8 [00:50<00:09,  9.75s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:56<00:00,  8.53s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:56<00:00,  7.02s/it]
+/home/npow/code/iteratehack/external/LingBot-World2/wan/modules/vae2_1.py:649: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with amp.autocast(dtype=self.dtype):
+/home/npow/code/iteratehack/external/LingBot-World2/wan/modules/vae2_1.py:251: UserWarning: Memory efficient kernel not used because: (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/native/transformers/cuda/sdp_utils.cpp:1387.)
+  x = F.scaled_dot_product_attention(
+/home/npow/code/iteratehack/external/LingBot-World2/wan/modules/vae2_1.py:251: UserWarning: Memory Efficient attention has been runtime disabled. (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/native/transformers/sdp_utils_cpp.h:618.)
+  x = F.scaled_dot_product_attention(
+/home/npow/code/iteratehack/external/LingBot-World2/wan/modules/vae2_1.py:251: UserWarning: Flash attention kernel not used because: (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/native/transformers/cuda/sdp_utils.cpp:1389.)
+  x = F.scaled_dot_product_attention(
+/home/npow/code/iteratehack/external/LingBot-World2/wan/modules/vae2_1.py:251: UserWarning: Flash attention requires q,k,v to have the same last dimension and to be less than or equal to 256. Got Query.size(-1): 384, Key.size(-1): 384, Value.size(-1): 384 instead. (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/native/transformers/cuda/sdp_utils.cpp:292.)
+  x = F.scaled_dot_product_attention(
+/home/npow/code/iteratehack/external/LingBot-World2/wan/modules/vae2_1.py:251: UserWarning: cuDNN attention kernel not used because: (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/native/transformers/cuda/sdp_utils.cpp:1391.)
+  x = F.scaled_dot_product_attention(
+/home/npow/code/iteratehack/external/LingBot-World2/wan/modules/vae2_1.py:251: UserWarning: cuDNN attention has been runtime disabled. (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/native/transformers/cuda/sdp_utils.cpp:1065.)
+  x = F.scaled_dot_product_attention(
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/npow/code/iteratehack/worldsync/lingbot_thor_smoke.py", line 157, in <module>
+    main()
+  File "/home/npow/code/iteratehack/worldsync/lingbot_thor_smoke.py", line 131, in main
+    rollout.main()
+  File "/home/npow/code/iteratehack/worldsync/lingbot_rollout.py", line 367, in main
+    pipeline.generate(world_text, Image.open(initial).convert("RGB"),
+  File "/home/npow/code/iteratehack/external/LingBot-World2/wan/image2video.py", line 540, in generate
+    return gen_fn(
+           ^^^^^^^
+  File "/home/npow/code/iteratehack/external/LingBot-World2/wan/image2video.py", line 729, in _generate_causal_fast
+    y = self.vae.encode([
+        ^^^^^^^^^^^^^^^^^
+  File "/home/npow/code/iteratehack/external/LingBot-World2/wan/modules/vae2_1.py", line 651, in encode
+    self.model.encode(u.unsqueeze(0), self.scale).float().squeeze(0)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/npow/code/iteratehack/external/LingBot-World2/wan/modules/vae2_1.py", line 523, in encode
+    out = self.encoder(
+          ^^^^^^^^^^^^^
+  File "/home/npow/code/icl/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/npow/code/icl/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1798, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/npow/code/iteratehack/external/LingBot-World2/wan/modules/vae2_1.py", line 346, in forward
+    x = layer(x)
+        ^^^^^^^^
+  File "/home/npow/code/icl/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/npow/code/icl/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1798, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/npow/code/iteratehack/external/LingBot-World2/wan/modules/vae2_1.py", line 251, in forward
+    x = F.scaled_dot_product_attention(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: No available kernel. Aborting execution.
