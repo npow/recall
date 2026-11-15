@@ -153,6 +153,12 @@ def main():
         "- The arms differ in more than the controller: text (caption+objective vs objective only; insight caption vs \"wait and observe\") "
         "and chunk budget (40 vs 60 for moving cases). This compares the two complete configurations as specified.",
         "- Hold-service token cap raised (above). Proxy transport for the player.",
+        "- Episode length differs sharply: the legacy player sends END once the reference plan's legs are done, so its "
+        "moving-case videos are 5-10 s long; every corrected-arm video runs the full 60 s budget. Short videos leave no time "
+        "for a revisit, which bears on the out-of-sight gate; long ones give the judge more to fault.",
+        "- Sanity check: the legacy arm's scores equal the frozen Modal stock run's on 7 of 9 moving cases (GC024 4.60 vs "
+        "1.00 and GC022 1.80 vs 2.40 differ), so the local legacy arm broadly reproduces the frozen configuration. Insight "
+        "OE009 and OE020 score lower locally (1.00 vs 3.00, 1.33 vs 2.00).",
         "- Missing judgements: " + ("none." if not missing else "; ".join(missing) + ". Not imputed."), ""]
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text("\n".join(lines))
