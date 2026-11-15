@@ -1,0 +1,455 @@
+{
+  "comparison": "retrieval",
+  "cache_frames": {
+    "stock": 18,
+    "candidate": 18
+  },
+  "scope": "single controlled fixed path; no PlayWorld score or SOTA claim",
+  "matched_settings": {
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v5",
+    "task_id": "GC010",
+    "split": "gc",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "seed": 42,
+    "fps": 16,
+    "max_chunks": 14,
+    "max_area": 399360,
+    "chunk_size": 4,
+    "local_attn_size": 18,
+    "sink_size": 6,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "fixed_actions": [
+      "WAIT",
+      "RIGHT",
+      "RIGHT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "LEFT",
+      "LEFT",
+      "WAIT"
+    ]
+  },
+  "native_camera_inputs_verified": true,
+  "pre_intervention_pixel_identical_chunks": 4,
+  "modified_chunks": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "stock_wall_s": 203.872076939,
+  "candidate_wall_s": 184.203268883,
+  "stock_peak_allocated_bytes": 72129853952,
+  "candidate_peak_allocated_bytes": 73910017024,
+  "memory": {
+    "method": "bounded early-view pose KV retrieval; diagnostic, not paper reproduction",
+    "archive_limit_latent_frames": 16,
+    "retrieved_latent_frames": 4,
+    "attended_latent_frames": 18,
+    "sink_latent_frames": 6,
+    "tail_latent_frames": 8,
+    "pose_source": "commanded poses, not reconstructed realized poses",
+    "key_positions": "virtual",
+    "key_storage": "canonical pre-RoPE BF16 keys; reapply spatial and virtual temporal RoPE on read",
+    "archive_bytes": 19765657600,
+    "retrieval_attention_calls": 1600,
+    "trace": [
+      {
+        "chunk": 0,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 1,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 2,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [
+          6,
+          7
+        ],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 3,
+        "retrieved_frame_ids": [
+          7,
+          6
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 4,
+        "retrieved_frame_ids": [
+          11,
+          10,
+          9,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "attention_replaced": true
+      },
+      {
+        "chunk": 5,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "attention_replaced": true
+      },
+      {
+        "chunk": 6,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true
+      },
+      {
+        "chunk": 7,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true
+      },
+      {
+        "chunk": 8,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true
+      },
+      {
+        "chunk": 9,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true
+      },
+      {
+        "chunk": 10,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true
+      },
+      {
+        "chunk": 11,
+        "retrieved_frame_ids": [
+          7,
+          6,
+          8,
+          9
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true
+      },
+      {
+        "chunk": 12,
+        "retrieved_frame_ids": [
+          6,
+          7,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 13,
+        "retrieved_frame_ids": [
+          6,
+          7,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false
+      }
+    ]
+  },
+  "caveat": "Commanded camera closure does not prove realized closure. Endpoint image similarity cannot establish world memory if the realized route fails.",
+  "stock": {
+    "endpoint_psnr_db": 10.258682691525925,
+    "video_sha256": "821b02a36ec0b24aa3616303279ae25634d4013ca09349c9423c6df3fb73f795",
+    "endpoint_dino_cosine": 0.6230654120445251
+  },
+  "retrieval": {
+    "endpoint_psnr_db": 10.590237026292185,
+    "video_sha256": "4c8f0f94563882626f4417316cb16a23830bd512875be41a46f4ce6610209d89",
+    "endpoint_dino_cosine": 0.7625097036361694
+  },
+  "reference_label": "stock",
+  "reference_memory": null,
+  "reference_wall_s": 203.872076939,
+  "reference_peak_allocated_bytes": 72129853952,
+  "candidate_label": "retrieval",
+  "warmed_suffix_s": {
+    "stock": 75.53815154200001,
+    "retrieval": 89.841258716
+  },
+  "feature_model": {
+    "name": "facebook/dinov2-small",
+    "revision": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+    "feature": "normalized CLS token"
+  },
+  "visual_judge": {
+    "model": "claude-opus-5-5",
+    "response_id": "msg_011Ch3xngo8URhZdN8KohRfs",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 41262,
+      "output_tokens": 2124,
+      "output_tokens_details": {
+        "thinking_tokens": 860
+      },
+      "server_tool_use": null,
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "label_mapping": {
+      "A": "stock",
+      "B": "retrieval"
+    },
+    "prompt": "Evaluate two anonymized world-model videos independently and then compare. Each was given the same image and fixed camera path. Commands by one-second chunk: ['WAIT', 'RIGHT', 'RIGHT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'LEFT', 'LEFT', 'WAIT']. RIGHT and LEFT yaw 45.0 degrees per second; W moves forward. Commands are NOT proof that motion happened. Inspect actual frames. Assess whether each video realizes a turnaround and return to the starting viewpoint; whether persistent landmark identity, any sign text, geometry and spatial layout match on return; and whether there are sudden jumps, frozen motion or implausible transitions. Distinguish camera-control failures from forgetting. Do not reward a similar final building if reaching it required a reset. Do not invent unseen geometry. Return English JSON with keys A and B (each with realized_round_trip: yes|no|uncertain, starting_place_recovered: yes|no|uncertain, discontinuity: yes|no|uncertain, visual_evidence, failure_classification), preference: A|B|tie|neither, confidence: low|medium|high, and reasoning. This is a diagnostic comparison, not a benchmark score.",
+    "prompt_sha256": "e5bc952e033e53155aa248eb338cd9c72bd48ef0c364e90104c08b5509b81536",
+    "result": {
+      "A": {
+        "realized_round_trip": "no",
+        "starting_place_recovered": "no",
+        "discontinuity": "no",
+        "visual_evidence": "Start view: a main street with a white 'DRUGS' facade and a 'SHERIFF' sign, a brick annex, a telegraph pole and snowy mountains on the right. During the RIGHT chunks (about frames 10\u201330) the view pans smoothly right to a two-storey 'E:PRECES' building with a porch sign, beside a darker neighbouring building. Through the long WAIT the view holds steady, which matches the commands. Over the wait the sign text drifts: 'E:PRECES' becomes 'S:RRECES', and the porch sign becomes a red 'DRUGGI/DDRUGG' plate. The LEFT chunks (about frames 109\u2013125) do produce a visible leftward pan: the E:PRECES building slides to the right of frame. But no 'DRUGS'/'SHERIFF' row, brick annex or mountain backdrop comes back. Instead a new false-front store labelled 'GRUVGS/GRICGS' appears, followed by other unfamiliar two-storey buildings and a wheel prop in the foreground. The final frames (125\u2013138) show a different street layout from frame 0.",
+        "failure_classification": "Forgetting / scene hallucination on return. Camera control is roughly correct: right and left yaw both occur, and the wait is static. However, the revisited region is regenerated as new geometry and new signage instead of the original street. There is also progressive text drift on persistent signs."
+      },
+      "B": {
+        "realized_round_trip": "yes",
+        "starting_place_recovered": "yes",
+        "discontinuity": "no",
+        "visual_evidence": "Frames 0\u201330 match A: the DRUGS/SHERIFF street, then a right pan to the E:PRECES building, then a static wait. Sign text wobbles slightly ('EDAUCCF') but stays mostly stable. During the LEFT chunks (about frames 110\u2013125) the pan reverses continuously. The E:PRECES building slides right, the brick annex and grass return, then the telegraph pole and the white 'DRUGS' and 'SHERIFF' facades with mountains behind. The final frames (125\u2013138) show the same storefront row, pole, brick annex and dirt street as frame 0. Discrepancies remain. A large dark building with an 'R...' sign and a hanging lamp intrude on the left edge, where the start had a pole and trees. The view appears slightly over-rotated or shifted. The HUD minimap is replaced by a wheel prop. The left-edge building enters fairly quickly (frames 124\u2013126), but the pan is otherwise continuous.",
+        "failure_classification": "Mostly successful loop closure. The main landmarks, signs and spatial layout persist on return. Minor issues: slight yaw overshoot or framing offset, invented foreground geometry at the left edge, and HUD/prop inconsistency. These are minor camera-control and edge-hallucination errors, not wholesale forgetting."
+      },
+      "preference": "B",
+      "confidence": "high",
+      "reasoning": "Both videos share an identical opening and turn right to the same E:PRECES building, so camera control on the outbound leg is equivalent. The difference is on return. B's left pan brings back the original DRUGS/SHERIFF street, brick annex, pole and mountains in a continuous motion, with no reset, and only minor edge discrepancies. A's left pan also physically happens, but it reveals entirely new buildings ('GRUVGS' store and others) and never recovers the starting street. That is a memory and consistency failure, not a camera failure. A also shows stronger sign-text drift during the wait."
+    }
+  }
+}

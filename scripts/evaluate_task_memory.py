@@ -15,6 +15,15 @@ from scripts.evaluate_context_validation import evaluate
 def evaluate_task(case):
     output = ROOT / "reproduction/task-memory-benchmark"
     try:
+        audit = json.loads((ROOT / "reproduction/task-input-audit.json").read_text())["cases"][case["task_id"]]
+        if audit["status"] != "valid":
+            raw = {}
+            directory = output / f"{case['task_id']}-seed{case['seed']}-{case['path']}"
+            for mode in ("stock", "retrieval"):
+                score_path = directory / f"{mode}-task-score.json"
+                if score_path.exists():
+                    raw[mode] = json.loads(score_path.read_text()).get("reported_score")
+            return {**case, "status": "invalid_input", "reason": audit, "raw_invalid_scores_not_in_mean": raw}
         result = evaluate(case, output, judge=True, memory=True, input_prefix="task-benchmark")
         directory = output / f"{case['task_id']}-seed{case['seed']}-{case['path']}"
         result["local_task_scores"] = {}
@@ -46,6 +55,24 @@ def evaluate_task(case):
         return {**case, "status": "incomplete_or_failed", "error": f"{type(error).__name__}: {error}"}
 
 
+def summarize_results(plan, results):
+    complete = [result for result in results if result["status"] == "completed"]
+    valid_declared = [case for case in plan["cases"] if case["task_id"] not in plan.get("quarantined_case_ids", [])]
+    # No mean until every valid declared pair is scored; quarantine stays visible.
+    key = lambda case: (case["task_id"], case.get("seed"), case.get("path"))
+    expected = {key(case) for case in valid_declared}
+    all_complete = len(complete) == len(expected) and {key(result) for result in complete} == expected
+    summary = {"scope": plan["scope"], "declared_pairs_including_quarantine": len(plan["cases"]), "valid_declared_pairs": len(valid_declared),
+               "completed_pairs": len(complete), "quarantined_case_ids": plan.get("quarantined_case_ids", []),
+               "complete": all_complete, "results": results, "local_cohort_means": None,
+               "cohort_definition": "Amended pilot after a verified source input mismatch; quarantined raw results remain visible and are not valid quality scores.",
+               "caveat": "Scripted task-matched actions and Claude evaluation differ from the published Agent Player/Gemini protocol. This is not a leaderboard score."}
+    if all_complete:
+        summary["local_cohort_means"] = {mode: sum(result["local_task_scores"][mode]["score"] for result in complete) / len(complete)
+                                         for mode in ("stock", "retrieval")}
+    return summary
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--available", action="store_true", help="Score completed pairs while the other declared generations continue")
@@ -60,15 +87,7 @@ def main():
     output.mkdir(exist_ok=True)
     with ThreadPoolExecutor(max_workers=2) as pool:
         results = list(pool.map(evaluate_task, cases))
-    complete = [result for result in results if result["status"] == "completed"]
-    # No numerical cohort mean unless every declared pair has a valid score.
-    all_complete = len(complete) == len(plan["cases"])
-    summary = {"scope": plan["scope"], "declared_pairs": len(plan["cases"]), "completed_pairs": len(complete),
-               "complete": all_complete, "results": results, "local_cohort_means": None,
-               "caveat": "Scripted task-matched actions and Claude evaluation differ from the published Agent Player/Gemini protocol. This is not a leaderboard score."}
-    if all_complete:
-        summary["local_cohort_means"] = {mode: sum(result["local_task_scores"][mode]["score"] for result in complete) / len(complete)
-                                         for mode in ("stock", "retrieval")}
+    summary = summarize_results(plan, results)
     (output / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     print(json.dumps(summary, indent=2))
 

@@ -4,9 +4,9 @@
 
 [Historical-view retrieval](reproduction/memory-validation/README.md) now
 preserves returning landmarks in a new-seed trial, an image-held-out fountain
-scene, and a31.8-second mall return where stock forgets the starting building.
-The same18-frame attention budget is retained, with a bounded19.765GB CPU
-archive and about6% higher GPU peak allocation. Exact heading recovery and
+scene, and a 31.8-second mall return where stock forgets the starting building.
+The same 18-frame attention budget is retained, with a bounded 19.765GB CPU
+archive and about 6% higher GPU peak allocation. Exact heading recovery and
 some texture/sign drift remain unresolved; endpoint similarity can decline
 when the camera overshoots. No training was used for these tests.
 

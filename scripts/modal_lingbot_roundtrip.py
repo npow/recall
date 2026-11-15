@@ -1,5 +1,6 @@
 """Stock native-control round-trip calibration; no adaptive player or memory edit."""
 import json
+import hashlib
 from pathlib import Path
 import sys
 import modal
@@ -109,11 +110,30 @@ def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False,
             raise ValueError("Choose one experiment plan")
         plan = json.loads((ROOT / "reproduction/task-memory-benchmark-plan.json").read_text())
         jobs = [(case["path"], case["seed"], retrieve, 18, case["task_id"], False, "virtual", plan["turn_degrees_per_second"])
-                for case in plan["cases"] for retrieve in (False, True)]
-        for index, result in enumerate(generate_h100.starmap(jobs, return_exceptions=True)):
-            job = jobs[index]
+                for case in plan["cases"] if case["task_id"] not in plan.get("quarantined_case_ids", []) for retrieve in (False, True)]
+        audit = json.loads((ROOT / plan["input_integrity_audit"]).read_text())
+        tasks = json.loads((ROOT / "external/PlayWorld/data/gc/data.json").read_text())
+        pending = []
+        for job in jobs:
+            path, seed, retrieve, _, task_id, _, _, _ = job
+            task = next(row for row in tasks if row["task_id"] == task_id)
+            checked = audit["cases"][task_id]
+            image = ROOT / "external/PlayWorld/data" / task["image_path"]
+            if (checked["status"] != "valid" or checked["image_sha256"] != hashlib.sha256(image.read_bytes()).hexdigest()
+                    or checked["caption_sha256"] != hashlib.sha256(task["image_caption"].encode()).hexdigest()):
+                raise ValueError(f"Unverified benchmark input: {task_id}")
+            mode = "retrieval" if retrieve else "stock"
+            output = ROOT / "outputs/lingbot-reproduction" / f"task-benchmark-{task_id}-{mode}-{path}-seed{seed}.json"
+            if output.exists() and json.loads(output.read_text())["run"]["status"] == "completed":
+                print(f"Reusing completed task {task_id}/{mode}", flush=True)
+            else:
+                pending.append(job)
+        failures_path = ROOT / "outputs/lingbot-reproduction/task-benchmark-generation-failures.json"
+        failures = json.loads(failures_path.read_text()) if failures_path.exists() else []
+        for index, result in enumerate(generate_h100.starmap(pending, return_exceptions=True)):
             if isinstance(result, BaseException):
-                print(f"FAILED task benchmark attempt {job}: {result}", flush=True)
+                failures.append({"job": pending[index], "error": str(result)})
+                failures_path.write_text(json.dumps(failures, indent=2) + "\n")
                 continue
             run = result["run"]
             output = ROOT / "outputs/lingbot-reproduction" / f"task-benchmark-{run['task_id']}-{result['mode']}-{result['path']}-seed{run['seed']}.json"

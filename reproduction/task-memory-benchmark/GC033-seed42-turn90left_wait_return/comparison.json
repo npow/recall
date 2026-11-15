@@ -1,0 +1,455 @@
+{
+  "comparison": "retrieval",
+  "cache_frames": {
+    "stock": 18,
+    "candidate": 18
+  },
+  "scope": "single controlled fixed path; no PlayWorld score or SOTA claim",
+  "matched_settings": {
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v5",
+    "task_id": "GC033",
+    "split": "gc",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "seed": 42,
+    "fps": 16,
+    "max_chunks": 14,
+    "max_area": 399360,
+    "chunk_size": 4,
+    "local_attn_size": 18,
+    "sink_size": 6,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "fixed_actions": [
+      "WAIT",
+      "LEFT",
+      "LEFT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "WAIT",
+      "RIGHT",
+      "RIGHT",
+      "WAIT"
+    ]
+  },
+  "native_camera_inputs_verified": true,
+  "pre_intervention_pixel_identical_chunks": 4,
+  "modified_chunks": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "stock_wall_s": 171.921306287,
+  "candidate_wall_s": 189.671200927,
+  "stock_peak_allocated_bytes": 72129853952,
+  "candidate_peak_allocated_bytes": 73910017024,
+  "memory": {
+    "method": "bounded early-view pose KV retrieval; diagnostic, not paper reproduction",
+    "archive_limit_latent_frames": 16,
+    "retrieved_latent_frames": 4,
+    "attended_latent_frames": 18,
+    "sink_latent_frames": 6,
+    "tail_latent_frames": 8,
+    "pose_source": "commanded poses, not reconstructed realized poses",
+    "key_positions": "virtual",
+    "key_storage": "canonical pre-RoPE BF16 keys; reapply spatial and virtual temporal RoPE on read",
+    "archive_bytes": 19765657600,
+    "retrieval_attention_calls": 1600,
+    "trace": [
+      {
+        "chunk": 0,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 1,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 2,
+        "retrieved_frame_ids": [],
+        "archive_frame_ids": [
+          6,
+          7
+        ],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 3,
+        "retrieved_frame_ids": [
+          7,
+          6
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 4,
+        "retrieved_frame_ids": [
+          11,
+          10,
+          9,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "attention_replaced": true
+      },
+      {
+        "chunk": 5,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "attention_replaced": true
+      },
+      {
+        "chunk": 6,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true
+      },
+      {
+        "chunk": 7,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true
+      },
+      {
+        "chunk": 8,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true
+      },
+      {
+        "chunk": 9,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true
+      },
+      {
+        "chunk": 10,
+        "retrieved_frame_ids": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true
+      },
+      {
+        "chunk": 11,
+        "retrieved_frame_ids": [
+          7,
+          6,
+          8,
+          9
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": true
+      },
+      {
+        "chunk": 12,
+        "retrieved_frame_ids": [
+          6,
+          7,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false
+      },
+      {
+        "chunk": 13,
+        "retrieved_frame_ids": [
+          6,
+          7,
+          8
+        ],
+        "archive_frame_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "attention_replaced": false
+      }
+    ]
+  },
+  "caveat": "Commanded camera closure does not prove realized closure. Endpoint image similarity cannot establish world memory if the realized route fails.",
+  "stock": {
+    "endpoint_psnr_db": 9.38244700795148,
+    "video_sha256": "389a62cd408fd618b23d494772c9fc525435b7561a2b877361e4eed9dc77d960",
+    "endpoint_dino_cosine": 0.5469109416007996
+  },
+  "retrieval": {
+    "endpoint_psnr_db": 10.301554422461425,
+    "video_sha256": "655d454fc3a8f3bb4040094feaaf5fda7f22893b105040aad3451b01b14eda6c",
+    "endpoint_dino_cosine": 0.800994873046875
+  },
+  "reference_label": "stock",
+  "reference_memory": null,
+  "reference_wall_s": 171.921306287,
+  "reference_peak_allocated_bytes": 72129853952,
+  "candidate_label": "retrieval",
+  "warmed_suffix_s": {
+    "stock": 75.73615354599997,
+    "retrieval": 91.82512721199998
+  },
+  "feature_model": {
+    "name": "facebook/dinov2-small",
+    "revision": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+    "feature": "normalized CLS token"
+  },
+  "visual_judge": {
+    "model": "claude-opus-5-5",
+    "response_id": "msg_011Ch3yE6xdiEYLmMWmJUzuD",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 41262,
+      "output_tokens": 1796,
+      "output_tokens_details": {
+        "thinking_tokens": 572
+      },
+      "server_tool_use": null,
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "label_mapping": {
+      "A": "stock",
+      "B": "retrieval"
+    },
+    "prompt": "Evaluate two anonymized world-model videos independently and then compare. Each was given the same image and fixed camera path. Commands by one-second chunk: ['WAIT', 'LEFT', 'LEFT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'WAIT', 'RIGHT', 'RIGHT', 'WAIT']. RIGHT and LEFT yaw 45.0 degrees per second; W moves forward. Commands are NOT proof that motion happened. Inspect actual frames. Assess whether each video realizes a turnaround and return to the starting viewpoint; whether persistent landmark identity, any sign text, geometry and spatial layout match on return; and whether there are sudden jumps, frozen motion or implausible transitions. Distinguish camera-control failures from forgetting. Do not reward a similar final building if reaching it required a reset. Do not invent unseen geometry. Return English JSON with keys A and B (each with realized_round_trip: yes|no|uncertain, starting_place_recovered: yes|no|uncertain, discontinuity: yes|no|uncertain, visual_evidence, failure_classification), preference: A|B|tie|neither, confidence: low|medium|high, and reasoning. This is a diagnostic comparison, not a benchmark score.",
+    "prompt_sha256": "bd09e3d9a420f4f3dc55bb62872fe773185e987cdac22dbcafb10538b0b121bf",
+    "result": {
+      "A": {
+        "realized_round_trip": "no",
+        "starting_place_recovered": "no",
+        "discontinuity": "uncertain",
+        "visual_evidence": "Start (idx 0-9): wooden-framed shop window with the hanging white sign (handwritten text), copper pendant lamps, tall amethyst geode, quartz points and terracotta figurines, with the textured stone pillar at the left edge. The LEFT turn (idx ~10-35) pans smoothly past the stone pillar, the large purple amethyst boulder and the wire-diamond lamps to a white-framed window run along a sidewalk with a beige house and silver car. This view then holds through the long WAIT period (idx ~35-110) with only minor drift. On the RIGHT turn (idx ~111-125) the camera does rotate back, but the stone pillar never reappears. The amethyst boulder now sits directly against a wooden-framed window with a row of copper lamps, a white candle and an amethyst point. The final frames (idx 125-138) show an unseen courtyard: white low building, green bush, paved ground, more hanging wire lamps. The hanging sign, the tall amethyst geode/figurine composition and the original framing never return.",
+        "failure_classification": "Not a camera-control failure: yaw motion is realized in both directions. On return the model fails to reproduce the remembered layout (stone pillar missing, window contents rearranged) and continues into newly hallucinated geometry (courtyard). This is forgetting / inconsistent revisit, possibly with rotation overshoot or drift. No hard cut is visible, but the scene morphs implausibly during the return pan."
+      },
+      "B": {
+        "realized_round_trip": "yes",
+        "starting_place_recovered": "yes",
+        "discontinuity": "no",
+        "visual_evidence": "The start and the LEFT-turn segment match A: wooden window with sign, then stone pillar, amethyst boulder and diamond lamps, then the white-framed sidewalk view. The sidewalk view holds through the WAITs (idx ~35-110); only an interior person moves, which is plausible. On the RIGHT turn (idx ~111-125) the pan reverses through the same landmarks in reverse order: white windows, diamond lamp, amethyst boulder, stone pillar, then the wooden-framed window. The hanging white sign, illuminated blue display case, tall amethyst geode, quartz points, terracotta figurines and copper pendant lamps all reappear in consistent relative positions. Final frames (idx 128-138) closely match the opening view, with the stone pillar slightly more visible on the left, a small yaw offset. The sign is present, though its text is not crisply legible at this resolution.",
+        "failure_classification": "No significant failure. Yaw control is realized and the start viewpoint is recovered with consistent landmark identity and layout; only a minor residual offset remains."
+      },
+      "preference": "B",
+      "confidence": "high",
+      "reasoning": "Both videos execute the outgoing LEFT turn and hold identically, so the difference lies in the return. B retraces the same landmark sequence in reverse (amethyst boulder, stone pillar, wooden window with sign and display) and ends on a view that matches the start. A also rotates back, so its camera control works, but the revisited scene is inconsistent: the stone pillar vanishes, the window contents are rearranged, and it ends in an unseen courtyard. A's failure is therefore forgetting or inconsistent revisit rather than frozen motion. A's similar storefront elements do not earn credit, because the spatial layout and endpoint do not match the start."
+    }
+  }
+}

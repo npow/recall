@@ -23,6 +23,8 @@ def evaluate(case, output, judge, memory=False, input_prefix="memory-validation"
                     else f"validation-{case['task_id']}-{mode}-seed{case['seed']}.json")
         source = ROOT / "outputs/lingbot-reproduction" / filename
         manifest = json.loads(source.read_text())
+        if manifest["run"]["task_id"] != case["task_id"] or manifest["run"]["seed"] != case["seed"] or manifest["path"] != path:
+            raise ValueError("Generation manifest does not belong to the declared case")
         manifests[mode] = manifest
         saved_manifest = directory / f"{mode}-run.json"
         if saved_manifest.exists() and json.loads(saved_manifest.read_text())["result_directory"] != manifest["result_directory"]:

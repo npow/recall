@@ -1,0 +1,496 @@
+{
+  "task_id": "GC013",
+  "judge_provider": "anthropic",
+  "judge_model": "claude-opus-5-5",
+  "playworld_revision": "eeaea12e050a90b815d11d030e943e7b3181da21",
+  "dry_run": false,
+  "mode": "both",
+  "video_sha256": "8bc9ab411a772c7e87a4274998bd2dd33e79fd22033abe30127f4963891d113d",
+  "protocol_warning": "Claude judge and custom controller differ from the published PlayWorld protocol; do not compare directly with its leaderboard.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "GC013",
+    "perspective": "first-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "partial",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "\u955c\u5934\u5148\u660e\u663e\u5411\u5de6\u8f6c\uff0c\u7136\u540e\u957f\u65f6\u95f4\u505c\u5728\u5de6\u4fa7\u89d2\u843d\u89c6\u89d2\uff1b\u968f\u540e\u5411\u53f3\u8f6c\u56de\uff0c\u7ecf\u8fc7\u4e0e\u8d77\u59cb\u671d\u5411\u76f8\u8fd1\u7684\u6c99\u53d1\u65b9\u5411\uff0c\u6700\u7ec8\u7ee7\u7eed\u504f\u53f3\uff0c\u505c\u5728\u7535\u89c6\u65b9\u5411\u3002",
+    "trajectory_evidence_zh": "\u7ea60.2\u20131.0\u79d2\u4e3a\u8d77\u59cb\u5ba4\u5185\u89c6\u89d2\uff0c\u6c99\u53d1\u4f4d\u4e8e\u753b\u9762\u4e2d\u592e\uff0c\u53f3\u4fa7\u662f\u4e66\u67b6\u3002\u7ea61.0\u20132.4\u79d2\u753b\u9762\u5185\u5bb9\u6301\u7eed\u5411\u53f3\u79fb\u52a8\uff0c\u5de6\u4fa7\u4f9d\u6b21\u51fa\u73b0\u7a97\u6237\u548c\u4e66\u67b6\uff0c\u8bf4\u660e\u955c\u5934\u5728\u5411\u5de6\u8f6c\u3002\u7ea62.5\u201310.5\u79d2\u89c6\u89d2\u57fa\u672c\u505c\u7559\u5728\u95e8\u628a\u624b\u3001\u4e66\u67b6\u548c\u7a97\u6237\u6240\u5728\u7684\u89d2\u843d\uff0c\u51e0\u4e4e\u6ca1\u6709\u8f6c\u52a8\u3002\u7ea610.5\u201312.5\u79d2\u753b\u9762\u5185\u5bb9\u5411\u5de6\u79fb\u52a8\uff0c\u4e66\u67b6\u79fb\u51fa\u5de6\u4fa7\uff0c\u7a97\u6237\u548c\u6c99\u53d1\u56de\u5230\u753b\u9762\u4e2d\u90e8\uff0c\u53f3\u4fa7\u51fa\u73b0\u7535\u89c6\uff0c\u8bf4\u660e\u955c\u5934\u5728\u5411\u53f3\u8f6c\uff0c\u5e76\u7ecf\u8fc7\u8d77\u59cb\u671d\u5411\u9644\u8fd1\u3002\u7ea612.5\u201313.8\u79d2\u89c6\u89d2\u505c\u5728\u4ee5\u7535\u89c6\u4e3a\u4e2d\u5fc3\u7684\u65b9\u5411\uff0c\u6c99\u53d1\u504f\u5230\u753b\u9762\u5de6\u4fa7\u3002",
+    "failure_reason_zh": "\u5de6\u8f6c\u548c\u53f3\u8f6c\u56de\u8f6c\u7684\u52a8\u4f5c\u90fd\u6e05\u6670\u53ef\u89c1\uff0c\u4f46\u5de6\u8f6c\u540e\u6709\u957f\u65f6\u95f4\u505c\u6ede\uff1b\u56de\u8f6c\u65f6\u8d8a\u8fc7\u4e86\u8d77\u59cb\u671d\u5411\uff0c\u6700\u7ec8\u89c6\u89d2\u6bd4\u8d77\u70b9\u66f4\u504f\u53f3\uff0c\u6ca1\u6709\u51c6\u786e\u505c\u5728\u8d77\u59cb\u89c6\u89d2\u3002",
+    "confidence_1_to_5": 3
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 2.4,
+    "final_score_1_to_5": 2.4,
+    "category_scores_1_to_5": {
+      "identity_id": {
+        "score": 2,
+        "weight": 2.0,
+        "answer": "partial",
+        "evidence_zh": "\u5e270-1\u4e3a\u60ac\u5d16\u6d77\u9e25\u573a\u666f\uff0c\u5e272\u7a81\u53d8\u4e3a\u5ba2\u5385\uff0c\u60ac\u5d16\u82b1\u8349\u53e0\u52a0\u6b8b\u7559\u81f3\u7ea6\u5e2719\u3002\u5e272-9\u7684\u521d\u59cb\u5ba2\u5385\u89c6\u89d2\u53ef\u89c1\u95e8\u3001\u753b\u5eca\u5899\u3001\u6c99\u53d1\u3001\u5706\u8336\u51e0\u3001\u73bb\u7483\u7f50\u548c\u53f3\u4fa7\u4e66\u67b6\u3002\u5de6\u8f6c\u540e\uff0c\u73bb\u7483\u7f50\u51fa\u73b0\u5728\u5c0f\u8fb9\u684c\u4e0a\u3002\u53f3\u8f6c\u56de\u7a0b\uff08\u5e27112-138\uff09\u4e2d\uff0c\u539f\u753b\u5eca\u5899\u548c\u95e8\u672a\u5728\u5bf9\u5e94\u533a\u57df\u91cd\u73b0\uff0c\u8f6c\u800c\u51fa\u73b0\u7a97\u3001\u7535\u89c6\u67dc\u3001\u53e6\u4e00\u4e66\u67b6\uff0c\u8336\u51e0\u53d8\u4e3a\u692d\u5706\u5f62\u3002\u521d\u59cb\u533a\u57df\u7684\u7ed3\u6784\u672a\u80fd\u4e00\u81f4\u91cd\u73b0\u3002"
+      },
+      "identity_texture": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "\u5e272-19\u4e2d\uff0c\u5730\u6bef\u548c\u6c99\u53d1\u524d\u65b9\u6301\u7eed\u53e0\u52a0\u9ec4\u8272\u82b1\u8349\u7eb9\u7406\uff0c\u5c5e\u4e8e\u8de8\u573a\u666f\u6750\u8d28\u6df7\u5408\uff0c\u540c\u4e00\u5730\u6bef\u8868\u9762\u5728\u5e272\u300110\u300119\u9010\u6b65\u6b8b\u7559\u3002\u5176\u4f59\u9636\u6bb5\u6c99\u53d1\u5e03\u6599\u3001\u4e66\u810a\u3001\u6728\u7eb9\u5728\u76f8\u90bb\u5e27\u95f4\u8f83\u7a33\u5b9a\u3002"
+      },
+      "color": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "\u6c99\u53d1\u6df1\u84dd\u3001\u8336\u51e0\u68d5\u8272\u3001\u5899\u9762\u767d\u7070\u5728\u76f8\u90bb\u5e27\u95f4\u57fa\u672c\u7a33\u5b9a\u3002\u521d\u59cb\u5e27\u4e2d\uff0c\u540c\u4e00\u5730\u6bef\u533a\u57df\u5448\u82b1\u8349\u7684\u9ec4\u7eff\u8272\u8c03\uff0c\u5e2720\u540e\u624d\u6d88\u5931\uff0c\u5c5e\u4e8e\u5c40\u90e8\u8272\u5f69\u6c61\u67d3\u3002"
+      },
+      "relative_position": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "\u521d\u59cb\u5e03\u5c40\u4e2d\uff0c\u753b\u5eca\u5899\u4f4d\u4e8e\u6c99\u53d1\u4e0a\u65b9\uff0c\u4e66\u67b6\u5728\u53f3\uff0c\u95e8\u5728\u5de6\u3002\u56de\u8f6c\u540e\u7684\u89c6\u89d2\uff08\u5e27115-130\uff09\u4e2d\uff0c\u6c99\u53d1\u4e0a\u65b9\u53d8\u4e3a\u7a97\u6237\uff0c\u65c1\u8fb9\u662f\u7535\u89c6\u67dc\uff0c\u5e03\u5c40\u4e0e\u521d\u59cb\u951a\u70b9\u4e0d\u7b26\u3002\u73bb\u7483\u7f50\u6240\u5728\u4f4d\u7f6e\u4e5f\u4ece\u8336\u51e0\u53d8\u4e3a\u8fb9\u684c\uff0c\u518d\u56de\u5230\u8336\u51e0\u6258\u76d8\u3002"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored",
+      "other_excluded_if_any": "none"
+    },
+    "static_tail_policy_applied": "\u5e2725-110\u957f\u65f6\u95f4\u51e0\u4e4e\u9759\u6b62\uff0c\u4f46\u6b64\u524d\u5df2\u6709\u660e\u663e\u5de6\u8f6c\uff0c\u4e4b\u540e\u53c8\u6709\u53f3\u8f6c\uff0c\u56e0\u6b64\u4e0d\u89e6\u53d1\u51bb\u7ed3\u95e8\u69db\u3002",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "uncertain",
+      "first_completion_frame": null,
+      "evidence_zh": "\u5e2710-24\u5411\u5de6\u8f6c\uff0c\u5e27110-138\u5411\u53f3\u8f6c\uff0c\u4f46\u7ec8\u70b9\u89c6\u89d2\u5e76\u975e\u521d\u59cb\u753b\u5eca\u5899\u89c6\u89d2\u3002"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "\u5e271\u21922\u4ece\u60ac\u5d16\u6d77\u666f\u7a81\u53d8\u4e3a\u5ba2\u5385\uff0c\u60ac\u5d16\u82b1\u8349\u4e0e\u5ba2\u5385\u53e0\u52a0\u81f3\u7ea6\u5e2719\uff1b\u56de\u8f6c\u540e\u7684\u5899\u9762\u5e03\u5c40\u4e0e\u521d\u59cb\u4e0d\u4e00\u81f4\u3002",
+      "post_completion_phase_zh": "\u65e0\u6cd5\u786e\u5b9a\u9996\u6b21\u5b8c\u6210\u70b9\uff1b\u5c3e\u6bb5\u7535\u89c6\u533a\u57df\u76f8\u90bb\u5e27\u95f4\u7a33\u5b9a\u3002"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "\u521d\u59cb\u753b\u5eca\u5899\u6c99\u53d1\u533a\u57df vs \u56de\u8f6c\u540e\u6c99\u53d1\u533a\u57df",
+        "anchors": [
+          "\u6c99\u53d1\u4e0e\u7a97/\u5899\u8fb9\u754c",
+          "\u8336\u51e0\u4e0e\u5730\u6bef\u4f4d\u7f6e"
+        ],
+        "same_object_or_region": "uncertain"
+      },
+      {
+        "comparison": "\u5e2710-24\u5de6\u8f6c\u8fc7\u7a0b\u4e2d\u7684\u6c99\u53d1\u4e0e\u4e66\u67b6",
+        "anchors": [
+          "\u7a97\u6237",
+          "\u95e8\u6846"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-2",
+        "2-24",
+        "24-110",
+        "110-138"
+      ],
+      "continuous_camera_motion": "uncertain",
+      "tracked_structural_anchors": [
+        "\u95e8\u6846",
+        "\u7a97\u6237",
+        "\u4e66\u67b6\u8fb9\u7f18",
+        "\u753b\u5eca\u5899"
+      ],
+      "newly_revealed_regions_zh": "\u5de6\u8f6c\u9732\u51fa\u7684\u5899\u89d2\u3001\u5f00\u5173\u4e0e\u8fb9\u684c\uff0c\u4ee5\u53ca\u53f3\u8f6c\u540e\u9732\u51fa\u7684\u7535\u89c6\u67dc\u533a\u57df\uff0c\u5747\u4e3a\u65b0\u533a\u57df\u3002",
+      "evidence_zh": "\u5e272-24\u7684\u5de6\u8f6c\u8fde\u7eed\u53ef\u8ffd\u8e2a\uff0c\u5e27110-138\u7684\u53f3\u8f6c\u4e5f\u8fde\u7eed\uff1b\u4f46\u5e271\u21922\u4e3a\u573a\u666f\u7a81\u53d8\uff0c\u65e0\u6cd5\u7528\u76f8\u673a\u8fd0\u52a8\u89e3\u91ca\u3002"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "sample 1\u21922",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "\u60ac\u5d16\u8fb9\u7f18/\u6d77\u5e73\u7ebf",
+        "\u6d77\u9e25\u4f4d\u7f6e"
+      ],
+      "evidence_zh": "\u5e271\u4ecd\u4e3a\u60ac\u5d16\u6d77\u666f\uff0c\u5e272\u7a81\u7136\u51fa\u73b0\u5ba2\u5385\u5899\u9762\u3001\u6c99\u53d1\u548c\u4e66\u67b6\uff0c\u6d77\u5e73\u7ebf\u4e0e\u6d77\u9e25\u540c\u65f6\u6d88\u5931\uff0c\u4efb\u4f55\u76f8\u673a\u53d8\u6362\u90fd\u65e0\u6cd5\u89e3\u91ca\u3002"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "\u5b8c\u6210\u70b9\u4e0d\u786e\u5b9a\uff0c\u4e0d\u505a\u989d\u5916\u6263\u5206\u3002"
+    },
+    "final_state_check": {
+      "window": "125-138",
+      "visible_key_objects": [
+        "grey sectional sofa",
+        "round wooden coffee table",
+        "glass jar",
+        "tall white bookshelf"
+      ],
+      "reappearance_consistency_zh": "\u7ec8\u6001\u53ef\u89c1\u6c99\u53d1\u3001\u8336\u51e0\uff08\u504f\u692d\u5706\uff09\u3001\u6258\u76d8\u4e0a\u7684\u73bb\u7483\u7f50\u548c\u4e66\u67b6\uff0c\u4f46\u753b\u5eca\u5899\u4e0e\u6d6e\u52a8\u7f6e\u7269\u67b6\u672a\u91cd\u73b0\uff0c\u5468\u8fb9\u5e03\u5c40\u4e0e\u521d\u59cb\u4e0d\u540c\u3002"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 3,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": "0",
+      "static_tail_penalty_zh": "\u65e0",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "\u5e272-24\u6709\u660e\u663e\u5de6\u8f6c\uff0c\u5e27110-138\u6709\u660e\u663e\u53f3\u8f6c\u3002",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "\u5730\u6bef\u533a\u57df",
+        "\u6c99\u53d1",
+        "\u4e66\u67b6\u4e66\u810a",
+        "\u8336\u51e0"
+      ],
+      "correspondence_anchors": [
+        "\u8336\u51e0",
+        "\u6c99\u53d1\u5e95\u8fb9"
+      ],
+      "visible_intervals": [
+        "2-19",
+        "25-110",
+        "125-138"
+      ],
+      "before_developing_after_checkpoints": [
+        {
+          "surface": "\u8336\u51e0\u524d\u65b9\u7684\u5730\u6bef\u533a\u57df",
+          "before_frame": "2",
+          "developing_frame": "10",
+          "after_frame": "19",
+          "observed_change_zh": "\u60ac\u5d16\u9ec4\u8272\u82b1\u8349\u53e0\u52a0\u5728\u5730\u6bef\u4e0a\uff0c\u5e76\u968f\u8f6c\u52a8\u9010\u6e10\u6b8b\u7559\u540e\u6d88\u9000\u3002"
+        }
+      ],
+      "intrinsic_color_drift": "possible",
+      "material_or_texture_drift": "verified",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "\u82b1\u8349\u7eb9\u7406\u5728\u540c\u4e00\u5730\u6bef\u533a\u57df\u8de8\u591a\u5e27\u6301\u7eed\u51fa\u73b0\uff0c\u5c5e\u4e8e\u573a\u666f\u6df7\u5408\u4f2a\u5f71\u3002"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "yes",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": "0",
+      "evidence_zh": "\u4e0d\u9002\u7528",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "first-person",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "no",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "partial",
+      "evidence_zh": "\u4e0d\u9002\u7528"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": "\u4e0d\u9002\u7528"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "\u4e0d\u9002\u7528"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "\u5ba2\u5385\u573a\u666f\uff08\u6c99\u53d1\u3001\u8336\u51e0\u3001\u4e66\u67b6\uff09",
+      "same_entity_throughout": "partial",
+      "stable_identity_attributes": [
+        "colors",
+        "materials"
+      ],
+      "identity_failure": "contradictory_reappearance",
+      "evidence_zh": "\u5f00\u5934\u4ece\u60ac\u5d16\u573a\u666f\u7a81\u53d8\u4e3a\u5ba2\u5385\uff1b\u56de\u8f6c\u540e\u521d\u59cb\u753b\u5eca\u5899\u533a\u57df\u672a\u91cd\u73b0\uff0c\u5e03\u5c40\u6539\u53d8\u3002"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 3,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": null,
+      "evidence_zh": "\u76f8\u673a\u6709\u5b9e\u9645\u8f6c\u52a8\uff0c\u6b63\u5e38\u8ba1\u6743\u3002"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 3,
+      "interaction_opportunity_reached": "partial",
+      "physical_response_observed": "partial",
+      "core_failure_zh": "\u4e0d\u9002\u7528",
+      "positive_evidence_zh": "\u4e0d\u9002\u7528",
+      "evidence_zh": "\u4e0d\u9002\u7528",
+      "final_score_cap_applied": 3
+    },
+    "summary_zh": "\u89c6\u9891\u5f00\u5934\u4ece\u60ac\u5d16\u6d77\u666f\u786c\u5207\u5230\u5ba2\u5385\u5e76\u6b8b\u7559\u82b1\u8349\u53e0\u52a0\uff0c\u56de\u8f6c\u540e\u521d\u59cb\u753b\u5eca\u5899\u533a\u57df\u672a\u4e00\u81f4\u91cd\u73b0\u3001\u5e03\u5c40\u6539\u53d8\uff0c\u6574\u4f53\u4e00\u81f4\u6027\u504f\u5f31\u3002"
+  },
+  "reported_score": 2.4,
+  "calls": [
+    {
+      "mode": "gate",
+      "model": "claude-opus-5-5",
+      "response_id": "msg_011Ch3xq4uUK1cMJrhnG7UVP",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 22498,
+        "output_tokens": 1129,
+        "output_tokens_details": {
+          "thinking_tokens": 637
+        },
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      }
+    },
+    {
+      "mode": "score",
+      "model": "claude-opus-5-5",
+      "response_id": "msg_011Ch3xrYThHBDhqUe7o6HB1",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 45222,
+        "output_tokens": 4927,
+        "output_tokens_details": {
+          "thinking_tokens": 695
+        },
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      }
+    }
+  ],
+  "input_normalization": {
+    "original_perspective": "first person",
+    "metric_perspective": "first-person"
+  },
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 139,
+      "sheets_count": 6,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 13.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 138,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 13.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 7,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 12.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 6,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 12.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "edd7b0a19efc834e97bb22c89db4f505b20ed02b899ddbd91dc9ce2f13a48e30",
+  "score_prompt_sha256": "381b2476406817e3909bc20a36396f55ca015f6276c30bf765228ecba6a3b587"
+}

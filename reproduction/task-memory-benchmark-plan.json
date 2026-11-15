@@ -24,6 +24,14 @@
       "path": "turn90left_wait_return",
       "partition": "held_out",
       "task": "Turn left90 degrees then back to the display window"
+    },
+    {
+      "task_id": "GC040",
+      "seed": 42,
+      "path": "turn90_wait_return",
+      "partition": "development_replacement",
+      "task": "Turn right90 degrees then return to the starting view",
+      "replacement_for": "GC013"
     }
   ],
   "case_selection": "Selected by literal task structure and frozen image partition, before any videos on these cases were generated. GC033 is the next compatible unused held-out pure90-degree task. All pairs retained.",
@@ -32,5 +40,11 @@
   "auxiliary_metrics": "Matched native camera audit; raw-pixel prefix; DINO/PSNR and complete-video blind comparison; memory/latency",
   "failure_reporting": "Count generation and judge failures explicitly; preserve attempted videos/manifests; do not change frozen candidate based on held-out scores.",
   "hardware": "ModalH100, same PyTorch2.6/CUDA12.4 environment. Both modes move the already-used GPU text encoder to CPU before denoising; conditioning tensors and weights are unchanged.",
-  "hardware_change_before_generation": "The original H200 app ap-yMjUp45chgzCcppCL43Fyh was explicitly stopped after a long allocation queue with no completed task outputs. The paired cohort is moved together toH100; all per-run hardware and offload settings are recorded."
+  "hardware_change_before_generation": "The original H200 app ap-yMjUp45chgzCcppCL43Fyh was explicitly stopped after a long allocation queue with no completed task outputs. The paired cohort is moved together toH100; all per-run hardware and offload settings are recorded.",
+  "quarantined_case_ids": [
+    "GC013"
+  ],
+  "amendment": "Confirmed source image/caption mismatch inGC013, independently verified against current pinned HF bytes. Retain its raw outputs as invalid; add the next compatible unused development caseGC040 before generating it. Do not report the original cohort mean.",
+  "replacement_selection": "Ascending task ID among remaining compatible development90-degree tasks selectsGC040 beforeGC042; this choice is made before its generation. Its source image was visually checked against caption and rubric.",
+  "input_integrity_audit": "reproduction/task-input-audit.json"
 }

@@ -1,0 +1,501 @@
+{
+  "task_id": "GC013",
+  "judge_provider": "anthropic",
+  "judge_model": "claude-opus-5-5",
+  "playworld_revision": "eeaea12e050a90b815d11d030e943e7b3181da21",
+  "dry_run": false,
+  "mode": "both",
+  "video_sha256": "985671616e626da554f9b07cb89c1ceecb28e0d91b9161f50e9a43e459f576b3",
+  "protocol_warning": "Claude judge and custom controller differ from the published PlayWorld protocol; do not compare directly with its leaderboard.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "GC013",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "\u955c\u5934\u5148\u6301\u7eed\u5411\u5de6\u8f6c\uff0c\u4ece\u6b63\u5bf9\u6302\u753b\u5899\u548c\u6c99\u53d1\u7684\u89c6\u89d2\u8f6c\u5230\u5de6\u4fa7\u4e66\u67b6\u3001\u7a97\u6237\u548c\u5899\u89d2\uff0c\u8f6c\u5e45\u63a5\u8fd190\u5ea6\u3002\u968f\u540e\u5728\u8be5\u65b9\u5411\u505c\u7559\u8f83\u957f\u65f6\u95f4\uff0c\u6700\u540e\u5411\u53f3\u8f6c\u56de\uff0c\u6062\u590d\u5230\u6b63\u5bf9\u6302\u753b\u5899\u3001\u6c99\u53d1\u548c\u8336\u51e0\u7684\u8d77\u59cb\u89c6\u89d2\u3002",
+    "trajectory_evidence_zh": "0.2\u20130.9\u79d2\uff1a\u89c6\u89d2\u6b63\u5bf9\u6302\u753b\u5899\u548c\u6c99\u53d1\uff0c\u53ef\u4f5c\u4e3a\u8d77\u59cb\u671d\u5411\u3002\u7ea61.0\u20132.5\u79d2\uff1a\u753b\u9762\u5185\u5bb9\u6301\u7eed\u5411\u53f3\u79fb\u52a8\uff0c\u5de6\u4fa7\u4f9d\u6b21\u51fa\u73b0\u7a97\u6237\u3001\u4e66\u67b6\u548c\u5899\u89d2\uff0c\u8868\u660e\u5728\u5411\u5de6\u8f6c\u3002\u7ea62.5\u201311.5\u79d2\uff1a\u89c6\u89d2\u57fa\u672c\u505c\u5728\u4e66\u67b6\u3001\u8fb9\u51e0\u548c\u5899\u89d2\u65b9\u5411\u3002\u7ea611.7\u201312.9\u79d2\uff1a\u753b\u9762\u5185\u5bb9\u5411\u5de6\u79fb\u52a8\uff0c\u7a97\u6237\u3001\u95e8\u548c\u6302\u753b\u5899\u4f9d\u6b21\u56de\u5230\u753b\u9762\u4e2d\uff0c\u8868\u660e\u5728\u5411\u53f3\u8f6c\u3002\u7ea612.9\u201313.8\u79d2\uff1a\u89c6\u89d2\u56de\u5230\u6b63\u5bf9\u6302\u753b\u5899\u3001\u6c99\u53d1\u548c\u8336\u51e0\u7684\u8d77\u59cb\u671d\u5411\u3002",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 4
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 3.2,
+    "final_score_1_to_5": 3.2,
+    "category_scores_1_to_5": {
+      "identity_id": {
+        "score": 2.5,
+        "weight": 2.0,
+        "answer": "partial",
+        "evidence_zh": "Frames 0-1 show the cliff, sea and seagull. Frame 2 abruptly becomes the living room, with cliff vegetation fused into the lower left. Yellow flowers stay embedded on the rug in front of the coffee table through frames 2-17 and again at 120-138. Sofa, round coffee table, glass jar, art-wall frames and the right wooden-edged bookshelf keep similar count and structure from frame 2 to the end. The floating shelf is not clearly identifiable."
+      },
+      "identity_texture": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "The yellow-flower and green-vegetation texture from the reference scene stays on the same rug/coffee-table-base surface. It is visible at frames 2, 10, 17, 121 and 135, a verified generated texture contamination. Sofa fabric, tabletop wood grain, jar glass and book spines are otherwise stable."
+      },
+      "color": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "Navy sofa, wood-brown coffee table, white walls and colorful book spines keep consistent hue between the initial frames (2-9) and the final frames (128-138). Brightness changes are mostly explained by lighting and viewing angle. The yellow flower overlay is mainly counted under texture."
+      },
+      "relative_position": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "The door, art gallery, sofa, coffee table and right bookshelf keep stable relative positions during the left turn and the return. The window, second sofa section, white bookshelf and side table are newly revealed regions. Their parallax is coherent, with no teleportation."
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored",
+      "other_excluded_if_any": "none"
+    },
+    "static_tail_policy_applied": "The long static segment around frames 25-105 occurs mid-action. The video then turns right back to the starting view. The final frames 130-138 are a near-static tail, which is acceptable.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 130,
+      "evidence_zh": "Frames 2-25 turn left to the bookshelf and side-table corner. After a long pause, frames ~107-130 turn right back to the sofa and art-wall view."
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "The door, window, wall-floor boundary and art gallery stay coherent during rotation. However, the cliff vegetation fuses into the room's floor area as a persistent anomaly.",
+      "post_completion_phase_zh": "Frames 130-138 are stable. The yellow flower overlay is still present, and a white cabinet appears at the right edge as a newly revealed edge region."
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "Initial frame 2 vs final frame 135: sofa, coffee table, art wall",
+        "anchors": [
+          "door",
+          "art gallery frame arrangement",
+          "right bookshelf"
+        ],
+        "same_object_or_region": "yes"
+      },
+      {
+        "comparison": "Middle-segment white bookshelf and side table with glass jar vs initial bookshelf",
+        "anchors": [
+          "window",
+          "left-side light switch and wall corner"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "2-25",
+        "25-105",
+        "105-130",
+        "130-138"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "door",
+        "window",
+        "art gallery",
+        "bookshelf"
+      ],
+      "newly_revealed_regions_zh": "The window, left sofa section, left white bookshelf, side table and light switch are newly revealed regions.",
+      "evidence_zh": "Rotation is continuous and parallax is reasonable, except for the scene switch at frames 1\u21922."
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "1\u21922",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "sea horizon and cliffs",
+        "seagull"
+      ],
+      "evidence_zh": "The cliff and sea scene is instantly replaced by an indoor living room, and no camera transform can explain it. Residual vegetation fuses into the indoor scene."
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "No obvious overrun after completion."
+    },
+    "final_state_check": {
+      "window": "130-138",
+      "visible_key_objects": [
+        "grey sectional sofa",
+        "round wooden coffee table",
+        "glass jar",
+        "framed art gallery",
+        "tall bookshelf"
+      ],
+      "reappearance_consistency_zh": "The sofa, coffee table, jar, art gallery and bookshelf match the frame-2 positions and structure. The flower overlay persists."
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 3,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "yes",
+      "static_tail_first_frame": 130,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": "0",
+      "static_tail_penalty_zh": "none",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [
+        "door",
+        "art gallery"
+      ],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "The camera turns left and then returns.",
+      "evidence_zh": "Rotation is clear.",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "Turned left, then right.",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "no",
+      "ink_change_type": "none",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "There is a clear left turn and a right turn back to the start.",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "rug/coffee-table-base area",
+        "sofa",
+        "coffee table",
+        "book spines"
+      ],
+      "correspondence_anchors": [
+        "coffee table",
+        "door",
+        "art gallery"
+      ],
+      "visible_intervals": [
+        "2-17",
+        "120-138"
+      ],
+      "before_developing_after_checkpoints": [
+        {
+          "surface": "rug area in front of the coffee table",
+          "before_frame": "2",
+          "developing_frame": "10",
+          "after_frame": "135",
+          "observed_change_zh": "Cliff vegetation and yellow-flower texture persistently overlays the rug."
+        }
+      ],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "verified",
+      "generated_noise_artifacts": "none",
+      "noise_type": "other",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "The flower texture appears on the same rug region at the start and the end and is a persistent contamination. Other surfaces are stable."
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "yes",
+      "post_action_static_tail": "yes",
+      "static_tail_first_frame": 130,
+      "static_tail_fraction_of_video": 0.06,
+      "post_action_static_penalty": "0",
+      "evidence_zh": "First-person camera rotation.",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "first-person",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "Camera rotation.",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "no",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "yes",
+      "evidence_zh": "not_applicable"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": "not_applicable"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "living-room scene (sofa, coffee table, art wall, bookshelf)",
+      "same_entity_throughout": "partial",
+      "stable_identity_attributes": [
+        "colors",
+        "materials"
+      ],
+      "identity_failure": "fusion",
+      "evidence_zh": "The scene switches from cliff to living room, and cliff vegetation persistently fuses onto the floor. Furniture stays consistent on return."
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 3,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": null,
+      "evidence_zh": "GC case, so the IF/OE cap does not apply."
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 3,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "none",
+      "positive_evidence_zh": "not_applicable",
+      "evidence_zh": "Not applicable to GC.",
+      "final_score_cap_applied": 3
+    },
+    "summary_zh": "The camera turns left and returns smoothly, and the sofa, coffee table, art wall and bookshelf reappear consistently. However, the opening abruptly switches from the cliff scene to the living room, and cliff vegetation persistently fuses onto the rug, so overall consistency is moderate."
+  },
+  "reported_score": 3.2,
+  "calls": [
+    {
+      "mode": "gate",
+      "model": "claude-opus-5-5",
+      "response_id": "msg_011Ch3xv8Pi3ppF2epp7YV6X",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 22498,
+        "output_tokens": 664,
+        "output_tokens_details": {
+          "thinking_tokens": 241
+        },
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      }
+    },
+    {
+      "mode": "score",
+      "model": "claude-opus-5-5",
+      "response_id": "msg_011Ch3xwFwAVQvWp8Pru94jH",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 45222,
+        "output_tokens": 5464,
+        "output_tokens_details": {
+          "thinking_tokens": 1140
+        },
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      }
+    }
+  ],
+  "input_normalization": {
+    "original_perspective": "first person",
+    "metric_perspective": "first-person"
+  },
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 139,
+      "sheets_count": 6,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 13.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 138,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 13.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 7,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 12.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 6,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 12.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "edd7b0a19efc834e97bb22c89db4f505b20ed02b899ddbd91dc9ce2f13a48e30",
+  "score_prompt_sha256": "381b2476406817e3909bc20a36396f55ca015f6276c30bf765228ecba6a3b587"
+}

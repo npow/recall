@@ -1,0 +1,492 @@
+{
+  "task_id": "GC033",
+  "judge_provider": "anthropic",
+  "judge_model": "claude-opus-5-5",
+  "playworld_revision": "eeaea12e050a90b815d11d030e943e7b3181da21",
+  "dry_run": false,
+  "mode": "both",
+  "video_sha256": "655d454fc3a8f3bb4040094feaaf5fda7f22893b105040aad3451b01b14eda6c",
+  "protocol_warning": "Claude judge and custom controller differ from the published PlayWorld protocol; do not compare directly with its leaderboard.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "GC033",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "\u955c\u5934\u5148\u4ece\u6b63\u5bf9\u5c55\u793a\u6a71\u7a97\u7684\u4f4d\u7f6e\u5411\u5de6\u5e73\u79fb/\u8f6c\u52a8\uff0c\u753b\u9762\u4e2d\u77f3\u67f1\u3001\u83f1\u5f62\u540a\u706f\u3001\u767d\u6846\u7a97\u6237\u4f9d\u6b21\u4ece\u5de6\u4fa7\u8fdb\u5165\uff0c\u6700\u7ec8\u770b\u5230\u6cbf\u8857\u9053\u5ef6\u4f38\u7684\u767d\u8272\u5efa\u7b51\u7acb\u9762\uff08\u7ea6\u8f6c\u5411\u5de6\u4fa7\u4e00\u5927\u89d2\u5ea6\uff09\uff0c\u505c\u7559\u4e00\u6bb5\u65f6\u95f4\u540e\u518d\u5411\u53f3\u8f6c\u56de\uff0c\u91cd\u65b0\u6b63\u5bf9\u539f\u6765\u7684\u5c55\u793a\u6a71\u7a97\u3002",
+    "trajectory_evidence_zh": "0-0.8\u79d2\uff1a\u6b63\u5bf9\u6728\u6846\u5c55\u793a\u6a71\u7a97\uff1b0.9-2.4\u79d2\uff1a\u753b\u9762\u5185\u5bb9\u5411\u53f3\u79fb\u51fa\u3001\u5de6\u4fa7\u4f9d\u6b21\u51fa\u73b0\u77f3\u67f1\u3001\u540a\u706f\u3001\u767d\u6846\u7a97\u6237\uff0c\u8868\u660e\u5411\u5de6\u8f6c\uff1b2.5-10.5\u79d2\uff1a\u89c6\u89d2\u7a33\u5b9a\u5728\u6cbf\u8857\u65b9\u5411\uff0c\u53ef\u89c1\u8857\u9053\u3001\u6c7d\u8f66\u548c\u5efa\u7b51\u7acb\u9762\uff0c\u4e3a\u5de6\u8f6c\u540e\u7684\u6700\u8fdc\u671d\u5411\uff1b\u7ea610.9-12.5\u79d2\uff1a\u77f3\u67f1\u3001\u7d2b\u6c34\u6676\u548c\u5c55\u793a\u6a71\u7a97\u4ece\u53f3\u4fa7\u4f9d\u6b21\u56de\u5230\u753b\u9762\uff0c\u8868\u660e\u5411\u53f3\u8f6c\u56de\uff1b12.5-13.8\u79d2\uff1a\u91cd\u65b0\u6b63\u5bf9\u4e0e\u521d\u59cb\u76f8\u540c\u7684\u6728\u6846\u5c55\u793a\u6a71\u7a97\uff08\u540a\u724c\u3001\u706f\u5177\u3001\u7d2b\u6c34\u6676\u67f1\uff09\u3002",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 4
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 4.0,
+    "final_score_1_to_5": 4.0,
+    "category_scores_1_to_5": {
+      "identity_id": {
+        "score": 4,
+        "weight": 2.0,
+        "answer": "yes",
+        "evidence_zh": "\u9996\u5e27\uff080-9\uff09\u4e2d\uff0c\u7d2b\u6676\u6d1e\u3001\u767d\u8272\u6676\u67f1\u3001\u6728\u96d5\u4eba\u50cf\u3001\u7eb8\u724c\u548c\u4e09\u76cf\u94dc\u8272\u51e0\u4f55\u540a\u706f\u5747\u6e05\u6670\u53ef\u89c1\u3002\u5de6\u8f6c\u8fc7\u7a0b\u4e2d\uff0c\u8fd9\u4e9b\u7269\u4f53\u968f\u955c\u5934\u5e73\u79fb\u4ece\u5de6\u4fa7\u79fb\u51fa\u753b\u9762\u3002\u53f3\u8f6c\u8fd4\u56de\u540e\uff08\u7ea6126-138\uff09\uff0c\u4ee5\u6728\u7a97\u6846\u3001\u5c55\u67dc\u706f\u6761\u548c\u77f3\u67f1\u4e3a\u951a\u70b9\u6838\u5bf9\uff0c\u4e94\u7c7b\u5173\u952e\u7269\u4f53\u5168\u90e8\u91cd\u73b0\uff0c\u6570\u91cf\u548c\u7ed3\u6784\u57fa\u672c\u4e00\u81f4\u3002\u672a\u89c1\u590d\u5236\u6216\u66ff\u6362\uff0c\u53ea\u662f\u8fd4\u56de\u540e\u89c6\u89d2\u7565\u504f\uff0c\u6728\u96d5\u7ec6\u8282\u6709\u8f7b\u5fae\u6a21\u7cca\u3002"
+      },
+      "identity_texture": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "\u6676\u6d1e\u6676\u7c07\u7eb9\u7406\u3001\u7a97\u6846\u6728\u7eb9\u548c\u77f3\u67f1\u8d28\u611f\u5728\u8fd4\u56de\u540e\u4fdd\u6301\u4e00\u81f4\u3002\u7eb8\u724c\u5728\u9996\u5e27\u53ef\u8bfb\u51fa\u624b\u5199\u7684\u201cGift Vouchers\u201d\uff1b\u8fd4\u56de\u65f6\u7684\u7ec6\u8282\u5e27\uff0812.0s\uff09\u4e2d\uff0c\u7eb8\u724c\u6587\u5b57\u56e0\u8fd0\u52a8\u6a21\u7cca\u548c\u753b\u9762\u7f29\u5c0f\u800c\u65e0\u6cd5\u8fa8\u8ba4\uff0c\u5728\u7ec8\u5e27\u4e2d\u4e5f\u53ea\u80fd\u770b\u5230\u6a21\u7cca\u7b14\u8ff9\u3002\u8fd9\u4e9b\u8bc1\u636e\u4e0d\u8db3\u4ee5\u786e\u8ba4\u5b57\u6bcd\u88ab\u66ff\u6362\uff0c\u53ea\u8bb0\u4e3a\u53ef\u80fd\u95ee\u9898\uff0c\u4e0d\u4f5c\u4e3a\u786e\u8bc1\u6263\u5206\u3002"
+      },
+      "color": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "\u6676\u6d1e\u4fdd\u6301\u6df1\u7d2b\u8272\uff0c\u7eb8\u724c\u4fdd\u6301\u767d\u8272\uff0c\u540a\u706f\u4e3a\u6696\u6a59\u5149\uff0c\u6728\u96d5\u4e3a\u6d45\u68d5\u81f3\u6a59\u8272\uff0c\u7ec8\u5e27\u4e0e\u9996\u5e27\u8272\u76f8\u4e00\u81f4\u3002\u4ec5\u968f\u66dd\u5149\u548c\u89d2\u5ea6\u6709\u6b63\u5e38\u660e\u6697\u53d8\u5316\uff0c\u672a\u89c1\u7ecf\u4e09\u70b9\u4f50\u8bc1\u7684\u8272\u6f02\u6216\u95ea\u70c1\u3002"
+      },
+      "relative_position": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "\u8fd4\u56de\u540e\uff0c\u7eb8\u724c\u4ecd\u60ac\u6302\u5728\u5de6\u7a97\u683c\u4e0a\u65b9\uff0c\u4e09\u76cf\u540a\u706f\u4f4d\u4e8e\u53f3\u7a97\u683c\u4e0a\u90e8\uff0c\u6676\u6d1e\u5728\u5de6\u4e0b\uff0c\u767d\u6676\u67f1\u5728\u5176\u53f3\u4fa7\uff0c\u6728\u96d5\u5c45\u4e2d\uff0c\u76f8\u5bf9\u5e03\u5c40\u4e0e\u9996\u5e27\u4e00\u81f4\u3002\u5de6\u8f6c\u9014\u4e2d\u51fa\u73b0\u7684\u77f3\u67f1\u3001\u76f8\u90bb\u5e97\u94fa\u548c\u8857\u9053\u5c5e\u4e8e\u65b0\u63ed\u793a\u533a\u57df\uff0c\u6309\u8fde\u7eed\u5e73\u79fb\u5224\u65ad\u5408\u7406\u3002"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored",
+      "other_excluded_if_any": "\u65e0"
+    },
+    "static_tail_policy_applied": "\u5de6\u8f6c\u540e\u5728\u65b0\u533a\u57df\u505c\u7559\u8f83\u4e45\uff08\u7ea627-110\u5e27\uff09\uff0c\u955c\u5934\u57fa\u672c\u9759\u6b62\uff0c\u5c5e\u4e8e\u52a8\u4f5c\u4e2d\u6bb5\u505c\u987f\uff1b\u968f\u540e\u53f3\u8f6c\u8fd4\u56de\u539f\u7a97\u53e3\u3002\u7ec8\u6bb5\u9759\u6b62\u4e3a\u8fd4\u56de\u540e\u7684\u6b63\u5e38\u72b6\u6001\uff0c\u4e0d\u89e6\u53d1\u51bb\u7ed3\u95e8\u69db\u3002",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 127,
+      "evidence_zh": "0-26\u5e27\u5de6\u8f6c\uff0c\u7ecf\u8fc7\u77f3\u67f1\u548c\u76f8\u90bb\u5e97\u7a97\u5230\u8fbe\u8857\u9053\u89c6\u89d2\uff1b111-127\u5e27\u53f3\u8f6c\u8fd4\u56de\uff0c127\u5e27\u8d77\u91cd\u65b0\u6b63\u5bf9\u5c55\u793a\u7a97\u3002"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "\u77f3\u67f1\u3001\u6728\u7a97\u6846\u548c\u76f8\u90bb\u767d\u6846\u5e97\u7a97\u5728\u5e73\u79fb\u4e2d\u8fde\u7eed\u51fa\u73b0\uff0c\u51e0\u4f55\u8fde\u8d2f\u3002\u8857\u9053\u548c\u623f\u5c4b\u4e3a\u65b0\u63ed\u793a\u533a\u57df\uff0c\u98ce\u683c\u4e0e\u521d\u59cb\u7684\u6b27\u5f0f\u8857\u666f\u7565\u6709\u5dee\u5f02\uff0c\u4f46\u65e0\u786c\u5207\u3002",
+      "post_completion_phase_zh": "\u8fd4\u56de\u540e\uff0c\u6728\u7a97\u6846\u3001\u5c55\u67dc\u706f\u6761\u548c\u7a97\u5185\u53cd\u5c04\u4e0e\u9996\u5e27\u4e00\u81f4\uff0c\u65e0\u6f02\u79fb\u3002"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "\u9996\u5e27\u5c55\u793a\u7a97\u4e0e\u7ec8\u5e27\u5c55\u793a\u7a97",
+        "anchors": [
+          "\u6728\u8d28\u7a97\u6846\u7ad6\u6883",
+          "\u53d1\u5149\u84dd\u8272\u5c55\u67dc",
+          "\u5de6\u4fa7\u77f3\u67f1"
+        ],
+        "same_object_or_region": "yes"
+      },
+      {
+        "comparison": "\u524d\u666f\u5927\u5757\u7d2b\u6676\u4e0e\u9996\u5e27\u7269\u4f53",
+        "anchors": [
+          "\u77f3\u67f1\u5de6\u4fa7",
+          "\u767d\u6846\u76f8\u90bb\u5e97\u7a97"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-26",
+        "26-110",
+        "110-128",
+        "128-138"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "\u77f3\u67f1",
+        "\u6728\u7a97\u6846",
+        "\u767d\u8272\u7a97\u6846",
+        "\u51e0\u4f55\u540a\u706f"
+      ],
+      "newly_revealed_regions_zh": "\u77f3\u67f1\u5de6\u4fa7\u7684\u76f8\u90bb\u5e97\u7a97\u3001\u524d\u666f\u5927\u7d2b\u6676\u3001\u8857\u9053\u548c\u623f\u5c4b\u5747\u4e3a\u65b0\u533a\u57df\uff0c\u4e0d\u4e0e\u9996\u5e27\u6bd4\u8f83\u3002",
+      "evidence_zh": "\u77f3\u67f1\u548c\u540a\u706f\u968f\u955c\u5934\u8fde\u7eed\u5411\u53f3\uff08\u6216\u5411\u5de6\uff09\u5e73\u79fb\uff0c\u53ef\u89c1\u5e73\u6ed1\u7684\u65cb\u8f6c\u8fc7\u7a0b\u3002"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "\u6240\u6709\u8f6c\u53d8\u5747\u53ef\u7531\u8fde\u7eed\u5e73\u79fb\u89e3\u91ca\u3002"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "\u8fd4\u56de\u540e\u955c\u5934\u9759\u6b62\uff0c\u65e0\u8d85\u7a0b\u3002"
+    },
+    "final_state_check": {
+      "window": "128-138",
+      "visible_key_objects": [
+        "large purple amethyst geode",
+        "Gift Vouchers sign",
+        "three hanging lights",
+        "tall white crystal point",
+        "carved wooden figure"
+      ],
+      "reappearance_consistency_zh": "\u4e94\u7c7b\u7269\u4f53\u5747\u5728\u539f\u4f4d\u91cd\u73b0\uff0c\u5e03\u5c40\u548c\u989c\u8272\u4e0e\u9996\u5e27\u4e00\u81f4\uff1b\u7eb8\u724c\u6587\u5b57\u8f83\u6a21\u7cca\u3002"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 4,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "yes",
+      "static_tail_first_frame": 128,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": "0",
+      "static_tail_penalty_zh": "\u65e0",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [
+        "\u77f3\u67f1",
+        "\u7a97\u6846"
+      ],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "\u955c\u5934\u5b8c\u6210\u5de6\u8f6c\u4e0e\u8fd4\u56de",
+      "evidence_zh": "GC\u955c\u5934\u8fd0\u52a8\u660e\u786e",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "none",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "\u955c\u5934\u660e\u663e\u5de6\u8f6c\u7ea690\u00b0\u540e\u53f3\u8f6c\u8fd4\u56de\u539f\u7a97\u53e3\u3002",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "\u7d2b\u6676\u6d1e",
+        "\u7eb8\u724c",
+        "\u4e09\u76cf\u540a\u706f",
+        "\u767d\u6676\u67f1",
+        "\u6728\u96d5"
+      ],
+      "correspondence_anchors": [
+        "\u6728\u7a97\u6846",
+        "\u84dd\u8272\u5c55\u67dc",
+        "\u77f3\u67f1"
+      ],
+      "visible_intervals": [
+        "0-10",
+        "127-138"
+      ],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "possible",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "motion_blur",
+      "evidence_zh": "\u7eb8\u724c\u6587\u5b57\u5728\u8fd4\u56de\u65f6\u6a21\u7cca\uff0c\u5c5e\u8fd0\u52a8\u6a21\u7cca\u6216\u5206\u8fa8\u7387\u4e0d\u8db3\uff0c\u65e0\u4e09\u70b9\u4f50\u8bc1\uff0c\u4e0d\u4f5c\u4e3a\u786e\u8bc1\u6263\u5206\u3002"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "yes",
+      "post_action_static_tail": "yes",
+      "static_tail_first_frame": 128,
+      "static_tail_fraction_of_video": 0.08,
+      "post_action_static_penalty": "0",
+      "evidence_zh": "\u7b2c\u4e00\u4eba\u79f0\u955c\u5934\u4efb\u52a1",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "first-person",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "no",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "yes",
+      "evidence_zh": "not_applicable"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": "not_applicable"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "\u5c55\u793a\u7a97\u5185\u6c34\u6676\u9648\u5217",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "colors",
+        "materials",
+        "textures"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "\u8fd4\u56de\u540e\u9648\u5217\u7269\u4e0e\u9996\u5e27\u4e00\u81f4\u3002"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 4,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": null,
+      "evidence_zh": "GC\u955c\u5934\u8fd0\u52a8\u6709\u6548\u3002"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 4,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "none",
+      "positive_evidence_zh": "not_applicable",
+      "evidence_zh": "\u4e0d\u9002\u7528",
+      "final_score_cap_applied": 4
+    },
+    "summary_zh": "\u955c\u5934\u8fde\u8d2f\u5730\u5de6\u8f6c\u540e\u8fd4\u56de\uff0c\u539f\u5c55\u793a\u7a97\u5185\u7684\u6676\u6d1e\u3001\u6676\u67f1\u3001\u6728\u96d5\u3001\u4e09\u76cf\u540a\u706f\u548c\u7eb8\u724c\u5747\u5728\u539f\u4f4d\u4e00\u81f4\u91cd\u73b0\uff0c\u4ec5\u7eb8\u724c\u6587\u5b57\u5728\u8fd4\u56de\u65f6\u8f83\u6a21\u7cca\uff0c\u6574\u4f53\u4e00\u81f4\u6027\u826f\u597d\u3002"
+  },
+  "reported_score": 4.0,
+  "calls": [
+    {
+      "mode": "gate",
+      "model": "claude-opus-5-5",
+      "response_id": "msg_011Ch3yM66yoqfoNL4QqvUj4",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 22501,
+        "output_tokens": 454,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      }
+    },
+    {
+      "mode": "score",
+      "model": "claude-opus-5-5",
+      "response_id": "msg_011Ch3yNAuyiq7fKM4m25NHQ",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 43226,
+        "output_tokens": 4857,
+        "output_tokens_details": {
+          "thinking_tokens": 645
+        },
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      }
+    }
+  ],
+  "input_normalization": {
+    "original_perspective": "first person",
+    "metric_perspective": "first-person"
+  },
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 139,
+      "sheets_count": 6,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 13.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 138,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 13.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 7,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 12.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 6,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 12.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "81a8ab5a2fe76c574d846da49c3e201ff7985ab6b632df714fd43ea0b7c9d521",
+  "score_prompt_sha256": "9a47711c8e201a93545aea723d9dba1a47004eb18a9a1ee1ccb8efc439855f80"
+}

@@ -77,7 +77,9 @@ def main():
     maximum = min(args.max_chunks, 60 if stationary else 40)
     frames = maximum * 16 - 3
     report = {"status": "prepared", "model": "LingBot-World2 14B causal-fast stock", "protocol_id": PROTOCOL_ID,
-        "source_revision": revision, "checkpoint_revision": WEIGHT_REVISION, "task_id": args.task_id,
+        "source_revision": revision, "checkpoint_revision": WEIGHT_REVISION,
+        "initial_image_sha256": hashlib.sha256(initial.read_bytes()).hexdigest(),
+        "image_caption_sha256": hashlib.sha256(task["image_caption"].encode()).hexdigest(), "task_id": args.task_id,
         "split": args.split, "seed": args.seed, "turn_degrees_per_second": args.turn_degrees_per_second, "fps": 16, "max_chunks": maximum, "max_interactions": 40,
         "native_fixed_controls": args.native_fixed_controls, "camera_embedding_audit": [],
         "pose_retrieval": args.pose_retrieval, "sink_rephase": args.rephase_sink,
