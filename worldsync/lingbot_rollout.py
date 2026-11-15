@@ -80,8 +80,9 @@ def main():
     diagnostics = [args.pose_retrieval, args.rephase_sink, args.kv_retention, args.decoprune, args.reanchor, args.budget_memory]
     if sum(diagnostics) > 1:
         parser.error("memory ablations must be tested separately")
-    if (any(diagnostics) or args.denoise_schedule != "stock") and not args.native_fixed_controls:
-        parser.error("retrieval calibration requires native fixed controls")
+    adaptive_memory_ok = args.budget_memory and lingbot_tuning.hillclimb_unlocked()  # pose memory is driven by the live camera poses
+    if (any(diagnostics) or args.denoise_schedule != "stock") and not args.native_fixed_controls and not adaptive_memory_ok:
+        parser.error("retrieval calibration requires native fixed controls (adaptive runs only allow --budget-memory once hillclimbing is unlocked)")
     if args.rephase_sink and not lingbot_tuning.is_stock(knobs):
         parser.error("sink rephasing requires the stock 18-frame/6-sink budget")
     if args.pose_retrieval and (knobs["local_attn_size"] not in {18, 22}
