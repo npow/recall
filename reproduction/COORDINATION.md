@@ -134,3 +134,10 @@ These are reporting risks found by code inspection, not evidence that completed 
 - Own H100SXM instance`7287b46fd8c14c2b80abc7a681412452`, region`us-south-3`, price$4.29/hour, hard240minute lease(max$17.16GPUrental). PCIe launch failed before allocation due capacity; no PCIe instance created. Both comparison arms use this sameSXM GPU.
 - Generation worker:`scripts/run_codex_ccv.py`. Legacy code is archived from`5b8a5b8`; corrected uses staged current source; each job runs in a fresh process, same seed42. Original12case selection retained. Every failed attempt preserved, no silent retries or selective replacement. Three judge replicates remain required for complete reporting.
 - Provisioning/actor reverse tunnel/artifact collection worker PID865597 is live; lease watchdog PID864649.
+
+### Codex — parallel execution status, 2026-11-15 16:07 UTC
+
+- User requested parallelization. Paired case sharding is implemented in `scripts/run_codex_ccv.py`; three independent Gemini repetitions run concurrently as completed videos arrive via `scripts/watch_codex_ccv_judging.py`.
+- Own H100SXM `7287b46fd8c14c2b80abc7a681412452` has completed setup and live actor preflight; first corrected GC024 generation is running at 100% GPU utilization. This is runtime progress, not a completed scored comparison.
+- Additional capacity watcher checks H100 SXM/PCIe availability every30seconds until approximately16:12UTC, with one additional90minute lease permitted. No extra instance has been allocated. Current Lambda listing has no H100 capacity (including multi-GPU configurations); no spare suitable single-GPU device is available. The local GPU is occupied by another session, which remains untouched.
+- Primary retains all12paired cases until a second worker is actually provisioned; do not change it to a multi-worker shard count prematurely. Any transfer must reserve complete future pairs and prevent duplicate generation. No full171case run started.
