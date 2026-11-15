@@ -18,6 +18,7 @@ Rule: the largest paired judged differences at 12 s or 24 s away, one entry per 
 | GC016 | 24 s | 1.00 | 2.10 | +1.10 | [1.0, 1.0] / [2.2, 2.0] | 0.21 / 0.37 |
 | GC015 | 24 s | 1.20 | 2.20 | +1.00 | [1.0, 1.4] / [1.6, 2.8] | 0.34 / 0.33 |
 | GC044 | 12 s | 1.10 | 1.80 | +0.70 | [1.2, 1.0] / [2.6, 1.0] | 0.55 / 0.21 |
+| GC022 | 24 s | 1.20 | 1.80 | +0.60 | [1.2, 1.2] / [1.4, 2.2] | 0.80 / 0.82 |
 | GC003 | 24 s | 1.30 | 1.80 | +0.50 | [1.0, 1.6] / [1.0, 2.6] | 0.68 / 0.39 |
 | GC014 | 12 s | 1.80 | 2.20 | +0.40 | [1.8, 1.8] / [1.6, 2.8] | 0.59 / 0.53 |
 | GC042 | 24 s | 1.00 | 1.40 | +0.40 | [1.0, 1.0] / [1.8, 1.0] | 0.20 / 0.27 |
@@ -76,6 +77,12 @@ Rule: the largest paired judged differences at 12 s or 24 s away, one entry per 
 **GC002, 12 s away: 2.9 → 1.9.** A loss. Neither arm returns to the central gallery view; stock's final view is the more coherent one. [video](horizon-loss-GC002-H12.mp4)
 
 ![GC002](horizon-loss-GC002-H12.jpg)
+
+## A loss on a real PlayWorld task (memory v2, OE044)
+
+Judged 3.0 → 1.0. Stock ends with the plate and the person still at the counter; memory v2 ends on a sink view without them. Memory fired on 9 of 13 chunks here. [video](playworld-OE044.mp4)
+
+![OE044](playworld-OE044.jpg)
 
 ## Memory v2 on a slow 360° turn (GC007)
 

@@ -28,8 +28,6 @@ def interval(triple, digits=2):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--memv2-report", type=Path)
-    parser.add_argument("--memv2-final", action="store_true")
     args = parser.parse_args()
     summary = json.loads((DEMO / "horizon-summary.json").read_text())
     interim = summary["interim"]
@@ -42,17 +40,24 @@ def main():
     for horizon, row in sorted(horizons.items()):
         rows.append(f"| {horizon} s | {row['n']} | {row['stock'][0]:.2f} | {row['memory'][0]:.2f} | {interval(row['delta'])} | "
                     f"{row['wins']}/{row['ties']}/{row['losses']} |")
-    memv2_line = ("**Memory v2 on PlayWorld's own revisit tasks** (36 tasks, pre-registered in "
-                  "`docs/demo/sources/memory-v2-config.json`): still being scored when this page was written.")
-    if args.memv2_report and args.memv2_report.is_file():
-        judge = json.loads(args.memv2_report.read_text())["summary"]["judge_delta"]["all"]
-        mean, low, high = judge["mean_ci95"]
-        wins, ties, losses = judge["wins_ties_losses"]
-        state = "final" if args.memv2_final else "interim"
-        verdict = "a gain on real episodes" if low > 0 else ("a positive tendency, interval includes zero" if mean > 0 else "no gain on real episodes")
-        memv2_line = (f"**Memory v2 on PlayWorld's own revisit tasks** (pre-registered in `docs/demo/sources/memory-v2-config.json`, "
-                      f"{state}, {judge['pairs']} pairs): paired judged difference {mean:+.2f} [{low:+.2f}, {high:+.2f}], "
-                      f"{wins}/{ties}/{losses} wins/ties/losses: {verdict}.")
+    memv2_line, memv2_limit = "", ""
+    step2 = DEMO / "memv2-step2-summary.json"
+    if step2.is_file():
+        data = json.loads(step2.read_text())
+        everything, held = data["all"], data["held_out"]
+        memv2_line = (f"**Memory v2 on PlayWorld's own revisit tasks** (pre-registered: the {everything['pairs']} geometry and out-of-sight "
+                      f"tasks whose path revisits a view, `docs/demo/sources/memory-v2-config.json`): no gain. Paired judged difference "
+                      f"{interval(everything['delta'])}, {everything['wins']}/{everything['ties']}/{everything['losses']} wins/ties/losses; "
+                      f"held-out {held['pairs']} tasks {interval(held['delta'])} (`docs/demo/sources/memory-v2-step2-per-case.csv`). "
+                      "One selected example from that set shows what it does when it fires:\n\n"
+                      "**GC045, \"move 10 steps left, then 10 steps right to return\": judged 2.4 → 4.0** (selected example; a development task). "
+                      "The player took the same 9 actions in both arms and the first 5 chunks are pixel-identical; memory fired once, at the turn-around. "
+                      "On the way back, stock pushes a large red traffic light and a changed street sign into the frame; with memory v2 the "
+                      "Pleasure Pier arch stays framed as it was. [video](demo/playworld-GC045.mp4)\n\n"
+                      "![GC045 freeze frame](demo/playworld-GC045-freeze.jpg)\n\n![GC045](demo/playworld-GC045.jpg)")
+        memv2_limit = (f"- **Memory v2 does not raise scores on PlayWorld's own revisit tasks**: {interval(everything['delta'])} over "
+                       f"{everything['pairs']} tasks. It usually fires on only 1 to 5 chunks per episode, often at or after the return itself, and "
+                       "single judge calls and different player endings swing individual tasks by several points.\n")
     examples = ""
     for task, horizon in FEATURED:
         pair = pairs.get((task, horizon))
@@ -200,6 +205,11 @@ How it differs from published work, as we read it (`reproduction/literature-revi
 | VMem | past views, indexed by 3D surfels | what is visible from the new camera | fine-tuned generator |
 | **ours (memory v2)** | **the frame only; state recomputed** | **pose, verified by content** | **none** |
 
+What the tests of memory v2 establish (`docs/demo/sources/memory-v2-step1-table.md`): it is pixel-identical to the stock model
+whenever it does not fire (v1 also retrieved on 338 of 726 chunks, 47%, where nothing was being revisited); recomputed state matches state
+stored on disk (0.77 against 0.82 on the hold path, 0.62 against 0.63 on the slow turn); it needs no archive of internal state;
+and it removes v1's harm on the slow 360° turn.
+
 Storing the frame and recomputing the state is what gives the 200× saving; we did not find it in the papers we surveyed, and
 we have not searched exhaustively. We also built 8-bit and low-rank variants of the stored state as ablations.
 
@@ -238,7 +248,7 @@ we have not searched exhaustively. We also built 8-bit and low-rank variants of 
 - **PlayWorld overall is unchanged.** Memory v1 1.80 against stock 1.85; director 1.82 against 1.81. Neither is above Genie 3's 2.12, and the pre-registered criterion was not met.
 - **PlayWorld's tasks rarely need memory.** Only 12% of geometry and out-of-sight chunks revisit a view the stock model had forgotten.
 - **The gain is in what the judge sees, not in our own similarity measure.** On the 20 unseen scenes, final-frame similarity to the start view is {h12['dino_stock']:.2f} against {h12['dino_memory']:.2f}: the judge credits consistent objects and layout more than an exact return.
-- **The horizon benchmark tested memory v1**, because v2 had not passed its checks when the design was frozen. The judge is also noisy (0.36 points on the same video), which is why the tables report intervals.
+{memv2_limit}- **The horizon benchmark tested memory v1**, because v2 had not passed its checks when the design was frozen. The judge is also noisy (0.36 points on the same video), which is why the tables report intervals.
 - **Forward-and-back moves are not undone by the model**, and memory cannot fix that. A fine-tuned memory adapter (48 training pairs) did not help and hurt ordinary generation.
 
 ## What we would do next
@@ -274,6 +284,10 @@ Assets are built by `scripts/build_demo.py` and this page by `scripts/write_demo
         if pair and (DEMO / f"{name}.jpg").is_file():
             appendix += [f"**{task}, {horizon} s away: {pair['stock']:.1f} → {pair['memory']:.1f}.** {text} [video]({name}.mp4)", "",
                          f"![{task}]({name}.jpg)", ""]
+    if (DEMO / "playworld-OE044.jpg").is_file():
+        appendix += ["## A loss on a real PlayWorld task (memory v2, OE044)", "",
+                     "Judged 3.0 → 1.0. Stock ends with the plate and the person still at the counter; memory v2 ends on a sink view "
+                     "without them. Memory fired on 9 of 13 chunks here. [video](playworld-OE044.mp4)", "", "![OE044](playworld-OE044.jpg)", ""]
     appendix += ["## Memory v2 on a slow 360° turn (GC007)", "",
                  "Both arms end on a similar plaza view, not the start view; the similarity scores are 0.57 (stock) and 0.62 (v2 recompute; 0.63 for v2 with the disk archive). "
                  "The point of this path is that v2 no longer scores below stock, as the first version did (0.49).", "",

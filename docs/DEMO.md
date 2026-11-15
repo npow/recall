@@ -39,9 +39,9 @@ PlayWorld's released consistency rubric. These are PlayWorld scenes with our own
 | 0 s | 3 | 1.03 | 2.27 | +1.23 [+0.30, +2.60] | 3/0/0 |
 | 6 s | 7 | 1.43 | 2.34 | +0.91 [+0.47, +1.33] | 6/1/0 |
 | 12 s | 20 | 1.86 | 2.52 | +0.66 [+0.19, +1.12] | 14/2/4 |
-| 24 s | 18 | 1.44 | 1.78 | +0.34 [+0.03, +0.67] | 11/2/5 |
+| 24 s | 19 | 1.43 | 1.78 | +0.36 [+0.06, +0.68] | 12/2/5 |
 
-Pooled over the 12 s and 24 s absences, scenes as units: +0.55 [+0.24, +0.87] (n = 20) (interim).
+Pooled over the 12 s and 24 s absences, scenes as units: +0.56 [+0.25, +0.88] (n = 20) (interim).
 
 ### Selected examples
 
@@ -93,7 +93,13 @@ losses, in [GALLERY.md](GALLERY.md)):
 
 ![OE030](gallery/outsight-OE030.jpg)
 
-**Memory v2 on PlayWorld's own revisit tasks** (pre-registered in `docs/demo/sources/memory-v2-config.json`, interim, 12 pairs): paired judged difference -0.16 [-0.93, +0.56], 4/3/5 wins/ties/losses: no gain on real episodes.
+**Memory v2 on PlayWorld's own revisit tasks** (pre-registered: the 36 geometry and out-of-sight tasks whose path revisits a view, `docs/demo/sources/memory-v2-config.json`): no gain. Paired judged difference -0.12 [-0.54, +0.28], 10/14/12 wins/ties/losses; held-out 31 tasks +0.05 [-0.32, +0.41] (`docs/demo/sources/memory-v2-step2-per-case.csv`). One selected example from that set shows what it does when it fires:
+
+**GC045, "move 10 steps left, then 10 steps right to return": judged 2.4 → 4.0** (selected example; a development task). The player took the same 9 actions in both arms and the first 5 chunks are pixel-identical; memory fired once, at the turn-around. On the way back, stock pushes a large red traffic light and a changed street sign into the frame; with memory v2 the Pleasure Pier arch stays framed as it was. [video](demo/playworld-GC045.mp4)
+
+![GC045 freeze frame](demo/playworld-GC045-freeze.jpg)
+
+![GC045](demo/playworld-GC045.jpg)
 
 ### Run the demo
 
@@ -152,6 +158,11 @@ How it differs from published work, as we read it (`reproduction/literature-revi
 | VMem | past views, indexed by 3D surfels | what is visible from the new camera | fine-tuned generator |
 | **ours (memory v2)** | **the frame only; state recomputed** | **pose, verified by content** | **none** |
 
+What the tests of memory v2 establish (`docs/demo/sources/memory-v2-step1-table.md`): it is pixel-identical to the stock model
+whenever it does not fire (v1 also retrieved on 338 of 726 chunks, 47%, where nothing was being revisited); recomputed state matches state
+stored on disk (0.77 against 0.82 on the hold path, 0.62 against 0.63 on the slow turn); it needs no archive of internal state;
+and it removes v1's harm on the slow 360° turn.
+
 Storing the frame and recomputing the state is what gives the 200× saving; we did not find it in the papers we surveyed, and
 we have not searched exhaustively. We also built 8-bit and low-rank variants of the stored state as ablations.
 
@@ -190,6 +201,7 @@ we have not searched exhaustively. We also built 8-bit and low-rank variants of 
 - **PlayWorld overall is unchanged.** Memory v1 1.80 against stock 1.85; director 1.82 against 1.81. Neither is above Genie 3's 2.12, and the pre-registered criterion was not met.
 - **PlayWorld's tasks rarely need memory.** Only 12% of geometry and out-of-sight chunks revisit a view the stock model had forgotten.
 - **The gain is in what the judge sees, not in our own similarity measure.** On the 20 unseen scenes, final-frame similarity to the start view is 0.48 against 0.50: the judge credits consistent objects and layout more than an exact return.
+- **Memory v2 does not raise scores on PlayWorld's own revisit tasks**: -0.12 [-0.54, +0.28] over 36 tasks. It usually fires on only 1 to 5 chunks per episode, often at or after the return itself, and single judge calls and different player endings swing individual tasks by several points.
 - **The horizon benchmark tested memory v1**, because v2 had not passed its checks when the design was frozen. The judge is also noisy (0.36 points on the same video), which is why the tables report intervals.
 - **Forward-and-back moves are not undone by the model**, and memory cannot fix that. A fine-tuned memory adapter (48 training pairs) did not help and hurt ordinary generation.
 

@@ -321,8 +321,51 @@ def hero(stock, ours, path, task, objective, scores, away_s, panel=640, fps=16):
     Image.fromarray(freeze).save(path.with_suffix(".jpg"), quality=90)
 
 
+def task_clip(stock, ours, stem, task, objective, scores, labels, panel=640, fps=16):
+    """Side-by-side video of a real PlayWorld task with a title card and a start-vs-end freeze frame; also a strip."""
+    left, right = read_frames(stock, panel), read_frames(ours, panel)
+    count = min(len(left), len(right))
+    caption = f"PlayWorld task {task}  ·  judged {scores[0]:.1f} vs {scores[1]:.1f}"
+    step = max(1.0, count / (14.0 * fps))
+    indices = [int(i * step) for i in range(int(count / step))]
+    body = [compose(left[i], right[i], panel, labels, caption + (f"  ·  {step:.1f}× speed" if step > 1.05 else ""), "") for i in indices]
+    height, width = body[0].shape[:2]
+    card = title_card(width, height, [(f"PlayWorld task {task}", 34, (255, 255, 255), True), (objective, 22, (225, 225, 225), False),
+                                      (f"left: {labels[0]}", 22, STOCK_C, True), (f"right: {labels[1]}", 22, OURS_C, True)])
+    small = panel // 2
+    def shrink(frame):
+        return cv2.resize(frame, (small, int(frame.shape[0] * small / frame.shape[1])), interpolation=cv2.INTER_AREA)
+    quad = np.concatenate([np.concatenate([shrink(left[0]), shrink(left[len(left) - 1])], 1), np.full((shrink(left[0]).shape[0], 8, 3), 18, np.uint8),
+                           np.concatenate([shrink(right[0]), shrink(right[len(right) - 1])], 1)], 1)
+    freeze = np.concatenate([
+        np.concatenate([bar(panel, 30, labels[0], STOCK_C, size=17, bold=True), np.full((30, 8, 3), 18, np.uint8),
+                        bar(panel, 30, labels[1], OURS_C, size=17, bold=True)], 1),
+        np.concatenate([bar(small, 26, "start view", size=14), bar(small, 26, "after returning", size=14), np.full((26, 8, 3), 18, np.uint8),
+                        bar(small, 26, "start view", size=14), bar(small, 26, "after returning", size=14)], 1),
+        quad, bar(width, 28, "Does the view after returning match the start view?", (255, 214, 102), size=16)], 0)
+    extra = height - freeze.shape[0]
+    if extra > 0:
+        freeze = np.concatenate([np.full((extra // 2, width, 3), 18, np.uint8), freeze, np.full((extra - extra // 2, width, 3), 18, np.uint8)], 0)
+    else:
+        freeze = freeze[:height]
+    write_video([card] * int(2.5 * fps) + body + [body[-1]] * int(0.8 * fps) + [freeze] * int(4 * fps), OUT / f"{stem}.mp4", fps, crf=25)
+    Image.fromarray(freeze).save(OUT / f"{stem}-freeze.jpg", quality=90)
+    strip(stock, ours, OUT / f"{stem}.jpg", labels, f"{task}  ·  judged {scores[0]:.1f} vs {scores[1]:.1f}")
+
+
+def memv2_cases(tree, cases):
+    import csv
+    rows = {row["task_id"]: row for row in csv.DictReader((tree / "reproduction/memory-v2-step2/per-case.csv").open())}
+    labels = ("LingBot-World2 as released", "with our memory v2")
+    for task in cases:
+        row = rows[task]
+        task_clip(row["stock_video"], row["memv2_video"], f"playworld-{task}", task, row["objective"],
+                  (float(row["stock_mean"]), float(row["memv2_mean"])), labels)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--memv2-cases", default="", help="comma-separated PlayWorld task ids from memory-v2 step 2 to render")
     parser.add_argument("--horizon-tree", type=Path, required=True)
     parser.add_argument("--memv2-tree", type=Path, required=True)
     parser.add_argument("--interim", action="store_true")
@@ -363,6 +406,8 @@ def main():
     for pair in pairs[:8] + losses[:3]:
         print(pair["task"], pair["horizon"], round(pair["stock"]["score"], 2), round(pair["memory"]["score"], 2), round(pair["delta"], 2),
               pair["stock"]["calls"], pair["memory"]["calls"], round(pair["stock"]["dino"], 2), round(pair["memory"]["dino"], 2))
+    if args.memv2_cases:
+        memv2_cases(args.memv2_tree, args.memv2_cases.split(","))
     if args.skip_media:
         return
     labels = ("LingBot-World2 as released", "with our memory")
