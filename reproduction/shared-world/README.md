@@ -68,6 +68,25 @@ chunks instead of 8 (the seeded noise depends on clip length). 26 data points (3
 as duel-b at heading 180 returned the viewer's and its own sightings with resolvable frame references.
 `opponent_cue`/`cowboy_prompt` turn the stored positions into a text placement of the other agent.
 
+## Two agents circling each other (demo, 2026-11-15)
+
+`CameraPlan` gained `CIRCLE_LEFT`/`CIRCLE_RIGHT` (orbit the point 4 units ahead at 45 deg/s, always facing it).
+`PATHS["circle_a"]` is one full lap; `PATHS["circle_b"]` walks to the far side of the circle, turns to face its centre,
+then orbits half a lap through agent-a's earlier poses. Launcher: `scripts/modal_lingbot_orbit.py` with the cleaned
+start image `gc010_clean2.jpg` (minimap/HUD painted out); agent-a exports its archive (`--archive-until 40`), agent-b
+retrieves from it (`--foreign-archive agent-a=... --min-retrieved-frames 1`). World `w-55018cb255709d31`.
+
+Findings: chunk 0 is pixel-identical across the two runs. On the far side (headings 180-270) agent-b attended to
+agent-a's views at every chunk and generated the same blue SHERIFF building, porch posts and poles from the same
+positions. Returning to the start (315, 0) the views keep the style but not the detail, and agent-a's own lap does
+not return to the original DRUGS street. past.dev recall as agent-b at heading 225 returns agent-a's sighting from
+the identical pose first; 22 data points, 34 credits.
+
+```
+python -m worldsync.shared_world --db outputs/shared-world/orbit.db ingest-run outputs/shared-world/orbit/agent-a --agent agent-a --captions ... --dry-run
+python reproduction/shared-world/make_trio_demo.py outputs/shared-world/orbit agent-a agent-b
+```
+
 ## Not done
 
 - Captions are hand-written per chunk (no VLM key here).
