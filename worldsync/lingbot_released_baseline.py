@@ -103,11 +103,15 @@ def preflight(split, task_id, *, seed=42, chunks=60):
     return result
 
 
-def run(split,task_id,output,*,seed=42,chunks=60):
+def run(split,task_id,output,*,seed=42,chunks=60,validate_runtime=False):
     from worldsync import lingbot_rollout
     from worldsync.released_reference_player import ReleasedReferenceController
     output=Path(output);output.mkdir(parents=True,exist_ok=False)
     audit=preflight(split,task_id,seed=seed,chunks=chunks)
+    if validate_runtime:
+        if chunks > 2 or audit['status'] != 'blocked_controller_integration':
+            raise ValueError('Runtime validation requires a supported plan and at most2chunks')
+        audit.update(status='ready_for_generation_validation', scope='runtime smoke only; not benchmark evidence')
     (output/'protocol.json').write_text(json.dumps(audit,indent=2)+'\n')
     if audit['status']!='ready_for_generation_validation':
         raise ValueError('Native control preflight failed; task retained as unsupported')
@@ -135,9 +139,12 @@ def main():
     parser.add_argument('--chunks',type=int,default=60)
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--generate',action='store_true',help='Explicitly run native GPU inference; omitted for CPU preflight')
+    parser.add_argument('--validate-runtime',action='store_true',help='Permit at most2GPUchunks to validate rollout integration; no benchmark claim')
     args=parser.parse_args()
+    if args.validate_runtime and not args.generate:
+        parser.error('--validate-runtime requires --generate')
     if args.generate:
-        run(args.split,args.task_id,args.output,seed=args.seed,chunks=args.chunks)
+        run(args.split,args.task_id,args.output,seed=args.seed,chunks=args.chunks,validate_runtime=args.validate_runtime)
     else:
         result=preflight(args.split,args.task_id,seed=args.seed,chunks=args.chunks)
         args.output.parent.mkdir(parents=True,exist_ok=True)

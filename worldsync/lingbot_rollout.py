@@ -104,7 +104,7 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
     lingbot_adaptive_pilot.validate(args, knobs, parser)
     if args.turn_clamp != "off" and not lingbot_tuning.hillclimb_unlocked():
         parser.error("turn clamping is locked until hillclimbing is unlocked")
-    if args.text_prompt != "caption" and not lingbot_tuning.hillclimb_unlocked():
+    if args.text_prompt != "caption" and controller_profile is None and not lingbot_tuning.hillclimb_unlocked():
         parser.error("non-default world-model text is locked until hillclimbing is unlocked")
     if not 0 < args.turn_degrees_per_second <= 90:
         parser.error("turn rate must be in (0,90] degrees per second")
@@ -187,6 +187,13 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
     if controller_profile is not None:
         if player_decide is None or args.decision_interval != 1:
             raise ValueError("Canonical controller requires callback on every native chunk")
+        if (args.text_prompt != 'prompt' or not lingbot_tuning.is_stock(knobs)
+                or any(diagnostics) or args.fixed_actions or args.native_fixed_controls
+                or args.adaptive_retrieval_pilot or args.lora or args.memory_reader
+                or args.turn_clamp != 'off' or args.denoise_schedule != 'stock'):
+            raise ValueError('Canonical baseline requires stock model settings and its own camera schedule')
+        if controller_profile['task_id'] != args.task_id or controller_profile['split'] != args.split:
+            raise ValueError('Controller profile belongs to a different task')
         report.update(protocol_id=controller_profile['profile'], controller_profile=controller_profile,
                       player_sha256=controller_profile['source_sha256']['worldsync/released_reference_player.py'],
                       observation_encoding='lossless PNG before released JPEG stages',
@@ -200,7 +207,7 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
     save()
     if args.dry_run:
         print(json.dumps({"status": "prepared", "api_calls": 0, "native_frames": frames}))
-        return
+        return report
     manifest = json.loads((ROOT / "reproduction/lingbot-weights.json").read_text())
     if manifest["revision"] != WEIGHT_REVISION:
         raise ValueError("wrong checkpoint inventory")
@@ -213,7 +220,8 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
     import torch
     import imageio.v2 as imageio
     report["hardware"] = {"gpu": torch.cuda.get_device_name(), "torch": str(torch.__version__), "cuda": torch.version.cuda}
-    report["deviations"][2] = f"Official 480p demo area; single {report['hardware']['gpu']}, BF16 and valid-length SDPA backend"
+    if controller_profile is None:
+        report["deviations"][2] = f"Official 480p demo area; single {report['hardware']['gpu']}, BF16 and valid-length SDPA backend"
     from PIL import Image
     from einops import rearrange
     from worldsync.lingbot_vae import NativeVaeStream
@@ -225,7 +233,8 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
     from wan.configs import WAN_CONFIGS
     from wan.utils.cam_utils import compute_relative_poses, get_plucker_embeddings, get_Ks_transformed
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
-    if not stationary and not args.fixed_actions:
+    client = None
+    if (not stationary or controller_profile is not None) and not args.fixed_actions:
         from anthropic import Anthropic
         load_local_credentials()
         client = Anthropic(timeout=180, max_retries=2, default_headers={"Accept-Encoding": "identity"})
