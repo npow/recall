@@ -78,11 +78,14 @@ def main():
     parser.add_argument("--reference-image", type=Path)
     parser.add_argument("--world-model", default="ABot-World-0")
     parser.add_argument("--mode", choices=["both", "gate", "score"], default="both")
-    parser.add_argument("--model", default="claude-opus-5-5")
+    parser.add_argument("--provider", choices=["anthropic", "gemini"], default="anthropic")
+    parser.add_argument("--model", default=None, help="default: claude-opus-5-5, or gemini-3.1-pro-preview for --provider gemini")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--sampling-output-dir", type=Path)
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
+    if args.model is None:
+        args.model = "gemini-3.1-pro-preview" if args.provider == "gemini" else "claude-opus-5-5"
     if args.reference_image and not args.reference_image.is_file():
         parser.error("reference image does not exist")
     repo = args.playworld.resolve()
@@ -100,10 +103,12 @@ def main():
     item = {"model": args.world_model, "task": metric_task["task_id"],
             "group": task.get("source_category") or task.get("category"),
             "view": metric_task.get("perspective"), "caption": task.get("image_caption"), "status": "generated"}
-    result = {"task_id": args.task_id, "judge_provider": "anthropic", "judge_model": args.model,
+    result = {"task_id": args.task_id, "judge_provider": "vertex-gemini" if args.provider == "gemini" else "anthropic", "judge_model": args.model,
               "playworld_revision": revision, "dry_run": args.dry_run, "mode": args.mode,
               "video_sha256": hashlib.sha256(args.video.read_bytes()).hexdigest(),
-              "protocol_warning": "Claude judge and custom controller differ from the published PlayWorld protocol; do not compare directly with its leaderboard.",
+              "protocol_warning": ("Gemini via Vertex (preview model id) with a reconstructed controller; closer to, but not identical with, the published protocol."
+                                   if args.provider == "gemini" else
+                                   "Claude judge and custom controller differ from the published PlayWorld protocol; do not compare directly with its leaderboard."),
               "gate": None, "rubric": None, "reported_score": None, "calls": []}
     result["input_normalization"] = {"original_perspective": task.get("perspective"), "metric_perspective": metric_task["perspective"]}
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -112,7 +117,10 @@ def main():
         result["sampling"] = artifacts.metadata()
         if args.sampling_output_dir:
             export_artifacts(artifacts, args.sampling_output_dir)
-        if not args.dry_run:
+        if not args.dry_run and args.provider == "gemini":
+            from worldsync import judge_gemini
+            client = judge_gemini.make_client()
+        elif not args.dry_run:
             from anthropic import Anthropic
             load_local_credentials()
             client = Anthropic(timeout=180, max_retries=2, default_headers={"Accept-Encoding": "identity"})
@@ -134,18 +142,23 @@ def main():
             context_path.write_text(json.dumps(context, indent=2))
             if args.dry_run:
                 continue
-            response = client.messages.create(
-                model=args.model, max_tokens=16384,
-                system="Evaluate the supplied visual evidence using the provided rubric. Return only the requested JSON object, with no Markdown fences.",
-                messages=[{"role": "user", "content": evidence_content(prompt, artifacts, args.reference_image if mode == "score" else None)}],
-                thinking={"type": "adaptive"}, output_config={"effort": "medium"},
-            )
-            text = "\n".join(block.text for block in response.content if block.type == "text")
+            blocks = evidence_content(prompt, artifacts, args.reference_image if mode == "score" else None)
+            if args.provider == "gemini":
+                text, call = judge_gemini.generate(client, args.model, blocks)
+            else:
+                response = client.messages.create(
+                    model=args.model, max_tokens=16384,
+                    system="Evaluate the supplied visual evidence using the provided rubric. Return only the requested JSON object, with no Markdown fences.",
+                    messages=[{"role": "user", "content": blocks}],
+                    thinking={"type": "adaptive"}, output_config={"effort": "medium"},
+                )
+                text = "\n".join(block.text for block in response.content if block.type == "text")
+                call = {"model": response.model, "response_id": response.id, "usage": response.usage.model_dump()}
             parsed = parse_json(text)
             if mode == "gate" and parsed.get("verdict") not in {"pass", "partial", "fail", "not_applicable"}:
                 raise ValueError("judge returned an invalid trajectory verdict")
             result["gate" if mode == "gate" else "rubric"] = parsed
-            result["calls"].append({"mode": mode, "model": response.model, "response_id": response.id, "usage": response.usage.model_dump()})
+            result["calls"].append({"mode": mode, **call})
             args.output.write_text(json.dumps(result, indent=2))
     result["reported_score"] = effective_score(result["gate"], result["rubric"])
     args.output.write_text(json.dumps(result, indent=2))
