@@ -267,3 +267,7 @@ User requested more videos, shorter clips, then explicitly preferred normal spee
 ### Codex — mall video replaced per user feedback
 
 User found the shopping-plaza clip too static. The academic presentation now replaces that12second segment with6seconds each of IF013 rowing and OE018 pouring, both at1×. These are separately labeled scene-director examples, scores1→4 and1→4.4 from the frozen final-run primary judge reports; original hashes verified. Selected positive examples, not aggregate claims. Memory remains in the architecture and diagnostic text. All footage remains normal speed, total120seconds, silent. Notes/PDF/verification updated at the same academic video path.
+
+### Codex — local pair scoring queued
+
+`scripts/finish_local_caption_pair.py` is waiting for the current pair. It verifies both complete original videos and matched protocols before scheduling the predeclared3judge repetitions per arm. Judge source is loaded from the315cdce generation archive. Exclusive attempt markers retain failures and prevent silent resubmission. No new GPU generation is launched by the finisher. The first arm is still running; no new scores yet.
