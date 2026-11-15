@@ -41,6 +41,7 @@ image = (modal.Image.debian_slim(python_version="3.12")
         "einops", "safetensors", "sentencepiece", "Pillow", "anthropic", "pydantic", "huggingface_hub")
     .add_local_dir(ROOT / "worldsync", f"{PROJECT}/worldsync", ignore=lambda path: "__pycache__" in Path(path).parts)
     .add_local_file(ROOT / "reproduction/lingbot-weights.json", f"{PROJECT}/reproduction/lingbot-weights.json")
+    .add_local_file(ROOT / "reproduction/state.json", f"{PROJECT}/reproduction/state.json")
     .add_local_dir(ROOT / "external/LingBot-World2", f"{PROJECT}/external/LingBot-World2",
         ignore=lambda path: "checkpoints" in Path(path).parts or "__pycache__" in Path(path).parts)
     .add_local_dir(ROOT / "external/PlayWorld", f"{PROJECT}/external/PlayWorld", ignore=lambda path: "__pycache__" in Path(path).parts))
@@ -183,6 +184,9 @@ class WarmWorker:
     @modal.enter()
     def load(self):
         os.environ.update(WARM_ENV)
+        if PROJECT not in sys.path:
+            sys.path.insert(0, PROJECT)
+        os.chdir(PROJECT)
         from worldsync.lingbot_runtime import WarmRuntime
         self.runtime = WarmRuntime()
         raw = Path(f"{PROJECT}/external/LingBot-World2/checkpoints")
