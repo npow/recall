@@ -1,0 +1,299 @@
+{
+  "scope": "Local Opus-judge scores on six development GC cases; stock baseline is the earlier guarded run (separate player and generation draws). Not comparable with the paper's 1.82 / 2.12.",
+  "baseline_stock": {
+    "n_scored": 12,
+    "mean_score": 2.5,
+    "gate": {
+      "fail": 3,
+      "partial": 8,
+      "pass": 1
+    }
+  },
+  "arms": {
+    "fb": {
+      "n_scored": 9,
+      "mean_score": 2.9222222222222225,
+      "gate": {
+        "partial": 9
+      }
+    },
+    "fbcomp": {
+      "n_scored": 9,
+      "mean_score": 2.711111111111111,
+      "gate": {
+        "partial": 8,
+        "fail": 1
+      }
+    }
+  },
+  "paired_vs_baseline": {
+    "fb": {
+      "n_pairs": 9,
+      "mean_delta": 0.36666666666666664,
+      "wins": 4,
+      "ties": 1,
+      "losses": 4
+    },
+    "fbcomp": {
+      "n_pairs": 9,
+      "mean_delta": -0.28888888888888903,
+      "wins": 4,
+      "ties": 0,
+      "losses": 5
+    }
+  },
+  "per_case": {
+    "GC005-s42": {
+      "baseline_stock": {
+        "score": 1.0,
+        "gate": "fail",
+        "seconds": 39.8125
+      },
+      "fb": {
+        "score": null,
+        "gate": null,
+        "seconds": null,
+        "termination": null,
+        "error": "generation failed or produced no artifacts"
+      },
+      "fbcomp": {
+        "score": null,
+        "gate": null,
+        "seconds": null,
+        "termination": null,
+        "error": "generation failed or produced no artifacts"
+      }
+    },
+    "GC005-s43": {
+      "baseline_stock": {
+        "score": 1.0,
+        "gate": "fail",
+        "seconds": 16.8125
+      },
+      "fb": {
+        "score": 2.4,
+        "gate": "partial",
+        "seconds": 39.8125,
+        "termination": "chunk_budget_exhausted",
+        "error": null
+      },
+      "fbcomp": {
+        "score": null,
+        "gate": null,
+        "seconds": null,
+        "termination": null,
+        "error": "generation failed or produced no artifacts"
+      }
+    },
+    "GC007-s42": {
+      "baseline_stock": {
+        "score": 1.0,
+        "gate": "fail",
+        "seconds": 13.8125
+      },
+      "fb": {
+        "score": 3.2,
+        "gate": "partial",
+        "seconds": 30.8125,
+        "termination": "agent_end",
+        "error": null
+      },
+      "fbcomp": {
+        "score": null,
+        "gate": null,
+        "seconds": null,
+        "termination": null,
+        "error": "generation failed or produced no artifacts"
+      }
+    },
+    "GC007-s43": {
+      "baseline_stock": {
+        "score": 1.8,
+        "gate": "partial",
+        "seconds": 39.8125
+      },
+      "fb": {
+        "score": 3.2,
+        "gate": "partial",
+        "seconds": 39.8125,
+        "termination": "chunk_budget_exhausted",
+        "error": null
+      },
+      "fbcomp": {
+        "score": 1.0,
+        "gate": "fail",
+        "seconds": 13.8125,
+        "termination": "agent_end",
+        "error": null
+      }
+    },
+    "GC027-s42": {
+      "baseline_stock": {
+        "score": 2.6,
+        "gate": "partial",
+        "seconds": 6.8125
+      },
+      "fb": {
+        "score": null,
+        "gate": null,
+        "seconds": null,
+        "termination": null,
+        "error": "generation failed or produced no artifacts"
+      },
+      "fbcomp": {
+        "score": 2.8,
+        "gate": "partial",
+        "seconds": 5.8125,
+        "termination": "agent_end",
+        "error": null
+      }
+    },
+    "GC027-s43": {
+      "baseline_stock": {
+        "score": 3.6,
+        "gate": "pass",
+        "seconds": 6.8125
+      },
+      "fb": {
+        "score": 2.6,
+        "gate": "partial",
+        "seconds": 10.8125,
+        "termination": "agent_end",
+        "error": null
+      },
+      "fbcomp": {
+        "score": 2.4,
+        "gate": "partial",
+        "seconds": 5.8125,
+        "termination": "agent_end",
+        "error": null
+      }
+    },
+    "GC017-s42": {
+      "baseline_stock": {
+        "score": 3.8,
+        "gate": "partial",
+        "seconds": 7.8125
+      },
+      "fb": {
+        "score": 3.3,
+        "gate": "partial",
+        "seconds": 14.8125,
+        "termination": "agent_end",
+        "error": null
+      },
+      "fbcomp": {
+        "score": 4.0,
+        "gate": "partial",
+        "seconds": 9.8125,
+        "termination": "agent_end",
+        "error": null
+      }
+    },
+    "GC017-s43": {
+      "baseline_stock": {
+        "score": 3.4,
+        "gate": "partial",
+        "seconds": 8.8125
+      },
+      "fb": {
+        "score": 3.4,
+        "gate": "partial",
+        "seconds": 13.8125,
+        "termination": "agent_end",
+        "error": null
+      },
+      "fbcomp": {
+        "score": 3.8,
+        "gate": "partial",
+        "seconds": 8.8125,
+        "termination": "agent_end",
+        "error": null
+      }
+    },
+    "GC015-s42": {
+      "baseline_stock": {
+        "score": 3.4,
+        "gate": "partial",
+        "seconds": 9.8125
+      },
+      "fb": {
+        "score": null,
+        "gate": null,
+        "seconds": null,
+        "termination": null,
+        "error": "generation failed or produced no artifacts"
+      },
+      "fbcomp": {
+        "score": 2.4,
+        "gate": "partial",
+        "seconds": 16.8125,
+        "termination": "agent_end",
+        "error": null
+      }
+    },
+    "GC015-s43": {
+      "baseline_stock": {
+        "score": 2.1,
+        "gate": "partial",
+        "seconds": 11.8125
+      },
+      "fb": {
+        "score": 2.4,
+        "gate": "partial",
+        "seconds": 11.8125,
+        "termination": "agent_end",
+        "error": null
+      },
+      "fbcomp": {
+        "score": 1.4,
+        "gate": "partial",
+        "seconds": 21.8125,
+        "termination": "agent_end",
+        "error": null
+      }
+    },
+    "GC024-s42": {
+      "baseline_stock": {
+        "score": 3.1,
+        "gate": "partial",
+        "seconds": 5.8125
+      },
+      "fb": {
+        "score": 2.8,
+        "gate": "partial",
+        "seconds": 6.8125,
+        "termination": "agent_end",
+        "error": null
+      },
+      "fbcomp": {
+        "score": 2.8,
+        "gate": "partial",
+        "seconds": 5.8125,
+        "termination": "agent_end",
+        "error": null
+      }
+    },
+    "GC024-s43": {
+      "baseline_stock": {
+        "score": 3.2,
+        "gate": "partial",
+        "seconds": 5.8125
+      },
+      "fb": {
+        "score": 3.0,
+        "gate": "partial",
+        "seconds": 5.8125,
+        "termination": "agent_end",
+        "error": null
+      },
+      "fbcomp": {
+        "score": 3.8,
+        "gate": "partial",
+        "seconds": 5.8125,
+        "termination": "agent_end",
+        "error": null
+      }
+    }
+  }
+}
