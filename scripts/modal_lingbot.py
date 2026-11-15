@@ -51,7 +51,7 @@ def sh(command, log, **kwargs):
         return subprocess.run(command, cwd=PROJECT, stdout=handle, stderr=subprocess.STDOUT, **kwargs).returncode
 
 
-@app.function(image=image, gpu="H200", volumes={"/weights": weights, "/results": results},
+@app.function(image=image, gpu=os.environ.get("WORLDSYNC_GPU", "H200"), volumes={"/weights": weights, "/results": results},
     secrets=[modal.Secret.from_dict({"ANTHROPIC_API_KEY": _key()})], timeout=4 * 3600)
 def gate_and_one_case(run_id: str, case: str = "gc:GC007"):
     import numpy as np
@@ -112,7 +112,7 @@ def gate_and_one_case(run_id: str, case: str = "gc:GC007"):
     return report
 
 
-@app.function(image=image, gpu="H200", volumes={"/weights": weights, "/results": results},
+@app.function(image=image, gpu=os.environ.get("WORLDSYNC_GPU", "H200"), volumes={"/weights": weights, "/results": results},
     secrets=[modal.Secret.from_dict({"ANTHROPIC_API_KEY": _key()})], timeout=4 * 3600, max_containers=3)  # account GPU limit is believed to be 3
 def seed_case(run_id: str, seed: int, case: str = "gc:GC007", extra: tuple = ()):
     """One scored episode at one seed, through the suite code; gate is assumed passed."""
