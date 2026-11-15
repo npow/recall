@@ -30,5 +30,7 @@
   "policy": "Fixed scripted reference actions, not the published adaptive Agent Player. Run the released instruction gate and rubric for each complete video. A failed trajectory gets its released effective score; never silently exclude it. Report all per-case scores and failures, no171-case overall claim.",
   "judge": "Claude Opus5.5 using pinned released PlayWorld gate and rubric; same generic world-model label for both modes; noGemini calls.",
   "auxiliary_metrics": "Matched native camera audit; raw-pixel prefix; DINO/PSNR and complete-video blind comparison; memory/latency",
-  "failure_reporting": "Count generation and judge failures explicitly; preserve attempted videos/manifests; do not change frozen candidate based on held-out scores."
+  "failure_reporting": "Count generation and judge failures explicitly; preserve attempted videos/manifests; do not change frozen candidate based on held-out scores.",
+  "hardware": "ModalH100, same PyTorch2.6/CUDA12.4 environment. Both modes move the already-used GPU text encoder to CPU before denoising; conditioning tensors and weights are unchanged.",
+  "hardware_change_before_generation": "The original H200 app ap-yMjUp45chgzCcppCL43Fyh was explicitly stopped after a long allocation queue with no completed task outputs. The paired cohort is moved together toH100; all per-run hardware and offload settings are recorded."
 }

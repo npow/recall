@@ -18,7 +18,7 @@ app = modal.App("worldsync-lingbot-roundtrip")
 
 @app.function(image=image, gpu="H200", cpu=8, memory=131072, timeout=1800, max_containers=3,
               volumes={"/cache": weights, "/results": results})
-def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", rephase_sink: bool = False, retrieval_positions: str = "virtual", turn_rate: float = 60):
+def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", rephase_sink: bool = False, retrieval_positions: str = "virtual", turn_rate: float = 60, offload_text_encoder: bool = False):
     import shutil
     import subprocess
     import time
@@ -36,6 +36,8 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
         command = [sys.executable, "-u", "-m", "worldsync.lingbot_rollout", "--split", "gc",
             "--task-id", task_id, "--seed", str(seed), "--turn-degrees-per-second", str(turn_rate), "--max-chunks", str(len(actions)),
             "--native-fixed-controls", "--fixed-actions", *actions, "--output", str(output)]
+        if offload_text_encoder:
+            command.append("--offload-text-encoder")
         if retrieval:
             command.extend(["--pose-retrieval", "--retrieval-positions", retrieval_positions])
         if rephase_sink:
@@ -54,6 +56,16 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
             "path": path_name, "result_directory": identifier, "run": report}
 
 
+@app.function(image=image, gpu="H100", cpu=8, memory=131072, timeout=1800, max_containers=3,
+              volumes={"/cache": weights, "/results": results})
+def generate_h100(path_name: str, seed: int, retrieval: bool, cache_frames: int, task_id: str,
+                  rephase_sink: bool, retrieval_positions: str, turn_rate: float):
+    # Same GPU encoding and denoising arithmetic; only inactive encoder weights
+    # move to CPU after the prompt context is computed.
+    return generate.local(path_name, seed, retrieval, cache_frames, task_id,
+                          rephase_sink, retrieval_positions, turn_rate, True)
+
+
 @app.local_entrypoint()
 def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", validation: bool = False, memory_validation: bool = False, task_benchmark: bool = False, rephase_sink: bool = False, retrieval_positions: str = "virtual", turn_rate: float = 60):
     if retrieval_positions not in {"native", "virtual"} or (retrieval_positions != "virtual" and not retrieval):
@@ -66,7 +78,8 @@ def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False,
         plan = json.loads((ROOT / "reproduction/task-memory-benchmark-plan.json").read_text())
         jobs = [(case["path"], case["seed"], retrieve, 18, case["task_id"], False, "virtual", plan["turn_degrees_per_second"])
                 for case in plan["cases"] for retrieve in (False, True)]
-        for job, result in zip(jobs, generate.starmap(jobs, return_exceptions=True)):
+        for index, result in enumerate(generate_h100.starmap(jobs, return_exceptions=True)):
+            job = jobs[index]
             if isinstance(result, BaseException):
                 print(f"FAILED task benchmark attempt {job}: {result}", flush=True)
                 continue
@@ -92,7 +105,8 @@ def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False,
                 pending.append(job)
         failures_path = ROOT / "outputs/lingbot-reproduction/memory-validation-attempt-failures.json"
         failures = json.loads(failures_path.read_text()) if failures_path.exists() else []
-        for job, result in zip(pending, generate.starmap(pending, return_exceptions=True)):
+        for index, result in enumerate(generate.starmap(pending, return_exceptions=True)):
+            job = pending[index]
             if isinstance(result, BaseException):
                 failures.append({"job": job, "error": str(result)})
                 failures_path.write_text(json.dumps(failures, indent=2) + "\n")

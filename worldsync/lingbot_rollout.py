@@ -34,6 +34,7 @@ def main():
     parser.add_argument("--pose-retrieval", action="store_true", help="Experimental bounded early-view retrieval on native fixed paths")
     parser.add_argument("--retrieval-positions", choices=("virtual", "native"), default="virtual")
     parser.add_argument("--rephase-sink", action="store_true", help="Experimental pose-gated native sink key rephasing")
+    parser.add_argument("--offload-text-encoder", action="store_true", help="Release the completed GPU text encoder before denoising")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--dry-run", action="store_true")
     lingbot_tuning.add_arguments(parser)
@@ -76,6 +77,7 @@ def main():
         "split": args.split, "seed": args.seed, "turn_degrees_per_second": args.turn_degrees_per_second, "fps": 16, "max_chunks": maximum, "max_interactions": 40,
         "native_fixed_controls": args.native_fixed_controls, "camera_embedding_audit": [],
         "pose_retrieval": args.pose_retrieval, "sink_rephase": args.rephase_sink,
+        "text_encoder_offloaded_after_encoding": args.offload_text_encoder,
         "stationary_wait_only": stationary, "fixed_actions": args.fixed_actions, "quantization": "none",
         "max_area": 480 * 832, "chunk_size": 4, "local_attn_size": knobs["local_attn_size"], "sink_size": knobs["sink_size"],
         "decision_interval": knobs["decision_interval"], "stock_knobs": lingbot_tuning.is_stock(knobs),
@@ -175,6 +177,9 @@ def main():
             if index >= maximum or (not stationary and index >= 40):
                 report["termination"] = "budget_exhausted"
                 raise RolloutComplete
+            if index == 0 and args.offload_text_encoder:
+                pipeline.text_encoder.model.cpu()
+                torch.cuda.empty_cache()
             if stationary:
                 decision, metadata = {"operation": "KEEP", "action": "WAIT", "reason": "stationary observation"}, {}
             elif args.fixed_actions:
