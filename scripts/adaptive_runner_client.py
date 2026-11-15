@@ -28,6 +28,21 @@ def all_cases(data_root):
     return cases
 
 
+def interleave(cases):
+    """Round-robin across splits, each split in a salted-hash order, so a partial run fills every
+    dimension evenly (and the order is never chosen by outcome)."""
+    lanes = {split: sorted((c for c in cases if c[0] == split),
+                           key=lambda c: hashlib.sha256(f"worldsync-fullrun-v1:{c[1]}".encode()).hexdigest())
+             for split in SPLITS}
+    ordered, index = [], 0
+    while any(index < len(rows) for rows in lanes.values()):
+        for split in SPLITS:
+            if index < len(lanes[split]):
+                ordered.append(lanes[split][index])
+        index += 1
+    return ordered
+
+
 def select_cases(data_root, per_split=None, only=None, salt="worldsync-final"):
     """All cases, or `per_split` cases per split ordered by a salted hash of the case id (never by outcome)."""
     cases = all_cases(data_root)
@@ -35,7 +50,7 @@ def select_cases(data_root, per_split=None, only=None, salt="worldsync-final"):
         wanted = {tuple(item.split(":")) for item in only}
         return [case for case in cases if case in wanted]
     if per_split is None:
-        return cases
+        return interleave(cases)
     chosen = []
     for split in SPLITS:
         rows = sorted((c for c in cases if c[0] == split),

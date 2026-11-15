@@ -13,7 +13,14 @@ def test_episode_job_argv_and_names():
     assert stock["argv"][:6] == ["--split", "gc", "--task-id", "GC007", "--seed", "42"]
     assert "--offload-text-encoder" in stock["argv"] and "--budget-memory" not in stock["argv"]
     budget = make_job("budget")
-    assert "--budget-memory" in budget["argv"] and "--offload-text-encoder" not in budget["argv"]
+    assert "--budget-memory" in budget["argv"]
+    # frozen config: the same common flags on every arm, only the memory setting differs
+    for job in (stock, budget):
+        assert job["argv"][job["argv"].index("--player-retries") + 1] == "2"
+        assert job["argv"][job["argv"].index("--text-prompt") + 1] == "both"
+        assert "--offload-text-encoder" in job["argv"]
+    assert q.episode_job("r", "stock", "insight", "OE001", 42)["argv"][7] == "60"
+    assert stock["argv"][7] == "40"
     assert budget["base"] == "adaptive/run1/budget/gc-GC007-seed42"
     assert q.attempt_name(budget, 1) == "adaptive/run1/budget/gc-GC007-seed42__a1"
 

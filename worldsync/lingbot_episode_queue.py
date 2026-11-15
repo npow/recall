@@ -15,13 +15,15 @@ import json
 import re
 import time
 
-# Memory arms the parent may freeze later; extra rollout flags are appended after the common ones.
+# FROZEN CONFIG (reproduction/full-run-config.json). Identical to the four-dimension pilot's flags:
+# every arm gets the same player retries, task-objective text prompt and lossless text-encoder offload;
+# the arms differ ONLY in the memory setting.
+COMMON_FLAGS = ["--player-retries", "2", "--text-prompt", "both", "--offload-text-encoder"]
 ARMS = {
     "stock": {"gpu": "H100", "extra": []},
-    "budget": {"gpu": "H200", "extra": ["--budget-memory", "--budget-retrieved", "10", "--budget-rope", "native"]},
+    "budget": {"gpu": "H200", "extra": ["--budget-memory", "--budget-rope", "native", "--budget-retrieved", "10"]},
 }
-COMMON = ["--max-chunks", "40"]
-H100_SAVINGS = ["--offload-text-encoder"]  # lossless; stock peaks ~80 GB otherwise
+MAX_CHUNKS = {"gc": 40, "if": 40, "outsight": 40, "insight": 60}  # insight: ~59.8 s stationary WAIT, no player calls
 TRANSIENT = ("PlayerResponseError", "invalid player", "overloaded", "529", "rate limit", "RateLimit", "timed out",
              "timeout", "APIConnectionError", "APIStatusError", "InternalServerError", "ConnectionError",
              "Connection reset", "503", "502", "500")
@@ -40,10 +42,8 @@ def episode_job(label, arm, split, task_id, seed, extra=None):
     """The warm-runner job (raw rollout argv) for one adaptive, player-driven episode."""
     if arm not in ARMS:
         raise ValueError(f"unknown arm {arm}; declared arms: {sorted(ARMS)}")
-    argv = ["--split", split, "--task-id", task_id, "--seed", str(seed), *COMMON]
-    if ARMS[arm]["gpu"] == "H100":
-        argv += H100_SAVINGS
-    argv += list(ARMS[arm]["extra"]) + list(extra or [])
+    argv = ["--split", split, "--task-id", task_id, "--seed", str(seed), "--max-chunks", str(MAX_CHUNKS[split]),
+            *COMMON_FLAGS, *ARMS[arm]["extra"], *(extra or [])]
     return {"id": case_key(arm, split, task_id, seed), "arm": arm, "split": split, "task_id": task_id,
             "seed": seed, "label": label, "base": base_name(label, arm, split, task_id, seed), "argv": argv}
 
