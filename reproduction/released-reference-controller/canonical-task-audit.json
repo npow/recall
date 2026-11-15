@@ -1,0 +1,99 @@
+{
+  "scope": "CPU-only canonical shared DSL validation; no API/GPU calls",
+  "service": {
+    "profile": "released-hy-hold-check-service-strict-v1",
+    "model": "claude-haiku-4-5-20251001",
+    "released_source_sha256": "d7a90541a19c27cf4c7ed298510fb1585974c85bdd90ea39547150093b287291",
+    "released_function_sha256": {
+      "extract_chat_text": "bbbd952ef1f7f29114ddba22852ec47b26d320e704f708a11624dbbd00a9d7d8",
+      "extract_json_object": "de8634b2568cd9af5c79675560b17bc9c217694438d4ac9c20142524ba485d9e",
+      "claude_viewer_screenshot": "7c888cfcbba52e18be17c4028c50452566e41d6aa2c875612d94364d75849726",
+      "request_claude_hold_decision": "63bdb91f6e06f7d147de553cb0c80e828d1572c1f643e33d7a9ccb33a6194e35",
+      "parse_actions": "d1b23517a023cd7aeec38e8a7b8c23a3afc99802b5d96797900b184ab19bf9c6"
+    },
+    "exact_paper_lingbot_controller": false,
+    "reference_guided": true,
+    "scheduler_policy": null,
+    "remaining_differences": [
+      "No public LingBot player exists; this transfers HY-specific reference-guided behavior, not verified paper LingBot behavior.",
+      "Native generation pauses during SDK calls; released browser controls remain held while the request runs.",
+      "Released prompt uses the latest screenshot only, not an initial/current image pair or arbitrary history.",
+      "Decoded native frames replace browser screenshots; the released JPEG65 then640x360/JPEG45 preprocessing is retained.",
+      "Anthropic SDK replaces the released OpenAI-compatible HTTP proxy; malformed/API failures abort instead of silently continuing.",
+      "Raw response schema and served snapshot are now checked before the permissive released parser; this is intentional fail-closed hardening.",
+      "Only native camera controls are supported; avatar interactions and simultaneous keys are rejected, not synthesized."
+    ],
+    "low_level_service_only": true,
+    "hy_action_parser_and_scheduler_used": false,
+    "shared_dsl_source_sha256": "906e1b993b4261cbb7d56013c4fd3f52676120cc234c5bce497016dd5a7ce6d0",
+    "caller_responsibilities": [
+      "Canonical phase parsing, clock and angle calibration",
+      "Check cadence, minimum hold/release, phase progression and rotation-release policy",
+      "Global interaction budget and extension/correction application"
+    ]
+  },
+  "splits": {
+    "gc": {
+      "tasks": 48,
+      "supported": 46,
+      "unsupported": 2
+    },
+    "if": {
+      "tasks": 50,
+      "supported": 49,
+      "unsupported": 1
+    },
+    "insight": {
+      "tasks": 30,
+      "supported": 30,
+      "unsupported": 0
+    },
+    "outsight": {
+      "tasks": 43,
+      "supported": 38,
+      "unsupported": 5
+    }
+  },
+  "unsupported": [
+    {
+      "split": "gc",
+      "task_id": "GC008",
+      "error": "Canonical plan requires unsupported native controls"
+    },
+    {
+      "split": "gc",
+      "task_id": "GC016",
+      "error": "Canonical plan requires unsupported native controls"
+    },
+    {
+      "split": "if",
+      "task_id": "IF033",
+      "error": "No canonical shared DSL plan; raw action fallback is unsupported"
+    },
+    {
+      "split": "outsight",
+      "task_id": "OE028",
+      "error": "Canonical plan requires unsupported native controls"
+    },
+    {
+      "split": "outsight",
+      "task_id": "OE030",
+      "error": "Canonical plan requires unsupported native controls"
+    },
+    {
+      "split": "outsight",
+      "task_id": "OE032",
+      "error": "Canonical plan requires unsupported native controls"
+    },
+    {
+      "split": "outsight",
+      "task_id": "OE036",
+      "error": "Canonical plan requires unsupported native controls"
+    },
+    {
+      "split": "outsight",
+      "task_id": "OE047",
+      "error": "Canonical plan requires unsupported native controls"
+    }
+  ]
+}

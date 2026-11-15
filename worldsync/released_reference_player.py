@@ -14,6 +14,7 @@ import json
 import re
 import time
 import weakref
+from dataclasses import dataclass
 from io import BytesIO
 from pathlib import Path
 from types import SimpleNamespace
@@ -25,8 +26,13 @@ from worldsync.reference_player import PlayerResponseError
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "external/PlayWorld/Agent_player/hyworld2/player.py"
 SOURCE_SHA256 = "d7a90541a19c27cf4c7ed298510fb1585974c85bdd90ea39547150093b287291"
+SHARED_SOURCE = ROOT / "external/PlayWorld/Agent_player/player.py"
+SHARED_SOURCE_SHA256 = (
+    "906e1b993b4261cbb7d56013c4fd3f52676120cc234c5bce497016dd5a7ce6d0"
+)
 MODEL = "claude-haiku-4-5-20251001"
-PROFILE = "released-hy-reference-guided-transfer-v1"
+PROFILE = "released-hy-reference-guided-transfer-v2"
+HOLD_SERVICE_PROFILE = "released-hy-hold-check-service-strict-v1"
 FUNCTIONS = {
     "request_claude_hold_decision",
     "extract_chat_text",
@@ -61,6 +67,7 @@ DIFFERENCES = [
     "Released prompt uses the latest screenshot only, not an initial/current image pair or arbitrary history.",
     "Decoded native frames replace browser screenshots; the released JPEG65 then640x360/JPEG45 preprocessing is retained.",
     "Anthropic SDK replaces the released OpenAI-compatible HTTP proxy; malformed/API failures abort instead of silently continuing.",
+    "Raw response schema and served snapshot are now checked before the permissive released parser; this is intentional fail-closed hardening.",
     "Neutral observation tail ends at the native chunk budget, not HY's natural60s world endpoint; END does not assert visual success.",
     "A40interaction paper limit is not verified equivalent to40one-second native chunks; some released HY reference plans exceed this chunk budget.",
     "Only native camera controls are supported; avatar interactions and simultaneous keys are rejected, not synthesized.",
@@ -109,6 +116,79 @@ def _load_source(path):
     )
     exec(compiled, namespace)  # noqa: S102 -- SHA-pinned pure function AST, no runner/module execution
     return namespace, hashes
+
+
+def canonical_actions(task, source_path=SHARED_SOURCE):
+    """Shared released action DSL, exact milliseconds, no HY counts/padding.
+
+    Unsupported raw action descriptions are never interpreted as camera inputs.
+    The root timeline owns phase boundaries and angle/speed calibration.
+    """
+    raw = Path(source_path).read_bytes()
+    if _sha(raw) != SHARED_SOURCE_SHA256:
+        raise ValueError("Shared released action DSL source changed")
+    tree = ast.parse(raw.decode())
+    namespace = {"re": re, "dataclass": dataclass, "__name__": __name__}
+    nodes = []
+    for node in tree.body:
+        if (
+            isinstance(node, ast.Assign)
+            and any(
+                isinstance(target, ast.Name)
+                and target.id in {"ACTION_RE", "WAIT_RE", "KEY_ALIASES"}
+                for target in node.targets
+            )
+            or isinstance(node, ast.ClassDef)
+            and node.name == "ActionStep"
+            or isinstance(node, ast.FunctionDef)
+            and node.name == "parse_action_step"
+        ):
+            nodes.append(node)
+    if len(nodes) != 5:
+        raise ValueError("Shared action DSL definitions are incomplete")
+    compiled = compile(
+        ast.Module(body=nodes, type_ignores=[]),
+        str(source_path),
+        "exec",
+        dont_inherit=True,
+    )
+    exec(compiled, namespace)  # noqa: S102 -- SHA-pinned shared parser/class/constants only
+    steps = task.get("action_sequence_steps") or task.get("action_sequence") or []
+    if isinstance(steps, str):
+        steps = [step.strip() for step in steps.split(";") if step.strip()]
+    if not isinstance(steps, (list, tuple)) or (not steps and task.get("action")):
+        raise PlayerResponseError(
+            "No canonical shared DSL plan; raw action fallback is unsupported",
+            {"shared_dsl_source_sha256": SHARED_SOURCE_SHA256},
+        )
+    result = []
+    for index, step in enumerate(steps):
+        parsed = namespace["parse_action_step"](step)
+        keys = [
+            "Key" + key.upper() if key.upper() in {"W", "A", "S", "D"} else key
+            for key in parsed.keys
+        ]
+        if parsed.kind != "wait" and (len(keys) != 1 or keys[0] not in KEYS):
+            raise PlayerResponseError(
+                "Canonical plan requires unsupported native controls",
+                {
+                    "raw_step": step,
+                    "keys": keys,
+                    "shared_dsl_source_sha256": SHARED_SOURCE_SHA256,
+                },
+            )
+        result.append(
+            {
+                "type": parsed.kind,
+                "keys": keys,
+                "duration_ms": parsed.duration_ms,
+                "raw": parsed.raw,
+                "index": index,
+                "rotation_extra_ms": 0,
+                "source": "released shared action DSL; no HY timing conversion",
+            }
+        )
+    return result
 
 
 class _ImageSink:
@@ -178,6 +258,32 @@ class ReleasedReferenceController:
             raise ValueError("Negative reference duration")
         return actions
 
+    def hold_service_metadata(self):
+        result = self.metadata()
+        legacy_only = (
+            "Durations use generated time",
+            "First live check observes",
+            "Released HY action-field priority",
+            "Neutral observation tail ends",
+            "A40interaction paper limit",
+        )
+        result.update(
+            profile=HOLD_SERVICE_PROFILE,
+            scheduler_policy=None,
+            low_level_service_only=True,
+            hy_action_parser_and_scheduler_used=False,
+            shared_dsl_source_sha256=SHARED_SOURCE_SHA256,
+        )
+        result["remaining_differences"] = [
+            text for text in DIFFERENCES if not text.startswith(legacy_only)
+        ]
+        result["caller_responsibilities"] = [
+            "Canonical phase parsing, clock and angle calibration",
+            "Check cadence, minimum hold/release, phase progression and rotation-release policy",
+            "Global interaction budget and extension/correction application",
+        ]
+        return result
+
     @staticmethod
     def _new_state(index=0):
         return {
@@ -237,8 +343,29 @@ class ReleasedReferenceController:
             "raw_response": raw,
             "stop_reason": getattr(response, "stop_reason", None),
         }
+        if self.transport["served_model"] != MODEL:
+            raise ValueError(
+                "Controller served model does not match the requested Haiku snapshot"
+            )
         if self.transport["stop_reason"] == "max_tokens":
             raise ValueError("Released controller response was truncated")
+        parsed = self.namespace["extract_json_object"](raw)
+        expected = {"release_now", "extend_ms", "adaptive_direction", "reason"}
+        if (
+            set(parsed) != expected
+            or type(parsed["release_now"]) is not bool
+            or type(parsed["extend_ms"]) is not int
+            or parsed["extend_ms"] < 0
+            or not isinstance(parsed["reason"], str)
+            or not isinstance(parsed["adaptive_direction"], str)
+        ):
+            raise ValueError("Controller JSON does not match the released field schema")
+        direction = parsed["adaptive_direction"].strip().lower()
+        if (
+            direction != "none"
+            and direction not in self.namespace["CLAUDE_ADAPTIVE_KEY_MAP"]
+        ):
+            raise ValueError("Controller returned an unsupported adaptive direction")
         return SimpleNamespace(
             status_code=200, json=lambda: {"choices": [{"message": {"content": raw}}]}
         )
@@ -249,6 +376,78 @@ class ReleasedReferenceController:
             image.convert("RGB").save(buffer, format="JPEG", quality=65)
         target = SimpleNamespace(screenshot=lambda **kwargs: buffer.getvalue())
         return self.namespace["claude_viewer_screenshot"](target, _ImageSink())
+
+    def check_hold(
+        self, client, task, actions, phase_index, elapsed_ms, extension_ms, latest
+    ):
+        """Released visual hold request on an explicit caller-owned phase.
+
+        Does not parse HY action counts, pad durations, advance phases, or apply
+        release/extension/correction policies. The caller owns those decisions.
+        """
+        if not isinstance(actions, list) or not actions:
+            raise ValueError("Explicit nonempty canonical actions required")
+        if type(phase_index) is not int or not 0 <= phase_index < len(actions):
+            raise ValueError("Invalid canonical phase index")
+        for action in actions:
+            keys = action.get("keys", []) if isinstance(action, dict) else None
+            if (
+                not isinstance(action, dict)
+                or action.get("type") not in {"hold", "wait"}
+                or type(action.get("duration_ms")) is not int
+                or action["duration_ms"] < 0
+                or not isinstance(keys, (list, tuple))
+                or (action["type"] == "wait" and keys)
+                or (
+                    action["type"] == "hold" and (len(keys) != 1 or keys[0] not in KEYS)
+                )
+            ):
+                raise ValueError("Invalid or unsupported explicit canonical action")
+        if (
+            type(elapsed_ms) is not int
+            or elapsed_ms < 0
+            or type(extension_ms) is not int
+            or not 0 <= extension_ms <= 10000
+        ):
+            raise ValueError("Invalid explicit phase clock/extension")
+        if self.client is not None:
+            raise RuntimeError(
+                "Hold checks must be serial within a controller instance"
+            )
+        args = argparse.Namespace(
+            claude_model=MODEL,
+            claude_min_release_ms=1000,
+            claude_max_extension_ms=5000,
+            claude_timeout_s=30,
+        )
+        self.transport = None
+        self.client = client
+        try:
+            result = self.namespace["request_claude_hold_decision"](
+                args,
+                task,
+                actions[phase_index],
+                phase_index,
+                elapsed_ms,
+                actions[phase_index]["duration_ms"],
+                extension_ms,
+                actions[phase_index + 1 :],
+                self._observation(latest),
+            )
+        finally:
+            self.client = None
+        metadata = {
+            "released_controller": self.hold_service_metadata(),
+            "player_transport": self.transport,
+            "released_hold_decision": result,
+            "explicit_phase_index": phase_index,
+            "explicit_elapsed_ms": elapsed_ms,
+            "explicit_planned_ms": actions[phase_index]["duration_ms"],
+            "shared_dsl_source_sha256": SHARED_SOURCE_SHA256,
+        }
+        if "error" in result:
+            raise PlayerResponseError("Released hold service request failed", metadata)
+        return result, metadata
 
     def decide(
         self, client, task, initial, latest, history, maximum=40, commanded_state=None

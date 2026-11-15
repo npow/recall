@@ -1,0 +1,25 @@
+{
+  "scope": "CPU-only strict released hold service and canonical DSL; no claims about native scheduler/calibration",
+  "command": ".venv-lingbot/bin/python -m pytest -q tests/test_released_reference_player.py tests/test_reference_player.py",
+  "passed": 23,
+  "elapsed_s": 0.78,
+  "api_calls": 0,
+  "gpu_calls": 0,
+  "checks": [
+    "Exact served Haiku snapshot required",
+    "String-bools/string-or-bool integers/null and unsupported directions rejected before permissive upstream parsing",
+    "Extra JSON fields rejected",
+    "Explicit canonical phase clock and planned milliseconds passed unchanged into released prompt",
+    "Low-level checks do not mutate legacy scheduler or history",
+    "Pinned shared DSL parser prefers action_sequence_steps, no HY count fallback and no arrow padding",
+    "GC010 canonical durations1800ms each instead of legacy HY7500ms"
+  ],
+  "gc010_canonical_ms": [
+    1800,
+    1800
+  ],
+  "files": {
+    "worldsync/released_reference_player.py": "3fad6333747f21f3ef0233caa7bf25edf3fd53e7430c64e6491ee68ce5f1169f",
+    "tests/test_released_reference_player.py": "11c0241ef68e7d1848a44583b368944fbb2e507bc7674b613f0b1741571779da"
+  }
+}

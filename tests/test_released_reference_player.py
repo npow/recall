@@ -10,6 +10,7 @@ from worldsync.released_reference_player import (
     MODEL,
     PROFILE,
     ReleasedReferenceController,
+    canonical_actions,
 )
 
 
@@ -208,3 +209,114 @@ def test_episode_history_guards_reset_and_pinned_source(observation, tmp_path):
     source.write_text("# changed")
     with pytest.raises(ValueError, match="source differs"):
         ReleasedReferenceController(source)
+
+
+def test_canonical_shared_dsl_exact_duration_without_hy_fallback(tmp_path):
+    data = task(
+        action="right*4 -> left*4",
+        action_sequence_steps=[
+            "hold(Right,1800ms)",
+            "hold(Left,1800ms)",
+            "wait(500ms)",
+        ],
+    )
+    actions = canonical_actions(data)
+    assert [a["duration_ms"] for a in actions] == [1800, 1800, 500]
+    assert [a["keys"] for a in actions] == [["ArrowRight"], ["ArrowLeft"], []]
+    assert all(a["rotation_extra_ms"] == 0 for a in actions)
+    assert canonical_actions(task(action_sequence_steps=["hold(w,450ms)"]))[0][
+        "keys"
+    ] == ["KeyW"]
+    with pytest.raises(PlayerResponseError, match="raw action fallback"):
+        canonical_actions(task(action_sequence_steps=[]))
+    with pytest.raises(PlayerResponseError, match="unsupported native controls"):
+        canonical_actions(task(action_sequence_steps=["hold(SPACE,500ms)"]))
+    changed = tmp_path / "shared.py"
+    changed.write_text("# changed")
+    with pytest.raises(ValueError, match="DSL source changed"):
+        canonical_actions(data, changed)
+
+
+def test_low_level_service_uses_explicit_canonical_phase_and_no_scheduler(observation):
+    controller, client = ReleasedReferenceController(), FakeClient()
+    data = task(action_sequence_steps=["hold(W,4500ms)", "hold(Right,1800ms)"])
+    actions = canonical_actions(data)
+    released, metadata = controller.check_hold(
+        client, data, actions, 0, 1250, 500, observation
+    )
+    prompt = client.calls[0]["messages"][0]["content"][0]["text"]
+    assert (
+        "Elapsed hold: 1250ms; original planned hold: 4500ms; extension already granted: 500ms"
+        in prompt
+    )
+    assert "Current held key(s): ['KeyW']" in prompt
+    assert (
+        released["release_now"] is False
+        and controller.state is None
+        and not controller.issued
+    )
+    assert metadata["released_controller"]["scheduler_policy"] is None
+    assert (
+        metadata["released_controller"]["hy_action_parser_and_scheduler_used"] is False
+    )
+    assert controller.client is None
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        {"release_now": "false"},
+        {"extend_ms": "100"},
+        {"extend_ms": True},
+        {"adaptive_direction": None},
+        {"adaptive_direction": "w"},
+        {"reason": 10},
+        {"extra": 1},
+    ],
+)
+def test_strict_schema_prevents_released_parser_coercions(observation, change):
+    controller = ReleasedReferenceController()
+    response = {
+        "release_now": False,
+        "extend_ms": 0,
+        "adaptive_direction": "none",
+        "reason": "continue",
+        **change,
+    }
+    client = FakeClient([response])
+    with pytest.raises(PlayerResponseError, match="service request failed") as error:
+        controller.check_hold(
+            client, task(), canonical_actions(task()), 0, 1250, 0, observation
+        )
+    assert (
+        controller.client is None
+        and error.value.metadata["player_transport"]["raw_response"]
+    )
+
+
+def test_service_rejects_served_model_mismatch_and_invalid_inputs(observation):
+    controller, client = ReleasedReferenceController(), FakeClient()
+    original = client.messages.create
+
+    def wrong_model(**kwargs):
+        response = original(**kwargs)
+        response.model = "not-haiku"
+        return response
+
+    client.messages.create = wrong_model
+    with pytest.raises(PlayerResponseError, match="service request failed") as error:
+        controller.check_hold(
+            client, task(), canonical_actions(task()), 0, 1250, 0, observation
+        )
+    assert error.value.metadata["player_transport"]["served_model"] == "not-haiku"
+    assert controller.client is None
+    count = len(client.calls)
+    with pytest.raises(ValueError, match="phase index"):
+        controller.check_hold(
+            client, task(), canonical_actions(task()), 3, 1250, 0, observation
+        )
+    with pytest.raises(ValueError, match="phase clock"):
+        controller.check_hold(
+            client, task(), canonical_actions(task()), 0, 1.5, 0, observation
+        )
+    assert len(client.calls) == count
