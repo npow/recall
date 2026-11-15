@@ -35,3 +35,18 @@ def test_runtime_failure_is_recorded_in_outer_manifest(tmp_path, monkeypatch):
     audit = json.loads((tmp_path/'smoke/protocol.json').read_text())
     assert audit['generation_status'] == 'failed'
     assert audit['scope'] == 'runtime smoke only; not benchmark evidence'
+
+
+def test_explicit_full_validation_is_labeled_and_passes_requested_budget(tmp_path, monkeypatch):
+    def fake(argv, **kwargs):
+        assert kwargs['simulation_chunk_budget']==60
+        assert kwargs['controller_profile']['scope']=='controller validation episode; not published benchmark reproduction'
+        return {'text_prompt_mode':'prompt','local_attn_size':18,'sink_size':6,'status':'completed'}
+    monkeypatch.setattr(lingbot_rollout,'main',fake)
+    report=run('gc','GC010',tmp_path/'validation',chunks=60,validate_controller=True)
+    assert report['status']=='completed'
+
+
+def test_opt_in_does_not_bypass_unsupported_controls(tmp_path):
+    with pytest.raises(ValueError,match='supported canonical plan'):
+        run('if','IF033',tmp_path/'unsupported',validate_controller=True)

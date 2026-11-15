@@ -104,11 +104,18 @@ def preflight(split, task_id, *, seed=42, chunks=60):
     return result
 
 
-def run(split,task_id,output,*,seed=42,chunks=60,validate_runtime=False):
+def run(split,task_id,output,*,seed=42,chunks=60,validate_runtime=False,validate_controller=False):
     from worldsync import lingbot_rollout
     from worldsync.released_reference_player import ReleasedReferenceController
     output=Path(output);output.mkdir(parents=True,exist_ok=False)
     audit=preflight(split,task_id,seed=seed,chunks=chunks)
+    if validate_runtime and validate_controller:
+        raise ValueError('Choose runtime smoke or controller validation, not both')
+    if validate_controller:
+        if audit['status'] != 'blocked_controller_integration':
+            raise ValueError('Controller validation requires a supported canonical plan')
+        audit.update(status='ready_for_generation_validation',
+                     scope='controller validation episode; not published benchmark reproduction')
     if validate_runtime:
         if chunks > 2 or audit['status'] != 'blocked_controller_integration':
             raise ValueError('Runtime validation requires a supported plan and at most2chunks')
@@ -141,11 +148,13 @@ def main():
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--generate',action='store_true',help='Explicitly run native GPU inference; omitted for CPU preflight')
     parser.add_argument('--validate-runtime',action='store_true',help='Permit at most2GPUchunks to validate rollout integration; no benchmark claim')
+    parser.add_argument('--validate-controller',action='store_true',help='Opt in to one full supported controller-validation episode; no published benchmark claim')
     args=parser.parse_args()
-    if args.validate_runtime and not args.generate:
-        parser.error('--validate-runtime requires --generate')
+    if (args.validate_runtime or args.validate_controller) and not args.generate:
+        parser.error('Validation flags require --generate')
     if args.generate:
-        run(args.split,args.task_id,args.output,seed=args.seed,chunks=args.chunks,validate_runtime=args.validate_runtime)
+        run(args.split,args.task_id,args.output,seed=args.seed,chunks=args.chunks,
+            validate_runtime=args.validate_runtime,validate_controller=args.validate_controller)
     else:
         result=preflight(args.split,args.task_id,seed=args.seed,chunks=args.chunks)
         args.output.parent.mkdir(parents=True,exist_ok=True)
