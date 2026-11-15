@@ -46,8 +46,30 @@ where the two agents stop sharing the world returned the sync fact first.
 Recall is semantic, not exact. Use `nearby` for exact heading lookup and past.dev for dated, cross-agent facts;
 captions should make past.dev results more useful. `recall_view` drops results that belong to another world.
 
+## Three agents in one LingBot world (demo, 2026-11-15)
+
+`scripts/modal_lingbot_trio.py` runs a viewer and two duelers from the same seed 42 / GC010 start with
+RECALL pose retrieval; the viewer exports its K/V archive (`--archive-export`) and each dueler also retrieves from it
+(`--foreign-archive viewer=...`, `lingbot_retrieval.select_frames(..., foreign=...)`). World id `w-ea4cc9b26e3af54b`
+(the identity now includes `world_text_sha256` when the conditioning text was changed). Ingest + demo:
+
+```
+for a in viewer duel-a duel-b; do
+  python -m worldsync.shared_world --db outputs/shared-world/trio.db ingest-run outputs/shared-world/trio/$a --agent $a \
+      --captions outputs/shared-world/trio/$a/captions.json --dry-run; done
+python -m worldsync.shared_world --db outputs/shared-world/trio.db compare outputs/shared-world/trio/viewer outputs/shared-world/trio/duel-b --agents viewer duel-b --confirm-send
+python reproduction/shared-world/make_trio_demo.py outputs/shared-world/trio   # side-by-side mp4 with memory captions
+```
+
+Findings: duel-b's chunks 0-3 are pixel-identical to the viewer's (same seed, same WAIT/RIGHT x3), and at chunk 4,
+facing 180 degrees, it attended to the viewer's views 13-16. duel-a never attended to the viewer: retrieval needs
+four views within 8 units and S moves 4 units per chunk, and its chunk 0 already differed because its clip was 7
+chunks instead of 8 (the seeded noise depends on clip length). 26 data points (34 credits) went to past.dev; recall
+as duel-b at heading 180 returned the viewer's and its own sightings with resolvable frame references.
+`opponent_cue`/`cowboy_prompt` turn the stored positions into a text placement of the other agent.
+
 ## Not done
 
-- No captions: there is no VLM key here, so observations carry pose and frame references only.
-- No generation uses the shared memory yet. Phase 1 would let agent B retrieve agent A's views at matching
-  headings during its own rollout.
+- Captions are hand-written per chunk (no VLM key here).
+- Retrieval requires a full set of four views and an 8-unit range, so moving agents rarely use another
+  agent's archive; partial sets and slower motion are the proposed next step.
