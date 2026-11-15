@@ -15,11 +15,12 @@ If a browser refuses to autoplay from a file, run `python3 -m http.server 8000` 
 Videos loop for as long as their slide is shown and rewind when you leave it. The URL keeps the slide number
 (`index.html#7`), so a reload returns to the same slide. `index.html?notes=1` opens with notes on.
 
-Slides: 1 title, 2 problem, 3 benchmark, 4 baseline reproduced, 5 four baseline failures (videos),
-6 the 4.5 s cache, 7 method diagram (memory v2), 8 store the frame and recompute, 9 side-by-side GC011,
-10 side-by-sides GC034 and GC026, 11 revisit-horizon chart and table (measured with memory v1), 12 ablation,
-13 PlayWorld task GC045 (selected example, with the 36-task result), 14 limitations, 15 autoresearch loop,
-16 future work.
+The main story runs from the single-camera memory problem and benchmark through the method,
+results, scope, and autoresearch loop. Slides 15–16 extend it to the multi-agent prototype:
+what is reused, then two labeled first-person world-model views. Slide 17 closes with
+shared visual evidence as the next step. The remaining slides are the results appendix.
+The multi-agent videos use scripted controllers and independent visual histories;
+they are not multi-agent benchmark results.
 
 Plain-language definitions of every term are in [../EXPLAINER.md](../EXPLAINER.md).
 

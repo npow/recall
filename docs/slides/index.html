@@ -20,7 +20,7 @@ html,body{margin:0;height:100%;background:#000;color:var(--text);overflow:hidden
 .slide.active{display:flex}
 /* section bar */
 #bar{position:absolute;left:0;right:0;top:0;height:60px;background:#10141b;border-bottom:1px solid var(--line);
-  display:flex;align-items:center;padding:0 96px;gap:44px;z-index:5;font-size:24px;color:var(--faint)}
+  display:flex;align-items:center;padding:0 96px;gap:24px;z-index:5;font-size:22px;color:var(--faint)}
 #bar span.on{color:var(--text);font-weight:700;box-shadow:0 3px 0 var(--rel);padding:16px 0}
 #bar .count{margin-left:auto;color:var(--dim);font-variant-numeric:tabular-nums}
 #progress{position:absolute;left:0;bottom:0;height:5px;background:var(--rel);z-index:6;transition:width .25s}
@@ -391,16 +391,42 @@ svg text{font-family:inherit}
     <div style="display:flex;justify-content:space-between;align-items:baseline"><h2 style="margin:0">An autoresearch loop</h2>
     <div style="font-size:30px;color:var(--dim)"><span class="dot" style="background:#3ddc97"></span>4 kept &nbsp; <span class="dot" style="background:#7aa2f7"></span>5 partial &nbsp; <span class="dot" style="background:#6b7482"></span>8 dropped</div></div>
     <div class="tl"><div class="tn l kept kp" style="grid-row:1;grid-column:1"><b>Reproduce the open baseline</b> <span>1.81–1.85 vs 1.82</span></div><div class="sd" style="grid-row:1;grid-column:2"><i class="kept kp"></i></div><div class="tn r kept kp" style="grid-row:2;grid-column:3"><b>Pose memory on scripted paths</b> <span>similarity 0.30 → 0.78</span></div><div class="sd" style="grid-row:2;grid-column:2"><i class="kept kp"></i></div><div class="tn l partial " style="grid-row:3;grid-column:1"><b>Four vs eight retrieved views</b> <span>four kept</span></div><div class="sd" style="grid-row:3;grid-column:2"><i class="partial "></i></div><div class="tn r dropped " style="grid-row:4;grid-column:3"><b>WorldKV-style retention</b> <span>no gain</span></div><div class="sd" style="grid-row:4;grid-column:2"><i class="dropped "></i></div><div class="tn l dropped " style="grid-row:5;grid-column:1"><b>DeCoPrune port</b> <span>no gain</span></div><div class="sd" style="grid-row:5;grid-column:2"><i class="dropped "></i></div><div class="tn r dropped " style="grid-row:6;grid-column:3"><b>Memory LoRA</b> <span>lower quality</span></div><div class="sd" style="grid-row:6;grid-column:2"><i class="dropped "></i></div><div class="tn l dropped " style="grid-row:7;grid-column:1"><b>Prompt and motion tricks</b> <span>no gain</span></div><div class="sd" style="grid-row:7;grid-column:2"><i class="dropped "></i></div><div class="tn r dropped " style="grid-row:8;grid-column:3"><b>Re-anchor on the start image</b> <span>no gain</span></div><div class="sd" style="grid-row:8;grid-column:2"><i class="dropped "></i></div><div class="tn l dropped " style="grid-row:9;grid-column:1"><b>Commit Forcing transfer</b> <span>no revisit gain shown</span></div><div class="sd" style="grid-row:9;grid-column:2"><i class="dropped "></i></div><div class="tn r dropped " style="grid-row:10;grid-column:3"><b>Keyframe restart</b> <span>hard cuts</span></div><div class="sd" style="grid-row:10;grid-column:2"><i class="dropped "></i></div><div class="tn l partial " style="grid-row:11;grid-column:1"><b>Bigger and fp8 caches</b> <span>diagnostic only</span></div><div class="sd" style="grid-row:11;grid-column:2"><i class="partial "></i></div><div class="tn r partial " style="grid-row:12;grid-column:3"><b>Full 171-task run</b> <span>no gain; audit finds bugs</span></div><div class="sd" style="grid-row:12;grid-column:2"><i class="partial "></i></div><div class="tn l partial " style="grid-row:13;grid-column:1"><b>Text director</b> <span>+0.02, not established</span></div><div class="sd" style="grid-row:13;grid-column:2"><i class="partial "></i></div><div class="tn r partial " style="grid-row:14;grid-column:3"><b>Storage ablations</b> <span>fp8 holds</span></div><div class="sd" style="grid-row:14;grid-column:2"><i class="partial "></i></div><div class="tn l kept kp" style="grid-row:15;grid-column:1"><b>Store the frame, rebuild values</b> <span>200× smaller</span></div><div class="sd" style="grid-row:15;grid-column:2"><i class="kept kp"></i></div><div class="tn r dropped " style="grid-row:16;grid-column:3"><b>Verified retrieval</b> <span>−0.35 on 36 real tasks</span></div><div class="sd" style="grid-row:16;grid-column:2"><i class="dropped "></i></div><div class="tn l kept kp" style="grid-row:17;grid-column:1"><b>Revisit-horizon test</b> <span>+0.77, pre-registered</span></div><div class="sd" style="grid-row:17;grid-column:2"><i class="kept kp"></i></div><div class="tn r day" style="grid-row:1;grid-column:3">Nov 14</div><div class="tn l day" style="grid-row:9;grid-column:3;justify-content:flex-start">Nov 15</div></div>
-    <p class="tiny foot">AI agents wrote the code, ran the experiments and audited the results; a human set goals and budget. Findings memory: past.dev.</p>
-    <aside class="notes">The research ran as an autoresearch loop: AI agents proposed a method, ran experiments on cloud GPUs, a separate AI agent audited the code and the results, then diagnosed, fixed and re-tested, and the findings were stored in a research memory in past.dev. Over two days the loop tried seventeen ideas, shown here in the order their results landed in the repo. Four were kept: the reproduced baseline, the pose-indexed memory, the store-the-frame idea that is two hundred times smaller, and the pre-registered revisit test with its plus 0.77. Five were partial, and eight were dropped, each with its result recorded in the repo. A human set the goals and the budget and made a few key calls.</aside>
+    <p class="tiny foot">AI agents wrote the code, ran the experiments and audited the results; a human set goals and budget. Findings are recorded in the research memory.</p>
+    <aside class="notes">The research ran as an autoresearch loop: AI agents proposed a method, ran experiments on cloud GPUs, a separate AI agent audited the code and the results, then diagnosed, fixed and re-tested, and the findings were stored in a research memory. Over two days the loop tried seventeen ideas, shown here in the order their results landed in the repo. Four were kept: the reproduced baseline, the pose-indexed memory, the store-the-frame idea that is two hundred times smaller, and the pre-registered revisit test with its plus 0.77. Five were partial, and eight were dropped, each with its result recorded in the repo. A human set the goals and the budget and made a few key calls.</aside>
+  </section>
+
+  <section class="slide" data-sec="Multi-agent" id="multi-agent-bridge">
+    <h2>From remembering a place to sharing a place</h2>
+    <p class="sub" style="font-size:36px;margin-bottom:30px">A second agent adds a second viewpoint of the same events.</p>
+    <table class="compact" style="margin-bottom:28px">
+      <tr><th>Earlier work</th><th style="text-align:left">How it carries forward</th></tr>
+      <tr><td><b>LingBot rollout + camera conditioning</b></td><td style="text-align:left;white-space:normal">A first-person video history for each agent.</td></tr>
+      <tr><td><b>Event-caption director</b></td><td style="text-align:left;white-space:normal">One shared action plan becomes two viewpoint-specific prompts.</td></tr>
+      <tr><td><b>Warm model runtime</b></td><td style="text-align:left;white-space:normal">Load the same pretrained model once; render both histories.</td></tr>
+      <tr><td><b>Pose archive + frame recomputation</b></td><td style="text-align:left;white-space:normal">Foundation for a future shared visual archive; not yet connected across agents.</td></tr>
+    </table>
+    <div class="card"><p style="font-size:34px;margin:0"><span class="ours"><b>New prototype:</b></span> shared scripted event timeline → two generated POVs → synchronized, labeled video tiles.</p></div>
+    <p class="tiny foot">The memory benchmarks measure single-camera revisits. They are not multi-agent results.</p>
+    <aside class="notes">The next question follows directly from the memory work. If one agent can return to a place, can two agents agree about that place? We reused the real LingBot rollout, its camera conditioning, the event-caption director and the warm runtime. One event plan is projected into two first-person descriptions and rendered with separate histories. The pose archive and compact recomputation motivate the next shared visual memory, but that cross-agent archive is not implemented in this prototype. The earlier benchmark numbers remain single-camera results.</aside>
+  </section>
+
+  <section class="slide" data-sec="Multi-agent" id="multi-agent-demo">
+    <h2>Two agents, two first-person views</h2>
+    <div class="vwrap" style="margin:12px 0 24px"><video controls muted loop playsinline preload="auto" poster="media/multi-agent-pov.jpg" src="media/multi-agent-pov.mp4"></video></div>
+    <div class="row" style="gap:30px">
+      <div class="card col"><p style="font-size:30px;margin:0 0 10px"><b>What is working</b></p><p class="small" style="margin:0">Two actual LingBot POV renders, one scripted handoff plan, matching frame times and persistent agent labels.</p></div>
+      <div class="card col"><p style="font-size:30px;margin:0 0 10px"><b>What remains open</b></p><p class="small" style="margin:0">The basket stays visible, but release and ownership are unresolved. Separate visual histories can disagree.</p></div>
+    </div>
+    <p class="tiny foot">Exploratory prototype · generated reference views · scripted controllers · no shared visual archive · no multi-agent benchmark score.</p>
+    <aside class="notes">Each tile is a genuine first-person LingBot render, not a crop of the observer video. Orange sees Purple; Purple sees Orange. Both use the same event boundaries and their own visual histories. The agents are scripted, and the reference viewpoints were generated from the same scene reference. The clip makes the remaining challenge visible: both characters reach for the basket, but the final release is not consistent enough to claim shared object ownership. The next step is shared, revision-aware visual evidence.</aside>
   </section>
 
   <!-- 16 -->
   <section class="slide" data-sec="Future work">
-    <h2>What we would do next</h2>
+    <h2>What comes next: shared visual evidence</h2>
     <div class="row grow">
       <div class="col"><ul>
-        <li><b>A trained, compact memory layer.</b> A small adapter that reads a few memory tokens per past view, so the model learns to use what it is shown.</li>
+        <li><b>Share compatible views across agents.</b> Index the archive by scene, pose and object revision, so an old frame cannot restore an object that moved.</li>
         <li><b>Retrieve by what is visible</b> (as in VMem) to handle forward-and-back motion.</li>
         <li><b>Longer-horizon tasks.</b> The benchmark's own episodes are mostly shorter than the model's memory; the interesting regime starts after it.</li>
       </ul></div>
@@ -524,7 +550,7 @@ svg text{font-family:inherit}
 
 <script>
 (function(){
-  var SECTIONS=["Problem","Benchmark","Baseline failures","Method","Results","Scope","Autoresearch","Future work","Appendix"];
+  var SECTIONS=["Problem","Benchmark","Baseline failures","Method","Results","Scope","Autoresearch","Multi-agent","Future work","Appendix"];
   var stage=document.getElementById('stage'), slides=[].slice.call(document.querySelectorAll('.slide'));
   var bar=document.getElementById('bar'), progress=document.getElementById('progress'), notes=document.getElementById('notes');
   var cur=0, frag=0;
