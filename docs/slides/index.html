@@ -182,10 +182,10 @@ svg text{font-family:inherit}
       </ul></div>
       <div class="col" style="flex:.7"><div class="card">
         <p class="small" style="margin:0 0 10px">Differences from the published setup, all recorded in the repo:</p>
-        <p class="small" style="margin:0">local checkpoint, not the hosted service · our Haiku player · Gemini preview model name · caption-only text for in-sight tasks · one seed</p>
+        <p class="small" style="margin:0">local checkpoint · our Haiku player · Gemini preview model name · caption-only text for in-sight tasks · one seed</p>
       </div></div>
     </div>
-    <aside class="notes">Before changing anything we reproduced the published baseline on the full benchmark, twice, on two kinds of GPU. We got 1.85 and 1.81 against the published 1.82. The dimensions do not match one for one, and the interval is about plus or minus 0.2, so we call this consistent with the published number, not an exact reproduction.</aside>
+    <aside class="notes">Before changing anything we reproduced the published baseline on the full benchmark, twice, on two kinds of GPU. We got 1.85 and 1.81 against the published 1.82. The dimensions do not match one for one, and the interval is about plus or minus 0.2, so we call this consistent with the published number.</aside>
   </section>
 
   <!-- 5 -->
@@ -343,8 +343,8 @@ svg text{font-family:inherit}
         </table>
       </div>
     </div>
-    <p class="tiny foot">Baseline: LingBot-World2 as released. Side-by-side clips: slides 9 and 10 and docs/demo/. Revisit-horizon benchmark: PlayWorld scenes with our scripted look-away-and-return path, PlayWorld's judge and rubric (mean of 2 calls). Not PlayWorld's own tasks, so not comparable with 1.82 or 2.12. Both arms decline with time away; the gain shrinks at 24 s.</p>
-    <aside class="notes">This is our main quantitative result. On twenty scenes we had never used, the judged score is higher with memory at every absence length, and every interval is above zero: plus 0.77 pooled. Two honest notes. These are PlayWorld scenes on our own camera path, not PlayWorld's own tasks. And both arms get worse the longer the camera is away.</aside>
+    <p class="tiny foot">Baseline: LingBot-World2 as released. Side-by-side clips: slides 9 and 10 and docs/demo/. Revisit-horizon benchmark: PlayWorld scenes with our scripted look-away-and-return path, PlayWorld's judge and rubric (mean of 2 calls). Our own camera path on PlayWorld scenes; the published 1.82 and 2.12 are on the 171-task benchmark. Both arms decline with time away; the gain shrinks at 24 s.</p>
+    <aside class="notes">This is our main quantitative result. On twenty scenes we had never used, the judged score is higher with memory at every absence length, and every interval is above zero: plus 0.77 pooled. Two honest notes. These are PlayWorld scenes on our own camera path. And both arms get worse the longer the camera is away.</aside>
   </section>
 
   <!-- 12 -->
@@ -353,7 +353,7 @@ svg text{font-family:inherit}
     <div class="row grow">
       <div class="col" style="flex:1.25">
         <svg viewBox="0 0 980 470" width="980" height="470" id="abl"></svg>
-        <p class="tiny" style="margin-top:8px">Scripted turn-hold-return on one scene (GC007), similarity of the final frame to the start view, cloud H100. Recompute bar: tested on one scene so far. On a different GPU the released model itself returned on this path, so read these as an ablation, not a headline.</p>
+        <p class="tiny" style="margin-top:8px">Scripted turn-hold-return on one scene (GC007), similarity of the final frame to the start view, cloud H100. Recompute bar: tested on one scene so far. On a different GPU the released model itself returned on this path.</p>
       </div>
       <div class="col">
         <ul>
@@ -363,7 +363,7 @@ svg text{font-family:inherit}
         </ul>
       </div>
     </div>
-    <aside class="notes">We asked how small the memory can be. Storing the values in eight bits works and halves the size. We also tried shrinking the cache itself, with fewer layers, pooling, or a low-rank form, and the memory stopped working. Storing only the frame and recomputing is about two hundred times smaller at the same recall, tested on one scene so far. So treat this panel as an ablation, not a headline.</aside>
+    <aside class="notes">We asked how small the memory can be. Storing the values in eight bits works and halves the size. We also tried shrinking the cache itself, with fewer layers, pooling, or a low-rank form, and the memory stopped working. Storing only the frame and recomputing is about two hundred times smaller at the same recall, tested on one scene so far.</aside>
   </section>
 
   <!-- 13 -->
@@ -388,12 +388,12 @@ svg text{font-family:inherit}
       <li><b>Record not beaten.</b> On the full PlayWorld benchmark our methods score <b>1.80–1.86</b>: level with the published 1.82, below Genie 3's 2.12.</li>
       <li><b>Memory rarely fires on PlayWorld's own tasks.</b> Episodes are short: only 12% of chunks revisit a view the model had already forgotten.</li>
       <li><b>The model does not undo forward motion.</b> Walk forward and back, and the picture does not return, so there is nothing correct to recall.</li>
-      <li><b>Frozen scenes and unattempted interactions are not memory problems.</b> Most minimum scores come from these.</li>
+      <li><b>Frozen scenes and unattempted interactions come from the model's own dynamics.</b> Most minimum scores come from these.</li>
       <li><b>What the audits taught us.</b> Retrieving only on a verified return removed unneeded swaps (338 to 0 on 611 non-revisit chunks) but was not better on 36 real revisit tasks: −0.35 [−0.71, −0.01].</li>
       <li><b>The judge is noisy.</b> The same video scored three times varies by 0.36 on average; identical videos have received 1.0 and 5.0.</li>
     </ul>
     <p class="small foot">Full tables, per-episode scores and the two audits that explain these are in the repo.</p>
-    <aside class="notes">Here is what did not work. We did not beat the record: on the full benchmark we land between 1.80 and 1.86. The reason our memory does not move the benchmark score is that PlayWorld's own episodes are short, so the camera is rarely away for longer than the model already remembers. Other failures, like frozen scenes, are not memory problems at all. And the judge itself is noisy, which is why we report intervals everywhere.</aside>
+    <aside class="notes">Here is what did not work. We did not beat the record: on the full benchmark we land between 1.80 and 1.86. The reason our memory does not move the benchmark score is that PlayWorld's own episodes are short, so the camera is rarely away for longer than the model already remembers. Other failures, like frozen scenes, come from the model's own dynamics. And the judge itself is noisy, which is why we report intervals everywhere.</aside>
   </section>
 
   <!-- 15 -->
@@ -428,10 +428,10 @@ svg text{font-family:inherit}
       </div>
     </div>
     <ul style="margin-top:14px">
-      <li class="small">AI agents wrote the code and ran every step; a separate AI agent, not the one that wrote the code, audited it. A human set the goals and budget and made key calls (including the store-the-frame idea).</li>
+      <li class="small">AI agents wrote the code and ran every step; a separate AI agent audited it. A human set the goals and budget and made key calls (including the store-the-frame idea).</li>
       <li class="small">Every run: pass criterion pre-registered, configuration frozen and committed first; per-episode scores and logs in the repo (github.com/npow/recall, reproduction/). Negative results are kept and reported.</li>
     </ul>
-    <aside class="notes">The research itself ran as an autoresearch loop, and AI agents did the work: one agent proposed a method, agents ran the experiments on cloud GPUs, a separate AI agent, not the one that wrote the code, audited the code and the results, then diagnosis, fix, and re-test. A human set the goals and the budget and made a few key calls, including the idea of storing the frame and recomputing. Watch the highlight go around the ring. In lap one, the first design gave no gain on the full benchmark, the audit found three bugs and two design flaws, and the memory was rebuilt, with two hundred times less storage and without the harm. Lap two re-tested it on thirty-six real tasks: not better, and we reported that. At the centre is past.dev, a long-term memory for the agents: the agents recall past findings before proposing the next experiment, and store each result. Every run had a pre-registered criterion and a frozen configuration, with logs in the repo.</aside>
+    <aside class="notes">The research itself ran as an autoresearch loop, and AI agents did the work: one agent proposed a method, agents ran the experiments on cloud GPUs, a separate AI agent audited the code and the results, then diagnosis, fix, and re-test. A human set the goals and the budget and made a few key calls, including the idea of storing the frame and recomputing. Watch the highlight go around the ring. In lap one, the first design gave no gain on the full benchmark, the audit found three bugs and two design flaws, and the memory was rebuilt, with two hundred times less storage and without the harm. Lap two re-tested it on thirty-six real tasks: no better than stock, and we reported that. At the centre is past.dev, a long-term memory for the agents: the agents recall past findings before proposing the next experiment, and store each result. Every run had a pre-registered criterion and a frozen configuration, with logs in the repo.</aside>
   </section>
 
   <!-- 16 -->
@@ -440,7 +440,7 @@ svg text{font-family:inherit}
     <div class="row grow">
       <div class="col"><ul>
         <li><b>A trained, compact memory layer.</b> A small adapter that reads a few memory tokens per past view, so the model learns to use what it is shown.</li>
-        <li><b>Retrieve by what is visible</b>, not by where the camera was told to be (as in VMem), to handle forward-and-back motion.</li>
+        <li><b>Retrieve by what is visible</b> (as in VMem) to handle forward-and-back motion.</li>
         <li><b>Longer-horizon tasks.</b> The benchmark's own episodes are mostly shorter than the model's memory; the interesting regime starts after it.</li>
       </ul></div>
       <div class="col" style="flex:.8"><div class="card">
@@ -468,7 +468,7 @@ svg text{font-family:inherit}
         <p class="small" style="margin:0"><b>Pre-declared 12-case check:</b> corrected 1.72 vs legacy 1.52, +0.20 [−0.68, +0.99]. Inconclusive.</p>
       </div>
     </div>
-    <div class="foot"><p class="tiny" style="margin:0">Selected examples, chosen after seeing results. These show other components, not the memory result, and are not an overall benchmark win.</p></div>
+    <div class="foot"><p class="tiny" style="margin:0">Selected examples, chosen after seeing results. These examples show the controller and director components.</p></div>
     <aside class="notes">Appendix. Two more examples from the instruction-following tasks, comparing the frozen earlier action controller with a corrected one, same checkpoint and seed. The boardwalk task goes from 1.67 to 3.50 and the pond task from 2.00 to 2.56. These are examples we picked after seeing the scores. The declared twelve-case check across all categories was 1.72 against 1.52, with an interval that includes zero, so it is inconclusive. This is a different component from the memory result.</aside>
   </section>
 
@@ -484,7 +484,7 @@ svg text{font-family:inherit}
         <p class="small" style="margin:0"><b>Full run, 171 tasks:</b> director minus stock +0.02 [−0.15, +0.19]. Not established.</p>
       </div>
     </div>
-    <div class="foot"><p class="tiny" style="margin:0">Selected examples, chosen after seeing results. These show other components, not the memory result, and are not an overall benchmark win.</p></div>
+    <div class="foot"><p class="tiny" style="margin:0">Selected examples, chosen after seeing results. These examples show the controller and director components.</p></div>
     <aside class="notes">Appendix. Two examples where a text description of the event, written by a language model, kept the action going: rowing across the river and pouring tea. We picked these after seeing the scores, with one judge call each. Across all 171 tasks the director made no reliable difference: plus 0.02 with an interval from minus 0.15 to plus 0.19.</aside>
   </section>
 
@@ -493,11 +493,11 @@ svg text{font-family:inherit}
     <h2>A failure we also found</h2>
     <div style="width:1500px;margin:0 auto"><video muted loop playsinline preload="auto" poster="media/appendix-piping.jpg" src="media/appendix-piping.mp4" style="width:1500px;display:block;border-radius:8px"></video></div>
     <div class="row foot" style="gap:40px;align-items:center">
-      <p class="col" style="margin:0;font-size:40px;font-weight:700">More motion does not mean more progress.</p>
+      
       <p class="col small" style="margin:0">Piping onto a tray (OE066): legacy 2.20, corrected <span class="warn"><b>1.00</b></span>. The corrected setup moves more, but the tool morphs instead of piping. Mean of three judge calls; excerpt of the first 10 seconds.</p>
     </div>
-    <p class="tiny" style="margin:14px 0 0">Selected examples, chosen after seeing results. These show other components, not the memory result, and are not an overall benchmark win.</p>
-    <aside class="notes">Appendix. The same kind of comparison can go the other way. On the piping task the corrected setup produces more visible motion but the tool morphs instead of piping, and the judge gives it 1.0 against 2.2 for the earlier setup. More motion does not mean more progress.</aside>
+    <p class="tiny" style="margin:14px 0 0">Selected examples, chosen after seeing results. These examples show the controller and director components.</p>
+    <aside class="notes">Appendix. The same kind of comparison can go the other way. On the piping task the corrected setup produces more visible motion but the tool morphs instead of piping, and the judge gives it 1.0 against 2.2 for the earlier setup.</aside>
   </section>
 
   <div id="progress"></div>
