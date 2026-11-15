@@ -251,3 +251,7 @@ User explicitly requested a standard research presentation and chose silent vide
 ### Codex — local Thor smoke completed; GPU released
 
 Two-chunk OE020 caption ablation at ad352d1 passed actual inference:29frames/1.8125s, zero player calls, identity WAIT command poses, all source and chunk hashes verified. Receipt/video at `reproduction/baseline-gap/caption-runtime-smoke/`. Total load+generation about421s; no quality score or full-episode validation. Process1121962 exited successfully; local GPU reservation released.
+
+### Codex — one local matched prompt pair launched
+
+Thor was idle after the successful smoke. Reserved for two sequential full60chunk OE020 episodes, seed42: task-only control then caption-plus-task. Source archived at315cdce in an ignored isolated directory; same GPU/runtime for both arms. Plan at `reproduction/baseline-gap/local-caption-pair/plan.json`; live manifest at `outputs/local-caption-pair-OE020/manifest.json`. This is a small development ablation, not a full baseline. No cloud allocation. Presentation already completed and unchanged.

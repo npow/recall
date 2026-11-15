@@ -1,0 +1,18 @@
+{
+  "source_commit": "315cdce3136ef7e6fe4223b7d43b00819d43b031",
+  "task": "OE020",
+  "split": "insight",
+  "seed": 42,
+  "chunks": 60,
+  "arms": [
+    "task-only",
+    "caption-plus-task"
+  ],
+  "selection": "OE020 selected from previous H100 failure audit; exploratory development test",
+  "hardware": "same local NVIDIA Thor and Torch2.15.0+cu132 runtime for both arms",
+  "fixed_settings": "canonical controller, stock18/6cache, stock denoising, same checkpoint,60chunks",
+  "varied_setting": "task.prompt versus image_caption + space + task.prompt",
+  "evaluation": "three fixed Gemini judgments per completed original video; retain failed attempts, no silent replacement; inspect full videos and report all outcomes",
+  "interpretation": "No cross-GPU comparison with H100 controls; no full-benchmark or held-out claim",
+  "status": "generation launched; no result"
+}
