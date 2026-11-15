@@ -6,8 +6,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PROFILE = 'lingbot-local-released-objective-reference-transfer-v1'
-GENERATION_BLOCKER = ('Controller timing audit failed: legacy HY scheduling is still wired into this profile. '
-                      'Canonical native timeline, observation encoding, and raw-report provenance require integration tests.')
+GENERATION_BLOCKER = ('Canonical controller and fixed-scale conditioning are integrated; '
+                      'full rollout hook execution and output provenance still require runtime validation.')
 
 
 def load_task(split, task_id):
@@ -16,22 +16,42 @@ def load_task(split, task_id):
 
 
 class BaselinePlayer:
-    """Separate native rendering ticks from actual Haiku decision requests."""
+    """Own canonical timing; use the released service only for visual hold checks."""
     def __init__(self, controller, simulation_chunks=60):
         self.controller, self.simulation_chunks = controller, simulation_chunks
         self.requests = 0
+        self.timeline = None
+        self.actions = None
+        self.scale = None
 
     def decide(self, client, task, initial, latest, history, maximum=40, commanded_state=None):
-        if self.requests >= maximum:
-            return {'operation':'END','action':None,'reason':'Haiku request budget exhausted; no success assertion'}, {
-                'agent_interaction_increment':0, 'baseline_budget_exhausted':True}
-        decision, metadata = self.controller.decide(client,task,initial,latest,history,
-            maximum=self.simulation_chunks, commanded_state=commanded_state)
-        increment = int(metadata.get('player_transport') is not None)
-        self.requests += increment
-        return decision, {**metadata,'agent_interaction_increment':increment,
-            'haiku_requests_total':self.requests,'native_render_ticks_before_decision':len(history),
-            'budget_definition':'At most40Haiku requests, separately from native render ticks; published LingBot interaction semantics unavailable.'}
+        from worldsync.released_reference_player import canonical_actions
+        from worldsync.native_reference_timeline import NativeReferenceTimeline
+        from worldsync.camera_conditioning import plan_translation_scale
+        if self.timeline is None:
+            self.actions = canonical_actions(task)
+            self.timeline = NativeReferenceTimeline(self.actions, task['prompt'])
+            self.scale = plan_translation_scale(self.timeline)
+        metadata = {'agent_interaction_increment': 0, 'translation_scale': self.scale}
+        if not history:
+            steps = [{'action': 'WAIT', 'turn_degrees': 0}] * 3
+            metadata['bootstrap'] = True
+        else:
+            if self.timeline.check_due():
+                if self.requests >= maximum:
+                    return {'operation': 'END', 'action': None, 'reason': 'Haiku request budget exhausted'}, metadata
+                phase = self.timeline.current()
+                self.requests += 1
+                decision, service = self.controller.check_hold(
+                    client, task, self.actions, phase['source']['index'],
+                    phase['used'] * 250, phase['extension'] * 250, latest)
+                self.timeline.apply_decision(decision)
+                metadata.update(service, agent_interaction_increment=1)
+            steps = self.timeline.take(4)
+        metadata.update(native_camera_steps=steps, haiku_requests_total=self.requests,
+                        plan_complete=self.timeline.current() is None)
+        return {'operation': 'KEEP', 'action': steps[0]['action'],
+                'reason': 'Canonical quarter-second schedule; no visual success assertion'}, metadata
 
 
 def generation_argv(split, task_id, output, *, seed=42, chunks=60):
@@ -52,7 +72,7 @@ def preflight(split, task_id, *, seed=42, chunks=60):
     result = {'profile':PROFILE,'task_id':task_id,'split':split,'seed':seed,
         'world_text':task['prompt'],'world_text_source':'task.prompt exactly; no static-caption substitution',
         'simulation_chunks':chunks,'max_haiku_requests':40,
-        'controller':controller.metadata(),'stock_cache':{'frames':18,'sink':6},
+        'controller':controller.hold_service_metadata(),'stock_cache':{'frames':18,'sink':6},
         'backbone_modified':False,'training':False,'streamed_legacy_player':False,
         'exact_published_baseline_reproduced':False,
         'judge':{'requested_model':'gemini-3.1-pro','transport':'released Gemini API client',
@@ -64,13 +84,18 @@ def preflight(split, task_id, *, seed=42, chunks=60):
             '40Haiku requests is an explicit local budget definition, not verified paper LingBot interaction counting.',
             'Exact judge alias currently404 with configured released client; preview scores remain qualified.']}
     try:
-        actions=controller.validate_task(task)
+        from worldsync.released_reference_player import canonical_actions
+        from worldsync.native_reference_timeline import NativeReferenceTimeline
+        actions=canonical_actions(task)
+        timeline=NativeReferenceTimeline(actions, task['prompt'])
+        result['timeline']=timeline.quantization
         result.update(status='blocked_controller_integration',reference_actions=actions,
                       generation_blocker=GENERATION_BLOCKER)
-    except PlayerResponseError as error:
+    except (PlayerResponseError, ValueError) as error:
         result.update(status='unsupported_native_controls',error=str(error))
     paths=['worldsync/lingbot_released_baseline.py','worldsync/released_reference_player.py',
            'worldsync/lingbot_rollout.py','worldsync/lingbot_controls.py',
+           'worldsync/native_reference_timeline.py','worldsync/camera_conditioning.py',
            'external/PlayWorld/Agent_player/hyworld2/player.py',
            f'external/PlayWorld/data/{split}/data.json']
     result['source_sha256']={p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in paths}
@@ -89,12 +114,15 @@ def run(split,task_id,output,*,seed=42,chunks=60):
     controller=ReleasedReferenceController();player=BaselinePlayer(controller,chunks)
     try:
         report=lingbot_rollout.main(generation_argv(split,task_id,output/'episode',seed=seed,chunks=chunks),
-            player_decide=player.decide,simulation_chunk_budget=chunks)
+            player_decide=player.decide,simulation_chunk_budget=chunks, controller_profile=audit)
         if report['text_prompt_mode']!='prompt' or report['local_attn_size']!=18 or report['sink_size']!=6:
             raise ValueError('Corrected baseline settings changed')
         audit.update(generation_status=report['status'],haiku_requests=player.requests,
                      generated_seconds=report.get('generated_seconds'))
         return report
+    except BaseException as error:
+        audit.update(generation_status='failed', error=f'{type(error).__name__}: {error}')
+        raise
     finally:
         (output/'protocol.json').write_text(json.dumps(audit,indent=2)+'\n')
 

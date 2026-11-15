@@ -40,3 +40,9 @@ Before another corrected baseline run: integrate the canonical timeline and low-
 The CPU regression uses the actual native camera utilities on a5400ms-per-leg rectangle. It verifies that concatenated chunk conditioning matches native full-trajectory normalization, that the six-channel camera embeddings agree, and that composing the conditioned transforms closes the rectangle. The old prefix-normalized conditioning fails the equality check. A separate early-release/extension test establishes that later commands cannot rescale committed conditioning. All16conditioning/timeline tests pass.
 
 This validates the normalization helper, not rollout integration or visual return fidelity. The generation guard remains in place until the controller, conditioning helper, observation encoding and provenance are integrated. No GPU or judge call was used for this follow-up.
+
+## Controller integration follow-up
+
+The baseline player now invokes the canonical timeline and released low-level visual hold service, with a neutral first chunk and a separate40-request budget. It no longer invokes the HY scheduler. The rollout callback path consumes quarter-step camera commands and the fixed translation denominator, saves lossless PNG observations before the released JPEG stages, stamps the supplied controller profile into the raw report, and reports actual commanded poses instead of reconstructing them from coarse chunk labels. Failed runs also update the outer protocol manifest.
+
+CPU integration tests using actual GC010 and GC002 tasks establish the intended90-degree turn/return and rectangular command closure, original phase indices for hold checks, and invariant movement scale. The controller/conditioning/timeline/released-service suite passes37tests. The full GPU rollout hook path remains unvalidated, so the generation guard is still active. These tests do not demonstrate visual revisits or a reproduced benchmark score.

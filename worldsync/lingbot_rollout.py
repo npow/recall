@@ -30,7 +30,7 @@ def build_pipeline(upstream, configs, pack, knobs):
         local_attn_size=knobs["local_attn_size"], sink_size=knobs["sink_size"], infer_mode="causal_fast", convert_model_dtype=True)
 
 
-def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=None):
+def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=None, controller_profile=None):
     """Run one rollout. `runtime` (worldsync/lingbot_runtime.py) may supply a warm pipeline; returns the report."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-root", type=Path, default=ROOT / "external/PlayWorld/data")
@@ -184,6 +184,14 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
             "Official 480p demo area and KV settings; single Thor GPU, BF16 and valid-length SDPA backend",
             "Native VAE sequential decoding exposed at chunk boundaries for observations; parity verified separately",
             "Claude diagnostic scoring differs from published Gemini judgments"]}
+    if controller_profile is not None:
+        if player_decide is None or args.decision_interval != 1:
+            raise ValueError("Canonical controller requires callback on every native chunk")
+        report.update(protocol_id=controller_profile['profile'], controller_profile=controller_profile,
+                      player_sha256=controller_profile['source_sha256']['worldsync/released_reference_player.py'],
+                      observation_encoding='lossless PNG before released JPEG stages',
+                      initial_neutral_bootstrap=True)
+        report['deviations'] = controller_profile['remaining_differences']
     path = output / "run.json"
     def save():
         temporary = path.with_suffix(".tmp")
@@ -313,7 +321,7 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
                 torch.cuda.empty_cache()
             if args.adaptive_retrieval_pilot and index == 0:
                 decision, metadata = {"operation": "KEEP", "action": "WAIT", "reason": "declared neutral bootstrap"}, {"bootstrap": True}
-            elif stationary:
+            elif stationary and controller_profile is None:
                 decision, metadata = {"operation": "KEEP", "action": "WAIT", "reason": "stationary observation"}, {}
             elif args.fixed_actions:
                 if index >= len(args.fixed_actions):
@@ -350,12 +358,20 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
             if decision["operation"] == "END":
                 report["termination"] = "agent_end"
                 raise RolloutComplete
-            poses = torch.from_numpy(camera.advance(decision["action"])).float()
+            if controller_profile is not None:
+                from worldsync.native_reference_timeline import apply_camera_steps
+                poses = torch.from_numpy(apply_camera_steps(camera, metadata['native_camera_steps'])).float()
+            else:
+                poses = torch.from_numpy(camera.advance(decision["action"])).float()
             if memory:
                 memory.begin(index, camera.poses)
             report["actions"][-1]["pose_after"] = camera.commanded_state()
             save()
-            relative = compute_relative_poses(poses, framewise=True)[-4:].to(pipeline.device)
+            if controller_profile is not None:
+                from worldsync.camera_conditioning import fixed_scale_relative_poses
+                relative = fixed_scale_relative_poses(compute_relative_poses, poses, metadata['translation_scale'])[-4:].to(pipeline.device)
+            else:
+                relative = compute_relative_poses(poses, framewise=True)[-4:].to(pipeline.device)
             condition = kwargs["dit_cond_dict"]["c2ws_plucker_emb"][0]
             height, width = condition.shape[-2] * 8, condition.shape[-1] * 8
             ks = get_Ks_transformed(torch.from_numpy(intrinsics[None]).float(),
@@ -407,8 +423,12 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
             encoded_at = time.monotonic()
             if args.fixed_actions and maximum <= 2:
                 np.save(output / f"pixels-{index:03d}.npy", pixels)
-            latest = output / f"observation-{index:03d}.jpg"
-            Image.fromarray(pixels[-1]).save(latest, quality=95)
+            if controller_profile is not None:
+                latest = output / f"observation-{index:03d}.png"
+                Image.fromarray(pixels[-1]).save(latest)
+            else:
+                latest = output / f"observation-{index:03d}.jpg"
+                Image.fromarray(pixels[-1]).save(latest, quality=95)
             if pending_player is not None:
                 decision, metadata = pending_player.finish()
                 report["actions"][-1].update({**decision, **metadata})
@@ -456,6 +476,8 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
         report["camera_diagnostics"] = summarize([a["action"] for a in report["actions"] if a.get("action")],
                                                   turn_degrees_per_second=args.turn_degrees_per_second,
                                                   yaw_limits_degrees=(report.get("turn_clamp") or {}).get("yaw_limits_degrees"))
+        if controller_profile is not None:
+            report['camera_diagnostics'] = camera.commanded_state()
         report["peak_allocated_bytes"] = torch.cuda.max_memory_allocated()
         save()
         if report["chunks"]:

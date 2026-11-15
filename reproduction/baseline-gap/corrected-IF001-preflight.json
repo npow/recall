@@ -8,7 +8,7 @@
   "simulation_chunks": 60,
   "max_haiku_requests": 40,
   "controller": {
-    "profile": "released-hy-reference-guided-transfer-v2",
+    "profile": "released-hy-hold-check-service-strict-v1",
     "model": "claude-haiku-4-5-20251001",
     "released_source_sha256": "d7a90541a19c27cf4c7ed298510fb1585974c85bdd90ea39547150093b287291",
     "released_function_sha256": {
@@ -20,33 +20,23 @@
     },
     "exact_paper_lingbot_controller": false,
     "reference_guided": true,
-    "scheduler_policy": {
-      "reference_priority": "released parse_actions: action field before action_sequence_steps",
-      "action_unit_seconds": 1.5,
-      "arrow_padding_ms": 1500,
-      "minimum_hold_ms": 1000,
-      "minimum_release_ms": 1000,
-      "maximum_checks_per_hold": 3,
-      "minimum_check_spacing_ms": 1500,
-      "maximum_extension_per_check_ms": 5000,
-      "maximum_total_extension_ms": 10000,
-      "maximum_unique_post_hold_arrow_corrections": 2,
-      "correction_hold_ms": 1000,
-      "live_checks_on_rotation_holds": false
-    },
+    "scheduler_policy": null,
     "remaining_differences": [
       "No public LingBot player exists; this transfers HY-specific reference-guided behavior, not verified paper LingBot behavior.",
       "Native generation pauses during SDK calls; released browser controls remain held while the request runs.",
-      "Durations use generated time (first chunk812.5ms, later1000ms), rounded at chunk boundaries instead of browser wall time.",
-      "First live check observes the first generated chunk instead of starting immediately after browser keydown.",
-      "Released HY action-field priority,1.5s action units and1.5s arrow padding differ from derived action_sequence_steps and cannot be assumed to match hosted LingBot timing.",
       "Released prompt uses the latest screenshot only, not an initial/current image pair or arbitrary history.",
       "Decoded native frames replace browser screenshots; the released JPEG65 then640x360/JPEG45 preprocessing is retained.",
       "Anthropic SDK replaces the released OpenAI-compatible HTTP proxy; malformed/API failures abort instead of silently continuing.",
       "Raw response schema and served snapshot are now checked before the permissive released parser; this is intentional fail-closed hardening.",
-      "Neutral observation tail ends at the native chunk budget, not HY's natural60s world endpoint; END does not assert visual success.",
-      "A40interaction paper limit is not verified equivalent to40one-second native chunks; some released HY reference plans exceed this chunk budget.",
       "Only native camera controls are supported; avatar interactions and simultaneous keys are rejected, not synthesized."
+    ],
+    "low_level_service_only": true,
+    "hy_action_parser_and_scheduler_used": false,
+    "shared_dsl_source_sha256": "906e1b993b4261cbb7d56013c4fd3f52676120cc234c5bce497016dd5a7ce6d0",
+    "caller_responsibilities": [
+      "Canonical phase parsing, clock and angle calibration",
+      "Check cadence, minimum hold/release, phase progression and rotation-release policy",
+      "Global interaction budget and extension/correction application"
     ]
   },
   "stock_cache": {
@@ -70,6 +60,17 @@
     "40Haiku requests is an explicit local budget definition, not verified paper LingBot interaction counting.",
     "Exact judge alias currently404 with configured released client; preview scores remain qualified."
   ],
+  "timeline": {
+    "interval_ms": 250,
+    "method": "Nearest cumulative boundary; explicit degree targets divided across their rounded phase steps",
+    "reference_total_ms": 4500,
+    "scheduled_total_ms": 4500,
+    "nominal_turn_rate_for_unspecified_angles": 50,
+    "explicit_angle_phases": 0,
+    "unresolved_angle_phases": 0,
+    "angle_binding": "Text-number heuristic; not validated semantic grounding",
+    "native_translation_normalization_validated": false
+  },
   "status": "blocked_controller_integration",
   "reference_actions": [
     {
@@ -77,20 +78,22 @@
       "keys": [
         "KeyW"
       ],
-      "duration_ms": 15000,
-      "base_duration_ms": 15000,
-      "rotation_extra_ms": 0,
-      "raw": "w*10",
+      "duration_ms": 4500,
+      "raw": "hold(W,4500ms)",
       "index": 0,
-      "source": "action_field_1_5s_unit_with_fixed_rotation_extra"
+      "rotation_extra_ms": 0,
+      "source": "released shared action DSL; no HY timing conversion",
+      "native_pitch_aliases": []
     }
   ],
-  "generation_blocker": "Controller timing audit failed: legacy HY scheduling is still wired into this profile. Canonical native timeline, observation encoding, and raw-report provenance require integration tests.",
+  "generation_blocker": "Canonical controller and fixed-scale conditioning are integrated; full rollout hook execution and output provenance still require runtime validation.",
   "source_sha256": {
-    "worldsync/lingbot_released_baseline.py": "ec83f2916fee15b6190007924f4e2e998886aa3097348a245332179231d193ee",
+    "worldsync/lingbot_released_baseline.py": "cad6e7ae7ac0f74fd595a3318888f1a837b6e70d0855b29714d346e586beebc2",
     "worldsync/released_reference_player.py": "1f5b59c6d9f872363136f327756632410304150b8b92b4b2b64a53722bf413ff",
-    "worldsync/lingbot_rollout.py": "6545447ee70f3f1d969a53a072669f8227d745c23a86d5e6704170d526335a5d",
+    "worldsync/lingbot_rollout.py": "d25099dbd6e2b167292da0ffdf430bac815ed21dec31ca42a17bfbea9aec67d9",
     "worldsync/lingbot_controls.py": "ef2d9f0c0ba25440964f19c3047108469016a48bfb40c04cc3777a0ade8eba63",
+    "worldsync/native_reference_timeline.py": "adacea4d99fa44df37a331293fc110e57d0967daa126ed8c34f522a00cc9bb70",
+    "worldsync/camera_conditioning.py": "6c93722a16978998e7164161d5c71d52aed431962b3ea5bab42e8ef138f32fd6",
     "external/PlayWorld/Agent_player/hyworld2/player.py": "d7a90541a19c27cf4c7ed298510fb1585974c85bdd90ea39547150093b287291",
     "external/PlayWorld/data/if/data.json": "d852a5b6ebdc32b3267974e4c16efc9c0e585c95153b0a5cfb41dee2f5657f3a"
   }
