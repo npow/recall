@@ -1,0 +1,490 @@
+{
+  "stock_torch26": {
+    "scope": "synthetic kernel microbenchmark at recorded model shapes; not rollout speed or quality",
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4",
+    "dtype": "bfloat16",
+    "seed": 731,
+    "training": false,
+    "quantization": false,
+    "optional_torch_c_dlpack_addon": false,
+    "cxx11_abi": false,
+    "versions": {},
+    "cases": [
+      {
+        "name": "self4",
+        "q_shape": [
+          1,
+          6032,
+          40,
+          128
+        ],
+        "kv_shape": [
+          1,
+          6032,
+          40,
+          128
+        ],
+        "measurements": {
+          "sdpa": {
+            "cold_first_call_wall_s": 0.04373864700000052,
+            "blocks_ms": [
+              2.1996128082275392,
+              2.179961585998535,
+              2.2540512084960938,
+              2.31451358795166,
+              2.279694366455078,
+              2.229859161376953,
+              2.252203178405762
+            ],
+            "incremental_peak_allocated_bytes": 124500480,
+            "median_ms": 2.252203178405762
+          }
+        },
+        "accuracy": {
+          "sdpa_vs_fp32_max_abs": 0.0002512037754058838,
+          "sdpa_vs_fp32_relative_l2": 0.0023056173231452703
+        }
+      },
+      {
+        "name": "self18",
+        "q_shape": [
+          1,
+          6032,
+          40,
+          128
+        ],
+        "kv_shape": [
+          1,
+          27144,
+          40,
+          128
+        ],
+        "measurements": {
+          "sdpa": {
+            "cold_first_call_wall_s": 0.010146270999999984,
+            "blocks_ms": [
+              9.604952239990235,
+              9.60674591064453,
+              9.624527740478516,
+              9.790921783447265,
+              11.195553588867188,
+              10.055268859863281,
+              9.661017608642577
+            ],
+            "incremental_peak_allocated_bytes": 124500480,
+            "median_ms": 9.661017608642577
+          }
+        },
+        "accuracy": {
+          "sdpa_vs_fp32_max_abs": 0.00011061877012252808,
+          "sdpa_vs_fp32_relative_l2": 0.0023160725831985474
+        }
+      },
+      {
+        "name": "self22",
+        "q_shape": [
+          1,
+          6032,
+          40,
+          128
+        ],
+        "kv_shape": [
+          1,
+          33176,
+          40,
+          128
+        ],
+        "measurements": {
+          "sdpa": {
+            "cold_first_call_wall_s": 0.012324248999999732,
+            "blocks_ms": [
+              11.819168090820312,
+              13.027903747558593,
+              12.48062744140625,
+              11.91131362915039,
+              11.953334045410156,
+              12.81329803466797,
+              12.472621154785156
+            ],
+            "incremental_peak_allocated_bytes": 124500480,
+            "median_ms": 12.472621154785156
+          }
+        },
+        "accuracy": {
+          "sdpa_vs_fp32_max_abs": 0.00011874735355377197,
+          "sdpa_vs_fp32_relative_l2": 0.0022677734959870577
+        }
+      },
+      {
+        "name": "self34",
+        "q_shape": [
+          1,
+          6032,
+          40,
+          128
+        ],
+        "kv_shape": [
+          1,
+          51272,
+          40,
+          128
+        ],
+        "measurements": {
+          "sdpa": {
+            "cold_first_call_wall_s": 0.01955509799999966,
+            "blocks_ms": [
+              18.466651916503906,
+              19.58855743408203,
+              18.655227661132812,
+              18.8722412109375,
+              19.30332794189453,
+              18.50858154296875,
+              19.291096496582032
+            ],
+            "incremental_peak_allocated_bytes": 124500480,
+            "median_ms": 18.8722412109375
+          }
+        },
+        "accuracy": {
+          "sdpa_vs_fp32_max_abs": 9.411945939064026e-05,
+          "sdpa_vs_fp32_relative_l2": 0.0022974107414484024
+        }
+      },
+      {
+        "name": "cross512",
+        "q_shape": [
+          1,
+          6032,
+          40,
+          128
+        ],
+        "kv_shape": [
+          1,
+          512,
+          40,
+          128
+        ],
+        "measurements": {
+          "sdpa": {
+            "cold_first_call_wall_s": 0.0019299899999989378,
+            "blocks_ms": [
+              0.2823839902877808,
+              0.2817023992538452,
+              0.2819567918777466,
+              0.28158719539642335,
+              0.2812511920928955,
+              0.2821408033370972,
+              0.28132479190826415
+            ],
+            "incremental_peak_allocated_bytes": 124500480,
+            "median_ms": 0.2817023992538452
+          }
+        },
+        "accuracy": {
+          "sdpa_vs_fp32_max_abs": 0.000612989068031311,
+          "sdpa_vs_fp32_relative_l2": 0.0022036582231521606
+        }
+      }
+    ],
+    "status": "completed"
+  },
+  "candidate_torch29": {
+    "scope": "synthetic kernel microbenchmark at recorded model shapes; not rollout speed or quality",
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "torch": "2.9.1+cu128",
+    "cuda": "12.8",
+    "dtype": "bfloat16",
+    "seed": 731,
+    "training": false,
+    "quantization": false,
+    "optional_torch_c_dlpack_addon": true,
+    "cxx11_abi": true,
+    "versions": {
+      "flash-attn-4": "4.0.0b39",
+      "nvidia-cutlass-dsl": "4.8.1",
+      "quack-kernels": "0.6.5",
+      "apache-tvm-ffi": "0.1.16",
+      "torch-c-dlpack-ext": "0.1.5"
+    },
+    "cases": [
+      {
+        "name": "self4",
+        "q_shape": [
+          1,
+          6032,
+          40,
+          128
+        ],
+        "kv_shape": [
+          1,
+          6032,
+          40,
+          128
+        ],
+        "measurements": {
+          "sdpa": {
+            "cold_first_call_wall_s": 0.03787071100000006,
+            "blocks_ms": [
+              2.192198371887207,
+              2.434494400024414,
+              2.2882863998413088,
+              2.476089668273926,
+              2.386916732788086,
+              2.5254608154296876,
+              2.325147247314453
+            ],
+            "incremental_peak_allocated_bytes": 124501504,
+            "median_ms": 2.386916732788086
+          },
+          "fa4": {
+            "cold_first_call_wall_s": 1.419605622999999,
+            "blocks_ms": [
+              1.071558380126953,
+              1.0701472282409668,
+              1.071073627471924,
+              1.1217007637023926,
+              1.0873231887817383,
+              1.1360544204711913,
+              1.0780703544616699
+            ],
+            "incremental_peak_allocated_bytes": 61767680,
+            "median_ms": 1.0780703544616699
+          }
+        },
+        "accuracy": {
+          "fa4_vs_sdpa_max_abs": 0.00048828125,
+          "fa4_vs_sdpa_mean_abs": 4.761437594424933e-06,
+          "fa4_vs_sdpa_relative_l2": 0.0010054419981315732,
+          "sdpa_vs_fp32_max_abs": 0.0002512037754058838,
+          "sdpa_vs_fp32_relative_l2": 0.002305617555975914,
+          "fa4_vs_fp32_max_abs": 0.0002512037754058838,
+          "fa4_vs_fp32_relative_l2": 0.002275928156450391
+        },
+        "kernel_speedup": 2.2140639735706147
+      },
+      {
+        "name": "self18",
+        "q_shape": [
+          1,
+          6032,
+          40,
+          128
+        ],
+        "kv_shape": [
+          1,
+          27144,
+          40,
+          128
+        ],
+        "measurements": {
+          "sdpa": {
+            "cold_first_call_wall_s": 0.010015763999998484,
+            "blocks_ms": [
+              9.978590393066407,
+              9.95831527709961,
+              9.946250915527344,
+              10.1228515625,
+              9.722526550292969,
+              10.261580657958984,
+              10.493682861328125
+            ],
+            "incremental_peak_allocated_bytes": 124501504,
+            "median_ms": 9.978590393066407
+          },
+          "fa4": {
+            "cold_first_call_wall_s": 0.05156268200000014,
+            "blocks_ms": [
+              5.085404968261718,
+              5.136190414428711,
+              5.536820983886718,
+              5.629238510131836,
+              5.08732795715332,
+              5.18929443359375,
+              5.028267288208008
+            ],
+            "incremental_peak_allocated_bytes": 61767680,
+            "median_ms": 5.136190414428711
+          }
+        },
+        "accuracy": {
+          "fa4_vs_sdpa_max_abs": 0.000244140625,
+          "fa4_vs_sdpa_mean_abs": 1.3183480405132286e-06,
+          "fa4_vs_sdpa_relative_l2": 0.000769615697208792,
+          "sdpa_vs_fp32_max_abs": 0.00011061877012252808,
+          "sdpa_vs_fp32_relative_l2": 0.0023160725831985474,
+          "fa4_vs_fp32_max_abs": 0.00011061877012252808,
+          "fa4_vs_fp32_relative_l2": 0.002316228812560439
+        },
+        "kernel_speedup": 1.9427999330076058
+      },
+      {
+        "name": "self22",
+        "q_shape": [
+          1,
+          6032,
+          40,
+          128
+        ],
+        "kv_shape": [
+          1,
+          33176,
+          40,
+          128
+        ],
+        "measurements": {
+          "sdpa": {
+            "cold_first_call_wall_s": 0.012592885000000109,
+            "blocks_ms": [
+              12.2809326171875,
+              12.55608673095703,
+              12.577241516113281,
+              12.186663818359374,
+              12.251881408691407,
+              12.24072494506836,
+              11.958953857421875
+            ],
+            "incremental_peak_allocated_bytes": 124501504,
+            "median_ms": 12.251881408691407
+          },
+          "fa4": {
+            "cold_first_call_wall_s": 0.0632303630000024,
+            "blocks_ms": [
+              5.981227111816406,
+              6.4438224792480465,
+              6.080044937133789,
+              6.246831893920898,
+              6.301704025268554,
+              6.5525970458984375,
+              6.034049606323242
+            ],
+            "incremental_peak_allocated_bytes": 61767680,
+            "median_ms": 6.246831893920898
+          }
+        },
+        "accuracy": {
+          "fa4_vs_sdpa_max_abs": 0.000244140625,
+          "fa4_vs_sdpa_mean_abs": 1.083726260731055e-06,
+          "fa4_vs_sdpa_relative_l2": 0.0007323577301576734,
+          "sdpa_vs_fp32_max_abs": 0.00011874735355377197,
+          "sdpa_vs_fp32_relative_l2": 0.0022677734959870577,
+          "fa4_vs_fp32_max_abs": 0.00011874735355377197,
+          "fa4_vs_fp32_relative_l2": 0.0022682850249111652
+        },
+        "kernel_speedup": 1.9612951999899852
+      },
+      {
+        "name": "self34",
+        "q_shape": [
+          1,
+          6032,
+          40,
+          128
+        ],
+        "kv_shape": [
+          1,
+          51272,
+          40,
+          128
+        ],
+        "measurements": {
+          "sdpa": {
+            "cold_first_call_wall_s": 0.02213414699999916,
+            "blocks_ms": [
+              19.18934020996094,
+              19.20592346191406,
+              18.35118408203125,
+              18.797132873535155,
+              18.4944580078125,
+              18.49857940673828,
+              18.80359802246094
+            ],
+            "incremental_peak_allocated_bytes": 124501504,
+            "median_ms": 18.797132873535155
+          },
+          "fa4": {
+            "cold_first_call_wall_s": 0.10421284099999895,
+            "blocks_ms": [
+              9.329000091552734,
+              9.840564727783203,
+              9.786090850830078,
+              10.21617431640625,
+              10.193977355957031,
+              10.12292938232422,
+              10.17967529296875
+            ],
+            "incremental_peak_allocated_bytes": 61767680,
+            "median_ms": 10.12292938232422
+          }
+        },
+        "accuracy": {
+          "fa4_vs_sdpa_max_abs": 0.000244140625,
+          "fa4_vs_sdpa_mean_abs": 7.263037673510553e-07,
+          "fa4_vs_sdpa_relative_l2": 0.0006699498044326901,
+          "sdpa_vs_fp32_max_abs": 9.411945939064026e-05,
+          "sdpa_vs_fp32_relative_l2": 0.0022974107414484024,
+          "fa4_vs_fp32_max_abs": 9.411945939064026e-05,
+          "fa4_vs_fp32_relative_l2": 0.00228689843788743
+        },
+        "kernel_speedup": 1.856886693920544
+      },
+      {
+        "name": "cross512",
+        "q_shape": [
+          1,
+          6032,
+          40,
+          128
+        ],
+        "kv_shape": [
+          1,
+          512,
+          40,
+          128
+        ],
+        "measurements": {
+          "sdpa": {
+            "cold_first_call_wall_s": 0.0020563640000013095,
+            "blocks_ms": [
+              0.3226703882217407,
+              0.31239359378814696,
+              0.3112384080886841,
+              0.31211199760437014,
+              0.2820368051528931,
+              0.278057599067688,
+              0.2766272068023682
+            ],
+            "incremental_peak_allocated_bytes": 124501504,
+            "median_ms": 0.3112384080886841
+          },
+          "fa4": {
+            "cold_first_call_wall_s": 0.0014732909999999322,
+            "blocks_ms": [
+              0.17025279998779297,
+              0.16756160259246827,
+              0.17122399806976318,
+              0.16667200326919557,
+              0.149452805519104,
+              0.1421679973602295,
+              0.14501760005950928
+            ],
+            "incremental_peak_allocated_bytes": 61767680,
+            "median_ms": 0.16667200326919557
+          }
+        },
+        "accuracy": {
+          "fa4_vs_sdpa_max_abs": 0.00390625,
+          "fa4_vs_sdpa_mean_abs": 3.2705684134270996e-05,
+          "fa4_vs_sdpa_relative_l2": 0.001444829162210226,
+          "sdpa_vs_fp32_max_abs": 0.000612989068031311,
+          "sdpa_vs_fp32_relative_l2": 0.0022036582231521606,
+          "fa4_vs_fp32_max_abs": 0.000612989068031311,
+          "fa4_vs_fp32_relative_l2": 0.0022220765240490437
+        },
+        "kernel_speedup": 1.867370656042312
+      }
+    ],
+    "status": "completed"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "scope": "synthetic kernel microbenchmark at recorded model shapes; not rollout speed or quality",
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "torch": "2.6.0+cu124",
+  "cuda": "12.4",
+  "dtype": "bfloat16",
+  "seed": 731,
+  "training": false,
+  "quantization": false,
+  "optional_torch_c_dlpack_addon": false,
+  "torch_stream_protocol_patch": "official TVM-FFI compatibility helper for older torch",
+  "versions": {
+    "flash-attn-4": "4.0.0b39",
+    "nvidia-cutlass-dsl": "4.8.1",
+    "quack-kernels": "0.6.5",
+    "apache-tvm-ffi": "0.1.16",
+    "torch-c-dlpack-ext": "0.1.5"
+  },
+  "cases": [],
+  "status": "failed",
+  "error": "Traceback (most recent call last):\n  File \"/root/modal_lingbot_attention_benchmark.py\", line 62, in benchmark\n    from flash_attn.cute import flash_attn_func\n  File \"/usr/local/lib/python3.12/site-packages/flash_attn/cute/__init__.py\", line 10, in <module>\n    from .interface import (\n  File \"/usr/local/lib/python3.12/site-packages/flash_attn/cute/interface.py\", line 20, in <module>\n    from quack.compile_utils import make_fake_tensor as fake_tensor\n  File \"/usr/local/lib/python3.12/site-packages/quack/__init__.py\", line 18, in <module>\n    from quack.rmsnorm import rmsnorm  # noqa: E402\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/quack/rmsnorm.py\", line 28, in <module>\n    from quack.cute_dsl_utils import torch2cute_dtype_map\n  File \"/usr/local/lib/python3.12/site-packages/quack/cute_dsl_utils.py\", line 59, in <module>\n    torch.float4_e2m1fn_x2: cutlass.Float4E2M1FN,\n    ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/torch/__init__.py\", line 2681, in __getattr__\n    raise AttributeError(f\"module '{__name__}' has no attribute '{name}'\")\nAttributeError: module 'torch' has no attribute 'float4_e2m1fn_x2'\n"
+}

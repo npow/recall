@@ -1,0 +1,20 @@
+{
+  "scope": "synthetic kernel microbenchmark at recorded model shapes; not rollout speed or quality",
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "torch": "2.6.0+cu124",
+  "cuda": "12.4",
+  "dtype": "bfloat16",
+  "seed": 731,
+  "training": false,
+  "quantization": false,
+  "versions": {
+    "flash-attn-4": "4.0.0b39",
+    "nvidia-cutlass-dsl": "4.8.1",
+    "quack-kernels": "0.6.5",
+    "apache-tvm-ffi": "0.1.16",
+    "torch-c-dlpack-ext": "0.1.5"
+  },
+  "cases": [],
+  "status": "failed",
+  "error": "Traceback (most recent call last):\n  File \"/root/modal_lingbot_attention_benchmark.py\", line 44, in benchmark\n    from flash_attn.cute import flash_attn_func\n  File \"/usr/local/lib/python3.12/site-packages/flash_attn/cute/__init__.py\", line 10, in <module>\n    from .interface import (\n  File \"/usr/local/lib/python3.12/site-packages/flash_attn/cute/interface.py\", line 20, in <module>\n    from quack.compile_utils import make_fake_tensor as fake_tensor\n  File \"/usr/local/lib/python3.12/site-packages/quack/__init__.py\", line 18, in <module>\n    from quack.rmsnorm import rmsnorm  # noqa: E402\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/quack/rmsnorm.py\", line 27, in <module>\n    from quack.cache import jit_cache\n  File \"/usr/local/lib/python3.12/site-packages/quack/cache/__init__.py\", line 50, in <module>\n    from quack.cache.jit import (  # noqa: E402\n  File \"/usr/local/lib/python3.12/site-packages/quack/cache/jit.py\", line 34, in <module>\n    import tvm_ffi\n  File \"/usr/local/lib/python3.12/site-packages/tvm_ffi/__init__.py\", line 102, in <module>\n    from . import _optional_torch_c_dlpack\n  File \"/usr/local/lib/python3.12/site-packages/tvm_ffi/_optional_torch_c_dlpack.py\", line 220, in <module>\n    _LIB = load_torch_c_dlpack_extension()  # keep a reference to the loaded shared library\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/tvm_ffi/_optional_torch_c_dlpack.py\", line 119, in load_torch_c_dlpack_extension\n    import torch_c_dlpack_ext  # noqa: PLC0415, F401\n    ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/torch_c_dlpack_ext/__init__.py\", line 19, in <module>\n    from . import core\n  File \"/usr/local/lib/python3.12/site-packages/torch_c_dlpack_ext/core.py\", line 81, in <module>\n    _lib = load_torch_c_dlpack_extension()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/torch_c_dlpack_ext/core.py\", line 62, in load_torch_c_dlpack_extension\n    lib = ctypes.CDLL(str(lib_path))\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/ctypes/__init__.py\", line 379, in __init__\n    self._handle = _dlopen(self._name, mode)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^\nOSError: /usr/local/lib/python3.12/site-packages/torch_c_dlpack_ext/libtorch_c_dlpack_addon_torch26-cuda.so: undefined symbol: _ZNK3c106Device3strB5cxx11Ev\n"
+}
