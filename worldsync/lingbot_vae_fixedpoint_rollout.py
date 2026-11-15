@@ -21,6 +21,8 @@ def main():
     shortcut=None
     def backend(report,save):
         state.update(report=report,save=save)
+        report['protocol_id']='lingbot-vae-conditioning-parity-only-v1'
+        report['benchmark_eligible']=False
         report['runtime_validation']={'scope':'637-frame conditioning, intentionally stop after two rendered chunks',
             'benchmark_eligible':False,'declared_chunks':40,'rendered_chunk_limit':2,
             'vae_fixedpoint_enabled':a.enable_shortcut,
