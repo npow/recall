@@ -24,8 +24,8 @@ Released prompts, sampling, gate and aggregation; Vertex `gemini-3.1-pro-preview
 | Adaptive GC027 | stock |2/2|3.10|0/2|
 | Adaptive GC027 | memory |2/2|1.50|1/2|
 | Start-anchor replay | stock |2/2|1.70|0/2|
-| Start-anchor replay | four-view |1/2|pending|0/1|
-| Start-anchor replay | start-anchor |1/2|pending|0/1|
+| Start-anchor replay | four-view |2/2|1.80|0/2|
+| Start-anchor replay | start-anchor |2/2|3.00|0/2|
 
 Evidence: [individual Gemini judgments](reproduction/gemini-current/episodes/). Pending/error rows never receive a partial-cohort mean.
 

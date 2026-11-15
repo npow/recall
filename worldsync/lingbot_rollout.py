@@ -46,6 +46,8 @@ def main(argv=None, runtime=None):
     parser.add_argument("--turn-degrees-per-second", type=float, default=60)
     parser.add_argument("--adaptive-retrieval-pilot", action="store_true",
                         help="Separate GC027 adaptive protocol:30deg/s, initial neutral chunk, optional frozen four-view memory")
+    parser.add_argument("--stream-player-actions", action="store_true",
+                        help="Overlap generation with the trailing streamed player explanation; same controller prompts and validation")
     parser.add_argument("--pose-retrieval", action="store_true", help="Experimental bounded early-view retrieval on native fixed paths")
     parser.add_argument("--retrieved-frames", type=int, choices=(4, 8), default=4)
     parser.add_argument("--retrieval-selection", choices=("nearest", "diverse"), default="nearest")
@@ -138,6 +140,9 @@ def main(argv=None, runtime=None):
         "pose_retrieval": args.pose_retrieval, "sink_rephase": args.rephase_sink,
         "adaptive_retrieval_pilot": args.adaptive_retrieval_pilot,
         "player_temperature": "provider default",
+        "player_streaming": args.stream_player_actions and not stationary and not args.fixed_actions,
+        "streaming_player_sha256": (hashlib.sha256((Path(__file__).parent / "streaming_player.py").read_bytes()).hexdigest()
+                                    if args.stream_player_actions else None),
         "initial_neutral_bootstrap": args.adaptive_retrieval_pilot,
         "kv_retention": args.kv_retention, "decoprune": args.decoprune, "reanchor": args.reanchor,
         "budget_memory": args.budget_memory, "denoise_schedule": args.denoise_schedule,
@@ -208,6 +213,7 @@ def main(argv=None, runtime=None):
     save()
     handles = []
     memory = None
+    pending_player = None
     native_ray_builder = None
     native_rays = {}
     try:
@@ -257,7 +263,7 @@ def main(argv=None, runtime=None):
         current_chunk = -1
         latest = initial
         def before(model, positional, kwargs):
-            nonlocal current_chunk
+            nonlocal current_chunk, pending_player
             if memory:
                 memory.clean = float(kwargs["t"].flatten()[0]) == 0
             index = int(kwargs["current_start"]) // (4 * int(kwargs["frame_seqlen"]))
@@ -281,10 +287,15 @@ def main(argv=None, runtime=None):
             elif (held := lingbot_tuning.held_decision(report["actions"], index, knobs["decision_interval"])):
                 decision, metadata = held, {}
             else:
-                decision, metadata = decide(client, task, initial, latest,
-                    [{key: action[key] for key in ("operation", "action", "reason")} for action in report["actions"]],
-                    commanded_state=(lingbot_adaptive_pilot.player_state(camera) if args.adaptive_retrieval_pilot
-                                     else camera.commanded_state()))
+                history = [{key: action[key] for key in ("operation", "action", "reason")} for action in report["actions"]]
+                commanded = (lingbot_adaptive_pilot.player_state(camera) if args.adaptive_retrieval_pilot
+                             else camera.commanded_state())
+                if args.stream_player_actions:
+                    from worldsync.streaming_player import StreamingDecision
+                    pending_player = StreamingDecision(client, task, initial, latest, history, commanded_state=commanded)
+                    decision, metadata = pending_player.action()
+                else:
+                    decision, metadata = decide(client, task, initial, latest, history, commanded_state=commanded)
                 report["agent_interactions"] += 1
             report["actions"].append({**decision, **metadata, "pose_before": camera.commanded_state(),
                                       "elapsed_s": time.monotonic() - started})
@@ -332,24 +343,34 @@ def main(argv=None, runtime=None):
                 kwargs["dit_cond_dict"]["c2ws_plucker_emb"] = [embedding]
             current_chunk = index
         def after(model, positional, kwargs, result):
-            nonlocal latest
+            nonlocal latest, pending_player
             if float(kwargs["t"].flatten()[0]) != 0:
                 return
+            decode_started = time.monotonic()
             if args.pose_retrieval:
                 memory.release_read_cache()
             video = stream.decode(kwargs["x"][0])
             if not torch.isfinite(video).all():
                 raise ValueError("non-finite decoded observation")
             pixels = np.ascontiguousarray(((video.permute(1, 2, 3, 0) + 1) * 127.5).clamp(0, 255).cpu().numpy().astype(np.uint8))
+            decoded_at = time.monotonic()
             index = len(report["chunks"])
             movie = output / f"chunk-{index:03d}.mp4"
             imageio.mimwrite(movie, pixels, fps=16, codec="libx264", quality=8, macro_block_size=1)
+            encoded_at = time.monotonic()
             if args.fixed_actions and maximum <= 2:
                 np.save(output / f"pixels-{index:03d}.npy", pixels)
             latest = output / f"observation-{index:03d}.jpg"
             Image.fromarray(pixels[-1]).save(latest, quality=95)
+            if pending_player is not None:
+                decision, metadata = pending_player.finish()
+                report["actions"][-1].update({**decision, **metadata})
+                pending_player.close()
+                pending_player = None
             report["chunks"].append({"index": index, "path": movie.name, "frames": len(pixels),
                 "pixel_sha256": hashlib.sha256(pixels).hexdigest(),
+                "phase_seconds": {"vae_decode_and_download": decoded_at - decode_started,
+                                  "mp4_encode": encoded_at - decoded_at},
                 "elapsed_s": time.monotonic() - started, "sha256": hashlib.sha256(movie.read_bytes()).hexdigest()})
             report["generated_frames"] = sum(chunk["frames"] for chunk in report["chunks"])
             report["generated_seconds"] = report["generated_frames"] / 16
@@ -376,6 +397,8 @@ def main(argv=None, runtime=None):
             report["player_failure"] = error.metadata
         raise
     finally:
+        if pending_player is not None:
+            pending_player.close()
         if native_ray_builder is not None:
             upstream.get_plucker_embeddings = native_ray_builder
         if memory:

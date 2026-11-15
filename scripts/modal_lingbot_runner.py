@@ -24,9 +24,20 @@ import modal
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 if modal.is_local():
-    from scripts.modal_lingbot_benchmark import image, weights, results
+    from scripts.modal_lingbot_benchmark import runtime_image, weights, results
+    from worldsync.credentials import load_local_credentials
+    load_local_credentials()
+    player_secrets = ([modal.Secret.from_dict({"ANTHROPIC_API_KEY": os.environ["ANTHROPIC_API_KEY"]})]
+                      if os.environ.get("ANTHROPIC_API_KEY") else [])
+    image = (runtime_image.pip_install("anthropic==2.8.0")
+        .env({"PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"})
+        .add_local_dir(ROOT / "worldsync", "/work/worldsync", ignore=["__pycache__"])
+        .add_local_file(ROOT / "reproduction/lingbot-weights.json", "/work/reproduction/lingbot-weights.json")
+        .add_local_file(ROOT / "reproduction/state.json", "/work/reproduction/state.json")
+        .add_local_dir(ROOT / "external/PlayWorld/data", "/work/external/PlayWorld/data"))
 else:
     image = None
+    player_secrets = []
     weights = modal.Volume.from_name("worldsync-lingbot-weights")
     results = modal.Volume.from_name("worldsync-lingbot-results")
 
@@ -66,7 +77,7 @@ def _start_core(defaults, expandable):
 
 
 @app.cls(image=image, gpu="H200", cpu=8, memory=196608, timeout=3600, startup_timeout=1800,
-         scaledown_window=SCALEDOWN, max_containers=MAX_CONTAINERS, volumes=VOLUMES)
+         scaledown_window=SCALEDOWN, max_containers=MAX_CONTAINERS, volumes=VOLUMES, secrets=player_secrets)
 class RunnerH200:
     @modal.enter()
     def start(self):
@@ -78,7 +89,7 @@ class RunnerH200:
 
 
 @app.cls(image=image, gpu="H100", cpu=8, memory=131072, timeout=3600, startup_timeout=1800,
-         scaledown_window=SCALEDOWN, max_containers=MAX_CONTAINERS, volumes=VOLUMES)
+         scaledown_window=SCALEDOWN, max_containers=MAX_CONTAINERS, volumes=VOLUMES, secrets=player_secrets)
 class RunnerH100:
     @modal.enter()
     def start(self):
@@ -98,12 +109,12 @@ def _oneshot(job, defaults):
     return run_oneshot({**defaults, **job}, commit=results.commit)
 
 
-@app.function(image=image, gpu="H200", cpu=8, memory=196608, timeout=3600, max_containers=MAX_CONTAINERS, volumes=VOLUMES)
+@app.function(image=image, gpu="H200", cpu=8, memory=196608, timeout=3600, max_containers=MAX_CONTAINERS, volumes=VOLUMES, secrets=player_secrets)
 def oneshot_h200(job: dict):
     return _oneshot(job, {})
 
 
-@app.function(image=image, gpu="H100", cpu=8, memory=131072, timeout=3600, max_containers=MAX_CONTAINERS, volumes=VOLUMES)
+@app.function(image=image, gpu="H100", cpu=8, memory=131072, timeout=3600, max_containers=MAX_CONTAINERS, volumes=VOLUMES, secrets=player_secrets)
 def oneshot_h100(job: dict):
     return _oneshot(job, {**H100_DEFAULTS, "allocator_expandable": True})
 
