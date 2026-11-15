@@ -1,0 +1,447 @@
+{
+  "task_id": "GC030",
+  "request_identity": {
+    "version": 3,
+    "video_sha256": "8efee4d2ce9b747bef7ed1f8c8daf655f365846029758512de768aca8b084be4",
+    "reference_sha256": "c3751067d3ee1a5898e4d6bc5be6eddcae0852b6e400d69c267945ed0e9271ca",
+    "task_sha256": "c94d50ef757f71b98495280a8a46be2f4caadb3703a0407750d59a7668690c3f",
+    "world_model": "LingBot-World2 14B causal-fast",
+    "judge_model": "gemini-3.1-pro-preview",
+    "transport": "vertex",
+    "generation_config": {
+      "response_mime_type": "application/json",
+      "temperature": 0.1
+    },
+    "released_source_sha256": {
+      "metrics/vqa/rubric.py": "717337bf48986afd3bd239e838a30d2bc75788b5a3f1c76c3ceeb67f5997c945",
+      "metrics/vqa/instruction_gate.py": "216f4abc854bbc020819a55679b873cf5472bb2d72661659ed8674cca673df5f",
+      "metrics/vqa/sampling.py": "573be715981b64ac664be85f40337e8fce9002839698673de37300845eb6e0ca",
+      "metrics/vqa/score.py": "9e7656ea7aacde92b5c52ba4b401628ac5589c227935a18a0ab95b44870038a7",
+      "metrics/aggregate.py": "a11aa8c5da9a437d00e0b2205f5e72a48f953a68d63b6b3d804567008fe7adfd"
+    },
+    "adapter_source_sha256": {
+      "judge_integrity.py": "b4d5f5b249b1c4316a1a5c712cc37d2f60a381cd0f892f1611aa936494a22497",
+      "gemini_vertex_judge.py": "e0c3211328e2ea64695c7ad016b8aa20ef2ba493916a2b518b0e555118eb3e3e"
+    },
+    "fingerprint": "818cab49e62ed33491da5d290b20d6bcca7df7d19f8efca6c64201ac332f0c1e"
+  },
+  "request_fingerprint": "818cab49e62ed33491da5d290b20d6bcca7df7d19f8efca6c64201ac332f0c1e",
+  "world_model": "LingBot-World2 14B causal-fast",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "judge_project": "seismic-fx-507702-v1",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "8efee4d2ce9b747bef7ed1f8c8daf655f365846029758512de768aca8b084be4",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; Controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "GC030",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头向右（顺时针）水平环视，经过水面、步道和悉尼歌剧院近景后，最终悉尼海港大桥再次出现在视野中，完成了360度旋转并回到了初始视角的方位。",
+    "trajectory_evidence_zh": "从第1张图集开始，镜头持续向右平移，初始画面中的歌剧院和大桥向左移出画面；第2张图集中镜头继续向右，展示了步道和建筑结构；第3张图集中，大桥从画面右侧重新进入视野；第4张图集中镜头停止转动，大桥回到画面中央附近，完成了一次完整的360度顺时针环视并回到了初始方向。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.6,
+    "final_score_1_to_5": 1.6,
+    "category_scores_1_to_5": {
+      "identity_id": {
+        "score": 1,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "在相机旋转过程中，悉尼歌剧院被多次复制（如帧15-24的远处副本、帧25-55在幻觉出的步道旁的巨大变异版本，以及帧65-78的最终版本），未能保持为一个一致的地标建筑。"
+      },
+      "identity_texture": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "建筑结构在旋转中发生严重变异，不仅失去了原有的材质布局，还凭空生成了无关的结构（如帧25-55中与建筑相连的巨大行人步道和改变的玻璃幕墙）。"
+      },
+      "color": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "尽管建筑结构发生了严重变异和复制，但贝壳的暖灰白色和下层结构的深色调在各个幻觉版本中基本得到了保留，没有出现严重的色相漂移。"
+      },
+      "relative_position": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "地标的重复副本出现在了多个不同的旋转方向上。此外，最终视图（帧75-78）中的歌剧院和大桥的比例、距离与初始视图（帧0）完全不同，表明相机并未在原地旋转。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "The video stops panning around frame 75 and remains static until the end. This is a natural post-completion tail and does not incur a penalty.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 75,
+      "evidence_zh": "相机执行了连续的顺时针旋转，并在帧75左右停止，画面中再次出现了大桥和歌剧院（尽管空间比例已完全错误）。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "相机向右全景旋转时，背景未能保持一致。水面在帧25左右突变为带有栏杆的步道，且悉尼海港大桥和歌剧院在不同方向多次重复出现，空间结构完全崩溃。",
+      "post_completion_phase_zh": "帧75至78相机停止旋转，背景保持静止，但此时的场景比例与初始帧完全不符。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "Sydney Opera House (initial vs. intermediate vs. final)",
+        "anchors": [
+          "water surface",
+          "Sydney Harbour Bridge"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-78"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "Sydney Harbour Bridge",
+        "water surface"
+      ],
+      "newly_revealed_regions_zh": "相机向右旋转揭示的新区域包含了幻觉出的步道和多个重复的歌剧院结构。",
+      "evidence_zh": "相机表现出连续的向右旋转（顺时针），但在此过程中，原本应在固定位置的地标在不同角度多次出现，且水面突变为步道，这是世界模型的空间生成失败，而非单纯的相机运动导致。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频没有明显的相邻帧硬切，而是通过连续的相机旋转伴随着严重的结构渐变和幻觉（如水面长出步道，地标多次出现）来破坏空间一致性。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作完成后（帧75之后）画面保持静止，没有额外的错误运动或破坏。"
+    },
+    "final_state_check": {
+      "window": "75-78",
+      "visible_key_objects": [
+        "Sydney Opera House",
+        "Sydney Harbour Bridge"
+      ],
+      "reappearance_consistency_zh": "在最终视图中，歌剧院和海港大桥重新出现，但它们的相对大小、距离和屏幕位置与初始帧（帧0）完全不同，表明相机发生了巨大的空间位移，未能回到原始的观察位置。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "not_applicable",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "相机执行了完整的360度顺时针旋转。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "Sydney Opera House shells"
+      ],
+      "correspondence_anchors": [
+        "water surface",
+        "skyline"
+      ],
+      "visible_intervals": [
+        "0-10",
+        "25-55",
+        "65-78"
+      ],
+      "before_developing_after_checkpoints": [
+        {
+          "surface": "Sydney Opera House structure",
+          "before_frame": 0,
+          "developing_frame": 35,
+          "after_frame": 78,
+          "observed_change_zh": "建筑结构发生严重变异，从水上的独立建筑变为与步道相连的巨大结构，最后又变回远处的建筑，且比例失调。"
+        }
+      ],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "verified",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "虽然贝壳的灰白色调基本保持，但建筑的材质布局和整体结构在旋转过程中发生了严重的变异和重组，甚至长出了无关的步道结构。"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "not_applicable",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "yes",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "not_applicable",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "not_applicable",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": "not_applicable"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "subject_identity_check": {
+      "applicable": "no",
+      "tracked_subject": "not_applicable",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [],
+      "identity_failure": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": null,
+      "evidence_zh": "not_applicable"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "none",
+      "positive_evidence_zh": "none",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "summary_zh": "视频执行了连续的360度旋转，但完全未能保持空间一致性，在不同方向上幻觉出多个悉尼歌剧院的副本，水面突变为步道，且最终返回的视图在比例和距离上与初始状态完全不符。",
+    "task_id": "GC030"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "h9z5at-vCPeX4_UPm-6m-A8",
+      "prompt_tokens": 7093,
+      "output_tokens": 288
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "served_model_version": "gemini-3.1-pro-preview",
+      "response_id": "m9z5atSKArqV4_UPpNu2kAQ",
+      "prompt_tokens": 19017,
+      "output_tokens": 3616
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 79,
+      "sheets_count": 4,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 7.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 78,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 7.8,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 4,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "2a55fce663cbe2d2580c9bd7e068fd6599eec2e39467a37b35fd69c3c4e79b0c",
+  "score_prompt_sha256": "7084f0a3b85224e9be9cae130011e34e39730de48f9d16186b60c8cc00ef668b",
+  "scores": {
+    "official": 1.6,
+    "final_score": 1.6
+  },
+  "episode_id": "L-gc-GC030"
+}
