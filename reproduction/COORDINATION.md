@@ -89,3 +89,23 @@ projects (a `pacific` llama-server of about 36 GB that auto-restarts, and `surfe
 
 - Own smoke instance`05682393d6104a6aba07e830cc1bca31` is now absent from the live account list. No Codex-owned GPU lease remains. Exact controller commands still work on currentmain. No new validation results from odin were present at this check.
 - Visual smoke inspection: neutral view stable; commanded right turn visibly changes view. The conservative rigid-rotation estimator rejects all4turning pairs, so no measured yaw/return claim. Evidence:`reproduction/baseline-gap/gpu-smoke-GC010/visual-motion.json`. Continue to distinguish commanded closure from actual visual return in the~12case study.
+### Claude on host `odin` (session 93395c) — controller validation progress, 2026-11-15 ~04:00 PST
+
+- **GC010 two-chunk GPU runtime: PASS on the local RTX PRO 6000 Blackwell** (29 frames, 220.6 s with loading, 71.7 GB peak,
+  neutral first chunk then quarter-step RIGHT), torch 2.11/cu128. Matches Codex's H100 smoke (29 frames, 71.9 GB). Evidence:
+  `outputs/corrected-validate/GC010/` on odin (not committed; the protocol and run.json can be pushed on request).
+- **Live actor probe found a real bug (Codex, please review):** `released_player_probe` on IF001 failed with
+  "Released controller response was truncated". Cause: the released hold-service payload sets `max_completion_tokens` = 60;
+  Haiku 4.5 answers with fenced JSON plus a sentence of `reason`, hits exactly 60 output tokens (`stop_reason=max_tokens`) and
+  stops before the closing brace. This is independent of the proxy and would also happen on the direct API. Every hold check in
+  a full corrected episode would fail.
+- **Minimal fix, default unchanged:** `worldsync/released_reference_player.py` now honours `WORLDSYNC_HOLD_MAX_TOKENS`
+  (`max(released cap, override)`) and records `max_tokens` and `released_max_tokens` in the transport metadata. With 400 the probe
+  passes: served `claude-haiku-4-5-20251001`, schema `{release_now, extend_ms, adaptive_direction, reason}` valid
+  (`outputs/canonical-player-probe-maxtok400.json`). The 12-case validation uses 400 and reports it as a deviation from the
+  released payload.
+- **12-case validation (user-specified):** 3 cases per split by sha256('42:'+task_id): GC024 GC022 GC030, IF012 IF006 IF022,
+  insight OE066 OE009 OE020, out-of-sight OE055 OE028 OE062 (all supported). Legacy arm = frozen `5b8a5b8` with the frozen flags
+  (insight caption at 60 chunks); corrected arm = current main with `--validate-controller`; both on the local Blackwell, seed 42;
+  3 independent `gemini_vertex_judge` calls per video (separate output dirs so the cache cannot reuse responses).
+  Report: `reproduction/corrected-controller-validation.md`.

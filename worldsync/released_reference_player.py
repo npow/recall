@@ -11,6 +11,7 @@ import base64
 import copy
 import hashlib
 import json
+import os
 import re
 import time
 import weakref
@@ -330,9 +331,12 @@ class ReleasedReferenceController:
                 else:
                     raise ValueError("Unexpected released message content")
             messages.append({"role": message["role"], "content": content})
+        # The released payload caps output at 60 tokens, which Haiku's fenced JSON plus reason exceeds (stop_reason
+        # max_tokens, unparseable). WORLDSYNC_HOLD_MAX_TOKENS raises the cap explicitly; default keeps the released value.
+        max_tokens = max(payload["max_completion_tokens"], int(os.environ.get("WORLDSYNC_HOLD_MAX_TOKENS", "0") or 0))
         response = self.client.messages.create(
             model=payload["model"],
-            max_tokens=payload["max_completion_tokens"],
+            max_tokens=max_tokens,
             messages=messages,
             timeout=timeout_s,
         )
@@ -349,7 +353,8 @@ class ReleasedReferenceController:
             "response_id": getattr(response, "id", None),
             "served_model": getattr(response, "model", None),
             "usage": usage,
-            "max_tokens": payload["max_completion_tokens"],
+            "max_tokens": max_tokens,
+            "released_max_tokens": payload["max_completion_tokens"],
             "raw_response": raw,
             "stop_reason": getattr(response, "stop_reason", None),
         }
