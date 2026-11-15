@@ -34,9 +34,19 @@ Caveat found: frames decoded from `rollout.mp4` do not keep the raw pixel parity
 match, the decoded JPEGs are identical for chunks 0 and 3 but differ for 1 and 2, because the whole video is lossy
 encoded. Frames for shared memory should be captured from the decoder output during rollout, not from the mp4.
 
+## Live run
+
+The same 30 data points were sent to past.dev (one ingestion each, about 486 credits); processing took several
+minutes. As agent-b, `recall --heading 90` returned agent-a's heading-90 observations first, and every returned frame
+reference resolved to a blob in the local database. With `--at 4.0` only data points at or before world time 4.0 s
+were returned. A free-text question about where the agents stop sharing the world returned the sync fact.
+
+Recall is semantic, not exact: some results were at 45 degrees, and with no captions past.dev also derived
+low-value memories such as "agent-a frame caption: no caption". Use `nearby` for exact heading lookup and
+past.dev for dated, cross-agent facts; captions should make past.dev results more useful.
+
 ## Not done
 
-- No live past.dev send or recall yet.
 - No captions: there is no VLM key here, so observations carry pose and frame references only.
 - No generation uses the shared memory yet. Phase 1 would let agent B retrieve agent A's views at matching
   headings during its own rollout.
