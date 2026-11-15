@@ -13,3 +13,5 @@ Warmed generation takes 47.59 s versus 37.58 s stock on the short path, and 101.
 The method is frozen for the new-seed, image-held-out and 32-second tests in ../memory-validation-plan.json. Exact native-key positions are also being tested as a separate positional ablation; those results do not change the frozen candidate. No training, image editing, or output frame pasting is used.
 
 A post-hoc diagnostic samples the entire return at 4 FPS to separate framing error from identity loss. Peak DINO similarity is 0.627 stock versus 0.787 retrieval, consistent with the continuous landmark recovery seen in the full video. The final-frame metric still declines and is reported above; this supporting metric does not replace the frozen evaluation. All sampled values are in turn_wait_return/revisit-segment.json.
+
+![Return-segment similarity and actual reference/return frames](turn_wait_return/return-analysis.png)
