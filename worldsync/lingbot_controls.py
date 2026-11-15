@@ -12,12 +12,17 @@ def fp32_camera_rays(builder, poses, intrinsics, height, width):
 
 
 class CameraPlan:
-    def __init__(self, turn_degrees_per_second=60, move_speed=1.0, yaw_limits_degrees=None):
+    def __init__(self, turn_degrees_per_second=60, move_speed=1.0, yaw_limits_degrees=None, orbit_radius=4.0,
+                 orbit_degrees_per_second=45):
         # The native helper rescales translations to unit maximum per call, so
         # move_speed only matters relative to rotation (and is 1 in stock).
         self.poses = []
         self.speed = move_speed
         self.turn = math.radians(turn_degrees_per_second) / 4
+        # CIRCLE_LEFT/CIRCLE_RIGHT orbit the point ``orbit_radius`` ahead while staying turned toward it
+        # (two agents circling each other): CIRCLE_LEFT moves the camera to its left and turns it right.
+        self.orbit_radius = orbit_radius
+        self.orbit = math.radians(orbit_degrees_per_second) / 4
         self.yaw_commanded = 0.0
         # Optional (lo, hi) range for the commanded yaw in degrees (right positive). A turn that would pass a limit is
         # shortened so the yaw lands exactly on it; the camera path has four pose steps per chunk, so this is finer
@@ -37,6 +42,11 @@ class CameraPlan:
                 angle = (target - self.yaw_commanded) / steps
             c, s = math.cos(angle), math.sin(angle)
             step[:3, :3] = [[c, 0, s], [0, 1, 0], [-s, 0, c]]
+        elif action in {"CIRCLE_LEFT", "CIRCLE_RIGHT"}:
+            angle = self.orbit if action == "CIRCLE_LEFT" else -self.orbit
+            c, s = math.cos(angle), math.sin(angle)
+            step[:3, :3] = [[c, 0, s], [0, 1, 0], [-s, 0, c]]
+            step[:3, 3] = [-self.orbit_radius * s, 0, self.orbit_radius * (1 - c)]  # centre stays at (0, 0, r)
         elif action in {"UP", "DOWN"}:
             angle = self.turn if action == "UP" else -self.turn
             c, s = math.cos(angle), math.sin(angle)
@@ -50,7 +60,7 @@ class CameraPlan:
             count = 4
         for _ in range(count):
             self.poses.append(self.poses[-1] @ step)
-        if action in {"LEFT", "RIGHT"}:
+        if action in {"LEFT", "RIGHT", "CIRCLE_LEFT", "CIRCLE_RIGHT"}:
             self.yaw_commanded += count * math.atan2(step[0, 2], step[0, 0])
         return np.stack(self.poses)
 

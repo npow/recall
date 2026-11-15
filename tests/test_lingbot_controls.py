@@ -64,3 +64,28 @@ def test_plan_yaw_limits_from_reference_plan():
     assert plan_yaw_limits({"prompt": "Rotate the camera 360 degrees", "action_sequence_steps": ["hold(Right,7200ms)"]}) == (0.0, 360.0)
     assert plan_yaw_limits({"prompt": "Turn left 90 degrees then back", "action_sequence_steps": ["hold(Left,1800ms)", "hold(Right,1800ms)"]}) == (-90.0, 0.0)
     assert plan_yaw_limits({"prompt": "Walk then turn around", "action_sequence_steps": ["hold(W,7200ms)", "hold(S,7200ms)"]}) is None
+
+
+def test_circle_actions_orbit_the_point_ahead_and_keep_facing_it():
+    camera = CameraPlan(orbit_radius=4.0, orbit_degrees_per_second=45)
+    camera.advance("WAIT")
+    centre = np.array([0.0, 0.0, 4.0, 1.0])
+    start = camera.poses[-1].copy()
+    for _ in range(8):
+        camera.advance("CIRCLE_LEFT")
+        pose = camera.poses[-1]
+        np.testing.assert_allclose(np.linalg.inv(pose) @ centre, centre, atol=1e-9)  # still 4 units straight ahead
+        np.testing.assert_allclose(pose[:3, :3].T @ pose[:3, :3], np.eye(3), atol=1e-12)
+    np.testing.assert_allclose(camera.poses[-1], start, atol=1e-9)  # a full circle in 8 chunks
+    assert camera.commanded_state()["accumulated_yaw_degrees"] == pytest.approx(360)
+    camera = CameraPlan()
+    camera.advance("WAIT")
+    camera.advance("CIRCLE_LEFT")
+    state = camera.commanded_state()
+    assert state["heading_degrees"] == pytest.approx(45)
+    assert state["position_normalized_units"][0] < 0 and state["position_normalized_units"][2] > 0  # moved left/forward
+    mirror = CameraPlan()
+    mirror.advance("WAIT")
+    mirror.advance("CIRCLE_RIGHT")
+    assert mirror.commanded_state()["heading_degrees"] == pytest.approx(-45)
+    assert mirror.commanded_state()["position_normalized_units"][0] == pytest.approx(-state["position_normalized_units"][0])

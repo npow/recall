@@ -13,6 +13,8 @@ PATHS = {
     "translate_return": ["WAIT"] + ["W"] * 4 + ["S"] * 4 + ["WAIT"],
     "spin360": ["WAIT"] + ["RIGHT"] * 6 + ["WAIT"] * 2,
     "trio_viewer": ["WAIT"] + ["RIGHT"] * 3 + ["LEFT"] * 3 + ["WAIT"],
+    "circle_left": ["WAIT"] + ["CIRCLE_LEFT"] * 8,
+    "circle_right": ["WAIT"] + ["CIRCLE_RIGHT"] * 8,
     "trio_duel_a": ["WAIT"] + ["S"] * 6,
     "trio_duel_b": ["WAIT"] + ["RIGHT"] * 3 + ["S"] * 4,
     "spin720": ["WAIT"] + ["RIGHT"] * 12 + ["WAIT"],
