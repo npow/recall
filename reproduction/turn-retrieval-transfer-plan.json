@@ -1,0 +1,35 @@
+{
+  "scope": "Native turn-path transfer test of previously rejected bounded retrieval prototype",
+  "reason": "Full-history cache improves two scenes, while sink positional refresh fails. Test whether retrieving overlapping outbound views reproduces the history benefit at stock attention capacity. Earlier failed trial used a translation path with no realized revisit.",
+  "task_id": "GC007",
+  "seed": 42,
+  "paths": [
+    "turn_return",
+    "turn_wait_return"
+  ],
+  "method": "Unchanged PoseKVMemory implementation; archive16 early non-sink canonical key/value frames; retrieve4 by commanded pose; native18-frame attention budget",
+  "frozen_parameters": {
+    "archive_frame_ids": "6..21",
+    "retrieve_count": 4,
+    "max_pose_distance": 8,
+    "max_pose_angle_degrees": 60,
+    "sink_frames": 6,
+    "recent_tail_frames": 8
+  },
+  "expected_intervention_chunks": {
+    "turn_return": [
+      4,
+      5
+    ],
+    "turn_wait_return": [
+      12,
+      13
+    ]
+  },
+  "evaluation": [
+    "Native camera audit and identical pre-intervention raw pixels",
+    "Full-video actual return identity, no frozen motion or resets",
+    "DINO/PSNR and cost",
+    "Report all failures; success requires new seed and image-held-out transfer before broad recommendation"
+  ]
+}
