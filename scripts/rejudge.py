@@ -11,6 +11,7 @@ from pathlib import Path
 import statistics
 import subprocess
 import sys
+import time
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "external/PlayWorld/data"
@@ -28,6 +29,15 @@ def judge(job):
     label, task_id, video, repeat, provider, model, directory = job
     split, record = locate(task_id)
     out = directory / f"{label}-{task_id}-r{repeat}.json"
+    if out.exists():
+        # A file whose score call failed after the gate call has no reported_score; rerun it once it is stale
+        # (fresh ones may still be in flight in another process).
+        try:
+            stale = json.loads(out.read_text()).get("reported_score") is None and time.time() - out.stat().st_mtime > 900
+        except Exception:
+            stale = time.time() - out.stat().st_mtime > 900
+        if stale:
+            out.unlink()
     if not out.exists():
         command = [sys.executable, "-W", "ignore", "-m", "worldsync.judge", "--provider", provider,
             "--dataset", str(DATA / split / "data.json"), "--task-id", task_id, "--video", str(video),
