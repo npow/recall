@@ -12,6 +12,7 @@ A job is a plain JSON dict. Either give `argv` (the exact CLI arguments of
     env                extra environment variables, e.g. WORLDSYNC_TURN_DEG
     offload_text_encoder, allocator_expandable   lossless H100 memory savings
     extra              extra rollout CLI arguments, e.g. ["--budget-memory", "--budget-retrieved", "10"]
+    result_name        optional stable result directory name (default: id + time_ns)
 """
 import json
 import os
@@ -45,6 +46,8 @@ def job_to_argv(job, output):
 
 
 def job_identifier(job):
+    if job.get("result_name"):  # stable name: lets a resumed queue recognise finished episodes
+        return job["result_name"]
     return f"{job.get('id') or 'job'}-{time.time_ns()}"
 
 
