@@ -1,0 +1,552 @@
+{
+  "protocol": "worldsync four-dimension stock vs budget-memory pilot, seed 42",
+  "code_commit": "17f360dc0bb9a20d4a6da549b435b9c2abcdddd5",
+  "modal": {
+    "profile": "nissan-pow",
+    "app": "worldsync-lingbot-fourdim (stopped)",
+    "gpu": "H200",
+    "results_volume": "worldsync-lingbot-results",
+    "volume_layout": "<directory>/{rollout.mp4,run.json,judge.json,controls/}; chunk-*.mp4 and observation-*.jpg are NOT copied",
+    "fetch": "modal volume get worldsync-lingbot-results <directory>/rollout.mp4 <local_dir>/"
+  },
+  "rollout_command": "python -m worldsync.lingbot_rollout --split SPLIT --task-id TASK --seed 42 --max-chunks N COMMON ARM_FLAGS --output DIR",
+  "common_flags": [
+    "--player-retries",
+    "2",
+    "--text-prompt",
+    "both",
+    "--offload-text-encoder"
+  ],
+  "arm_flags": {
+    "stock": [],
+    "budget": [
+      "--budget-memory",
+      "--budget-rope",
+      "native",
+      "--budget-retrieved",
+      "10"
+    ]
+  },
+  "max_chunks_by_split": {
+    "gc": 40,
+    "if": 40,
+    "outsight": 40,
+    "insight": 60
+  },
+  "player": "worldsync.reference_player.decide (Haiku 4.5, Player v6 with END challenge); insight cases: stationary WAIT, no player",
+  "case_selection": {
+    "salt": "worldsync-fourdim-v1",
+    "per_dimension": 12,
+    "excluded": {
+      "gc/GC013": "released image does not match caption/rubric (reproduction/input-audit-gc013.md)"
+    },
+    "rule": "sort task ids per split by sha256(f'{salt}:{split}:{task}'), take first 12",
+    "cases": [
+      {
+        "split": "gc",
+        "task": "GC001"
+      },
+      {
+        "split": "gc",
+        "task": "GC016"
+      },
+      {
+        "split": "gc",
+        "task": "GC012"
+      },
+      {
+        "split": "gc",
+        "task": "GC023"
+      },
+      {
+        "split": "gc",
+        "task": "GC028"
+      },
+      {
+        "split": "gc",
+        "task": "GC017"
+      },
+      {
+        "split": "gc",
+        "task": "GC043"
+      },
+      {
+        "split": "gc",
+        "task": "GC032"
+      },
+      {
+        "split": "gc",
+        "task": "GC011"
+      },
+      {
+        "split": "gc",
+        "task": "GC025"
+      },
+      {
+        "split": "gc",
+        "task": "GC009"
+      },
+      {
+        "split": "gc",
+        "task": "GC030"
+      },
+      {
+        "split": "if",
+        "task": "IF046"
+      },
+      {
+        "split": "if",
+        "task": "IF026"
+      },
+      {
+        "split": "if",
+        "task": "IF051"
+      },
+      {
+        "split": "if",
+        "task": "IF025"
+      },
+      {
+        "split": "if",
+        "task": "IF045"
+      },
+      {
+        "split": "if",
+        "task": "IF002"
+      },
+      {
+        "split": "if",
+        "task": "IF021"
+      },
+      {
+        "split": "if",
+        "task": "IF013"
+      },
+      {
+        "split": "if",
+        "task": "IF012"
+      },
+      {
+        "split": "if",
+        "task": "IF027"
+      },
+      {
+        "split": "if",
+        "task": "IF050"
+      },
+      {
+        "split": "if",
+        "task": "IF049"
+      },
+      {
+        "split": "insight",
+        "task": "OE040"
+      },
+      {
+        "split": "insight",
+        "task": "OE022"
+      },
+      {
+        "split": "insight",
+        "task": "OE063"
+      },
+      {
+        "split": "insight",
+        "task": "OE035"
+      },
+      {
+        "split": "insight",
+        "task": "OE008"
+      },
+      {
+        "split": "insight",
+        "task": "OE074"
+      },
+      {
+        "split": "insight",
+        "task": "OE013"
+      },
+      {
+        "split": "insight",
+        "task": "OE023"
+      },
+      {
+        "split": "insight",
+        "task": "OE007"
+      },
+      {
+        "split": "insight",
+        "task": "OE018"
+      },
+      {
+        "split": "insight",
+        "task": "OE012"
+      },
+      {
+        "split": "insight",
+        "task": "OE006"
+      },
+      {
+        "split": "outsight",
+        "task": "OE067"
+      },
+      {
+        "split": "outsight",
+        "task": "OE039"
+      },
+      {
+        "split": "outsight",
+        "task": "OE046"
+      },
+      {
+        "split": "outsight",
+        "task": "OE028"
+      },
+      {
+        "split": "outsight",
+        "task": "OE019"
+      },
+      {
+        "split": "outsight",
+        "task": "OE014"
+      },
+      {
+        "split": "outsight",
+        "task": "OE052"
+      },
+      {
+        "split": "outsight",
+        "task": "OE032"
+      },
+      {
+        "split": "outsight",
+        "task": "OE034"
+      },
+      {
+        "split": "outsight",
+        "task": "OE051"
+      },
+      {
+        "split": "outsight",
+        "task": "OE049"
+      },
+      {
+        "split": "outsight",
+        "task": "OE027"
+      }
+    ]
+  },
+  "judges": {
+    "primary": "released PlayWorld Gemini rubric via worldsync/gemini_vertex_judge.py (gemini-3.1-pro-preview, Vertex global, gcloud login)",
+    "secondary": "worldsync.judge (Opus) inside Modal"
+  },
+  "finished_pilot_episodes": [
+    {
+      "directory": "fourdim-budget-if-IF002-seed42-1794722872276053532",
+      "arm": "budget",
+      "split": "if",
+      "task": "IF002",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-budget-if-IF012-seed42-1794723082829286066",
+      "arm": "budget",
+      "split": "if",
+      "task": "IF012",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-budget-if-IF013-seed42-1794723044335984804",
+      "arm": "budget",
+      "split": "if",
+      "task": "IF013",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-budget-if-IF021-seed42-1794723024877166124",
+      "arm": "budget",
+      "split": "if",
+      "task": "IF021",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-budget-if-IF025-seed42-1794722758496321002",
+      "arm": "budget",
+      "split": "if",
+      "task": "IF025",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-budget-if-IF026-seed42-1794722571271974290",
+      "arm": "budget",
+      "split": "if",
+      "task": "IF026",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-budget-if-IF027-seed42-1794723224370931270",
+      "arm": "budget",
+      "split": "if",
+      "task": "IF027",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-budget-if-IF045-seed42-1794722863236847322",
+      "arm": "budget",
+      "split": "if",
+      "task": "IF045",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-budget-if-IF046-seed42-1794722543023240660",
+      "arm": "budget",
+      "split": "if",
+      "task": "IF046",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-budget-if-IF049-seed42-1794723372993778786",
+      "arm": "budget",
+      "split": "if",
+      "task": "IF049",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-budget-if-IF050-seed42-1794723250328808157",
+      "arm": "budget",
+      "split": "if",
+      "task": "IF050",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-budget-if-IF051-seed42-1794722712099397107",
+      "arm": "budget",
+      "split": "if",
+      "task": "IF051",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-budget-insight-OE022-seed42-1794723512039542527",
+      "arm": "budget",
+      "split": "insight",
+      "task": "OE022",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-budget-insight-OE035-seed42-1794723914725325137",
+      "arm": "budget",
+      "split": "insight",
+      "task": "OE035",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-budget-insight-OE040-seed42-1794723416152582572",
+      "arm": "budget",
+      "split": "insight",
+      "task": "OE040",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-budget-insight-OE063-seed42-1794723802730879622",
+      "arm": "budget",
+      "split": "insight",
+      "task": "OE063",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-if-IF002-seed42-1794722868889219308",
+      "arm": "stock",
+      "split": "if",
+      "task": "IF002",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-if-IF012-seed42-1794723076710096433",
+      "arm": "stock",
+      "split": "if",
+      "task": "IF012",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-if-IF013-seed42-1794723029323937074",
+      "arm": "stock",
+      "split": "if",
+      "task": "IF013",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-if-IF021-seed42-1794722926023252785",
+      "arm": "stock",
+      "split": "if",
+      "task": "IF021",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-if-IF025-seed42-1794722718490762956",
+      "arm": "stock",
+      "split": "if",
+      "task": "IF025",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-if-IF026-seed42-1794722543500854395",
+      "arm": "stock",
+      "split": "if",
+      "task": "IF026",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-if-IF027-seed42-1794723193078984883",
+      "arm": "stock",
+      "split": "if",
+      "task": "IF027",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-if-IF045-seed42-1794722845169419452",
+      "arm": "stock",
+      "split": "if",
+      "task": "IF045",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-if-IF046-seed42-1794722542902389393",
+      "arm": "stock",
+      "split": "if",
+      "task": "IF046",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-if-IF049-seed42-1794723299696617340",
+      "arm": "stock",
+      "split": "if",
+      "task": "IF049",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-if-IF050-seed42-1794723236086123500",
+      "arm": "stock",
+      "split": "if",
+      "task": "IF050",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-if-IF051-seed42-1794722652372421628",
+      "arm": "stock",
+      "split": "if",
+      "task": "IF051",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-insight-OE008-seed42-1794723993828034944",
+      "arm": "stock",
+      "split": "insight",
+      "task": "OE008",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-insight-OE022-seed42-1794723450881896544",
+      "arm": "stock",
+      "split": "insight",
+      "task": "OE022",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-insight-OE035-seed42-1794723857983042608",
+      "arm": "stock",
+      "split": "insight",
+      "task": "OE035",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-insight-OE040-seed42-1794723388156416816",
+      "arm": "stock",
+      "split": "insight",
+      "task": "OE040",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-insight-OE063-seed42-1794723567075840114",
+      "arm": "stock",
+      "split": "insight",
+      "task": "OE063",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    },
+    {
+      "directory": "fourdim-stock-insight-OE074-seed42-1794724145238411796",
+      "arm": "stock",
+      "split": "insight",
+      "task": "OE074",
+      "seed": 42,
+      "has_rollout_mp4": true,
+      "has_opus_judge_json": true
+    }
+  ],
+  "not_generated_or_cancelled": "every case/arm not listed in finished_pilot_episodes (app stopped at the coordinator's request)"
+}

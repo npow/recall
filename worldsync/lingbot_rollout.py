@@ -73,6 +73,11 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
     parser.add_argument("--budget-archive", type=int, default=24)
     parser.add_argument("--budget-rope", choices=["virtual", "native"], default="virtual")
     parser.add_argument("--offload-text-encoder", action="store_true", help="Release the completed GPU text encoder before denoising")
+    parser.add_argument("--fp8-kv", action="store_true", help="Experimental fp8 (e4m3) self-attention KV cache; weights stay bf16 (native fixed paths)")
+    parser.add_argument("--fp8-kv-quantize-current", action="store_true", help="Also attend to the fp8-rounded K/V of the chunk being generated (v1 behaviour; worse)")
+    parser.add_argument("--fp8-kv-audit-layers", default="", help="Comma-separated layer indices that keep a bf16 shadow cache to measure attention error")
+    parser.add_argument("--player-retries", type=int, default=0,
+        help="Resample the player up to N times after an invalid response (same for every arm; each retry is logged)")
     parser.add_argument("--lora", type=Path, help="Memory LoRA adapter (scripts/train_lingbot_memory.py); non-stock weights")
     parser.add_argument("--memory-reader", type=Path, help="Experimental trained residual reader; standalone fixed diagnostics only")
     parser.add_argument("--output", type=Path, required=True)
@@ -118,7 +123,7 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
             or knobs["local_attn_size"] != 22 or args.retrieval_selection != "nearest"
             or args.retrieval_positions != "virtual"):
         parser.error("gated attention pilot requires22 frames,8 nearest views,virtual positions and pose retrieval")
-    diagnostics = [args.pose_retrieval, args.rephase_sink, args.kv_retention, args.decoprune, args.reanchor, args.budget_memory]
+    diagnostics = [args.pose_retrieval, args.rephase_sink, args.kv_retention, args.decoprune, args.reanchor, args.budget_memory, args.fp8_kv]
     if sum(diagnostics) > 1:
         parser.error("memory ablations must be tested separately")
     adaptive_memory_ok = args.budget_memory and lingbot_tuning.hillclimb_unlocked()
@@ -162,9 +167,9 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
                                     if args.stream_player_actions else None),
         "initial_neutral_bootstrap": args.adaptive_retrieval_pilot,
         "kv_retention": args.kv_retention, "decoprune": args.decoprune, "reanchor": args.reanchor,
-        "budget_memory": args.budget_memory, "denoise_schedule": args.denoise_schedule,
+        "budget_memory": args.budget_memory, "fp8_kv": args.fp8_kv, "denoise_schedule": args.denoise_schedule,
         "text_encoder_offloaded_after_encoding": args.offload_text_encoder,
-        "stationary_wait_only": stationary, "fixed_actions": args.fixed_actions, "quantization": "none", "cuda_allocator_configuration": os.environ.get("PYTORCH_CUDA_ALLOC_CONF", "default"),
+        "stationary_wait_only": stationary, "fixed_actions": args.fixed_actions, "quantization": ("none (weights bf16); KV cache fp8 e4m3 [diagnostic, non-stock]" if args.fp8_kv else "none"), "cuda_allocator_configuration": os.environ.get("PYTORCH_CUDA_ALLOC_CONF", "default"),
         "max_area": 480 * 832, "chunk_size": 4, "local_attn_size": knobs["local_attn_size"], "sink_size": knobs["sink_size"],
         "decision_interval": knobs["decision_interval"], "stock_knobs": lingbot_tuning.is_stock(knobs),
         "controlled_ablation": args.controlled_ablation,
@@ -204,9 +209,9 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
     from PIL import Image
     from einops import rearrange
     from worldsync.lingbot_vae import NativeVaeStream
-    from worldsync.reference_player import decide
+    from worldsync.reference_player import decide as _decide, PlayerResponseError
     if player_decide is not None:
-        decide = player_decide
+        _decide = player_decide
     if str(source) not in sys.path:
         sys.path.insert(0, str(source))
     from wan.configs import WAN_CONFIGS
@@ -287,6 +292,10 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
             from worldsync.lingbot_budgetmem import BudgetPoseMemory
             memory = BudgetPoseMemory(pipeline, sink_size=knobs["sink_size"], local_attn_size=knobs["local_attn_size"],
                 retrieved=args.budget_retrieved, archive_frames=args.budget_archive, rope=args.budget_rope)
+        elif args.fp8_kv:
+            from worldsync.lingbot_fp8kv import Fp8KVCache
+            audit = [int(item) for item in args.fp8_kv_audit_layers.split(",") if item.strip()]
+            memory = Fp8KVCache(pipeline, audit_layers=audit, quantize_current=args.fp8_kv_quantize_current)
         current_chunk = -1
         latest = initial
         def before(model, positional, kwargs):
@@ -317,12 +326,20 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
                 history = [{key: action[key] for key in ("operation", "action", "reason")} for action in report["actions"]]
                 commanded = (lingbot_adaptive_pilot.player_state(camera) if args.adaptive_retrieval_pilot
                              else camera.commanded_state())
-                if args.stream_player_actions:
-                    from worldsync.streaming_player import StreamingDecision
-                    pending_player = StreamingDecision(client, task, initial, latest, history, commanded_state=commanded)
-                    decision, metadata = pending_player.action()
-                else:
-                    decision, metadata = decide(client, task, initial, latest, history, commanded_state=commanded)
+                for attempt in range(args.player_retries + 1):
+                    try:
+                        if args.stream_player_actions:
+                            from worldsync.streaming_player import StreamingDecision
+                            pending_player = StreamingDecision(client, task, initial, latest, history, commanded_state=commanded)
+                            decision, metadata = pending_player.action()
+                        else:
+                            decision, metadata = _decide(client, task, initial, latest, history, commanded_state=commanded)
+                        break
+                    except PlayerResponseError as error:
+                        report.setdefault("player_retry_events", []).append(
+                            {"chunk": index, "attempt": attempt, "error": str(error)})
+                        if attempt == args.player_retries:
+                            raise
                 increment = metadata.get("agent_interaction_increment", 1)
                 if type(increment) is not int or not 0 <= increment <= 1:
                     raise ValueError("Player must report zero or one interaction per callback")

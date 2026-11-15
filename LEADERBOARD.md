@@ -71,7 +71,7 @@ The adaptive four-view pilot changed 3.60→3.90, but neither seed visibly retur
 
 ## Other measured results
 
-- [Rotation and yaw-clamp test](reproduction/rotation-clamp-test.json): 4 GC 360-degree rotation cases scored 2.22 at 60 deg/s, 2.19 at 50 deg/s and 1.97 with the plan clamp; 3 OE turn-and-return cases rose 1.19 to 1.83 with the clamp. One run per case, inside noise; the trajectory gate already passed at 60 deg/s, so turn overshoot is not the limiting factor. No claimed improvement.
+- [Rotation and yaw-clamp test](reproduction/rotation-clamp-test.json): 4 GC 360-degree rotation cases scored 2.22 at 60 deg/s, 2.19 at 50 deg/s and 1.97 with the plan clamp; 3 OE turn-and-return cases rose 1.19 to 1.83 with the clamp. One run per case, inside noise; the trajectory gate already passed at 60 deg/s, so turn overshoot is not the limiting factor. The bounded pose-memory arm on the same cases also showed no gain (2.60 vs 2.44 on 3 GC cases). No claimed improvement.
 - [Turn check](reproduction/turn-check-baseline-v6.json): judge-independent yaw-from-frames check; stock passed 6/6 turn tasks, v6 4/6. Gemini failed OE057 three times for both arms although the video turned as instructed.
 - [Protocol finding](reproduction/text-prompt-finding.md): the released PlayWorld harness submits `task.prompt` as the world-model text, while our adapter sent the static image caption. `--text-prompt prompt` exists; the completed four-case development comparison and its limitations are reported above; held-out confirmation is pending.
 - [Long-return memory](reproduction/memory-validation/README.md): a 31.8-second episode with 24 seconds away retained the landmark; residual framing/text drift remains. Not a benchmark score.
@@ -144,7 +144,7 @@ One scripted GC010 seed42 case, same H200/SDPA/seed/controls. Stock18, four-view
 
 ## Gemini — paired GC/OE development cohort (seeds 42 and 43)
 
-14 hash-selected GC and out-of-sight cases (7 GC, 7 out-of-sight), three arms, two seeds, same cases, `--end-guard` and player retries on every arm. Scores are the Gemini mean over GC and out-of-sight episodes only, **not** the four-dimension overall, so they are **not comparable with 2.12 or 1.82**. Paired delta is against stock over (case, seed) pairs; wins/ties/losses in brackets (28 pairs). No arm is established better than stock overall. The one interval that clears zero, 46/6 on out-of-sight (+0.84 [+0.20, +1.62]), is one of eight uncorrected contrasts, comes mostly from seed 43, and Opus sees nothing (+0.05), so it is a lead, not a result.
+14 GC and out-of-sight development cases (7 GC, 7 out-of-sight), three arms, two seeds, same cases. The cases were not hash-selected: 7 come from the first development cohort and 7 (GC005, OE044, GC015, OE056, OE055, GC025, GC019) were chosen for long reference-plan duration, before outcomes. Every arm ran with `--end-guard` and player retries, which the full run does not use. Scores are the Gemini mean over GC and out-of-sight episodes only, **not** the four-dimension overall, so they are **not comparable with 2.12 or 1.82**. Paired delta is against stock over (case, seed) pairs; wins/ties/losses in brackets (28 pairs). No arm is established better than stock overall. The one interval that clears zero, 46/6 on out-of-sight (+0.84 [+0.20, +1.62]), is one of eight uncorrected contrasts, comes mostly from seed 43, and Opus sees nothing (+0.05), so it is a lead, not a result.
 
 | Arm | n | Gemini mean [95% CI] | GC | Out-of-sight | Gate non-fail | Paired Δ vs stock [95% CI] (W/T/L) |
 |---|---:|---|---:|---:|---:|---|
@@ -173,6 +173,8 @@ Scripted camera paths with a guaranteed return to the start view; metric is DINO
 
 ## What would change the headline
 
-Nothing here is a full-benchmark score. The pass criterion for beating 2.12 was fixed in advance in [pass-criterion.md](reproduction/pass-criterion.md): equal mean of four dimension means, released Gemini scorer, identical-harness stock baseline, full 171 cases, lower CI bound above 2.12.
+The pass criterion for beating 2.12 was fixed in advance in [pass-criterion.md](reproduction/pass-criterion.md): equal mean of four dimension means, released Gemini scorer, identical-harness stock baseline, full 171 cases, lower CI bound above 2.12.
+
+A full 171-case run is complete; preliminary tally stock about 1.84, budget memory about 1.80 (no gain); official table pending. **The pass criterion is not met.** An exploratory check finds memory did fire in 136 of 171 budget episodes, the earlier +0.32 does not replicate on its own 14 cases inside the full run (+0.04), and the judge scored 5 of 28 identical-pixel video pairs differently (by up to 4.0 points), so single-call differences under about 0.3 are noise: [did memory act?](reproduction/full-run-memory-fired.md).
 
 Regenerate: `.venv-lingbot/bin/python scripts/update_leaderboard.py`. Machine-readable snapshot: [leaderboard.json](leaderboard.json).

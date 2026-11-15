@@ -30,7 +30,17 @@ def main():
     parser.add_argument("--repeats", type=int, default=2)
     parser.add_argument("--output", type=Path, default=ROOT / "reproduction/full-baseline-gemini.json")
     args = parser.parse_args()
-    data = json.loads((ROOT / f"outputs/rejudge/{args.label}-{args.judge}.json").read_text())
+    # Read the per-judgement files directly; the summary file can be rewritten concurrently by another re-judging pass.
+    raw = ROOT / f"outputs/rejudge/{args.label}-{args.judge}-raw"
+    cases_raw = {}
+    for path in sorted(raw.glob(f"{args.label}-*-r[0-9].json")):
+        task = path.name[len(args.label) + 1:].rsplit("-r", 1)[0]
+        try:
+            judged = json.loads(path.read_text())
+        except Exception:
+            continue
+        cases_raw.setdefault(task, []).append({"score": judged.get("reported_score"), "gate": (judged.get("gate") or {}).get("verdict")})
+    data = {"cases": cases_raw}
     splits = split_of()
     per_split = {s: {} for s in EXPECTED}
     for task, items in data["cases"].items():

@@ -7,6 +7,7 @@ PATHS = {
     "turn90_wait_return": ["WAIT"] + ["RIGHT"] * 2 + ["WAIT"] * 8 + ["LEFT"] * 2 + ["WAIT"],
     "turn90left_wait_return": ["WAIT"] + ["LEFT"] * 2 + ["WAIT"] * 8 + ["RIGHT"] * 2 + ["WAIT"],
     "turn_return": ["WAIT"] + ["RIGHT"] * 3 + ["LEFT"] * 3 + ["WAIT"],
+    "turn_hold_return": ["WAIT"] + ["RIGHT"] * 3 + ["WAIT"] * 6 + ["LEFT"] * 3 + ["WAIT"],  # revisit matrix / keyframe-restart path
     "turn_long_wait_return": ["WAIT"] + ["RIGHT"] * 3 + ["WAIT"] * 24 + ["LEFT"] * 3 + ["WAIT"],
     "turn_wait_return": ["WAIT"] + ["RIGHT"] * 3 + ["WAIT"] * 8 + ["LEFT"] * 3 + ["WAIT"],
     "translate_return": ["WAIT"] + ["W"] * 4 + ["S"] * 4 + ["WAIT"],
