@@ -281,7 +281,7 @@ svg text{font-family:inherit}
         </ul>
       </div>
     </div>
-    <p class="tiny foot">Sizes measured on LingBot-World2 14B at 480×832. A second method, a text “director” that writes event captions in the model's trained format, is in the repo; it showed a small trend, not an established gain.</p>
+    <p class="tiny foot">Sizes measured on LingBot-World2 14B at 480×832.</p>
     <aside class="notes">This is a storage finding, separate from the main result. What attention needs from a remembered frame is its values at all 40 layers: 1,235 megabytes per frame, which is why the memory on the previous slide keeps only 24 frames. We also tried storing just the frame, 6.2 megabytes, and rebuilding the values with one extra pass when the frame is needed. 1,235 divided by 6.2 is about two hundred times less, the same information traded for a little compute. On a scripted turn-away path it recalled the start view about as well as exact storage, 0.77 against 0.78, where the released model scores 0.35.</aside>
   </section>
 
