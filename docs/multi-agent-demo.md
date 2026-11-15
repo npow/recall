@@ -1,5 +1,24 @@
 # Two-agent world-model video experiments
 
+## Selected presentation examples
+
+The deck and two-minute video now show three selected paired scenarios: basket
+handoff, greeting, and joint attention. Six paired attempts (12 individual
+LingBot rollouts) were reviewed. Three new attempts ran concurrently on three
+ephemeral H200 workers. All jobs have stopped.
+
+Selection was by eye for identity stability and readable motion. The later wave
+duplicated a character; the high five became clapping or missed contact. Those
+attempts were excluded from the presentation. The selected clips still have
+cross-view timing and action disagreements and do not establish a shared-world
+consistency success rate. The full selection ledger is
+[`multi-agent-selection.json`](../reproduction/multi-agent-selection.json).
+
+Presentation media: `docs/slides/media/multi-agent-{pov,wave,point}.mp4` and the
+12-second `multi-agent-montage.mp4`. `scripts/build_agent_montage.py` records the
+chosen excerpts; `scripts/build_submission_video.py` places them after the
+measured RECALL results while keeping the final narration/video at 120 seconds.
+
 ## Required presentation: labeled first-person tiles
 
 The deliverable is one MP4 showing **Agent A — Orange POV** on the left and

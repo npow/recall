@@ -17,7 +17,7 @@ Videos loop for as long as their slide is shown and rewind when you leave it. Th
 
 The main story runs from the single-camera memory problem and benchmark through the method,
 results, scope, and autoresearch loop. Slides 15–17 extend it to the multi-agent prototype:
-what is reused, how shared text context branches into two histories, then the labeled views. Slide 18 closes with
+what is reused, how shared text context branches into two histories, then the labeled views. Slides 18–19 show selected greeting and joint-attention attempts. Slide 20 closes with
 shared visual evidence as the next step. The remaining slides are the results appendix.
 The multi-agent videos use scripted controllers and independent visual histories;
 they are not multi-agent benchmark results.

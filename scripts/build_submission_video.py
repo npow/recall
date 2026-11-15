@@ -25,12 +25,22 @@ def main():
     args = ap.parse_args()
     work = ROOT/"outputs/submission"
     work.mkdir(parents=True, exist_ok=True)
+    # Capture the current mechanism slide so a rebuild cannot reuse stale artwork.
+    html = (ROOT/"docs/slides/index.html").read_text()
+    slide_number = html.split('id="shared-context"')[0].count('<section class="slide"')
+    call(["google-chrome", "--headless", "--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage",
+          f"--user-data-dir={work/'chrome-video'}", "--window-size=1920,1080", "--hide-scrollbars",
+          f"--screenshot={work/'bridge.png'}", "--virtual-time-budget=1000",
+          (ROOT/"docs/slides/index.html").as_uri()+f"#{slide_number}"], capture_output=True)
     texts = {
         "bridge": "We reuse the director: shared events become each agent's text conditioning. The warm renderer keeps two separate visual histories.",
         "demo": "Each labeled tile is a real world-model view. The handoff is still unresolved: matching actions and time does not guarantee shared object ownership.",
         "close": "Next: shared visual memory. Code and evidence on GitHub.",
     }
     lengths = {"bridge": 8, "demo": 12, "close": 4}
+    montage = ROOT/"docs/slides/media/multi-agent-montage.mp4"
+    if montage.exists():
+        texts["demo"] = "We rendered several paired scenarios and selected three: a basket handoff, a greeting, and joint attention. Shared timing and object ownership still need validation."
     for name, text in texts.items():
         call([args.piper_python, "-m", "piper", "-m", args.voice, "-f", work/f"{name}.wav"],
              input=text, text=True, capture_output=True)
@@ -42,7 +52,7 @@ def main():
     draw.text((110, 495), "Next: shared visual evidence across agents.", font=font(48), fill="#9aa4b2")
     draw.text((110, 780), "github.com/npow/recall", font=font(48), fill="white")
     image.save(work/"close.png")
-    video = ROOT/"docs/slides/media/multi-agent-pov.mp4"
+    video = montage if montage.exists() else ROOT/"docs/slides/media/multi-agent-pov.mp4"
     # Fit narration with a short quiet tail; record the exact timing and wording.
     for name in texts:
         duration = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration",
@@ -67,7 +77,8 @@ def main():
           "-c:v", "libx264", "-preset", "veryfast", "-crf", "22", "-pix_fmt", "yuv420p",
           "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", args.output])
     report = {"output": str(args.output), "seconds": 120, "original_story_seconds": 96,
-              "new_scenes": lengths, "narration": texts, "scope": "two scripted POV histories; cross-view handoff unresolved"}
+              "new_scenes": lengths, "narration": texts, "scope": "selected scripted POV examples; cross-view consistency unresolved",
+              "demo_source": str(video.relative_to(ROOT))}
     (ROOT/"reproduction/submission-video.json").write_text(json.dumps(report, indent=2)+"\n")
     print(json.dumps(report))
 
