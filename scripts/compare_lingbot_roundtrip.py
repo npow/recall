@@ -16,12 +16,16 @@ def main():
     for name in ("stock_run", "candidate_run", "stock_video", "candidate_video", "output"):
         parser.add_argument("--" + name.replace("_", "-"), type=Path, required=True)
     parser.add_argument("--judge", action="store_true")
+    parser.add_argument("--comparison", choices=("retrieval", "context"), default="retrieval")
     parser.add_argument("--dino", action="store_true", help="Add pinned DINOv2-small endpoint feature similarity")
     args = parser.parse_args()
+    candidate_label = "retrieval" if args.comparison == "retrieval" else "context34"
     stock = json.loads(args.stock_run.read_text())["run"]
     candidate = json.loads(args.candidate_run.read_text())["run"]
     fields = ("source_revision", "checkpoint_revision", "protocol_id", "task_id", "split", "controls_sha256", "seed", "fps", "max_chunks",
               "max_area", "chunk_size", "local_attn_size", "sink_size", "sampler_timesteps_index", "sample_shift", "fixed_actions")
+    if args.comparison == "context":
+        fields = tuple(field for field in fields if field != "local_attn_size")
     for field in fields:
         if stock[field] != candidate[field]:
             raise ValueError(f"Unmatched comparison setting: {field}")
@@ -30,11 +34,19 @@ def main():
             raise ValueError("Comparison requires two complete paths")
         if not run["native_fixed_controls"] or not all(a["within_tolerance"] for a in run["camera_embedding_audit"]):
             raise ValueError("Native camera conditioning audit failed")
-    memory = candidate["memory"]
-    modified = [item["chunk"] for item in memory["trace"] if item["attention_replaced"]]
-    if not modified:
-        raise ValueError("Candidate never retrieved memory; no intervention to compare")
-    first = min(modified)
+    memory = candidate.get("memory")
+    if args.comparison == "retrieval":
+        modified = [item["chunk"] for item in memory["trace"] if item["attention_replaced"]]
+        if not modified:
+            raise ValueError("Candidate never retrieved memory; no intervention to compare")
+        first = min(modified)
+    else:
+        if stock["local_attn_size"] != 18 or candidate["local_attn_size"] != 34:
+            raise ValueError("Declared context pilot requires stock18 versus context34")
+        if memory or stock.get("memory") or not candidate["controlled_ablation"]:
+            raise ValueError("Context pilot must only change cache capacity")
+        first = stock["local_attn_size"] // stock["chunk_size"]
+        modified = list(range(first, stock["max_chunks"]))
     identical_prefix = all(a["pixel_sha256"] == b["pixel_sha256"] for a, b in zip(stock["chunks"][:first], candidate["chunks"][:first]))
     if not identical_prefix:
         raise ValueError("Pre-intervention raw pixels differ; comparison is confounded")
@@ -45,49 +57,41 @@ def main():
     from PIL import Image
     import numpy as np
     endpoints = {}
-    for label, video, run in (("stock", args.stock_video, stock), ("retrieval", args.candidate_video, candidate)):
+    for label, video, run in (("stock", args.stock_video, stock), (candidate_label, args.candidate_video, candidate)):
         for part, frame in (("reference", 12), ("return", run["generated_frames"] - 1)):
             image = artifacts / f"{label}-{part}.png"
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(video), "-vf", f"select=eq(n\\,{frame})",
                             "-frames:v", "1", str(image)], check=True)
             endpoints[label, part] = image
-    report = {"scope": "single controlled development round trip; no PlayWorld score or SOTA claim",
+    report = {"comparison": args.comparison, "cache_frames": {"stock": stock["local_attn_size"], "candidate": candidate["local_attn_size"]}, "scope": "single controlled development round trip; no PlayWorld score or SOTA claim",
         "matched_settings": {key: stock[key] for key in fields}, "native_camera_inputs_verified": True,
         "pre_intervention_pixel_identical_chunks": first, "modified_chunks": modified,
-        "stock_wall_s": stock["elapsed_s"], "retrieval_wall_s": candidate["elapsed_s"],
+        "stock_wall_s": stock["elapsed_s"], "candidate_wall_s": candidate["elapsed_s"],
         "stock_peak_allocated_bytes": stock["peak_allocated_bytes"],
-        "retrieval_peak_allocated_bytes": candidate["peak_allocated_bytes"], "memory": memory,
+        "candidate_peak_allocated_bytes": candidate["peak_allocated_bytes"], "memory": memory,
         "caveat": "Commanded camera closure does not prove realized closure. Endpoint image similarity cannot establish world memory if the realized route fails."}
-    for label in ("stock", "retrieval"):
+    for label in ("stock", candidate_label):
         reference = np.asarray(Image.open(endpoints[label, "reference"])).astype(np.float32)
         returned = np.asarray(Image.open(endpoints[label, "return"])).astype(np.float32)
         mse = float(np.mean((reference - returned) ** 2))
         report[label] = {"endpoint_psnr_db": float(10 * np.log10(255 ** 2 / max(mse, 1e-12))),
                          "video_sha256": hashlib.sha256((args.stock_video if label == "stock" else args.candidate_video).read_bytes()).hexdigest()}
+    report["candidate_label"] = candidate_label
+    report["warmed_suffix_s"] = {label: run["chunks"][-1]["elapsed_s"] - run["chunks"][0]["elapsed_s"] for label, run in (("stock", stock), (candidate_label, candidate))}
     output.write_text(json.dumps(report, indent=2) + "\n")
     if args.dino:
         import torch
-        from urllib.request import Request, urlopen
-        import requests
-        from huggingface_hub import configure_http_backend
         from transformers import AutoImageProcessor, AutoModel
         model_name = "facebook/dinov2-small"
-        with urlopen(Request(f"https://huggingface.co/api/models/{model_name}",
-                             headers={"Accept-Encoding": "identity"}), timeout=60) as response:
-            revision = json.load(response)["sha"]
-        def backend():
-            session = requests.Session()
-            session.headers["Accept-Encoding"] = "identity"
-            return session
-        configure_http_backend(backend_factory=backend)
+        revision = "ed25f3a31f01632728cabb09d1542f84ab7b0056"
         processor = AutoImageProcessor.from_pretrained(model_name, revision=revision, use_fast=False)
         model = AutoModel.from_pretrained(model_name, revision=revision).eval()
         torch.set_num_threads(8)
-        order = [(label, part) for label in ("stock", "retrieval") for part in ("reference", "return")]
+        order = [(label, part) for label in ("stock", candidate_label) for part in ("reference", "return")]
         inputs = processor(images=[Image.open(endpoints[key]).convert("RGB") for key in order], return_tensors="pt")
         with torch.no_grad():
             features = torch.nn.functional.normalize(model(**inputs).last_hidden_state[:, 0], dim=-1)
-        for i, label in enumerate(("stock", "retrieval")):
+        for i, label in enumerate(("stock", candidate_label)):
             report[label]["endpoint_dino_cosine"] = float(features[i * 2] @ features[i * 2 + 1])
         report["feature_model"] = {"name": model_name, "revision": revision, "feature": "normalized CLS token"}
         output.write_text(json.dumps(report, indent=2) + "\n")
@@ -100,9 +104,9 @@ def main():
         from metrics.vqa.sampling import generate_dual_sampling
         prompt = (
             "Evaluate two anonymized world-model videos independently and then compare. Each was given the same "
-            "image and fixed camera path: initial hold, four seconds forward, three seconds yaw right (180 degrees), "
-            "four seconds forward back along the intended path, three seconds yaw right to restore the original "
-            "heading, and final hold. Commands are NOT proof that motion happened. Inspect actual frames. "
+            "image and fixed camera path. Commands by one-second chunk: "
+            + str(stock["fixed_actions"]) + ". RIGHT and LEFT yaw 60 degrees per second; W moves forward. "
+            "Commands are NOT proof that motion happened. Inspect actual frames. "
             "Assess whether each video realizes a turnaround and return to the starting viewpoint; whether persistent "
             "building identity, sign text, geometry and spatial layout match on return; and whether there are sudden "
             "jumps, frozen motion or implausible transitions. Distinguish camera-control failures from forgetting. "
@@ -113,7 +117,7 @@ def main():
             "This is a diagnostic comparison, not a benchmark score."
         )
         content = [{"type": "text", "text": prompt}]
-        mapping = {"A": ("retrieval", args.candidate_video), "B": ("stock", args.stock_video)}
+        mapping = {"A": (candidate_label, args.candidate_video), "B": ("stock", args.stock_video)}
         with tempfile.TemporaryDirectory(prefix="roundtrip-judge-") as directory:
             for anonymous, (_, video) in mapping.items():
                 sampled = generate_dual_sampling(video, Path(directory) / anonymous)

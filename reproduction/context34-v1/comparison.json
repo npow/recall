@@ -1,0 +1,118 @@
+{
+  "comparison": "context",
+  "cache_frames": {
+    "stock": 18,
+    "candidate": 34
+  },
+  "scope": "single controlled development round trip; no PlayWorld score or SOTA claim",
+  "matched_settings": {
+    "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+    "checkpoint_revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+    "protocol_id": "lingbot-world2-stock-reconstructed-haiku-16fps-v5",
+    "task_id": "GC007",
+    "split": "gc",
+    "controls_sha256": "e07836bf3873ddad541cb3c29da3d388742b5c2aa0d37f18e0cc140750b9f57f",
+    "seed": 42,
+    "fps": 16,
+    "max_chunks": 8,
+    "max_area": 399360,
+    "chunk_size": 4,
+    "sink_size": 6,
+    "sampler_timesteps_index": [
+      0,
+      250,
+      500,
+      750
+    ],
+    "sample_shift": 10,
+    "fixed_actions": [
+      "WAIT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "LEFT",
+      "LEFT",
+      "LEFT",
+      "WAIT"
+    ]
+  },
+  "native_camera_inputs_verified": true,
+  "pre_intervention_pixel_identical_chunks": 4,
+  "modified_chunks": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "stock_wall_s": 135.94742860899999,
+  "stock_peak_allocated_bytes": 80201656320,
+  "memory": null,
+  "caveat": "Commanded camera closure does not prove realized closure. Endpoint image similarity cannot establish world memory if the realized route fails.",
+  "stock": {
+    "endpoint_psnr_db": 9.262998465615306,
+    "video_sha256": "57723d0a2e0779ac2af5d3d85284c73a17ec2e6054ad0d0a04500d9fde90d8c3",
+    "endpoint_dino_cosine": 0.5788122415542603
+  },
+  "candidate_label": "context34",
+  "feature_model": {
+    "name": "facebook/dinov2-small",
+    "revision": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+    "feature": "normalized CLS token"
+  },
+  "visual_judge": {
+    "model": "claude-opus-5-5",
+    "response_id": "msg_011Ch3sDRzQ7TtwJiqHGJVL5",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 26416,
+      "output_tokens": 1761,
+      "output_tokens_details": {
+        "thinking_tokens": 488
+      },
+      "server_tool_use": null,
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "label_mapping": {
+      "A": "context34",
+      "B": "stock"
+    },
+    "prompt_sha256": "6d735cf4a9ab289fac16ce45c863819feca85b247cc4f8234a71740f2743cea8",
+    "result": {
+      "A": {
+        "realized_round_trip": "yes",
+        "starting_place_recovered": "yes",
+        "discontinuity": "no",
+        "visual_evidence": "Frames 0-9 hold on the Primemall facade, consistent with WAIT. From about frame 10 to 40 the view pans right continuously. Primemall exits left, then the 'Diemell' block with its blue umbrella comes in, followed by the pink-sign storefront and the glass-fronted arcade with the plaza and railing. From about frame 40 the pan reverses smoothly through the same sequence: arcade, pink sign, Diemell, then Primemall re-entering from the left (frames ~55-65). The scene settles on Primemall for frames ~65-78. On return the building identity is preserved: the two-peaked dark roof, the 'Primemall' sign text, the diamond-patterned orange cladding, the glass entrance corner, the small kiosk umbrella and the red/white storefront at lower right. Spatial order matches the outbound path. The final framing differs somewhat from frame 0: a blue umbrella and a ledge now sit in the left foreground, and the building appears slightly shifted and larger, suggesting minor drift or slight translation. Text is legible and stable throughout. No sudden cuts or freezes are visible.",
+        "failure_classification": "Minor camera drift/framing offset on return, plus a newly visible foreground umbrella. No memory failure. The intermediate scene (Diemell, arcade) is hallucinated beyond the input image but is consistent on both passes."
+      },
+      "B": {
+        "realized_round_trip": "uncertain",
+        "starting_place_recovered": "no",
+        "discontinuity": "yes",
+        "visual_evidence": "Frames 0-48 are essentially identical to A: the WAIT hold, the right pan through Diemell, the pink sign and the arcade, then the start of the reverse pan back to Diemell. At about frame 49-50 the 'Diemell' sign morphs into a doubled 'Pitemall/Primemall' signage on the same pink block. A dark triangular roof fragment grafts onto that block, so the Diemell and Primemall identities merge. As the leftward pan continues (frames ~60-70), a different brown building appears instead of the original Primemall. It carries garbled 'Dunno/Dinno' and 'Prientgrall' text, a large white umbrella and a different roof geometry. The lighting also shifts from bright sun to dim, overcast tones. Frames ~70-78 settle on this new building. The original Primemall facade (two-peaked roof, glass entrance corner, kiosk) never returns.",
+        "failure_classification": "Memory/consistency failure (forgetting and hallucinated replacement), not a camera-control failure. The leftward rotation does occur, but the scene content mutates mid-return: sign morphing, building fusion and a lighting change. The endpoint is a new place, so whether the yaw returned to the start cannot be confirmed visually."
+      },
+      "preference": "A",
+      "confidence": "high",
+      "reasoning": "Both videos share the same outbound trajectory and the same hallucinated intermediate scenery. They diverge only on the return. A retraces the outbound landmarks in reverse order and lands back on a recognizably identical Primemall: same sign text, roof geometry, cladding and entrance details. Its only flaws are a modest framing offset and an added foreground umbrella, reached through continuous motion rather than a reset. B's return corrupts the scene: the Diemell sign morphs into doubled Primemall text, buildings fuse, lighting abruptly darkens, and the video ends on a new 'Dinno' building rather than the start. B's camera does move as commanded; its failure is scene memory, not control."
+    }
+  },
+  "context34": {
+    "endpoint_psnr_db": 9.117388865606936,
+    "video_sha256": "c645e05b61b972d0348162a6b37ca60472684a93cef15cff54d231c1c637a83b",
+    "endpoint_dino_cosine": 0.848051905632019
+  },
+  "candidate_wall_s": 140.0148619,
+  "candidate_peak_allocated_bytes": 99917301760,
+  "warmed_suffix_s": {
+    "stock": 37.58085155999997,
+    "context34": 40.70247226400002
+  }
+}

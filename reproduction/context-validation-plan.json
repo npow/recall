@@ -1,0 +1,36 @@
+{
+  "scope": "Predeclared small validation of fixed cache34; not PlayWorld or published-score reproduction",
+  "path": "turn_return",
+  "settings_frozen": {
+    "local_attn_size": 34,
+    "sink_size": 6,
+    "all_other_settings": "native stock"
+  },
+  "cases": [
+    {
+      "task_id": "GC007",
+      "seed": 43,
+      "partition": "development",
+      "reason": "new seed on pilot scene"
+    },
+    {
+      "task_id": "GC004",
+      "seed": 42,
+      "partition": "development",
+      "reason": "different outdoor scene: windmill"
+    },
+    {
+      "task_id": "GC002",
+      "seed": 42,
+      "partition": "held_out",
+      "reason": "unseen indoor scene from frozen image split"
+    }
+  ],
+  "selection_policy": "No cache-size tuning on these cases. Report all pairs including failures. Held-out case is a fixed-path mechanism test, not final adaptive benchmark.",
+  "success_criteria": [
+    "Complete native camera audit and pixel-identical first4 chunks in each pair",
+    "Realized pan and reversal, no freezing or abrupt reset",
+    "DINO endpoint improvement with full-video blinded visual confirmation",
+    "Report memory and warmed generation timing; cold-load total is not inference latency"
+  ]
+}

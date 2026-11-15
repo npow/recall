@@ -16,9 +16,9 @@ else:
 app = modal.App("worldsync-lingbot-roundtrip")
 
 
-@app.function(image=image, gpu="H200", cpu=8, memory=131072, timeout=1800, max_containers=1,
+@app.function(image=image, gpu="H200", cpu=8, memory=131072, timeout=1800, max_containers=2,
               volumes={"/cache": weights, "/results": results})
-def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18):
+def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007"):
     import shutil
     import subprocess
     import time
@@ -30,11 +30,11 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
     if not target.exists():
         target.symlink_to("/cache/14b-causal-fast")
     mode = "retrieval" if retrieval else ("stock" if cache_frames == 18 else f"context{cache_frames}")
-    identifier = f"{mode}-{path_name}-seed{seed}-{time.time_ns()}"
+    identifier = f"{mode}-{task_id}-{path_name}-seed{seed}-{time.time_ns()}"
     output = Path("/work/outputs") / identifier
     try:
         command = [sys.executable, "-u", "-m", "worldsync.lingbot_rollout", "--split", "gc",
-            "--task-id", "GC007", "--seed", str(seed), "--max-chunks", str(len(actions)),
+            "--task-id", task_id, "--seed", str(seed), "--max-chunks", str(len(actions)),
             "--native-fixed-controls", "--fixed-actions", *actions, "--output", str(output)]
         if retrieval:
             command.append("--pose-retrieval")
@@ -53,11 +53,22 @@ def generate(path_name: str = "round_trip", seed: int = 42, retrieval: bool = Fa
 
 
 @app.local_entrypoint()
-def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18):
+def main(path_name: str = "round_trip", seed: int = 42, retrieval: bool = False, cache_frames: int = 18, task_id: str = "GC007", validation: bool = False):
     if cache_frames not in {18, 34} or (retrieval and cache_frames != 18):
         raise ValueError("This declared pilot supports stock18, context34, or stock-budget retrieval")
-    result = generate.remote(path_name, seed, retrieval, cache_frames)
+    if validation:
+        plan = json.loads((ROOT / "reproduction/context-validation-plan.json").read_text())
+        jobs = [(plan["path"], case["seed"], False, cache, case["task_id"])
+                for case in plan["cases"] for cache in (18, 34)]
+        for result in generate.starmap(jobs):
+            run = result["run"]
+            output = ROOT / "outputs/lingbot-reproduction" / f"validation-{run['task_id']}-{result['mode']}-seed{run['seed']}.json"
+            output.write_text(json.dumps(result, indent=2) + "\n")
+            print(json.dumps({k: v for k, v in result.items() if k != "run"}, indent=2), flush=True)
+        return
+    result = generate.remote(path_name, seed, retrieval, cache_frames, task_id)
     mode = "retrieval" if retrieval else ("stock" if cache_frames == 18 else f"context{cache_frames}")
-    output = ROOT / "outputs/lingbot-reproduction" / f"native-{mode}-{path_name}-seed{seed}.json"
+    scene = "" if task_id == "GC007" else f"{task_id}-"
+    output = ROOT / "outputs/lingbot-reproduction" / f"native-{scene}{mode}-{path_name}-seed{seed}.json"
     output.write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({k: v for k, v in result.items() if k != "run"}, indent=2))

@@ -30,7 +30,7 @@ image = (
     .add_local_dir(ROOT / "worldsync", "/work/worldsync", ignore=["__pycache__"])
     .add_local_file(ROOT / "reproduction/lingbot-weights.json", "/work/reproduction/lingbot-weights.json")
     .add_local_file(ROOT / "external/PlayWorld/data/gc/data.json", "/work/external/PlayWorld/data/gc/data.json")
-    .add_local_file(ROOT / "external/PlayWorld/data/gc/images/GC007.jpg", "/work/external/PlayWorld/data/gc/images/GC007.jpg")
+    .add_local_dir(ROOT / "external/PlayWorld/data/gc/images", "/work/external/PlayWorld/data/gc/images")
 )
 
 
