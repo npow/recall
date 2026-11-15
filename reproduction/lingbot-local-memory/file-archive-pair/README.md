@@ -24,3 +24,5 @@ python scripts/report_lingbot_thor_pair.py BASELINE_OUTPUT FILE4_OUTPUT
 ```
 
 The supervisor checks an idle local GPU, fresh MemAvailable, at least 25GB free disk for the file candidate, and an 87.61GB application estimate plus 16GiB reserve. It terminates only its own child if the physical reserve is breached. The file bank is an isolated prototype; normal rollout defaults are unchanged. Full videos, manifests, logs and both memory/IO monitors are retained here. The 19.8GB feature files remain in ignored local outputs and are not committed.
+
+The raw baseline result.scope retains the old two-chunk smoke label from the harness version loaded at launch. Its episode field is baseline, and the actual run records max_chunks=13, thirteen chunk hashes and205 generated frames. The raw artifact is preserved unchanged; the measured episode was complete.

@@ -28,6 +28,7 @@ def main():
         report['runs'][arm] = {k: v for k, v in result.items() if k not in ['run', 'events']}
         report['runs'][arm]['supervisor'] = json.loads((source / 'supervisor.json').read_text())
     candidate, baseline = runs['file4'], runs['baseline']
+    report['instrumentation_note'] = 'Baseline result.scope may retain the legacy two-chunk smoke label; actual complete episode length is checked from all13 chunk records.'
     report['complete_13_chunks'] = all(r.get('status') == 'completed' and len(r.get('chunks', [])) == 13 for r in runs.values())
     fields = ['source_revision', 'checkpoint_revision', 'initial_image_sha256', 'image_caption_sha256', 'task_id', 'split', 'seed', 'turn_degrees_per_second', 'fps', 'max_chunks', 'fixed_actions', 'hardware', 'attention_backend', 'sampler_timesteps_index', 'sample_shift', 'local_attn_size', 'sink_size']
     report['native_camera_audits_pass'] = all(len(r.get('camera_embedding_audit', [])) == 13 and all(x['within_tolerance'] for x in r['camera_embedding_audit']) for r in runs.values())
