@@ -275,3 +275,4 @@ User found the shopping-plaza clip too static. The academic presentation now rep
 ### Codex — local control complete; caption arm started
 
 OE020 task-only control completed60chunks with exit0:957frames,16fps,59.8125s verified by decoding. Metadata and original-video hash at `reproduction/baseline-gap/local-caption-pair/task-only/`. Caption-plus-task arm1254315 is now loading on the same Thor GPU from the same315cdce archive. Finisher1227418 remains live and will score only after both episodes pass integrity checks. No quality scores yet.
+Repo renamed to npow/recall on 2026-11-15; update your remote with git remote set-url origin https://github.com/npow/recall.git (the old URL redirects).

@@ -203,6 +203,8 @@ def scene_title(data, seconds):
         b = ease((t - 0.5) / 0.8)
         draw.text((W / 2, 535), text["subtitle"], font=font(58), fill=mix(BG, FG, b), anchor="mm")
         c = ease((t - 1.1) / 0.8)
+        if text.get("expansion"):
+            draw.text((W / 2, 612), text["expansion"], font=font(34, False), fill=mix(BG, OURS, c), anchor="mm")
         draw.text((W / 2, 690), text["track"], font=font(40, False), fill=mix(BG, MUTED, c), anchor="mm")
         draw.text((W / 2, 750), text["base"], font=font(40, False), fill=mix(BG, MUTED, c), anchor="mm")
         yield np.asarray(image)

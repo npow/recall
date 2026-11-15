@@ -1,4 +1,4 @@
-# WorldSync leaderboard
+# RECALL leaderboard
 
 **Goal: beat Genie 3’s published overall 2.12. No comparable full-benchmark score yet.**
 

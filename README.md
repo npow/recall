@@ -1,4 +1,6 @@
-# WorldSync
+# RECALL
+
+*Retrieval of Earlier Camera views for Long-horizon Lookback* · Track 4 (World Models): how long can a generated world hold together while an agent plays in it? A training-free episodic memory for LingBot-World2.
 
 **[Demo: results, figures and side-by-side videos](docs/DEMO.md)** · [Experiment leaderboard](LEADERBOARD.md) · [Method overview](METHOD.md) · [Detailed memory methods](docs/METHOD.md) · [Side-by-side gallery](docs/GALLERY.md) · [Machine-readable results](leaderboard.json)
 

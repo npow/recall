@@ -1,4 +1,4 @@
-# WorldSync demo: making a generated world remember where it has been
+# RECALL demo: making a generated world remember where it has been
 
 **Track 4 question: how long can a generated world hold together while an agent plays in it?**
 

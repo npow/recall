@@ -1,6 +1,6 @@
 # How the memory methods work, and what the evidence says
 
-Track 4 question: how long can a generated world hold together while an agent plays in it?
+RECALL (Retrieval of Earlier Camera views for Long-horizon Lookback) is our memory for this model. Track 4 question: how long can a generated world hold together while an agent plays in it?
 Base model: **LingBot-World2 14B causal-fast** (open, Wan2.2-based, distilled 4-step causal video DiT with a KV cache).
 No training from scratch. Numbers live in [LEADERBOARD.md](../LEADERBOARD.md); this note explains the mechanisms.
 Nothing here is a full-benchmark PlayWorld score unless the leaderboard says so.

@@ -1,6 +1,6 @@
 # Plain-language explainer: what we built and what happened
 
-For the presenter. Every term used in the video and slides is defined here. Numbers are from
+For the presenter. The project is called RECALL (Retrieval of Earlier Camera views for Long-horizon Lookback); the code package is still named `worldsync`. Every term used in the video and slides is defined here. Numbers are from
 [LEADERBOARD.md](../LEADERBOARD.md); method details are in [METHOD.md](METHOD.md).
 
 ## 1. The model and why it forgets

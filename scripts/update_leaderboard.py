@@ -315,7 +315,7 @@ def generate():
                 "gemini_local_cohorts": cohorts, "historical_claude_cohorts": historical,
                 "comparability": "Subset scores are not comparable to published four-dimension overall. Methods only compared within the same cohort/judge. Gemini model alias, player and adapter differences remain documented."}
     (ROOT / "leaderboard.json").write_text(json.dumps(snapshot, indent=2) + "\n")
-    lines = ["# WorldSync leaderboard", "",
+    lines = ["# RECALL leaderboard", "",
         "**Goal: beat Genie 3’s published overall 2.12. No comparable full-benchmark score yet.**", "",
         "Compare methods only within the same table/cohort and judge. A higher subset score does not beat the published record.", "", "Method and evidence: [METHOD.md](METHOD.md).", "",
         "## Published references — not reproduced here", "",

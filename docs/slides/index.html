@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WorldSync slides</title>
+<title>RECALL slides</title>
 <style>
 :root{
   --bg:#0b0e13; --panel:#151a22; --line:#2a3240; --text:#e8ecf2; --dim:#9aa4b2; --faint:#6b7585;
@@ -88,15 +88,16 @@ svg text{font-family:inherit}
   <!-- 1 -->
   <section class="slide" data-sec="">
     <div style="margin-top:150px">
-      <h1>WorldSync</h1>
+      <h1>RECALL</h1>
+      <p style="font-size:34px;color:var(--dim);margin:-6px 0 26px">Retrieval of Earlier Camera views for Long-horizon Lookback</p>
       <p style="font-size:56px;font-weight:650;margin-bottom:36px">Training-free episodic memory for an open world model</p>
       <p class="sub">How long can a generated world hold together while an agent plays in it?</p>
     </div>
     <div class="foot">
       <p class="small">Track 4 · World Models &nbsp;·&nbsp; base model: LingBot-World2 14B (open weights) &nbsp;·&nbsp; benchmark: PlayWorld</p>
-      <p class="tiny">github.com/npow/worldsync</p>
+      <p class="tiny">github.com/npow/recall</p>
     </div>
-    <aside class="notes">We took an open world model and asked the track's question: how long does the generated world hold together. We added a memory that needs no training, measured it on PlayWorld, and we report both what worked and what did not.</aside>
+    <aside class="notes">This is RECALL. We took an open world model and asked the track's question: how long does the generated world hold together. We added a memory that needs no training, measured it on PlayWorld, and we report both what worked and what did not.</aside>
   </section>
 
   <!-- 2 -->
@@ -429,7 +430,7 @@ svg text{font-family:inherit}
     </div>
     <ul style="margin-top:14px">
       <li class="small">AI agents wrote the code and ran every step; a separate AI agent, not the one that wrote the code, audited it. A human set the goals and budget and made key calls (including the store-the-frame idea).</li>
-      <li class="small">Every run: pass criterion pre-registered, configuration frozen and committed first; per-episode scores and logs in the repo (github.com/npow/worldsync, reproduction/). Negative results are kept and reported.</li>
+      <li class="small">Every run: pass criterion pre-registered, configuration frozen and committed first; per-episode scores and logs in the repo (github.com/npow/recall, reproduction/). Negative results are kept and reported.</li>
     </ul>
     <aside class="notes">The research itself ran as an autoresearch loop, and AI agents did the work: one agent proposed a method, agents ran the experiments on cloud GPUs, a separate AI agent, not the one that wrote the code, audited the code and the results, then diagnosis, fix, and re-test. A human set the goals and the budget and made a few key calls, including the idea of storing the frame and recomputing. Watch the highlight go around the ring. In lap one, the first design gave no gain on the full benchmark, the audit found three bugs and two design flaws, and the memory was rebuilt, with two hundred times less storage and without the harm. Lap two re-tested it on thirty-six real tasks: not better, and we reported that. At the centre is past.dev, a long-term memory for the agents: the agents recall past findings before proposing the next experiment, and store each result. Every run had a pre-registered criterion and a frozen configuration, with logs in the repo.</aside>
   </section>
@@ -451,7 +452,7 @@ svg text{font-family:inherit}
         <p class="small" style="margin:0">Honest negative: no gain on PlayWorld's own short tasks</p>
       </div></div>
     </div>
-    <div class="foot"><p style="font-size:44px;font-weight:750;margin:0">github.com/npow/worldsync</p><p class="small" style="margin:6px 0 0">Built in two days · every number in these slides traces to a file in the repo</p></div>
+    <div class="foot"><p style="font-size:44px;font-weight:750;margin:0">github.com/npow/recall</p><p class="small" style="margin:6px 0 0">Built in two days · every number in these slides traces to a file in the repo</p></div>
     <aside class="notes">Next steps: train a small memory layer so the model learns to use retrieved views, retrieve by what is actually visible, and test on longer tasks where memory matters. To sum up: a clear gain in judged consistency after looking away, a memory two hundred times smaller than the obvious design, a reproduced baseline, and an honest negative result on the benchmark's own short tasks. Thank you.</aside>
   </section>
 
