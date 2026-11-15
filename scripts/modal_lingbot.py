@@ -204,13 +204,24 @@ class WarmWorker:
         argv = ["--data-root", f"{PROJECT}/external/PlayWorld/data", "--split", split, "--task-id", task,
                 "--max-chunks", str(60 if split == "insight" else 40), "--seed", str(seed), "--output", str(out), *extra]
         started, error, report = time.monotonic(), None, None
-        try:
-            report = lingbot_rollout.main(argv, runtime=self.runtime)
-        except SystemExit as request:
-            error = f"rollout rejected the job (exit {request.code})"
-        except BaseException as failure:  # keep the container alive for the next case
-            error = f"{type(failure).__name__}: {failure}"
-        summary = {"case": case, "seed": seed, "extra": list(extra), "error": error, "seconds": round(time.monotonic() - started, 1),
+        import shutil
+        for attempt in range(1, 4):  # transient player/API errors and OOMs are retried; failures stay recorded
+            error, report = None, None
+            if out.exists():
+                shutil.rmtree(out)
+            try:
+                report = lingbot_rollout.main(argv, runtime=self.runtime)
+                if (report or {}).get("status") == "completed":
+                    break
+                error = f"incomplete run: {(report or {}).get('status')}"
+            except SystemExit as request:
+                error = f"rollout rejected the job (exit {request.code})"
+                break  # a rejected argument will not fix itself
+            except BaseException as failure:  # keep the container alive for the next case
+                error = f"{type(failure).__name__}: {failure}"
+            self.runtime.between_jobs()
+            time.sleep(20)
+        summary = {"case": case, "seed": seed, "extra": list(extra), "error": error, "seconds": round(time.monotonic() - started, 1), "attempts": attempt,
                    "status": (report or {}).get("status"), "chunks": len((report or {}).get("chunks", [])),
                    "termination": (report or {}).get("termination")}
         (out.parent / f"{split}-{task}-summary.json").write_text(json.dumps(summary, indent=2) + "\n")
