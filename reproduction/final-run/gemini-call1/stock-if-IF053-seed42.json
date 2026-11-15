@@ -1,0 +1,121 @@
+{
+  "task_id": "IF053",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "3c92664b603fc44bd93df2f645e549a7108f0549bfdc51ade02112e8cda4cd03",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF053",
+    "perspective": "third-person",
+    "verdict": "fail",
+    "instruction_following_score": 0,
+    "meaningful_requested_trajectory_progress": "no",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "视频开始时男子蹲在地上，随后镜头拉近并切换到火堆的特写，接着镜头向前移动穿过缝隙，最后看到一个男子在远处向前走。男子站起来的动作并未出现。",
+    "trajectory_evidence_zh": "第0-5帧男子蹲着；第6-10帧镜头拉近到男子背部；第11-33帧镜头切换并显示火堆，随后镜头向前推进；第34-38帧在远处出现一个向前走的男子。",
+    "failure_reason_zh": "视频中没有展示男子站起来的动作，镜头发生了切换并变成了向前推进的视角，未能完成指令要求的动作轨迹。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": null,
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4684,
+      "output_tokens": 268
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "138aec06468ab59def5ca0e5d68ed2b876db1340eb77a437a541a96d0b2b3ccd",
+  "rubric_skipped": "trajectory failed; aggregate score is 1",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "stock-if-IF053-seed42"
+}

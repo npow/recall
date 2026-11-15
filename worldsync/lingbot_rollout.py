@@ -46,6 +46,18 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
     parser.add_argument("--turn-clamp", choices=["off", "plan"], default="off",
         help="plan: limit commanded yaw to the range implied by the reference plan's Left/Right holds (50 deg/s pacing); "
              "the last turning chunk is shortened to land exactly on the limit")
+    parser.add_argument("--director", choices=["off", "static", "perchunk", "unseen"], default="off",
+        help="EXPERIMENTAL (worldsync/lingbot_director.py): an LLM writes the world-model text from the caption, task "
+             "objective, reference plan, elapsed time and commanded camera state only (never rubric text)")
+    parser.add_argument("--director-interval", type=int, default=4, help="chunks between director refreshes (perchunk/unseen)")
+    parser.add_argument("--director-model", default="claude-haiku-4-5-20251001")
+    parser.add_argument("--director-text-file", type=Path, help="use committed preset director texts instead of LLM calls")
+    parser.add_argument("--nag", action="store_true",
+        help="EXPERIMENTAL (worldsync/lingbot_nag.py): Normalized Attention Guidance with a negative prompt in cross-attention")
+    parser.add_argument("--nag-scale", type=float, default=8.0)
+    parser.add_argument("--nag-tau", type=float, default=2.5)
+    parser.add_argument("--nag-alpha", type=float, default=0.25)
+    parser.add_argument("--nag-negative", default=None, help="negative prompt (default: a short 'static, still, frozen' list)")
     parser.add_argument("--turn-degrees-per-second", type=float, default=60)
     parser.add_argument("--adaptive-retrieval-pilot", action="store_true",
                         help="Separate GC027 adaptive protocol:30deg/s, initial neutral chunk, optional frozen four-view memory")
@@ -106,6 +118,12 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
         parser.error("turn clamping is locked until hillclimbing is unlocked")
     if args.text_prompt != "caption" and controller_profile is None and not lingbot_tuning.hillclimb_unlocked():
         parser.error("non-default world-model text is locked until hillclimbing is unlocked")
+    if args.director != "off" and not lingbot_tuning.hillclimb_unlocked():
+        parser.error("the text director is locked until hillclimbing is unlocked")
+    if args.nag and not lingbot_tuning.hillclimb_unlocked():
+        parser.error("NAG is locked until hillclimbing is unlocked")
+    if args.director != "off" and args.fixed_actions and args.native_fixed_controls:
+        parser.error("the text director is not supported with native fixed controls")
     if not 0 < args.turn_degrees_per_second <= 90:
         parser.error("turn rate must be in (0,90] degrees per second")
     if (args.turn_degrees_per_second != 60 and not args.native_fixed_controls
@@ -156,7 +174,7 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
     report = {"status": "prepared", "model": "LingBot-World2 14B causal-fast stock", "protocol_id": lingbot_adaptive_pilot.PROTOCOL if args.adaptive_retrieval_pilot else PROTOCOL_ID,
         "source_revision": revision, "checkpoint_revision": WEIGHT_REVISION,
         "initial_image_sha256": hashlib.sha256(initial.read_bytes()).hexdigest(),
-        "text_prompt_mode": args.text_prompt, "image_caption_sha256": hashlib.sha256(task["image_caption"].encode()).hexdigest(), "task_id": args.task_id,
+        "text_prompt_mode": args.text_prompt, "director_mode": args.director, "image_caption_sha256": hashlib.sha256(task["image_caption"].encode()).hexdigest(), "task_id": args.task_id,
         "split": args.split, "seed": args.seed, "turn_degrees_per_second": args.turn_degrees_per_second, "fps": 16, "max_chunks": maximum, "max_interactions": 40,
         "native_fixed_controls": args.native_fixed_controls, "camera_embedding_audit": [],
         "pose_retrieval": args.pose_retrieval, "sink_rephase": args.rephase_sink,
@@ -234,10 +252,20 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
     from wan.utils.cam_utils import compute_relative_poses, get_plucker_embeddings, get_Ks_transformed
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
     client = None
-    if (not stationary or controller_profile is not None) and not args.fixed_actions:
+    if (((not stationary or controller_profile is not None) and not args.fixed_actions)
+            or (args.director != "off" and not args.director_text_file)):
         from anthropic import Anthropic
         load_local_credentials()
         client = Anthropic(timeout=180, max_retries=2, default_headers={"Accept-Encoding": "identity"})
+    director = None
+    director_context = None
+    if args.director != "off":
+        from worldsync.lingbot_director import Director, PresetDirector
+        director = (PresetDirector(args.director_text_file, args.split, args.task_id, args.director) if args.director_text_file
+                    else Director(client, task, args.director, model=args.director_model, interval=args.director_interval))
+        report["deviations"].append(f"EXPERIMENTAL text director mode {args.director} (worldsync/lingbot_director.py): "
+                                    "LLM-written world-model text; not the released PlayWorld text protocol")
+        report["model"] = "LingBot-World2 14B causal-fast stock weights + text director (non-stock protocol)"
     controls = output / "controls"
     controls.mkdir()
     np.save(controls / "poses.npy", np.repeat(np.eye(4, dtype=np.float32)[None], frames, axis=0))
@@ -254,6 +282,7 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
     save()
     handles = []
     memory = None
+    nag = None
     pending_player = None
     native_ray_builder = None
     native_rays = {}
@@ -282,6 +311,13 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
             report["memory_reader"] = lingbot_memory_reader.load(pipeline.model, args.memory_reader)
             report["model"] = "LingBot-World2 14B causal-fast + learned memory reader (non-stock)"
             save()
+        if args.nag:
+            from worldsync.lingbot_nag import NAG, DEFAULT_NEGATIVE
+            nag = NAG(pipeline, negative=args.nag_negative or DEFAULT_NEGATIVE, scale=args.nag_scale,
+                      tau=args.nag_tau, alpha=args.nag_alpha).install()
+            report["deviations"].append("EXPERIMENTAL Normalized Attention Guidance in cross-attention (worldsync/lingbot_nag.py)")
+            report["model"] = "LingBot-World2 14B causal-fast stock weights + NAG (non-stock inference)"
+            report["nag"] = nag.metadata()
         stream = NativeVaeStream(pipeline.vae)
         from worldsync.lingbot_controls import plan_yaw_limits
         yaw_limits = plan_yaw_limits(task) if args.turn_clamp == "plan" else None
@@ -316,11 +352,13 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
         current_chunk = -1
         latest = initial
         def before(model, positional, kwargs):
-            nonlocal current_chunk, pending_player
+            nonlocal current_chunk, pending_player, director_context
             if memory:
                 memory.clean = float(kwargs["t"].flatten()[0]) == 0
             index = int(kwargs["current_start"]) // (4 * int(kwargs["frame_seqlen"]))
             if index == current_chunk:
+                if director_context is not None:
+                    kwargs["context"] = director_context
                 return
             if index >= maximum or (simulation_chunk_budget is None and not stationary and index >= 40):
                 report["termination"] = "budget_exhausted"
@@ -413,6 +451,24 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
             # calls for this chunk. Only its external camera input is replaced.
             if not args.native_fixed_controls:
                 kwargs["dit_cond_dict"]["c2ws_plucker_emb"] = [embedding]
+            if director is not None and args.director != "static":
+                # Per-chunk text: re-encode only when the director changed it, then rebuild the cross-attention
+                # K/V cache exactly as upstream does on the first call of a generate().
+                text, changed = director.for_chunk(index, decision["action"], camera.commanded_state(),
+                                                   max(0.0, index - 0.1875) if index else 0.0)
+                if changed:
+                    # Encode at the chunk boundary; with --offload-text-encoder the encoder returns to the CPU
+                    # straight away so the 80 GB cards keep their headroom during denoising.
+                    pipeline.text_encoder.model.to(pipeline.device)
+                    encoded = pipeline.text_encoder([text], pipeline.device)
+                    director_context = [encoded[0].to(pipeline.device)]
+                    if args.offload_text_encoder:
+                        pipeline.text_encoder.model.cpu()
+                        torch.cuda.empty_cache()
+                    kwargs["cross_attn_first_call"] = True
+                if director_context is not None:
+                    kwargs["context"] = director_context
+                report["director"] = director.metadata()
             current_chunk = index
         def after(model, positional, kwargs, result):
             nonlocal latest, pending_player
@@ -461,6 +517,11 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
                    pipeline.model.register_forward_hook(after, with_kwargs=True)]
         world_text = {"caption": task["image_caption"], "prompt": task["prompt"],
                       "both": f"{task['image_caption']} {task['prompt']}"}[args.text_prompt]
+        if director is not None:
+            world_text = director.initial()  # replaces the static text; later chunks may refresh it
+            report["director"] = director.metadata()
+            report["world_text_sha256"] = hashlib.sha256(world_text.encode()).hexdigest()
+            save()
         pipeline.generate(world_text, Image.open(initial).convert("RGB"),
             action_path=str(controls), chunk_size=4, max_area=480 * 832, frame_num=frames,
             shift=schedule["shift"], timesteps_index=schedule["timesteps_index"], seed=args.seed, offload_model=False)
@@ -479,6 +540,9 @@ def main(argv=None, runtime=None, player_decide=None, simulation_chunk_budget=No
             upstream.get_plucker_embeddings = native_ray_builder
         if memory:
             memory.close()
+        if nag is not None:
+            report["nag"] = nag.metadata()
+            nag.uninstall()
         for handle in handles:
             handle.remove()
         report["elapsed_s"] = time.monotonic() - started

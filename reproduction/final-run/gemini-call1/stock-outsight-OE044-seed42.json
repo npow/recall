@@ -1,0 +1,431 @@
+{
+  "task_id": "OE044",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "aadf3140a4f8a20e09adcc5425d7b9139e1909cfbe637c7181ec80e5e9048cf1",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE044",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头向右转动，人物向左移出画面；随后镜头向左转回，人物重新回到画面中央；镜头保持静止一段时间后，向左转动，人物向右移出画面并出现窗户；最后镜头向右转回，人物再次回到画面中央。",
+    "trajectory_evidence_zh": "第10-25帧，镜头向右平移，人物向左移出画面；第25-40帧，镜头向左平移，人物回到画面中央；第40-60帧，镜头保持静止；第60-75帧，镜头向左平移，人物向右移出画面，视野中出现窗户；第80-95帧，镜头向右平移，人物再次回到画面中央，完成所有要求的轨迹。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 3.25,
+    "final_score_1_to_5": 3,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "人物、黄色上衣、黑柄刀、橙色盘子、黄瓜片和绿色橱柜在整个视频和多次相机运动中保持了高度的身份和外观一致性，没有出现变形或消失。"
+      },
+      "hidden_state_progression": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "在第一次相机移开期间，人物的姿势从切番茄变为拿着一块番茄，显示了合理的隐藏进展；但在第二次移开期间，人物的动作和番茄状态没有发生有意义的变化。"
+      },
+      "revealed_state_difference": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "第一次相机返回时，展示了番茄变小和手部姿势改变的合理后续状态；但第二次返回时，番茄和盘子的状态与离开前几乎完全相同，缺乏应有的状态差异。"
+      },
+      "process_accumulation": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "尽管在第一次相机移动后番茄的体积有所减小，但在整个持续的切割过程中，盘子里始终没有增加新的番茄片，切割动作未能产生合理的积累结果。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "The video does not end in a static state; the person is still actively moving the knife at the end of the video.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 100,
+      "evidence_zh": "相机完成了向右旋转并返回，等待了一段时间后，又完成了向左旋转并返回的动作序列。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "相机向右和向左旋转时，背景中的绿色橱柜、台面和窗户保持了良好的结构和空间一致性。",
+      "post_completion_phase_zh": "动作完成后，背景依然保持稳定，没有出现扭曲或突变。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial orange plate and plate revealed on the left",
+        "anchors": [
+          "camera motion trajectory",
+          "kitchen counter"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "10-25",
+        "30-45",
+        "60-75",
+        "85-100"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "绿色橱柜",
+        "台面边缘"
+      ],
+      "newly_revealed_regions_zh": "相机向左旋转时（帧60-75），展示了左侧的窗户、香蕉和另一个装有番茄片的红盘子，这是一个新揭示的区域。",
+      "evidence_zh": "视频中的视角变化表现为平滑的相机水平旋转/平移，背景中的橱柜和台面边缘在移动过程中保持了几何一致性。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频中的视角切换均由连续的相机运动解释，没有出现无支撑的硬重置或物体瞬移。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "视频在完成提示要求的相机运动后，没有出现多余的破坏性运动或明显的画面崩坏。"
+    },
+    "final_state_check": {
+      "window": "110-118",
+      "visible_key_objects": [
+        "person in pale yellow top",
+        "black-handled knife",
+        "orange-red plate",
+        "tomato",
+        "cucumber slices",
+        "dark green cabinets"
+      ],
+      "reappearance_consistency_zh": "经过两次相机旋转后，人物、黄色上衣、黑柄刀、橙色盘子、黄瓜片和绿色橱柜在最终画面中一致地重新出现，位置和外观保持稳定。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "partial",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "yes",
+      "evolution_quality_level_1_to_5": 3,
+      "named_process": "切番茄",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "第一次离开视线前，人物正在切一个完整的番茄；第二次离开视线前，人物正在切变小后的番茄。",
+      "hidden_interval_zh": "第一次隐藏期间，人物的姿势发生了变化，番茄变小；第二次隐藏期间，切番茄的动作似乎没有产生实际进展。",
+      "reappeared_state_zh": "第一次返回时，人物手里拿着一块番茄，砧板上的番茄变小；第二次返回时，人物的姿势和番茄的状态与离开前几乎没有变化。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "unfinished_tool_action",
+      "support_and_pose_evidence_zh": "视频结束时，人物仍在进行切番茄的动作，没有达到完成或静止的状态。",
+      "terminal_state_reasoning_zh": "切割过程仍在进行中，未达到自然的结束状态。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "diagnostic explanation only; no separate final-score deduction",
+      "camera_independent_subject_motion": "yes",
+      "stable_world_anchors_compared": [
+        "橙色盘子",
+        "绿色橱柜"
+      ],
+      "articulation_or_local_state_change_zh": "第一次返回时，人物的手部姿势从切番茄变为拿着一块番茄，且盘子中的番茄体积变小。",
+      "uniquely_matched_anchor_relative_change_zh": "相对于橙色盘子，番茄的形状和人物手部的位置发生了变化。",
+      "two_independent_motion_evidence_requirements_met": "yes",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "人物的手部姿势和番茄的体积发生了变化。",
+      "unchanged_coupled_details_zh": "第二次返回时，人物的姿势和番茄的状态与离开前几乎完全相同，表现出一定的停滞。",
+      "accumulated_change_zh": "整个过程中，番茄的体积在第一次相机移动后变小，但盘子中始终没有增加新的番茄片，切割动作未能产生持续的积累结果。",
+      "evidence_zh": "视频展示了切番茄的动作，并在第一次相机移动后呈现了番茄变小的状态，但后续的切割动作未能产生新的番茄片，积累过程停滞。",
+      "final_score_cap_applied": 3
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "partial",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "partial",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "相机向右旋转了一定角度后返回，然后向左旋转了一定角度后返回。",
+      "trajectory_evidence_zh": "视频中相机首先向右平移/旋转，展示了右侧的橱柜和台面，然后返回原位；接着向左平移/旋转，展示了左侧的窗户和另一个盘子，最后再次返回原位。虽然旋转角度未达到提示要求的180度和90度，但执行了有意义的轨迹片段。",
+      "failure_reason_zh": "相机的旋转角度明显未达到提示中要求的180度和90度。"
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "yes",
+      "action_type": "cutting",
+      "tool_and_target": "刀和番茄",
+      "persistent_result_created": "partial",
+      "result_recognizable_and_intentional": "partial",
+      "tool_contact_causes_local_change": "partial",
+      "action_result_temporally_coherent": "partial",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "no",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 3,
+      "evidence_zh": "人物使用刀切番茄，第一次相机移动后番茄体积变小，显示了部分切割结果；但整个过程中盘子里没有增加新的番茄片，切割动作未能产生持续、连贯的积累结果。"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "partial",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "yes",
+      "evidence_zh": "相机执行了左右旋转的动作，但切番茄的动作在后期陷入了无效的重复，未能产生新的番茄片。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "partial",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "人物在整个视频中持续进行切番茄的动作。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "person, knife, plate, tomato, cucumber slices",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "clothing",
+        "persistent_equipment",
+        "colors",
+        "materials",
+        "textures",
+        "surface_appearance"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "人物的黄色上衣、黑柄刀、橙色盘子、黄瓜片和绿色橱柜在整个视频中保持了高度的身份和外观一致性，没有出现颜色漂移或纹理突变。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 3,
+      "meaningful_motion_or_evolution": "partial",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": 3,
+      "evidence_zh": "视频展示了部分有意义的演变（番茄变小），因此身份一致性可以正常计入评分，但最终得分受限于演变质量上限。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 3,
+      "interaction_opportunity_reached": "yes",
+      "physical_response_observed": "partial",
+      "core_failure_zh": "切割动作未能产生持续的积累结果（没有新的番茄片）。",
+      "positive_evidence_zh": "人物与番茄之间有合理的物理接触，且在第一次相机移动后番茄体积变小。",
+      "evidence_zh": "人物持续进行切番茄的动作，但除了第一次相机移动后番茄变小外，后续的切割未能产生新的番茄片，积累过程停滞。",
+      "final_score_cap_applied": 3
+    },
+    "summary_zh": "视频较好地保持了人物、盘子和背景的身份一致性，并执行了相机的左右旋转动作，但在视线移开期间，切番茄的动作仅在第一次返回时表现出番茄变小的部分进展，整个过程中未能产生新的番茄片，积累过程停滞。",
+    "task_id": "OE044"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 9610,
+      "output_tokens": 302
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 35482,
+      "output_tokens": 3981
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 119,
+      "sheets_count": 5,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 11.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 118,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 11.8,
+          "filled_cells": 19
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 6,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 10.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 5,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 10.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "5a93968a3a92145efb32a5ce820b6e8a6b07243a313faf02ef2e0813ad74d7f7",
+  "score_prompt_sha256": "3ad5675e3fc967d4788a7f7ae3b553f3b711205dd477d6355d917f53fd76389f",
+  "scores": {
+    "official": 3.0,
+    "final_score": 3.0
+  },
+  "episode_id": "stock-outsight-OE044-seed42"
+}

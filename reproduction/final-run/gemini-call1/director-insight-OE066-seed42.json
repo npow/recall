@@ -1,0 +1,625 @@
+{
+  "task_id": "OE066",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "54f6f6b170da031b22fc09ac5aa2d0e50ad3ff89baff473306bbe5b53f8cc2c7",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "verdict": "not_applicable",
+    "instruction_following_score": null
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 2.2,
+    "final_score_1_to_5": 2,
+    "category_scores_1_to_5": {
+      "insight_evolution": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "奶油在最初约3秒内有微小的堆积，但在随后的50多秒内，尽管手部持续进行挤压和抖动，奶油的堆积状态完全停滞，未能持续涌出并累积。"
+      },
+      "prompt_evolution_alignment": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "场景未能实现合理的演进，长达一分钟的持续挤压理应导致奶油大量堆积或溢出，但视频中的过程几乎立即陷入停滞，不符合物理常理。"
+      },
+      "subject_identity": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "手、挤花袋和面点在形态上保持了一致，但整个画面的色调在视频过程中出现了严重的、无支撑的漂移，从最初的暖黄色逐渐变成了冷蓝色。"
+      },
+      "temporal_scene_consistency": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "持续的挤压动作未能产生相应的累积结果，后续挤出的奶油似乎凭空消失，未能保持动作与结果在时间上的连贯性。"
+      },
+      "physical_causality": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "物理因果关系失效，手部对挤花袋的持续施压在最初几秒后未能促使奶油继续被挤出并堆叠成型，动作与物理反馈脱节。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail; the hands continue to jitter and squeeze throughout the video, but the productive process stagnates.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 0,
+      "evidence_zh": "视频是一个开放式观察任务，没有特定的离散动作需要完成，持续观察即可。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景中的烤盘和面点在整个过程中保持相对稳定，没有出现明显的结构性突变。",
+      "post_completion_phase_zh": "背景在后续观察中保持稳定，但整体色调发生了漂移。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "画面中心的挤花袋和面点",
+        "anchors": [
+          "画面中心位置",
+          "手部握持姿势"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-598"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "烤盘边缘",
+        "排列的面点"
+      ],
+      "newly_revealed_regions_zh": "无明显新区域展现，镜头保持固定特写。",
+      "evidence_zh": "镜头基本保持固定，只有极其轻微的呼吸感晃动，没有复杂的相机运动。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "uncertain",
+      "persistent_anchor_contradiction": "uncertain",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频连续播放，没有发现硬切或重置现象。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "视频为持续观察任务，没有超出预期的额外动作导致扣分。"
+    },
+    "final_state_check": {
+      "window": "575-598",
+      "visible_key_objects": [
+        "手",
+        "挤花袋",
+        "面点",
+        "烤盘"
+      ],
+      "reappearance_consistency_zh": "物体始终在视野内，未发生遮挡后重现的不一致。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "in_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "yes",
+      "evolution_quality_level_1_to_5": 2,
+      "named_process": "挤花袋挤出奶油并在面点中不断堆积",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "视频全程手部都在持续抖动和挤压，没有进入静止状态。",
+      "terminal_state_reasoning_zh": "视频没有静止尾部，动作一直在持续但无效。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无静止尾部。",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "奶油在最初几秒有极少量的堆积，随后在长达50多秒的时间里，尽管手部持续挤压，奶油堆积状态完全停滞，没有任何实质性的体积增加。",
+      "evidence_zh": "手部持续进行挤压的重复动作，但未能产生相应的奶油堆积效果，属于无效的重复动作。",
+      "final_score_cap_applied": 2
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "yes",
+      "action_type": "other",
+      "tool_and_target": "挤花袋和面点壳",
+      "persistent_result_created": "partial",
+      "result_recognizable_and_intentional": "partial",
+      "tool_contact_causes_local_change": "partial",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "yes",
+      "visible_reversal_explanation": "none",
+      "productive_action_quality_level_1_to_5": 2,
+      "evidence_zh": "挤压动作在最初几秒产生了微小的奶油堆积，但随后长达50多秒的持续挤压未能使奶油继续增加，新挤出的奶油似乎凭空消失，未能形成连贯的累积结果。"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "yes",
+      "evidence_zh": "手部持续挤压但未能产生奶油堆积的实质性进展。",
+      "final_score_gate_applied": 2
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "手",
+        "挤花袋",
+        "面点",
+        "烤盘"
+      ],
+      "correspondence_anchors": [
+        "画面中心的挤花袋和面点"
+      ],
+      "visible_intervals": [
+        "0-598"
+      ],
+      "before_developing_after_checkpoints": [
+        {
+          "surface": "整个画面",
+          "before_frame": 0,
+          "developing_frame": 300,
+          "after_frame": 598,
+          "observed_change_zh": "画面整体色调从最初的暖黄色逐渐漂移为明显的冷蓝色。"
+        }
+      ],
+      "intrinsic_color_drift": "verified",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "视频在播放过程中出现了严重的、无支撑的整体色调漂移，从暖色调变成了冷蓝色。"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "主体手部在持续运动，但属于无效重复。",
+      "final_score_gate_applied": 2
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": "not_applicable"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "手和挤花袋",
+      "same_entity_throughout": "partial",
+      "stable_identity_attributes": [
+        "body_proportions",
+        "persistent_equipment"
+      ],
+      "identity_failure": "color_drift",
+      "evidence_zh": "手和挤花袋的形态保持稳定，但整体画面出现了明显的色调漂移（由暖变冷）。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 2,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 2,
+      "evidence_zh": "由于演进质量仅为2（无效重复），主体一致性无法提升最终得分上限。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 2,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "not_applicable",
+      "positive_evidence_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": 2
+    },
+    "summary_zh": "视频中的挤奶油动作在最初几秒后陷入无效的重复，尽管手部持续挤压，但奶油未能继续堆积，且画面出现了严重的整体色调漂移（由暖变冷）。",
+    "task_id": "OE066"
+  },
+  "calls": [
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 61788,
+      "output_tokens": 3677
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 599,
+      "sheets_count": 24,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 59.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 149,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 14.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 7,
+          "first_sample_index": 150,
+          "last_sample_index": 174,
+          "first_time_seconds": 15.0,
+          "last_time_seconds": 17.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 8,
+          "first_sample_index": 175,
+          "last_sample_index": 199,
+          "first_time_seconds": 17.5,
+          "last_time_seconds": 19.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 9,
+          "first_sample_index": 200,
+          "last_sample_index": 224,
+          "first_time_seconds": 20.0,
+          "last_time_seconds": 22.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 10,
+          "first_sample_index": 225,
+          "last_sample_index": 249,
+          "first_time_seconds": 22.5,
+          "last_time_seconds": 24.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 11,
+          "first_sample_index": 250,
+          "last_sample_index": 274,
+          "first_time_seconds": 25.0,
+          "last_time_seconds": 27.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 12,
+          "first_sample_index": 275,
+          "last_sample_index": 299,
+          "first_time_seconds": 27.5,
+          "last_time_seconds": 29.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 13,
+          "first_sample_index": 300,
+          "last_sample_index": 324,
+          "first_time_seconds": 30.0,
+          "last_time_seconds": 32.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 14,
+          "first_sample_index": 325,
+          "last_sample_index": 349,
+          "first_time_seconds": 32.5,
+          "last_time_seconds": 34.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 15,
+          "first_sample_index": 350,
+          "last_sample_index": 374,
+          "first_time_seconds": 35.0,
+          "last_time_seconds": 37.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 16,
+          "first_sample_index": 375,
+          "last_sample_index": 399,
+          "first_time_seconds": 37.5,
+          "last_time_seconds": 39.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 17,
+          "first_sample_index": 400,
+          "last_sample_index": 424,
+          "first_time_seconds": 40.0,
+          "last_time_seconds": 42.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 18,
+          "first_sample_index": 425,
+          "last_sample_index": 449,
+          "first_time_seconds": 42.5,
+          "last_time_seconds": 44.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 19,
+          "first_sample_index": 450,
+          "last_sample_index": 474,
+          "first_time_seconds": 45.0,
+          "last_time_seconds": 47.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 20,
+          "first_sample_index": 475,
+          "last_sample_index": 499,
+          "first_time_seconds": 47.5,
+          "last_time_seconds": 49.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 21,
+          "first_sample_index": 500,
+          "last_sample_index": 524,
+          "first_time_seconds": 50.0,
+          "last_time_seconds": 52.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 22,
+          "first_sample_index": 525,
+          "last_sample_index": 549,
+          "first_time_seconds": 52.5,
+          "last_time_seconds": 54.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 23,
+          "first_sample_index": 550,
+          "last_sample_index": 574,
+          "first_time_seconds": 55.0,
+          "last_time_seconds": 57.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 24,
+          "first_sample_index": 575,
+          "last_sample_index": 598,
+          "first_time_seconds": 57.5,
+          "last_time_seconds": 59.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 30,
+      "sheets_count": 8,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 58.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 7,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 14.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 8,
+          "last_sample_index": 11,
+          "first_time_seconds": 16.0,
+          "last_time_seconds": 22.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 12,
+          "last_sample_index": 15,
+          "first_time_seconds": 24.0,
+          "last_time_seconds": 30.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 16,
+          "last_sample_index": 19,
+          "first_time_seconds": 32.0,
+          "last_time_seconds": 38.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 20,
+          "last_sample_index": 23,
+          "first_time_seconds": 40.0,
+          "last_time_seconds": 46.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 7,
+          "first_sample_index": 24,
+          "last_sample_index": 27,
+          "first_time_seconds": 48.0,
+          "last_time_seconds": 54.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 8,
+          "first_sample_index": 28,
+          "last_sample_index": 29,
+          "first_time_seconds": 56.0,
+          "last_time_seconds": 58.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "score_prompt_sha256": "537cf89da840732c45b8dd6ec2fa60c61c60ceac6e24a38a9350e613f8cc78a1",
+  "scores": {
+    "official": 2.0,
+    "final_score": 2.0
+  },
+  "episode_id": "director-insight-OE066-seed42"
+}

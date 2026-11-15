@@ -1,0 +1,397 @@
+{
+  "task_id": "OE057",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "85d6de556982c0f917b0725bd8a719b3fab0cbc4e9ed489dc6c4b5cf15e3644b",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE057",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头向左平移，展示了桌面上的一排纸杯蛋糕和另一个人，随后镜头向右平移，回到了最初正在挤糖霜的人的视角。",
+    "trajectory_evidence_zh": "在第一张图集中（第0-24帧），镜头持续向左转动；在第二张图集中（第25-38帧），镜头开始向右转动，并最终回到了初始的视角位置。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.25,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "主体在镜头移开并返回后，以与初始完全相同的挤奶油姿势和状态冻结重现，没有发生任何预期的物理演变，根据规则得分为2。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "在镜头移开期间，挤奶油的过程完全停滞，没有添加额外的奶油，也没有放置两颗樱桃。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头返回后的画面与初始画面完全一致，纸杯蛋糕上没有出现两颗樱桃，奶油量也没有明显增加。"
+      },
+      "process_accumulation": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "视频没有展示出合理的蛋糕装饰累积过程，没有任何樱桃被放置在蛋糕上。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored",
+      "other_excluded_if_any": "none"
+    },
+    "static_tail_policy_applied": "No static tail adjustment applied; the failure is a frozen out-of-sight process, which is penalized directly in the progression categories.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 38,
+      "evidence_zh": "镜头向左平移后成功向右平移回初始视角。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头平移过程中展示了桌面上其他的纸杯蛋糕，背景连贯。",
+      "post_completion_phase_zh": "不适用，视频在动作完成后结束。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "baker and cupcake before and after camera pan",
+        "anchors": [
+          "wooden table",
+          "nearby decorated cupcakes"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-18",
+        "19-38"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "wooden table edge",
+        "background white cabinet"
+      ],
+      "newly_revealed_regions_zh": "帧5-34展示了桌面上原本在视野外的其他纸杯蛋糕。",
+      "evidence_zh": "视角的改变完全由镜头的左右平移引起。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "镜头运动连贯，没有发生硬切或重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "视频在镜头返回初始视角后结束，没有多余的动作或错误。"
+    },
+    "final_state_check": {
+      "window": "35-38",
+      "visible_key_objects": [
+        "baker",
+        "blue shirt",
+        "piping bag",
+        "cupcake",
+        "brown wrapper",
+        "wooden table"
+      ],
+      "reappearance_consistency_zh": "初始场景中的主体和物体在镜头返回后一致重现，但处于不合理的冻结状态。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "yes",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "baker piping cream and placing two cherries",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "帧4，烘焙师正在往纸杯蛋糕上挤奶油。",
+      "hidden_interval_zh": "帧5-34，镜头移开，预期烘焙师继续挤奶油并放置樱桃。",
+      "reappeared_state_zh": "帧35-38，镜头返回，烘焙师和蛋糕保持与初始完全相同的未完成状态。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "no",
+      "terminal_pose_or_process_state": "unfinished_tool_action",
+      "support_and_pose_evidence_zh": "烘焙师的手和裱花袋停留在半空中挤奶油的动作，这是一个未完成的活跃状态，不应完全静止。",
+      "terminal_state_reasoning_zh": "挤奶油是一个连续的物理过程，镜头返回时主体以完全相同的姿势冻结，属于不合理的人工静止。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "主体冻结的缺陷已在隐藏状态进展和显露状态差异中扣分。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "wooden table",
+        "nearby cupcakes"
+      ],
+      "articulation_or_local_state_change_zh": "无变化，烘焙师的手部姿势和裱花袋状态与初始完全相同。",
+      "uniquely_matched_anchor_relative_change_zh": "无变化，主体相对于桌面的位置没有改变。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "不适用",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "主体姿势和局部状态没有任何改变。",
+      "unchanged_coupled_details_zh": "裱花袋下方的奶油形状、手部姿势和衣服褶皱完全没有变化，表明是复制粘贴的冻结状态。",
+      "accumulated_change_zh": "从镜头移开到返回，没有任何任务相关的累积变化（没有樱桃，奶油未增加）。",
+      "evidence_zh": "视频在镜头移开并返回后，主体以完全相同的未完成状态冻结重现，没有任何实质性的演变。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向左平移约90度，然后向右平移返回。",
+      "trajectory_evidence_zh": "帧0-18镜头向左转，帧19-38镜头向右转回初始视角。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "yes",
+      "action_type": "other",
+      "tool_and_target": "piping bag and cupcake",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "outcome",
+      "result_matches_named_requirement": "no",
+      "result_later_disappears_or_resets": "no",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "镜头返回后，没有产生任何新的奶油累积或放置樱桃的结果，过程完全冻结。"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "uncertain",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "uncertain",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "uncertain",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "baker and cupcake",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "clothing",
+        "body_proportions",
+        "persistent_equipment",
+        "colors",
+        "materials"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "烘焙师的蓝色衬衫、手部特征、裱花袋以及纸杯蛋糕在镜头返回后保持一致，但由于是冻结状态，得分为2。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于视频缺乏实质性的演变（主体冻结），身份一致性得分被限制在2分，且最终得分上限为1分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "镜头成功完成了向左平移并返回的动作，但烘焙师和蛋糕在镜头返回后以完全相同的未完成状态冻结重现，没有发生任何预期的装饰进展。",
+    "task_id": "OE057"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4717,
+      "output_tokens": 222
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 30432,
+      "output_tokens": 3467
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "2892214cb7485f5927550985bb024dc7b33638def13e67547570abd5aca9dd06",
+  "score_prompt_sha256": "be60093e84b0293d5ea90ef32a6c8ba14410cbe08bbd69094d46761dde887965",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "stock-outsight-OE057-seed42"
+}

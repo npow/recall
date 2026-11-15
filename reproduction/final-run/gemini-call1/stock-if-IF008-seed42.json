@@ -1,0 +1,409 @@
+{
+  "task_id": "IF008",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "8e215ea76df970f1cef82ce932772433b41af6d62f0166f26c449a939a6b9063",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF008",
+    "perspective": "third-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "小女孩在走廊里一直向前走。",
+    "trajectory_evidence_zh": "从视频帧中可以看出，小女孩背对镜头，持续向走廊深处直线行走，身形逐渐变小，背景透视关系也随之变化，证明了向前的运动轨迹。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 2.714,
+    "final_score_1_to_5": 2.714,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "女孩的衣着、发型和带有狮子图案的彩色背包在整个视频中保持高度一致，没有发生变形或身份改变。"
+      },
+      "contact_support": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "女孩的脚在光泽的地面上明显滑动，缺乏真实的重量转移和稳定的接触，且未能到达目标墙壁。"
+      },
+      "causal_response": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "女孩在视频结束前未能到达走廊尽头的黄墙，因此黄墙的物理阻挡反馈未被测试。"
+      },
+      "lighting_shadow": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "女孩在光泽地面上投射了合理的倒影，并随着她的移动而自然变化，但细节略显模糊。"
+      },
+      "motion_kinematics": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "女孩的行走动作非常僵硬，腿部关节活动不自然，整体表现为在地面上平移滑动而非真实的步行。"
+      },
+      "collision_boundary": {
+        "score": 2,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "女孩在整个视频中未能到达黄墙，碰撞边界未被测试。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "no static tail observed",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "女孩持续向前走，但在视频结束前未能到达走廊尽头。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "走廊的墙壁、门和尽头的黄墙在相机推进过程中保持稳定的空间结构。",
+      "post_completion_phase_zh": "不适用，动作未完成。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "the little girl and her backpack",
+        "anchors": [
+          "hallway floor",
+          "yellow wall ahead"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-58"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "doors on the left",
+        "yellow wall ahead"
+      ],
+      "newly_revealed_regions_zh": "走廊前方的地面和墙壁细节随着相机推进逐渐清晰。",
+      "evidence_zh": "相机跟随女孩向前推进，左侧的门和前方的黄墙保持稳定的空间关系。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频中没有出现硬重置，相机运动和场景结构保持连贯。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作未完成，无完成后的额外扣分。"
+    },
+    "final_state_check": {
+      "window": "50-58",
+      "visible_key_objects": [
+        "little girl",
+        "backpack",
+        "yellow wall"
+      ],
+      "reappearance_consistency_zh": "不适用，无旋转或离开视野的情况。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "not_applicable",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "not_applicable",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "not_applicable",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "yes",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "女孩在整个视频中持续向前移动。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "prompt_directed_forward_progress": "yes",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "女孩在走廊中持续向前走。",
+      "trajectory_evidence_zh": "女孩在整个视频中保持向前的位移，并在世界空间中取得了明显的进展。",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "unresolved",
+      "solid_interpenetration": "no",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "女孩在视频结束时仍距离黄墙较远，未能到达并测试碰撞边界。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "yellow wall",
+      "target_type": "solid_boundary",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "yes",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "yes",
+      "evidence_zh": "前方的黄墙在整个视频中保持稳定存在，但女孩未能到达。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "yes",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "女孩的脚部可见，但表现为在地面上滑动，缺乏真实的步行支撑。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "little girl",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "clothing",
+        "body_proportions",
+        "face_or_hair",
+        "persistent_equipment",
+        "colors"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "女孩的衣着、发型以及带有狮子图案的背包在整个视频中保持高度一致。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 3,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": 3,
+      "evidence_zh": "互动质量达到等级3，主体身份的一致性正常计入评分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 3,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "女孩的步态僵硬且脚部在地面上滑动，且未到达黄墙。",
+      "positive_evidence_zh": "女孩在世界空间中保持了持续的向前位移，没有发生穿模或瞬移。",
+      "evidence_zh": "女孩持续向前移动，但步态表现为滑动，且在视频结束前未能到达走廊尽头的黄墙进行互动。",
+      "final_score_cap_applied": 3
+    },
+    "summary_zh": "女孩在走廊中持续向前移动，身份特征保持高度一致，但步态僵硬且在地面上滑动，且最终未能到达黄墙测试碰撞和物理反馈。",
+    "task_id": "IF008"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 5881,
+      "output_tokens": 190
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 39323,
+      "output_tokens": 3427
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 59,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 5.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 58,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 5.8,
+          "filled_cells": 9
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "1de5837ea760a1f097158892afa990e54dd7c5b4058e8ce050964e67d92cd688",
+  "score_prompt_sha256": "537eaaf7ce7af357d93ef25ac8351dadff3f417618192d22b4dd54fc9a31bcb4",
+  "scores": {
+    "official": 2.714,
+    "final_score": 2.714
+  },
+  "episode_id": "stock-if-IF008-seed42"
+}

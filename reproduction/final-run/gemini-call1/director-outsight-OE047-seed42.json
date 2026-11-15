@@ -1,0 +1,391 @@
+{
+  "task_id": "OE047",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "6d6206370cc0c5140510924e4c42a495fe24eaac86e602906462c90ceb3b7c6b",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE047",
+    "perspective": "third-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头向右平移，然后向左平移回到初始视角，最后向上倾斜看向天花板。",
+    "trajectory_evidence_zh": "第0-14帧镜头向右平移，展示了右侧的走廊；第15-29帧镜头向左平移，回到了初始的扶梯视角；第30-38帧镜头向上倾斜，画面显示出天花板和灯光。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1.0,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男子在镜头向右转动时（第4-5帧）瞬间从自动扶梯上瞬移到平地上，其状态和位置发生了严重的矛盾性重置。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男子没有在视线外继续乘坐自动扶梯上升，而是瞬移到了平地上奔跑，隐藏状态的演变完全失败。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "当镜头转回原始视角时，男子并没有出现在自动扶梯的更高处，而是出现在了平地上。"
+      },
+      "trajectory_continuity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男子乘坐自动扶梯向上的轨迹被完全破坏，他脱离了扶梯并在平地上奔跑，轨迹不连续且物理上不合理。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "视频没有静止的结尾，不适用。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 38,
+      "evidence_zh": "镜头完成了向右转、转回原视角并向上看的动作。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "自动扶梯和墙壁的结构在镜头转动期间基本保持一致，但人物与背景的相对位置发生了严重错误。",
+      "post_completion_phase_zh": "不适用，动作持续到视频结束。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "男子",
+        "anchors": [
+          "自动扶梯",
+          "平地"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "4-5",
+        "14-15",
+        "24-25"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "自动扶梯",
+        "墙壁"
+      ],
+      "newly_revealed_regions_zh": "镜头向右转动时揭示了右侧的平地和门。",
+      "evidence_zh": "镜头的平移和旋转是连续的，但人物的运动无法用镜头运动来解释。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "4-5",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "自动扶梯",
+        "平地"
+      ],
+      "evidence_zh": "在第4到第5帧之间，镜头向右平移，但男子瞬间从自动扶梯上瞬移到了右侧的平地上奔跑，这在物理上是不可能的，属于严重的硬重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "无"
+    },
+    "final_state_check": {
+      "window": "35-38",
+      "visible_key_objects": [
+        "男子"
+      ],
+      "reappearance_consistency_zh": "男子在视频结尾时出现在镜头上方，但他已经脱离了自动扶梯，与初始状态不一致。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "男子乘坐自动扶梯向上",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "在第4帧，男子站在自动扶梯上向上移动。",
+      "hidden_interval_zh": "镜头向右转动，男子本应继续在自动扶梯上上升。",
+      "reappeared_state_zh": "镜头转回时，男子不在自动扶梯上，而是在平地上奔跑。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "不适用，视频没有静止的结尾。",
+      "terminal_state_reasoning_zh": "不适用。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "自动扶梯",
+        "平地"
+      ],
+      "articulation_or_local_state_change_zh": "男子从站立在扶梯上变为在平地上奔跑。",
+      "uniquely_matched_anchor_relative_change_zh": "男子相对于自动扶梯的位置发生了瞬间的、不合理的跳跃（瞬移到平地）。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "沿着自动扶梯向上。",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "no",
+      "subject_relative_change_zh": "男子脱离了自动扶梯，瞬移到了平地上。",
+      "unchanged_coupled_details_zh": "无",
+      "accumulated_change_zh": "男子没有在自动扶梯上积累向上的位移，而是发生了状态重置和瞬移。",
+      "evidence_zh": "男子在镜头向右转动时（第4-5帧）瞬间从自动扶梯上瞬移到平地上奔跑，完全破坏了预期的演变过程。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向右转动，然后转回原始视角，最后向上看。",
+      "trajectory_evidence_zh": "第5-14帧镜头向右转，第15-24帧镜头转回左侧，第30-38帧镜头向上仰视。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "uncertain",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "uncertain",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "uncertain",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "男子",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "clothing"
+      ],
+      "identity_failure": "contradictory_reappearance",
+      "evidence_zh": "男子的衣着基本保持一致，但他在镜头转动时瞬间从自动扶梯瞬移到平地上，发生了严重的矛盾性重置。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "no",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于演变过程完全失败（瞬移），身份一致性无法提升最终得分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频中男子在镜头向右转动时瞬间从自动扶梯上瞬移到平地上奔跑，完全破坏了预期的上升过程和轨迹连续性。",
+    "task_id": "OE047"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4746,
+      "output_tokens": 222
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 30528,
+      "output_tokens": 3335
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "d51b427b7bc562aee704f0818aab5a54e8c756a8b895dcac51acad6b2e801594",
+  "score_prompt_sha256": "206e6ca5ceebbc4e0265f70ce516dccef32ae8d9da073771851baced7c1fb8d5",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "director-outsight-OE047-seed42"
+}

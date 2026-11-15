@@ -1,0 +1,404 @@
+{
+  "task_id": "OE067",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "c413569a2ca53707d70aa839334fc402ec843d877f7bf5d9ababbc1fcb341919",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE067",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头向左平移约180度，从向上看楼梯变为向下看楼梯，然后向右平移回到最初向上看楼梯的视角。",
+    "trajectory_evidence_zh": "Sheet 1显示镜头向左平移，视角从向上的楼梯转为向下的楼梯；Sheet 2显示镜头在向下看的视角停留后开始向右平移；Sheet 3显示镜头继续向右平移，最终回到了初始的向上看楼梯的视角。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.25,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "镜头转回原视角后，画面中同时出现了两个穿着相同紫红色外套的女孩（一个在近处，一个在楼梯上方），发生严重的克隆/复制错误。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "在镜头向左转180度期间，画面显示背后是向下的楼梯，且出现了一个向下走的女孩，而原本向上走的女孩的隐藏状态进展完全丢失，逻辑断裂。"
+      },
+      "revealed_state_difference": {
+        "score": 2,
+        "weight": 1,
+        "answer": "partial",
+        "evidence_zh": "镜头转回后，楼梯上方确实出现了一个女孩（比初始位置更高），但画面左下角近处又凭空出现了一个克隆的女孩，返回状态存在严重缺陷。"
+      },
+      "process_accumulation": {
+        "score": 1,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "由于镜头旋转期间出现向下走的女孩，且转回后画面中同时出现两个女孩，向上攀爬的累积过程被克隆和空间错乱完全破坏，不符合合理的物理累积。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail penalty applied; failures are captured in category scores.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 50,
+      "evidence_zh": "镜头在第50帧左右完全转回了初始的仰视楼梯视角。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头旋转期间，楼梯和砖墙的结构保持了相对连续的平移，但背后的空间被生成为向下的楼梯。",
+      "post_completion_phase_zh": "镜头转回后，初始的向上楼梯和出口标志重新出现，背景结构基本一致。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial girl vs girls after camera returns",
+        "anchors": [
+          "stair treads",
+          "brick walls",
+          "metal handrails"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "15-25",
+        "40-50"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "brick walls",
+        "metal handrails"
+      ],
+      "newly_revealed_regions_zh": "镜头向左转180度后揭示的背后向下楼梯区域。",
+      "evidence_zh": "视角的改变是由连续的镜头水平旋转（Pan）引起的，并非硬切。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "镜头旋转过程是连续的，没有发生硬切，但生成了不合理的克隆对象。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "镜头转回后视频很快结束，没有多余的错误动作。"
+    },
+    "final_state_check": {
+      "window": "50-68",
+      "visible_key_objects": [
+        "young girl",
+        "mauve fleece jacket",
+        "light pants",
+        "brick walls",
+        "metal handrails",
+        "stair treads",
+        "street-level exit",
+        "red-bordered sign"
+      ],
+      "reappearance_consistency_zh": "初始视角的楼梯、墙壁和出口标志一致地重新出现，但女孩被错误地复制成了两个。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 2,
+      "named_process": "girl walking up the stairs",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "女孩在楼梯下半部分向上走。",
+      "hidden_interval_zh": "镜头向左转180度后，画面变成从楼梯上方往下看，且出现一个向下走的女孩，空间和逻辑完全错乱。",
+      "reappeared_state_zh": "镜头转回后，画面中出现了两个女孩，一个在画面前方，另一个在楼梯上方靠近出口处。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "不适用，视频结束时女孩仍在走动。",
+      "terminal_state_reasoning_zh": "不适用。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "不适用。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "stair treads",
+        "brick walls"
+      ],
+      "articulation_or_local_state_change_zh": "女孩的肢体动作在持续，但由于克隆现象，无法确认是同一个实体的合理动作变化。",
+      "uniquely_matched_anchor_relative_change_zh": "转回后上方女孩相对于台阶的位置确实更高，但同时出现了克隆体。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "沿着楼梯向上走向出口。",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "转回后上方女孩的位置发生了改变，但克隆体的出现破坏了相对变化的合理性。",
+      "unchanged_coupled_details_zh": "无明显的复制粘贴冻结，但存在实体的直接克隆。",
+      "accumulated_change_zh": "女孩的攀爬过程被镜头旋转期间的向下走和转回后的克隆现象完全破坏，缺乏合理的累积进展。",
+      "evidence_zh": "视频中虽然有运动，但由于严重的克隆和空间逻辑错误，导致没有形成有意义的、连贯的演变过程。",
+      "final_score_cap_applied": 2
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向左旋转了180度，随后又向右旋转回到了初始的向上看楼梯的视角。",
+      "trajectory_evidence_zh": "画面从仰视楼梯向左平移旋转，展示了背后的向下楼梯视角，然后再次反向旋转回到了最初的仰视楼梯视角，完成了要求的运镜轨迹。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "young girl",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "clothing",
+        "hair"
+      ],
+      "identity_failure": "duplication",
+      "evidence_zh": "镜头转回后，画面中同时出现了两个穿着相同紫红色外套的女孩，发生了严重的克隆现象。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 2,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 2,
+      "evidence_zh": "由于演变质量仅为2级（存在严重的克隆和逻辑错误），身份一致性无法提升最终得分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频虽然完成了要求的镜头旋转轨迹，但在镜头转回后严重地将女孩克隆成了两个，且在旋转期间出现了不合理的向下走的女孩，导致隐藏状态进展和累积过程完全失败。",
+    "task_id": "OE067"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 5918,
+      "output_tokens": 234
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 31870,
+      "output_tokens": 3493
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 69,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 68,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 6.8,
+          "filled_cells": 19
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 4,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "c225d892c7cfaf4b88c7991e6343ceeb721e45dcfba8401e5d27ede6aa4698fb",
+  "score_prompt_sha256": "ab3c6172b7df406cab3cfa07cd3174bf98a8fdd0b43a7bb5916a6664f4c9f4e1",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "director-outsight-OE067-seed42"
+}

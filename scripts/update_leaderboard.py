@@ -88,8 +88,43 @@ def official_full_run_section():
     return lines
 
 
+def final_run_section():
+    """Final run on Lambda H100 (final1): stock versus the static text director, single Gemini call."""
+    data = read("reproduction/final-run/analysis.json")
+    primary = (data or {}).get("primary_single_call")
+    if not primary:
+        return []
+    def rows(key, label):
+        block, out = primary[key], []
+        for arm, name in (("stock", "stock 18/6"), ("director", "static text director")):
+            stats = block[arm]
+            dims, (low, high) = stats["dimension_means"], stats["overall_ci95"]
+            out.append(f"| {label} | {name} |{sum(stats['n'].values())}|{stats['overall']:.2f} [{low:.2f}, {high:.2f}]"
+                       f"|{dims['gc']:.2f}|{dims['if']:.2f}|{dims['insight']:.2f}|{dims['outsight']:.2f}|")
+        return out
+    def paired(key):
+        delta = primary[key]["paired_director_minus_stock"]
+        low, high = delta["overall_delta_ci95"]
+        dims = delta["dimension_delta"]
+        return (f"{delta['overall_delta']:+.2f} [{low:+.2f}, {high:+.2f}] (GC {dims['gc']:+.2f}, IF {dims['if']:+.2f}, "
+                f"in-sight {dims['insight']:+.2f}, out-of-sight {dims['outsight']:+.2f})")
+    return ["", "## Final run on Lambda H100 (final1), 171 cases, seed 42, single Gemini call", "",
+        "Stock versus the static text director: clean-room Haiku-written event text in LingBot's caption format, used on IF, "
+        "in-sight and out-of-sight cases. GC episodes are the stock episodes, so GC is identical by construction. "
+        "Frozen configuration; the director was chosen on 20 development cases, so the 151 held-out cases are also shown.", "",
+        "| Set | Arm | Scored | Overall [95% CI] | GC | IF | In-sight | Out-of-sight |", "|---|---|---:|---|---:|---:|---:|---:|",
+        *rows("all_171", "all 171"), *rows("held_out_151", "held-out 151"), "",
+        f"Paired director minus stock: all 171 **{paired('all_171')}**; held-out 151 {paired('held_out_151')}. "
+        "**The result is a null and the pass criterion for beating 2.12 is NOT met.** The pre-registered projection was about 2.05. "
+        "Gate failures moved in opposite directions (IF 20 to 11, out-of-sight 7 to 13) while scores stayed the same. "
+        "Hardware differs from the Modal H200 full run above (stock 1.85 there, 1.81 here), so compare arms only within a run.", "",
+        "Evidence: [table](reproduction/final-run/table.md), [analysis](reproduction/final-run/analysis.json), "
+        "[per-episode scores](reproduction/final-run/per-episode.csv), [verifier outputs](reproduction/final-run/gemini-call1/), "
+        "[frozen config](reproduction/final-run-config.json), [development experiment](reproduction/director-dev.md)."]
+
+
 def extra_sections():
-    lines = official_full_run_section()
+    lines = official_full_run_section() + final_run_section()
     recovered = read("reproduction/full1-recovered-judging/summary.json")
     if recovered:
         lines.extend(["", "## Full171 stock versus budget run", "",

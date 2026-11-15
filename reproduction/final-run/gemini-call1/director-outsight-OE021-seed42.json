@@ -1,0 +1,129 @@
+{
+  "task_id": "OE021",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "a7c5cc1c73eb0cc85837d0eba5ff5c8bca9ed32093b6148292b335ac273ddaa4",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE021",
+    "perspective": "first-person",
+    "verdict": "fail",
+    "instruction_following_score": 0,
+    "meaningful_requested_trajectory_progress": "no",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "视角基本保持静止，多辆汽车（白车、黑车、黑色面包车）从画面底部出现并向前驶过。",
+    "trajectory_evidence_zh": "在整个视频中，相机并没有沿着公路向前行驶，而是停留在原地，看着其他车辆从后方驶入并沿着公路远去。",
+    "failure_reason_zh": "未执行向前驾驶的动作，视角保持静止，变成了观察其他车辆驶过的画面。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": null,
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 5887,
+      "output_tokens": 217
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 69,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 68,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 6.8,
+          "filled_cells": 19
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 4,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "a597a3a6d8543a9540f6ff62a5e362953224fd76fa0b7ce04f6327a13cdf5827",
+  "rubric_skipped": "trajectory failed; aggregate score is 1",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "director-outsight-OE021-seed42"
+}

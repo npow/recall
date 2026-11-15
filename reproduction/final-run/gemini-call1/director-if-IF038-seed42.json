@@ -1,0 +1,403 @@
+{
+  "task_id": "IF038",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "24a063cd80a14d59efef4d4d11f4a8e4e8ab1d9a64ab2d871d40847cd1ad881c",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF038",
+    "perspective": "third-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "partial",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "男子最初在砖墙上向右走，随后转身背对镜头向远处走去，没有跳下墙。",
+    "trajectory_evidence_zh": "在第0-9帧中，男子在砖墙上向右行走；从第10帧开始，男子转身背对镜头并向远处走去，直到视频结束都没有跳下墙的动作。",
+    "failure_reason_zh": "男子没有执行跳下墙的动作，而是转身向远处走去，轨迹未完全符合要求。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 3.57,
+    "final_score_1_to_5": 3,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "当男子在第11至15帧转身时，他原本敞开的橙色连帽衫和白色内搭T恤发生形变，变成了一件底部带有罗纹下摆的闭合橙色飞行员夹克。"
+      },
+      "contact_support": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "男子在前半段行走时脚步支撑基本合理，但在第11至14帧转身时，双脚在墙面上发生不自然的滑动而没有抬起。"
+      },
+      "causal_response": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "砖墙在男子的踩踏下保持完全坚固和稳定，没有发生任何变形或损坏。"
+      },
+      "lighting_shadow": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "男子在墙面和自身衣物上投射的阴影与晴朗的蓝天光照条件保持一致。"
+      },
+      "motion_kinematics": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男子仅在视频开头短暂行走，随后进行了僵硬且伴随脚步滑动的转身，从第15帧开始到视频结束完全冻结在原地，失去了所有运动学特征。"
+      },
+      "collision_boundary": {
+        "score": 4,
+        "weight": 2.0,
+        "answer": "yes",
+        "evidence_zh": "男子在墙头上行走时没有穿模进入砖墙内部，但他随后完全停止了动作，未能测试跳下墙壁接触地面的边界响应。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "The subject moves meaningfully in the first half of the video before freezing at frame 15; the static tail is noted but does not incur an additional penalty beyond the motion_kinematics score.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "男子在墙上行走了一小段距离后转身并完全静止，从未尝试跳下墙壁。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景中的树木、公寓楼和天空在男子行走和转身期间保持稳定。",
+      "post_completion_phase_zh": "男子静止后，背景画面也保持完全静止和一致。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "man's jacket before and after turning",
+        "anchors": [
+          "man's body position on the wall",
+          "background trees and buildings"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-28"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "brick wall edge",
+        "background apartment building"
+      ],
+      "newly_revealed_regions_zh": "随着男子向右行走，画面右侧展现了更多相同的背景树木和建筑。",
+      "evidence_zh": "相机在前半段跟随男子向右平移，运动平滑且符合透视规律，后半段随男子一起静止。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频中没有出现突然的场景切换或空间拓扑矛盾，相机的跟随运动是连续的。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作未完成，且静止的尾部不作为额外的扣分项。"
+    },
+    "final_state_check": {
+      "window": "25-28",
+      "visible_key_objects": [
+        "man",
+        "brick wall"
+      ],
+      "reappearance_consistency_zh": "男子在转身后背对镜头，其衣物发生了形变，但在此最终窗口内保持了形变后的状态。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "not_applicable",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "yes",
+      "static_tail_first_frame": 15,
+      "terminal_static_reasonable": "no",
+      "terminal_pose_or_process_state": "other_unresolved",
+      "support_and_pose_evidence_zh": "男子在转身后以一个僵硬的站立姿势完全冻结，没有自然的休息或放松动作。",
+      "terminal_state_reasoning_zh": "这种突然的完全静止是不自然的，属于生成过程中的冻结缺陷，而非合理的动作结束。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "静止尾部作为诊断信息记录，其缺陷已在motion_kinematics中扣分。",
+      "camera_independent_subject_motion": "yes",
+      "stable_world_anchors_compared": [
+        "brick wall"
+      ],
+      "articulation_or_local_state_change_zh": "男子在前半段有明显的迈步和转身动作。",
+      "uniquely_matched_anchor_relative_change_zh": "男子相对于砖墙向右移动了一段距离。",
+      "two_independent_motion_evidence_requirements_met": "yes",
+      "expected_world_motion_direction_zh": "向右行走并向下跳跃。",
+      "returned_motion_direction_consistent": "partial",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "男子的四肢在行走时有交替运动，转身时身体朝向发生改变。",
+      "unchanged_coupled_details_zh": "在第15帧之后，男子的衣物褶皱和身体姿态完全冻结，没有任何微小的动态变化。",
+      "accumulated_change_zh": "男子在墙上向右移动了一小段距离，随后转身并静止。",
+      "evidence_zh": "男子在视频前半段表现出了真实的行走和转身动作，但随后陷入了完全的静止状态。",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "partial",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "男子在前半段有行走动作，但后半段完全静止。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "partial",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "yes",
+      "static_tail_first_frame": 15,
+      "static_tail_fraction_of_video": 0.48,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "男子在视频前14帧进行了行走和转身，从第15帧开始完全静止，静止尾部约占视频的48%。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "partial",
+      "instruction_following_score": 1,
+      "prompt_directed_forward_progress": "partial",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "男子在墙上向右行走了一小段距离，随后转身并完全静止，没有执行跳下的动作。",
+      "trajectory_evidence_zh": "男子在第0至10帧向右移动，随后在第11至14帧转身，此后轨迹完全停止。",
+      "failure_reason_zh": "男子未能完成跳下墙壁的指令，且在转身后完全冻结。"
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "partial",
+      "observed_outcome": "contacted_and_continued",
+      "solid_interpenetration": "no",
+      "support_after_contact": "plausible",
+      "boundary_response_plausible": "partial",
+      "evidence_zh": "男子在墙头上行走时没有穿模，但他未能跳下墙壁，因此未测试地面的碰撞边界。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "brick wall",
+      "target_type": "solid_boundary",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "yes",
+      "observed_trigger": "contact",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "yes",
+      "evidence_zh": "砖墙在整个视频中保持稳定，没有发生任何无端的变化或消失。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "yes",
+      "proxy_evidence_observed": [
+        "weight_transfer",
+        "joint_motion"
+      ],
+      "proxy_supports_expected_locomotion": "partial",
+      "evidence_zh": "男子的双脚在画面中可见，前半段行走时有合理的支撑，但转身时双脚在墙面上滑动。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "man",
+      "same_entity_throughout": "partial",
+      "stable_identity_attributes": [
+        "body_proportions",
+        "face_or_hair",
+        "colors"
+      ],
+      "identity_failure": "morphing",
+      "evidence_zh": "男子的衣物在转身时发生了明显的形变，从敞开的连帽衫和白色内搭变成了闭合的飞行员夹克。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 3,
+      "meaningful_motion_or_evolution": "partial",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": 3,
+      "evidence_zh": "由于男子表现出了部分有效的物理交互（在墙上行走），交互质量达到3级，因此身份一致性类别正常计入总分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 3,
+      "interaction_opportunity_reached": "partial",
+      "physical_response_observed": "partial",
+      "core_failure_zh": "男子在转身后完全冻结，且未尝试跳下墙壁，同时外套发生明显形变。",
+      "positive_evidence_zh": "男子在视频前半段成功在墙头向右行走，与墙壁保持了合理的接触。",
+      "evidence_zh": "男子展示了在墙上行走的部分交互过程，但随后出现了严重的动作冻结、衣物形变以及未能完成跳跃指令的缺陷，属于带有主要缺陷的明确部分交互。",
+      "final_score_cap_applied": 3
+    },
+    "summary_zh": "男子在墙上短暂行走后转身并完全冻结，未能执行跳下动作，且转身时外套发生了明显的形变。",
+    "task_id": "IF038"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4700,
+      "output_tokens": 229
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 36814,
+      "output_tokens": 3852
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 29,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 28,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 2.8,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "831de925634e237bca46d864648acf3905e281fbee8b19daee0c5733e1b8f70b",
+  "score_prompt_sha256": "2eefc079585dcc5fc272a99b200c6cea09b37067c22d6c231309a6f397b0e159",
+  "scores": {
+    "official": 3.0,
+    "final_score": 3.0
+  },
+  "episode_id": "director-if-IF038-seed42"
+}

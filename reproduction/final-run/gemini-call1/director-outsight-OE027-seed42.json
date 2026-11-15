@@ -1,0 +1,404 @@
+{
+  "task_id": "OE027",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "4bda86d32ec1271575c907e1428682402b2393eea5048800431198f51a463131",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE027",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "视角先向左旋转，从侧面观察喷气式飞机变为从后方观察，随后视角向右旋转，恢复到最初的侧面视角。",
+    "trajectory_evidence_zh": "在视频的前半部分（第0-18帧），镜头向左平移，导致飞机和背景在画面中向右移动，直到镜头正对跑道方向；在后半部分（第19-38帧），镜头向右平移，视角重新回到飞机的侧面，完成了返回初始视角的动作。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.67,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "out_of_sight_evolution": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "两架正在起飞的喷气式飞机在整个视频中完全停留在跑道上的原位，没有任何向前的位移，且5号机在未移动的情况下不自然地放平了机头。"
+      },
+      "prompt_evolution_alignment": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "视频未能展示飞机起飞的合理演变，飞机在跑道上处于冻结状态，违背了起飞过程的物理常理。"
+      },
+      "subject_identity": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "飞机的整体外观和涂装基本保持一致，但作为动态主体，它们在没有产生任何累积进度的情况下以几乎静态的副本形式重新出现，且5号机的尾号在后半段变得模糊不清。"
+      },
+      "temporal_scene_consistency": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "随着镜头的旋转和返回，背景中的山丘、跑道边缘、黄色的风向袋以及绿色的军用车辆在空间位置上保持了较好的稳定性。"
+      },
+      "physical_causality": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "处于起飞状态（机头已抬起）的飞机不可能在跑道上静止不动，且5号机在没有向前滑行的情况下直接将机头砸回地面，完全违背物理因果关系。"
+      },
+      "trajectory_continuity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "飞机没有任何向前的运动轨迹，完全停滞在初始位置。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No separate penalty; failure is captured in evolution scores.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 38,
+      "evidence_zh": "镜头向左旋转后，在视频结尾成功返回到了初始视角的侧面。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "在镜头旋转期间，跑道、风向袋、车辆和远处的山丘保持了空间一致性。",
+      "post_completion_phase_zh": "无额外尾段。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "Jet 5 and Jet 6",
+        "anchors": [
+          "yellow windsock",
+          "green military vehicle"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-17",
+        "18-38"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "runway edge",
+        "distant hills"
+      ],
+      "newly_revealed_regions_zh": "镜头向左旋转时展示了飞机后方的跑道和背景区域。",
+      "evidence_zh": "视角的改变完全由镜头的平滑环绕旋转引起。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频中没有发生硬切或重置，镜头运动是连续的。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "视频在完成动作后结束，没有多余的尾段。"
+    },
+    "final_state_check": {
+      "window": "30-38",
+      "visible_key_objects": [
+        "Jet 5",
+        "Jet 6",
+        "yellow windsock",
+        "green military vehicle"
+      ],
+      "reappearance_consistency_zh": "镜头返回后，背景物体和飞机重新出现在一致的空间位置，但5号机的姿态发生了不合理的改变（机头放平）。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "yes",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "jets taking off along the runway",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "5号机机头抬起准备起飞，6号机在后方滑行。",
+      "hidden_interval_zh": "镜头向左环绕，从后方观察飞机，此时飞机应继续向前加速起飞。",
+      "reappeared_state_zh": "镜头返回侧面视角，飞机相对于地面的位置没有任何前进，且5号机不自然地恢复了平放姿态。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "no",
+      "terminal_pose_or_process_state": "active_vehicle_state",
+      "support_and_pose_evidence_zh": "5号机原本处于起飞抬头的活跃状态，最终却在没有位移的情况下冻结在平放姿态。",
+      "terminal_state_reasoning_zh": "正在起飞的喷气式飞机不可能在跑道上瞬间静止并冻结。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "No separate penalty; failure is captured in evolution scores.",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "yellow windsock",
+        "green military vehicle",
+        "runway markings"
+      ],
+      "articulation_or_local_state_change_zh": "5号机的机头从抬起变为平放，这是一个物理上不合理的局部状态改变。",
+      "uniquely_matched_anchor_relative_change_zh": "飞机相对于风向袋和军用车辆没有任何向前的位移。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "沿跑道向左前方高速移动。",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "没有观察到车轮滚动或向前的位移。",
+      "vehicle_front_rear_identification_zh": "机头/驾驶舱为前方，尾翼为后方。",
+      "vehicle_world_displacement_vs_heading_zh": "沿跑道方向的位移为零。",
+      "vehicle_motion_direction": "static",
+      "unexplained_reverse_motion": "no",
+      "subject_relative_change_zh": "5号机改变了俯仰角，但两架飞机均未产生位移。",
+      "unchanged_coupled_details_zh": "飞机相对于背景参照物的位置完全没有改变，表现为冻结状态。",
+      "accumulated_change_zh": "没有任何向前的起飞进度，5号机不自然地放平。",
+      "evidence_zh": "正在起飞的飞机在整个视频中相对于跑道完全冻结，未能展示任何向前的轨迹。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向左旋转，随后返回到初始视角。",
+      "trajectory_evidence_zh": "画面视角先向左转动展示了飞机的后方，然后向右转动恢复了最初的侧面视角。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "Jet 5 and Jet 6",
+      "same_entity_throughout": "partial",
+      "stable_identity_attributes": [
+        "colors",
+        "body_proportions"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "飞机的整体涂装和形状保持一致，但5号机的尾号在后半段变得模糊，且作为动态主体以静态副本形式重新出现。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于飞机完全没有产生向前的起飞进度，演变质量为1，最终得分被限制为1。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "镜头成功完成了向左旋转并返回的动作，但本应处于起飞加速状态的喷气式飞机在整个过程中完全冻结在跑道上，没有任何向前的位移，且5号机在静止状态下不自然地放平了机头，严重违背了物理常理。",
+    "task_id": "OE027"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4719,
+      "output_tokens": 241
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 35902,
+      "output_tokens": 3644
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "a8442e3800f1b5c61f93f23bfb9507a6193e76848777157c0bd0b6c9fc583ab6",
+  "score_prompt_sha256": "f485ea9f45d5eecbad73ae76aa91dc3810e60801b4940b8e10e3bbb26381ebb1",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "director-outsight-OE027-seed42"
+}

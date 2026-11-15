@@ -135,6 +135,21 @@ An independent re-judging of the same videos by another session bounds stock at 
 
 Evidence: [table](reproduction/full-run/table.md), [analysis](reproduction/full-run/analysis.json), [per-episode scores](reproduction/full-run/per-episode.csv), [frozen config](reproduction/full-run-config.json), [run log](reproduction/full-run-log.md), [judge-repeat study](reproduction/judge-repeat/README.md), [memory audit](reproduction/full-run-memory-audit.md).
 
+## Final run on Lambda H100 (final1), 171 cases, seed 42, single Gemini call
+
+Stock versus the static text director: clean-room Haiku-written event text in LingBot's caption format, used on IF, in-sight and out-of-sight cases. GC episodes are the stock episodes, so GC is identical by construction. Frozen configuration; the director was chosen on 20 development cases, so the 151 held-out cases are also shown.
+
+| Set | Arm | Scored | Overall [95% CI] | GC | IF | In-sight | Out-of-sight |
+|---|---|---:|---|---:|---:|---:|---:|
+| all 171 | stock 18/6 |171|1.81 [1.64, 1.99]|2.36|1.62|1.81|1.44|
+| all 171 | static text director |171|1.82 [1.66, 2.01]|2.36|1.69|1.79|1.45|
+| held-out 151 | stock 18/6 |151|1.76 [1.58, 1.94]|2.33|1.58|1.68|1.45|
+| held-out 151 | static text director |151|1.82 [1.65, 2.01]|2.33|1.71|1.73|1.52|
+
+Paired director minus stock: all 171 **+0.02 [-0.15, +0.19] (GC +0.00, IF +0.07, in-sight -0.01, out-of-sight +0.01)**; held-out 151 +0.06 [-0.13, +0.26] (GC +0.00, IF +0.13, in-sight +0.04, out-of-sight +0.08). **The result is a null and the pass criterion for beating 2.12 is NOT met.** The pre-registered projection was about 2.05. Gate failures moved in opposite directions (IF 20 to 11, out-of-sight 7 to 13) while scores stayed the same. Hardware differs from the Modal H200 full run above (stock 1.85 there, 1.81 here), so compare arms only within a run.
+
+Evidence: [table](reproduction/final-run/table.md), [analysis](reproduction/final-run/analysis.json), [per-episode scores](reproduction/final-run/per-episode.csv), [verifier outputs](reproduction/final-run/gemini-call1/), [frozen config](reproduction/final-run-config.json), [development experiment](reproduction/director-dev.md).
+
 ## Full171 stock versus budget run
 
 All342 generation records are verified complete. Judging resumes from preserved video-hash-verified reports after the original scorer lost credentials. Overall scores remain pending until all171 cases in each arm are scored.

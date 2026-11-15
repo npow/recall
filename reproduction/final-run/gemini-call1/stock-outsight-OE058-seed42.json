@@ -1,0 +1,393 @@
+{
+  "task_id": "OE058",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "43b64741b5af2f9789f7340ba0bcb8542ec5789833f494811c07b862f76b9fc6",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE058",
+    "perspective": "first-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "partial",
+    "revisit_required": "yes",
+    "revisit_observed": "no",
+    "observed_action_zh": "镜头先向右平移了约5秒，随后场景发生突变，镜头开始向左平移约1.8秒，未能回到初始视角。",
+    "trajectory_evidence_zh": "在第0-49帧（0.0-4.9秒），画面中的物体（如碗、圣诞树）持续向左移动，表明镜头在向右平移；从第50帧（5.0秒）开始，场景发生变化，随后画面中的物体（如人物、姜饼屋）向右移动，表明镜头开始向左平移，直到视频结束（第68帧），但向左平移的时间不足以回到初始视角。",
+    "failure_reason_zh": "镜头向左返回的时间过短，且场景发生突变，未能回到初始的视角和画面。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头向左转回时，原先正在挤糖霜的人手和裱花袋完全消失，原本平放的圣诞树饼干被替换成了一个立体的姜饼屋结构，旁边的碗也变成了装有白色粉末的玻璃杯，发生了严重的物体替换和消失。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "目标饼干在视线外并没有继续被合理装饰，而是直接被替换成了完全不同的立体姜饼结构，原有的装饰过程彻底中断并失败。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头返回后，并没有在原饼干上看到更多分层的白色糖霜，而是看到了一个毫无关联的立体姜饼结构，原饼干已不存在。"
+      },
+      "process_accumulation": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "视频没有展示合理的糖霜积累过程，最终出现的是一个与原任务无关的立体形状，且操作者消失，积累结果完全错误。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail penalty applied; failures are captured in category scores.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 50,
+      "evidence_zh": "镜头向右平移后，在第50帧左右向左平移回到了初始的桌面区域。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头平移过程中，桌面和背景墙面保持了基本的空间连续性。",
+      "post_completion_phase_zh": "返回初始区域后，背景墙面和桌面依然存在，但桌面上的物体发生了严重改变。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial flat cookies and board vs returned 3D structure and board",
+        "anchors": [
+          "table surface",
+          "general position on the left"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-15",
+        "15-35",
+        "35-50"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "桌面",
+        "背景墙面"
+      ],
+      "newly_revealed_regions_zh": "镜头向右平移时展示了右侧的搅拌机和圣诞树。",
+      "evidence_zh": "镜头进行了连续的左右平移，但向左返回时，原本位于左侧的物体发生了严重的替换和消失，这不能用视角变化来解释。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "镜头运动是连续的，但移出画面的物体在重新进入画面时发生了严重的替换和幻觉，属于一致性失败而非硬切。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "无额外扣分，严重失败已在基础评分中体现。"
+    },
+    "final_state_check": {
+      "window": "50-68",
+      "visible_key_objects": [
+        "wooden board"
+      ],
+      "reappearance_consistency_zh": "初始画面中的人、裱花袋、平放的饼干在最终画面中均未一致重新出现，被完全替换为立体的姜饼结构和玻璃杯。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "装饰圣诞树形状的姜饼",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "画面左侧，一个人正在用裱花袋给平放的圣诞树饼干挤白色糖霜。",
+      "hidden_interval_zh": "镜头向右平移，左侧的装饰过程移出画面。",
+      "reappeared_state_zh": "镜头向左平移返回，原位置的人消失，平放的饼干被替换为立体的姜饼结构。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "不适用，主体已消失。",
+      "terminal_state_reasoning_zh": "不适用，主体已消失。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "桌面"
+      ],
+      "articulation_or_local_state_change_zh": "无，主体被替换。",
+      "uniquely_matched_anchor_relative_change_zh": "无，主体被替换。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "不适用",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "主体被完全替换，无法比较相对变化。",
+      "unchanged_coupled_details_zh": "不适用",
+      "accumulated_change_zh": "原有的装饰过程彻底丢失，目标物体被替换为不相关的立体结构。",
+      "evidence_zh": "镜头返回后，原有的装饰工作和目标饼干完全消失，发生了灾难性的替换。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "partial",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "partial",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向右平移了一段距离（未达到180度），然后向左平移返回了初始区域。",
+      "trajectory_evidence_zh": "视频展示了向右再向左的镜头平移轨迹，成功返回了起始视角区域。",
+      "failure_reason_zh": "未达到要求的180度旋转，仅为平移。"
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "yes",
+      "action_type": "other",
+      "tool_and_target": "裱花袋和圣诞树饼干",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "outcome",
+      "result_matches_named_requirement": "no",
+      "result_later_disappears_or_resets": "yes",
+      "visible_reversal_explanation": "none",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "镜头返回后，原有的装饰工作和目标饼干完全消失，被替换为不相关的立体姜饼结构。"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "uncertain",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "decorator and cookies",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [],
+      "identity_failure": "replacement",
+      "evidence_zh": "镜头返回后，操作者消失，平放的饼干被替换为立体的姜饼结构。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于演化过程发生灾难性失败（主体被替换），身份一致性得分被限制在最低水平。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "镜头向右平移后返回时，原先正在挤糖霜的人完全消失，平放的圣诞树饼干被替换成了不相关的立体姜饼结构，发生了严重的物体替换和任务失败。",
+    "task_id": "OE058"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 5918,
+      "output_tokens": 293
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 31626,
+      "output_tokens": 3401
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 69,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 68,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 6.8,
+          "filled_cells": 19
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 4,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 6.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "6309c8ea93f221f4197fd71046099e0ddf9412e5338bccce8ec289472fed18f5",
+  "score_prompt_sha256": "237cab9854777d51e66971c26fcb29b89e2637cf6b96d1bb780933cf2dc35440",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "stock-outsight-OE058-seed42"
+}

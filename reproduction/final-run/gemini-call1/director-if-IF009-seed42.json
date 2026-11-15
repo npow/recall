@@ -1,0 +1,312 @@
+{
+  "task_id": "IF009",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "982dccae700946f944cc22f5a4c6c215686ab4f212f39961856c500f6d9385eb",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF009",
+    "perspective": "third-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "partial",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "女子向前走，然后向右转，沿着铺砌的小路向右前方斜向行走。",
+    "trajectory_evidence_zh": "视频显示角色最初向前行走，随后身体向右转，并继续向右前方斜向移动。然而，她始终停留在铺砌的道路上，并没有走上右侧的草坡。",
+    "failure_reason_zh": "角色虽然执行了向右前方的斜向移动，但没有走上草坡，未完全满足“up the slope”的要求。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 2.4,
+    "final_score_1_to_5": 2,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "该女子在整个视频中保持了棕色毛衣、白色裤子、黑色长发和黑色单肩包的一致外观，没有发生变形或身份漂移。"
+      },
+      "contact_support": {
+        "score": 2,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "女子在铺砌的小路上行走，但从未到达或踏上草坡，目标支撑面未被测试。"
+      },
+      "causal_response": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "由于女子从未到达草坡，因此没有展示出草地弯曲或变形等物理反馈。"
+      },
+      "motion_kinematics": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "女子在平坦的小路上展示了连贯的步态和重量转移，但由于未到达斜坡，未能展示上坡行走的动力学。"
+      },
+      "collision_boundary": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "女子在整个视频中都停留在小路上，从未到达小路与草坡之间的边界，目标边界未被测试。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "The subject remains in motion throughout the video; no static tail penalty is applied.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "女子在视频结束时仍未踏上草坡。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景中的树木、草坡和木栏杆在整个视频中保持稳定，没有发生扭曲或重置。",
+      "post_completion_phase_zh": "不适用，动作未完成。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "the woman",
+        "anchors": [
+          "the paved path",
+          "the wooden railing"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-58"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "the wooden railing",
+        "the edge of the paved path"
+      ],
+      "newly_revealed_regions_zh": "随着相机跟随女子向前移动，前方的小路和草坡逐渐显露。",
+      "evidence_zh": "相机的平移和推进与女子的运动保持一致，背景元素的透视变化合理。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频中没有出现硬重置，场景和相机的运动是连续的。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作未完成，不适用完成后的调整。"
+    },
+    "final_state_check": {
+      "window": "50-58",
+      "visible_key_objects": [
+        "the woman",
+        "the paved path",
+        "the grassy slope"
+      ],
+      "reappearance_consistency_zh": "不适用，没有对象离开并重新进入视野。"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "yes",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "女子在整个视频中都在小路上向前行走。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "partial",
+      "instruction_following_score": 1,
+      "prompt_directed_forward_progress": "partial",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "女子在小路上向右前方行走，但没有走上草坡。",
+      "trajectory_evidence_zh": "女子在空间中产生了有意义的位移，方向大致符合要求，但未能到达目标区域。",
+      "failure_reason_zh": "未能到达并走上草坡。"
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "unresolved",
+      "solid_interpenetration": "no",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "女子从未到达小路与草坡的边界，因此没有发生碰撞或边界交互。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "grassy slope",
+      "target_type": "flexible_contact_surface",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "yes",
+      "observed_trigger": "none",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "yes",
+      "evidence_zh": "草坡在整个视频中保持稳定，但女子从未与其发生接触。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "yes",
+      "proxy_evidence_observed": [
+        "weight_transfer",
+        "joint_motion"
+      ],
+      "proxy_supports_expected_locomotion": "yes",
+      "evidence_zh": "女子的脚部和腿部动作清晰可见，展示了在平地上的合理步态。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "the woman",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "clothing",
+        "body_proportions",
+        "face_or_hair",
+        "persistent_equipment",
+        "colors"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "女子的衣着、发型和携带的包在整个视频中保持高度一致。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 2,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "no",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 2,
+      "evidence_zh": "由于交互质量等级为2（未能到达目标区域），身份一致性得分不计入最终加权平均分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 2,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "女子未能到达目标草坡，导致交互机会未被测试。",
+      "positive_evidence_zh": "女子在小路上展示了有意义的行走动作。",
+      "evidence_zh": "尽管女子在小路上进行了有意义的移动，但她从未到达或踏上草坡，导致核心的物理交互完全缺失。",
+      "final_score_cap_applied": 2
+    },
+    "summary_zh": "女子在小路上向右前方行走，但未能到达并踏上草坡，导致目标交互未被测试，交互质量受限。",
+    "task_id": "IF009"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 6072,
+      "output_tokens": 230
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 38066,
+      "output_tokens": 2153
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 59,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 5.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 58,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 5.8,
+          "filled_cells": 9
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "a4ee9efdb38206a2802ccdd2741c7ff000755058d14da19b7fec4103f6c1b727",
+  "score_prompt_sha256": "af5b2f7e77765d1fc5e9a111202ab04d116fe03365e122ec1ada9a1aeda3f624",
+  "scores": {
+    "official": 2.0,
+    "final_score": 2.0
+  },
+  "episode_id": "director-if-IF009-seed42"
+}

@@ -1,0 +1,439 @@
+{
+  "task_id": "IF028",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "bdd10bdbb4c1a172d703ac3f26b97c12e8b53621a3fe900b5d9401c198257f0b",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF028",
+    "perspective": "third-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "partial",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "男子骑着马向左转，全速奔向左侧的木制拱门并进入其中，但没有发生猛烈的水平撞击。",
+    "trajectory_evidence_zh": "视频中，骑马的男子先是向前并向左转，随后马匹加速奔跑，径直冲向左侧的木制拱门建筑，最后进入了拱门内部，并未表现出撞击的动作。",
+    "failure_reason_zh": "马匹成功向左奔跑并到达了木制拱门，但只是进入了拱门内部，没有表现出要求的“猛烈水平撞击”。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 2.2,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "骑手和白马在整个视频中保持一致的外观和特征，没有发生变形或身份漂移。"
+      },
+      "contact_support": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "马匹在奔跑过程中，马蹄与地面保持了合理的接触，没有明显的悬空或下陷。"
+      },
+      "causal_response": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "马匹穿过木柱时没有引发任何预期的碰撞反应，木柱没有晃动或碎裂，马匹也没有受到阻挡。"
+      },
+      "motion_kinematics": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "马匹展示了连贯的奔跑动画，骑手的姿态也相对自然，符合运动学规律。"
+      },
+      "collision_boundary": {
+        "score": 1,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "在第115-119帧中，马匹和骑手直接穿透了左侧坚固的木制支柱，发生了严重的穿模现象。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail penalty applied as the subject made meaningful progress before stopping.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "主体未能与木拱门发生碰撞，而是直接穿透了过去。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景中的山丘、树木和建筑在相机跟随移动时保持一致，没有出现扭曲或突变。",
+      "post_completion_phase_zh": "不适用，动作未成功完成。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "wooden archway pillars",
+        "anchors": [
+          "ground path",
+          "stone archway behind it"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-138"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "wooden archway",
+        "stone archway"
+      ],
+      "newly_revealed_regions_zh": "随着相机向前推进，木拱门后方的石拱门和内部结构逐渐显现。",
+      "evidence_zh": "相机平滑地跟随骑手向前移动，视角变化自然，没有不合理的跳跃。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频连续，没有发现硬重置现象。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作未成功完成，无完成后的额外扣分。"
+    },
+    "final_state_check": {
+      "window": "125-138",
+      "visible_key_objects": [
+        "rider",
+        "white horse",
+        "stone archway"
+      ],
+      "reappearance_consistency_zh": "主体在视频末尾停在石拱门内，外观保持一致。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "not_applicable",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "主体在视频中持续向前奔跑，有明显的位移。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "yes",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "yes",
+      "static_tail_first_frame": 125,
+      "static_tail_fraction_of_video": 0.1,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "主体在视频的大部分时间里都在向前奔跑，仅在最后几帧停下。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "partial",
+      "instruction_following_score": 1,
+      "prompt_directed_forward_progress": "yes",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "骑手控制马匹向左前方奔跑，到达了木拱门的位置。",
+      "trajectory_evidence_zh": "主体成功执行了向目标方向的移动，但未能完成碰撞的交互。",
+      "failure_reason_zh": "主体直接穿透了目标物体，未能完成碰撞交互。"
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "yes",
+      "observed_outcome": "solid_penetration",
+      "solid_interpenetration": "yes",
+      "support_after_contact": "plausible",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "在第115-119帧中，马匹和骑手直接穿透了左侧的木制支柱，没有发生任何碰撞或阻挡。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "wooden archway pillar",
+      "target_type": "solid_boundary",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "yes",
+      "observed_trigger": "contact",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "yes",
+      "evidence_zh": "木柱在接触前一直稳定存在，没有发生变形或消失。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "yes",
+      "proxy_evidence_observed": [
+        "torso_or_head_bob",
+        "weight_transfer",
+        "rider_bounce",
+        "gait_synchronized_translation"
+      ],
+      "proxy_supports_expected_locomotion": "yes",
+      "evidence_zh": "马蹄与地面的接触清晰可见，同时骑手有自然的上下起伏，支持了奔跑的运动状态。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "rider and white horse",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "clothing",
+        "body_proportions",
+        "persistent_equipment",
+        "colors"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "骑手和白马在整个视频中保持一致的外观，没有发生身份漂移或变形。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于交互质量等级为1（灾难性的穿模失败），身份一致性得分不计入最终加权平均分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "yes",
+      "physical_response_observed": "no",
+      "core_failure_zh": "马匹和骑手直接穿透了坚固的木柱，发生了严重的穿模。",
+      "positive_evidence_zh": "马匹成功向目标方向奔跑并到达了木拱门处。",
+      "evidence_zh": "尽管主体到达了交互目标，但在接触时直接穿透了实体的木制支柱，没有任何物理碰撞反应，属于灾难性的边界交互失败。",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "马匹和骑手向左侧奔跑并到达了木拱门，但直接穿透了坚固的木制支柱，未能表现出任何碰撞反应，导致严重的物理边界失效。",
+    "task_id": "IF028"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 11048,
+      "output_tokens": 254
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 41256,
+      "output_tokens": 3498
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 139,
+      "sheets_count": 6,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 13.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 138,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 13.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 7,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 12.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 6,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 12.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "daa6819e5bfd97b26429b6d7e3e3c3b6f971fed6eb4eeee470ba3932ce94c77d",
+  "score_prompt_sha256": "f3a1ac9a33951e93687309a96be884658e83bb478e3656a594ac99cd7278ecbf",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "stock-if-IF028-seed42"
+}

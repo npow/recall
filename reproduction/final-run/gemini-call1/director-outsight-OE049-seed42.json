@@ -1,0 +1,400 @@
+{
+  "task_id": "OE049",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "bbb1fd2964ac1261c33e7c179c31ecf3a7e125a93369f88040921cadf355bfab",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE049",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头先向左平移（画面中的男孩向右移动并移出画面），随后镜头向右平移，回到了初始的视角（男孩重新回到画面中）。",
+    "trajectory_evidence_zh": "在主视图第1张的第0-14帧中，镜头持续向左转动，男孩从画面左侧移至右侧并最终离开画面，展示了房间的另一侧；从第15帧开始，镜头开始向右转动；在主视图第2张的第25-38帧中，镜头继续向右转动，男孩重新进入画面，最终回到了与初始帧相似的视角。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.75,
+    "final_score_1_to_5": 1.0,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男孩在相机移开并返回后（第10帧），其短裤颜色从卡其色突变为蓝色，且墙上的画作形状也发生了不连贯的改变。"
+      },
+      "hidden_state_progression": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "在相机移开期间，墙上的画作发生了变化，但最初的太阳形状并未保留，而是被一个全新的大圆圈取代，缺乏连贯的演变。"
+      },
+      "revealed_state_difference": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "当相机返回时，墙上的黄色画作确实变大了（变成了一个大圆圈），但它是一个全新的图案，而不是最初太阳形状的合理扩展。"
+      },
+      "process_accumulation": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "在相机首次返回时（第10-14帧），墙上出现了一个大圆圈，但它与最初的太阳形状不连贯。在动作完成后的多余镜头中（第34帧），该图案完全消失并重置为一条波浪线。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "The video does not have a static tail; the camera continues to pan back and forth extensively after completing the requested action.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 14,
+      "evidence_zh": "相机向左转动后，在第14帧左右向右转回到了最初男孩所在的视角。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "在第0-14帧，相机向左平移并返回，房间的墙壁、窗户和桌子等背景结构基本保持一致。",
+      "post_completion_phase_zh": "在第15-38帧的多余镜头中，相机继续来回平移，墙上的画作在第34帧发生了严重的重置和消失。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "boy before and after camera pan",
+        "anchors": [
+          "wall corner",
+          "window"
+        ],
+        "same_object_or_region": "yes"
+      },
+      {
+        "comparison": "drawing on the wall before and after camera pan",
+        "anchors": [
+          "wall corner",
+          "boy's position"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-9",
+        "10-14",
+        "15-38"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "wall corner",
+        "window",
+        "small table"
+      ],
+      "newly_revealed_regions_zh": "相机向左平移时展示了房间左侧的窗户和桌子。",
+      "evidence_zh": "相邻帧之间的视角变化平滑，符合相机的水平摇摄运动。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "相机运动连续，没有发生全屏硬切，但男孩和画作在视线外发生了严重的属性突变（身份一致性失败）。"
+    },
+    "post_completion_adjustment": {
+      "value": -0.75,
+      "evidence_zh": "在第14帧完成要求的动作后，相机进行了大量多余的左右平移（第15-38帧），并且墙上的画作在第34帧发生了严重的重置和消失。"
+    },
+    "final_state_check": {
+      "window": "35-38",
+      "visible_key_objects": [
+        "boy",
+        "white wall",
+        "yellow marker"
+      ],
+      "reappearance_consistency_zh": "在最终画面中，男孩的短裤颜色（蓝色）与初始状态（卡其色）不一致，墙上的画作也变成了一条不相关的波浪线，与初始的太阳形状完全不同。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "partial",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 2,
+      "named_process": "drawing on the wall",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "第4帧，男孩穿着卡其色短裤，墙上画着一个小的半太阳形状。",
+      "hidden_interval_zh": "第5-9帧，男孩和画作在画面外，预期男孩在继续画画。",
+      "reappeared_state_zh": "第10帧，男孩重新出现，短裤变成蓝色，墙上的画作变成了一个大圆圈。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "视频没有静止的结尾，男孩一直在站立或移动，相机也在持续运动。",
+      "terminal_state_reasoning_zh": "不适用，视频没有静止结尾。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无静止结尾。",
+      "camera_independent_subject_motion": "yes",
+      "stable_world_anchors_compared": [
+        "wall corner",
+        "window"
+      ],
+      "articulation_or_local_state_change_zh": "男孩的手臂姿势发生了变化，墙上的画作状态也发生了改变。",
+      "uniquely_matched_anchor_relative_change_zh": "男孩相对于墙角的位置基本保持不变，但画作的覆盖范围扩大了。",
+      "two_independent_motion_evidence_requirements_met": "yes",
+      "expected_world_motion_direction_zh": "不适用，男孩主要在原地画画。",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "男孩的手臂姿势和墙上的画作状态发生了变化。",
+      "unchanged_coupled_details_zh": "无明显复制粘贴的细节。",
+      "accumulated_change_zh": "墙上的画作从小的半太阳形状变成了一个大圆圈，但在视频后半段又重置为一条波浪线。",
+      "evidence_zh": "画作确实发生了变化，但缺乏连贯性，且男孩的衣物颜色发生了突变，整体演变质量较低。",
+      "final_score_cap_applied": 2
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "相机向左转动了约90度，然后向右转回到了最初的视角。",
+      "trajectory_evidence_zh": "第0-9帧相机向左平移，第10-14帧相机向右平移并回到了男孩所在的初始视角。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "yes",
+      "action_type": "drawing",
+      "tool_and_target": "yellow marker and white wall",
+      "persistent_result_created": "partial",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "partial",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "partial yellow sun-like shape",
+      "result_matches_named_requirement": "no",
+      "result_later_disappears_or_resets": "yes",
+      "visible_reversal_explanation": "none",
+      "productive_action_quality_level_1_to_5": 2,
+      "evidence_zh": "男孩在视线外画出了一个大圆圈，但与最初的太阳形状不连贯。在视频后半段（第34帧），该画作在没有擦除动作的情况下突然消失并重置为一条波浪线。"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "partial",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "相机完成了要求的平移运动，但场景内容的演变存在严重缺陷。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "partial",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "男孩在原地画画，手臂有动作。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "not_applicable",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "boy and drawing",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "clothing",
+        "surface_appearance"
+      ],
+      "identity_failure": "color_drift",
+      "evidence_zh": "男孩在第10帧重新出现时，短裤颜色从卡其色突变为蓝色。墙上的画作也未能保持一致的身份，发生了多次不连贯的突变和重置。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 2,
+      "meaningful_motion_or_evolution": "partial",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 2,
+      "evidence_zh": "由于演变质量仅为2级（画作不连贯且重置），身份一致性得分不能提高最终得分，最终得分上限被限制为2。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "相机成功完成了向左平移并返回的动作，但在视线外期间，男孩的短裤颜色发生了突变，且墙上的画作演变不连贯并在视频后半段完全重置消失。",
+    "task_id": "OE049"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4717,
+      "output_tokens": 274
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 31857,
+      "output_tokens": 3724
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "38b3bfe54002ea01b395783cde0d672f5b633cc08da258dfb2696f71ed3a667c",
+  "score_prompt_sha256": "75b42432a9966cd09d9f1fc85f39f11ecc3ba567102d7dece04c361bba5d7149",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "director-outsight-OE049-seed42"
+}

@@ -1,0 +1,396 @@
+{
+  "task_id": "OE051",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "ca7ea08d7ec7b135e02e0575740f684863fd695c9a25a830b942f9577b3c5b46",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE051",
+    "perspective": "third-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "partial",
+    "revisit_required": "yes",
+    "revisit_observed": "no",
+    "observed_action_zh": "镜头持续向左平移跟随摩托车，没有向右转回原视角的动作。",
+    "trajectory_evidence_zh": "从第0帧到第38帧，背景持续向右移动，表明镜头一直在向左平移。视频中没有出现镜头向右转动或返回初始视角的轨迹。",
+    "failure_reason_zh": "镜头仅执行了向左转动的动作，未能执行向右转回原视角的指令，轨迹不完整。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头返回初始视角后，前景摩托车和落后的摩托车均回到了第一帧的精确位置和姿态，发生了严重的矛盾重现（状态重置），未能保持合理的物理演进身份。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "在镜头向左转动并返回的过程中，落后的摩托车没有继续向前行驶，而是在镜头返回时被冻结在初始的背景位置。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头返回初始视角时，落后的摩托车完全没有前进，其位置与第一帧完全相同，没有展现出任何演进后的状态差异。"
+      },
+      "trajectory_continuity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "落后的摩托车重新出现时并未沿着赛道向前推进，而是像复制粘贴一样停留在原点，轨迹连续性完全失败。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "无额外扣分，缺乏演进已在各维度评分中体现。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 38,
+      "evidence_zh": "镜头成功向左平移了约90度，随后向右平移并回到了包含初始草垛和观众的原始视角。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头平移过程中，背景的草垛、旗帜和观众保持了相对稳定的空间结构。",
+      "post_completion_phase_zh": "镜头返回后，背景元素与第一帧完全一致，但处于不合理的冻结状态。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "lagging motorcycle in frame 0 vs frame 38",
+        "anchors": [
+          "hay-bale barriers",
+          "spectators in red and white shirts"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-15",
+        "20-38"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "hay-bale barriers",
+        "event flags",
+        "spectators"
+      ],
+      "newly_revealed_regions_zh": "镜头向左转动时展示了赛道左侧的黑色帐篷和红色旗帜区域。",
+      "evidence_zh": "背景中的草垛、旗帜和人物随着镜头的左右平移在画面中连续移动，符合摄像机水平旋转的透视变化。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "镜头运动是连续的平移，没有发生突兀的剪辑，但返回的场景状态是冻结的初始状态。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作在视频末尾完成，无额外的违规尾部。"
+    },
+    "final_state_check": {
+      "window": "30-38",
+      "visible_key_objects": [
+        "foreground rider",
+        "lagging motorcycle",
+        "dusty track",
+        "hay-bale barriers",
+        "spectators",
+        "event flags"
+      ],
+      "reappearance_consistency_zh": "镜头返回后，所有初始对象均一致重新出现，但它们的状态被不合理地冻结在第一帧的位置，没有发生应有的物理演进。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "yes",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "motorcycles riding forward along the dirt track",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "镜头向左转动前，落后的摩托车位于画面左侧远处的赛道上，前景摩托车位于画面中央。",
+      "hidden_interval_zh": "镜头向左转动并返回，期间落后的摩托车应继续沿赛道向前行驶。",
+      "reappeared_state_zh": "镜头返回初始视角后，落后的摩托车和前景摩托车均回到了第一帧的完全相同位置，没有任何前进。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "no",
+      "terminal_pose_or_process_state": "active_vehicle_state",
+      "support_and_pose_evidence_zh": "摩托车处于行驶姿态，车轮扬起沙尘，不应在返回视角时停留在原点。",
+      "terminal_state_reasoning_zh": "摩托车比赛是一个持续的运动过程，镜头移开再返回后，车辆应处于赛道更前方，而不是像复制粘贴一样回到初始位置。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无额外扣分，缺乏演进已在各维度评分中体现。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "hay-bale barriers",
+        "spectators",
+        "event flags"
+      ],
+      "articulation_or_local_state_change_zh": "无，返回后摩托车姿态和位置与初始帧完全一致。",
+      "uniquely_matched_anchor_relative_change_zh": "无，返回后摩托车相对于草垛和观众的位置没有变化。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "沿赛道向左前方行驶。",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "无，返回后车轮和扬尘状态与初始帧相同。",
+      "vehicle_front_rear_identification_zh": "摩托车前轮和车头朝向赛道前方。",
+      "vehicle_world_displacement_vs_heading_zh": "返回后车辆在世界坐标系中没有位移。",
+      "vehicle_motion_direction": "static",
+      "unexplained_reverse_motion": "no",
+      "subject_relative_change_zh": "无相对变化，完全重置。",
+      "unchanged_coupled_details_zh": "返回后，摩托车周围的扬尘、车手姿态以及背景人物的姿势与第一帧完全相同，属于复制粘贴式的冻结。",
+      "accumulated_change_zh": "整个视频中，世界状态没有累积变化，镜头返回后一切重置为初始状态。",
+      "evidence_zh": "镜头向左平移后返回，但赛道上的摩托车（包括前景和落后的摩托车）以及背景人物均回到了第一帧的精确位置，没有任何累积的运动进展。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向左平移了约90度，然后向右平移返回了初始视角。",
+      "trajectory_evidence_zh": "从第0帧到第15帧，镜头持续向左平移；从第20帧到第38帧，镜头向右平移并最终回到了包含初始草垛、旗帜和观众的视角。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "no",
+      "ink_change_type": "none",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "不适用",
+      "change_sequence_zh": "不适用",
+      "resulting_ink_state_zh": "不适用",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "不适用"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "不适用",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "no",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "不适用"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "yes",
+      "evidence_zh": "此为OE任务，适用OE动态性检查。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "此为OE任务。"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "yes",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "此为OE任务，适用OE动态性检查。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "此为OE任务。",
+      "trajectory_evidence_zh": "此为OE任务。",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "not_applicable",
+      "solid_interpenetration": "no",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "此为OE任务。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "no",
+      "remained_present_until_trigger": "no",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "no",
+      "evidence_zh": "此为OE任务。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "此为OE任务。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "foreground rider and lagging motorcycle",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "clothing",
+        "colors",
+        "motorcycle shape"
+      ],
+      "identity_failure": "contradictory_reappearance",
+      "evidence_zh": "虽然摩托车和车手的外观特征保持一致，但镜头返回后它们回到了与第一帧完全相同的空间位置和姿态，对于正在高速行驶的车辆而言，这属于矛盾的重现（状态重置）。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于视频缺乏有意义的累积演进（镜头返回后世界状态完全重置为初始帧），演进质量为1，身份一致性得分不能提高最终得分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "此为OE任务。",
+      "positive_evidence_zh": "此为OE任务。",
+      "evidence_zh": "此为OE任务。",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "镜头成功向左转动并返回，但整个场景（包括正在比赛的摩托车）不合理地重置为完全冻结的初始状态，没有任何时间上的演进。",
+    "task_id": "OE051"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4717,
+      "output_tokens": 220
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 31056,
+      "output_tokens": 3749
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "5fbbb1c9db0bc96451202d7561035d0e249e9e9d36b9929668a882613dbdfe81",
+  "score_prompt_sha256": "9b68e4b7ff6e0ceca479367b52ec7864e9855b3a0e0202d964afe8db92057086",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "director-outsight-OE051-seed42"
+}

@@ -1,0 +1,393 @@
+{
+  "task_id": "OE030",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "c24413c74d75ac02c50036f58b9f6664332ac6d0f37244ece6bc55a401455b50",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE030",
+    "perspective": "third-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头先向下倾斜（俯仰向下）跟随银色SUV，随后向上倾斜（俯仰向上）回到初始视角的建筑画面。",
+    "trajectory_evidence_zh": "在Primary Sheet 1中，镜头从初始的平视建筑视角逐渐向下倾斜，直到完全俯视下方的银色SUV；在Primary Sheet 2中，镜头随后向上倾斜，视线重新抬起，最终回到了与初始帧相似的建筑视角。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "在镜头向下平移的过程中（第5-24帧），绿色的建筑、螺旋坡道和银色SUV完全消失，场景变成了一个俯视视角的绿色小径和树篱，以及一辆不同的银色车辆。当镜头向上倾斜时，原始场景部分重新出现，发生了严重的场景和主体变形。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "银色SUV并没有继续沿着坡道向下行驶。相反，整个场景变形为一个完全不同的环境，原始车辆的运动进程完全丢失。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "当镜头向上倾斜回到原始视角时（第30-38帧），银色SUV重新出现在坡道上与其初始位置大致相同的地方，并没有明显向隧道尽头行驶更远的距离。"
+      },
+      "trajectory_continuity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "SUV的行驶轨迹被场景变形完全破坏。在镜头平移期间，车辆并没有保持在路面和车道边界内连续行驶，而是随着场景的突变而消失并被替换。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail penalty applied; the video fails due to catastrophic scene morphing and lack of meaningful evolution.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "镜头执行了向下平移和向上倾斜的动作，但目标车辆并没有沿着坡道向下行驶，场景发生了严重的变形。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "在镜头向下平移时（第5-24帧），背景中的绿色带孔建筑完全消失，被替换为俯视视角的树篱和绿色地面，背景发生严重的不一致和变形。",
+      "post_completion_phase_zh": "不适用，动作未成功完成。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial silver SUV vs. silver vehicle in top-down view",
+        "anchors": [
+          "camera motion",
+          "expected location on ramp"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-10",
+        "20-30"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "green building facade",
+        "curved ramp structure"
+      ],
+      "newly_revealed_regions_zh": "第5-24帧中出现的俯视树篱和绿色路径是完全不符合逻辑的新区域，无法用摄像机向下平移来解释。",
+      "evidence_zh": "摄像机的向下平移无法解释绿色建筑的消失和场景完全变为俯视视角的树篱路径，这是场景生成的失败，而非单纯的视角变化。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "4-10",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "green building facade",
+        "curved ramp structure"
+      ],
+      "evidence_zh": "在第4到第10帧之间，随着镜头的向下平移，原本的绿色建筑和坡道完全消失，被一个俯视视角的树篱和绿色路径取代，这在物理上是不可能的，构成了硬重置和场景变形。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "没有在首次完成提示动作后出现额外的失败，因为动作本身并未有效完成。"
+    },
+    "final_state_check": {
+      "window": "35-38",
+      "visible_key_objects": [
+        "green building with decorative circular holes",
+        "curved ramp",
+        "silver Suzuki Jimny SUV"
+      ],
+      "reappearance_consistency_zh": "在视频结尾，镜头向上倾斜后，绿色建筑和SUV重新出现，但SUV的位置与初始状态几乎相同，没有体现出应有的行驶进度，且坡道的结构细节与初始状态存在差异。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "silver SUV driving down the spiral parking garage ramp",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "第0-4帧，银色SUV位于螺旋坡道的上部。",
+      "hidden_interval_zh": "第5-24帧，镜头向下平移，但场景完全变形为俯视视角的树篱路径，原始SUV的行驶过程未被合理推演。",
+      "reappeared_state_zh": "第30-38帧，镜头向上倾斜，SUV重新出现在坡道上，但位置几乎没有改变。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "不适用，车辆并未到达合理的终点状态。",
+      "terminal_state_reasoning_zh": "不适用。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "不适用。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "curved ramp structure",
+        "green building facade"
+      ],
+      "articulation_or_local_state_change_zh": "无，车辆在重新出现时没有显示出明显的局部状态变化或行驶进度。",
+      "uniquely_matched_anchor_relative_change_zh": "无，车辆相对于坡道的位置在重新出现时几乎没有改变。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "沿着螺旋坡道向下行驶。",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "无，车轮或车辆局部特征没有显示出连续的行驶变化。",
+      "vehicle_front_rear_identification_zh": "车辆前部有挡风玻璃和车头灯。",
+      "vehicle_world_displacement_vs_heading_zh": "车辆在重新出现时没有产生与车头朝向一致的有效位移。",
+      "vehicle_motion_direction": "static",
+      "unexplained_reverse_motion": "no",
+      "subject_relative_change_zh": "车辆在重新出现时相对于坡道的位置没有发生明显的改变。",
+      "unchanged_coupled_details_zh": "不适用，场景发生了严重的变形。",
+      "accumulated_change_zh": "在整个视频中，目标车辆没有产生任何有效的行驶进度，场景发生了灾难性的变形。",
+      "evidence_zh": "视频未能展示银色SUV沿着坡道向下行驶的过程。在镜头平移期间，场景完全变形为另一个不相关的环境，当镜头移回时，车辆几乎停留在原地，没有任何有意义的演变。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "摄像机执行了向下平移然后向上倾斜回到原始视角的动作。",
+      "trajectory_evidence_zh": "第0-15帧摄像机向下平移，第25-38帧摄像机向上倾斜，轨迹符合提示要求。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "silver Suzuki Jimny SUV and green building",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "colors",
+        "surface_appearance"
+      ],
+      "identity_failure": "replacement",
+      "evidence_zh": "在镜头向下平移的过程中，绿色的建筑和银色SUV完全消失，被替换为一个俯视视角的树篱路径和一辆不同的银色车辆，发生了严重的身份替换和场景变形。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于视频未能展示任何有意义的演变（车辆未行驶，场景严重变形），演变质量等级为1，最终得分被限制为1，主体身份的稳定性无法提高最终得分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频在镜头向下平移时发生了灾难性的场景变形，原始的绿色建筑和SUV完全消失并被替换，且车辆没有产生任何沿着坡道向下行驶的有效进度。",
+    "task_id": "OE030"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4726,
+      "output_tokens": 226
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 30479,
+      "output_tokens": 3666
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "019c6706abbcd2169bfd18f9667d8a9afe60bc5cf41cce849b45dd92e60cf370",
+  "score_prompt_sha256": "1534a6b1908c7d517d006ca6778f769f59be1b796648d6e21b6f4f4d0bd375dc",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "stock-outsight-OE030-seed42"
+}

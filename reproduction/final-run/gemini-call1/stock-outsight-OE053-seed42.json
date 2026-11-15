@@ -1,0 +1,408 @@
+{
+  "task_id": "OE053",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "0401816cde70e770f450cbba12e61c7833c1f21fb32c14608bd47f29decdca7b",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE053",
+    "perspective": "first-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "partial",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头向右旋转，停顿了一段时间，然后向左旋转，经过了初始视角但没有停止，继续向左旋转到了其他区域。",
+    "trajectory_evidence_zh": "0-1.5秒（第0-15帧），镜头向右旋转；1.5-5.0秒（第15-50帧），镜头保持静止；5.0-8.8秒（第50-88帧），镜头向左旋转，在第58帧左右经过了初始视角，但随后继续向左旋转，超出了初始视角的范围。",
+    "failure_reason_zh": "镜头在向左旋转返回时没有停在初始视角，而是继续向左旋转，导致最终视角与初始视角不符（过度旋转）。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1.0,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头向左转回原视角时，初始的面包店场景、面包柜以及排队的所有人物（戴头巾的女士、穿牛仔夹克的男子、灰发男子、长发女子、男孩）完全消失，被一个全新的场景和不同的人群取代，发生了严重的场景重置和身份替换。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "由于镜头转回时初始场景和人物完全被替换，原始队伍在视野外的状态没有任何有意义的推进或演变。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "返回的视角并没有展示原始队伍的演变状态，而是展示了一个完全不同的、幻觉出的新场景和新人群。"
+      },
+      "trajectory_continuity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "原始顾客没有在队伍中合理地向前移动，而是完全消失并被不相关的人员取代，轨迹连续性彻底破坏。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "无额外扣分，场景重置的失败已在各类别评分中体现。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 88,
+      "evidence_zh": "镜头完成了向右平移、等待以及向左平移返回的动作轨迹。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头向右转动时，背景从面包店变为摆满瓶子的吧台；向左转回时，背景没有回到最初的面包店，而是变成了一个完全不同的新场景。",
+      "post_completion_phase_zh": "动作在视频结束时完成，无额外尾部。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial bakery queue vs. returned bakery queue",
+        "anchors": [
+          "camera trajectory",
+          "expected spatial location"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "50-74"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "counter edge",
+        "background walls"
+      ],
+      "newly_revealed_regions_zh": "镜头向左转回时展示了与初始场景完全不同的新区域，而非预期的原始场景。",
+      "evidence_zh": "镜头进行了连续的平移返回，但未能保持空间一致性，导致场景完全改变。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "50-74",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "bakery counter structure",
+        "background walls"
+      ],
+      "evidence_zh": "镜头向左平移回原视角时，原本的面包柜、墙壁和排队的人群完全消失，被一个全新的场景和不同的人群取代，发生了严重的场景重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作在视频结束时完成，无额外尾部。"
+    },
+    "final_state_check": {
+      "window": "75-88",
+      "visible_key_objects": [],
+      "reappearance_consistency_zh": "初始场景中的所有关键对象（戴头巾的女士、穿牛仔夹克的男子、灰发男子、长发女子、男孩、面包柜）在最终视角中均未一致重新出现，完全被替换。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "queue progression",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "初始排队的人群和面包柜。",
+      "hidden_interval_zh": "镜头向右转动并停留，排队过程在视野外。",
+      "reappeared_state_zh": "镜头转回后，出现了一个完全不同的场景和人群。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "场景完全重置，无法评估最终状态的合理性。",
+      "terminal_state_reasoning_zh": "场景重置导致无法评估。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无额外扣分。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "none"
+      ],
+      "articulation_or_local_state_change_zh": "无，原始人物消失。",
+      "uniquely_matched_anchor_relative_change_zh": "无，场景重置。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "队伍应向前移动。",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "不适用。",
+      "vehicle_front_rear_identification_zh": "不适用。",
+      "vehicle_world_displacement_vs_heading_zh": "不适用。",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "原始人物消失，被新人物取代。",
+      "unchanged_coupled_details_zh": "无。",
+      "accumulated_change_zh": "场景发生灾难性重置，没有积累有效的任务相关变化。",
+      "evidence_zh": "镜头转回时，初始场景和人物完全消失并被替换，没有任何有意义的演变。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向右平移，停留一段时间后，向左平移回大致的初始方向。",
+      "trajectory_evidence_zh": "视频显示了向右的平移、静止等待以及向左的平移返回。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "uncertain",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "uncertain",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "uncertain",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "initial bakery queue and counter",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [],
+      "identity_failure": "replacement",
+      "evidence_zh": "镜头向左转回原视角时，初始的面包店场景、面包柜以及排队的所有人物完全消失，被一个全新的场景和不同的人群取代。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于场景发生灾难性重置，没有任何有意义的演变，身份稳定性无法提升最终得分，最终得分被限制为1。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "镜头向左转回原视角时，初始的面包店场景和排队人群完全消失，被一个全新的场景和不同的人群取代，发生了严重的场景重置，导致无法体现任何有意义的队伍演变。",
+    "task_id": "OE053"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 8336,
+      "output_tokens": 286
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 34098,
+      "output_tokens": 3342
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 89,
+      "sheets_count": 4,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 8.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 88,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 8.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 5,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 8.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 4,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 8.0,
+          "filled_cells": 1
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "40cce6f68551620d9c72e4484062abcc96fc7dea2bde90ad94f0adf8c88b2901",
+  "score_prompt_sha256": "9278e358fd9fdd7d5ba68ad31b07356dd74be3f6d8cf81127b9c1716e31125f6",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "stock-outsight-OE053-seed42"
+}

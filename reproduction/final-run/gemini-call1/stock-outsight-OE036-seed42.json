@@ -1,0 +1,393 @@
+{
+  "task_id": "OE036",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "c38385a879779ed9d5db2dc9b578c4311073632627d211504cf243f4eed7b09b",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE036",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头先向上仰视约90度看向天空，随后向下俯视，视角重新回到人物和狗身上。",
+    "trajectory_evidence_zh": "在主视图第1张的第0-18帧中，镜头持续向上仰视，画面从人物和狗逐渐变为天空；从第19帧开始到第2张的第28帧，镜头开始向下俯视，人物的身体和狗重新出现在画面中，完成了返回初始视角的轨迹。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1.0,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头上仰并回正后，原本在前方背对镜头行走的男子消失，画面突变为一个男子的正面/躯干自拍视角，主体身份和空间关系发生灾难性错误。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "由于镜头回正后原本的男子和狗消失并被自拍视角取代，无法观察到他们在盲区期间的任何合理运动进展。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头回正后没有显示男子和狗在道路上前进后的状态，而是变成了完全错误的自拍视角。"
+      },
+      "trajectory_continuity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头回正后，原本向前的运动轨迹完全断裂，画面变成了男子的正面自拍视角，未能保持一致的运动方向和姿态。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "no static tail penalty applied; failures are captured in category scores",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 28,
+      "evidence_zh": "镜头完成了向上仰视天空并向下回正的动作。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头上仰前，背景为有植被的柏油路；上仰时变为天空。",
+      "post_completion_phase_zh": "镜头回正后，背景仍为柏油路和植被，但视角和主体位置已完全改变。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial man walking away vs. man in selfie view",
+        "anchors": [
+          "asphalt road",
+          "dog's leash"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "10-15",
+        "24-28"
+      ],
+      "continuous_camera_motion": "no",
+      "tracked_structural_anchors": [
+        "asphalt road",
+        "vegetation"
+      ],
+      "newly_revealed_regions_zh": "镜头上仰时出现的男子面部和回正后出现的男子躯干属于无中生有的新区域/主体。",
+      "evidence_zh": "镜头上仰和回正的运动无法解释为何原本在前方行走的男子会突然变成自拍视角/第一人称躯干视角。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "10-12",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "asphalt road",
+        "man's position"
+      ],
+      "evidence_zh": "镜头在第10-12帧上仰时，画面底部突然出现一个男子的面部轮廓，而原本镜头是跟在男子身后一段距离的，这种视角的瞬间转换（从跟随变为自拍/胸前视角）在物理上是不可能的。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "无额外扣分"
+    },
+    "final_state_check": {
+      "window": "25-28",
+      "visible_key_objects": [
+        "man",
+        "dog",
+        "leash",
+        "asphalt road"
+      ],
+      "reappearance_consistency_zh": "初始画面中男子背对镜头在前方行走，最终画面中变成了男子的正面/躯干自拍视角，一致性完全破坏。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "man and dog walking down the road",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "镜头跟随男子和狗在路上走",
+      "hidden_interval_zh": "镜头向上仰视天空，但画面中出现了一个男子的面部（自拍视角）",
+      "reappeared_state_zh": "镜头回正后，变成了男子的自拍视角，原本在前方行走的男子消失",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "不适用",
+      "terminal_state_reasoning_zh": "不适用",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "diagnostic explanation only; no separate final-score deduction",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "asphalt road"
+      ],
+      "articulation_or_local_state_change_zh": "无，原本的男子和狗在镜头回正后消失，被自拍视角的男子取代",
+      "uniquely_matched_anchor_relative_change_zh": "无，视角完全改变",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "沿着道路向前",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "no",
+      "subject_relative_change_zh": "视角从第三人称跟随突变为第一人称自拍，主体发生替换",
+      "unchanged_coupled_details_zh": "无",
+      "accumulated_change_zh": "无连贯的累积变化，场景发生灾难性突变",
+      "evidence_zh": "镜头上仰后出现自拍视角的男子面部，回正后完全变成了自拍视角，原本在前方行走的男子消失，场景连续性彻底破坏。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向上仰视天空，随后向下回正。",
+      "trajectory_evidence_zh": "第5-10帧镜头开始上仰，第11-24帧保持仰视天空，第25-28帧镜头向下回正。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "man and dog",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "clothing",
+        "colors"
+      ],
+      "identity_failure": "replacement",
+      "evidence_zh": "镜头回正后，原本在前方行走的男子被一个处于自拍视角的男子完全替换。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于场景发生了灾难性的视角和主体替换，演进质量为1，身份一致性无法提升最终得分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频在镜头上仰并回正后发生了灾难性的空间和身份错误，原本在前方行走的男子消失，画面突变为男子的自拍视角。",
+    "task_id": "OE036"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4715,
+      "output_tokens": 229
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 30434,
+      "output_tokens": 3399
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 29,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 28,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 2.8,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "0abd0d14345cd9b9278e231d352bb9a82ac23e4b5a6f7822ff949d86fa6a147f",
+  "score_prompt_sha256": "8cb53f1ac20499b87b54963f89d9d466b6451a5d5c873991ddf8913a7642028c",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "stock-outsight-OE036-seed42"
+}

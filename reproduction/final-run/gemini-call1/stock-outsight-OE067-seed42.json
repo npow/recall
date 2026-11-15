@@ -1,0 +1,418 @@
+{
+  "task_id": "OE067",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "6f952a3166b42772b8d6c15ba371d11b11d6a0193383617c6025b49313bf1ef9",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE067",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头向左转动，视线从楼梯移开并看到一扇门，随后镜头向右转动，重新回到最初面向楼梯的视角。",
+    "trajectory_evidence_zh": "从第0帧到第24帧，镜头向左平移，楼梯向画面右侧移出，一扇门进入视野；从第25帧开始，镜头向右平移，门向画面左侧移出，楼梯重新出现并在视频结尾回到画面中央，完成了向左转再转回原视角的轨迹。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 3.5,
+    "final_score_1_to_5": 3.5,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "女孩的夹克颜色从紫红色变为浅粉色，楼梯两侧的砖墙在镜头移动期间变成了黑色竖条纹墙板（第21-46帧），随后又变回砖墙（第51-58帧），发生了严重的材质和环境替换。"
+      },
+      "hidden_state_progression": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "在镜头向左移开并返回后（如第25帧和第51帧），女孩的姿态发生了变化，并且相对于楼梯台阶的位置明显上升，表明在画面外继续了攀爬动作。"
+      },
+      "revealed_state_difference": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "当镜头最终切回原始视角（第51-58帧）时，女孩明显比初始状态更接近顶部的出口，位于更高的台阶上。"
+      },
+      "process_accumulation": {
+        "score": 4,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "女孩位置的升高与合理的攀爬过程一致，身体姿态和位置的变化符合向上走楼梯的动作，没有出现瞬间移动或穿模。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "无静止尾部，动作持续进行。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "partial",
+      "first_completion_frame": 51,
+      "evidence_zh": "镜头向左平移后返回了原始视角，但过程中发生了多次左右来回摆动，而非单次干净的180度转向并返回。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头平移期间，背景墙壁从砖墙突变为黑色竖条纹墙板（第6-10帧发生渐变），严重破坏了背景一致性。",
+      "post_completion_phase_zh": "第51帧后镜头再次切回时，墙壁又变回了砖墙。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "stairway walls and girl",
+        "anchors": [
+          "stairway structure",
+          "top exit door"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-10",
+        "21-26",
+        "47-58"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "stairway steps",
+        "top exit door"
+      ],
+      "newly_revealed_regions_zh": "镜头向左平移时展示了左侧的黑色墙壁区域。",
+      "evidence_zh": "视角的改变由连续的镜头左右平移引起，但环境材质在平移过程中发生了不合理的幻觉变化。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "画面没有发生硬切，材质变化是在镜头连续平移过程中渐变和替换的。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "无额外扣分项。"
+    },
+    "final_state_check": {
+      "window": "51-58",
+      "visible_key_objects": [
+        "young girl",
+        "light pants",
+        "brick walls",
+        "stair treads",
+        "street-level exit"
+      ],
+      "reappearance_consistency_zh": "女孩和砖墙在最终画面中重新出现，但女孩的夹克颜色变浅，且红边标志牌消失。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 4,
+      "named_process": "girl walking up the stairway",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "第0-5帧，女孩在砖墙楼梯的下半部分向上走。",
+      "hidden_interval_zh": "镜头向左移开，女孩在画面外继续攀爬。",
+      "reappeared_state_zh": "第51-58帧，镜头最终切回砖墙楼梯，女孩已经到达楼梯顶部附近。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "视频结束时女孩仍在走动，未达到静止状态。",
+      "terminal_state_reasoning_zh": "动作在视频结束时仍在进行。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无静止尾部。",
+      "camera_independent_subject_motion": "yes",
+      "stable_world_anchors_compared": [
+        "stair steps",
+        "top exit door"
+      ],
+      "articulation_or_local_state_change_zh": "女孩的腿部姿态发生变化，从右脚抬起变为左脚抬起或双脚站立在更高处。",
+      "uniquely_matched_anchor_relative_change_zh": "女孩相对于楼梯顶部出口和两侧墙壁的位置明显升高。",
+      "two_independent_motion_evidence_requirements_met": "yes",
+      "expected_world_motion_direction_zh": "沿着楼梯向上走向出口。",
+      "returned_motion_direction_consistent": "yes",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "no",
+      "subject_relative_change_zh": "女孩相对于楼梯台阶的位置发生了真实的物理位移。",
+      "unchanged_coupled_details_zh": "无复制粘贴现象，姿态有合理变化。",
+      "accumulated_change_zh": "女孩从楼梯中下部成功攀爬到了接近顶部出口的位置。",
+      "evidence_zh": "视频展示了清晰的攀爬进度，但伴随了严重的环境材质幻觉。",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "partial",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向左平移，然后向右平移返回，但随后发生了多次左右来回摆动。",
+      "trajectory_evidence_zh": "镜头确实执行了向左转并返回原始视角的动作，但包含了多余的振荡。",
+      "failure_reason_zh": "镜头运动包含了多次不必要的左右来回摆动，而非单次干净的180度转向并返回。"
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "女孩持续向上攀爬，镜头有明显的平移运动。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "brick walls",
+        "girl's jacket"
+      ],
+      "correspondence_anchors": [
+        "stairway structure",
+        "top exit door"
+      ],
+      "visible_intervals": [
+        "0-5",
+        "21-46",
+        "51-58"
+      ],
+      "before_developing_after_checkpoints": [
+        {
+          "surface": "stairway walls",
+          "before_frame": 5,
+          "developing_frame": 10,
+          "after_frame": 25,
+          "observed_change_zh": "砖墙材质在镜头平移过程中渐变为黑色竖条纹墙板。"
+        }
+      ],
+      "intrinsic_color_drift": "verified",
+      "material_or_texture_drift": "verified",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "楼梯两侧的墙壁材质在镜头移开期间发生了完全的替换（砖墙变黑板再变回砖墙），女孩的夹克颜色也发生了漂移。"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "yes",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "女孩在画面中和画面外均保持了向上的攀爬运动。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "yes",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "yes",
+      "evidence_zh": "女孩的脚部和台阶的接触清晰可见，支撑关系合理。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "young girl and stairway environment",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "body_proportions"
+      ],
+      "identity_failure": "replacement",
+      "evidence_zh": "女孩的夹克颜色发生漂移，且楼梯环境的墙壁材质发生了严重的替换和幻觉（砖墙变为黑色墙板再变回砖墙）。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 4,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": null,
+      "evidence_zh": "攀爬动作的演进质量达到了4级，因此身份一致性问题正常计入扣分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 4,
+      "interaction_opportunity_reached": "yes",
+      "physical_response_observed": "yes",
+      "core_failure_zh": "无物理交互失败，主要问题在于环境材质幻觉。",
+      "positive_evidence_zh": "女孩的攀爬动作连贯且符合物理规律。",
+      "evidence_zh": "攀爬动作本身质量较高，但受限于环境的严重幻觉。",
+      "final_score_cap_applied": 4
+    },
+    "summary_zh": "视频中女孩在镜头移开期间继续向上攀爬，展现了合理的隐藏状态进展和累积结果，但在此过程中楼梯墙壁材质和女孩衣物颜色发生了严重的幻觉和替换。",
+    "task_id": "OE067"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 5917,
+      "output_tokens": 245
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 31869,
+      "output_tokens": 3751
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 59,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 5.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 58,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 5.8,
+          "filled_cells": 9
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "999b7a8aeb24182359133397fb541c7e533abbfac1890fd48a3aa9275256c536",
+  "score_prompt_sha256": "8ae413abfa4bfdee892e22823d8fb324bfe633ad82efd94060f46244d57519f8",
+  "scores": {
+    "official": 3.5,
+    "final_score": 3.5
+  },
+  "episode_id": "stock-outsight-OE067-seed42"
+}

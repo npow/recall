@@ -1,0 +1,395 @@
+{
+  "task_id": "OE029",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "599736748579b8be0c90bd163cfb127c31e560bd9e8659f09565e1a7b41fba6a",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE029",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "视角首先向右转动，接着向前移动了一段距离，最后画面保持静止。",
+    "trajectory_evidence_zh": "在主视图表1的前半部分（帧0-13），视角明显向右转动；随后（帧14-27），视角沿着铁轨向前推进；在表2的后半部分（帧28-38），画面停止移动并保持静止，完全符合指令要求的轨迹。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "out_of_sight_evolution": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "5917号机车在相机右转时并未自然地继续沿轨道行驶，而是发生严重形变，变成了一节带有烟囱的灰色车厢。"
+      },
+      "prompt_evolution_alignment": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "场景演变极不合理，画面右侧凭空出现了一辆蓝色的电力机车，天空中也出现了原本不存在的接触网电线。"
+      },
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "5917号蒸汽机车完全失去了原有特征（红色装饰、驾驶室等），形变为一节灰色车厢，且场景中幻觉出了另一辆完全不同的电力机车。"
+      },
+      "temporal_scene_consistency": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "场景空间极不稳定，随着相机转动，天空中突然出现了接触网，右侧也凭空出现了新的轨道和列车。"
+      },
+      "physical_causality": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "原机车并未在右侧轨道上合理地显得更远，而是被形变的车厢和凭空出现的电力机车所取代，严重违背物理因果关系。"
+      },
+      "trajectory_continuity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "由于5917号机车形变为其他物体，其原有的运动轨迹和方向连续性已完全丢失。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "The video ends with a static hold as requested by the prompt; no static tail penalty is applied.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 25,
+      "evidence_zh": "相机完成了向右转动约60度并向前移动的动作，随后在第25帧左右保持静止。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "相机右转和前进过程中，天空中凭空出现了接触网，右侧出现了新的蓝色电力机车。",
+      "post_completion_phase_zh": "相机静止后，幻觉产生的接触网和蓝色机车持续存在于画面中。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "Locomotive 5917 and the grey carriage with a smokestack",
+        "anchors": [
+          "left train track",
+          "continuous camera pan"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-15"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "left train track",
+        "horizon line"
+      ],
+      "newly_revealed_regions_zh": "画面右侧随着相机转动新展现的区域。",
+      "evidence_zh": "相机连续向右旋转并前进，左侧轨道和地平线相对稳定，但右侧新区域出现了不合理的电力机车和接触网，且左侧列车发生形变，这些变化不能用相机运动来解释。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "场景变化（形变和幻觉）发生在连续的相机运动过程中，并非由于硬切或重置引起。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作完成后画面按提示词要求保持静止，无额外扣分项。"
+    },
+    "final_state_check": {
+      "window": "25-38",
+      "visible_key_objects": [
+        "left train track"
+      ],
+      "reappearance_consistency_zh": "5917号机车未能保持其初始形态，在最终画面中已被形变的车厢和幻觉出的电力机车取代。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "locomotive 5917 moving to the right",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "yes",
+      "static_tail_first_frame": 25,
+      "terminal_static_reasonable": "yes",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "提示词要求最后保持视角静止，画面符合该要求。",
+      "terminal_state_reasoning_zh": "相机按要求停止移动，属于合理的静止状态。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "diagnostic explanation only; no separate final-score deduction",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "left train track"
+      ],
+      "articulation_or_local_state_change_zh": "机车发生严重形变，长出了不合理的烟囱。",
+      "uniquely_matched_anchor_relative_change_zh": "形变后的车厢相对于左侧轨道向远处移动。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "向右（沿轨道向前）",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "车轮和车身细节完全丢失，被灰色车厢取代。",
+      "vehicle_front_rear_identification_zh": "初始帧中机车车头朝右，但随后形变为无法辨认前后的车厢。",
+      "vehicle_world_displacement_vs_heading_zh": "形变后的物体沿轨道向远处移动，但已不是原机车。",
+      "vehicle_motion_direction": "uncertain",
+      "unexplained_reverse_motion": "no",
+      "subject_relative_change_zh": "主体发生灾难性形变和替换。",
+      "unchanged_coupled_details_zh": "无，主体完全改变。",
+      "accumulated_change_zh": "相机向右转动并向前移动，但5917号蒸汽机车在画面中变成了带烟囱的灰色车厢，右侧凭空出现了一辆蓝色电力机车和接触网。",
+      "evidence_zh": "主体机车发生严重形变和替换，场景中出现大量幻觉（新机车和电线），属于灾难性失败。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "相机向右转动约60度，向前移动了一段距离，然后保持静止。",
+      "trajectory_evidence_zh": "视频显示视角向右平移旋转，随后向前推进，最后画面稳定，符合提示词的相机运动要求。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "locomotive 5917",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [],
+      "identity_failure": "replacement",
+      "evidence_zh": "5917号蒸汽机车在相机转动过程中完全失去了原有特征，形变为一节带有烟囱的灰色车厢，且场景中幻觉出了另一辆蓝色的电力机车。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于演变质量极差（发生灾难性形变和幻觉），主体一致性得分不能提升最终分数，最终分数被限制在1分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频在执行相机右转和前进时，原有的5917号蒸汽机车发生灾难性形变变成了灰色车厢，同时场景中凭空幻觉出了接触网和一辆蓝色的电力机车，导致演变质量和主体一致性严重失败。",
+    "task_id": "OE029"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4740,
+      "output_tokens": 230
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 34580,
+      "output_tokens": 3627
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "fd18264ffbfd03df4beeba48a418a58e209bf0f314cbee42d44260f62b1491a6",
+  "score_prompt_sha256": "a1e8894e7b2db8aac145eac8168c218b610c860ba5f21721f3ac78888f920400",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "stock-outsight-OE029-seed42"
+}

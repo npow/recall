@@ -1,0 +1,605 @@
+{
+  "task_id": "OE001",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "92598f1237f27285274f71bc766917e5e511216378376cc3422a3fc66d48c535",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "verdict": "not_applicable",
+    "instruction_following_score": null
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "insight_evolution": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "主主体在画面中保持静止，随后摄像机向前移动穿过人群，人群大多处于静止状态且发生严重复制和变形，没有产生有意义的自然动作进展。"
+      },
+      "prompt_evolution_alignment": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "场景演变极不合理，摄像机在街道上穿梭时，人群变成了大量复制的克隆人（许多人背着完全相同的背包），缺乏物理合理性和连贯性。"
+      },
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "初始的推婴儿车的女子在摄像机向前移动后消失，随后出现的大量行人发生严重的复制和变形，许多人背着完全相同的带有白色标志的黑色背包。"
+      },
+      "temporal_scene_consistency": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "初始的斑马线、街道标志和背景建筑在摄像机移动后完全消失，场景突变为一个充满克隆人群的通用街道环境。"
+      },
+      "physical_causality": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "人群的分布和状态极不自然，大量行人僵立在街道中间，随着摄像机的推进发生滑动和不合理的变形，缺乏正常的物理接触和运动。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "no static tail; camera moves continuously",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "视频未能展现合理的观察过程，场景退化为不合理的克隆人群。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "初始背景在摄像机移动后完全丢失，被不合理的通用街道取代。",
+      "post_completion_phase_zh": "不适用"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial woman vs subsequent pedestrians",
+        "anchors": [
+          "camera trajectory",
+          "street layout"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-598"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "street surface",
+        "pedestrian crowd"
+      ],
+      "newly_revealed_regions_zh": "摄像机向前移动揭示了新的街道区域，但这些区域充满了不合理的复制人群。",
+      "evidence_zh": "摄像机持续向前移动并穿过人群，导致初始主体出画。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "场景的变化是由摄像机持续向前移动引起的，而非硬切，但揭示的内容极度不合理。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "无额外扣分，基础分数已为最低。"
+    },
+    "final_state_check": {
+      "window": "575-598",
+      "visible_key_objects": [],
+      "reappearance_consistency_zh": "初始主体未再出现。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "in_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "woman waiting and observing, and surrounding pedestrians walking",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "street surface"
+      ],
+      "articulation_or_local_state_change_zh": "主体保持静止，随后出画。",
+      "uniquely_matched_anchor_relative_change_zh": "主体相对于地面的位置没有发生有意义的改变。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "根据提示词，主体应保持等待和观察。",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "主体无明显动作变化。",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "主主体在画面中静止，随后摄像机向前移动穿过人群，人群大多处于静止状态且发生严重复制和变形，没有产生有意义的动作进展。",
+      "evidence_zh": "视频中主主体没有明显的动作进展，随后摄像机在静止且大量复制的人群中穿梭，缺乏合理的物理演变。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "not_applicable",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "not_applicable",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": "not_applicable"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "woman with black backpack and stroller",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "clothing",
+        "colors"
+      ],
+      "identity_failure": "replacement",
+      "evidence_zh": "初始主体在摄像机移动后消失，随后出现的人群发生严重的复制和变形，大量行人背着完全相同的背包。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于演变质量极差（得分为1），主体一致性得分不能提升最终得分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "not_applicable",
+      "positive_evidence_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频未能展现合理的场景演变，摄像机向前移动后初始主体消失，场景退化为在大量复制且静止的人群中穿梭，存在严重的幻觉和一致性问题。",
+    "task_id": "OE001"
+  },
+  "calls": [
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 61709,
+      "output_tokens": 3349
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 599,
+      "sheets_count": 24,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 59.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 149,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 14.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 7,
+          "first_sample_index": 150,
+          "last_sample_index": 174,
+          "first_time_seconds": 15.0,
+          "last_time_seconds": 17.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 8,
+          "first_sample_index": 175,
+          "last_sample_index": 199,
+          "first_time_seconds": 17.5,
+          "last_time_seconds": 19.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 9,
+          "first_sample_index": 200,
+          "last_sample_index": 224,
+          "first_time_seconds": 20.0,
+          "last_time_seconds": 22.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 10,
+          "first_sample_index": 225,
+          "last_sample_index": 249,
+          "first_time_seconds": 22.5,
+          "last_time_seconds": 24.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 11,
+          "first_sample_index": 250,
+          "last_sample_index": 274,
+          "first_time_seconds": 25.0,
+          "last_time_seconds": 27.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 12,
+          "first_sample_index": 275,
+          "last_sample_index": 299,
+          "first_time_seconds": 27.5,
+          "last_time_seconds": 29.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 13,
+          "first_sample_index": 300,
+          "last_sample_index": 324,
+          "first_time_seconds": 30.0,
+          "last_time_seconds": 32.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 14,
+          "first_sample_index": 325,
+          "last_sample_index": 349,
+          "first_time_seconds": 32.5,
+          "last_time_seconds": 34.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 15,
+          "first_sample_index": 350,
+          "last_sample_index": 374,
+          "first_time_seconds": 35.0,
+          "last_time_seconds": 37.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 16,
+          "first_sample_index": 375,
+          "last_sample_index": 399,
+          "first_time_seconds": 37.5,
+          "last_time_seconds": 39.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 17,
+          "first_sample_index": 400,
+          "last_sample_index": 424,
+          "first_time_seconds": 40.0,
+          "last_time_seconds": 42.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 18,
+          "first_sample_index": 425,
+          "last_sample_index": 449,
+          "first_time_seconds": 42.5,
+          "last_time_seconds": 44.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 19,
+          "first_sample_index": 450,
+          "last_sample_index": 474,
+          "first_time_seconds": 45.0,
+          "last_time_seconds": 47.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 20,
+          "first_sample_index": 475,
+          "last_sample_index": 499,
+          "first_time_seconds": 47.5,
+          "last_time_seconds": 49.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 21,
+          "first_sample_index": 500,
+          "last_sample_index": 524,
+          "first_time_seconds": 50.0,
+          "last_time_seconds": 52.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 22,
+          "first_sample_index": 525,
+          "last_sample_index": 549,
+          "first_time_seconds": 52.5,
+          "last_time_seconds": 54.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 23,
+          "first_sample_index": 550,
+          "last_sample_index": 574,
+          "first_time_seconds": 55.0,
+          "last_time_seconds": 57.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 24,
+          "first_sample_index": 575,
+          "last_sample_index": 598,
+          "first_time_seconds": 57.5,
+          "last_time_seconds": 59.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 30,
+      "sheets_count": 8,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 58.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 7,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 14.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 8,
+          "last_sample_index": 11,
+          "first_time_seconds": 16.0,
+          "last_time_seconds": 22.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 12,
+          "last_sample_index": 15,
+          "first_time_seconds": 24.0,
+          "last_time_seconds": 30.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 16,
+          "last_sample_index": 19,
+          "first_time_seconds": 32.0,
+          "last_time_seconds": 38.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 20,
+          "last_sample_index": 23,
+          "first_time_seconds": 40.0,
+          "last_time_seconds": 46.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 7,
+          "first_sample_index": 24,
+          "last_sample_index": 27,
+          "first_time_seconds": 48.0,
+          "last_time_seconds": 54.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 8,
+          "first_sample_index": 28,
+          "last_sample_index": 29,
+          "first_time_seconds": 56.0,
+          "last_time_seconds": 58.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "score_prompt_sha256": "c726052b9b1c19aeddb36ea12cd71ed1ba389c5cbaac73c0430532b9fbfcc9f7",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "director-insight-OE001-seed42"
+}

@@ -1,0 +1,389 @@
+{
+  "task_id": "OE046",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "e38e5f1377cada7d79b771b4b7f8af46a33d03038c95eac624517d7082d36389",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE046",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头先向左转动，随后向右转动回到了初始视角。",
+    "trajectory_evidence_zh": "在第一张图集中，镜头持续向左平移，画面中的传送带和纸箱向右移出视野；在第二张图集中，镜头开始向右平移，最初的传送带和纸箱重新回到视野中，完成了返回初始视角的动作。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 5.0,
+    "final_score_1_to_5": 5.0,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "黄色带黑条纹的纸箱、银色金属滚筒、黑色边框的传送带以及背景中的仓库和蓝色货架在镜头向左平移并返回后均保持了其身份和外观，没有发生颜色改变、条纹丢失或复制等现象。"
+      },
+      "hidden_state_progression": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "在镜头向左平移期间，纸箱在视野外继续沿着传送带向右移动，没有停滞在原处。"
+      },
+      "revealed_state_difference": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "当镜头返回初始视角时（第38帧），相对于地面上的黄色标线和背景货架，纸箱已经从最初靠近左侧的位置移动到了传送带更靠右的位置，展现了明显的状态差异。"
+      },
+      "trajectory_continuity": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "纸箱重新出现时，位于同一条传送带上更靠右的位置，符合其初始向右移动的轨迹，没有出现在无关位置或反向移动。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "无静止尾部，视频持续展示动态过程。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 38,
+      "evidence_zh": "镜头成功向左平移，随后向右平移并回到了初始视角。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头平移期间，背景中的蓝色货架、地面标线等结构保持一致，未见明显扭曲或突变。",
+      "post_completion_phase_zh": "动作在视频末尾完成，无明显尾部阶段。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "初始视角的纸箱与返回视角后的纸箱",
+        "anchors": [
+          "地面黄色标线",
+          "背景蓝色货架"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-38"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "地面黄色标线",
+        "背景蓝色货架"
+      ],
+      "newly_revealed_regions_zh": "镜头向左平移时展示了传送带左侧及背景货架的新区域。",
+      "evidence_zh": "视角的改变完全由镜头的连续平移引起，背景锚点在平移过程中保持稳定的空间关系。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频中镜头的平移是连续的，没有发生硬切或场景重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作在视频末尾完成，没有多余的导致扣分的尾部动作。"
+    },
+    "final_state_check": {
+      "window": "35-38",
+      "visible_key_objects": [
+        "yellow box",
+        "silver metal rollers",
+        "black-framed conveyor belt",
+        "warehouse background"
+      ],
+      "reappearance_consistency_zh": "镜头返回后，纸箱、传送带及背景货架的外观与初始状态一致，且纸箱的位置符合物理运动规律。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 5,
+      "named_process": "黄色纸箱在传送带上向右移动",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "离开视野前（第4帧），黄色纸箱在传送带上向右移动，位于地面黄色标线左侧。",
+      "hidden_interval_zh": "镜头向左平移期间，纸箱在视野外继续向右移动。",
+      "reappeared_state_zh": "镜头移回后（第38帧），纸箱出现在传送带更靠右的位置，已越过地面黄色标线。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "视频结束时纸箱仍在传送带上移动。",
+      "terminal_state_reasoning_zh": "视频在动态过程中结束，无静止尾部。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无静止尾部扣分。",
+      "camera_independent_subject_motion": "yes",
+      "stable_world_anchors_compared": [
+        "地面黄色标线",
+        "背景蓝色货架"
+      ],
+      "articulation_or_local_state_change_zh": "纸箱在传送带上的局部位置发生改变。",
+      "uniquely_matched_anchor_relative_change_zh": "相对于地面黄色标线，纸箱从标线左侧移动到了标线右侧较远的位置。",
+      "two_independent_motion_evidence_requirements_met": "yes",
+      "expected_world_motion_direction_zh": "向右",
+      "returned_motion_direction_consistent": "yes",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "纸箱相对于传送带和地面标线发生了明显的位移。",
+      "unchanged_coupled_details_zh": "无复制粘贴的冻结现象。",
+      "accumulated_change_zh": "纸箱在视野外完成了向右的持续位移。",
+      "evidence_zh": "视频完整展示了纸箱在传送带上的运动，即使在镜头移开期间，其运动轨迹也在合理延续。",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头先向左平移，然后向右平移回到初始视角。",
+      "trajectory_evidence_zh": "第5-18帧镜头向左平移，第19-38帧镜头向右平移并回到初始的地面标线和货架视角。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "镜头完成了向左再向右的平移，且纸箱在传送带上持续移动。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "yellow box",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "colors",
+        "materials",
+        "surface_appearance"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "黄色纸箱在离开视野并重新出现后，其颜色、条纹和材质均保持一致。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 5,
+      "meaningful_motion_or_evolution": "yes",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": null,
+      "evidence_zh": "视频展示了高质量的动态演变过程，身份一致性符合正常计分条件。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 5,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 5
+    },
+    "summary_zh": "视频成功执行了镜头向左平移并返回的指令，且在视野外期间，黄色纸箱在传送带上保持了合理的向右运动轨迹，身份特征稳定，整体演变质量高。",
+    "task_id": "OE046"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": true
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 30466,
+      "output_tokens": 3448
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "35c65dfdc9169a543e84313be00cb98098c25203a38b8e2beca3bac7140bb500",
+  "score_prompt_sha256": "181e9a9a0c6d4f2ca3ab69f5a17fe7b3ce9236f9a348ec6fdab3078f1fd6aaff",
+  "scores": {
+    "official": 5.0,
+    "final_score": 5.0
+  },
+  "episode_id": "stock-outsight-OE046-seed42"
+}

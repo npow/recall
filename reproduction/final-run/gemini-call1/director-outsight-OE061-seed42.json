@@ -1,0 +1,401 @@
+{
+  "task_id": "OE061",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "ec12a667116fd69029708d4904f9865f8e1c873e9a040111384fc2bb23e0b7a3",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE061",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头向右平移，画布移出视野，随后镜头保持静止一段时间，最后向左平移回到初始的画布视角。",
+    "trajectory_evidence_zh": "在Sheet 1中，镜头向右转动，画布逐渐向左移出画面；在Sheet 2的前半部分，镜头保持静止，画面停留在人物躯干和背景上；在Sheet 2的后半部分和Sheet 3中，镜头向左转动，画布重新回到视野中央，恢复到初始视角。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "画笔在镜头移开时严重变形为一把宽大的绿色刷子，镜头转回时又变回原来的木柄画笔。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "镜头移开期间，手只是拿着变形的刷子停留在衣服前，没有继续在画布上进行任何绘画动作。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "镜头转回后，画布上的绿色涂层边缘形状和未涂色的白色区域与第一帧完全一致，没有任何新增的颜料。"
+      },
+      "process_accumulation": {
+        "score": 1,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "整个视频中没有任何颜料的累积过程，画布上的涂色状态完全没有发生变化。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail penalty applied; the lack of progress is reflected in the category scores.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 58,
+      "evidence_zh": "镜头成功向右旋转，停留后向左旋转回到了初始的画布视角。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头右转后显示的深色背景墙面在停留期间保持相对稳定。",
+      "post_completion_phase_zh": "无明显的动作后阶段。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "画布上的绿色涂层",
+        "anchors": [
+          "画布左侧边缘",
+          "绿色涂层底部的锯齿状边缘"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-10",
+        "36-58"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "画布边缘",
+        "背景墙面纹理"
+      ],
+      "newly_revealed_regions_zh": "镜头右转时揭示了右侧的深色背景墙面和人物的衣服。",
+      "evidence_zh": "视角的改变完全由镜头的水平旋转引起，符合提示词要求的运镜。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "镜头运动连续，没有发生硬切或场景重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "视频在镜头转回初始视角后结束，没有多余的动作。"
+    },
+    "final_state_check": {
+      "window": "50-58",
+      "visible_key_objects": [
+        "hand",
+        "brush",
+        "canvas",
+        "green paint area",
+        "unpainted canvas strip"
+      ],
+      "reappearance_consistency_zh": "镜头转回后，画布、绿色涂层和未涂色区域与初始状态完全一致，但画笔在移开期间发生了严重变形，转回时才恢复原状。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "painting the canvas green",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "画布左侧有未涂色的白色区域，绿色涂层底部边缘呈锯齿状。",
+      "hidden_interval_zh": "镜头向右转，画笔变形为宽大的绿色刷子并停留在衣服前，没有任何绘画动作。",
+      "reappeared_state_zh": "镜头转回后，画布上的绿色涂层和白色区域与初始状态完全一致，没有任何增加。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "视频结束时画笔仍在画布前，但没有绘画进展。",
+      "terminal_state_reasoning_zh": "过程未产生任何实际进展，画布状态被完全复制粘贴。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "画布左侧边缘",
+        "绿色涂层锯齿状边缘"
+      ],
+      "articulation_or_local_state_change_zh": "画布上的颜料状态没有任何改变。",
+      "uniquely_matched_anchor_relative_change_zh": "颜料相对于画布边缘的位置和形状完全没有变化。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "颜料应向左侧白色区域扩展。",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "画布状态无变化。",
+      "unchanged_coupled_details_zh": "绿色涂层的锯齿状边缘细节在镜头转回后完全一致，表明是复制粘贴的静止状态。",
+      "accumulated_change_zh": "整个过程中画布上的颜料没有任何增加或改变。",
+      "evidence_zh": "镜头移开期间没有绘画动作，镜头转回后画布状态与初始完全相同，没有任何绘画进展。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向右旋转约90度，停留一段时间后，向左旋转回到初始的画布视角。",
+      "trajectory_evidence_zh": "帧0-10镜头右转，帧11-35镜头保持向右，帧36-58镜头左转回到画布。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "yes",
+      "action_type": "painting",
+      "tool_and_target": "brush and canvas",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "region",
+      "result_matches_named_requirement": "no",
+      "result_later_disappears_or_resets": "no",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "镜头移开期间画笔没有接触画布进行绘画，镜头转回后画布上没有任何新增的颜料，没有产生任何生产性动作的结果。"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "镜头有运动，但核心的绘画过程没有任何进展。",
+      "final_score_gate_applied": 1
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "brush",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "colors",
+        "materials",
+        "body_proportions"
+      ],
+      "identity_failure": "morphing",
+      "evidence_zh": "镜头向右转时，原本木柄的小画笔（帧0）变形为一把宽大的绿色刷子（帧15-40），镜头转回时又变回原来的画笔（帧50-58）。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "no",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "绘画过程没有任何实质性进展，演化质量为1，身份一致性得分仅作为诊断参考，最终得分上限为1。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频虽然完成了向右转并转回的运镜，但在镜头移开期间画笔发生了严重变形且没有进行任何绘画动作，镜头转回后画布状态与初始完全一致，没有任何绘画进展。",
+    "task_id": "OE061"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 5941,
+      "output_tokens": 238
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 33078,
+      "output_tokens": 3428
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 59,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 5.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 58,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 5.8,
+          "filled_cells": 9
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "9eeadadd2fd5b1a07d9cbd8d4d118c359cdd7e32045d477da9b1ce72a6ffb213",
+  "score_prompt_sha256": "6167348d88bc9c5330f62178ace01a63445bc3f707e3489673d8cd40c6c4366b",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "director-outsight-OE061-seed42"
+}

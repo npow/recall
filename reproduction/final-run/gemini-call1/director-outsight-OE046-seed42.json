@@ -1,0 +1,391 @@
+{
+  "task_id": "OE046",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "51c558e0013771ab4ee41f865672e32c32c2d1d21d1e65b133a8e5cd6f3b037d",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE046",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头先向左转动，随后向右转动并回到了初始视角。",
+    "trajectory_evidence_zh": "在主视图第一张图的第0-18帧中，镜头持续向左平移（画面内容向右移动）；从第19帧开始到第二张图结束，镜头向右平移，最终在结尾处恢复到了与初始帧几乎一致的视角。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.25,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "黄色带黑条纹的纸箱、传送带和背景在视觉上保持了一致，但在相机向右转回后，纸箱的位置发生了完全重置，回到了初始位置（位于传送带黄色标记左侧），违反了状态不重置的原则。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "相机向左转动期间，纸箱在视野外并没有继续沿传送带向右移动，而是在相机转回时重置到了传送带上的初始起点。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "相机转回原始视角时，纸箱并没有处于传送带更靠右的推进位置，而是回到了与初始帧相同的靠近左侧的位置（再次从传送带黄色标记的左侧开始移动）。"
+      },
+      "trajectory_continuity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "纸箱重新出现时，没有在传送带上继续向右的轨迹，而是瞬间移动回了左侧的起点，轨迹发生严重断裂。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail; the video ends with the box still moving.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 38,
+      "evidence_zh": "相机向左转动后又向右转回，在第38帧基本回到了初始视角。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景中的蓝色货架和地面黄线在相机转动期间保持稳定。",
+      "post_completion_phase_zh": "无明显的动作后阶段。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "yellow box before and after camera pan",
+        "anchors": [
+          "yellow mark on the conveyor belt frame",
+          "blue shelves in the background"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-18",
+        "18-26",
+        "26-38"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "yellow mark on conveyor belt",
+        "blue shelves"
+      ],
+      "newly_revealed_regions_zh": "相机向左转动时展示了左侧更多的货架区域。",
+      "evidence_zh": "相邻帧之间的背景和传送带位移符合相机的水平摇摄（先向左摇，再向右摇）。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "相机运动是连续的，没有发生硬切，但纸箱在视野外发生了位置重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "视频在相机转回后结束，没有多余的失败或动作。"
+    },
+    "final_state_check": {
+      "window": "35-38",
+      "visible_key_objects": [
+        "yellow box with a black stripe",
+        "silver metal rollers",
+        "black-framed conveyor belt",
+        "warehouse background"
+      ],
+      "reappearance_consistency_zh": "初始视角的物体在最终视角中重新出现，外观一致，但纸箱的位置发生了不合理的重置。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "yes",
+      "evolution_quality_level_1_to_5": 2,
+      "named_process": "yellow box moving on the conveyor belt",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "第15-18帧，纸箱移动到了传送带黄色标记的右侧并离开视野。",
+      "hidden_interval_zh": "相机向左转动，纸箱在视野外应继续向右移动。",
+      "reappeared_state_zh": "第26帧纸箱重新出现时，回到了传送带黄色标记的左侧（初始位置）。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "视频结束时纸箱仍在移动，未达到静止状态。",
+      "terminal_state_reasoning_zh": "不适用，过程未静止。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无静止尾部。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "yellow mark on the conveyor belt frame"
+      ],
+      "articulation_or_local_state_change_zh": "纸箱在传送带上的位置状态。",
+      "uniquely_matched_anchor_relative_change_zh": "纸箱相对于传送带黄色标记的位置在重新出现时发生了倒退（重置）。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "向右（沿着传送带滚动的方向）。",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "不适用。",
+      "vehicle_front_rear_identification_zh": "不适用。",
+      "vehicle_world_displacement_vs_heading_zh": "不适用。",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "yes",
+      "subject_relative_change_zh": "纸箱相对于传送带的位置在视野外发生了重置。",
+      "unchanged_coupled_details_zh": "无。",
+      "accumulated_change_zh": "纸箱在整个视频中没有产生有效的累积位移，因为其在视野外重置回了起点。",
+      "evidence_zh": "纸箱在重新出现时位置重置，导致整个过程没有累积的有效进展。",
+      "final_score_cap_applied": 2
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "相机先向左摇摄，然后向右摇摄回原视角。",
+      "trajectory_evidence_zh": "第0-18帧相机向左转，第26-38帧相机向右转回。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "yellow box with a black stripe",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "colors",
+        "surface_appearance"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "纸箱在视觉外观上保持一致，但其位置状态发生了重置。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 2,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": 2,
+      "evidence_zh": "由于过程发生了重置，演进质量被限制在2分，身份一致性无法提升最终得分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频成功执行了相机的左右摇摄，但纸箱在视野外没有继续前进，而是在相机转回时重置到了初始位置，导致轨迹断裂和状态重置。",
+    "task_id": "OE046"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4717,
+      "output_tokens": 213
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 30466,
+      "output_tokens": 3400
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "35c65dfdc9169a543e84313be00cb98098c25203a38b8e2beca3bac7140bb500",
+  "score_prompt_sha256": "181e9a9a0c6d4f2ca3ab69f5a17fe7b3ce9236f9a348ec6fdab3078f1fd6aaff",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "director-outsight-OE046-seed42"
+}

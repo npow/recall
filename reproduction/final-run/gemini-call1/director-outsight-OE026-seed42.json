@@ -1,0 +1,394 @@
+{
+  "task_id": "OE026",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "e0215d4507a2e23f3be33f544d341f163f96fefd5e2887ccc762c6379640d97e",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE026",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头先向左转动，看到新的景物和人物，然后向右转动回到初始方向，最后向后退，视野变宽，人物变小。",
+    "trajectory_evidence_zh": "在第1张图的第0-15帧，镜头向左平移，初始画面中的人物向右移出画面，左侧出现新的人物；第16-30帧，镜头向右平移，初始画面中的人物重新回到画面中央；第31-48帧，镜头向后移动，画面中的人物和建筑逐渐变小，视野变宽。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.75,
+    "final_score_1_to_5": 1.75,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 3,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "女子、小女孩和兔子在相机返回后保持了可辨认的身份和服装，但背景中的红色建筑发生了变化，墙上的绿色水管消失，且招牌的文本和排版发生了改变。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "在第30帧相机返回时，女子和小女孩的姿势与离开画面前（第5帧）完全一致，表明她们在视野外期间处于完全冻结状态，没有继续自然移动。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "相机返回时的初始状态（第30帧）与离开前相比没有任何明显变化，女子的表情和女孩的手臂姿势完全相同，直到相机完全返回后女孩才开始抬手。"
+      },
+      "process_accumulation": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "主要人物在视野外期间没有产生累积的动作变化，但场景中有微小的累积改变，例如初始阶段右侧背景中趴着的山羊在相机返回后已经不在原位。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail penalty applied; the video ends while the subjects are still in motion (girl petting the rabbit).",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 48,
+      "evidence_zh": "相机成功向左转动，然后转回原始方向，并在最后阶段向后退了约两步的距离。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "初始阶段红色建筑墙上挂着绿色水管，且有特定的招牌。",
+      "post_completion_phase_zh": "相机返回并后退时，红色建筑的绿色水管消失，招牌内容发生变化。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "original woman and girl vs reappeared woman and girl",
+        "anchors": [
+          "red building",
+          "ground dirt patches"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-15",
+        "15-30",
+        "30-48"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "red building",
+        "fence"
+      ],
+      "newly_revealed_regions_zh": "第10-25帧相机向左转动时，展示了左侧包含不同人物（长发女子和另一女孩）的新区域。",
+      "evidence_zh": "视角的改变和新区域的出现与提示词要求的相机向左转动和后退一致，并非硬重置。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频中的视角变化可以通过相机的转动和后退来解释，没有发生硬重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作在视频结束时刚好完成，没有多余的尾部运动或失败。"
+    },
+    "final_state_check": {
+      "window": "40-48",
+      "visible_key_objects": [
+        "woman",
+        "little girl",
+        "rabbit",
+        "red building"
+      ],
+      "reappearance_consistency_zh": "女子、女孩和兔子在相机返回后保持了一致的外观，但红色建筑丢失了绿色水管且招牌发生变化。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "partial",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 2,
+      "named_process": "petting zoo activity and subject interaction",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "在相机向左转动前（第5帧），女子抱着兔子，女孩双手放下看着兔子。",
+      "hidden_interval_zh": "相机向左转动并返回期间，主要人物在视野外，预期应继续自然的互动。",
+      "reappeared_state_zh": "相机返回后（第30帧），女子和女孩的姿势与离开前完全一致，随后女孩才开始抬手。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "视频在后退动作中结束，人物仍在互动，未达到静止的终止状态。",
+      "terminal_state_reasoning_zh": "视频结束时动作仍在进行，没有不合理的静止。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无",
+      "camera_independent_subject_motion": "partial",
+      "stable_world_anchors_compared": [
+        "red building wall",
+        "ground dirt patches"
+      ],
+      "articulation_or_local_state_change_zh": "相机返回后，女孩在第35-48帧抬起左手抚摸兔子。",
+      "uniquely_matched_anchor_relative_change_zh": "相机后退时，人物相对于红色建筑的位置保持合理，但视野外期间没有相对锚点的位移。",
+      "two_independent_motion_evidence_requirements_met": "yes",
+      "expected_world_motion_direction_zh": "提示词要求相机后退，人物应相对相机变小。",
+      "returned_motion_direction_consistent": "yes",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "女孩抬起手臂的动作是局部的姿势变化，并非仅由相机运动引起。",
+      "unchanged_coupled_details_zh": "在视野外期间，女子抱兔子的姿势和女孩的手臂位置完全没有变化，表明在遮挡期间处于冻结状态。",
+      "accumulated_change_zh": "整个视频中，女孩最终抬起手抚摸兔子，背景中的山羊位置发生了变化，但视野外期间主要人物没有累积变化。",
+      "evidence_zh": "视频展示了局部的动作（女孩抬手），但主要人物在视野外期间完全冻结，缺乏连贯的隐藏状态演进。",
+      "final_score_cap_applied": 2
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "相机向左转动约90度，然后转回原始方向，最后向后移动（后退）。",
+      "trajectory_evidence_zh": "第0-15帧相机向左平移/转动，第15-30帧相机向右转回，第30-48帧相机向后退，画面中的人物和建筑变小。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "partial",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "相机成功执行了转动和后退动作，女孩在视频后半段有抬手抚摸兔子的动作。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "partial",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "女孩在视频后半段有抬手动作，并非完全静止。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "woman, little girl, rabbit",
+      "same_entity_throughout": "partial",
+      "stable_identity_attributes": [
+        "clothing",
+        "body_proportions",
+        "face_or_hair",
+        "colors"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "主要人物在相机返回后保持了身份一致，但背景建筑发生了细节变化。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 2,
+      "meaningful_motion_or_evolution": "partial",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 2,
+      "evidence_zh": "由于主要人物在视野外期间完全冻结，演进质量被限制在2级，身份稳定性无法提升最终得分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 2,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 2
+    },
+    "summary_zh": "视频成功执行了相机的转动和后退动作，主要人物在相机返回后保持了身份一致，但在视野外期间完全冻结，缺乏隐藏状态的自然演进，且背景建筑发生了细节变化。",
+    "task_id": "OE026"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4744,
+      "output_tokens": 255
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 30843,
+      "output_tokens": 3632
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 49,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 48,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "70001563d136f4b2934973cb9585606e3b68708bdfb582d3ee620ff082c00082",
+  "score_prompt_sha256": "64439ca208e85e7ec345d08dba9260af4779caf2e95ea24910af1cc51348f240",
+  "scores": {
+    "official": 1.75,
+    "final_score": 1.75
+  },
+  "episode_id": "director-outsight-OE026-seed42"
+}

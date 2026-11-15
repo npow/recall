@@ -1,0 +1,393 @@
+{
+  "task_id": "OE048",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "5ce3a0918d6800a3bc30f679b1f9f9f5dfc6493ba2e6b485751395afb5a26d24",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE048",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头先向右转动，随后向左转动并回到了初始视角。",
+    "trajectory_evidence_zh": "在Primary Sheet 1中，镜头持续向右转动（第0-24帧）；在Primary Sheet 2中，镜头开始向左转动（第25-38帧），并最终回到了与初始状态一致的视角方向。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.25,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "初始的咖啡机、双层玻璃杯、滴水盘和背景植物在镜头向右旋转并返回后（第30-38帧）重新出现，外观特征保持一致。但由于咖啡液面没有任何累积增加，属于完全复制的冻结状态，根据规则得分上限为2。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "杯子在第30帧重新出现时，咖啡液面高度与第4帧离开视线前完全相同，在视线外期间没有任何体积增加的物理进展。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "重新出现后的咖啡液面没有比离开前更高，状态完全没有演进。"
+      },
+      "process_accumulation": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "尽管咖啡持续注入，但杯中的咖啡体积没有发生任何单调累积，液面始终冻结在初始的极低位置。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail penalty applied; the lack of evolution is penalized directly in the applicable OE categories.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 35,
+      "evidence_zh": "镜头在第5-15帧向右旋转，随后在第25-35帧向左旋转并完全回到了初始的视角。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "背景中的白色瓷砖墙面和左侧的盆栽植物在镜头旋转和返回过程中保持了合理的空间一致性。",
+      "post_completion_phase_zh": "动作完成后（第35-38帧），背景植物和墙面保持稳定。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial double-walled glass cup and machine vs returned double-walled glass cup and machine",
+        "anchors": [
+          "slatted drip tray",
+          "potted plant in background"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "4-6",
+        "28-30"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "wall tiles",
+        "drip tray edge"
+      ],
+      "newly_revealed_regions_zh": "第11-29帧展示了咖啡机右侧的新区域，包含一个带把手的单层玻璃杯。",
+      "evidence_zh": "镜头连续向右旋转揭示了右侧区域，随后向左旋转重新将初始区域纳入视线，运动轨迹连贯，符合物理透视。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视角的切换完全由连续的镜头平移和旋转解释，没有发生硬切或重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作完成后没有多余的错误运动或破坏性画面。"
+    },
+    "final_state_check": {
+      "window": "35-38",
+      "visible_key_objects": [
+        "matte black coffee machine",
+        "clear double-walled glass cup",
+        "slatted drip tray",
+        "potted plant"
+      ],
+      "reappearance_consistency_zh": "初始的咖啡机、双层玻璃杯、滴水盘和植物在最终画面中一致地重新出现，位置和外观与初始状态相符。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "yes",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "coffee pouring and accumulating in the cup",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "在第4帧离开视线前，双层玻璃杯底仅有极浅的一层咖啡。",
+      "hidden_interval_zh": "在第6至29帧期间，初始咖啡杯在视线外，但咖啡应持续注入并增加体积。",
+      "reappeared_state_zh": "在第30帧重新出现时，杯中咖啡的液面高度与离开前完全一致，没有任何增加。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "不适用，过程未终止。",
+      "terminal_state_reasoning_zh": "不适用，咖啡一直在注入。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无静态尾部扣分。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "slatted drip tray",
+        "coffee machine spout"
+      ],
+      "articulation_or_local_state_change_zh": "无，咖啡液面高度未发生改变。",
+      "uniquely_matched_anchor_relative_change_zh": "无，液面相对于杯底和滴水盘的高度未变。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "液面应向上累积。",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "咖啡液面高度在整个过程中保持不变。",
+      "unchanged_coupled_details_zh": "注入的咖啡水流和杯底的极少量咖啡液面在离开前和返回后完全一致，表现为复制粘贴的冻结状态。",
+      "accumulated_change_zh": "整个视频中，尽管咖啡液流持续下落，但杯中的咖啡体积没有任何累积增加。",
+      "evidence_zh": "咖啡持续注入杯中，但无论是离开视线前、视线外还是重新出现后，杯中的咖啡液面高度始终保持不变，缺乏物理累积过程。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向右旋转约90度，停留后向左旋转回到初始视角。",
+      "trajectory_evidence_zh": "第5-15帧镜头向右旋转，第25-35帧镜头向左旋转并回到初始的咖啡机和杯子画面。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "matte black coffee machine, clear double-walled glass cup, slatted drip tray, potted plant",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "colors",
+        "materials",
+        "textures",
+        "surface_appearance"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "初始的双层玻璃杯、咖啡机、滴水盘和背景植物在镜头向右旋转并返回后（第30-38帧）重新出现，外观特征保持一致，但由于缺乏状态演进，属于完全复制的冻结状态。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于咖啡体积没有任何累积，属于完全冻结的无效重复过程，演进质量为1，主体一致性得分被限制在2及以下，且最终得分上限为1。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频成功执行了向右旋转并返回的镜头运动，初始的咖啡机和杯子也一致地重新出现，但尽管咖啡持续注入，杯中的液面高度始终没有任何累积增加，属于无效的冻结过程。",
+    "task_id": "OE048"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4717,
+      "output_tokens": 208
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 30426,
+      "output_tokens": 3579
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "30d61e87c6eb073a3330e28d815bbd6ef552798d8c82f25e0e86b9d2c89e71c8",
+  "score_prompt_sha256": "a33d61abf5d37a7828b03c624809f3725f462a290377665a39551f5a50440be2",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "stock-outsight-OE048-seed42"
+}

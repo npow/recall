@@ -1,0 +1,397 @@
+{
+  "task_id": "OE014",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "ad811229d963d6af8a86b7f2160079f902b16586c31243b613e28dd8593adc07",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE014",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头先向左转动（画面中的物体向右移动），随后向右转动回到初始视角。",
+    "trajectory_evidence_zh": "在主视图的第0-18帧中，画面中的画板和颜料盒向右移动，表明镜头向左转动；从第19帧开始到第38帧，画面中的物体向左移动，表明镜头向右转动，最终回到了与初始帧相似的视角。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.4,
+    "final_score_1_to_5": 1.0,
+    "category_scores_1_to_5": {
+      "out_of_sight_evolution": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头转回后，画纸和纸板呈现为初始状态的精确复制，没有任何新增的颜料或绘画进展，演化完全失败。"
+      },
+      "prompt_evolution_alignment": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "视频没有展示出任何合理的绘画演化过程，镜头向左时的绘画动作是混乱且不连贯的，最终也没有留下任何持久的绘画结果。"
+      },
+      "subject_identity": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "partial",
+        "evidence_zh": "画纸和纸板在镜头转回后重新出现，但呈现为没有任何绘画进展的精确复制状态，且背景调色板在镜头向左时发生了严重的变形和替换。"
+      },
+      "temporal_scene_consistency": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头向左转动时，背景中的水彩调色板变形并被替换为一排蓝色的容器，虽然镜头转回后调色板恢复了原状，但中间过程存在严重的不一致。"
+      },
+      "physical_causality": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "画笔在镜头向左转动时画出了一条悬浮在空中并延伸到幻觉表面上的绿线，且该线条在镜头转回后无故消失，完全不符合物理规律。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "无静止尾部，不适用。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 38,
+      "evidence_zh": "镜头在第0-18帧向左转动，随后在第19-38帧向右转回，成功回到了初始视角。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头向左转动时，背景中的调色板变形为蓝色容器，桌面变成了蓝色表面。",
+      "post_completion_phase_zh": "不适用，动作在视频末尾完成。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "第0帧与第38帧中的画纸和纸板",
+        "anchors": [
+          "纸板边缘",
+          "胶带边界"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-18",
+        "19-38"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "纸板边缘",
+        "桌面"
+      ],
+      "newly_revealed_regions_zh": "第15-24帧中出现的蓝色表面和蓝色容器是新揭示的区域，但它们不合理地替换了原本应该存在的桌面和调色板。",
+      "evidence_zh": "第0-18帧镜头向左平移，第19-38帧镜头向右平移，镜头运动是连续的。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "镜头运动是连续的平移，没有发生硬切或硬重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作在视频末尾完成，没有多余的尾部。"
+    },
+    "final_state_check": {
+      "window": "35-38",
+      "visible_key_objects": [
+        "hand",
+        "paintbrush",
+        "watercolor paper",
+        "cardboard",
+        "watercolor palette"
+      ],
+      "reappearance_consistency_zh": "第38帧中重新出现的画纸、纸板和调色板与第0帧中的初始状态完全一致，没有任何绘画进展，属于精确复制。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "painting using paintbrush on the taped watercolor paper",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "第0帧中，画纸上有蓝色区域和绿色条纹，没有其他笔触。",
+      "hidden_interval_zh": "镜头向左转动，画笔在空中和幻觉出的蓝色表面上画出一条细绿线。",
+      "reappeared_state_zh": "第38帧镜头转回后，画纸恢复为第0帧的完全相同状态，没有任何新增的颜料或笔触。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "不适用",
+      "terminal_state_reasoning_zh": "不适用",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "纸板边缘",
+        "胶带边界"
+      ],
+      "articulation_or_local_state_change_zh": "画纸状态没有发生任何改变，没有新增颜料。",
+      "uniquely_matched_anchor_relative_change_zh": "画纸相对于纸板的位置和外观完全没有变化。",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "不适用",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "画纸和纸板在镜头转回后呈现为初始状态的精确复制，没有任何绘画进展。",
+      "unchanged_coupled_details_zh": "画纸上的颜料分布与初始帧完全一致，表明是复制粘贴的冻结状态。",
+      "accumulated_change_zh": "整个过程中画纸上没有积累任何新的绘画痕迹。",
+      "evidence_zh": "镜头转回后，画纸状态与初始帧完全相同，没有任何绘画进展，且镜头向左时画出的线条消失。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头先向左转动，然后向右转回初始视角。",
+      "trajectory_evidence_zh": "第0-18帧镜头向左平移，第19-38帧镜头向右平移并回到初始位置。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "yes",
+      "action_type": "painting",
+      "tool_and_target": "paintbrush and watercolor paper",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "yes",
+      "visible_reversal_explanation": "none",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "画笔在镜头向左转动时在空中和幻觉表面画出一条绿线，但当镜头转回时，该线条完全消失，画纸上没有留下任何持久的绘画结果。"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "uncertain",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "uncertain",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "uncertain",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "watercolor paper and cardboard",
+      "same_entity_throughout": "partial",
+      "stable_identity_attributes": [
+        "colors",
+        "materials",
+        "textures"
+      ],
+      "identity_failure": "contradictory_reappearance",
+      "evidence_zh": "画纸和纸板在镜头转回后重新出现，但呈现为没有任何绘画进展的精确复制状态，且背景调色板在镜头向左时发生了严重的变形和替换。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于没有任何有意义的绘画进展（演化质量为1），主体身份得分被限制在最高2分，最终得分被限制在1分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "镜头成功执行了向左再向右转回的动作，但转回后的画纸呈现为初始状态的精确复制，没有任何绘画进展，且镜头向左时画笔在空中画出的线条在转回后完全消失，演化完全失败。",
+    "task_id": "OE014"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": true
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 33789,
+      "output_tokens": 3611
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "35d65f9f05183676f6669463d0a4f8ca7cb1ee6df8fa8dc027a0384eb15e4afc",
+  "score_prompt_sha256": "8be14bb242f46d0d2eed0f0e8f0318fd4eab365cc3af96341649b6312c471ea6",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "stock-outsight-OE014-seed42"
+}

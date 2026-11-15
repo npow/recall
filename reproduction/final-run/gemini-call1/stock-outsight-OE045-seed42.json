@@ -1,0 +1,392 @@
+{
+  "task_id": "OE045",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "bd3a424ba3f5891cba0d415093386a9c1e5f687d6d6e0f8c34bffc228f9e8b25",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE045",
+    "perspective": "third-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头向右旋转约90度，展示了跑步者的侧面，随后镜头向左旋转，恢复到最初跟在跑步者后方的视角。",
+    "trajectory_evidence_zh": "在第0-10帧，镜头向右旋转，画面中的白墙从右侧移至左侧，视角从跑步者正后方变为侧面；第15-25帧，镜头向左旋转，白墙从左侧移回右侧，视角恢复到跑步者后方；第25-38帧保持在初始的后方视角。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 2.0,
+    "final_score_1_to_5": 2.0,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "男子的红衣黑裤、白色矩形墙壁、红色跑道和背景树木在整个视频中都保持了稳定的外观和身份，没有发生突变或重复。"
+      },
+      "hidden_state_progression": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男子从未离开过相机视野；为了留在画面中，他没有继续沿跑道向前跑，而是不自然地转向90度横穿跑道奔跑，因此不存在预期的隐藏状态推进。"
+      },
+      "revealed_state_difference": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "当相机返回初始视角时，男子并没有出现在跑道更前方的位置，而是因为横穿跑道跑到了画面的右侧，未能展现出预期的状态演变。"
+      },
+      "trajectory_continuity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男子的运动轨迹完全断裂，他放弃了沿弯曲跑道向前的轨迹，瞬间转向90度横穿跑道以跟随相机的平移，且从未走到白墙后方。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "无静止尾部，视频持续处于动态。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 38,
+      "evidence_zh": "在第38帧，相机向左平移结束，白墙回到画面右侧，基本恢复了初始视角。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "相机向右平移时，白墙、跑道和背景树木的移动符合透视规律，保持一致。",
+      "post_completion_phase_zh": "相机返回初始视角后，背景元素与初始状态一致。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "man and white wall",
+        "anchors": [
+          "track lines",
+          "grass edge"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-18",
+        "18-38"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "white wall",
+        "track lines"
+      ],
+      "newly_revealed_regions_zh": "相机向右平移时，左侧跑道移出画面，右侧草地进入画面；随后相机向左平移，视角恢复。",
+      "evidence_zh": "白墙和跑道在画面中的水平移动与相机先向右后向左的平移旋转一致。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频中的视角变化可以通过相机的连续平移来解释，没有发生硬切或场景重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作在视频末尾完成，没有多余的失败尾部。"
+    },
+    "final_state_check": {
+      "window": "35-38",
+      "visible_key_objects": [
+        "man",
+        "white wall",
+        "track"
+      ],
+      "reappearance_consistency_zh": "相机返回后，白墙和跑道的外观与初始帧一致，男子也仍在画面中。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "partial",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 2,
+      "named_process": "man running forward along the track",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "视频结束时男子仍在奔跑，没有静止尾部。",
+      "terminal_state_reasoning_zh": "视频持续处于动态，没有静止尾部。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无静止尾部。",
+      "camera_independent_subject_motion": "yes",
+      "stable_world_anchors_compared": [
+        "white wall",
+        "track lines"
+      ],
+      "articulation_or_local_state_change_zh": "男子的四肢持续交替运动，保持奔跑姿态。",
+      "uniquely_matched_anchor_relative_change_zh": "男子相对于白墙和跑道线的位置发生了明显变化，从墙的左侧移动到了墙的前方和右侧。",
+      "two_independent_motion_evidence_requirements_met": "yes",
+      "expected_world_motion_direction_zh": "根据初始帧，男子应沿着弯曲的跑道向前（向画面深处）奔跑。",
+      "returned_motion_direction_consistent": "no",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "男子没有沿着跑道向前跑，而是突然转向90度，横穿跑道向右奔跑。",
+      "unchanged_coupled_details_zh": "无，男子确实在运动。",
+      "accumulated_change_zh": "男子从跑道左侧横穿跑道跑到了右侧，但未能按照预期沿跑道向前推进。",
+      "evidence_zh": "男子保持了奔跑动作，但轨迹完全错误，为了留在镜头内而横穿跑道，未能实现预期的向前推进。",
+      "final_score_cap_applied": 2
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "相机向右平移，然后向左平移回到初始视角。",
+      "trajectory_evidence_zh": "视频显示相机先向右旋转，白墙向左移动，随后相机向左旋转，白墙回到右侧，完成了要求的相机运动。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "",
+      "change_sequence_zh": "",
+      "resulting_ink_state_zh": "",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": ""
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": ""
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": ""
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "man",
+      "same_entity_throughout": "yes",
+      "stable_identity_attributes": [
+        "clothing",
+        "body_proportions",
+        "colors",
+        "surface_appearance"
+      ],
+      "identity_failure": "none",
+      "evidence_zh": "男子的红衣黑裤在整个视频中保持稳定，没有发生颜色漂移或身份改变。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 2,
+      "meaningful_motion_or_evolution": "partial",
+      "contact_or_support_demonstrated": "yes",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": 2,
+      "evidence_zh": "虽然身份保持稳定，但由于演变质量较低（轨迹完全错误），最终得分被限制在2分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "",
+      "positive_evidence_zh": "",
+      "evidence_zh": "",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "相机成功执行了向右再向左的平移，但男子为了留在画面中，放弃了沿跑道向前的轨迹，不自然地转向90度横穿跑道，导致轨迹连续性和隐藏状态推进严重失败。",
+    "task_id": "OE045"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4717,
+      "output_tokens": 250
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 30446,
+      "output_tokens": 3416
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "542789f23ab11db649b1af7080c2652e80bb1a70d31f2d2e95472305896a0aaa",
+  "score_prompt_sha256": "a4d43ba10e3dccbe552e6f7d49a378b0a1b87bc663d7022eb5105729ce844ca4",
+  "scores": {
+    "official": 2.0,
+    "final_score": 2.0
+  },
+  "episode_id": "stock-outsight-OE045-seed42"
+}

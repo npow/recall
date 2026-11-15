@@ -1,0 +1,392 @@
+{
+  "task_id": "OE026",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "f91797103c9f9c0c393d75dd4bbae7cd2830e3318cad7aee8cd8da5e42defd9e",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE026",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头向左转动，看到另一位抱着白兔的女士，然后向右转回原来的方向，最后向后退。",
+    "trajectory_evidence_zh": "在Sheet 1中，镜头从第0帧开始向左转，到第15帧左右停止，画面中出现了新的人物。从第20帧开始，镜头向右转。在Sheet 2中，镜头继续向右转，到第35帧左右回到了初始的视角方向。从第40帧开始，镜头向后移动，画面中的人物变小，符合后退的轨迹。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.75,
+    "final_score_1_to_5": 1.75,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头平移后，原本黑白相间的兔子变成了纯白色，小女孩的白色上衣变成了粉色裙子，女人的面部特征也发生了明显的形变，主体身份严重丢失。"
+      },
+      "hidden_state_progression": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "主体在镜头移开期间并未保持冻结，但其状态演变完全不合理，导致了严重的身份和外观突变，缺乏连贯的隐藏状态推进。"
+      },
+      "revealed_state_difference": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "镜头转回后，人物和动物的状态确实发生了变化，但这些变化（如兔子变色、衣服变色）是不符合物理逻辑的形变，而非合理的动作或表情变化。"
+      },
+      "process_accumulation": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "场景未能展示出合理的累积变化，背景中的山羊消失，主要人物和动物的外观发生了无端的严重突变，缺乏合理的互动过程累积。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "视频全程保持动态，无静止尾部，未应用静止尾部扣分。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "镜头虽然执行了向左、向右和后退的运动轨迹，但未能真实展现环境视角的转换，而是导致了画面和主体的严重扭曲形变。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "镜头平移期间，背景的红色建筑、门和水管发生扭曲和相对位置的改变。",
+      "post_completion_phase_zh": "镜头后退期间，背景细节继续发生不稳定变化，远处的山羊消失。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial woman, girl, and rabbit vs. subjects after camera pan",
+        "anchors": [
+          "red building wall",
+          "white door"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-10",
+        "10-20",
+        "20-48"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "red building wall",
+        "white door"
+      ],
+      "newly_revealed_regions_zh": "镜头平移并未真正揭示新的环境区域，而是将原有主体和背景强行拖拽并发生形变。",
+      "evidence_zh": "镜头移动导致了严重的画面扭曲和主体形变，而非真实的视角转换。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "uncertain",
+      "persistent_anchor_contradiction": "uncertain",
+      "contradicting_anchors": [],
+      "evidence_zh": "视频没有明显的硬切，而是通过连续的形变和扭曲完成了主体特征的替换（如兔子变白、女孩衣服变粉）。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "未完成指令，无额外扣分。"
+    },
+    "final_state_check": {
+      "window": "40-48",
+      "visible_key_objects": [
+        "woman",
+        "girl",
+        "rabbit",
+        "red building"
+      ],
+      "reappearance_consistency_zh": "初始的黑白兔子变成了纯白兔子，女孩的白上衣变成了粉色裙子，主体一致性严重破坏。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "partial",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 2,
+      "named_process": "petting zoo activity and camera rotation",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "女人抱着黑白相间的兔子，女孩穿着白色上衣。",
+      "hidden_interval_zh": "镜头向左平移再转回，主体短暂移出或处于画面边缘。",
+      "reappeared_state_zh": "女人抱着纯白色的兔子，女孩穿着粉色裙子。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "视频全程保持动态，无静止尾部。",
+      "terminal_state_reasoning_zh": "不适用，视频未静止。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无静止尾部扣分。",
+      "camera_independent_subject_motion": "yes",
+      "stable_world_anchors_compared": [
+        "red building wall",
+        "white door"
+      ],
+      "articulation_or_local_state_change_zh": "女人的手臂姿势和女孩的站位发生了变化。",
+      "uniquely_matched_anchor_relative_change_zh": "相对于背景红墙和白门，人物的位置和姿态有局部改变。",
+      "two_independent_motion_evidence_requirements_met": "yes",
+      "expected_world_motion_direction_zh": "无特定预期方向，主要为原地互动。",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "人物的姿态和相对位置发生了变化，但伴随着严重的身份特征突变。",
+      "unchanged_coupled_details_zh": "无明显的复制粘贴冻结现象。",
+      "accumulated_change_zh": "主体发生了不合理的突变（兔子变色、衣服变色），而非合理的动作累积。",
+      "evidence_zh": "视频具有动态变化，但由于严重的身份和外观形变，演变质量极低。",
+      "final_score_cap_applied": 2
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "partial",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "镜头向左平移，随后向右平移回到大致初始方向，最后向后退。",
+      "trajectory_evidence_zh": "视频展示了向左平移、向右平移回正以及后退的镜头运动轨迹，尽管伴随着严重的画面形变。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "none",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "不适用",
+      "change_sequence_zh": "不适用",
+      "resulting_ink_state_zh": "不适用",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "不适用"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "不适用",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "不适用"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "不适用",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "不适用"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "不适用",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "不适用",
+      "trajectory_evidence_zh": "不适用",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "不适用"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "不适用",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": "不适用"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "不适用"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "woman, little girl, rabbit",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "clothing",
+        "colors"
+      ],
+      "identity_failure": "morphing",
+      "evidence_zh": "黑白相间的兔子在镜头移动后变成了纯白色，小女孩的白色上衣变成了粉色裙子，女人的面部特征也发生了明显形变。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 2,
+      "meaningful_motion_or_evolution": "partial",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "yes",
+      "final_score_cap_applied": 2,
+      "evidence_zh": "视频具有一定的动态变化（演变质量为2），主体身份特征发生严重形变，最终得分受限于演变质量上限2分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "不适用",
+      "positive_evidence_zh": "不适用",
+      "evidence_zh": "不适用",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频在镜头平移和后退过程中，主体发生了严重的身份和外观形变（如兔子变白、女孩衣服变粉），缺乏合理的隐藏状态推进和累积变化。",
+    "task_id": "OE026"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4744,
+      "output_tokens": 254
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 30843,
+      "output_tokens": 3503
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 49,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 48,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 3,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 4.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 2,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 4.0,
+          "filled_cells": 3
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "70001563d136f4b2934973cb9585606e3b68708bdfb582d3ee620ff082c00082",
+  "score_prompt_sha256": "64439ca208e85e7ec345d08dba9260af4779caf2e95ea24910af1cc51348f240",
+  "scores": {
+    "official": 1.75,
+    "final_score": 1.75
+  },
+  "episode_id": "stock-outsight-OE026-seed42"
+}

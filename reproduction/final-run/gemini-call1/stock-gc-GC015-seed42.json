@@ -1,0 +1,454 @@
+{
+  "task_id": "GC015",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "38a14ec64beb7181e340eb9077a3a2c474706e2d5edb2db4ee3c0209a516f3c0",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "GC015",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "视角向前移动，随后向右转约180度，接着再次向前移动回到起始区域，最后再次向右转。",
+    "trajectory_evidence_zh": "0.0秒至3.0秒，视角向前平移；3.0秒至8.0秒，视角向右旋转约180度；8.0秒至12.5秒，视角再次向前平移，回到初始位置附近；12.5秒至16.8秒，视角再次向右旋转。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 2.6,
+    "final_score_1_to_5": 2.6,
+    "category_scores_1_to_5": {
+      "identity_id": {
+        "score": 1,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "相机走出木屋后转身重新看向木屋（第50-70帧），原本开放的西侧外墙不可能地变成了带有门窗的实心木墙。随后相机重新进入木屋（第80-168帧），原本要求出现的餐桌、餐椅、格子衬衫和厨房操作台完全消失，被全新的沙发、不同的操作台和书架等结构取代，发生了严重的物体消失和结构替换。"
+      },
+      "identity_texture": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "在物体可见期间，木屋的木纹、格子衬衫的布料纹理以及室外的树叶均保持了清晰一致的材质和细节，没有出现纹理漂移、融化或生成的噪点伪影。"
+      },
+      "color": {
+        "score": 5,
+        "weight": 1.0,
+        "answer": "yes",
+        "evidence_zh": "木屋的棕色调、格子衬衫的红蓝白图案以及室外树木的绿色在可见期间均保持了一致的固有色，没有出现无支撑的颜色漂移或闪烁。"
+      },
+      "relative_position": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "木屋内部的空间布局在相机重新进入后发生了彻底的重置。原本位于北墙的厨房操作台和室内的用餐区布局完全消失，被矛盾的沙发、新操作台和扶手椅布局所取代，无法维持合理的局部空间关系。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "视频在完成动作序列后没有出现导致额外扣分的静止尾部或多余动作。",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 140,
+      "evidence_zh": "相机完成了提示词对应的动作序列（前进、右转、前进、右转）。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "相机连续运动，但木屋的建筑结构和内部布局在重新进入时发生了彻底的重置和替换。",
+      "post_completion_phase_zh": "动作完成后，最终视角的扶手椅和书架背景保持稳定。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "木屋的西侧外墙（第0-20帧与第50-70帧）",
+        "anchors": [
+          "相机连续的退出和右转轨迹",
+          "周围的树木环境"
+        ],
+        "same_object_or_region": "yes"
+      },
+      {
+        "comparison": "木屋内部空间（第0-20帧与第80-168帧）",
+        "anchors": [
+          "同一栋木屋建筑",
+          "相机U型折返后重新进入的轨迹"
+        ],
+        "same_object_or_region": "yes"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-168"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "木屋墙壁",
+        "室外树木"
+      ],
+      "newly_revealed_regions_zh": "相机转身后看到的木屋外墙外观是新视角的展现，但墙体本身的结构突变属于同一物体的错误变化。",
+      "evidence_zh": "相机连续向前移动、退出木屋、右转并再次进入木屋，运动轨迹连贯，解释了视角的转换，但揭示了木屋结构的严重突变。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [],
+      "evidence_zh": "视角的转换由连贯的相机运动（退出和转向）解释，没有发生相邻帧的硬切，结构突变发生在相机移开视线期间。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作序列完成后的尾部没有出现新的画面崩坏或多余的错误运动。"
+    },
+    "final_state_check": {
+      "window": "150-168",
+      "visible_key_objects": [
+        "cabin structure"
+      ],
+      "reappearance_consistency_zh": "最终视角显示了木屋的内部，但原本要求的餐桌、格子衬衫和厨房操作台等关键物体全部缺失，被全新的扶手椅和书架布局取代，一致性极差。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "not_applicable",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": null,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": null,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "yes",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "相机在整个视频中持续进行连贯的平移和旋转，完成了退出和重新进入木屋的轨迹。",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "wooden cabin walls",
+        "plaid shirt",
+        "trees"
+      ],
+      "correspondence_anchors": [
+        "continuous visibility"
+      ],
+      "visible_intervals": [
+        "0-30",
+        "80-168"
+      ],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "在物体可见期间，木屋墙壁、格子衬衫和室外树木均保持了一致的固有色和材质纹理，没有出现漂移或生成的噪点伪影。"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "no",
+      "meaningful_subject_motion": "not_applicable",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "not_applicable",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "other",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "other",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": "not_applicable"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "subject_identity_check": {
+      "applicable": "no",
+      "tracked_subject": "not_applicable",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [],
+      "identity_failure": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": null,
+      "evidence_zh": "not_applicable"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "none",
+      "positive_evidence_zh": "none",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "summary_zh": "视频中相机走出木屋后转身重新进入，但木屋的外墙从开放式变成了带门的实心墙，且屋内原有的餐桌、格子衬衫和厨房操作台完全消失，被全新的沙发和书架布局取代，发生了严重的结构和布局重置。",
+    "task_id": "GC015"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 13183,
+      "output_tokens": 238
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 26902,
+      "output_tokens": 3581
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 169,
+      "sheets_count": 7,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 16.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 149,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 14.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 7,
+          "first_sample_index": 150,
+          "last_sample_index": 168,
+          "first_time_seconds": 15.0,
+          "last_time_seconds": 16.8,
+          "filled_cells": 19
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 9,
+      "sheets_count": 3,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 16.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 7,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 14.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 8,
+          "last_sample_index": 8,
+          "first_time_seconds": 16.0,
+          "last_time_seconds": 16.0,
+          "filled_cells": 1
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "d37403e46572522de2009fe530d044d75f5a4d4df830f1932451bb949b1de52e",
+  "score_prompt_sha256": "fb038fd5c86248e9fe98da9cdf3e1ee47c14adacc8a8be04288058ed7c8d23cd",
+  "scores": {
+    "official": 2.6,
+    "final_score": 2.6
+  },
+  "episode_id": "stock-gc-GC015-seed42"
+}

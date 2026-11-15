@@ -1,0 +1,490 @@
+{
+  "task_id": "IF037",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "ec5489b74e337c02d7a52e249f071259e0bbeaca8de6641c30cc3c6589dd9f50",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF037",
+    "perspective": "third-person",
+    "verdict": "partial",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "partial",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "男子走进电梯，转身面向电梯门，但随后再次转身并最终走出了电梯，没有按下任何楼层按钮。",
+    "trajectory_evidence_zh": "在Sheet 1-2中，男子向前走进电梯；在Sheet 3-4中，男子转身面向电梯门；在Sheet 5-7中，男子再次转身背对电梯门，随后又转回并走出电梯；在Sheet 8-10中，男子在电梯外的大堂走动。",
+    "failure_reason_zh": "男子虽然走进了电梯并转身，但没有执行按下6楼按钮的动作，反而走出了电梯，轨迹未完全符合指令。",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.5,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "视频中人物身份发生多次严重突变，从穿浅蓝色衬衫背书包的男子（帧0-11），变为穿马甲打领带的男子（帧13-19），后又变为穿深色西装无书包的男子（帧50起），服装和特征完全不连贯。"
+      },
+      "contact_support": {
+        "score": 2,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "人物在行走时脚步与地面的接触存在滑动，且由于场景多次重置，支撑关系严重断裂。"
+      },
+      "causal_response": {
+        "score": 1,
+        "weight": 2,
+        "answer": "no",
+        "evidence_zh": "人物完全没有按下电梯按钮的动作，电梯门也未关闭，且场景发生多次无理的硬重置。"
+      },
+      "lighting_shadow": {
+        "score": 2,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "由于场景和人物的多次重置，光影和反射无法保持连贯一致。"
+      },
+      "motion_kinematics": {
+        "score": 2,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "人物的行走和转身动作被多次硬重置和消失打断，缺乏连贯的运动学表现。"
+      },
+      "collision_boundary": {
+        "score": 1,
+        "weight": 1,
+        "answer": "no",
+        "evidence_zh": "在帧11-12中，人物直接穿模并融入了电梯右侧的门框中消失。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail penalty applied as the video contains continuous but incoherent motion and resets.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "人物进入电梯后发生了多次重置和身份突变，始终没有按下电梯按钮。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "电梯内部和外部大堂的背景在多次硬重置（如帧49-50）中发生了不连贯的变化。",
+      "post_completion_phase_zh": "动作未完成。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "man entering elevator (frames 0-11) vs man inside elevator (frames 50+)",
+        "anchors": [
+          "elevator doors",
+          "elevator back wall"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "49-50"
+      ],
+      "continuous_camera_motion": "no",
+      "tracked_structural_anchors": [
+        "elevator doors",
+        "elevator back wall"
+      ],
+      "newly_revealed_regions_zh": "无",
+      "evidence_zh": "帧49到50之间，镜头角度突变，人物服装瞬间改变，无法用连续的摄像机运动解释。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "49-50",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "elevator back wall",
+        "elevator doors"
+      ],
+      "evidence_zh": "在帧49到50之间，电梯内的同一人物服装瞬间从衬衫背包变为深色西装，属于明显的硬重置。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作未完成，不适用。"
+    },
+    "final_state_check": {
+      "window": "238-248",
+      "visible_key_objects": [
+        "elevator",
+        "man"
+      ],
+      "reappearance_consistency_zh": "人物最终再次走入电梯，但其穿着（蓝色长外套）与初始状态（浅蓝色衬衫和背包）完全不一致。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "not_applicable",
+      "hidden_interval_zh": "not_applicable",
+      "reappeared_state_zh": "not_applicable",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "not_applicable",
+      "terminal_state_reasoning_zh": "not_applicable",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "not_applicable",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "not_applicable",
+      "uniquely_matched_anchor_relative_change_zh": "not_applicable",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "not_applicable",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "not_applicable",
+      "vehicle_front_rear_identification_zh": "not_applicable",
+      "vehicle_world_displacement_vs_heading_zh": "not_applicable",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "not_applicable",
+      "unchanged_coupled_details_zh": "not_applicable",
+      "accumulated_change_zh": "not_applicable",
+      "evidence_zh": "not_applicable",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "not_applicable",
+      "trajectory_evidence_zh": "not_applicable",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "not_applicable",
+      "change_sequence_zh": "not_applicable",
+      "resulting_ink_state_zh": "not_applicable",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "not_applicable"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "not_applicable"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "not_applicable",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "not_applicable"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "partial",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "人物有明显的行走和转身动作，但被多次重置打断。",
+      "final_score_gate_applied": null
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "fail",
+      "instruction_following_score": 0,
+      "prompt_directed_forward_progress": "partial",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "人物走入电梯并转身，但随后发生多次身份突变，且未执行按按钮的动作。",
+      "trajectory_evidence_zh": "人物进入电梯的轨迹被穿模和重置严重破坏。",
+      "failure_reason_zh": "未执行按按钮的核心指令，且存在灾难性的身份和场景重置。"
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "yes",
+      "observed_outcome": "solid_penetration",
+      "solid_interpenetration": "yes",
+      "support_after_contact": "implausible",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "在帧11-12，人物直接穿模并融入了电梯右侧的门框中。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "elevator button panel",
+      "target_type": "solid_boundary",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "yes",
+      "observed_trigger": "none",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "yes",
+      "evidence_zh": "电梯按钮面板一直存在，但人物从未尝试去触碰它。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "yes",
+      "proxy_evidence_observed": [
+        "weight_transfer",
+        "joint_motion"
+      ],
+      "proxy_supports_expected_locomotion": "partial",
+      "evidence_zh": "人物行走时脚部大部分时间可见，但由于场景重置，支撑的连续性被破坏。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "man",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "body_proportions"
+      ],
+      "identity_failure": "replacement",
+      "evidence_zh": "人物身份发生多次替换，从穿衬衫背书包变为穿马甲打领带，再变为穿深色西装，最后变为穿蓝色长外套，服装和特征完全不一致。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "partial",
+      "contact_or_support_demonstrated": "partial",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于交互质量评级为1（灾难性失败），身份一致性得分不计入最终加权平均。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "partial",
+      "physical_response_observed": "no",
+      "core_failure_zh": "人物在帧12穿模融入墙壁，且场景发生多次硬重置，完全没有执行按按钮的交互。",
+      "positive_evidence_zh": "人物在初始阶段走向并进入了电梯。",
+      "evidence_zh": "视频存在灾难性的物理和连贯性错误，人物穿模消失、身份多次突变，且完全未尝试按下按钮，交互质量极差。",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频中人物发生严重的穿模消失和多次身份突变（硬重置），且完全没有执行按下电梯按钮的指令，交互质量极差。",
+    "task_id": "IF037"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 17987,
+      "output_tokens": 271
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 50070,
+      "output_tokens": 3583
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 249,
+      "sheets_count": 10,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 24.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 49,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 4.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 50,
+          "last_sample_index": 74,
+          "first_time_seconds": 5.0,
+          "last_time_seconds": 7.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 75,
+          "last_sample_index": 99,
+          "first_time_seconds": 7.5,
+          "last_time_seconds": 9.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 5,
+          "first_sample_index": 100,
+          "last_sample_index": 124,
+          "first_time_seconds": 10.0,
+          "last_time_seconds": 12.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 6,
+          "first_sample_index": 125,
+          "last_sample_index": 149,
+          "first_time_seconds": 12.5,
+          "last_time_seconds": 14.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 7,
+          "first_sample_index": 150,
+          "last_sample_index": 174,
+          "first_time_seconds": 15.0,
+          "last_time_seconds": 17.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 8,
+          "first_sample_index": 175,
+          "last_sample_index": 199,
+          "first_time_seconds": 17.5,
+          "last_time_seconds": 19.9,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 9,
+          "first_sample_index": 200,
+          "last_sample_index": 224,
+          "first_time_seconds": 20.0,
+          "last_time_seconds": 22.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 10,
+          "first_sample_index": 225,
+          "last_sample_index": 248,
+          "first_time_seconds": 22.5,
+          "last_time_seconds": 24.8,
+          "filled_cells": 24
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 13,
+      "sheets_count": 4,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 24.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 3,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 6.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 4,
+          "last_sample_index": 7,
+          "first_time_seconds": 8.0,
+          "last_time_seconds": 14.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 3,
+          "first_sample_index": 8,
+          "last_sample_index": 11,
+          "first_time_seconds": 16.0,
+          "last_time_seconds": 22.0,
+          "filled_cells": 4
+        },
+        {
+          "sheet_index": 4,
+          "first_sample_index": 12,
+          "last_sample_index": 12,
+          "first_time_seconds": 24.0,
+          "last_time_seconds": 24.0,
+          "filled_cells": 1
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "830cc94e3429bdaf4492cb9210540f7c53bc4e703ae44228945c96b6a02e156a",
+  "score_prompt_sha256": "401d547a59f1802f2e55fddb5f338b26792539a1678d5dd5de865f3f710ea6ef",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "stock-if-IF037-seed42"
+}

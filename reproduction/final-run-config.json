@@ -1,0 +1,51 @@
+{
+ "label": "final1",
+ "frozen_at": "2026-11-15 about 04:55 PST, before any final1 episode was generated",
+ "purpose": "Frozen final run for the 'beat Genie 3 (2.12)' goal: stock vs one method arm (static text director) on all 171 PlayWorld cases.",
+ "seed": 42,
+ "hardware": "Lambda Cloud gpu_1x_h100_pcie (H100 80 GB), one warm worker per instance",
+ "code": {"branch": "director", "parent_commit": "ef722b0", "note": "the run uses the commit that adds this file (reported to the coordinator); worldsync/ is identical to parent_commit"},
+ "model": "LingBot-World2 14B causal-fast, stock weights, 18/6 window, 480x832, 16 FPS, BF16, sdpa attention, no quantization",
+ "player": "claude-haiku-4-5-20251001 (reference-guided player, END challenge, --player-retries 2), reached through the local Claude proxy over an SSH reverse tunnel",
+ "arms": {
+  "stock": {
+   "cases": "all 171 (GC 48, IF 50, insight 30, out-of-sight 43)",
+   "flags": {"gc|if|outsight": "--seed 42 --max-chunks 40 --player-retries 2 --offload-text-encoder --text-prompt both",
+             "insight": "--seed 42 --max-chunks 60 --player-retries 2 --offload-text-encoder --text-prompt caption (stationary WAIT, no player)"}
+  },
+  "director": {
+   "cases": "IF 50, insight 30, out-of-sight 43 (123 generated episodes)",
+   "flags": "the stock flags of the split plus --director static --director-text-file reproduction/director-static-texts-all.json",
+   "gc": "DEFINED as identical to stock (stock text). The director arm's GC episodes ARE the stock arm's GC episodes; they are not regenerated, so the GC delta is zero by construction.",
+   "texts": "reproduction/director-static-texts-all.json: one static world-model text per case written by claude-haiku-4-5-20251001 through worldsync.lingbot_director.Director from image_caption, prompt and action_sequence_steps only (no images, questions, policies, rubric or judge text); 0 LLM errors; no director LLM call at run time."
+  }
+ },
+ "job_list": "reproduction/final-run-jobs.jsonl (294 jobs: 171 stock + 123 director; arms and dimensions interleaved; the 20 development cases last). A job is done when <output>/run.json has status completed; transient failures are retried by the worker.",
+ "deviations_from_the_modal_full_run_full1": [
+  "Hardware: Lambda H100 PCIe instead of Modal H200 (outputs are bit-exact only within one GPU model), so the stock arm is regenerated here and compared with the director arm on the same hardware.",
+  "Reference-plan parser fix d484e0f (pitch keys u/j map to UP/DOWN); applies to both arms; affects 7 plans (GC008, GC016, OE028, OE030, OE032, OE036, OE047).",
+  "Player calls go through the local Claude proxy (same model id) because the project API key reached its usage limit.",
+  "Insight uses --text-prompt caption at 60 chunks (the full1 amendment), other splits --text-prompt both."
+ ],
+ "development_cases_used_to_choose_the_method": {
+  "outsight": ["OE048", "OE037", "OE068", "OE067", "OE062", "OE043"],
+  "if": ["IF012", "IF042", "IF036", "IF027", "IF011"],
+  "gc": ["GC001", "GC045", "GC046"],
+  "insight": ["OE008", "OE022", "OE035", "OE040", "OE063", "OE074"],
+  "evidence": "reproduction/director-dev.md"
+ },
+ "analysis_preregistered": {
+  "judge": "released PlayWorld rubric, instruction gate and aggregation via Vertex gemini-3.1-pro-preview (gcloud login); neutral world-model name, the arm is never shown to the judge",
+  "primary": "ONE Gemini call per episode. Per-dimension mean; overall = equal mean of the four dimension means (GC, IF, insight, out-of-sight); bootstrap 95% CI resampling cases within each dimension; paired director-minus-stock difference per case with bootstrap CI.",
+  "reported_sets": ["all 171 cases", "held-out = 151 cases (the 20 development cases dropped)", "each of those with and without GC013 (released image contradicts its caption and rubric)"],
+  "secondary": "mean of 3 independent Gemini calls per episode for both arms, if time allows; labelled secondary",
+  "unscorable_episodes": "listed with the reason and excluded from both arms' pairs; generation failures listed and never imputed",
+  "success_criterion": "reproduction/pass-criterion.md, unchanged: the claim 'beats 2.12' needs the director arm's overall on all 171 cases above 2.12 with the lower CI bound above 2.12; a point estimate above 2.12 with a CI that includes 2.12 is reported as 'point estimate only, not established'."
+ },
+ "prediction_on_record": {
+  "source": "20 development cases, fixed-action replays, mean of 3 judge calls (reproduction/director-dev.md)",
+  "dev_paired_deltas": {"if": "+0.03 [-0.89, +0.99] n=5", "outsight": "+0.33 [+0.03, +0.67] n=6", "insight": "+0.43 [-0.08, +0.98] n=6", "gc": "-0.44 [-1.33, +1.33] n=3 (director not applied to GC in this run)"},
+  "projected_overall": "about 2.05 for the director arm (stock about 1.85 + 0.20) if the dev deltas transfer exactly; they came from a few judge calls, so smaller is more likely",
+  "odds": "point estimate above 2.12: roughly one in four at best; lower CI bound above 2.12: essentially ruled out (the 171-case overall CI half-width is about 0.18)"
+ }
+}

@@ -1,0 +1,414 @@
+{
+  "task_id": "OE016",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "fcb68b41e60b83136565af6b0a1dee5960dce3aa14bc5063863399f9cadec292",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "OE016",
+    "perspective": "first-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "yes",
+    "revisit_observed": "yes",
+    "observed_action_zh": "镜头先向左转动，看到了窗户和另一本笔记本，然后向右转动，回到了最初看着双手写字的视角。",
+    "trajectory_evidence_zh": "在主视图的第1张图集中，镜头从第5帧开始向左转动，画面中出现了窗户。在第2张图集中，镜头从第25帧左右开始向右转动，并在第30帧之后回到了最初的视角。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 5
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.2,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "out_of_sight_evolution": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "相机转回后，笔记本上的文字与初始状态完全一致，没有任何新增的字迹，书写过程没有产生累积进展。"
+      },
+      "prompt_evolution_alignment": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "视频没有展示合理的场景演变，相机向左转动时凭空出现了一个完全不同的线圈笔记本，且整个过程没有产生任何书写结果。"
+      },
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "在相机向左转动期间，原本平放的笔记本消失，被一个完全不同的、倾斜放置的厚线圈笔记本取代，随后原笔记本又在相机转回时重新出现，发生了严重的物体替换和身份不一致。"
+      },
+      "temporal_scene_consistency": {
+        "score": 2,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "虽然相机转回后原笔记本回到了大致相同的位置，但在相机向左转动期间，桌面上出现了一个完全不同的线圈笔记本，破坏了场景的空间一致性。"
+      },
+      "physical_causality": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "手持笔在纸上做出了书写的动作，但纸上没有出现任何新的墨水痕迹，缺乏物理因果关系。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "no static tail penalty applied; failures are captured in category scores",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "yes",
+      "first_completion_frame": 30,
+      "evidence_zh": "相机在第15帧左右完成向左转动，并在第30帧左右转回到了初始视角。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "相机转动过程中，背景桌面和窗户的相对位置关系发生了一定变形，且桌面上凭空出现了一个新的笔记本。",
+      "post_completion_phase_zh": "相机转回后，背景与初始状态基本一致。"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "initial flat notebook vs. spiral notebook during pan",
+        "anchors": [
+          "wooden desk surface",
+          "hand holding the purple pen"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "0-15",
+        "15-30"
+      ],
+      "continuous_camera_motion": "yes",
+      "tracked_structural_anchors": [
+        "wooden desk",
+        "window frame in the background"
+      ],
+      "newly_revealed_regions_zh": "相机向左转动时展示了桌面左侧的区域。",
+      "evidence_zh": "视角的改变是由相机的连续水平旋转（先向左，后向右）引起的。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "no",
+      "adjacent_frame_interval": "none",
+      "no_plausible_camera_transform": "no",
+      "persistent_anchor_contradiction": "no",
+      "contradicting_anchors": [],
+      "evidence_zh": "相机的运动是连续的，没有发生硬切。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "动作完成后视频很快结束，没有额外的违规行为。"
+    },
+    "final_state_check": {
+      "window": "30-38",
+      "visible_key_objects": [
+        "hands",
+        "purple pen",
+        "grey sweater",
+        "notebook"
+      ],
+      "reappearance_consistency_zh": "相机转回后，手、笔、毛衣和笔记本重新出现，且外观与初始状态基本一致，但笔记本上没有新增字迹。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "out_of_sight",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "yes",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "writing with a purple pen on lined notebook paper",
+      "phase_comparison_applicable": "yes",
+      "pre_occlusion_state_zh": "在相机向左转动前，笔记本上有多行文字。",
+      "hidden_interval_zh": "相机向左转动，原笔记本移出视野，画面中出现了一个完全不同的线圈笔记本。",
+      "reappeared_state_zh": "相机转回后，原笔记本重新出现，文字状态与初始完全一致，没有新增任何字迹。",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "视频结束时手仍在做书写动作。",
+      "terminal_state_reasoning_zh": "视频没有以静止状态结束。",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "无静止尾段惩罚。",
+      "camera_independent_subject_motion": "no",
+      "stable_world_anchors_compared": [
+        "wooden desk"
+      ],
+      "articulation_or_local_state_change_zh": "手在移动，但笔记本上的文字状态没有改变。",
+      "uniquely_matched_anchor_relative_change_zh": "无",
+      "two_independent_motion_evidence_requirements_met": "no",
+      "expected_world_motion_direction_zh": "无特定方向要求。",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "无有效的相对状态改变。",
+      "unchanged_coupled_details_zh": "无",
+      "accumulated_change_zh": "整个过程中，笔记本上没有任何新增的字迹，书写过程没有产生任何累积的进展。",
+      "evidence_zh": "相机转回后，手虽然在移动，但笔记本上的文字与初始状态完全相同，没有新的墨水痕迹产生。",
+      "final_score_cap_applied": 1
+    },
+    "oe_instruction_following_check": {
+      "applicable": "yes",
+      "verdict": "pass",
+      "instruction_following_score": 1,
+      "meaningful_requested_trajectory_progress": "yes",
+      "revisit_required": "yes",
+      "starting_pose_revisited": "yes",
+      "observed_action_zh": "相机先向左转动，然后向右转回到了初始视角。",
+      "trajectory_evidence_zh": "从第0帧到第15帧相机向左转，从第15帧到第30帧相机向右转回。",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "yes",
+      "persistent_new_ink": "no",
+      "ink_change_type": "none",
+      "same_anchored_paper_region_compared": "yes",
+      "initial_ink_state_zh": "笔记本上有多行已有的文字。",
+      "change_sequence_zh": "手持笔在纸上移动，但没有留下任何新的痕迹。",
+      "resulting_ink_state_zh": "文字状态与初始完全一致。",
+      "hand_or_pen_motion_without_ink_change": "yes",
+      "evidence_zh": "尽管手在做书写动作，但纸上没有出现任何新的紫色墨水痕迹。"
+    },
+    "oe_productive_action_check": {
+      "applicable": "yes",
+      "action_type": "writing",
+      "tool_and_target": "purple pen and lined notebook paper",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "no",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "手持笔在纸上移动，但没有留下任何新的墨水痕迹，没有产生持久的书写结果。"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "yes",
+      "evidence_zh": "相机完成了转动，但书写动作没有产生任何实际进展。",
+      "final_score_gate_applied": 1
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "yes",
+      "tracked_objects_or_surfaces": [
+        "notebook"
+      ],
+      "correspondence_anchors": [
+        "wooden desk",
+        "hand holding the pen"
+      ],
+      "visible_intervals": [
+        "0-10",
+        "10-25",
+        "25-38"
+      ],
+      "before_developing_after_checkpoints": [
+        {
+          "surface": "notebook",
+          "before_frame": 0,
+          "developing_frame": 15,
+          "after_frame": 38,
+          "observed_change_zh": "原本平放的笔记本在相机转动期间变成了一个倾斜放置的厚线圈笔记本，随后又变回原样。"
+        }
+      ],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "在相机向左转动期间，原本平放的笔记本消失，被一个完全不同的线圈笔记本取代，这是严重的物体替换。"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "no",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0.0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "手在移动，但没有产生书写结果。",
+      "final_score_gate_applied": 1
+    },
+    "if_instruction_following_check": {
+      "applicable": "no",
+      "perspective": "first-person",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "prompt_directed_forward_progress": "not_applicable",
+      "camera_or_background_motion_only": "not_applicable",
+      "observed_action_zh": "",
+      "trajectory_evidence_zh": "",
+      "failure_reason_zh": ""
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "no",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "not_applicable",
+      "solid_interpenetration": "uncertain",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": ""
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "not_applicable",
+      "target_type": "not_applicable",
+      "tracked_before_contact": "uncertain",
+      "remained_present_until_trigger": "uncertain",
+      "observed_trigger": "not_applicable",
+      "unsupported_change": "none",
+      "interaction_opportunity_preserved": "uncertain",
+      "evidence_zh": ""
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "no",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "no",
+      "evidence_zh": ""
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "notebook",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "colors",
+        "materials",
+        "textures"
+      ],
+      "identity_failure": "replacement",
+      "evidence_zh": "在相机向左转动期间，原本平放的笔记本消失，被一个完全不同的、倾斜放置的厚线圈笔记本取代。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "OE_evolution",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "not_applicable",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于书写过程没有产生任何累积进展（演变质量为1），身份一致性得分不能提高最终得分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "无书写结果",
+      "positive_evidence_zh": "",
+      "evidence_zh": "手持笔在纸上移动，但没有留下任何新的墨水痕迹。",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "相机成功完成了向左转动并转回的动作，但在转动期间桌面上凭空出现了一个完全不同的线圈笔记本，且相机转回后，尽管手在做书写动作，笔记本上却没有产生任何新的字迹，缺乏实质性的演变进展。",
+    "task_id": "OE016"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4717,
+      "output_tokens": 224
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 35726,
+      "output_tokens": 3768
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 39,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 3.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 38,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 3.8,
+          "filled_cells": 14
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "9acc7274e8b2c3400c83d04f1c3ad7934679913c7dea9cfd1f0b9bd8cec96d96",
+  "score_prompt_sha256": "fc892fca96cc46d2cc6a664a06164e30429b16163aa28d7043300b5841db687d",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "director-outsight-OE016-seed42"
+}

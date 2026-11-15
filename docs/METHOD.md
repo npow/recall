@@ -68,6 +68,19 @@ The pre-registered pass criterion for beating 2.12 is **not met**. Memory did fi
 replicate on its own 14 cases inside the full run (+0.04), and the judge scored 5 of 28 identical-pixel video pairs differently (by up to 4.0 points),
 so single-call differences under about 0.3 are noise ([exploratory analysis](../reproduction/full-run-memory-fired.md)).
 
+### Director (text state tracking)
+
+**What it is.** `--director static` (default off, `worldsync/lingbot_director.py`): Claude Haiku writes one event description per case
+in LingBot's trained caption format, clean-room from the image caption, task objective and reference plan only (never rubric text).
+It replaces the world-model text on IF, in-sight and out-of-sight cases; GC keeps the stock text.
+**Development result** ([director-dev](../reproduction/director-dev.md)): on 20 development cases with fixed-action replays and three judge calls,
+no reliable gain: out-of-sight +0.33 [+0.03, +0.67] (n=6), in-sight +0.43 [-0.08, +0.98], IF +0.03, about +0.1 to +0.2 overall at best.
+**Final run** ([final1](../reproduction/final-run/table.md), Lambda H100, 171 cases, seed 42, single Gemini call):
+stock 1.81 [1.64, 1.99], director 1.82 [1.66, 2.01], paired +0.02 [-0.15, +0.19]; held-out 151 cases 1.76 vs 1.82, +0.06 [-0.13, +0.26].
+A null; the pre-registered projection was about 2.05, and the pass criterion is not met.
+**Gate counts.** IF gate failures fell from 20 to 11 while out-of-sight gate failures rose from 7 to 13, and scores did not move.
+Why the two moved in opposite directions has not been investigated.
+
 ## Things we tried that did not help (kept in the repo)
 
 - Memory LoRA fine-tune on 48 real Sekai revisit pairs: no gain over plain retrieval and it degrades ordinary generation ([lora](../reproduction/lora/README.md)).

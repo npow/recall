@@ -1,0 +1,395 @@
+{
+  "task_id": "IF032",
+  "judge_provider": "google-vertex",
+  "judge_model": "gemini-3.1-pro-preview",
+  "endpoint": "vertex-ai-global",
+  "video_sha256": "d72e48b144b047d5373dd7d0d5d1b64d05c44dc3c81b13e6f15af98c0ec16896",
+  "dry_run": false,
+  "protocol_warning": "Vertex endpoint and model id differ from the paper's Gemini 3.1 Pro setup; controller, adapter and checkpoint also differ.",
+  "gate": {
+    "applicable": "yes",
+    "task_id": "IF032",
+    "perspective": "third-person",
+    "verdict": "pass",
+    "instruction_following_score": 1,
+    "meaningful_requested_trajectory_progress": "yes",
+    "revisit_required": "no",
+    "revisit_observed": "not_applicable",
+    "observed_action_zh": "视频后半段男孩重新出现并向小狗的方向跑去/走去。",
+    "trajectory_evidence_zh": "第0-4帧男孩站立，随后离开画面；第20帧开始男孩重新出现在画面左侧，并持续向右前方的小狗移动。",
+    "failure_reason_zh": "",
+    "confidence_1_to_5": 4
+  },
+  "rubric": {
+    "base_non_task_score_1_to_5": 1.0,
+    "final_score_1_to_5": 1,
+    "category_scores_1_to_5": {
+      "subject_identity": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "狗在第20帧突然穿上了之前没有的黑色胸背带，发生了明显的身份和外观替换。"
+      },
+      "contact_support": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男孩在硬重置前未能靠近狗，目标互动区域未被测试，且硬重置破坏了物理支撑的连贯性。"
+      },
+      "causal_response": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "视频在第19到20帧之间发生严重的硬重置，人物和狗瞬间移动，破坏了所有的空间和因果连贯性。"
+      },
+      "motion_kinematics": {
+        "score": 1,
+        "weight": 1.0,
+        "answer": "no",
+        "evidence_zh": "男孩在前半段保持静止，随后在第20帧发生硬重置和瞬间移动，运动学表现极差。"
+      },
+      "collision_boundary": {
+        "score": 1,
+        "weight": 2.0,
+        "answer": "no",
+        "evidence_zh": "由于男孩初始静止以及随后的硬重置，男孩从未真正到达狗的位置，边界互动机会未被测试。"
+      }
+    },
+    "excluded_categories": {
+      "task_specific": "not scored"
+    },
+    "static_tail_policy_applied": "No static tail policy applied as the video fails due to a hard reset.",
+    "action_inconsistency_penalties": [],
+    "requested_action_completion": {
+      "completed": "no",
+      "first_completion_frame": null,
+      "evidence_zh": "男孩未能连贯地朝狗跑去，视频中途发生硬重置。"
+    },
+    "background_consistency": {
+      "required_action_phase_zh": "第19到20帧之间背景和主体位置发生瞬间跳跃（硬重置）。",
+      "post_completion_phase_zh": "不适用"
+    },
+    "object_correspondence_checks": [
+      {
+        "comparison": "the dog in frames 0-19 vs frames 20-28",
+        "anchors": [
+          "shoreline",
+          "sand"
+        ],
+        "same_object_or_region": "no"
+      }
+    ],
+    "camera_motion_disambiguation": {
+      "intervals_checked": [
+        "19-20"
+      ],
+      "continuous_camera_motion": "no",
+      "tracked_structural_anchors": [
+        "shoreline",
+        "sand"
+      ],
+      "newly_revealed_regions_zh": "无",
+      "evidence_zh": "第19到20帧之间，人物和狗的位置发生瞬间跳跃，狗的外观发生突变，无法用摄像机运动解释。"
+    },
+    "hard_reset_check": {
+      "hard_reset_claimed": "yes",
+      "adjacent_frame_interval": "19-20",
+      "no_plausible_camera_transform": "yes",
+      "persistent_anchor_contradiction": "yes",
+      "contradicting_anchors": [
+        "the dog",
+        "the boy",
+        "the shoreline"
+      ],
+      "evidence_zh": "在第19到20帧之间发生硬重置，男孩突然出现在画面左侧，狗瞬间移动到较近位置并突然穿上了黑色胸背带。"
+    },
+    "post_completion_adjustment": {
+      "value": 0.0,
+      "evidence_zh": "未完成指令，无动作后调整。"
+    },
+    "final_state_check": {
+      "window": "25-28",
+      "visible_key_objects": [
+        "the boy",
+        "the dog"
+      ],
+      "reappearance_consistency_zh": "狗在重新出现时多出了黑色胸背带，外观不一致。"
+    },
+    "oe_dynamicity_check": {
+      "mode": "not_applicable",
+      "meaningful_evolution": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evolution_quality_level_1_to_5": 1,
+      "named_process": "not_applicable",
+      "phase_comparison_applicable": "no",
+      "pre_occlusion_state_zh": "不适用",
+      "hidden_interval_zh": "不适用",
+      "reappeared_state_zh": "不适用",
+      "post_completion_static_tail": "no",
+      "static_tail_first_frame": null,
+      "terminal_static_reasonable": "not_applicable",
+      "terminal_pose_or_process_state": "not_applicable",
+      "support_and_pose_evidence_zh": "不适用",
+      "terminal_state_reasoning_zh": "不适用",
+      "static_tail_score_adjustment": 0,
+      "static_tail_penalty_zh": "不适用",
+      "camera_independent_subject_motion": "not_applicable",
+      "stable_world_anchors_compared": [],
+      "articulation_or_local_state_change_zh": "不适用",
+      "uniquely_matched_anchor_relative_change_zh": "不适用",
+      "two_independent_motion_evidence_requirements_met": "not_applicable",
+      "expected_world_motion_direction_zh": "不适用",
+      "returned_motion_direction_consistent": "not_applicable",
+      "rigid_vehicle_local_progression_zh": "不适用",
+      "vehicle_front_rear_identification_zh": "不适用",
+      "vehicle_world_displacement_vs_heading_zh": "不适用",
+      "vehicle_motion_direction": "not_applicable",
+      "unexplained_reverse_motion": "not_applicable",
+      "subject_relative_change_zh": "不适用",
+      "unchanged_coupled_details_zh": "不适用",
+      "accumulated_change_zh": "不适用",
+      "evidence_zh": "不适用",
+      "final_score_cap_applied": null
+    },
+    "oe_instruction_following_check": {
+      "applicable": "no",
+      "verdict": "not_applicable",
+      "instruction_following_score": null,
+      "meaningful_requested_trajectory_progress": "not_applicable",
+      "revisit_required": "no",
+      "starting_pose_revisited": "not_applicable",
+      "observed_action_zh": "不适用",
+      "trajectory_evidence_zh": "不适用",
+      "failure_reason_zh": ""
+    },
+    "oe003_ink_deposition_check": {
+      "applicable": "no",
+      "persistent_new_ink": "uncertain",
+      "ink_change_type": "uncertain",
+      "same_anchored_paper_region_compared": "no",
+      "initial_ink_state_zh": "不适用",
+      "change_sequence_zh": "不适用",
+      "resulting_ink_state_zh": "不适用",
+      "hand_or_pen_motion_without_ink_change": "no",
+      "evidence_zh": "不适用"
+    },
+    "oe_productive_action_check": {
+      "applicable": "no",
+      "action_type": "other",
+      "tool_and_target": "not_applicable",
+      "persistent_result_created": "no",
+      "result_recognizable_and_intentional": "no",
+      "tool_contact_causes_local_change": "no",
+      "action_result_temporally_coherent": "no",
+      "prompt_named_requirement": "not_specified",
+      "result_matches_named_requirement": "not_applicable",
+      "result_later_disappears_or_resets": "uncertain",
+      "visible_reversal_explanation": "not_applicable",
+      "productive_action_quality_level_1_to_5": 1,
+      "evidence_zh": "不适用"
+    },
+    "gc_dynamicity_check": {
+      "meaningful_action_progress": "no",
+      "static_or_near_static": "no",
+      "ineffective_repetition": "no",
+      "evidence_zh": "不适用",
+      "final_score_gate_applied": null
+    },
+    "gc_appearance_stability_check": {
+      "applicable": "no",
+      "tracked_objects_or_surfaces": [],
+      "correspondence_anchors": [],
+      "visible_intervals": [],
+      "before_developing_after_checkpoints": [],
+      "intrinsic_color_drift": "none",
+      "material_or_texture_drift": "none",
+      "generated_noise_artifacts": "none",
+      "noise_type": "none",
+      "allowed_visual_explanation": "none",
+      "evidence_zh": "不适用"
+    },
+    "if_subject_motion_check": {
+      "subject_expected_to_move": "yes",
+      "meaningful_subject_motion": "partial",
+      "static_or_near_static": "no",
+      "camera_or_background_motion_only": "no",
+      "post_action_static_tail": "no",
+      "static_tail_first_frame": null,
+      "static_tail_fraction_of_video": 0,
+      "post_action_static_penalty": 0,
+      "evidence_zh": "男孩在第0-19帧保持静止，第20帧硬重置后才开始移动。",
+      "final_score_gate_applied": 1
+    },
+    "if_instruction_following_check": {
+      "applicable": "yes",
+      "perspective": "third-person",
+      "verdict": "fail",
+      "instruction_following_score": 0,
+      "prompt_directed_forward_progress": "no",
+      "camera_or_background_motion_only": "no",
+      "observed_action_zh": "男孩在前半段保持静止，随后视频发生硬重置，男孩才开始走动。",
+      "trajectory_evidence_zh": "男孩在第0-19帧没有朝狗跑去，第20帧发生硬重置后才出现走动，未能连贯执行指令。",
+      "failure_reason_zh": "男孩初始静止，且视频发生硬重置，未能连贯完成朝狗跑去的动作。"
+    },
+    "if_collision_boundary_checklist": {
+      "applicable": "yes",
+      "interaction_opportunity_reached": "no",
+      "observed_outcome": "unresolved",
+      "solid_interpenetration": "no",
+      "support_after_contact": "not_applicable",
+      "boundary_response_plausible": "no",
+      "evidence_zh": "男孩未能在硬重置前接触到狗，互动机会未达成。"
+    },
+    "if_target_boundary_stability_check": {
+      "target_boundary": "the small dog",
+      "target_type": "social_or_destination",
+      "tracked_before_contact": "yes",
+      "remained_present_until_trigger": "no",
+      "observed_trigger": "none",
+      "unsupported_change": "transformed",
+      "interaction_opportunity_preserved": "no",
+      "evidence_zh": "狗在第20帧发生硬重置，外观突变并瞬间移动，破坏了互动目标。"
+    },
+    "if_support_proxy_check": {
+      "direct_support_interface_visible": "yes",
+      "proxy_evidence_observed": [],
+      "proxy_supports_expected_locomotion": "yes",
+      "evidence_zh": "男孩和狗的脚部/爪子在画面中可见，无需代理证据。"
+    },
+    "subject_identity_check": {
+      "applicable": "yes",
+      "tracked_subject": "the small dog",
+      "same_entity_throughout": "no",
+      "stable_identity_attributes": [
+        "colors",
+        "persistent_equipment"
+      ],
+      "identity_failure": "replacement",
+      "evidence_zh": "狗在第20帧突然穿上了之前没有的黑色胸背带，发生了明显的身份/外观替换。"
+    },
+    "subject_identity_eligibility_check": {
+      "core_process": "IF_interaction_quality",
+      "core_process_level": 1,
+      "meaningful_motion_or_evolution": "no",
+      "contact_or_support_demonstrated": "no",
+      "identity_eligible_for_normal_weighting": "no",
+      "final_score_cap_applied": 1,
+      "evidence_zh": "由于互动质量为1（硬重置），身份一致性不计入加权平均分。"
+    },
+    "if_interaction_quality_check": {
+      "interaction_quality_level_1_to_5": 1,
+      "interaction_opportunity_reached": "no",
+      "physical_response_observed": "no",
+      "core_failure_zh": "视频在第19到20帧发生严重的硬重置，破坏了所有的物理连贯性。",
+      "positive_evidence_zh": "无",
+      "evidence_zh": "男孩在前半段未移动，随后发生硬重置，导致互动无法连贯进行。",
+      "final_score_cap_applied": 1
+    },
+    "summary_zh": "视频在第19到20帧之间发生了严重的硬重置，导致男孩和狗瞬间移动，且狗突然穿上了黑色胸背带，完全破坏了物理连贯性和互动过程。",
+    "task_id": "IF032"
+  },
+  "calls": [
+    {
+      "mode": "gate",
+      "cached": false,
+      "prompt_tokens": 4682,
+      "output_tokens": 189
+    },
+    {
+      "mode": "score",
+      "cached": false,
+      "prompt_tokens": 37814,
+      "output_tokens": 3424
+    }
+  ],
+  "sampling": {
+    "strategy": "dual-scale full-video contact-sheet sampling",
+    "chronological_order": true,
+    "contact_sheet_encoding": {
+      "format": "JPEG",
+      "quality": 70,
+      "subsampling": "4:2:0"
+    },
+    "primary": {
+      "fps": 10.0,
+      "sample_interval_seconds": 0.1,
+      "cell_size": [
+        384,
+        216
+      ],
+      "grid": [
+        5,
+        5
+      ],
+      "frames_per_sheet": 25,
+      "sheet_size": [
+        1920,
+        1080
+      ],
+      "frames_count": 29,
+      "sheets_count": 2,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.8,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 24,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.4,
+          "filled_cells": 25
+        },
+        {
+          "sheet_index": 2,
+          "first_sample_index": 25,
+          "last_sample_index": 28,
+          "first_time_seconds": 2.5,
+          "last_time_seconds": 2.8,
+          "filled_cells": 4
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "detail": {
+      "fps": 0.5,
+      "sample_interval_seconds": 2.0,
+      "cell_size": [
+        800,
+        450
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "frames_per_sheet": 4,
+      "sheet_size": [
+        1600,
+        900
+      ],
+      "frames_count": 2,
+      "sheets_count": 1,
+      "first_sample_time_seconds": 0.0,
+      "last_sample_time_seconds": 2.0,
+      "sheet_ranges": [
+        {
+          "sheet_index": 1,
+          "first_sample_index": 0,
+          "last_sample_index": 1,
+          "first_time_seconds": 0.0,
+          "last_time_seconds": 2.0,
+          "filled_cells": 2
+        }
+      ],
+      "ordering": "chronological row-major within each sheet"
+    },
+    "reference_image_role": "initial scene/style context only, if provided"
+  },
+  "gate_prompt_sha256": "d34a86b172d5fe110489819f432c7e929177783929ae6ef390fea3d3cc009ce0",
+  "score_prompt_sha256": "a78f8a58ad121b6212ce44cee8a0579e79f33b2c6ee2a3adf2fe0c0a56232d00",
+  "scores": {
+    "official": 1.0,
+    "final_score": 1.0
+  },
+  "episode_id": "director-if-IF032-seed42"
+}
