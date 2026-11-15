@@ -11,3 +11,5 @@ python scripts/guard_lingbot_small_probe.py --cache-frames 70
 ```
 
 The supervisor budgets 45GB of application memory plus 16GiB reserve, starts only when the local GPU is idle, and kills only its own child on a reserve breach. No extra cloud GPU job is used. Native fixed-camera replays are transport/quality diagnostics, not adaptive PlayWorld scores.
+
+Both complete13-chunk runs finished with all native camera audits passing. Four initial chunks are bit-exact before the18-frame cache begins evicting. The warmed last-four means are12.40seconds for18frames versus17.52seconds for70frames; the larger context is slower. Total times391/359seconds reflect uncontrolled cold-load differences. No context-quality benefit is inferred without blinded review. See comparison.json and the two complete videos.

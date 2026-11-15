@@ -1,0 +1,93 @@
+{
+  "scope": "Independent1.3B-release speed/quality context replay; not14B lossless optimization or leaderboard evidence",
+  "actual_dit_parameter_count": 1709502016,
+  "runs": {
+    "cache18": {
+      "status": "completed",
+      "chunks": 13,
+      "generated_frames": 205,
+      "harness_total_s": 391.2225304499734,
+      "native_gpu_peak_bytes": 17681712640,
+      "sampled_reserved_peak_bytes": 22154313728,
+      "min_physical_available_bytes": 84253270016,
+      "first_chunk_s": 242.46491581498412,
+      "last_four_intervals_s": [
+        12.461324620991945,
+        12.314123663993087,
+        12.481074012990575,
+        12.3221505000256
+      ],
+      "last_four_mean_s": 12.394668199500302,
+      "native_camera_audits_pass": true
+    },
+    "cache70": {
+      "status": "completed",
+      "chunks": 13,
+      "generated_frames": 205,
+      "harness_total_s": 359.2000725020189,
+      "native_gpu_peak_bytes": 32164275712,
+      "sampled_reserved_peak_bytes": 35955671040,
+      "min_physical_available_bytes": 67746623488,
+      "first_chunk_s": 179.45030662801582,
+      "last_four_intervals_s": [
+        16.422569621005096,
+        17.151083595003,
+        17.907569881004747,
+        18.61006387101952
+      ],
+      "last_four_mean_s": 17.52282174200809,
+      "native_camera_audits_pass": true
+    }
+  },
+  "matched_settings": {
+    "checkpoint_revision": true,
+    "asset_checkpoint_revision": true,
+    "checkpoint_model_id": true,
+    "source_revision": true,
+    "initial_image_sha256": true,
+    "image_caption_sha256": true,
+    "task_id": true,
+    "split": true,
+    "seed": true,
+    "max_chunks": true,
+    "sampler_timesteps_index": true,
+    "sample_shift": true,
+    "fps": true,
+    "turn_degrees_per_second": true,
+    "fixed_actions": true,
+    "hardware": true,
+    "attention_backend": true,
+    "sink_size": true,
+    "actual_dit_parameter_count": true,
+    "adapter_sha256": true,
+    "small_probe_sha256": true
+  },
+  "declared_changed_setting": {
+    "local_attn_size": [
+      18,
+      70
+    ]
+  },
+  "chunk_pixel_hash_equal": [
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "first_differing_chunk": 4,
+  "caveats": [
+    "Different model and official shift from14B: speed/quality trade-off, not transparent optimization.",
+    "Cold loading varied substantially; compare warmed intervals rather than total times.",
+    "Thirteen fixed native-camera chunks test one round trip, not adaptive PlayWorld or all four dimensions.",
+    "No task score or quality improvement inferred from longer context."
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "scope": "Standalone actual VAE positive-zero-tail fixed-point proof; inference only",
+  "status": "completed",
+  "source_revision": "1895d300d8ac936401689b26389f51cbd36530eb",
+  "vae_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+  "torch": "2.15.0+cu132",
+  "cuda": "13.2",
+  "gpu": "NVIDIA Thor",
+  "prototype_sha256": "998458052a84ffdd9b8ca83c062d47eccc5001e253df1b137ee1ae60806b8e45",
+  "default_generator_changed": false,
+  "rows": [
+    {
+      "mode": "native",
+      "rgb_frames": 205,
+      "elapsed_s": 34.2859487470123,
+      "latent_shape": [
+        16,
+        52,
+        58,
+        104
+      ],
+      "dtype": "torch.float32",
+      "sha256": "d8fc80d889b3c8ac609fb20ab454a49942ab1929b57fc594869594e070421f4c",
+      "finite": true,
+      "cuda_peak_allocated_bytes": 8156561408,
+      "cuda_peak_reserved_bytes": 10219421696,
+      "fixedpoint": {}
+    },
+    {
+      "mode": "fixedpoint",
+      "rgb_frames": 205,
+      "elapsed_s": 21.828191401960794,
+      "latent_shape": [
+        16,
+        52,
+        58,
+        104
+      ],
+      "dtype": "torch.float32",
+      "sha256": "d8fc80d889b3c8ac609fb20ab454a49942ab1929b57fc594869594e070421f4c",
+      "finite": true,
+      "cuda_peak_allocated_bytes": 10307504128,
+      "cuda_peak_reserved_bytes": 17811111936,
+      "fixedpoint": {
+        "status": "fixed_point_used",
+        "encoder_calls": 30,
+        "repeated_groups": 22,
+        "full_cache_bitwise_equal": true,
+        "native_groups": 52,
+        "fixed_after_group": 29,
+        "cache_entries": 26,
+        "cache_tensor_count": 24,
+        "cache_tensor_bytes": 2168045568,
+        "full_conv1_input_shape": [
+          1,
+          32,
+          52,
+          58,
+          104
+        ]
+      }
+    },
+    {
+      "mode": "native",
+      "rgb_frames": 637,
+      "elapsed_s": 107.26034283603076,
+      "latent_shape": [
+        16,
+        160,
+        58,
+        104
+      ],
+      "dtype": "torch.float32",
+      "sha256": "19d70cf0ede0db9c3a279e9271a953ae7648d361633e5b32b580df1c5cb425af",
+      "finite": true,
+      "cuda_peak_allocated_bytes": 10240565248,
+      "cuda_peak_reserved_bytes": 17811111936,
+      "fixedpoint": {}
+    },
+    {
+      "mode": "fixedpoint",
+      "rgb_frames": 637,
+      "elapsed_s": 21.601626015966758,
+      "latent_shape": [
+        16,
+        160,
+        58,
+        104
+      ],
+      "dtype": "torch.float32",
+      "sha256": "19d70cf0ede0db9c3a279e9271a953ae7648d361633e5b32b580df1c5cb425af",
+      "finite": true,
+      "cuda_peak_allocated_bytes": 30002777088,
+      "cuda_peak_reserved_bytes": 41383100416,
+      "fixedpoint": {
+        "status": "fixed_point_used",
+        "encoder_calls": 30,
+        "repeated_groups": 130,
+        "full_cache_bitwise_equal": true,
+        "native_groups": 160,
+        "fixed_after_group": 29,
+        "cache_entries": 26,
+        "cache_tensor_count": 24,
+        "cache_tensor_bytes": 2168045568,
+        "full_conv1_input_shape": [
+          1,
+          32,
+          160,
+          58,
+          104
+        ]
+      }
+    }
+  ],
+  "native_vae_dtype": "torch.float32",
+  "source_image_sha256": "cfe324c6dacbb91123a74ad7d5c80f75fe4bd5e3cfd040af201e4ee0742cd33f",
+  "input_height": 464,
+  "input_width": 832,
+  "parity": [
+    {
+      "rgb_frames": 205,
+      "all_normalized_latent_bytes_exact": true
+    },
+    {
+      "rgb_frames": 637,
+      "all_normalized_latent_bytes_exact": true
+    }
+  ],
+  "parameter_versions_unchanged": true,
+  "elapsed_s": 188.40790740796365,
+  "min_mem_available_bytes": 71209168896,
+  "peak_rss_bytes": 1868615680
+}
