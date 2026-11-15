@@ -89,6 +89,17 @@ Four predeclared IF cases, seed 42; 12 completed adaptive episodes. Same H200, n
 
 Caption plus objective is awaiting separate case/seed confirmation. Physical failures remain: walking through glass and disappearing carried objects. [Protocol, videos and per-case scores](reproduction/task-text-pilot/README.md).
 
+## Gemini — small-model scripted context diagnostic
+
+Official small checkpoint, GC027, seed42, thirteen native fixed-camera chunks. One judge draw per video; no adaptive player. This does not establish a benchmark improvement.
+
+| Cache | Diagnostic score | Revisit observed |
+|---|---:|---|
+| cache18 |1.20|no|
+| cache70 |3.80|no|
+
+Both videos fail the requested return. [Videos, frame comparison and caveats](reproduction/lingbot-small/README.md).
+
 
 ## Gemini — paired GC/OE development cohort (seeds 42 and 43)
 

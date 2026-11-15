@@ -90,6 +90,10 @@ def main():
     parser.add_argument("--adapter", choices=["lora", "memory-reader"], default="lora")
     parser.add_argument("--gradient-smoke", action="store_true",
                         help="One training step and single-noise/schedule evaluation; plumbing evidence only")
+    parser.add_argument("--quick-eval", action="store_true",
+                        help="Feasibility surrogate: one noise draw at schedule endpoints0/3")
+    parser.add_argument("--release-text-encoder", action="store_true",
+                        help="Dispose of T5 after all training/held-out prompts have been encoded")
     parser.add_argument("--alpha", type=float, default=32.0)
     parser.add_argument("--loss", choices=["velocity", "x0"], default="velocity")
     parser.add_argument("--seed", type=int, default=0)
@@ -144,6 +148,12 @@ def main():
         parser.error("no training clips")
     report["clips"] = {"train": [c.name for c in train_clips], "heldout": [c.name for c in heldout]}
     report["encode_s"] = time.monotonic() - started - report["load_s"]
+    if args.release_text_encoder:
+        import gc
+        report["text_encoder_released_bytes"] = sum(p.numel()*p.element_size() for p in pipeline.text_encoder.model.parameters())
+        del pipeline.text_encoder
+        gc.collect()
+        torch.cuda.empty_cache()
     save()
     torch.cuda.reset_peak_memory_stats()
     if args.parity:
@@ -152,7 +162,8 @@ def main():
         save()
 
     def snapshot(label):
-        evaluation = {"seeds": (0,), "schedule_indices": (0,)} if args.gradient_smoke else {}
+        evaluation = ({"seeds": (0,), "schedule_indices": (0,)} if args.gradient_smoke else
+                      {"seeds": (0,), "schedule_indices": (0, 3)} if args.quick_eval else {})
         report[label] = {c.name: evaluate(pipeline, c, loss_space=args.loss, **evaluation) for c in heldout + train_clips[:1]}
         print(json.dumps({label: report[label]}), flush=True)
         save()
@@ -162,6 +173,7 @@ def main():
     adapter = lingbot_lora if args.adapter == "lora" else lingbot_memory_reader
     trainable = (lingbot_lora.apply_lora(model, args.rank, args.alpha) if args.adapter == "lora"
                  else lingbot_memory_reader.attach(model, args.rank))
+    frozen_versions = [(p, p._version) for p in model.parameters() if not p.requires_grad]
     report["trainable_parameters"] = sum(p.numel() for p in trainable)
     optimizer = torch.optim.AdamW(trainable, lr=args.lr, weight_decay=0.0)
     rng = random.Random(args.seed)
@@ -185,12 +197,15 @@ def main():
         optimizer.step()
         torch.cuda.synchronize()
         step_times.append(time.monotonic() - tick)
-        curve.append({"step": step, "clip": clip.name, "schedule_index": index, "loss": float(loss), "grad_norm": norm})
+        curve.append({"step": step, "clip": clip.name, "schedule_index": index, "loss": float(loss.detach()), "grad_norm": norm})
         if step % args.log_every == 0 or step == 1:
             print(json.dumps(curve[-1]), flush=True)
             report["curve"] = curve
             save()
     report["curve"] = curve
+    report["frozen_base_parameter_versions_unchanged"] = all(p._version == version for p, version in frozen_versions)
+    if not report["frozen_base_parameter_versions_unchanged"]:
+        raise RuntimeError("frozen base model parameters changed during training")
     timed = step_times[2:] or step_times
     report["train"] = {"steps": args.steps, "mean_step_s": sum(timed) / len(timed), "steps_per_s": len(timed) / sum(timed),
         "peak_allocated_gb": torch.cuda.max_memory_allocated() / 1e9,
@@ -202,7 +217,7 @@ def main():
     digest = save_adapter(model, lora_path, extra={"steps": args.steps, "clips": report["clips"], "loss": args.loss})
     probe = heldout[0] if heldout else train_clips[0]
     measure = lambda: evaluate(pipeline, probe, modes=("correct",), seeds=(0,), loss_space=args.loss,
-                               schedule_indices=(0,) if args.gradient_smoke else None)["correct"]["mean"]
+                               schedule_indices=(0,) if args.gradient_smoke else (0, 3) if args.quick_eval else None)["correct"]["mean"]
     trained = measure()
     for p in trainable:
         p.data.zero_()

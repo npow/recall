@@ -1,0 +1,45 @@
+{
+  "scope": "Scripted single-case cache diagnostic, not adaptive PlayWorld or overall",
+  "complete": true,
+  "results": {
+    "cache18": {
+      "score": 1.2,
+      "gate": {
+        "applicable": "yes",
+        "task_id": "GC027",
+        "perspective": "first-person",
+        "verdict": "partial",
+        "instruction_following_score": 1,
+        "meaningful_requested_trajectory_progress": "partial",
+        "revisit_required": "yes",
+        "revisit_observed": "no",
+        "observed_action_zh": "镜头持续向右水平旋转，但未完成360度旋转，也没有回到初始视角。",
+        "trajectory_evidence_zh": "从Sheet 1到Sheet 6，镜头一直向右旋转，初始画面中的粉色建筑离开视野后未再出现，视频结束时镜头仍指向其他方向，未完成一整圈的旋转。",
+        "failure_reason_zh": "镜头虽然进行了旋转，但旋转角度不足360度，未能回到初始视角。",
+        "confidence_1_to_5": 5
+      },
+      "judge_model": "gemini-3.1-pro-preview",
+      "video_sha256": "9a192bcaa63460e74ce4760bad6ae14fae76351be378e5d035fe557444609bf6"
+    },
+    "cache70": {
+      "score": 3.8,
+      "gate": {
+        "applicable": "yes",
+        "task_id": "GC027",
+        "perspective": "first-person",
+        "verdict": "partial",
+        "instruction_following_score": 1,
+        "meaningful_requested_trajectory_progress": "yes",
+        "revisit_required": "yes",
+        "revisit_observed": "no",
+        "observed_action_zh": "镜头持续向右水平旋转，但直到视频结束也未转满360度回到初始视角。",
+        "trajectory_evidence_zh": "视频从头到尾显示镜头一直在向右旋转，初始画面中的粉色建筑向左移出画面后，后续画面展示了场地的其他部分。直到最后一帧，初始的粉色建筑和视角均未再次出现，说明旋转角度未达到360度。",
+        "failure_reason_zh": "镜头虽然进行了原地旋转，但未能完成360度旋转并回到初始视角，任务未完全完成。",
+        "confidence_1_to_5": 5
+      },
+      "judge_model": "gemini-3.1-pro-preview",
+      "video_sha256": "642512a8b77d56b71249fd96f81e5f6a34c461489414c8dbfca0aa1d0766882a"
+    }
+  },
+  "caveat": "One seed and scripted camera path; inspect actual revisit and dynamic scene behavior. No overall or adaptive improvement claim."
+}

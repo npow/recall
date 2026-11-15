@@ -1,0 +1,28 @@
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]Loading checkpoint shards:  12%|█▎        | 1/8 [00:02<00:17,  2.57s/it]Loading checkpoint shards:  25%|██▌       | 2/8 [00:05<00:15,  2.55s/it]Loading checkpoint shards:  38%|███▊      | 3/8 [00:07<00:12,  2.55s/it]Loading checkpoint shards:  50%|█████     | 4/8 [00:10<00:09,  2.50s/it]Loading checkpoint shards:  62%|██████▎   | 5/8 [00:21<00:17,  5.69s/it]Loading checkpoint shards:  75%|███████▌  | 6/8 [00:35<00:16,  8.41s/it]Loading checkpoint shards:  88%|████████▊ | 7/8 [00:45<00:09,  9.14s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:49<00:00,  7.43s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:49<00:00,  6.19s/it]
+/home/npow/code/iteratehack/external/LingBot-World2/wan/modules/vae2_1.py:649: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with amp.autocast(dtype=self.dtype):
+{"max_abs_error": 0.44921875, "mean_abs_error": 0.006765625439584255, "reference_mean_abs": 1.00313138961792, "relative_mean_error": 0.0067445058375597}
+{"eval_before": {"synthetic-pan-GC001": {"correct": {"per_step": [0.5743985176086426], "mean": 0.5743985176086426}, "wrong": {"per_step": [0.582968533039093], "mean": 0.582968533039093}, "none": {"per_step": [0.5820813775062561], "mean": 0.5820813775062561}}}}
+/home/npow/code/iteratehack/scripts/train_lingbot_memory.py:188: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  curve.append({"step": step, "clip": clip.name, "schedule_index": index, "loss": float(loss), "grad_norm": norm})
+{"step": 1, "clip": "synthetic-pan-GC001", "schedule_index": 3, "loss": 0.04574717953801155, "grad_norm": 0.04088139906525612}
+{"eval_after": {"synthetic-pan-GC001": {"correct": {"per_step": [0.5745481848716736], "mean": 0.5745481848716736}, "wrong": {"per_step": [0.5833359956741333], "mean": 0.5833359956741333}, "none": {"per_step": [0.5820813775062561], "mean": 0.5820813775062561}}}}
+{
+  "status": "completed",
+  "train": {
+    "steps": 1,
+    "mean_step_s": 48.36657454498345,
+    "steps_per_s": 0.02067543565794488,
+    "peak_allocated_gb": 63.734216192,
+    "peak_reserved_gb": 70.132957184
+  },
+  "reader_roundtrip": {
+    "sha256": "679322acf36eb8248335cc29a2dbbcb0c746a43f20b48a9c54a5e2bb3c33533e",
+    "loaded": "679322acf36eb8248335cc29a2dbbcb0c746a43f20b48a9c54a5e2bb3c33533e",
+    "loss_trained": 0.5745481848716736,
+    "loss_zeroed": 0.5743985176086426,
+    "loss_reloaded": 0.5745481848716736,
+    "reload_matches": true
+  }
+}

@@ -368,5 +368,27 @@
     }
   ],
   "wrong_memory_control": "Earliest aligned non-sink historical4-frame chunk not overlapping correct memory or recent4 frames, chosen before training. It is a matched token-count control, not guaranteed semantically dissimilar.",
-  "selected_manifest_sha256": "9752b36d066cc198e11f69a4b7b9b70e85becd8bbde8023da428d56b2c5cc34a"
+  "selected_manifest_sha256": "9752b36d066cc198e11f69a4b7b9b70e85becd8bbde8023da428d56b2c5cc34a",
+  "training_configuration": {
+    "adapter": "memory-reader",
+    "rank": 32,
+    "steps": 60,
+    "lr": 0.0001,
+    "seed": 0,
+    "heldout_count": 2,
+    "max_train": 6,
+    "quick_eval": true,
+    "evaluation_schedule_indices": [
+      0,
+      3
+    ],
+    "evaluation_noise_seeds": [
+      0
+    ],
+    "release_text_encoder": true,
+    "initialization": "Fresh pinned14B pretrained weights, not the syntheticGC001 probe adapter",
+    "training_loss": "velocity",
+    "parity": true
+  },
+  "acceptance": "Feasibility only: completed fitting, frozen base versions unchanged, exact checkpoint reload, and correct-memory loss lower than both wrong/absent controls on each held-out source. No candidate promotion without player-driven quality and baseline comparison. Report all held-out outcomes; no checkpoint selection using held-out losses."
 }

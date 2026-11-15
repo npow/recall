@@ -1,0 +1,123 @@
+{
+  "status": "completed",
+  "args": {
+    "output": "/home/npow/code/iteratehack/outputs/lingbot-reproduction/thor-reader-gradient-1794728305335141203/training",
+    "synthetic_tasks": "['GC001']",
+    "heldout_tasks": "[]",
+    "manifest": "None",
+    "data_root": "/data",
+    "content_ok_only": "False",
+    "heldout_count": "0",
+    "max_train": "0",
+    "steps": "1",
+    "lr": "0.0001",
+    "rank": "32",
+    "adapter": "memory-reader",
+    "gradient_smoke": "True",
+    "alpha": "32.0",
+    "loss": "velocity",
+    "seed": "0",
+    "parity": "True",
+    "log_every": "5"
+  },
+  "scope": "harness validation; not a PlayWorld score",
+  "source_sha256": {
+    "scripts/train_lingbot_memory.py": "4207fd138a99c34b3563fcdc54d45b57fd56c39ceb7cb0731abee7851c9c13ca",
+    "worldsync/lingbot_memory_train.py": "27ff30c20af97e805ed0f04bb37856ea99fbca457c5c0e0e079a56aae6ee5c8c",
+    "worldsync/lingbot_memory_reader.py": "9e65255296fe457d7a6d23d880ed4e3d36b1b65cf68e25b4973be7cb4395b4b5"
+  },
+  "attention_backend": "sdpa",
+  "optional_torch_dlpack_addon_disabled": false,
+  "attention_implementation_sha256": "b2cfdf3857361eb6dda975e53437326618aadcea13701ccb9fc14d6d03187e84",
+  "checkpoint_loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "load_s": 134.31532764597796,
+  "gpu": "NVIDIA Thor",
+  "clips": {
+    "train": [
+      "synthetic-pan-GC001"
+    ],
+    "heldout": []
+  },
+  "encode_s": 62.10721379198367,
+  "parity_vs_stock": {
+    "max_abs_error": 0.44921875,
+    "mean_abs_error": 0.006765625439584255,
+    "reference_mean_abs": 1.00313138961792,
+    "relative_mean_error": 0.0067445058375597
+  },
+  "eval_before": {
+    "synthetic-pan-GC001": {
+      "correct": {
+        "per_step": [
+          0.5743985176086426
+        ],
+        "mean": 0.5743985176086426
+      },
+      "wrong": {
+        "per_step": [
+          0.582968533039093
+        ],
+        "mean": 0.582968533039093
+      },
+      "none": {
+        "per_step": [
+          0.5820813775062561
+        ],
+        "mean": 0.5820813775062561
+      }
+    }
+  },
+  "trainable_parameters": 655360,
+  "curve": [
+    {
+      "step": 1,
+      "clip": "synthetic-pan-GC001",
+      "schedule_index": 3,
+      "loss": 0.04574717953801155,
+      "grad_norm": 0.04088139906525612
+    }
+  ],
+  "train": {
+    "steps": 1,
+    "mean_step_s": 48.36657454498345,
+    "steps_per_s": 0.02067543565794488,
+    "peak_allocated_gb": 63.734216192,
+    "peak_reserved_gb": 70.132957184
+  },
+  "eval_after": {
+    "synthetic-pan-GC001": {
+      "correct": {
+        "per_step": [
+          0.5745481848716736
+        ],
+        "mean": 0.5745481848716736
+      },
+      "wrong": {
+        "per_step": [
+          0.5833359956741333
+        ],
+        "mean": 0.5833359956741333
+      },
+      "none": {
+        "per_step": [
+          0.5820813775062561
+        ],
+        "mean": 0.5820813775062561
+      }
+    }
+  },
+  "reader_roundtrip": {
+    "sha256": "679322acf36eb8248335cc29a2dbbcb0c746a43f20b48a9c54a5e2bb3c33533e",
+    "loaded": "679322acf36eb8248335cc29a2dbbcb0c746a43f20b48a9c54a5e2bb3c33533e",
+    "loss_trained": 0.5745481848716736,
+    "loss_zeroed": 0.5743985176086426,
+    "loss_reloaded": 0.5745481848716736,
+    "reload_matches": true
+  },
+  "elapsed_s": 560.0400783339865
+}

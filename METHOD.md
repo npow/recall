@@ -68,3 +68,5 @@ The [leaderboard](LEADERBOARD.md) is the current results index. Regenerate its t
 ```
 
 Runtime improvements are separate from quality claims: [persistent workers](reproduction/modal-runner.md), [streamed player overlap](reproduction/player-streaming/README.md), and [lossless disk-backed memory on the local GPU](reproduction/lingbot-local-memory/README.md). They make experiments feasible; they do not by themselves raise the benchmark score.
+
+An experimental [learned memory reader](docs/differentiable-memory.md) now has a completed 14B gradient/checkpoint plumbing test. Its separate branch has about 0.66M trainable parameters; the base model stays frozen. The synthetic probe is not a quality improvement and cannot be a benchmark candidate. Real-data fitting and held-out, player-driven validation remain pending.
