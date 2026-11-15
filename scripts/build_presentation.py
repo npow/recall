@@ -666,59 +666,41 @@ def scene_limits(data, seconds):
         yield np.asarray(image)
 
 
+LAPS = [("Reproduce the open baseline", "kept"), ("Pose memory on scripted paths", "kept"), ("Four vs eight retrieved views", "partial"),
+        ("Re-anchor on the start image", "dropped"), ("WorldKV-style retention", "dropped"), ("DeCoPrune port", "dropped"),
+        ("Commit Forcing transfer", "dropped"), ("Keyframe restart", "dropped"), ("Bigger and fp8 caches", "partial"),
+        ("Memory LoRA", "dropped"), ("Prompt and motion tricks", "dropped"), ("Full 171-task run", "partial"),
+        ("Text director", "partial"), ("Store the frame, rebuild values", "kept"), ("Storage ablations", "partial"),
+        ("Verified retrieval", "dropped"), ("Revisit-horizon test", "kept")]
+
+
 def scene_process(data, seconds):
     loop = data.board["loop"]
-    chips = data.board.get("chips", ["pre-registered configs", "every run logged in the repo"])[:2]
-    cx, cy, rx, ry = W // 2, 520, 640, 225
-    bw, bh = 400, 132
-    pts = [(cx + rx * math.cos(math.radians(-120 + 60 * n)), cy + ry * math.sin(math.radians(-120 + 60 * n))) for n in range(6)]
-
-    def edge(c, t):
-        dx, dy = t[0] - c[0], t[1] - c[1]
-        k = min((bw / 2 + 10) / abs(dx) if dx else 1e9, (bh / 2 + 10) / abs(dy) if dy else 1e9)
-        return (c[0] + dx * k, c[1] + dy * k)
-
-    def arrow(draw, p0, p1, colour):
-        draw.line((p0, p1), fill=colour, width=4)
-        ang = math.atan2(p1[1] - p0[1], p1[0] - p0[0])
-        tip = p1
-        left = (tip[0] - 20 * math.cos(ang - 0.4), tip[1] - 20 * math.sin(ang - 0.4))
-        right = (tip[0] - 20 * math.cos(ang + 0.4), tip[1] - 20 * math.sin(ang + 0.4))
-        draw.polygon([tip, left, right], fill=colour)
-
+    names = [name for name, _ in loop]
+    colour_of = {"kept": OURS, "partial": ACCENT, "dropped": MUTED}
+    counts = {k: sum(1 for _, o in LAPS if o == k) for k in colour_of}
     for index in range(int(seconds * FPS)):
         t = index / FPS
         image, draw = canvas("Autoresearch", "An autoresearch loop", "AUTONOMY", 58)
-        for n in range(6):
-            a = ease((t - 0.4 - 0.5 * n) / 0.5)
-            c, nxt = pts[n], pts[(n + 1) % 6]
-            arrow(draw, edge(c, nxt), edge(nxt, c), mix(BG, ACCENT, ease((t - 0.7 - 0.5 * n) / 0.5)))
-        for n, (name, line) in enumerate(loop):
-            a = ease((t - 0.4 - 0.5 * n) / 0.5)
-            x, y = pts[n]
-            colour = OURS if n >= 4 else ACCENT
-            draw.rounded_rectangle((x - bw / 2, y - bh / 2, x + bw / 2, y + bh / 2), 18, fill=PANEL, outline=mix(BG, colour, max(a, 0.2)), width=4)
-            draw.text((x, y - 38), name, font=font(32), fill=mix(PANEL, FG, max(a, 0.3)), anchor="mm")
-            for k, part in enumerate(wrap(draw, line, font(25, False), bw - 30)):
-                draw.text((x, y + 2 + k * 32), part, font=font(25, False), fill=mix(PANEL, FG, a), anchor="mm")
-        m = ease((t - 3.6) / 0.6)
-        draw.rounded_rectangle((cx - 190, cy - 50, cx + 190, cy + 50), 16, fill=PANEL, outline=mix(BG, MUTED, m), width=2)
-        draw.text((cx, cy - 16), "findings memory", font=font(30), fill=mix(PANEL, FG, m), anchor="mm")
-        draw.text((cx, cy + 22), "stored in past.dev", font=font(24, False), fill=mix(PANEL, MUTED, m), anchor="mm")
-        r = ease((t - 4.2) / 0.6)
-        arrow(draw, (cx - 90, cy - 54), (pts[0][0] + 70, pts[0][1] + bh / 2 + 8), mix(BG, MUTED, r))
-        draw.text((cx + 20, cy - 80), "recall past findings", font=font(22, False), fill=mix(BG, MUTED, r), anchor="lm")
-        arrow(draw, (pts[5][0] + bw / 2 + 8, cy), (cx - 196, cy), mix(BG, MUTED, r))
-        draw.text(((pts[5][0] + bw / 2 + cx - 190) / 2, cy - 44), "store the", font=font(20, False), fill=mix(BG, MUTED, r), anchor="mm")
-        draw.text(((pts[5][0] + bw / 2 + cx - 190) / 2, cy - 20), "result", font=font(20, False), fill=mix(BG, MUTED, r), anchor="mm")
-        total = sum(draw.textlength(c, font=font(30)) + 48 for c in chips) + 24 * (len(chips) - 1)
-        x0 = (W - total) / 2
-        for n, chip in enumerate(chips):
-            d = ease((t - 4.6 - 0.3 * n) / 0.6)
-            width = draw.textlength(chip, font=font(30)) + 48
-            draw.rounded_rectangle((x0, 850, x0 + width, 910), 30, outline=mix(BG, ACCENT, d), width=3)
-            draw.text((x0 + width / 2, 880), chip, font=font(30), fill=mix(BG, FG, d), anchor="mm")
-            x0 += width + 24
+        h = ease(t / 0.5)
+        draw.text((90, 250), f"{len(LAPS)} ideas tried in two days", font=font(64), fill=mix(BG, FG, h), anchor="lm")
+        x = 90
+        for k in ("kept", "partial", "dropped"):
+            draw.ellipse((x, 312, x + 22, 334), fill=mix(BG, colour_of[k], h))
+            label = f"{counts[k]} {k}"
+            draw.text((x + 34, 323), label, font=font(34, False), fill=mix(BG, MUTED, h), anchor="lm")
+            x += 34 + draw.textlength(label, font=font(34, False)) + 50
+        loop_line = "  \u2192  ".join(names) + "  \u21ba"
+        lp = ease((t - 0.3) / 0.6)
+        draw.text((90, 398), loop_line, font=font(30, False), fill=mix(BG, ACCENT, lp), anchor="lm")
+        draw.text((90, 440), "findings memory \u00b7 stored in past.dev", font=font(26, False), fill=mix(BG, MUTED, lp), anchor="lm")
+        cols, per = 3, 6
+        for n, (title, outcome) in enumerate(LAPS):
+            a = ease((t - 0.8 - 0.17 * n) / 0.4)
+            col, row = n // per, n % per
+            x0, y0 = 90 + col * 600, 505 + row * 72
+            draw.ellipse((x0, y0 - 11, x0 + 22, y0 + 11), fill=mix(BG, colour_of[outcome], a))
+            draw.text((x0 + 38, y0), title, font=font(32, False), fill=mix(BG, FG, a), anchor="lm")
         caption(draw, "AI agents ran the loop; a human set goals and budget.", 1.0)
         yield np.asarray(image)
 

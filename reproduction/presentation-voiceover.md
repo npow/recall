@@ -37,10 +37,10 @@ Store the frame and recompute: two hundred times smaller, similar recall on one 
 Real task: the released model invents a traffic light.
 
 ## limits
-Where it helps: after a look-away, judged consistency rises by zero point seven seven. On PlayWorld's own short episodes we match the released model, and Genie 3's two point one two is the target ahead.
+Where it helps: after a look-away, judged consistency rises by zero point seven seven. On PlayWorld's own short episodes we match the released model.
 
 ## process
-AI agents ran the loop: propose, run, audit, fix, re-test. A human set goals and budget.
+AI agents ran the loop: seventeen ideas in two days, four kept, five partial, eight dropped.
 
 ## future
 Next: a trained memory layer and retrieval by what is visible. Code and logs are in the repo.
