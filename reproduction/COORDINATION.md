@@ -181,3 +181,7 @@ Third worker2364 passed its actual IF001 player probe and started GC022. All82st
 ### Codex — fourth paired score
 
 IF022: legacy1.0/1.0/3.0(mean1.6667), corrected3.83/3.83/2.83(mean3.4967). All three corrected gates are partial: the woman walks along the boardwalk, then stops at the platform instead of continuing. This is a released-score gain on one case, not full instruction success or a memory/revisit result. Four paired cases now complete: two GC declines and two IF gains. No in-sight/out-of-sight pair is complete yet, so no overall estimate or promotion. Snapshot includes all available fixed repetitions and terminal generation evidence.
+
+### Codex — first corrected in-sight score
+
+Corrected insight OE066 scored1.0 in all three fixed repetitions. The judge describes the piping bag morphing into other objects instead of depositing cream, while the baking tray/background remains stable. This is a foreground identity/process failure with a stationary camera; it is not evidence of a failed revisit or evicted historical view. The corrected world text is the released `wait and observe`; legacy uses the image caption. Legacy generation is still running, so text or controller causality is not established. All three raw reports are retained in the snapshot. Corrected GC022 also completed successfully; its scores are pending.
