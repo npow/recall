@@ -36,6 +36,11 @@ li{margin:0 0 20px}
 .lim{background:#151a22;border:2px solid #2a3240;border-radius:14px;padding:34px 38px}
 .lt{font-size:48px;font-weight:700;margin:0 0 12px}
 .ld{font-size:34px;color:var(--dim);line-height:1.35}
+.arg{display:grid;grid-template-columns:1fr 1fr;gap:0 30px}
+.ar{display:flex;align-items:baseline;gap:12px;padding:8px 0;border-bottom:1px solid #1c232e;font-size:26px;line-height:1.1;flex-wrap:wrap;row-gap:0}
+.ar .at{font-weight:650}
+.ar .ao{color:#9aa4b2;font-size:26px;flex:1 1 100%;padding-left:30px;margin-top:-2px}
+.dot{display:inline-block;width:16px;height:16px;border-radius:50%;flex:none;margin-right:2px}
 .tiny{font-size:22px;color:var(--faint);line-height:1.35}
 .rel{color:var(--rel)} .ours{color:var(--ours)} .warn{color:var(--warn)} .dim{color:var(--dim)}
 b{font-weight:750}
@@ -402,9 +407,9 @@ svg text{font-family:inherit}
   <!-- 15 -->
   <section class="slide" data-sec="Autoresearch">
     <h2>An autoresearch loop</h2>
-    <div class="row" style="gap:36px;align-items:center">
-      <div style="flex:none;width:1000px">
-      <svg id="loop" viewBox="0 0 1000 520" width="1000" height="520">
+    <div class="row" style="gap:40px;align-items:flex-start">
+      <div style="flex:none;width:640px;margin-top:8px">
+      <svg id="loop" viewBox="0 0 1000 520" width="640" height="333">
       <defs><marker id="al" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 z" fill="#7aa2f7"/></marker><marker id="ag2" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 z" fill="#3ddc97"/></marker></defs>
       <line x1="450" y1="89" x2="550" y2="89" stroke="#7aa2f7" stroke-width="4" marker-end="url(#al)"/>
       <line x1="741" y1="140" x2="817" y2="211" stroke="#7aa2f7" stroke-width="4" marker-end="url(#al)"/>
@@ -424,17 +429,15 @@ svg text{font-family:inherit}
       <line x1="264" y1="262" x2="369" y2="262" stroke="#5b6573" stroke-width="3" marker-end="url(#ag2)"/>
       <text x="306" y="232" font-size="18" fill="#9aa4b2" text-anchor="middle">store the</text><text x="306" y="253" font-size="18" fill="#9aa4b2" text-anchor="middle">result</text>
       </svg>
+      <p class="small" style="margin:18px 0 0">AI agents wrote the code, ran the experiments and audited the results; a human set goals and budget.</p>
       </div>
-      <div class="col">
-        <div class="card lapc" id="lap1" style="margin-bottom:18px"><p style="margin:0 0 8px;font-weight:700;color:#7aa2f7">Lap 1</p><p class="small" style="margin:0">First design: no gain on 171 tasks → the audit found 3 bugs and 2 design flaws → memory rebuilt (200× less storage, removes the harm)</p></div>
-        <div class="card lapc" id="lap2"><p style="margin:0 0 8px;font-weight:700;color:#7aa2f7">Lap 2</p><p class="small" style="margin:0">Re-test on 36 real tasks: not better, reported</p></div>
+      <div style="flex:1">
+        <p style="font-size:40px;font-weight:700;margin:0 0 6px">17 ideas tried in two days</p>
+        <p style="font-size:30px;margin:0 0 18px;color:var(--dim)"><span class="dot" style="background:#3ddc97"></span>4 kept &nbsp; <span class="dot" style="background:#7aa2f7"></span>5 partial &nbsp; <span class="dot" style="background:#6b7482"></span>8 dropped</p>
+        <div class="arg"><div><div class="ar"><span class="dot" style="background:#3ddc97"></span><span class="at">Reproduce the open baseline</span><span class="ao">1.81–1.85 vs 1.82</span></div><div class="ar"><span class="dot" style="background:#3ddc97"></span><span class="at">Pose memory on scripted paths</span><span class="ao">similarity 0.30 → 0.78</span></div><div class="ar"><span class="dot" style="background:#7aa2f7"></span><span class="at">Four vs eight retrieved views</span><span class="ao">four kept</span></div><div class="ar"><span class="dot" style="background:#6b7482"></span><span class="at">Re-anchor on the start image</span><span class="ao">no gain</span></div><div class="ar"><span class="dot" style="background:#6b7482"></span><span class="at">WorldKV-style retention</span><span class="ao">no gain</span></div><div class="ar"><span class="dot" style="background:#6b7482"></span><span class="at">DeCoPrune port</span><span class="ao">no gain</span></div><div class="ar"><span class="dot" style="background:#6b7482"></span><span class="at">Commit Forcing transfer</span><span class="ao">no revisit gain shown</span></div><div class="ar"><span class="dot" style="background:#6b7482"></span><span class="at">Keyframe restart</span><span class="ao">hard cuts</span></div><div class="ar"><span class="dot" style="background:#7aa2f7"></span><span class="at">Bigger and fp8 caches</span><span class="ao">diagnostic only</span></div></div><div><div class="ar"><span class="dot" style="background:#6b7482"></span><span class="at">Memory LoRA</span><span class="ao">lower quality</span></div><div class="ar"><span class="dot" style="background:#6b7482"></span><span class="at">Prompt and motion tricks</span><span class="ao">no gain</span></div><div class="ar"><span class="dot" style="background:#7aa2f7"></span><span class="at">Full 171-task run</span><span class="ao">no gain; audit finds bugs</span></div><div class="ar"><span class="dot" style="background:#7aa2f7"></span><span class="at">Text director</span><span class="ao">+0.02, not established</span></div><div class="ar"><span class="dot" style="background:#3ddc97"></span><span class="at">Store the frame, rebuild values</span><span class="ao">200× smaller</span></div><div class="ar"><span class="dot" style="background:#7aa2f7"></span><span class="at">Storage ablations</span><span class="ao">fp8 holds</span></div><div class="ar"><span class="dot" style="background:#6b7482"></span><span class="at">Verified retrieval</span><span class="ao">−0.35 on 36 real tasks</span></div><div class="ar"><span class="dot" style="background:#3ddc97"></span><span class="at">Revisit-horizon test</span><span class="ao">+0.77, pre-registered</span></div></div></div>
       </div>
     </div>
-    <ul style="margin-top:14px">
-      <li class="small">AI agents wrote the code and ran every step; a separate AI agent audited it. A human set the goals and budget and made key calls (including the store-the-frame idea).</li>
-      <li class="small">Every run: pass criterion pre-registered, configuration frozen and committed first; per-episode scores and logs in the repo (github.com/npow/recall, reproduction/). Negative results are kept and reported.</li>
-    </ul>
-    <aside class="notes">The research itself ran as an autoresearch loop, and AI agents did the work: one agent proposed a method, agents ran the experiments on cloud GPUs, a separate AI agent audited the code and the results, then diagnosis, fix, and re-test. A human set the goals and the budget and made a few key calls, including the idea of storing the frame and recomputing. Watch the highlight go around the ring. In lap one, the first design gave no gain on the full benchmark, the audit found three bugs and two design flaws, and the memory was rebuilt, with two hundred times less storage and without the harm. Lap two re-tested it on thirty-six real tasks: no better than stock, and we reported that. At the centre is past.dev, a long-term memory for the agents: the agents recall past findings before proposing the next experiment, and store each result. Every run had a pre-registered criterion and a frozen configuration, with logs in the repo.</aside>
+    <aside class="notes">The research ran as an autoresearch loop: AI agents proposed a method, ran experiments on cloud GPUs, a separate AI agent audited the code and the results, then diagnosed, fixed and re-tested, and the findings were stored in a research memory in past.dev. Over two days the loop tried seventeen ideas. Four were kept: the reproduced baseline, the pose-indexed memory, the store-the-frame idea that is two hundred times smaller, and the pre-registered revisit test with its plus 0.77. Five were partial, and eight were dropped, each with its result recorded in the repo. A human set the goals and the budget and made a few key calls.</aside>
   </section>
 
   <!-- 16 -->
@@ -641,7 +644,7 @@ svg text{font-family:inherit}
       var k=step%6, lap=Math.floor(step/6)%2;
       nodes.forEach(function(r,j){ var on=(step>=0&&j===k); r.setAttribute('stroke',on?'#7aa2f7':'#2a3240'); r.setAttribute('fill',on?'#1d2a46':'#151a22'); });
       rc.setAttribute('stroke-width',(step>=0&&(k===0||k===5))?7:3);
-      l1.style.opacity=(step<0||lap===0)?1:.35; l2.style.opacity=(step<0||lap===1)?1:.35;
+      if(l1){ l1.style.opacity=(step<0||lap===0)?1:.35; } if(l2){ l2.style.opacity=(step<0||lap===1)?1:.35; }
     }
     paint();
     setInterval(function(){
