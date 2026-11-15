@@ -22,6 +22,18 @@ def main():
     output = args.directory.resolve()
     plan = json.loads((output / "plan.json").read_text())
     jobs = [json.loads(line) for line in (output / "jobs.jsonl").read_text().splitlines()]
+    expected = {(case["task_id"], case.get("seed", plan.get("seed")), arm)
+                for case in plan["cases"] for arm in plan["arms"]}
+    declared = []
+    for job in jobs:
+        argv = job["argv"]
+        declared.append((argv[argv.index("--task-id") + 1],
+                         int(argv[argv.index("--seed") + 1]),
+                         argv[argv.index("--text-prompt") + 1]))
+    if (len(expected) != len(plan["cases"]) * len(plan["arms"])
+            or len(jobs) != len(expected) or set(declared) != expected
+            or len({job["id"] for job in jobs}) != len(jobs)):
+        raise ValueError("Jobs must cover every frozen case/seed/arm exactly once")
     bundle = json.loads((output / "results.json").read_text())
     outcomes = {row["id"]: row for row in bundle["results"]}
     if len(outcomes) != len(bundle["results"]) or set(outcomes) != {job["id"] for job in jobs}:
