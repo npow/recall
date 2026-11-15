@@ -200,3 +200,5 @@ against the caps of $150, then $300 (raised at 07:20). Lambda needed no more tha
 Failures over the whole effort: `final1` had two invalid-player-action attempts (both retried successfully);
 memory-v2 step 2 had none; the only persistent failures were the two `lr*` storage jobs, fixed and rerun.
 All teardown decisions, job lists and sync paths are in the scripts `scripts/lambda_*.py|sh`.
+- worldsync-ifd-2 (us-south-3) terminated 10:07 AM PST: CUDA error 802 on every setup attempt (faulty node); its shard never ran. Replacement worldsync-ifd-5 (gpu_1x_h100_pcie, us-west-3, $3.29/h) launched; SXM capacity was exhausted in all regions.
+- All odin IF-demo instances (worldsync-ifd-1, -us-southeast-1, -us-south-2, -5) terminated 12:04 PM PST at the user's request; final results pulled first.
